@@ -21,13 +21,19 @@ export default function JoinWaitlist() {
     setErrorHint("");
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/protocol@myshape.com", {
+      // 已替换为你的专用加密字符串：e24852dbfcaeee1d6895450fa46367e7
+      const response = await fetch("https://formsubmit.co/ajax/e24852dbfcaeee1d6895450fa46367e7", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json" 
+        },
         body: JSON.stringify({
           email: email,
           _subject: "Genesis Protocol: New Node Connection",
-          message: `Identity Established: ${email}`
+          message: `Identity Established: ${email}`,
+          _template: "table", // 可选：让收到的邮件格式更漂亮
+          _captcha: "false"   // 因为我们用 AJAX 提交，所以关闭人机验证
         })
       });
 
