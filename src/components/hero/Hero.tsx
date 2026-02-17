@@ -48,11 +48,12 @@ export default function Hero() {
 
   return (
     <section className="relative w-full h-screen overflow-hidden bg-black">
-      {/* 粒子视觉层 */}
+
+      {/* 粒子视觉层（背景） */}
       <HeroVisual showCore={true} />
 
       {/* 顶部标题 */}
-      <div className="absolute top-0 left-0 w-full z-20 pointer-events-none text-center pt-[8vh] px-6">
+      <div className="absolute top-0 left-0 w-full z-[5000] pointer-events-none text-center pt-[8vh] px-6">
         <h1 className="text-[1.8rem] md:text-[2.6rem] font-extralight tracking-[0.35em] uppercase text-white/90">
           MYSHAPE PROTOCOL
         </h1>
@@ -62,8 +63,8 @@ export default function Hero() {
         </p>
       </div>
 
-      {/* 左右按钮 */}
-      <div className="absolute inset-0 flex items-center justify-between px-[8vw] z-30">
+      {/* ⭐⭐⭐ 关键修复点：按钮容器必须在最高层 ⭐⭐⭐ */}
+      <div className="absolute inset-0 flex items-center justify-between px-[8vw] z-[9999] pointer-events-auto">
         <GlowVortexButton
           onClick={(e) => {
             e.stopPropagation();

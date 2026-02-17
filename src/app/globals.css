@@ -1,50 +1,70 @@
 @import "tailwindcss";
 
-/* 基础主题变量 */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #02040a;
+  --foreground: #ededed;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-/* 深色模式 */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* 全局字体与背景 */
 body {
-  background: var(--background);
+  background: var(--background) !important;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: sans-serif;
 }
 
-/* —— MyShape Narrative 动画 —— */
+/* ============================
+   NarrativeText 必须的动画
+   ============================ */
 
-/* 文案漂浮（能量呼吸） */
-@keyframes float {
-  0% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(-1px); opacity: 0.97; }
-  100% { transform: translateY(0); opacity: 1; }
-}
-
-/* 文案出现前的轻微闪烁（协议加载感） */
+/* 字符淡入闪烁 */
 @keyframes flash {
-  0% { opacity: 0.2; }
-  100% { opacity: 1; }
+  0% { opacity: 0; transform: translateY(2px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-/* 能量脉冲（按钮 + 粒子响应） */
-.vortex-pulse canvas {
-  filter: brightness(1.25);
-  transition: filter 0.3s ease-out;
+/* 行级漂浮 */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+/* ============================
+   你原本的动画（保持不动）
+   ============================ */
+
+@keyframes typing { from { width: 0 } to { width: 100% } }
+@keyframes scan { from { left: -100% } to { left: 100% } }
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+.typing-text {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #90c8ff;
+  animation: typing 3.5s steps(40, end) infinite alternate;
+}
+
+.btn-glow-bar {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(144, 200, 255, 0.3), transparent);
+  animation: scan 4s infinite linear;
+}
+
+.pulse-dot {
+  width: 4px;
+  height: 4px;
+  background: #80bfff;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #80bfff;
+  animation: pulse 3s infinite ease-in-out;
 }

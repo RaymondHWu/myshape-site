@@ -6,7 +6,7 @@ export default function GlowVortexButton({
   onClick,
   className,
 }: {
-  onClick?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
   className?: string;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);

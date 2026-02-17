@@ -1,7 +1,7 @@
 'use client';
+
 import React, { useEffect, useRef } from 'react';
 
-// 增加 showCore 属性，默认为 true
 export default function HeroVisual({ showCore = true }: { showCore?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -20,7 +20,7 @@ export default function HeroVisual({ showCore = true }: { showCore?: boolean }) 
         y: Math.random() * 2 - 1,
         z: Math.random() * 2
       }));
-      // 只有在需要显示核心粒子时才初始化它们
+
       if (showCore) {
         coreParticles = Array.from({ length: 1500 }, () => ({
           angle: Math.random() * Math.PI * 2,
@@ -32,15 +32,16 @@ export default function HeroVisual({ showCore = true }: { showCore?: boolean }) 
     };
 
     const resize = () => {
+      // ⭐ 关键：HeroVisual 只覆盖 Hero 区域（100vh）
       canvas.width = window.innerWidth;
-      canvas.height = canvas.parentElement?.offsetHeight || 800;
+      canvas.height = window.innerHeight;
     };
 
     const draw = () => {
       ctx.fillStyle = '#02040a';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // 1. 始终绘制星空背景 [cite: 2026-02-04]
+      // 星空背景
       stars.forEach(s => {
         s.z -= 0.005;
         if (s.z <= 0) s.z = 2;
@@ -53,7 +54,7 @@ export default function HeroVisual({ showCore = true }: { showCore?: boolean }) 
         ctx.fill();
       });
 
-      // 2. 只有 showCore 为 true 时才绘制中间的粒子漩涡
+      // 中心粒子漩涡
       if (showCore) {
         ctx.translate(canvas.width / 2, canvas.height / 2);
         coreParticles.forEach(p => {
@@ -68,17 +69,39 @@ export default function HeroVisual({ showCore = true }: { showCore?: boolean }) 
         });
         ctx.setTransform(1, 0, 0, 1, 0, 0);
       }
+
       requestAnimationFrame(draw);
     };
 
-    resize(); init(); draw();
+    resize();
+    init();
+    draw();
     window.addEventListener('resize', resize);
     return () => window.removeEventListener('resize', resize);
-  }, [showCore]); // 当 showCore 改变时重新初始化
+  }, [showCore]);
 
   return (
-    <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <canvas ref={canvasRef} style={{ display: 'block', width: '100%', height: '100%' }} />
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100vh',   // ⭐ 关键：固定为 Hero 区域高度
+        overflow: 'hidden',
+        zIndex: 0,
+        pointerEvents: 'none'
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        style={{
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          imageRendering: 'pixelated' // ⭐ 防止白线
+        }}
+      />
     </div>
   );
 }
