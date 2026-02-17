@@ -59,7 +59,8 @@ export default function JoinWaitlist() {
     
     const resize = () => { 
       canvas.width = window.innerWidth; 
-      canvas.height = window.innerWidth < 768 ? 600 : 800; // 手机端高度稍微收紧
+      // 手机端高度根据视口动态调整，防止背景被拉伸过长
+      canvas.height = window.innerWidth < 768 ? window.innerHeight * 0.7 : 800; 
     };
     
     class Particle {
@@ -70,11 +71,11 @@ export default function JoinWaitlist() {
 
       constructor() {
         this.angle = Math.random() * Math.PI * 2;
-        // 手机端漩涡半径缩小，确保在窄屏幕也能看到完整粒子
-        const maxRadius = window.innerWidth < 768 ? window.innerWidth * 0.4 : 320;
-        this.radius = Math.random() * maxRadius + 30;
+        // 响应式半径：手机端缩小半径，让漩涡集中在正中
+        const maxRadius = window.innerWidth < 768 ? window.innerWidth * 0.35 : 320;
+        this.radius = Math.random() * maxRadius + 20;
         this.speed = 0.005 + Math.random() * 0.005;
-        this.size = Math.random() * 1.8;
+        this.size = Math.random() * 1.5;
       }
       update(isBoosted: boolean) {
         const targetSpeed = isBoosted ? this.speed * 3.5 : this.speed;
@@ -93,8 +94,7 @@ export default function JoinWaitlist() {
 
     const init = () => { 
       resize(); 
-      // 性能适配：手机端(小于768px)使用80个粒子，桌面端保持200个
-      const particleCount = window.innerWidth < 768 ? 80 : 200;
+      const particleCount = window.innerWidth < 768 ? 60 : 180;
       particles = Array.from({ length: particleCount }, () => new Particle()); 
     };
 
@@ -106,20 +106,20 @@ export default function JoinWaitlist() {
 
     init(); 
     render();
-    window.addEventListener('resize', () => { resize(); init(); }); // 屏幕旋转时重新初始化
+    window.addEventListener('resize', init);
     return () => { 
       cancelAnimationFrame(animationFrameId); 
-      window.removeEventListener('resize', resize); 
+      window.removeEventListener('resize', init); 
     };
   }, [isTyping, status]);
 
   return (
-    <section style={{ 
-      padding: '120px 24px 80px', 
+    <section className="waitlist-section" style={{ 
+      padding: '100px 24px', 
       background: 'transparent', 
       position: 'relative', 
       overflow: 'hidden', 
-      minHeight: '80vh', 
+      minHeight: '75vh', 
       display: 'flex', 
       alignItems: 'center', 
       justifyContent: 'center' 
@@ -130,38 +130,37 @@ export default function JoinWaitlist() {
       <div style={{ maxWidth: '800px', width: '100%', position: 'relative', zIndex: 2, textAlign: 'center' }}>
         
         {/* 标题与滚动副标题 */}
-        <div style={{ marginBottom: "60px" }}>
-          {/* 响应式标题字体大小 */}
-          <h2 className="genesis-title" style={{ fontWeight: 200, color: '#f8feff', letterSpacing: '-0.02em', marginBottom: '1.5rem' }}>
+        <div className="waitlist-header" style={{ marginBottom: "50px" }}>
+          <h2 className="genesis-title" style={{ fontWeight: 200, color: '#f8feff', letterSpacing: '-0.02em', marginBottom: '1.2rem' }}>
              {status === "success" ? "Uplink Confirmed." : "Initialize Genesis."}
           </h2>
           <div style={{ overflow: 'hidden', display: 'inline-block' }}>
-             <p className="typing-text" style={{ color: 'rgba(144, 200, 255, 0.7)', fontSize: '11px', letterSpacing: '0.4em', fontWeight: 300 }}>
+             <p className="typing-text" style={{ color: 'rgba(144, 200, 255, 0.7)', fontSize: '10px', letterSpacing: '0.4em', fontWeight: 300 }}>
                {status === "success" ? "IDENTITY_LAYER_INITIALIZED" : "ESTABLISHING_IDENTITY_LAYER_PROTOCOL"}
              </p>
           </div>
         </div>
 
         {status === "success" ? (
-          <div style={{ animation: 'contentFadeIn 1.5s forwards', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
-            <div style={{ padding: '30px 40px', border: '1px solid rgba(144,200,255,0.3)', background: 'rgba(144,200,255,0.03)', backdropFilter: 'blur(15px)', position: 'relative', width: 'fit-content' }}>
+          <div style={{ animation: 'contentFadeIn 1s forwards', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '25px' }}>
+            <div style={{ padding: '24px 30px', border: '1px solid rgba(144,200,255,0.3)', background: 'rgba(144,200,255,0.03)', backdropFilter: 'blur(15px)', position: 'relative', width: 'fit-content' }}>
                <div className="corner tl" /> <div className="corner tr" />
                <div className="corner bl" /> <div className="corner br" />
                
-               <p style={{ color: '#fff', fontSize: '11px', letterSpacing: '0.2em', lineHeight: '2.2', margin: 0, fontWeight: 300, textAlign: 'left' }}>
+               <p style={{ color: '#fff', fontSize: '10px', letterSpacing: '0.2em', lineHeight: '2', margin: 0, fontWeight: 300, textAlign: 'left' }}>
                  NODE_STATUS: <span style={{ color: '#90c8ff' }}>ACTIVE</span> <br/>
                  ENCRYPTION: <span style={{ color: '#90c8ff' }}>RSA_4096_SYNC</span> <br/>
                  WAITLIST: <span style={{ color: '#90c8ff' }}>SEQUENTIAL_ENQUEUED</span>
                </p>
             </div>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', fontStyle: 'italic', marginTop: '10px', letterSpacing: '0.1em' }}>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', fontStyle: 'italic', marginTop: '10px', letterSpacing: '0.1em' }}>
               "The motion has been captured."
             </p>
             <div className="pulse-dot" />
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '40px', width: '100%' }}>
-            <div className={`input-portal ${isTyping ? 'active' : ''}`} style={{ position: 'relative', width: '100%', maxWidth: '440px' }}>
+          <form className="waitlist-form" onSubmit={handleSubmit} style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '35px', width: '100%' }}>
+            <div className={`input-portal ${isTyping ? 'active' : ''}`} style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
               <input
                 type="email"
                 required
@@ -171,7 +170,7 @@ export default function JoinWaitlist() {
                 value={email}
                 placeholder="GENESIS_EMAIL@ADDRESS.IO"
                 style={{
-                  padding: '24px 20px', width: '100%', fontSize: '12px', letterSpacing: '0.2em',
+                  padding: '22px 15px', width: '100%', fontSize: '11px', letterSpacing: '0.15em',
                   textAlign: 'center', outline: 'none', color: '#fff',
                   background: 'rgba(255,255,255,0.02)', border: `1px solid ${status === "error" ? '#ff4d4d' : 'rgba(128, 191, 255, 0.3)'}`,
                   transition: 'all 0.5s ease', backdropFilter: 'blur(5px)', borderRadius: '0'
@@ -181,7 +180,7 @@ export default function JoinWaitlist() {
               <div className="corner bl" /> <div className="corner br" />
               
               {status === "error" && (
-                <p style={{ position: 'absolute', bottom: '-30px', left: 0, width: '100%', color: '#ff4d4d', fontSize: '10px', letterSpacing: '0.1em' }}>
+                <p style={{ position: 'absolute', bottom: '-28px', left: 0, width: '100%', color: '#ff4d4d', fontSize: '9px', letterSpacing: '0.1em' }}>
                   {errorHint}
                 </p>
               )}
@@ -199,10 +198,14 @@ export default function JoinWaitlist() {
       </div>
 
       <style jsx>{`
-        .genesis-title { font-size: 48px; }
+        .genesis-title { font-size: 42px; }
+        
         @media (max-width: 768px) {
-          .genesis-title { font-size: 32px; }
-          .genesis-btn { padding: 18px 40px !important; width: 100%; max-width: 440px; }
+          .waitlist-section { padding: 60px 20px !important; min-height: 60vh !important; }
+          .genesis-title { font-size: 28px !important; }
+          .waitlist-header { marginBottom: 35px !important; }
+          .genesis-btn { padding: 16px 30px !important; width: 100%; max-width: 400px; font-size: 9px !important; }
+          .typing-text { font-size: 9px !important; }
         }
 
         .typing-text {
@@ -214,28 +217,28 @@ export default function JoinWaitlist() {
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #90c8ff } }
 
         .genesis-btn {
-          padding: 22px 100px; letter-spacing: 0.5em; font-size: 10px;
+          padding: 20px 80px; letter-spacing: 0.4em; font-size: 10px;
           cursor: pointer; border: 1px solid #80bfff; background: transparent;
           color: #80bfff; transition: all 0.6s; position: relative; overflow: hidden;
         }
         .btn-glow-bar {
           position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(144, 200, 255, 0.3), transparent);
+          background: linear-gradient(90deg, transparent, rgba(144, 200, 255, 0.2), transparent);
           animation: scan 4s infinite linear;
         }
         @keyframes scan { 100% { left: 100%; } }
 
-        .genesis-btn:hover { background: #90c8ff; color: #02040a !important; box-shadow: 0 0 50px rgba(144, 200, 255, 0.4); }
+        .genesis-btn:hover { background: #90c8ff; color: #02040a !important; box-shadow: 0 0 30px rgba(144, 200, 255, 0.3); }
         .btn-hover-text { position: absolute; left: 50%; top: 180%; transform: translate(-50%, -50%); width: 100%; transition: all 0.5s; font-weight: bold; }
         .genesis-btn:hover .btn-text { transform: translateY(-350%); opacity: 0; }
         .genesis-btn:hover .btn-hover-text { top: 50%; }
 
-        .corner { position: absolute; width: 15px; height: 15px; border-color: rgba(144, 200, 255, 0.4); border-style: solid; transition: 0.4s; }
-        .tl { top: -10px; left: -10px; border-width: 2px 0 0 2px; }
-        .tr { top: -10px; right: -10px; border-width: 2px 2px 0 0; }
-        .bl { bottom: -10px; left: -10px; border-width: 0 0 2px 2px; }
-        .br { bottom: -10px; right: -10px; border-width: 0 2px 2px 0; }
-        .input-portal.active .corner { border-color: #90c8ff; width: 20px; height: 20px; }
+        .corner { position: absolute; width: 12px; height: 12px; border-color: rgba(144, 200, 255, 0.4); border-style: solid; transition: 0.4s; }
+        .tl { top: -8px; left: -8px; border-width: 2px 0 0 2px; }
+        .tr { top: -8px; right: -8px; border-width: 2px 2px 0 0; }
+        .bl { bottom: -8px; left: -8px; border-width: 0 0 2px 2px; }
+        .br { bottom: -8px; right: -8px; border-width: 0 2px 2px 0; }
+        .input-portal.active .corner { border-color: #90c8ff; width: 18px; height: 18px; }
         
         @keyframes contentFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 

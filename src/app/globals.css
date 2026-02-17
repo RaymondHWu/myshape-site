@@ -74,43 +74,86 @@ body {
    响应式适配（新增：专为手机和 PAD 优化）
    ============================ */
 
-/* 针对手机和平板 (屏幕宽度小于 1024px) */
+/* 针对所有移动设备 (屏幕宽度小于 1024px) */
 @media (max-width: 1024px) {
-  /* 调整所有大标题的默认大小，防止溢出 */
   h1 { font-size: clamp(32px, 8vw, 64px) !important; }
   h2 { font-size: clamp(24px, 6vw, 48px) !important; }
   
-  /* 优化移动端输入框和容器的内边距 */
   section {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
+
+  /* 核心修复：Narrative 卡片容器在移动端转为纵向排列 */
+  .narrative-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 40px !important;
+    padding: 40px 0 !important;
+  }
+
+  /* 核心修复：防止卡片内的文字如 "Omni-Presence" 断行 */
+  .narrative-card {
+    width: 90% !important;
+    max-width: 340px;
+    min-height: auto !important;
+    padding: 30px 20px !important;
+  }
+
+  .narrative-card h3 {
+    font-size: 22px !important;
+    white-space: nowrap !important; /* 强制不换行 */
+    letter-spacing: 0.1em !important;
+  }
 }
 
-/* 针对手机 (屏幕宽度小于 768px) */
+/* 针对手机端 (屏幕宽度小于 768px) */
 @media (max-width: 768px) {
-  /* 打字机效果在手机上稍微调慢，防止闪烁感太强 */
+  /* 优化 Waitlist 模块的垂直间距 */
+  .waitlist-section {
+    padding: 60px 20px !important;
+    min-height: 70vh !important;
+  }
+
+  /* 标题与副标题间距压缩 */
+  .waitlist-header {
+    margin-bottom: 40px !important;
+  }
+
   .typing-text {
-    font-size: 11px !important;
+    font-size: 10px !important;
     letter-spacing: 0.2em !important;
   }
 
-  /* 针对 NarrativeText 的行间距在小屏上优化 */
-  .narrative-row {
-    margin-bottom: 1rem !important;
-    line-height: 1.6 !important;
+  /* 修复：缩小输入框区域，防止溢出 */
+  .input-portal {
+    width: 100% !important;
+    max-width: 320px !important;
   }
 
-  /* 按钮在手机上全宽显示，方便点击 */
+  .input-portal input {
+    padding: 20px !important;
+    font-size: 11px !important;
+  }
+
+  /* 按钮适配 */
   .genesis-btn {
     width: 100% !important;
-    max-width: 320px;
+    max-width: 320px !important;
     padding: 18px 0 !important;
     letter-spacing: 0.3em !important;
   }
+
+  /* 针对 NarrativeText 的行间距优化 */
+  .narrative-row {
+    margin-bottom: 0.8rem !important;
+    line-height: 1.5 !important;
+    font-size: 13px !important;
+  }
 }
 
-/* 针对超小屏幕手机 (宽度小于 380px) */
+/* 针对极窄屏幕手机 */
 @media (max-width: 380px) {
-  h2 { font-size: 28px !important; }
+  h2 { font-size: 26px !important; }
+  .narrative-card h3 { font-size: 18px !important; }
 }
