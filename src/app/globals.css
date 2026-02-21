@@ -135,7 +135,7 @@ body {
 }
 
 /* ============================
-   响应式适配
+   响应式适配 (重点优化区)
    ============================ */
 
 @media (max-width: 1024px) {
@@ -152,7 +152,7 @@ body {
     align-items: center !important;
     gap: 40px !important;
     padding: 40px 0 !important;
-    min-height: auto !important; /* 移动端视情况解除硬高度限制 */
+    min-height: auto !important;
   }
 
   .narrative-card {
@@ -170,6 +170,24 @@ body {
 }
 
 @media (max-width: 768px) {
+  /* 修复手机端标题过大导致重叠的问题 */
+  h1 { 
+    font-size: 28px !important; 
+    line-height: 1.2 !important; 
+    letter-spacing: 0.1em !important;
+  }
+  h2 { 
+    font-size: 24px !important; 
+    line-height: 1.3 !important;
+  }
+
+  /* 解决 Hero 章节在手机端高度过窄的问题 */
+  .hero-section {
+    padding-top: 100px !important;
+    padding-bottom: 60px !important;
+    min-height: auto !important;
+  }
+
   .waitlist-section {
     padding: 60px 20px !important;
     min-height: 70vh !important;
@@ -179,43 +197,56 @@ body {
     margin-bottom: 40px !important;
   }
 
+  /* 缩小打字机文字，防止在窄屏上断行过长 */
   .typing-text {
-    font-size: 10px !important;
-    letter-spacing: 0.2em !important;
+    font-size: 9px !important;
+    letter-spacing: 0.15em !important;
+    max-width: 90vw;
   }
 
   .input-portal {
     width: 100% !important;
-    max-width: 320px !important;
+    max-width: 300px !important;
   }
 
   .input-portal input {
-    padding: 20px !important;
+    padding: 16px !important;
     font-size: 11px !important;
   }
 
   .genesis-btn {
     width: 100% !important;
-    max-width: 320px !important;
-    padding: 18px 0 !important;
-    letter-spacing: 0.3em !important;
+    max-width: 300px !important;
+    padding: 16px 0 !important;
+    letter-spacing: 0.2em !important;
   }
 
-  /* 移动端行高微调，保持 5 行稳定 */
+  /* 手机端行高微调，增加呼吸感 */
   .narrative-row {
-    margin-bottom: 0.5rem !important;
-    line-height: 1.4 !important;
-    font-size: 13px !important;
+    margin-bottom: 0.8rem !important;
+    line-height: 1.5 !important;
+    font-size: 14px !important;
     height: auto !important;
+    text-align: center;
+    justify-content: center;
   }
 
   .status-box {
-    padding: 18px 20px !important;
-    width: 90% !important;
+    padding: 15px 15px !important;
+    width: 95% !important;
+    font-size: 12px !important;
+  }
+
+  /* 强制 Capabilities 卡片在移动端纵向平铺，防止挤扁 */
+  .capabilities-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
   }
 }
 
 @media (max-width: 380px) {
-  h2 { font-size: 26px !important; }
+  h1 { font-size: 24px !important; }
+  h2 { font-size: 22px !important; }
   .narrative-card h3 { font-size: 18px !important; }
 }

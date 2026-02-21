@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 /* ---------------------- 卡片组件 ---------------------- */
 interface CardProps {
@@ -13,12 +13,38 @@ interface CardProps {
 
 const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
   const [hover, setHover] = useState(false);
-  // 核心统一色值
   const themeColor = "144, 200, 255"; 
+
+  // 这里的微音效逻辑针对“悬停”做了调优：声音更厚实一点
+  const playHoverTick = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      // 使用 triangle 波形，听起来比打字机的 sine 波更有“点击感”
+      oscillator.type = 'triangle';
+      oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); 
+      
+      // 极小音量 (1.5%)，确保若有若无的精致感
+      gainNode.gain.setValueAtTime(0.015, audioCtx.currentTime);
+      
+      oscillator.start();
+      gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.04);
+      oscillator.stop(audioCtx.currentTime + 0.04);
+    } catch (e) { /* 浏览器拦截策略处理 */ }
+  }, []);
 
   return (
     <div
-      onMouseEnter={() => setHover(true)}
+      onMouseEnter={() => {
+        setHover(true);
+        playHoverTick(); // 触发微音效
+      }}
       onMouseLeave={() => setHover(false)}
       className="vision-card-container"
     >
@@ -33,7 +59,7 @@ const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
           </div>
       </div>
 
-      <div className={`vision-text-wrapper ${hover ? 'text-active' : ''}`}>
+      <div className="vision-text-wrapper">
         <h3 className="vision-card-title">{title}</h3>
         <p className="vision-card-desc-main">{desc1}</p>
         {desc2 && <p className="vision-card-desc-sub">{desc2}</p>}
@@ -45,11 +71,13 @@ const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
           width: 100%;
           padding: 1.5rem;
           border-radius: 12px; 
-          border: 1px solid ${hover ? `rgba(${themeColor}, 0.4)` : `rgba(${themeColor}, 0.15)`};
-          background-color: ${hover ? `rgba(${themeColor}, 0.05)` : `rgba(255, 255, 255, 0.02)`};
+          border: 1px solid ${hover ? `rgba(${themeColor}, 0.3)` : `rgba(${themeColor}, 0.1)`};
+          background: ${hover 
+            ? `radial-gradient(circle at top left, rgba(${themeColor}, 0.05) 0%, transparent 70%)` 
+            : 'transparent'};
           transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
-          transform: ${hover ? 'translateY(-6px)' : 'none'};
-          box-shadow: ${hover ? `0 10px 30px rgba(0, 0, 0, 0.4)` : 'none'};
+          transform: ${hover ? 'translateY(-4px)' : 'none'};
+          box-shadow: ${hover ? `0 15px 40px -10px rgba(${themeColor}, 0.1)` : 'none'};
           cursor: default;
           overflow: hidden;
           font-family: var(--font-geist-sans), sans-serif;
@@ -63,12 +91,13 @@ const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
           justify-content: space-between;
           align-items: center;
           margin-bottom: 1.2rem;
+          z-index: 2;
         }
 
         .vision-glyph {
           font-size: 1.1rem;
           color: rgba(${themeColor}, 0.8);
-          opacity: 0.6;
+          opacity: 0.5;
           transition: all 0.4s ease;
         }
         
@@ -81,47 +110,48 @@ const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
 
         .vision-card-index {
           font-family: monospace;
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           color: #90c8ff;
-          opacity: 0.5;
-          letter-spacing: 0.1em;
+          opacity: 0.3;
+          letter-spacing: 0.2em;
         }
 
         .vision-card-title {
-          font-size: 1.2rem;
-          font-weight: 300; /* 调大权重对齐下方 */
+          font-size: 1.15rem;
+          font-weight: 300;
           color: #fff;
           margin: 0 0 0.8rem 0;
-          letter-spacing: -0.01em;
+          letter-spacing: 0.02em;
         }
 
         .vision-card-desc-main {
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           font-weight: 300;
           line-height: 1.6;
-          color: rgba(255,255,255,0.85);
+          color: rgba(255,255,255,0.7);
         }
 
         .vision-card-desc-sub {
-          font-size: 0.95rem;
+          font-size: 0.85rem;
           font-weight: 300;
           line-height: 1.6;
-          color: rgba(255,255,255,0.4);
-          margin-top: 0.3rem;
+          color: rgba(255,255,255,0.3);
+          margin-top: 0.4rem;
         }
 
         .v-scan-line {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to bottom, transparent, rgba(${themeColor}, 0.03), transparent);
+          background: linear-gradient(to bottom, transparent, rgba(${themeColor}, 0.02), transparent);
           background-size: 100% 4px;
           pointer-events: none;
+          opacity: ${hover ? 1 : 0.4};
         }
 
         @keyframes glitchPulse {
           0%, 100% { transform: scale(1) skew(0deg); }
-          20% { transform: scale(1.1) skew(2deg); }
-          50% { transform: scale(0.95) skew(-1deg); }
+          20% { transform: scale(1.1) skew(1deg); }
+          50% { transform: scale(0.98) skew(-1deg); }
         }
       `}</style>
     </div>
@@ -143,43 +173,44 @@ export default function Vision() {
     <section style={{ 
       width: "100%", padding: "10rem 6%", display: "flex", 
       flexDirection: "column", alignItems: "center",
+      background: "transparent",
       fontFamily: "var(--font-geist-sans), sans-serif",
     }}>
       <div style={{ maxWidth: "1200px", width: "100%" }}>
         
-        {/* 标题组：严格对齐 Capabilities */}
+        {/* 标题组 */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "8rem" }}>
           <div style={{ maxWidth: "650px" }}>
-            <span style={{ fontSize: "0.75rem", letterSpacing: "0.6em", color: "rgba(144, 200, 255, 0.5)", display: "block", marginBottom: "1.5rem" }}>
+            <span style={{ fontSize: "0.75rem", letterSpacing: "0.6em", color: "rgba(144, 200, 255, 0.4)", display: "block", marginBottom: "1.5rem" }}>
               VISION
             </span>
             <h2 style={{ 
               fontSize: "3.2rem", 
-              fontWeight: 400, // 增加权重，对齐 Sovereignty 的视觉量级
+              fontWeight: 300, 
               letterSpacing: "-0.02em", 
               lineHeight: 1.1, 
               color: "#fff", 
               margin: 0 
             }}>
-              Identity as <span style={{ color: "rgba(144, 200, 255, 0.9)" }}>Geometry.</span>
+              Identity as <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>Geometry.</span>
             </h2>
             <p style={{ 
-              fontSize: "1.2rem", 
+              fontSize: "1.1rem", 
               fontWeight: 300, 
-              color: "rgba(255,255,255,0.85)", 
-              marginTop: "1.5rem", 
+              color: "rgba(255,255,255,0.7)", 
+              marginTop: "1.8rem", 
               maxWidth: "550px", 
-              lineHeight: 1.6 
+              lineHeight: 1.7 
             }}>
               A cryptographic layer defining the future of human-AI interaction through motion-native primitives.
             </p>
           </div>
 
-          {/* 右侧协议状态：色值变淡对齐 */}
+          {/* 右侧协议状态 */}
           <div style={{
-            fontSize: "0.9rem", opacity: 0.4, color: "rgba(144,200,255,0.7)", 
-            textAlign: "right", borderRight: "1px solid rgba(144,200,255,0.2)", 
-            paddingRight: "1.5rem", lineHeight: "1.6", fontFamily: "monospace", marginBottom: "5px"
+            fontSize: "0.8rem", opacity: 0.3, color: "rgba(144,200,255,0.7)", 
+            textAlign: "right", borderRight: "1px solid rgba(144,200,255,0.15)", 
+            paddingRight: "1.5rem", lineHeight: "1.8", fontFamily: "monospace", marginBottom: "5px"
           }}>
             PROTOCOL_VISION_V1.0<br />// STATE: ACTIVE
           </div>

@@ -1,8 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 
 export default function HowItWorks() {
+  // 核心音效生成器：根据步骤索引调整音调
+  const playPipelineTick = useCallback((stepIndex: number) => {
+    if (typeof window === 'undefined') return;
+    try {
+      const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      // 频率随步骤上升：600Hz -> 800Hz -> 1000Hz，模拟流程的推进感
+      const frequencies = [600, 800, 1000];
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(frequencies[stepIndex], audioCtx.currentTime); 
+      
+      gainNode.gain.setValueAtTime(0.015, audioCtx.currentTime);
+      
+      oscillator.start();
+      gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.06);
+      oscillator.stop(audioCtx.currentTime + 0.06);
+    } catch (e) { /* 忽略拦截 */ }
+  }, []);
+
   return (
     <section
       style={{
@@ -66,7 +90,6 @@ export default function HowItWorks() {
           animation: droplet 3.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- 找回并增强文案动态 --- */
         .step-container {
           cursor: default;
         }
@@ -81,9 +104,8 @@ export default function HowItWorks() {
           transition: all 0.4s ease;
         }
 
-        /* 悬停时的复合动作 */
         .step-container:hover .text-motion-wrapper {
-          transform: translateX(10px); /* 往右侧平移，模拟被“推入”流程的感觉 */
+          transform: translateX(10px);
           border-left: 1px solid rgba(144, 200, 255, 0.8);
           background: linear-gradient(90deg, rgba(144, 200, 255, 0.05), transparent);
         }
@@ -95,13 +117,13 @@ export default function HowItWorks() {
 
         .step-container:hover .index-num {
           color: #90c8ff !important;
-          letter-spacing: 0.3em; /* 数字展开 */
+          letter-spacing: 0.3em;
         }
       `}</style>
 
       <div style={{ maxWidth: "1200px", width: "100%" }}>
         
-        {/* 标题区保持对齐 */}
+        {/* 标题区 */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "6rem" }}>
           <div style={{ maxWidth: "650px" }}>
             <span style={{ fontSize: "0.75rem", letterSpacing: "0.6em", color: "rgba(144, 200, 255, 0.5)", display: "block", marginBottom: "1.5rem" }}>
@@ -125,7 +147,7 @@ export default function HowItWorks() {
           <div className="pipeline-line" />
 
           {/* STEP 01 */}
-          <div className="step-container" style={{ position: "relative" }}>
+          <div className="step-container" style={{ position: "relative" }} onMouseEnter={() => playPipelineTick(0)}>
             <div style={{ width: "12px", height: "12px", background: "#fff", borderRadius: "50%", marginBottom: "3rem", zIndex: 2, position: "relative", animation: "pulseDot 2s infinite" }} />
             <div className="text-motion-wrapper">
               <span className="text-item index-num" style={{ fontFamily: "monospace", fontSize: "0.8rem", color: "#90c8ff", opacity: 0.5 }}>01</span>
@@ -135,7 +157,7 @@ export default function HowItWorks() {
           </div>
 
           {/* STEP 02 */}
-          <div className="step-container" style={{ position: "relative" }}>
+          <div className="step-container" style={{ position: "relative" }} onMouseEnter={() => playPipelineTick(1)}>
             <div style={{ width: "12px", height: "12px", background: "#fff", borderRadius: "50%", marginBottom: "3rem", zIndex: 2, position: "relative", animation: "pulseDot 2s infinite 0.5s" }} />
             <div className="text-motion-wrapper">
               <span className="text-item index-num" style={{ fontFamily: "monospace", fontSize: "0.8rem", color: "#90c8ff", opacity: 0.5 }}>02</span>
@@ -145,7 +167,7 @@ export default function HowItWorks() {
           </div>
 
           {/* STEP 03 */}
-          <div className="step-container" style={{ position: "relative" }}>
+          <div className="step-container" style={{ position: "relative" }} onMouseEnter={() => playPipelineTick(2)}>
             <div style={{ width: "12px", height: "12px", background: "#fff", borderRadius: "50%", marginBottom: "3rem", zIndex: 2, position: "relative", animation: "pulseDot 2s infinite 1s" }} />
             <div className="text-motion-wrapper">
               <span className="text-item index-num" style={{ fontFamily: "monospace", fontSize: "0.8rem", color: "#90c8ff", opacity: 0.5 }}>03</span>

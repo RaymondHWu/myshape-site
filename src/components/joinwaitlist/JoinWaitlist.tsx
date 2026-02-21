@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 
 export default function JoinWaitlist() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -11,24 +11,39 @@ export default function JoinWaitlist() {
 
   const themeColor = "144, 200, 255"; 
 
-  const playProtocolSound = (isSuccess: boolean) => {
+  // --- 音效系统 ---
+  const playSound = useCallback((freq: number, type: OscillatorType = 'sine', duration: number = 0.1, vol: number = 0.02) => {
+    if (typeof window === 'undefined') return;
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const oscillator = audioCtx.createOscillator();
-      const gainNode = audioCtx.createGain();
-
-      oscillator.type = 'triangle';
-      oscillator.frequency.setValueAtTime(isSuccess ? 880 : 440, audioCtx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(isSuccess ? 1200 : 200, audioCtx.currentTime + 0.3);
-
-      gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-      oscillator.start();
-      oscillator.stop(audioCtx.currentTime + 0.3);
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
     } catch (e) {}
+  }, []);
+
+  const playProtocolSound = (isSuccess: boolean) => {
+    // 成功：向上的双音阶；失败：沉闷的降调
+    if (isSuccess) {
+      playSound(880, 'triangle', 0.4, 0.05);
+      setTimeout(() => playSound(1320, 'triangle', 0.6, 0.03), 100);
+    } else {
+      playSound(220, 'sawtooth', 0.3, 0.05);
+    }
+  };
+
+  const handleTyping = (val: string) => {
+    setEmail(val);
+    if(status === "error") setStatus("idle");
+    // 输入时的微弱电传感 (1200Hz - 1600Hz 随机)
+    playSound(1200 + Math.random() * 400, 'sine', 0.05, 0.01);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,12 +52,13 @@ export default function JoinWaitlist() {
     if (!emailRegex.test(email)) {
       setErrorHint("INVALID_PROTOCOL_FORMAT");
       setStatus("error");
+      playProtocolSound(false);
       return;
     }
 
     setStatus("submitting");
     setErrorHint("");
-    playProtocolSound(false); 
+    playSound(440, 'sine', 0.1, 0.02); // 提交动作音
 
     try {
       const response = await fetch("https://formsubmit.co/ajax/e24852dbfcaeee1d6895450fa46367e7", {
@@ -52,9 +68,8 @@ export default function JoinWaitlist() {
       });
 
       if (response.ok) {
-        // ⭐ 增强点：计算唯一色相并应用
         const hash = email.split('').reduce((acc, char) => char.charCodeAt(0) + acc, 0);
-        const uniqueHue = 190 + (hash % 60); // 190-250 之间，保持蓝色到紫色的高级感
+        const uniqueHue = 190 + (hash % 60); 
         setNodeColor(`hsla(${uniqueHue}, 100%, 75%, 0.8)`);
         
         setStatus("success");
@@ -65,6 +80,7 @@ export default function JoinWaitlist() {
     } catch (err) {
       setErrorHint("UPLINK_INTERRUPTED_RETRY");
       setStatus("error");
+      playProtocolSound(false);
     }
   };
 
@@ -92,7 +108,6 @@ export default function JoinWaitlist() {
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach(p => {
-        // ⭐ 增强点：成功后和提交时加速旋转
         let currentSpeed = p.speed;
         if (status === "submitting") currentSpeed *= 6;
         if (status === "success") currentSpeed *= 1.5;
@@ -134,7 +149,7 @@ export default function JoinWaitlist() {
 
         {status === "success" ? (
           <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '25px' }}>
-            <div className="status-box" style={{ padding: '30px', border: `1px solid ${status === 'success' ? nodeColor : `rgba(${themeColor}, 0.2)`}`, background: 'rgba(255,255,255,0.01)', position: 'relative' }}>
+            <div className="status-box" style={{ padding: '30px', border: `1px solid ${nodeColor}`, background: 'rgba(255,255,255,0.01)', position: 'relative' }}>
                <div className="corner tl" style={{ borderColor: nodeColor }} /> <div className="corner tr" style={{ borderColor: nodeColor }} />
                <div className="corner bl" style={{ borderColor: nodeColor }} /> <div className="corner br" style={{ borderColor: nodeColor }} />
                <p style={{ color: '#fff', fontSize: '10px', letterSpacing: '0.2em', lineHeight: '2.4', margin: 0, fontWeight: 300, textAlign: 'left', fontFamily: 'monospace' }}>
@@ -151,9 +166,9 @@ export default function JoinWaitlist() {
             <div className={`input-portal ${isTyping ? 'active' : ''}`} style={{ position: 'relative', width: '100%', maxWidth: '450px' }}>
               <input
                 type="email" required
-                onFocus={() => setIsTyping(true)}
+                onFocus={() => { setIsTyping(true); playSound(1000, 'sine', 0.05); }}
                 onBlur={() => setIsTyping(false)}
-                onChange={(e) => { setEmail(e.target.value); if(status === "error") setStatus("idle"); }}
+                onChange={(e) => handleTyping(e.target.value)}
                 value={email}
                 placeholder="GENESIS_EMAIL@ADDRESS.IO"
                 style={{

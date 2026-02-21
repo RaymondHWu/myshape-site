@@ -8,7 +8,6 @@ const ProtocolHeader = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date();
-      // 保持 ISO 时间格式，增加科技感
       setUtcTime(now.getUTCHours().toString().padStart(2, '0') + ":" + 
                  now.getUTCMinutes().toString().padStart(2, '0') + ":" + 
                  now.getUTCSeconds().toString().padStart(2, '0') + " UTC");
@@ -18,7 +17,6 @@ const ProtocolHeader = () => {
 
   return (
     <nav style={styles.headerNav}>
-      {/* 渐变遮罩层 - 让星云过渡更平滑 */}
       <div style={styles.gradientOverlay} />
 
       <div style={styles.leftSection}>
@@ -34,9 +32,21 @@ const ProtocolHeader = () => {
 
       <div style={styles.rightSection}>
         <span style={styles.timeDisplay} className="hide-mobile">{utcTime}</span>
+        
         <div style={styles.nodeBadge}>
           KFK_SPC_DC{new Date().getDate()} 
         </div>
+
+        {/* 优化后的钱包按钮：增加了扫光层 (scan-line) */}
+        <button 
+          onClick={() => console.log("Wallet connection triggered")}
+          style={styles.walletBtn}
+          className="wallet-btn-optimized"
+        >
+          <div className="scan-line" />
+          <div className="status-pulse-green" />
+          <span style={{ position: 'relative', zIndex: 1 }}>MYSHAE.BASE.ETH</span>
+        </button>
       </div>
 
       <style jsx>{`
@@ -44,13 +54,52 @@ const ProtocolHeader = () => {
           0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px rgba(144, 200, 255, 0.6); }
           50% { opacity: 0.3; transform: scale(0.9); box-shadow: 0 0 2px rgba(144, 200, 255, 0.2); }
         }
+        @keyframes greenBlink {
+          0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(80, 255, 170, 0.8); }
+          50% { opacity: 0.4; box-shadow: 0 0 2px rgba(80, 255, 170, 0.2); }
+        }
+        /* 边框呼吸动画 */
+        @keyframes borderResonance {
+          0%, 100% { border-color: rgba(144, 200, 255, 0.2); background: rgba(144, 200, 255, 0.05); }
+          50% { border-color: rgba(144, 200, 255, 0.5); background: rgba(144, 200, 255, 0.08); }
+        }
+        /* 扫描线动画 */
+        @keyframes scan {
+          0% { left: -100%; }
+          100% { left: 100%; }
+        }
+
         .status-pulse {
-          width: 4px;
-          height: 4px;
-          background-color: #90c8ff;
-          border-radius: 50%;
+          width: 4px; height: 4px; background-color: #90c8ff; border-radius: 50%;
           animation: statusBlink 3s infinite ease-in-out;
         }
+        .status-pulse-green {
+          width: 4px; height: 4px; background-color: #50ffaa; border-radius: 50%;
+          animation: greenBlink 2s infinite ease-in-out;
+        }
+
+        .wallet-btn-optimized {
+          position: relative;
+          overflow: hidden; /* 裁剪扫描线 */
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          animation: borderResonance 4s infinite ease-in-out;
+        }
+
+        .scan-line {
+          position: absolute;
+          top: 0; width: 40%; height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(144, 200, 255, 0.1), transparent);
+          animation: scan 3s infinite linear;
+          pointer-events: none;
+        }
+
+        .wallet-btn-optimized:hover {
+          border-color: #90c8ff !important;
+          box-shadow: inset 0 0 10px rgba(144, 200, 255, 0.2), 0 0 15px rgba(144, 200, 255, 0.1);
+          color: #fff !important;
+          transform: translateY(-1px);
+        }
+
         @media (max-width: 768px) {
           .hide-mobile { display: none; }
           .brand-logo { letter-spacing: 0.4em !important; font-size: 11px !important; }
@@ -62,65 +111,37 @@ const ProtocolHeader = () => {
 
 const styles: { [key: string]: React.CSSProperties } = {
   headerNav: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '60px', // 稍微加高一点点，更有呼吸感
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '0 40px',
+    position: 'fixed', top: 0, left: 0, width: '100%', height: '60px',
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px',
     background: 'linear-gradient(to bottom, rgba(2, 4, 10, 0.95) 0%, rgba(2, 4, 10, 0) 100%)',
-    backdropFilter: 'blur(8px)',
-    WebkitBackdropFilter: 'blur(8px)',
-    zIndex: 9999,
-    fontFamily: 'monospace',
-    color: '#90c8ff',
+    backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+    zIndex: 9999, fontFamily: 'monospace', color: '#90c8ff',
   },
   gradientOverlay: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    height: '1px',
+    position: 'absolute', bottom: 0, left: 0, width: '100%', height: '1px',
     background: 'linear-gradient(to right, transparent, rgba(144, 200, 255, 0.2), transparent)',
   },
-  leftSection: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '15px',
-    fontSize: '9px',
-    letterSpacing: '0.15em',
-  },
+  leftSection: { display: 'flex', alignItems: 'center', gap: '15px', fontSize: '9px', letterSpacing: '0.15em' },
   versionText: { fontWeight: 'bold', opacity: 0.8 },
   divider: { opacity: 0.2 },
   statusText: { opacity: 0.5 },
   centerSection: {
-    position: 'absolute',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    color: '#fff',
-    fontSize: '14px',
-    letterSpacing: '1em', // 极致的松散美学
-    fontWeight: 300,
-    whiteSpace: 'nowrap',
-    textIndent: '1em',
-    opacity: 0.9,
+    position: 'absolute', left: '50%', transform: 'translateX(-50%)',
+    color: '#fff', fontSize: '14px', letterSpacing: '1em', fontWeight: 300,
+    whiteSpace: 'nowrap', textIndent: '1em', opacity: 0.9,
   },
-  rightSection: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px',
-    fontSize: '9px',
-  },
-  timeDisplay: { opacity: 0.6, letterSpacing: '0.05em' },
+  rightSection: { display: 'flex', alignItems: 'center', gap: '12px', fontSize: '9px' },
+  timeDisplay: { opacity: 0.4, letterSpacing: '0.05em' },
   nodeBadge: {
+    border: '1px solid rgba(144, 200, 255, 0.15)', padding: '3px 8px', fontSize: '8px',
+    background: 'rgba(144, 200, 255, 0.02)', borderRadius: '2px', opacity: 0.6,
+  },
+  walletBtn: {
+    display: 'flex', alignItems: 'center', gap: '8px',
     border: '1px solid rgba(144, 200, 255, 0.2)',
-    padding: '3px 10px',
-    fontSize: '8px',
-    background: 'rgba(144, 200, 255, 0.03)',
-    borderRadius: '2px',
+    padding: '4px 12px', borderRadius: '2px', color: '#90c8ff',
+    fontSize: '9px', cursor: 'pointer', fontFamily: 'monospace',
+    letterSpacing: '0.1em', fontWeight: 'bold', outline: 'none', marginLeft: '5px',
   }
 };
 
