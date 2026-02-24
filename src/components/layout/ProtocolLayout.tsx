@@ -1,0 +1,99 @@
+"use client";
+import React from 'react';
+import ProtocolHeader from "@/components/header/header"; 
+import ProtocolFooter from "@/components/footer/footer";
+
+interface ProtocolLayoutProps {
+  children: React.ReactNode;
+  refId: string;
+  category: string;
+  title: string;
+  secLevel: string;
+  systemStatus: string;
+}
+
+export default function ProtocolLayout({ 
+  children, 
+  refId, 
+  category, 
+  title, 
+  secLevel, 
+  systemStatus 
+}: ProtocolLayoutProps) {
+  return (
+    <div className="min-h-screen bg-[#02040a] text-white font-mono selection:bg-cyan-500/30 overflow-x-hidden">
+      {/* 统一背景：粒子网格（极低密度） */}
+      <div className="fixed inset-0 pointer-events-none opacity-10" 
+           style={{ 
+             backgroundImage: 'radial-gradient(circle, #22d3ee 1px, transparent 1px)', 
+             backgroundSize: '60px 60px' 
+           }} />
+      
+      {/* 扫视线动画装饰（全站统一） */}
+      <div className="fixed top-0 left-0 w-full h-[2px] bg-cyan-500/5 shadow-[0_0_15px_rgba(34,211,238,0.2)] animate-scan-slow pointer-events-none z-50" />
+
+      <ProtocolHeader />
+
+      <main className="pt-40 pb-20 px-10 max-w-5xl mx-auto relative z-10 animate-fade-in">
+        {/* 统一 HUD 页眉格式 */}
+        <div className="relative mb-24 border-b border-white/10 pb-12">
+          <div className="flex justify-between items-end">
+            <div>
+              <div className="text-cyan-500 text-[10px] tracking-[0.6em] mb-4 uppercase opacity-70 font-bold">
+                {category} // REF_{refId}
+              </div>
+              <h1 className="text-4xl font-extralight tracking-[0.4em] uppercase leading-tight">
+                {title.replace(/_/g, ' ')}
+              </h1>
+            </div>
+            <div className="hidden md:block text-[9px] text-white/20 tracking-[0.3em] text-right uppercase leading-loose font-mono">
+              SECURITY_LVL: {secLevel} <br/>
+              SYS_STATUS: {systemStatus}
+            </div>
+          </div>
+        </div>
+
+        {/* 页面内容注入点 */}
+        <div className="min-h-[40vh]">
+          {children}
+        </div>
+
+        {/* 统一底部状态条 */}
+        <div className="mt-32 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 opacity-30 group transition-opacity hover:opacity-100">
+          <div className="text-[9px] tracking-[0.5em] uppercase font-light">
+            {category} // {systemStatus} // AUTH_VERIFIED
+          </div>
+          <div className="flex items-center gap-6">
+            <div className="flex gap-1">
+               {[...Array(4)].map((_, i) => (
+                 <div key={i} className="w-1 h-1 bg-cyan-500/50" />
+               ))}
+            </div>
+            <div className="text-[8px] tracking-[0.2em] uppercase font-bold text-cyan-500/60">
+              MYS_GENESIS_CORE_SYNCED
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <ProtocolFooter />
+
+      <style jsx global>{`
+        @keyframes scan-slow {
+          0% { transform: translateY(-100vh); }
+          100% { transform: translateY(100vh); }
+        }
+        .animate-scan-slow {
+          animation: scan-slow 12s linear infinite;
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+    </div>
+  );
+}

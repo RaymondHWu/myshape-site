@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const ProtocolHeader = () => {
   const [utcTime, setUtcTime] = useState("");
@@ -19,6 +20,7 @@ const ProtocolHeader = () => {
     <nav style={styles.headerNav}>
       <div style={styles.gradientOverlay} />
 
+      {/* 左侧：系统状态 */}
       <div style={styles.leftSection}>
         <div className="status-pulse" />
         <span style={styles.versionText} className="hide-mobile">MYSHAPE_CORE_V1.92</span>
@@ -26,10 +28,12 @@ const ProtocolHeader = () => {
         <span style={styles.statusText}>E&C: ACTIVE</span>
       </div>
 
-      <div style={styles.centerSection} className="brand-logo">
+      {/* 中间：Logo - 点击返回首页 */}
+      <Link href="/" style={styles.centerSection} className="brand-logo-link">
         M Y S H A P E
-      </div>
+      </Link>
 
+      {/* 右侧：时间、节点与钱包 */}
       <div style={styles.rightSection}>
         <span style={styles.timeDisplay} className="hide-mobile">{utcTime}</span>
         
@@ -37,7 +41,6 @@ const ProtocolHeader = () => {
           KFK_SPC_DC{new Date().getDate()} 
         </div>
 
-        {/* 优化后的钱包按钮：增加了扫光层 (scan-line) */}
         <button 
           onClick={() => console.log("Wallet connection triggered")}
           style={styles.walletBtn}
@@ -58,12 +61,10 @@ const ProtocolHeader = () => {
           0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(80, 255, 170, 0.8); }
           50% { opacity: 0.4; box-shadow: 0 0 2px rgba(80, 255, 170, 0.2); }
         }
-        /* 边框呼吸动画 */
         @keyframes borderResonance {
           0%, 100% { border-color: rgba(144, 200, 255, 0.2); background: rgba(144, 200, 255, 0.05); }
           50% { border-color: rgba(144, 200, 255, 0.5); background: rgba(144, 200, 255, 0.08); }
         }
-        /* 扫描线动画 */
         @keyframes scan {
           0% { left: -100%; }
           100% { left: 100%; }
@@ -78,9 +79,22 @@ const ProtocolHeader = () => {
           animation: greenBlink 2s infinite ease-in-out;
         }
 
+        /* Logo 交互特效 */
+        .brand-logo-link {
+          text-decoration: none;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          cursor: pointer;
+        }
+        .brand-logo-link:hover {
+          opacity: 1 !important;
+          text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+          transform: translateX(-50%) scale(1.05) !important;
+          letter-spacing: 1.1em !important;
+        }
+
         .wallet-btn-optimized {
           position: relative;
-          overflow: hidden; /* 裁剪扫描线 */
+          overflow: hidden;
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           animation: borderResonance 4s infinite ease-in-out;
         }
@@ -102,7 +116,14 @@ const ProtocolHeader = () => {
 
         @media (max-width: 768px) {
           .hide-mobile { display: none; }
-          .brand-logo { letter-spacing: 0.4em !important; font-size: 11px !important; }
+          .brand-logo-link { 
+            letter-spacing: 0.4em !important; 
+            font-size: 11px !important; 
+            text-indent: 0.4em !important;
+          }
+          .brand-logo-link:hover {
+            letter-spacing: 0.45em !important;
+          }
         }
       `}</style>
     </nav>
