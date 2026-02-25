@@ -1,49 +1,52 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// 关键修正：防止 Build 阶段因为环境变量缺失而中断
+// 使用 fallback 字符串确保构造函数能运行，实际运行时会检查真实变量
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_key';
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(req: Request) {
   try {
+    // 运行时严格检查
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      throw new Error("SERVER_CONFIGURATION_INCOMPLETE");
+    }
+
     const { email, otp } = await req.json();
 
-    // 1. 从数据库查找该邮箱对应的验证码
-    // 使用 .single() 确保只获取一行数据
-    const { data, error: fetchError } = await supabase
+    // 1. 从数据库校验 OTP
+    const { data, error: dbError } = await supabase
       .from('protocol_nodes')
-      .select('otp_code')
+      .select('otp_code, status')
       .eq('email', email)
       .single();
 
-    if (fetchError || !data) {
+    if (dbError || !data) {
       return NextResponse.json({ error: "NODE_NOT_FOUND" }, { status: 404 });
     }
 
-    // 2. 比对验证码 (确保转为字符串比较，防止类型不匹配)
-    if (String(data.otp_code) === String(otp)) {
-      
-      // 3. 验证通过，更新节点状态为正式连接
-      const { error: updateError } = await supabase
-        .from('protocol_nodes')
-        .update({ 
-          status: 'GENESIS_CONNECTED' 
-          // 如果你之前在表中加了 is_verified 字段，可以保留下面这行
-          // is_verified: true 
-        })
-        .eq('email', email);
-
-      if (updateError) throw updateError;
-
-      return NextResponse.json({ success: true });
-    } else {
-      // 验证码不匹配
-      return NextResponse.json({ error: "INVALID_SIGNATURE" }, { status: 400 });
+    // 2. 匹配验证码
+    if (data.otp_code !== otp) {
+      return NextResponse.json({ error: "SIGNATURE_INVALID" }, { status: 401 });
     }
+
+    // 3. 验证成功，更新状态
+    const { error: updateError } = await supabase
+      .from('protocol_nodes')
+      .update({ status: 'ACTIVE' })
+      .eq('email', email);
+
+    if (updateError) throw updateError;
+
+    return NextResponse.json({ success: true });
   } catch (error: any) {
-    console.error('VERIFICATION_CRITICAL_ERROR:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('VERIFY_ERROR:', error);
+    return NextResponse.json(
+      { error: error.message || 'INTERNAL_SERVER_ERROR' },
+      { status: 500 }
+    );
   }
 }
