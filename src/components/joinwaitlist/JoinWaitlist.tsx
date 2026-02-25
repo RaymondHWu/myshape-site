@@ -178,7 +178,6 @@ export default function JoinWaitlist({ onEmailChange, onCommitSuccess }: JoinWai
              {status === "success" ? "Uplink Confirmed." : step === 1 ? "Initialize Genesis." : "Verify Identity."}
           </h2>
           
-          {/* 打字机效果容器 */}
           <div className="typing-container">
             <p className="typing-text">
               {status === "success" ? "IDENTITY_LAYER_INITIALIZED" : step === 1 ? "ESTABLISHING_IDENTITY_LAYER_PROTOCOL" : "CHALLENGE_MODE_ACTIVE"}
@@ -188,11 +187,15 @@ export default function JoinWaitlist({ onEmailChange, onCommitSuccess }: JoinWai
 
         {status === "success" ? (
           <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '25px' }}>
+            {/* 右下角状态展示框：这里应用“加密显示” */}
             <div className="status-box" style={{ padding: '30px', border: `1px solid ${nodeColor}`, background: 'rgba(255,255,255,0.01)', position: 'relative' }}>
                <div className="corner tl" style={{ borderColor: nodeColor }} /> <div className="corner tr" style={{ borderColor: nodeColor }} />
                <div className="corner bl" style={{ borderColor: nodeColor }} /> <div className="corner br" style={{ borderColor: nodeColor }} />
                <p style={{ color: '#fff', fontSize: '10px', letterSpacing: '0.2em', lineHeight: '2.4', margin: 0, fontWeight: 300, textAlign: 'left', fontFamily: 'monospace' }}>
-                 NODE_ID: <span style={{ color: nodeColor }}>{btoa(email).substring(0, 12).toUpperCase()}</span> <br/>
+                 {/* 🔒 锁定修正：对展示的 NODE_ID 进行脱敏处理，保护右下角隐私 */}
+                 NODE_ID: <span style={{ color: nodeColor }}>
+                   {btoa(email).substring(0, 4)}••••••••{btoa(email).substring(btoa(email).length - 4).toUpperCase()}
+                 </span> <br/>
                  STATUS: <span style={{ color: nodeColor }}>ACTIVE_ENQUEUED</span>
                </p>
             </div>
@@ -201,6 +204,7 @@ export default function JoinWaitlist({ onEmailChange, onCommitSuccess }: JoinWai
           <form onSubmit={step === 1 ? handleRequestOTP : handleVerifyOTP} style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '35px', width: '100%' }}>
             <div className={`input-portal ${isTyping ? 'active' : ''}`} style={{ position: 'relative', width: '100%', maxWidth: '450px' }}>
               <input
+                // ✅ 修正锁定：中间输入框必须可见，类型为 email 
                 type={step === 1 ? "email" : "text"}
                 maxLength={step === 1 ? undefined : 6}
                 autoComplete="off"
@@ -232,11 +236,7 @@ export default function JoinWaitlist({ onEmailChange, onCommitSuccess }: JoinWai
       </div>
 
       <style jsx>{`
-        .typing-container {
-          display: inline-block;
-          position: relative;
-        }
-
+        .typing-container { display: inline-block; position: relative; }
         .typing-text {
           color: rgba(144, 200, 255, 0.7);
           font-size: 10px;
@@ -248,38 +248,21 @@ export default function JoinWaitlist({ onEmailChange, onCommitSuccess }: JoinWai
           overflow: hidden;
           border-right: 2px solid #90c8ff;
           width: 0;
-          animation: 
-            typing 3.5s steps(40) infinite,
-            blink-cursor 0.75s step-end infinite;
+          animation: typing 3.5s steps(40) infinite, blink-cursor 0.75s step-end infinite;
         }
-
-        @keyframes typing {
-          0% { width: 0; }
-          70% { width: 100%; }
-          90% { width: 100%; }
-          100% { width: 0; }
-        }
-
-        @keyframes blink-cursor {
-          from, to { border-color: transparent }
-          50% { border-color: #90c8ff; }
-        }
-
+        @keyframes typing { 0% { width: 0; } 70% { width: 100%; } 90% { width: 100%; } 100% { width: 0; } }
+        @keyframes blink-cursor { from, to { border-color: transparent } 50% { border-color: #90c8ff; } }
         .ritual-overlay { position: absolute; inset: 0; z-index: 100; background: rgba(0, 0, 0, 0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .scanner-line { position: absolute; width: 100%; height: 2px; background: #90c8ff; box-shadow: 0 0 20px #90c8ff; animation: scan 1.5s linear infinite; }
         .ritual-text { color: #fff; font-family: monospace; font-size: 11px; letter-spacing: 0.8em; }
         @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
-
-        .genesis-btn {
-          padding: 22px 80px; letter-spacing: 0.4em; font-size: 10px; cursor: pointer; border: 1px solid #80bfff; background: transparent; color: #80bfff; transition: all 0.6s; position: relative; overflow: hidden;
-        }
+        .genesis-btn { padding: 22px 80px; letter-spacing: 0.4em; font-size: 10px; cursor: pointer; border: 1px solid #80bfff; background: transparent; color: #80bfff; transition: all 0.6s; position: relative; overflow: hidden; }
         .btn-glow-bar { position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(144, 200, 255, 0.3), transparent); animation: flow 3s infinite; }
         @keyframes flow { 0% { left: -100%; } 100% { left: 100%; } }
         .genesis-btn:hover { background: rgba(144, 200, 255, 0.1); color: #fff; box-shadow: 0 0 30px rgba(144, 200, 255, 0.2); }
         .btn-hover-text { position: absolute; left: 50%; top: 180%; transform: translate(-50%, -50%); width: 100%; transition: all 0.5s; font-weight: bold; }
         .genesis-btn:hover .btn-text { transform: translateY(-350%); opacity: 0; }
         .genesis-btn:hover .btn-hover-text { top: 50%; }
-        
         .corner { position: absolute; width: 12px; height: 12px; border-color: rgba(144, 200, 255, 0.4); border-style: solid; }
         .tl { top: -8px; left: -8px; border-width: 1px 0 0 1px; }
         .tr { top: -8px; right: -8px; border-width: 1px 1px 0 0; }
