@@ -21,21 +21,20 @@ export default function ProtocolLayout({
   systemStatus 
 }: ProtocolLayoutProps) {
   return (
-    <div className="min-h-screen bg-[#02040a] text-white font-mono selection:bg-cyan-500/30 overflow-x-hidden">
-      {/* 统一背景：粒子网格（极低密度） */}
+    <div className="min-h-screen bg-[#02040a] text-white font-mono selection:bg-cyan-500/30 overflow-x-hidden flex flex-col">
+      {/* 1. 統一背景與動畫裝飾 */}
       <div className="fixed inset-0 pointer-events-none opacity-10" 
            style={{ 
              backgroundImage: 'radial-gradient(circle, #22d3ee 1px, transparent 1px)', 
              backgroundSize: '60px 60px' 
            }} />
       
-      {/* 扫视线动画装饰（全站统一） */}
       <div className="fixed top-0 left-0 w-full h-[2px] bg-cyan-500/5 shadow-[0_0_15px_rgba(34,211,238,0.2)] animate-scan-slow pointer-events-none z-50" />
 
       <ProtocolHeader />
 
-      <main className="pt-40 pb-20 px-10 max-w-5xl mx-auto relative z-10 animate-fade-in">
-        {/* 统一 HUD 页眉格式 */}
+      {/* 2. 頁面內容主體 */}
+      <main className="flex-1 pt-40 pb-10 px-10 max-w-5xl mx-auto relative z-10 animate-fade-in w-full">
         <div className="relative mb-24 border-b border-white/10 pb-12">
           <div className="flex justify-between items-end">
             <div>
@@ -53,13 +52,12 @@ export default function ProtocolLayout({
           </div>
         </div>
 
-        {/* 页面内容注入点 */}
-        <div className="min-h-[40vh]">
+        <div className="min-h-[30vh]">
           {children}
         </div>
 
-        {/* 统一底部状态条 */}
-        <div className="mt-32 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 opacity-30 group transition-opacity hover:opacity-100">
+        {/* 狀態裝飾條 */}
+        <div className="mt-20 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 opacity-30 group transition-opacity hover:opacity-100">
           <div className="text-[9px] tracking-[0.5em] uppercase font-light">
             {category} // {systemStatus} // AUTH_VERIFIED
           </div>
@@ -76,6 +74,7 @@ export default function ProtocolLayout({
         </div>
       </main>
 
+      {/* 3. 全局唯一 Footer */}
       <ProtocolFooter />
 
       <style jsx global>{`

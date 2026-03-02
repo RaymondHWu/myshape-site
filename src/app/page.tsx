@@ -74,6 +74,8 @@ export default function HomePage() {
   return (
     <>
       <ProtocolHeader />
+      
+      {/* 🔹 悬浮 HUD 监控层 🔹 */}
       <div className="fixed inset-0 z-[999] pointer-events-none">
         <div className="absolute top-10 right-10 pointer-events-auto">
           <div className="flex items-center gap-2">
@@ -81,6 +83,7 @@ export default function HomePage() {
              <span className="font-mono text-[9px] tracking-[0.3em] text-white/60 uppercase">LIVE_FEED</span>
           </div>
         </div>
+        
         <div className="absolute bottom-10 right-10 text-right">
           <div className="flex flex-col items-end">
             <div className="flex items-center gap-2 mb-1">
@@ -98,16 +101,20 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* 🔹 主内容区 🔹 */}
       <main className="relative z-0 w-full overflow-x-hidden bg-black">
         <Hero />
         <Vision />
+        {/* 注意：Capabilities 或 HowItWorks 组件内应包含指向 /protocol-core 的链接 */}
         <Capabilities />
         <HowItWorks />
         <JoinWaitlist 
-           onEmailChange={(val) => { /* 仅同步打字状态 */ }} 
-           onCommitSuccess={(email) => setActiveUser(email)} 
+            onEmailChange={(val) => {}} 
+            onCommitSuccess={(email) => setActiveUser(email)} 
         />
       </main>
+
       <ProtocolFooter />
     </>
   );

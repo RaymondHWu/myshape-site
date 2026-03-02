@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import Link from "next/link"; // 1. 引入 Link 组件
 
 /* ---------------------- 卡片组件 ---------------------- */
 
@@ -17,7 +18,7 @@ const CapabilityCard = ({
   const [isHovered, setIsHovered] = useState(false);
   const themeColor = "144, 200, 255";
 
-  // 定义 Primitive 激活音效：频率设为 750Hz，比 Vision 略低，增加“核心感”
+  // 定义 Primitive 激活音效
   const playPrimitiveTick = useCallback(() => {
     if (typeof window === 'undefined') return;
     try {
@@ -31,7 +32,7 @@ const CapabilityCard = ({
       oscillator.type = 'triangle';
       oscillator.frequency.setValueAtTime(750, audioCtx.currentTime); 
       
-      gainNode.gain.setValueAtTime(0.012, audioCtx.currentTime); // 极小声
+      gainNode.gain.setValueAtTime(0.012, audioCtx.currentTime); 
       
       oscillator.start();
       gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.05);
@@ -83,7 +84,7 @@ const CapabilityCard = ({
           width: 320px;
           height: 380px;
           background: transparent;
-          border: 1px solid rgba(${themeColor}, 0.1);
+          border: 1px solid rgba(144, 200, 255, 0.1);
           border-radius: 12px;
           padding: 2.2rem;
           transition: all 0.7s cubic-bezier(0.2, 1, 0.3, 1);
@@ -97,8 +98,8 @@ const CapabilityCard = ({
         .right  { transform: translateY(-10px); }
 
         .cap-box:hover {
-          background: radial-gradient(circle at top right, rgba(${themeColor}, 0.05) 0%, transparent 70%);
-          border-color: rgba(${themeColor}, 0.35);
+          background: radial-gradient(circle at top right, rgba(144, 200, 255, 0.05) 0%, transparent 70%);
+          border-color: rgba(144, 200, 255, 0.35);
           z-index: 10 !important;
           box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
         }
@@ -125,7 +126,7 @@ const CapabilityCard = ({
         .cap-index {
           font-family: monospace;
           font-size: 0.7rem;
-          color: rgba(${themeColor}, 0.4);
+          color: rgba(144, 200, 255, 0.4);
           letter-spacing: 0.2em;
         }
 
@@ -145,7 +146,7 @@ const CapabilityCard = ({
         .ring {
           position: absolute;
           inset: 0;
-          border: 1px solid rgba(${themeColor}, 0.2);
+          border: 1px solid rgba(144, 200, 255, 0.2);
           border-radius: 50%;
         }
 
@@ -154,8 +155,8 @@ const CapabilityCard = ({
           content: "";
           position: absolute;
           top: 0; left: 0; width: 100%; height: 1px;
-          background: rgba(${themeColor}, 0.6); 
-          box-shadow: 0 0 8px rgba(${themeColor}, 0.4);
+          background: rgba(144, 200, 255, 0.6); 
+          box-shadow: 0 0 8px rgba(144, 200, 255, 0.4);
           animation: scanLine 2.5s infinite ease-in-out;
         }
         .omni .r1 { animation: spread 4s infinite linear; }
@@ -201,7 +202,7 @@ const CapabilityCard = ({
         .cap-text-highlight { 
           font-size: 0.8rem; 
           font-weight: 300; 
-          color: rgba(${themeColor}, 0.6); 
+          color: rgba(144, 200, 255, 0.6); 
           text-transform: uppercase; 
           letter-spacing: 0.1em; 
         }
@@ -209,15 +210,15 @@ const CapabilityCard = ({
         .cap-footer { 
           margin-top: auto; 
           padding-top: 1.2rem; 
-          border-top: 1px solid rgba(${themeColor}, 0.08); 
+          border-top: 1px solid rgba(144, 200, 255, 0.08); 
         }
         .param-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
         .param-key { font-size: 0.7rem; opacity: 0.3; font-weight: 300; text-transform: uppercase; }
-        .param-val { font-size: 0.7rem; opacity: 0.6; color: rgba(${themeColor}, 0.8); font-family: monospace; }
+        .param-val { font-size: 0.7rem; opacity: 0.6; color: rgba(144, 200, 255, 0.8); font-family: monospace; }
 
         .cap-scan-line {
           position: absolute; inset: 0;
-          background: linear-gradient(to bottom, transparent, rgba(${themeColor}, 0.01), transparent);
+          background: linear-gradient(to bottom, transparent, rgba(144, 200, 255, 0.01), transparent);
           background-size: 100% 4px; pointer-events: none;
         }
       `}</style>
@@ -251,12 +252,39 @@ export default function Capabilities() {
           </p>
         </div>
 
-        <div style={{ 
-          fontSize: "0.8rem", opacity: 0.3, color: "rgba(144,200,255,0.7)", 
-          textAlign: "right", borderRight: "1px solid rgba(144,200,255,0.15)", 
-          paddingRight: "1.5rem", lineHeight: "1.8", fontFamily: "monospace", marginBottom: "5px" 
-        }}>
-          PROTOCOL_CORE_V1.86<br />// STREAM: ENCRYPTED<br />// STATE: ACTIVE
+        {/* 2. 修改右侧区域：增加跳转按钮 */}
+        <div style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "2rem" }}>
+          <div style={{ 
+            fontSize: "0.8rem", opacity: 0.3, color: "rgba(144,200,255,0.7)", 
+            textAlign: "right", borderRight: "1px solid rgba(144,200,255,0.15)", 
+            paddingRight: "1.5rem", lineHeight: "1.8", fontFamily: "monospace"
+          }}>
+            PROTOCOL_CORE_V1.86<br />// STREAM: ENCRYPTED<br />// STATE: ACTIVE
+          </div>
+          
+          <Link href="/protocol" style={{ textDecoration: 'none' }}>
+            <div style={{ 
+              padding: "0.8rem 1.5rem", 
+              border: "1px solid rgba(144, 200, 255, 0.3)", 
+              color: "rgba(144, 200, 255, 0.8)",
+              fontSize: "0.7rem",
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              transition: "all 0.3s"
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = "rgba(144, 200, 255, 0.1)";
+              e.currentTarget.style.color = "#fff";
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = "rgba(144, 200, 255, 0.8)";
+            }}
+            >
+              Access_System_Core →
+            </div>
+          </Link>
         </div>
       </div>
 

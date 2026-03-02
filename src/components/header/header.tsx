@@ -10,8 +10,8 @@ const ProtocolHeader = () => {
     const timer = setInterval(() => {
       const now = new Date();
       setUtcTime(now.getUTCHours().toString().padStart(2, '0') + ":" + 
-                 now.getUTCMinutes().toString().padStart(2, '0') + ":" + 
-                 now.getUTCSeconds().toString().padStart(2, '0') + " UTC");
+                  now.getUTCMinutes().toString().padStart(2, '0') + ":" + 
+                  now.getUTCSeconds().toString().padStart(2, '0') + " UTC");
     }, 1000);
     return () => clearInterval(timer);
   }, []);
@@ -37,9 +37,12 @@ const ProtocolHeader = () => {
       <div style={styles.rightSection}>
         <span style={styles.timeDisplay} className="hide-mobile">{utcTime}</span>
         
-        <div style={styles.nodeBadge}>
-          KFK_SPC_DC{new Date().getDate()} 
-        </div>
+        {/* 🔹 关键修改：将节点标识作为通往 /protocol 的入口 🔹 */}
+        <Link href="/protocol" style={{ textDecoration: 'none' }}>
+          <div style={styles.nodeBadge} className="node-link-hover">
+            KFK_SPC_DC{new Date().getDate()} 
+          </div>
+        </Link>
 
         <button 
           onClick={() => console.log("Wallet connection triggered")}
@@ -79,7 +82,6 @@ const ProtocolHeader = () => {
           animation: greenBlink 2s infinite ease-in-out;
         }
 
-        /* Logo 交互特效 */
         .brand-logo-link {
           text-decoration: none;
           transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -112,6 +114,18 @@ const ProtocolHeader = () => {
           box-shadow: inset 0 0 10px rgba(144, 200, 255, 0.2), 0 0 15px rgba(144, 200, 255, 0.1);
           color: #fff !important;
           transform: translateY(-1px);
+        }
+
+        /* 新增：节点链接的交互感 */
+        .node-link-hover {
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+        .node-link-hover:hover {
+          background: rgba(144, 200, 255, 0.15) !important;
+          border-color: rgba(144, 200, 255, 0.4) !important;
+          color: #fff !important;
+          opacity: 1 !important;
         }
 
         @media (max-width: 768px) {
