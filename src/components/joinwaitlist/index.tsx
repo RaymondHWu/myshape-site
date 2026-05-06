@@ -218,7 +218,7 @@ export default function JoinWaitlist({ onEmailChange }: JoinWaitlistProps) {
         )}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .ritual-overlay {
           position: absolute; inset: 0; z-index: 999;
           background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center;

@@ -75,7 +75,7 @@ export default function HomePage() {
     <>
       <ProtocolHeader />
       
-      {/* 🔹 悬浮 HUD 监控层 🔹 */}
+      {/* 🔹 悬浮 HUD 监控层 - 保持 z-[999] 确保在最顶层 🔹 */}
       <div className="fixed inset-0 z-[999] pointer-events-none">
         <div className="absolute top-10 right-10 pointer-events-auto">
           <div className="flex items-center gap-2">
@@ -102,17 +102,14 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 🔹 主内容区 🔹 */}
-      <main className="relative z-0 w-full overflow-x-hidden bg-black">
+      {/* 🔹 主内容区 - 注意：背景已移至 Layout，此处设为透明 🔹 */}
+      <main className="relative z-10 w-full overflow-x-hidden bg-transparent">
+        {/* 重要：确保 Hero 组件内部已经删除了它自己的 <HeroVisual /> */}
         <Hero />
         <Vision />
-        {/* 注意：Capabilities 或 HowItWorks 组件内应包含指向 /protocol-core 的链接 */}
         <Capabilities />
         <HowItWorks />
-        <JoinWaitlist 
-            onEmailChange={(val) => {}} 
-            onCommitSuccess={(email) => setActiveUser(email)} 
-        />
+        <JoinWaitlist id="genesis" />
       </main>
 
       <ProtocolFooter />
