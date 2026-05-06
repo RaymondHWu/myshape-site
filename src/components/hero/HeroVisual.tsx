@@ -33,13 +33,13 @@ export default function HeroVisual({ showCore = true }: { showCore?: boolean }) 
         z: Math.random() * 2
       }));
       
-      // 2. 核心粒子：严格按照 1500/150/300 原始参数，自旋速度提升 1.5 倍
+      // 2. 核心粒子：严格按照 1500/150/300 原始参数，自旋速度提升 3.0 倍
       if (showCore) {
         coreParticles = Array.from({ length: 1500 }, () => ({
           angle: Math.random() * Math.PI * 2,
           radius: Math.random() * 150,
           y: (Math.random() - 0.5) * 300,
-          speed: (0.02 + Math.random() * 0.02) * 1.5
+          speed: (0.02 + Math.random() * 0.02) * 3.0
         }));
       }
     };
