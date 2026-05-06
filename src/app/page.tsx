@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect, useRef } from "react"; 
 import { createClient } from '@supabase/supabase-js';
 import ProtocolHeader from "@/components/header/header"; 
 import ProtocolFooter from "@/components/footer/footer";
@@ -9,15 +9,21 @@ import Capabilities from "@/components/capabilities/Capabilities";
 import HowItWorks from "@/components/howitworks/HowItWorks";
 import JoinWaitlist from "@/components/joinwaitlist/JoinWaitlist";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-const supabase = (supabaseUrl && supabaseAnonKey) ? createClient(supabaseUrl, supabaseAnonKey) : null;
-
 export default function HomePage() {
   const [activeUser, setActiveUser] = useState("");
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [clientHash, setClientHash] = useState("0X7B2E1A9C");
+  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
+
+  // 在 useEffect 中安全创建 Supabase 客户端，避免构建时环境变量缺失
+  useEffect(() => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (url && key) {
+      supabaseRef.current = createClient(url, key);
+    }
+  }, []);
 
   const maskIdentifier = (id: string) => {
     if (!id) return "RODDOG03";
@@ -27,6 +33,7 @@ export default function HomePage() {
   };
 
   useEffect(() => {
+    const supabase = supabaseRef.current;
     if (!supabase) return;
 
     const fetchLastNode = async () => {

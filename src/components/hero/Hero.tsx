@@ -20,6 +20,30 @@ export default function Hero() {
     return () => window.removeEventListener("click", closeAll);
   }, []);
 
+  // 添加自定义事件监听器，使按钮功能完整
+  useEffect(() => {
+    const handleGenesisIgnite = () => {
+      console.log("Genesis ignition triggered");
+      // 可以在这里添加动画或音效
+    };
+    const handleRapidPulse = () => {
+      console.log("Rapid pulse triggered");
+    };
+    const handleOpenWallet = () => {
+      console.log("Wallet open triggered");
+    };
+
+    window.addEventListener("protocol:genesis-ignite", handleGenesisIgnite);
+    window.addEventListener("protocol:rapid-pulse", handleRapidPulse);
+    window.addEventListener("protocol:open-wallet", handleOpenWallet);
+
+    return () => {
+      window.removeEventListener("protocol:genesis-ignite", handleGenesisIgnite);
+      window.removeEventListener("protocol:rapid-pulse", handleRapidPulse);
+      window.removeEventListener("protocol:open-wallet", handleOpenWallet);
+    };
+  }, []);
+
   const handleEnterGenesis = (e: React.MouseEvent) => {
     e.stopPropagation();
     window.dispatchEvent(new CustomEvent("protocol:genesis-ignite"));
