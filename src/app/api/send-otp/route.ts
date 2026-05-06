@@ -2,22 +2,28 @@ import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
-// 关键修正 1：增加防御性判断，防止 Build 时因为缺少 Key 而崩溃
-const resendKey = process.env.RESEND_API_KEY || 're_dummy_key_for_build';
-const resend = new Resend(resendKey);
+// 在运行时检查环境变量，避免构建时崩溃
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    throw new Error("SERVER_CONFIGURATION_INCOMPLETE");
+  }
+  return createClient(url, key);
+}
 
-// 关键修正 2：确保 Supabase 变量在没有环境变量时也不会导致运行时 Crash
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_key';
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("SERVER_CONFIGURATION_INCOMPLETE");
+  }
+  return new Resend(apiKey);
+}
 
 export async function POST(req: Request) {
   try {
-    // 检查环境变量是否真实存在（生产环境下）
-    if (!process.env.RESEND_API_KEY || !process.env.NEXT_PUBLIC_SUPABASE_URL) {
-      throw new Error("SERVER_CONFIGURATION_INCOMPLETE");
-    }
+    const supabase = getSupabaseClient();
+    const resend = getResendClient();
 
     const { email } = await req.json(); 
     
@@ -25,7 +31,6 @@ export async function POST(req: Request) {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     // 2. 将邮箱和验证码存入 Supabase
-    // 使用 upsert，如果 email 存在则更新，不存在则插入
     const { error: dbError } = await supabase
       .from('protocol_nodes')
       .upsert({ 
@@ -36,10 +41,9 @@ export async function POST(req: Request) {
 
     if (dbError) throw dbError;
 
-    // 3. 发送黑客风格的验证邮件
-    // 注意：如果你的域名没在 Resend 验证通过，这里必须使用 onboarding@resend.dev
+    // 3. 发送验证邮件
     const { error: emailError } = await resend.emails.send({
-      from: 'MyShape Protocol <onboarding@resend.dev>', // 建议先用这个测试，验证通过后再改
+      from: 'MyShape Protocol <onboarding@resend.dev>',
       to: email,
       subject: 'ACTION_REQUIRED: IDENTITY_CHALLENGE',
       html: `

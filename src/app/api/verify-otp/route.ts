@@ -1,19 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
-// 关键修正：防止 Build 阶段因为环境变量缺失而中断
-// 使用 fallback 字符串确保构造函数能运行，实际运行时会检查真实变量
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_key';
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    throw new Error("SERVER_CONFIGURATION_INCOMPLETE");
+  }
+  return createClient(url, key);
+}
 
 export async function POST(req: Request) {
   try {
-    // 运行时严格检查
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      throw new Error("SERVER_CONFIGURATION_INCOMPLETE");
-    }
+    const supabase = getSupabaseClient();
 
     const { email, otp } = await req.json();
 

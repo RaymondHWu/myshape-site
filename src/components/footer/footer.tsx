@@ -12,15 +12,28 @@ export default function ProtocolFooter() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     setStatus("SENDING");
-    setTimeout(() => {
-      setStatus("SUCCESS");
-      setEmail("");
+    try {
+      const response = await fetch("/api/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+      if (response.ok) {
+        setStatus("SUCCESS");
+        setEmail("");
+        setTimeout(() => setStatus("IDLE"), 3000);
+      } else {
+        setStatus("ERROR");
+        setTimeout(() => setStatus("IDLE"), 3000);
+      }
+    } catch (error) {
+      setStatus("ERROR");
       setTimeout(() => setStatus("IDLE"), 3000);
-    }, 1500);
+    }
   };
 
   // 注意：這裡的所有鏈接必須使用 href 鍵名

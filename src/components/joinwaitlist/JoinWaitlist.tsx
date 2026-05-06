@@ -9,7 +9,6 @@ export default function JoinWaitlist({ id }: { id?: string }) {
   const collapseStartRef = useRef(0);
   const isHoveringRef = useRef(false);
   const isCollapsingRef = useRef(false);
-  // Lerped speed multiplier for smooth hover transition
   const currentSpeedRef = useRef(1);
   isHoveringRef.current = isHovering;
   isCollapsingRef.current = isCollapsing;
@@ -38,7 +37,6 @@ export default function JoinWaitlist({ id }: { id?: string }) {
       const count = window.innerWidth < 768 ? 80 : 220;
       particles = Array.from({ length: count }, () => {
         const radius = 20 + Math.random() * (window.innerWidth < 768 ? 250 : 380);
-        // Golden mean: inner orbits 8-10s, outer orbits 35-45s
         const speedGradient = 1 / (radius / 300 + 0.25);
         return {
           angle: Math.random() * Math.PI * 2,
@@ -61,7 +59,6 @@ export default function JoinWaitlist({ id }: { id?: string }) {
       const collapseElapsed = isColl ? (Date.now() - collapseStartRef.current) / 1000 : 0;
       const collapseT = Math.min(collapseElapsed, 1);
 
-      // Gentle hover acceleration (2.5x) with ~1s awakening response
       const targetSpeed = isHov ? 2.5 : 1;
       currentSpeedRef.current += (targetSpeed - currentSpeedRef.current) * 0.04;
       const speedMult = currentSpeedRef.current;
@@ -78,7 +75,6 @@ export default function JoinWaitlist({ id }: { id?: string }) {
           p.radius += (p.baseRadius - p.radius) * 0.008;
         }
 
-        // Pure circular orbit
         const x = Math.cos(p.angle) * p.radius;
         const y = Math.sin(p.angle) * p.radius;
 
@@ -89,7 +85,6 @@ export default function JoinWaitlist({ id }: { id?: string }) {
           ? Math.min(p.radius / Math.max(1, p.baseRadius), 1) * 0.5
           : 0.12 + 0.25 * (1 - p.radius / 500);
 
-        // Crisp white dot + 2px cyan glow — matches static starfield aesthetic
         ctx.shadowColor = '#00f2ff';
         ctx.shadowBlur = 2;
         ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(alpha * 2.5, 1)})`;
@@ -219,7 +214,6 @@ export default function JoinWaitlist({ id }: { id?: string }) {
           50% { border-color: #90c8ff; }
         }
 
-        /* ── Button Base ── */
         .establish-connection {
           position: relative;
           display: inline-block;
@@ -250,7 +244,6 @@ export default function JoinWaitlist({ id }: { id?: string }) {
           white-space: nowrap;
         }
 
-        /* ── Hover ── */
         .establish-connection:hover .btn-border {
           border-color: rgba(0, 242, 255, 0.8);
           box-shadow: 0 0 30px rgba(0, 242, 255, 0.15),
@@ -261,9 +254,6 @@ export default function JoinWaitlist({ id }: { id?: string }) {
           text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
         }
 
-        /* ════════════════════════════════════════════
-           CYBER FLOW — Broad energy wave (300px)
-           ════════════════════════════════════════════ */
         .btn-streak {
           position: absolute;
           top: 0;
