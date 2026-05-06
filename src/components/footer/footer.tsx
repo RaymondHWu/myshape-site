@@ -54,10 +54,8 @@ export default function ProtocolFooter() {
     { 
       title: "CONNECT_NODES", 
       links: [
-        { name: "X_PROTOCOL", href: "https://x.com" },
-        { name: "LINKED_IN", href: "#" },
-        { name: "DISCORD", href: "#" },
-        { name: "GITHUB", href: "#" }
+		{ name: "X_PROTOCOL", href: "https://x.com" },
+		{ name: "LINKED_IN", href: "#" },
       ] 
     }
   ];
@@ -110,7 +108,7 @@ export default function ProtocolFooter() {
 
           <div className="flex flex-col items-start md:items-end">
             <div className="flex items-center gap-2 mb-4">
-               <span className="text-[10px] text-white/80 tracking-[0.4em] uppercase font-bold">
+               <span className="text-[9px] text-white/40 tracking-[0.4em] uppercase font-bold">
                 {status === "SUCCESS" ? "✓ UPLINK_ESTABLISHED" : "SIGNAL_SUBSCRIPTION"}
               </span>
             </div>
@@ -121,12 +119,12 @@ export default function ProtocolFooter() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={status === "SENDING" ? "TRANSMITTING..." : `ENTER_EMAIL_ADDR${cursorVisible ? '█' : ' '}`}
                 disabled={status !== "IDLE"}
-                className="w-full bg-transparent border-b border-white/30 py-3 text-[11px] text-cyan-400 placeholder:text-white/40 focus:outline-none focus:border-cyan-500 transition-all tracking-[0.2em] uppercase font-mono"
+                className="w-full bg-transparent border-b border-white/10 py-3 text-[10px] text-cyan-400/60 placeholder:text-white/20 focus:outline-none focus:border-cyan-500/50 transition-all tracking-[0.2em] uppercase font-mono"
                 required
               />
               <button 
                 type="submit"
-                className="absolute right-0 bottom-3 text-[10px] font-bold text-cyan-500/40 hover:text-cyan-400 transition-all tracking-[0.2em]"
+                className="absolute right-0 bottom-3 text-[9px] font-normal text-cyan-500/25 hover:text-cyan-400/60 transition-all tracking-[0.2em]"
               >
                 {status === "IDLE" && "[ CONNECT ]"}
               </button>
