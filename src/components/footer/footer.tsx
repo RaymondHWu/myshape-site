@@ -27,10 +27,13 @@ export default function ProtocolFooter() {
         setEmail("");
         setTimeout(() => setStatus("IDLE"), 3000);
       } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Subscription error:", errorData);
         setStatus("ERROR");
         setTimeout(() => setStatus("IDLE"), 3000);
       }
     } catch (error) {
+      console.error("Network error during subscription:", error);
       setStatus("ERROR");
       setTimeout(() => setStatus("IDLE"), 3000);
     }
