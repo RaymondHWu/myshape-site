@@ -75,12 +75,17 @@ export default function PapersPage() {
                       {paper.abstract}
                     </p>
                   </div>
-                  <div className="min-w-[120px] text-right">
-                    <span className="text-[9px] text-white/40 border border-white/10 px-3 py-1 bg-white/5 uppercase">
+                  <div className="flex flex-col items-end gap-6 min-w-[120px]">
+                    <span className="text-[9px] text-white/40 border border-white/10 px-3 py-1 bg-white/5">
                       REV_{paper.version}
                     </span>
-                    {paper.locked && (
-                       <div className="mt-4 text-[8px] text-white/10 tracking-[0.3em] font-bold uppercase">Encrypted_Access</div>
+                    {paper.locked ? (
+                      <div className="text-[8px] text-white/10 tracking-[0.3em] font-bold uppercase">Encrypted_Access</div>
+                    ) : (
+                      <a href={`/papers/${paper.id === "PAPER_01" ? "core-protocol" : "protocol"}`} className="text-cyan-500 hover:text-white text-[10px] tracking-[0.4em] uppercase font-bold transition-all flex items-center gap-2 group/btn">
+                        <span>READ_PAPER</span>
+                        <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                      </a>
                     )}
                   </div>
                 </div>

@@ -158,7 +158,7 @@ export default function MotionPipelinePage() {
                 className="inline-block group cursor-pointer"
               >
                  <div className="px-16 py-6 border border-cyan-500/30 bg-cyan-500/5 group-hover:bg-cyan-400 group-hover:text-black transition-all duration-500 text-cyan-400 text-[11px] tracking-[0.6em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.05)]">
-                   Initialize Genesis Ritual →
+                   View Technical Specification →
                  </div>
               </button>
           </section>

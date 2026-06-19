@@ -79,8 +79,8 @@ export default function PapersPage() {
                     <span className="text-[9px] text-white/40 border border-white/10 px-3 py-1 bg-white/5">
                       REV_{paper.version}
                     </span>
-                    <a href="/protocol" className="text-cyan-500 hover:text-white text-[10px] tracking-[0.4em] uppercase font-bold transition-all flex items-center gap-2 group/btn">
-                      <span>READ_FILE</span>
+                    <a href={`/papers/${paper.id === "PAPER_01" ? "core-protocol" : "protocol"}`} className="text-cyan-500 hover:text-white text-[10px] tracking-[0.4em] uppercase font-bold transition-all flex items-center gap-2 group/btn">
+                      <span>{paper.id === "PAPER_01" ? "READ_PAPER" : "READ_FILE"}</span>
                       <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                     </a>
                   </div>

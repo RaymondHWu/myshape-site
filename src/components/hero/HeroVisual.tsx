@@ -37,7 +37,7 @@ export default function HeroVisual({ showCore = true }: { showCore?: boolean }) 
         z: Math.random() * 2
       }));
       
-      // 2. 严格使用你给的原始核心参数：1500个, 150半径, 300垂直跨度
+      // 2. 严格使用原始核心参数：1500个, 150半径, 300垂直跨度
       if (showCore) {
         coreParticles = Array.from({ length: 1500 }, () => ({
           angle: Math.random() * Math.PI * 2,
