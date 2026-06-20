@@ -134,7 +134,6 @@ const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
           opacity: ${hover ? 1 : 0.4};
         }
 
-        /* @keyframes glitchPulse → animations.css */
       `}</style>
     </div>
   );

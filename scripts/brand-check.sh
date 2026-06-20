@@ -47,7 +47,9 @@ for PATTERN in "${BANNED[@]}"; do
     esac
 
     if [ -f "$file" ]; then
-      MATCHES=$(grep -Hin "$PATTERN" "$file" 2>/dev/null || true)
+      RAW_MATCHES=$(grep -Hin "$PATTERN" "$file" 2>/dev/null || true)
+      # 排除品牌合规术语：Data-Body, data-body, non-biometric
+      MATCHES=$(echo "$RAW_MATCHES" | grep -v -i -E 'data.body|non.biometric' || true)
       if [ -n "$MATCHES" ]; then
         VIOLATIONS=$((VIOLATIONS + 1))
         echo -e "${RED}✘ BANNED WORD${NC} found in: ${YELLOW}$file${NC}"
