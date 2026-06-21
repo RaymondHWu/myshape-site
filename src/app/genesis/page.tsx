@@ -3,11 +3,11 @@ import GenesisClient from "./GenesisClient";
 export const metadata = {
   title: "MyShape Genesis — Identity Initialization Ritual",
   description:
-    "The Genesis Ritual transforms your presence into a sovereign Data-Body. Begin the AI-native identity initialization process through a non-biometric kinetic activation.",
+    "The Genesis Ritual transforms your presence into a sovereign Data-Body. Begin the AI-native identity initialization process through a non-corporeal kinetic activation.",
   openGraph: {
     title: "MyShape Genesis — Identity Initialization Ritual",
     description:
-      "Experience the Genesis Ritual: a non-biometric activation that generates your sovereign Data-Body for the AI-native era.",
+      "Experience the Genesis Ritual: a non-corporeal activation that generates your sovereign Data-Body for the AI-native era.",
     url: "https://www.myshape.com/genesis",
     siteName: "MyShape Protocol",
     images: [

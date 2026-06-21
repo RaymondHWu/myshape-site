@@ -1,0 +1,13 @@
+/* ── ProtocolLayout overrides ── */
+/* @keyframes scan-slow, fadeIn are in src/styles/animations.css */
+
+.protocol-main { background: transparent; }
+.protocol-main-inner { background: transparent; }
+
+.animate-scan-slow {
+  animation: scan-slow 12s linear infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { playTick } from "@/utils/useAudioTick";
+import "./Vision.css";
 
 /* ---------------------- 卡片组件 ---------------------- */
 interface CardProps {
@@ -16,7 +17,7 @@ const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
   const [hover, setHover] = useState(false);
   const themeColor = "144, 200, 255"; 
 
-  const playHoverTick = () => playTick(800, "triangle", 0.04, 0.015);
+  const playHoverTick = () => playTick(800, "triangle", 0.10, 0.025);
 
   return (
     <div
@@ -32,13 +33,15 @@ const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
         boxShadow: `0 12px 32px -8px rgba(${themeColor}, 0.12)`,
         transform: "translateY(-4px)",
         transition: "all 0.5s cubic-bezier(0.2, 1, 0.3, 1)",
-      } : {
+        '--v-hover': 1,
+      } as React.CSSProperties : {
         border: `1px solid rgba(${themeColor}, 0.1)`,
         background: "transparent",
         boxShadow: "none",
         transform: "none",
         transition: "all 0.5s cubic-bezier(0.2, 1, 0.3, 1)",
-      }}
+        '--v-hover': 0.4,
+      } as React.CSSProperties}
     >
       <div className="v-scan-line" />
 
@@ -57,84 +60,6 @@ const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
         {desc2 && <p className="vision-card-desc-sub">{desc2}</p>}
       </div>
 
-      <style>{`
-        .vision-card-container {
-          position: relative;
-          width: 100%;
-          padding: 1.5rem;
-          border-radius: 12px;
-          cursor: default;
-          overflow: hidden;
-          font-family: var(--font-geist-sans), sans-serif;
-          display: flex;
-          flex-direction: column;
-          min-height: 180px;
-          transition: border 0.6s, background 0.6s, box-shadow 0.6s;
-        }
-
-        .vision-card-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 1.2rem;
-          z-index: 2;
-        }
-
-        .vision-glyph {
-          font-size: 1.1rem;
-          color: rgba(${themeColor}, 0.8);
-          opacity: 0.5;
-          transition: all 0.4s ease;
-        }
-        
-        .vision-glyph.active {
-          color: #fff;
-          opacity: 1;
-          animation: visionGlyphGlow 1.5s ease-in-out infinite;
-          text-shadow: 0 0 10px rgba(${themeColor}, 0.8);
-        }
-
-        .vision-card-index {
-          font-family: monospace;
-          font-size: 0.7rem;
-          color: #90c8ff;
-          opacity: 0.3;
-          letter-spacing: 0.2em;
-        }
-
-        .vision-card-title {
-          font-size: 1.15rem;
-          font-weight: 300;
-          color: #fff;
-          margin: 0 0 0.8rem 0;
-          letter-spacing: 0.02em;
-        }
-
-        .vision-card-desc-main {
-          font-size: 0.9rem;
-          font-weight: 300;
-          line-height: 1.6;
-          color: rgba(255,255,255,0.7);
-        }
-
-        .vision-card-desc-sub {
-          font-size: 0.85rem;
-          font-weight: 300;
-          line-height: 1.6;
-          color: rgba(255,255,255,0.3);
-          margin-top: 0.4rem;
-        }
-
-        .v-scan-line {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to bottom, transparent, rgba(${themeColor}, 0.02), transparent);
-          background-size: 100% 4px;
-          pointer-events: none;
-          opacity: ${hover ? 1 : 0.4};
-        }
-
-      `}</style>
     </div>
   );
 };

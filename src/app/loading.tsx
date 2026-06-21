@@ -2,6 +2,8 @@
  * Root Loading UI — 路由切换时的全局加载状态
  * Next.js App Router 约定：loading.tsx 自动包裹所有 page.tsx 的 Suspense 边界
  */
+import "./loading.css";
+
 export default function RootLoading() {
   return (
     <div
@@ -39,12 +41,6 @@ export default function RootLoading() {
       >
         SYNCHRONIZING
       </span>
-      <style>{`
-        @keyframes myshape-loading-pulse {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.8); }
-        }
-      `}</style>
     </div>
   );
 }

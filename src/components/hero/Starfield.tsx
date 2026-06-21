@@ -3,6 +3,7 @@ import React, { useState, useRef, useMemo, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
+import './Starfield.css';
 
 // --- 1. 背景墙：Starfield (保持你的逻辑，优化视觉厚度) ---
 function Starfield() {
@@ -183,26 +184,6 @@ export default function GenesisIdentity() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style>{`
-        .protocol-input {
-          background: rgba(0,0,0,0.3); border: none; border-bottom: 1px solid rgba(144, 200, 255, 0.4);
-          padding: 12px; color: #fff; width: 100%; text-align: center; 
-          outline: none; font-family: monospace; letter-spacing: 4px; font-size: 14px;
-        }
-        .input-glow {
-          position: absolute; bottom: 0; left: 0; height: 1px; width: 100%;
-          background: #fff; box-shadow: 0 0 10px #90c8ff;
-        }
-        .genesis-btn {
-          margin-top: 35px; background: #fff; border: none; padding: 12px 60px;
-          color: #000; font-family: monospace; font-weight: bold; font-size: 10px;
-          letter-spacing: 2px; cursor: pointer; transition: 0.4s;
-        }
-        .genesis-btn:hover {
-          box-shadow: 0 0 30px rgba(144, 200, 255, 0.6); transform: translateY(-2px);
-        }
-      `}</style>
     </div>
   );
 }

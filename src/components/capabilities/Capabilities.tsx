@@ -3,6 +3,7 @@
 import React, { useState, useCallback } from "react";
 import { playTick } from "@/utils/useAudioTick";
 import { useRouter } from "next/navigation";
+import "./Capabilities.css";
 
 /* ---------------------- 卡片组件 ---------------------- */
 
@@ -17,7 +18,7 @@ const CapabilityCard = ({
   const [isHovered, setIsHovered] = useState(false);
   const themeColor = "144, 200, 255";
 
-  const playPrimitiveTick = () => playTick(750, "triangle", 0.05, 0.012);
+  const playPrimitiveTick = () => playTick(750, "triangle", 0.10, 0.025);
 
   return (
     <div 
@@ -40,7 +41,7 @@ const CapabilityCard = ({
           </div>
         </div>
 
-        <div className="cap-body">
+        <div className="cap-content">
           <h3 className="cap-title">{title}</h3>
           <p className="cap-text-main">{line1}</p>
           <p className="cap-text-sub">{line2}</p>
@@ -56,151 +57,6 @@ const CapabilityCard = ({
           ))}
         </div>
       </div>
-
-      <style>{`
-        .cap-box {
-          position: relative;
-          width: 320px;
-          height: 380px;
-          background: transparent;
-          border: 1px solid rgba(144, 200, 255, 0.1);
-          border-radius: 12px;
-          padding: 2.2rem;
-          transition: all 0.7s cubic-bezier(0.2, 1, 0.3, 1);
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-        }
-
-        .left   { transform: translateY(-30px); }
-        .center { transform: translateY(50px); z-index: 2; }
-        .right  { transform: translateY(-10px); }
-
-        .cap-box:hover {
-          background: radial-gradient(circle at top right, rgba(144, 200, 255, 0.05) 0%, transparent 70%);
-          border-color: rgba(144, 200, 255, 0.35);
-          z-index: 10 !important;
-          box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
-        }
-
-        .left:hover   { transform: translateY(-45px) scale(1.01); }
-        .center:hover { transform: translateY(35px) scale(1.01); }
-        .right:hover  { transform: translateY(-25px) scale(1.01); }
-
-        .cap-inner {
-          position: relative;
-          z-index: 2;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-        }
-
-        .cap-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 2.5rem;
-        }
-
-        .cap-index {
-          font-family: monospace;
-          font-size: 0.7rem;
-          color: rgba(144, 200, 255, 0.4);
-          letter-spacing: 0.2em;
-        }
-
-        .cap-visual-icon {
-          position: relative;
-          width: 24px;
-          height: 24px;
-        }
-
-        .core-dot {
-          position: absolute;
-          left: 50%; top: 50%; width: 2px; height: 2px;
-          background: #fff; border-radius: 50%;
-          transform: translate(-50%, -50%);
-        }
-
-        .ring {
-          position: absolute;
-          inset: 0;
-          border: 1px solid rgba(144, 200, 255, 0.2);
-          border-radius: 50%;
-        }
-
-        .lock .r1 { animation: pulse 3s infinite; }
-        .privacy::after {
-          content: "";
-          position: absolute;
-          top: 0; left: 0; width: 100%; height: 1px;
-          background: rgba(144, 200, 255, 0.6); 
-          box-shadow: 0 0 8px rgba(144, 200, 255, 0.4);
-          animation: scanLine 2.5s infinite ease-in-out;
-        }
-        .omni .r1 { animation: spread 4s infinite linear; }
-
-        @keyframes pulse {
-          0% { transform: scale(0.6); opacity: 0; }
-          50% { opacity: 0.4; }
-          100% { transform: scale(1.4); opacity: 0; }
-        }
-
-        @keyframes scanLine {
-          0% { transform: translateY(0); opacity: 0; }
-          50% { opacity: 1; }
-          100% { transform: translateY(24px); opacity: 0; }
-        }
-
-        @keyframes spread {
-          0% { transform: scale(1); opacity: 0.5; }
-          100% { transform: scale(2.2); opacity: 0; }
-        }
-
-        .cap-title { 
-          font-size: 1.2rem; 
-          font-weight: 300; 
-          color: #fff; 
-          margin: 0 0 1rem 0; 
-          letter-spacing: 0.02em; 
-        }
-        .cap-text-main { 
-          font-size: 0.9rem; 
-          font-weight: 300; 
-          line-height: 1.6; 
-          color: rgba(255,255,255,0.75); 
-          margin-bottom: 0.5rem; 
-        }
-        .cap-text-sub { 
-          font-size: 0.85rem; 
-          font-weight: 300; 
-          line-height: 1.6; 
-          color: rgba(255,255,255,0.35); 
-          margin-bottom: 0.8rem; 
-        }
-        .cap-text-highlight { 
-          font-size: 0.8rem; 
-          font-weight: 300; 
-          color: rgba(144, 200, 255, 0.6); 
-          text-transform: uppercase; 
-          letter-spacing: 0.1em; 
-        }
-
-        .cap-footer { 
-          margin-top: auto; 
-          padding-top: 1.2rem; 
-          border-top: 1px solid rgba(144, 200, 255, 0.08); 
-        }
-        .param-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
-        .param-key { font-size: 0.7rem; opacity: 0.3; font-weight: 300; text-transform: uppercase; }
-        .param-val { font-size: 0.7rem; opacity: 0.6; color: rgba(144, 200, 255, 0.8); font-family: monospace; }
-
-        .cap-scan-line {
-          position: absolute; inset: 0;
-          background: linear-gradient(to bottom, transparent, rgba(144, 200, 255, 0.01), transparent);
-          background-size: 100% 4px; pointer-events: none;
-        }
-      `}</style>
     </div>
   );
 };
@@ -381,10 +237,10 @@ export default function Capabilities() {
         <CapabilityCard
           index="01" side="left" motionType="lock"
           title="Neural Lock"
-          line1="Bind identity to your biological signature."
+          line1="Bind identity to your motion geometry."
           line2="A cryptographic tether forged from your unique physiological topology."
           line3="Unforgeable. Uncopyable. Irreversible."
-          params={{ BIOMETRIC_HASH: "SEALED", FORGE_RISK: "NULL" }}
+          params={{ MOTION_HASH: "SEALED", FORGE_RISK: "NULL" }}
         />
         <CapabilityCard
           index="02" side="center" motionType="privacy"
@@ -398,46 +254,11 @@ export default function Capabilities() {
           index="03" side="right" motionType="omni"
           title="Omni-Presence"
           line1="Deploy one identity across infinite agents."
-          line2="A unified protocol body that persists across systems."
+          line2="A unified protocol presence that persists across systems."
           line3="SYNC: CONTINUOUS. PERSISTENCE: 100%."
           params={{ SYNC_STATE: "CONTI", AGENT_LINKS: "ACTIVE" }}
         />
       </div>
-
-      <style>{`
-        .decrypt-btn {
-          font-family: monospace;
-          font-weight: 200;
-        }
-        .decrypt-btn:hover:not(:disabled) {
-          background: rgba(255, 255, 255, 0.05);
-          animation: textVibrate 0.15s ease-in-out infinite;
-        }
-        .decrypt-btn.glitch-active {
-          animation: decryptGlitch 0.4s ease-out forwards;
-        }
-        @keyframes decryptGlitch {
-          0% { filter: blur(0); transform: translateX(0); opacity: 1; }
-          5% { filter: blur(3px); transform: translateX(-6px); opacity: 0.4; }
-          8% { filter: blur(0); transform: translateX(4px); opacity: 1; }
-          12% { filter: blur(4px); transform: translateX(-8px); opacity: 0.3; }
-          16% { filter: blur(0); transform: translateX(5px); opacity: 1; }
-          22% { filter: blur(5px); transform: translateX(-7px); opacity: 0.2; }
-          28% { filter: blur(0); transform: translateX(3px); opacity: 1; }
-          35% { filter: blur(3px); transform: translateX(-5px); opacity: 0.5; }
-          45% { filter: blur(0); transform: translateX(2px); opacity: 1; }
-          60% { filter: blur(2px); transform: translateX(-3px); opacity: 0.6; }
-          80% { filter: blur(0); transform: translateX(1px); opacity: 1; }
-          100% { filter: blur(0); transform: translateX(0); opacity: 1; }
-        }
-        @keyframes textVibrate {
-          0% { transform: translateX(0); }
-          25% { transform: translateX(-0.5px); }
-          50% { transform: translateX(0.5px); }
-          75% { transform: translateX(-0.3px); }
-          100% { transform: translateX(0); }
-        }
-      `}</style>
     </section>
   );
 }

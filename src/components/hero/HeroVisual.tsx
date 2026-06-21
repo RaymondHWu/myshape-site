@@ -41,7 +41,7 @@ export default function HeroVisual({ showCore = true }: { showCore?: boolean }) 
       if (showCore) {
         coreParticles = Array.from({ length: 1500 }, () => ({
           angle: Math.random() * Math.PI * 2,
-          radius: Math.random() * 150,
+          radius: Math.random() * 120,
           y: (Math.random() - 0.5) * 300,
           speed: 0.02 + Math.random() * 0.02
         }));

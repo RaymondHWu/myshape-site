@@ -8,7 +8,7 @@ import IdentityClient from "./IdentityClient";
 export const metadata = {
   title: "MyShape Identity — AI-Native Data-Body Initialization",
   description:
-    "Initialize your AI-native identity through the MyShape Identity Layer. A kinetic, zero-knowledge, non-biometric activation that forms your sovereign Data-Body.",
+    "Initialize your AI-native identity through the MyShape Identity Layer. A kinetic, zero-knowledge, non-corporeal activation that forms your sovereign Data-Body.",
   openGraph: {
     title: "MyShape Identity — Data-Body Initialization",
     description:

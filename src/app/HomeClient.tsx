@@ -144,19 +144,6 @@ export default function HomeClient() {
         <JoinWaitlist id="genesis" />
       </main>
 
-      {/* Agent 入口 — 极简横条，不抢人类 Genesis 入口 */}
-      <div className="relative z-10 w-full border-y border-white/[0.03] bg-cyan-400/[0.01]">
-        <a href="/agent" className="block max-w-6xl mx-auto px-6 py-5 flex items-center justify-between group transition-all hover:bg-cyan-400/[0.03]">
-          <div className="flex items-center gap-4">
-            <div className="w-1.5 h-1.5 rounded-full bg-cyan-400/40 group-hover:bg-cyan-400/80 transition-colors" />
-            <span className="text-white/20 group-hover:text-white/40 text-[9px] tracking-[0.3em] uppercase transition-colors font-mono">
-              FOR_AI_AGENTS → DECLARE_IDENTITY
-            </span>
-          </div>
-          <span className="text-cyan-400/20 group-hover:text-cyan-400/60 text-[10px] transition-all group-hover:translate-x-1">→</span>
-        </a>
-      </div>
-
       <ProtocolFooter />
     </>
   );

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import HeroVisual from "./HeroVisual";
 import GlowVortexButton from "./GlowVortexButton";
 import NarrativeText from "./NarrativeText";
+import "./Hero.css";
 
 export default function Hero() {
   const [showLeft, setShowLeft] = useState(false);
@@ -34,7 +35,7 @@ export default function Hero() {
   };
 
   const leftLines = [
-    "THE BODY IS A SIGNAL.",
+    "PRESENCE IS A SIGNAL.",
     "THE SELF IS A FIELD.",
     "GEOMETRY HOLDS MEMORY.",
     "FORM CARRIES INTENT.",
@@ -138,7 +139,14 @@ export default function Hero() {
           </button>
         </div>
 
-        {/* 系统状态行 */}
+        {/* Motion Demo 入口 */}
+        <div className="absolute bottom-[56px] md:bottom-[92px] left-0 w-full z-100 text-center pointer-events-auto">
+          <a href="/motion-demo"
+            className="inline-block px-6 py-1.5 border border-cyan-400/12 text-cyan-400/25 hover:text-cyan-300/60 hover:border-cyan-400/30 text-[8px] md:text-[9px] tracking-[0.25em] uppercase font-mono transition-all duration-500">
+            See_Motion_Demo →
+          </a>
+        </div>
+        {/* 系统状态行 — 始终可见 */}
         <div className="absolute bottom-[30px] md:bottom-[60px] left-0 w-full z-100 text-center pointer-events-none">
           <span className="font-mono font-light text-[9px] md:text-[10px] tracking-[0.4em] transition-all duration-700"
             style={genesisCompleted
@@ -151,74 +159,6 @@ export default function Hero() {
         </div>
       </section>
 
-      <style>{`
-        .flow-boundary {
-          background: radial-gradient(ellipse at center, rgba(144, 200, 255, 0.06) 0%, transparent 70%);
-        }
-        .flow-dot {
-          position: absolute;
-          top: 50%;
-          width: 2px;
-          height: 2px;
-          border-radius: 50%;
-          background: rgba(144, 200, 255, 0.35);
-          transform: translateY(-50%);
-          filter: blur(1px);
-          opacity: 0;
-        }
-        .flow-glow {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          width: 6px;
-          height: 2px;
-          border-radius: 50%;
-          background: rgba(144, 200, 255, 0.15);
-          transform: translate(-50%, -50%);
-          filter: blur(3px);
-          opacity: 0;
-        }
-        .enter-genesis:hover .flow-dot {
-          animation: flowCenter 0.9s cubic-bezier(0.2, 1, 0.3, 1) forwards;
-        }
-        .enter-genesis:hover .flow-glow {
-          opacity: 1;
-          animation: glowPulse 1.5s ease-in-out infinite;
-        }
-        .enter-genesis:hover .flow-dot:nth-child(1) { animation-delay: 0s; }
-        .enter-genesis:hover .flow-dot:nth-child(2) { animation-delay: 0.15s; }
-        .enter-genesis:hover .flow-dot:nth-child(3) { animation-delay: 0.3s; }
-        .enter-genesis:hover .flow-dot:nth-child(5) { animation-delay: 0.15s; }
-        .enter-genesis:hover .flow-dot:nth-child(6) { animation-delay: 0.3s; }
-        .enter-genesis:hover .flow-dot:nth-child(7) { animation-delay: 0s; }
-        @keyframes flowCenter {
-          0% { opacity: 0; transform: translateY(-50%) translateX(var(--tx-start, -10px)) scale(0.5); }
-          30% { opacity: 1; }
-          100% { opacity: 0; transform: translateY(-50%) translateX(0) scale(1.2); }
-        }
-        @keyframes glowPulse {
-          0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
-          50% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
-        }
-        .flow-dot:nth-child(1) { --tx-start: -18px; }
-        .flow-dot:nth-child(2) { --tx-start: -12px; }
-        .flow-dot:nth-child(3) { --tx-start: -6px; }
-        .flow-dot:nth-child(5) { --tx-start: 6px; }
-        .flow-dot:nth-child(6) { --tx-start: 12px; }
-        .flow-dot:nth-child(7) { --tx-start: 18px; }
-        .protocol-command.glitch span {
-          animation: textGlitch 0.8s ease-out forwards;
-        }
-        @keyframes textGlitch {
-          0% { filter: blur(0); transform: translateX(0); opacity: 0.15; }
-          10% { filter: blur(3px); transform: translateX(-4px); opacity: 0.6; }
-          20% { filter: blur(1px); transform: translateX(3px); opacity: 0.3; }
-          30% { filter: blur(4px); transform: translateX(-6px); opacity: 0.7; }
-          50% { filter: blur(0); transform: translateX(2px); opacity: 0.2; }
-          70% { filter: blur(2px); transform: translateX(-3px); opacity: 0.5; }
-          100% { filter: blur(0); transform: translateX(0); opacity: 0.15; }
-        }
-      `}</style>
     </>
   );
 }

@@ -14,39 +14,15 @@ function makeGenesisId() {
   return `GNS_${t.slice(-6)}_${r}`;
 }
 
-type RitualPhase =
-  | "BOOT"
-  | "GENESIS_LOCK"
-  | "SYNCHRONIZING"
-  | "READY_FOR_UPLINK"
-  | "UPLINKING"
-  | "ACTIVE";
-
-function getRitualPhase(opts: {
-  isFormed: boolean;
-  status: "idle" | "submitting" | "success" | "error";
-}): RitualPhase {
-  if (!opts.isFormed) return "BOOT";
-  if (opts.status === "submitting") return "UPLINKING";
-  if (opts.status === "success") return "ACTIVE";
-  return "READY_FOR_UPLINK";
-}
-
 export default function IdentityClient() {
   const [clientReady, setClientReady] = useState(false);
   const [isFormed, setIsFormed] = useState(false);
-  const [showCollapse, setShowCollapse] = useState(true);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
   const [errorHint, setErrorHint] = useState("");
   const [genesisId, setGenesisId] = useState<string>("—");
-
-  const ritualPhase = useMemo(
-    () => getRitualPhase({ isFormed, status }),
-    [isFormed, status]
-  );
 
   const identityState = useMemo(() => {
     if (!isFormed) return "GENESIS_LOCKING";
@@ -66,12 +42,6 @@ export default function IdentityClient() {
     if (savedEmail) setEmail(savedEmail);
   }, []);
 
-  useEffect(() => {
-    if (!isFormed) return;
-    const t = setTimeout(() => setShowCollapse(false), 650);
-    return () => clearTimeout(t);
-  }, [isFormed]);
-
   const handleCollapseComplete = useCallback(() => {
     setIsFormed(true);
   }, []);
@@ -83,6 +53,16 @@ export default function IdentityClient() {
     e.preventDefault();
     setErrorHint("");
     setStatus("submitting");
+
+    // 粒子序列：收缩 → 换色(品牌冰蓝白) → 膨胀加速
+    window.dispatchEvent(new Event("particle-contract"));
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("particle-recolor", { detail: { color: "160, 225, 255" } }));
+    }, 400);
+    setTimeout(() => {
+      window.dispatchEvent(new Event("particle-expand"));
+      window.dispatchEvent(new Event("speed-up"));
+    }, 700);
 
     try {
       const response = await fetch("/api/uplink", {
@@ -108,8 +88,12 @@ export default function IdentityClient() {
 
       sessionStorage.setItem("genesis_completed", "1");
       setStatus("success");
+      // 粒子慢慢降回正常速度，新颜色保持
+      window.dispatchEvent(new Event("speed-down"));
     } catch (err: unknown) {
-      console.error("Local Uplink Error:", err);
+      window.dispatchEvent(new Event("speed-down"));
+      window.dispatchEvent(new Event("particle-expand"));
+      window.dispatchEvent(new CustomEvent("particle-recolor", { detail: { color: "128, 191, 255" } }));
       setStatus("error");
       setErrorHint((err as Error).message.toUpperCase());
     }
@@ -127,27 +111,24 @@ export default function IdentityClient() {
         <HeroVisual showCore={false} />
       </div>
 
-      {/* 粒子坍缩动画 */}
-      {clientReady && showCollapse && (
-        <ParticleEngine
-          onComplete={handleCollapseComplete}
-          centerYOffset={0}
-          durationMs={3200}
-          colorRgb="128, 191, 255"
-        />
+      {/* 粒子系统 — 收缩后永久停留在最终轨道，不替换 */}
+      {clientReady && (
+        <div className="absolute inset-0 z-[1] pointer-events-none" style={{ transform: "translateY(-10%)" }}>
+          <ParticleEngine
+            onComplete={handleCollapseComplete}
+            centerYOffset={0}
+            durationMs={3200}
+            colorRgb="128, 191, 255"
+          />
+        </div>
       )}
 
-      {/* 核心身份视觉 */}
-      <div
-        className={`absolute inset-0 z-[1] pointer-events-none transition-opacity duration-700 ${
-          isFormed ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <HeroVisual showCore />
-      </div>
+      {/* 底部渐变遮罩 — 匹配面板位置 */}
+      <div className="absolute inset-x-0 bottom-0 z-[5] pointer-events-none"
+        style={{ height: "min(380px, 60vh)", background: "linear-gradient(to top, rgba(2,4,10,0.97) 0%, rgba(2,4,10,0.7) 35%, rgba(2,4,10,0.25) 70%, transparent 100%)" }} />
 
       {/* 底部身份面板 */}
-      <section className="absolute inset-x-0 bottom-0 z-10 px-3 pb-3">
+      <section className="absolute inset-x-0 bottom-6 md:bottom-8 z-10 px-3">
         <div
           className={`mx-auto w-full max-w-sm transition-all duration-700 ${
             isFormed
@@ -156,43 +137,38 @@ export default function IdentityClient() {
           }`}
         >
           <div className="relative overflow-hidden rounded-md font-mono">
-            <div className="pointer-events-none absolute -inset-[1px] rounded-md border border-cyan-200/20" />
-            <div className="relative rounded-md border border-cyan-200/20 bg-transparent p-3 md:p-4">
+            <div className={`pointer-events-none absolute -inset-[1px] rounded-md border transition-all duration-500 ${
+              status === "submitting"
+                ? "border-cyan-300/60 shadow-[0_0_20px_rgba(144,200,255,0.3)] animate-pulse"
+                : status === "success"
+                ? "border-cyan-300/40 shadow-[0_0_12px_rgba(144,200,255,0.2)]"
+                : "border-cyan-200/20"
+            }`} />
+            <div className="relative rounded-md border border-cyan-200/20 bg-transparent p-2.5 md:p-3">
               <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-cyan-200/60 shadow-[0_0_18px_rgba(144,200,255,0.55)] identity-scan" />
 
               {/* Telemetry Header */}
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start justify-between gap-2">
                 <div className="text-[9px] tracking-[0.7em] uppercase text-white/55">
                   GENESIS_TELEMETRY
                 </div>
-                <div className="flex flex-col items-end gap-2">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`h-1.5 w-1.5 rounded-full ${
-                        status === "success"
-                          ? "bg-cyan-200 shadow-[0_0_12px_rgba(144,200,255,0.9)]"
-                          : "bg-cyan-300/70 identity-pulse"
-                      }`}
-                    />
-                    <span className="text-[9px] tracking-[0.5em] uppercase text-white/45"
-                      style={status === "success" ? { textShadow: "0 0 8px rgba(144,200,255,0.4)" } : {}}>
-                      {identityState}
-                    </span>
-                  </div>
-                  <span className="text-[9px] tracking-[0.5em] uppercase text-cyan-300/50">
-                    {ritualPhase === "BOOT" && "LOCKING_GENESIS_FIELD"}
-                    {ritualPhase === "READY_FOR_UPLINK" &&
-                      "SYNCHRONIZING_GENESIS_CHANNEL"}
-                    {ritualPhase === "UPLINKING" &&
-                      "WRITING_IDENTITY_LEDGER"}
-                    {ritualPhase === "ACTIVE" &&
-                      "IDENTITY_LAYER_INITIALIZED"}
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full ${
+                      status === "success"
+                        ? "bg-cyan-200 shadow-[0_0_12px_rgba(144,200,255,0.9)]"
+                        : "bg-cyan-300/70 identity-pulse"
+                    }`}
+                  />
+                  <span className="text-[9px] tracking-[0.5em] uppercase text-white/45"
+                    style={status === "success" ? { textShadow: "0 0 8px rgba(144,200,255,0.4)" } : {}}>
+                    {identityState}
                   </span>
                 </div>
               </div>
 
               {/* Telemetry Data */}
-              <div className="mt-3 grid grid-cols-1 gap-2 text-[10px] tracking-[0.28em] uppercase">
+              <div className="mt-2 grid grid-cols-1 gap-1.5 text-[10px] tracking-[0.28em] uppercase">
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-white/40">GENESIS_SECTOR</span>
                   <span className="text-cyan-200/90">IDENTITY_LAYER</span>
@@ -203,10 +179,10 @@ export default function IdentityClient() {
                 </div>
               </div>
 
-              <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/25 to-transparent" />
+              <div className="mt-2.5 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/25 to-transparent" />
 
               {/* Email Form */}
-              <form onSubmit={submitEmail} className="mt-6">
+              <form onSubmit={submitEmail} className="mt-3">
                 <div className="flex flex-col md:flex-row gap-3">
                   <input
                     value={email}
@@ -241,7 +217,7 @@ export default function IdentityClient() {
                   </p>
                 )}
                 {status === "success" && (
-                  <div className="mt-3 flex flex-col items-center gap-3">
+                  <div className="mt-2 flex flex-col items-center gap-2">
                     <p className="text-[10px] tracking-[0.35em] uppercase text-cyan-200/70 text-center">
                       NODE_REGISTERED. AUTH_STATE_UPDATED.
                     </p>
@@ -256,10 +232,13 @@ export default function IdentityClient() {
                       onMouseEnter={() => {
                         window.dispatchEvent(new CustomEvent("protocol:particle-resonance"));
                       }}
-                      className="px-6 py-1.5 border border-cyan-400/40 text-cyan-400/70 font-mono text-[8px] tracking-[0.3em] uppercase hover:border-cyan-400 hover:text-cyan-200 hover:bg-cyan-400/10 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all duration-300"
-                      style={{ textShadow: "0 0 8px rgba(34,211,238,0.3)" }}
+                      className="group relative inline-flex items-center gap-3 px-8 py-2.5 border border-cyan-400/30 text-cyan-400/60 font-mono text-[9px] tracking-[0.35em] uppercase hover:border-cyan-300/60 hover:text-cyan-100 transition-all duration-500"
+                      style={{ textShadow: "0 0 6px rgba(34,211,238,0.2)" }}
                     >
-                      RETURN_TO_ORIGIN
+                      <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                        style={{ background: "radial-gradient(ellipse at center, rgba(144,200,255,0.08) 0%, transparent 70%)" }} />
+                      <span className="relative z-10">◈&nbsp;RETURN_TO_ORIGIN</span>
+                      <span className="relative z-10 text-cyan-400/40 group-hover:text-cyan-200 group-hover:translate-x-0.5 transition-all duration-500">→</span>
                     </a>
                   </div>
                 )}

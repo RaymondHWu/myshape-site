@@ -41,6 +41,7 @@ export default function ProtocolFooter() {
         { name: "PROTOCOL_INDEX", href: "/protocol" },
         { name: "IDENTITY_LAYER", href: "/protocol/identity-layer" },
         { name: "MOTION_PIPELINE", href: "/protocol/motion-pipeline" },
+        { name: "DEVELOPERS", href: "/developers" },
         { name: "AI_AGENT", href: "/agent" },
         { name: "ZERO_KNOWLEDGE", href: "/protocol/zk" }
       ]

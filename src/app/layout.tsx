@@ -34,7 +34,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "MyShape Protocol — AI-Native Identity",
     description:
-      "A particle-based identity protocol for the AI-native era. Body is data. Data is sovereignty.",
+      "A particle-based identity protocol for the AI-native era. Presence is data. Data is sovereignty.",
     images: ["/og-image.png"],
   },
 };
@@ -80,7 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   "Decentralized Identity Mesh",
                   "3D Sovereign Identity Layer",
                   "Ethereal Data Energy",
-                  "Non-Biometric Kinetic Verification"
+                  "Non-Corporeal Kinetic Verification"
                 ]
               },
               {
@@ -111,7 +111,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {
                 "@type": "DefinedTerm",
                 "name": "Particle Body",
-                "description": "The visual manifestation of the Data-Body using dynamic particle fields. A pure data-energy structure devoid of muscle, skin, or biological form — embodying the non-binary aesthetic of MyShape.",
+                "description": "The visual manifestation of the Data-Body using dynamic particle fields. A pure data-energy structure devoid of biological form or physical attributes — embodying the non-binary aesthetic of MyShape.",
                 "url": "https://www.myshape.com/identity",
                 "inDefinedTermSet": {
                   "@id": "https://www.myshape.com/#organization"
@@ -120,7 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {
                 "@type": "DefinedTerm",
                 "name": "Halo Scan",
-                "description": "A non-biometric, non-contact scanning layer that activates or updates the Data-Body through kinetic motion analysis. Employs circular deep-sense halo scan technology without capturing physical biometrics.",
+                "description": "A non-corporeal, non-contact scanning layer that activates or updates the Data-Body through kinetic motion analysis. Employs circular deep-sense halo scan technology without capturing physical identifiers.",
                 "url": "https://www.myshape.com/identity",
                 "inDefinedTermSet": {
                   "@id": "https://www.myshape.com/#organization"
@@ -138,7 +138,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {
                 "@type": "DefinedTerm",
                 "name": "Genesis Ritual",
-                "description": "The initialization sequence that activates a sovereign Data-Body. A non-biometric, kinetic activation establishing the user's first link to the decentralized identity mesh through motion-signature verification.",
+                "description": "The initialization sequence that activates a sovereign Data-Body. A non-corporeal, kinetic activation establishing the user's first link to the decentralized identity mesh through motion-signature verification.",
                 "url": "https://www.myshape.com/genesis",
                 "inDefinedTermSet": {
                   "@id": "https://www.myshape.com/#organization"
@@ -147,7 +147,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {
                 "@type": "DefinedTerm",
                 "name": "AI-Native Identity",
-                "description": "An identity architecture designed for interoperability across AI systems, agents, and generative environments. Not a static avatar, but a sovereign, verifiable data-body that traverses platforms without losing integrity.",
+                "description": "An identity architecture designed for interoperability across AI systems, agents, and generative environments. Not a static representation, but a sovereign, verifiable data-body that traverses platforms without losing integrity.",
                 "url": "https://www.myshape.com/identity",
                 "inDefinedTermSet": {
                   "@id": "https://www.myshape.com/#organization"
@@ -156,7 +156,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {
                 "@type": "DefinedTerm",
                 "name": "Zero-Knowledge Presence",
-                "description": "Cryptographic proof of presence that verifies existence without revealing identity, biometrics, or personal data. The core privacy primitive of the MyShape Protocol identity layer.",
+                "description": "Cryptographic proof of presence that verifies existence without revealing identity, physical identifiers, or personal data. The core privacy primitive of the MyShape Protocol identity layer.",
                 "url": "https://www.myshape.com/protocol/zk",
                 "inDefinedTermSet": {
                   "@id": "https://www.myshape.com/#organization"

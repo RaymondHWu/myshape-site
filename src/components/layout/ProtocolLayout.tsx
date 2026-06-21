@@ -3,6 +3,7 @@ import React from 'react';
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
 import IdentitySigil from "@/components/identity/IdentitySigil";
+import "./ProtocolLayout.css";
 
 interface ProtocolLayoutProps {
   children: React.ReactNode;
@@ -91,25 +92,6 @@ export default function ProtocolLayout({
       {/* 3. 全局唯一 Footer */}
       <ProtocolFooter />
 
-      <style>{`
-        .protocol-main { background: transparent !important; }
-        .protocol-main-inner { background: transparent !important; }
-
-        @keyframes scan-slow {
-          0% { transform: translateY(-100vh); }
-          100% { transform: translateY(100vh); }
-        }
-        .animate-scan-slow {
-          animation: scan-slow 12s linear infinite;
-        }
-        .animate-fade-in {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }

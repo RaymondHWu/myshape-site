@@ -1,5 +1,8 @@
 /* ── 全局类型声明 ── */
 
+// CSS side-effect imports
+declare module "*.css" {}
+
 // MediaPipe Pose
 interface PoseResult {
   poseLandmarks?: Array<{ x: number; y: number; z: number }>;

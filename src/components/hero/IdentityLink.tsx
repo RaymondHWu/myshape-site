@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import "./IdentityLink.css";
 
 export default function IdentityLink() {
   const [connected, setConnected] = useState(false);
@@ -42,14 +43,6 @@ export default function IdentityLink() {
           SIGNAL_DEGRADATION: RECOVERY_IN_PROGRESS [ERR: MISSING_P]
         </div>
       )}
-
-      <style>{`
-        @keyframes glitch {
-          0% { transform: translate(2px, -1px); filter: hue-rotate(90deg); }
-          50% { transform: translate(-2px, 1px); filter: hue-rotate(180deg); }
-          100% { transform: translate(1px, -2px); filter: hue-rotate(0deg); }
-        }
-      `}</style>
     </div>
   );
 }

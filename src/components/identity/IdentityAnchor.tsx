@@ -39,7 +39,7 @@ export default function IdentityAnchor() {
             letterSpacing: "-0.02em",
           }}
         >
-          Your protocol body is the sovereign root of your digital existence.
+          Your protocol presence is the sovereign root of your digital existence.
         </h2>
       </div>
 

@@ -2,8 +2,8 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
-import LiveCapture from "@/components/ritual/LiveCapture";
 import VortexScan from "@/components/ritual/VortexScan";
+import "./genesis.css";
 
 type Stage = "input" | "scanning" | "sending_otp" | "verifying" | "success" | "error";
 
@@ -14,7 +14,7 @@ export default function GenesisClient() {
   const [errorMsg, setErrorMsg] = useState("");
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const handleCommence = async (e: React.FormEvent) => {
+  const handleCommence = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email.includes("@")) return;
     setStage("scanning");
@@ -35,7 +35,7 @@ export default function GenesisClient() {
     }
   };
 
-  const handleVerifyOTP = async (e: React.FormEvent) => {
+  const handleVerifyOTP = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (otp.length !== 6) return;
     setStage("sending_otp");
@@ -63,7 +63,7 @@ export default function GenesisClient() {
       refId="005" category="CIV_LAYER" title="GENESIS_PROTOCOL"
       secLevel="CLASS_OMEGA"
       systemStatus={
-        stage === "scanning" ? "BIOMETRIC_SCAN_ACTIVE"
+        stage === "scanning" ? "KINETIC_SCAN_ACTIVE"
         : stage === "sending_otp" ? "TRANSMITTING_CHALLENGE"
         : stage === "verifying" ? "AWAITING_SIGNATURE"
         : stage === "success" ? "IDENTITY_LAYER_INITIALIZED"
@@ -73,9 +73,10 @@ export default function GenesisClient() {
     >
       <h1 className="sr-only">MyShape Genesis — Identity Initialization Ritual</h1>
 
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <LiveCapture activeStage={stage === "scanning" ? 0 : -1} />
-      </div>
+      {/* 扫描阶段：纯 CSS 扫描线背景，不加载摄像头/MediaPipe — 避免卡顿 */}
+      {stage === "scanning" && (
+        <div className="fixed inset-0 z-0 pointer-events-none genesis-scan-bg" />
+      )}
 
       <div className="relative z-10 min-h-[60vh] flex flex-col items-center justify-center text-center mt-4 md:mt-8 pb-16">
         <div className={`transition-all duration-1000 shrink-0 ${isActive ? "opacity-20 blur-sm scale-90" : "opacity-100"}`}>
@@ -99,15 +100,18 @@ export default function GenesisClient() {
                 <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-cyan-400/30" />
               </div>
               <form onSubmit={handleCommence} className="flex flex-col items-center space-y-10">
-                {/* ── 邮箱输入终端 ── */}
-                <div className="relative group">
-                  {/* Genesis Cohort 标签 — 悬浮在终端上方 */}
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 px-3 py-0.5"
-                    style={{ border: "1px solid rgba(144,200,255,0.2)", background: "rgba(4,14,28,0.95)" }}>
-                    <span className="text-cyan-400/60 font-mono text-[6px] tracking-[0.3em] uppercase">
-                      ◈ Genesis_Cohort — First 100 only
+                {/* Genesis Cohort 标签 — 滚动数据流 */}
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-cyan-400/30" />
+                  <div className="cohort-marquee">
+                    <span className="cohort-marquee-inner text-cyan-400/70 font-mono text-[8px] tracking-[0.25em] uppercase">
+                      ◈ Genesis_Cohort — First 100 only&nbsp;&nbsp;&nbsp;◈ Genesis_Cohort — First 100 only&nbsp;&nbsp;&nbsp;
                     </span>
                   </div>
+                  <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-cyan-400/30" />
+                </div>
+                {/* ── 邮箱输入终端 ── */}
+                <div className="relative group">
                   {/* 外层辉光 */}
                   <div className="absolute -inset-[1px] rounded-sm opacity-50 group-focus-within:opacity-100 transition-opacity duration-700"
                     style={{ background: "linear-gradient(135deg, rgba(34,211,238,0.3), transparent 40%, transparent 60%, rgba(34,211,238,0.3))", filter: "blur(8px)" }} />
@@ -356,125 +360,7 @@ export default function GenesisClient() {
         </div>
       </div>
 
-      <style>{`
-        /* ── 邮箱输入终端动画 ── */
-        .genesis-scan-line {
-          background: linear-gradient(90deg, transparent 0%, rgba(34,211,238,0.06) 45%, rgba(34,211,238,0.12) 50%, rgba(34,211,238,0.06) 55%, transparent 100%);
-          animation: genesisScan 3s ease-in-out infinite;
-        }
-        @keyframes genesisScan { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-
-        .genesis-corner-tl { animation: cornerPulse 2s ease-in-out infinite; }
-        .genesis-corner-tr { animation: cornerPulse 2s ease-in-out 0.5s infinite; }
-        .genesis-corner-bl { animation: cornerPulse 2s ease-in-out 1s infinite; }
-        .genesis-corner-br { animation: cornerPulse 2s ease-in-out 1.5s infinite; }
-        @keyframes cornerPulse {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 1; border-color: rgba(34,211,238,0.9); }
-        }
-
-        .genesis-data-stream-l {
-          background: linear-gradient(to bottom, transparent, rgba(34,211,238,0.2), transparent);
-          animation: dataFlow 2.5s ease-in-out infinite;
-        }
-        .genesis-data-stream-r {
-          background: linear-gradient(to bottom, transparent, rgba(34,211,238,0.15), transparent);
-          animation: dataFlow 2.5s ease-in-out 0.8s infinite;
-        }
-        @keyframes dataFlow {
-          0%, 100% { opacity: 0.2; transform: scaleY(0.6); }
-          50% { opacity: 0.7; transform: scaleY(1); }
-        }
-
-        .genesis-btn-scan {
-          background: linear-gradient(90deg, transparent, rgba(34,211,238,0.5), transparent);
-          animation: btnScan 2s ease-in-out infinite;
-        }
-        @keyframes btnScan {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-
-        /* ── 成功确认视觉：光环系统 ── */
-        .genesis-success-core {
-          box-shadow:
-            0 0 16px rgba(200,230,255,1),
-            0 0 32px rgba(140,200,255,0.7),
-            0 0 56px rgba(100,170,255,0.4),
-            0 0 80px rgba(60,140,255,0.2);
-        }
-
-        .genesis-success-dot-small {
-          animation: dotBlink 1.2s ease-in-out infinite;
-          box-shadow: 0 0 6px rgba(144,200,255,0.8);
-        }
-        @keyframes dotBlink {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 1; }
-        }
-
-        /* 外光环 */
-        .genesis-halo-outer {
-          border: 1.5px solid rgba(144,200,255,0.2);
-          animation: haloExpand1 2.5s cubic-bezier(0.4,0,0.6,1) infinite;
-        }
-        @keyframes haloExpand1 {
-          0% { transform: scale(0.35); opacity: 0; }
-          20% { opacity: 0.8; }
-          100% { transform: scale(1.5); opacity: 0; }
-        }
-
-        /* 中光环 */
-        .genesis-halo-mid {
-          border: 1.5px solid rgba(144,200,255,0.25);
-          animation: haloExpand2 2.5s cubic-bezier(0.4,0,0.6,1) 0.7s infinite;
-        }
-        @keyframes haloExpand2 {
-          0% { transform: scale(0.35); opacity: 0; }
-          20% { opacity: 0.7; }
-          100% { transform: scale(1.3); opacity: 0; }
-        }
-
-        /* 内光环 — 脉冲呼吸而非扩散 */
-        .genesis-halo-inner {
-          border: 2px solid rgba(144,200,255,0.35);
-          animation: haloInner 1.8s ease-in-out infinite;
-        }
-        @keyframes haloInner {
-          0%, 100% { transform: scale(0.5); opacity: 0.5; border-color: rgba(144,200,255,0.3); }
-          50% { transform: scale(0.7); opacity: 1; border-color: rgba(180,220,255,0.6); }
-        }
-
-        /* ── 确认卡片 ── */
-        .genesis-success-card {
-          animation: cardFloat 3s ease-in-out infinite;
-        }
-        @keyframes cardFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-3px); }
-        }
-
-        .genesis-card-glow {
-          animation: cardGlowPulse 2s ease-in-out infinite;
-          background: linear-gradient(135deg, rgba(144,200,255,0.08), transparent 50%, rgba(144,200,255,0.08));
-        }
-        @keyframes cardGlowPulse {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 1; }
-        }
-
-        .genesis-card-corner { animation: cornerBreathe 2s ease-in-out infinite; }
-        .genesis-card-corner-tr { animation: cornerBreathe 2s ease-in-out 0.5s infinite; }
-        .genesis-card-corner-bl { animation: cornerBreathe 2s ease-in-out 1s infinite; }
-        @keyframes cornerBreathe {
-          0%, 100% { opacity: 0.4; border-color: rgba(144,200,255,0.4); }
-          50% { opacity: 1; border-color: rgba(180,220,255,0.8); }
-        }
-
-        /* ── 进度条 ── */
-        .genesis-progress { width: 40%; height: 100%; background: linear-gradient(90deg, transparent, rgba(34,211,238,0.6), transparent); animation: progressSlide 2s ease-in-out infinite; }
-        @keyframes progressSlide { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }
-      `}</style>
+      {/* genesis.css provides component-level animations; shared @keyframes genesisScan / progressSlide live in animations.css */}
     </ProtocolLayout>
   );
 }

@@ -1,0 +1,58 @@
+/* ── Hero flow boundary & hover effects ── */
+/* @keyframes flowCenter, glowPulse, textGlitch are in src/styles/animations.css */
+
+.flow-boundary {
+  background: radial-gradient(ellipse at center, rgba(144, 200, 255, 0.06) 0%, transparent 70%);
+}
+
+.flow-dot {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(144, 200, 255, 0.35);
+  transform: translateY(-50%);
+  filter: blur(1px);
+  opacity: 0;
+}
+
+.flow-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(144, 200, 255, 0.15);
+  transform: translate(-50%, -50%);
+  filter: blur(3px);
+  opacity: 0;
+}
+
+.enter-genesis:hover .flow-dot {
+  animation: flowCenter 0.9s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+}
+
+.enter-genesis:hover .flow-glow {
+  opacity: 1;
+  animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+.enter-genesis:hover .flow-dot:nth-child(1) { animation-delay: 0s; }
+.enter-genesis:hover .flow-dot:nth-child(2) { animation-delay: 0.15s; }
+.enter-genesis:hover .flow-dot:nth-child(3) { animation-delay: 0.3s; }
+.enter-genesis:hover .flow-dot:nth-child(5) { animation-delay: 0.15s; }
+.enter-genesis:hover .flow-dot:nth-child(6) { animation-delay: 0.3s; }
+.enter-genesis:hover .flow-dot:nth-child(7) { animation-delay: 0s; }
+
+.flow-dot:nth-child(1) { --tx-start: -18px; }
+.flow-dot:nth-child(2) { --tx-start: -12px; }
+.flow-dot:nth-child(3) { --tx-start: -6px; }
+.flow-dot:nth-child(5) { --tx-start: 6px; }
+.flow-dot:nth-child(6) { --tx-start: 12px; }
+.flow-dot:nth-child(7) { --tx-start: 18px; }
+
+.protocol-command.glitch span {
+  animation: textGlitch 0.8s ease-out forwards;
+}

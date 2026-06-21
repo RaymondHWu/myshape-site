@@ -1,0 +1,58 @@
+/* ── HowItWorks — Pipeline step styles ── */
+
+.pipeline-line {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(144, 200, 255, 0.2) 40%, rgba(144, 200, 255, 0.2) 60%, transparent 100%);
+  z-index: 1;
+}
+
+.pipeline-line::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -30%; width: 30%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(144, 200, 255, 0.6), transparent);
+  animation: scanBeam 2.8s infinite ease-in-out;
+}
+
+.pipeline-line::before {
+  content: "";
+  position: absolute;
+  top: -3px; left: -10%; width: 6px; height: 6px;
+  background: #90c8ff; border-radius: 50%;
+  box-shadow: 0 0 12px rgba(144, 200, 255, 0.8);
+  animation: droplet 3.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-container {
+  cursor: default;
+}
+
+.text-motion-wrapper {
+  transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+  border-left: 1px solid rgba(144, 200, 255, 0.2);
+  padding-left: 1.5rem;
+}
+
+.text-item {
+  transition: all 0.4s ease;
+}
+
+.step-container:hover .text-motion-wrapper {
+  transform: translateX(10px);
+  border-left: 1px solid rgba(144, 200, 255, 0.8);
+  background: linear-gradient(90deg, rgba(144, 200, 255, 0.05), transparent);
+}
+
+.step-container:hover .text-item {
+  color: #fff;
+  opacity: 1;
+}
+
+.step-container:hover .index-num {
+  color: #90c8ff;
+  letter-spacing: 0.3em;
+}

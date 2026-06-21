@@ -15,7 +15,7 @@ export default function JoinWaitlist({ id }: { id?: string }) {
     e.preventDefault();
     setIsRitual(true);
     setRitualText("INITIALIZING_GENESIS_SEQUENCE...");
-    playTick(60, "sawtooth", 0.8, 0.03);
+    playTick(100, "sawtooth", 0.8, 0.04);
     await new Promise((r) => setTimeout(r, 3200));
     window.dispatchEvent(new CustomEvent("pt:navigate", { detail: { href: "/genesis" } }));
   };
@@ -173,7 +173,7 @@ export default function JoinWaitlist({ id }: { id?: string }) {
           <button
             type="submit"
             className="genesis-btn"
-            onMouseEnter={() => { setIsHovering(true); playTick(800, "triangle", 0.04, 0.012); }}
+            onMouseEnter={() => { setIsHovering(true); playTick(800, "triangle", 0.10, 0.025); }}
             onMouseLeave={() => setIsHovering(false)}
           >
             <span className="btn-border-glow" />

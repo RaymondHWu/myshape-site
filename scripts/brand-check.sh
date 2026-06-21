@@ -47,9 +47,12 @@ for PATTERN in "${BANNED[@]}"; do
     esac
 
     if [ -f "$file" ]; then
+      # 跳过学术论文 JSON（技术术语上下文，非品牌文案）
+      case "$file" in *content.json) continue ;; esac
       RAW_MATCHES=$(grep -Hin "$PATTERN" "$file" 2>/dev/null || true)
       # 排除品牌合规术语：Data-Body, data-body, non-biometric
-      MATCHES=$(echo "$RAW_MATCHES" | grep -v -i -E 'data.body|non.biometric' || true)
+      # 排除：产品术语、HTTP fetch、HTML标签
+      MATCHES=$(echo "$RAW_MATCHES" | grep -v -i -E 'data.body|non.biometric|Particle.Body|body: JSON|<\/?body' || true)
       if [ -n "$MATCHES" ]; then
         VIOLATIONS=$((VIOLATIONS + 1))
         echo -e "${RED}✘ BANNED WORD${NC} found in: ${YELLOW}$file${NC}"

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback } from "react";
+import { playTick } from "@/utils/useAudioTick";
 
 export default function GlowVortexButton({
   onClick,
@@ -10,52 +11,14 @@ export default function GlowVortexButton({
   className?: string;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const audioCtxRef = useRef<AudioContext | null>(null);
 
-  // 初始化或获取音频上下文
-  const getAudioCtx = useCallback(() => {
-    if (typeof window === 'undefined') return null;
-    if (!audioCtxRef.current) {
-      audioCtxRef.current = new (window.AudioContext || (window as unknown as Record<string, unknown>).webkitAudioContext)();
+  const playVortexSound = useCallback((action: 'hover' | 'click') => {
+    if (action === 'hover') {
+      playTick(150, "sine", 0.15, 0.015);
+    } else {
+      playTick(800, "triangle", 0.10, 0.03);
     }
-    // 如果是被浏览器挂起的（Autoplay Policy），尝试恢复
-    if (audioCtxRef.current.state === 'suspended') {
-      audioCtxRef.current.resume();
-    }
-    return audioCtxRef.current;
   }, []);
-
-  const playVortexSound = useCallback((type: 'hover' | 'click') => {
-    const ctx = getAudioCtx();
-    if (!ctx) return;
-
-    try {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      if (type === 'hover') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(150, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(350, ctx.currentTime + 0.15);
-        gain.gain.setValueAtTime(0.008, ctx.currentTime);
-      } else {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(800, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.02, ctx.currentTime);
-      }
-
-      const duration = type === 'hover' ? 0.15 : 0.4;
-      gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + duration);
-      
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + duration);
-    } catch (e) {
-      console.warn("Audio feedback blocked by browser protocol.");
-    }
-  }, [getAudioCtx]);
 
   useEffect(() => {
     const canvas = canvasRef.current!;

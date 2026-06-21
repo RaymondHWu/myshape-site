@@ -1,39 +1,63 @@
 "use client";
 
+// ── Shared AudioContext ──
+// Keep-alive on every user gesture ensures the context is unlocked.
+// We NEVER synchronously check ctx.state because resume() is async
+// and the state check would race with the pending resume promise.
+// Instead: fire resume(), then immediately schedule the oscillator.
+// The browser's audio thread handles ordering correctly.
+
 let _ctx: AudioContext | null = null;
-let _warmed = false;
 
-function warmUp() {
-  if (_warmed || typeof window === "undefined") return;
-  _warmed = true;
-  const resume = () => {
-    if (!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)();
-    _ctx.resume();
-  };
-  document.addEventListener("click", resume, { once: true });
-  document.addEventListener("touchstart", resume, { once: true });
-  document.addEventListener("mouseenter", resume, { once: true });
+function getCtx(): AudioContext | null {
+  if (typeof window === "undefined") return null;
+  if (!_ctx) {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    _ctx = new AC();
+  }
+  return _ctx;
 }
-warmUp();
 
-export async function playTick(freq = 800, type: OscillatorType = "triangle", duration = 0.04, vol = 0.012) {
+// Keep-alive: aggressively resume on every interaction
+if (typeof window !== "undefined") {
+  const resume = () => {
+    const ctx = getCtx();
+    if (ctx) ctx.resume().catch(() => {});
+  };
+  ["click", "touchstart", "keydown", "pointerdown", "mouseenter"].forEach((evt) =>
+    document.addEventListener(evt, resume, { passive: true, capture: true }),
+  );
+}
+
+export function playTick(
+  freq = 800,
+  type: OscillatorType = "triangle",
+  duration = 0.04,
+  vol = 0.012,
+) {
   if (typeof window === "undefined") return;
-  if (!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)();
-  // 每次调用都尝试恢复（浏览器可能在后台暂停 AudioContext）
-  if (_ctx.state === "suspended") await _ctx.resume();
-  if (_ctx.state !== "running") return;
+  const ctx = getCtx();
+  if (!ctx) return;
+
+  // Fire resume (no await — the audio thread queues this before our oscillator)
+  ctx.resume().catch(() => {});
+
   try {
-    const osc = _ctx.createOscillator();
-    const gain = _ctx.createGain();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
     osc.type = type;
-    osc.frequency.setValueAtTime(freq, _ctx.currentTime);
-    gain.gain.setValueAtTime(vol, _ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.00001, _ctx.currentTime + duration);
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(Math.min(vol, 0.05), ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + duration);
     osc.connect(gain);
-    gain.connect(_ctx.destination);
+    gain.connect(ctx.destination);
     osc.start();
-    osc.stop(_ctx.currentTime + duration);
+    osc.stop(ctx.currentTime + duration);
+    osc.onended = () => {
+      osc.disconnect();
+      gain.disconnect();
+    };
   } catch {
-    // 静默
+    // audio is non-critical
   }
 }

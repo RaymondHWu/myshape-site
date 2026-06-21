@@ -2,9 +2,10 @@
 
 import React from "react";
 import { playTick } from "@/utils/useAudioTick";
+import "./HowItWorks.css";
 
 export default function HowItWorks() {
-  const playPipelineTick = (stepIndex: number) => playTick([600, 800, 1000][stepIndex] || 800, "sine", 0.06, 0.015);
+  const playPipelineTick = (stepIndex: number) => playTick([600, 800, 1000][stepIndex] || 800, "sine", 0.10, 0.025);
 
   return (
     <section
@@ -25,87 +26,6 @@ export default function HowItWorks() {
       <h1 className="sr-only">
         How MyShape Works — Motion-Native Zero-Knowledge Identity Pipeline
       </h1>
-
-      <style>{`
-        @keyframes pulseDot {
-          0% { transform: scale(1); opacity: 0.8; }
-          50% { transform: scale(1.5); opacity: 1; box-shadow: 0 0 15px #90c8ff; }
-          100% { transform: scale(1); opacity: 0.8; }
-        }
-
-        @keyframes scanBeam {
-          0% { left: -30%; opacity: 0; }
-          20% { opacity: 1; }
-          50% { left: 50%; opacity: 0.9; }
-          80% { opacity: 1; }
-          100% { left: 120%; opacity: 0; }
-        }
-
-        @keyframes droplet {
-          0% { left: -10%; opacity: 0; transform: scale(0.6); }
-          10% { opacity: 1; transform: scale(1); }
-          50% { left: 50%; opacity: 0.9; transform: scale(1.15); }
-          90% { opacity: 0.4; transform: scale(0.8); }
-          100% { left: 110%; opacity: 0; transform: scale(0.6); }
-        }
-
-        .pipeline-line {
-          position: absolute;
-          top: 35px;
-          left: 0;
-          height: 1px;
-          width: 100%;
-          background: linear-gradient(90deg, transparent 0%, rgba(144, 200, 255, 0.2) 40%, rgba(144, 200, 255, 0.2) 60%, transparent 100%);
-          z-index: 1;
-        }
-
-        .pipeline-line::after {
-          content: "";
-          position: absolute;
-          top: 0; left: -30%; width: 30%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(144, 200, 255, 0.6), transparent);
-          animation: scanBeam 2.8s infinite ease-in-out;
-        }
-
-        .pipeline-line::before {
-          content: "";
-          position: absolute;
-          top: -3px; left: -10%; width: 6px; height: 6px;
-          background: #90c8ff; border-radius: 50%;
-          box-shadow: 0 0 12px rgba(144, 200, 255, 0.8);
-          animation: droplet 3.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .step-container {
-          cursor: default;
-        }
-
-        .text-motion-wrapper {
-          transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
-          border-left: 1px solid rgba(144, 200, 255, 0.2);
-          padding-left: 1.5rem;
-        }
-
-        .text-item {
-          transition: all 0.4s ease;
-        }
-
-        .step-container:hover .text-motion-wrapper {
-          transform: translateX(10px);
-          border-left: 1px solid rgba(144, 200, 255, 0.8);
-          background: linear-gradient(90deg, rgba(144, 200, 255, 0.05), transparent);
-        }
-
-        .step-container:hover .text-item {
-          color: #fff !important;
-          opacity: 1 !important;
-        }
-
-        .step-container:hover .index-num {
-          color: #90c8ff !important;
-          letter-spacing: 0.3em;
-        }
-      `}</style>
 
       <div style={{ maxWidth: "1200px", width: "100%" }}>
         
@@ -148,7 +68,7 @@ export default function HowItWorks() {
             <div className="text-motion-wrapper">
               <span className="text-item index-num" style={{ fontFamily: "monospace", fontSize: "0.8rem", color: "#90c8ff", opacity: 0.5 }}>02</span>
               <h3 className="text-item" style={{ fontSize: "1.2rem", fontWeight: 200, color: "#fff", margin: "1rem 0" }}>BEHAVIORAL ENCODING</h3>
-              <p className="text-item" style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontWeight: 300 }}>Movement becomes a compact identity vector — non-biometric and irreversible.</p>
+              <p className="text-item" style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, fontWeight: 300 }}>Movement becomes a compact identity vector — non-corporeal and irreversible.</p>
             </div>
           </div>
 
