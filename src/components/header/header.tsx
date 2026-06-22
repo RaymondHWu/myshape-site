@@ -295,7 +295,15 @@ const ProtocolHeader = () => {
         { label: "Papers", href: "/papers" },
       ].map(link => (
         <Link key={link.href} href={link.href}
-          style={{ fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.45)", textDecoration: "none", textTransform: "uppercase" }}>
+          onMouseEnter={e => {
+            e.currentTarget.style.color = "rgba(144,200,255,0.9)";
+            e.currentTarget.style.textShadow = "0 0 8px rgba(144,200,255,0.3)";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.color = "rgba(255,255,255,0.45)";
+            e.currentTarget.style.textShadow = "none";
+          }}
+          style={{ fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.45)", textDecoration: "none", textTransform: "uppercase", transition: "all 0.3s ease" }}>
           {link.label}
         </Link>
       ))}
