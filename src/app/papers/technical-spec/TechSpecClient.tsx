@@ -95,6 +95,9 @@ export default function TechSpecClient() {
             The engineering document behind the MyShape Protocol. Motion Vector format,
             PES engine, proof system, SST topology, and reference implementation.
           </p>
+          <p className="text-white/15 text-[10px] tracking-[0.15em] mt-2">
+            By MyShape Protocol &nbsp;·&nbsp; V1.0 &nbsp;·&nbsp; June 2026
+          </p>
         </div>
 
         {/* Metrics */}
