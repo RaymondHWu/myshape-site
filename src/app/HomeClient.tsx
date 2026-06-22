@@ -197,6 +197,7 @@ export default function HomeClient() {
                         border: "none",
                       }}
                       onMouseEnter={e => {
+                        playTick([400, 550, 700, 850, 1000][5 - parseInt(layer.l.slice(1))] || 600, "sine", 0.10, 0.02);
                         e.currentTarget.style.background = "rgba(2,4,10,0.95)";
                         e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.4), 0 0 20px rgba(144,200,255,0.06)";
                       }}
