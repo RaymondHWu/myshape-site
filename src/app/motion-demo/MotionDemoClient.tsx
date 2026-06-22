@@ -435,7 +435,10 @@ export default function MotionDemoClient() {
         ep: zkp.ep.ep_hash,
       });
     } else {
-      setProofHashes(null);
+      // Simulated mode — no real camera data, inject sample PES for demonstration
+      setPesData({ score: 0.61, timing: 0.33, noise: 0.68, frequency: 0.14, biological: 0.51 });
+      setThreatVerdict("⚠ SIMULATED_DATA — NOT_A_REAL_PRESENCE_PROOF");
+      setProofHashes({ zkp: "sim_data", pop: "sim_pop", mp: "sim_mp", ep: "sim_ep" });
     }
     setTimeout(() => { playTick(1200, "sine", 0.12, 0.03); setPhase("complete"); }, 1500);
   }, [phase]);
