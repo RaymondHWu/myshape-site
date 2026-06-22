@@ -154,6 +154,28 @@ export default function HomeClient() {
 
             {/* ── Cryptographic Sovereign Spine ── */}
             <div className="relative max-w-3xl mx-auto">
+              {/* Mobile: simplified stack */}
+              <div className="md:hidden space-y-2">
+                {[
+                  { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F" },
+                  { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK" },
+                  { l: "L3", name: "IDENTITY VECTOR", desc: "Motion geometry distilled into a compact, non-replicable signature.", meta: "GEOMETRY: VECTOR_3D_DISTILLED // SIG_SECURE" },
+                  { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL" },
+                  { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE" },
+                ].map(layer => (
+                  <div key={layer.l} className="border border-cyan-400/10 bg-black/30 p-4">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="font-mono text-[10px] shrink-0" style={{ color: "rgba(144,200,255,0.4)" }}>{layer.l}</span>
+                      <span className="text-white/70 text-[11px] tracking-[0.2em] uppercase">{layer.name}</span>
+                    </div>
+                    <p className="text-white/25 text-[10px] leading-relaxed mb-2">{layer.desc}</p>
+                    <div className="inline-block px-2 py-0.5 font-mono text-[8px] border border-cyan-400/10 text-cyan-400/40 bg-cyan-400/[0.02]">{layer.meta}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Desktop: Quantum Spine */}
+              <div className="hidden md:block">
               {/* Quantum Spine — central axis */}
               <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[1px]"
                 style={{ background: "linear-gradient(to bottom, transparent, rgba(144,200,255,0.3), rgba(144,200,255,0.2), rgba(144,200,255,0.1), transparent)" }} />
@@ -248,6 +270,7 @@ export default function HomeClient() {
                 </div>
               ))}
             </div>
+            </div>{/* end desktop-only spine wrapper */}
 
             {/* Protocol Artifacts */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-14">
