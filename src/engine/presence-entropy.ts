@@ -135,7 +135,7 @@ export function computeBiologicalPerturbation(
         varA += da * da;
         varB += db * db;
       }
-      if (varA < 1e-9 || varB < 1e-9) continue;
+      if (varA < 1e-7 || varB < 1e-7) continue; // signals too smooth — no meaningful jerk
       const r = cov / Math.sqrt(varA * varB);
       // Real motion: r ≈ 0.3–0.8 (coordinated). AI/unreal: r ≈ 0–0.2.
       totalCorrelation += Math.abs(r);
