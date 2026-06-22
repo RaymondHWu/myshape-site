@@ -198,14 +198,13 @@ export default function HomeClient() {
                 { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", hue: 180, side: "right" as const, delay: "1.2s" },
               ].map((layer) => (
                 <div key={layer.l} className={`relative flex items-center mb-6 ${layer.side === "left" ? "flex-row" : "flex-row-reverse"}`}>
-                  {/* Spine connector — pulsing, alternates sides */}
-                  <div className={`absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full z-10 border-2 ${
-                    layer.side === "left" ? "left-[calc(50%-10px)]" : "left-[calc(50%+7px)]"
-                  }`}
+                  {/* Spine trace — horizontal circuit line to card, pulsing opacity */}
+                  <div className="absolute top-1/2 -translate-y-1/2 z-10"
                     style={{
-                      borderColor: "rgba(144,200,255,0.4)",
-                      background: "rgba(144,200,255,0.15)",
-                      boxShadow: "0 0 8px rgba(144,200,255,0.2)",
+                      left: layer.side === "left" ? "calc(50% - 18px)" : "50%",
+                      width: "18px",
+                      height: "1px",
+                      background: "rgba(144,200,255,0.25)",
                       animation: `nodePulse 2.5s ease-in-out ${layer.delay} infinite`,
                     }} />
 
