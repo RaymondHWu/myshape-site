@@ -3,9 +3,11 @@ import "@/styles/animations.css";
 import React from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { GeistSans, GeistMono } from "geist/font";
-import HeroVisual from "@/components/hero/HeroVisual";
+import dynamic from "next/dynamic";
 import PageTransition from "@/components/transition/PageTransition";
 import ScrollTop from "@/components/ui/ScrollTop";
+
+const HeroVisual = dynamic(() => import("@/components/hero/HeroVisual"), { ssr: false });
 
 /* -------------------------------
    全站 SEO metadata（首页）
