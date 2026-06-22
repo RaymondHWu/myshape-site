@@ -90,7 +90,7 @@ function ParticleEngine({ onComplete }: { onComplete: () => void }) {
       offY: (Math.random() - 0.5) * 2500
     }));
 
-    let startTime = Date.now();
+    const startTime = Date.now();
     let isStabilized = false;
     let completed = false;
 
@@ -105,9 +105,9 @@ function ParticleEngine({ onComplete }: { onComplete: () => void }) {
 
       particles.forEach(p => {
         p.angle += p.speed;
-        let tx = Math.cos(p.angle) * p.radius;
-        let x = tx + p.offX * invProgress;
-        let y = p.y + p.offY * invProgress;
+        const tx = Math.cos(p.angle) * p.radius;
+        const x = tx + p.offX * invProgress;
+        const y = p.y + p.offY * invProgress;
         
         const scale = 300 / (300 + Math.sin(p.angle) * p.radius);
         

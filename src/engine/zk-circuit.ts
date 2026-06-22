@@ -18,26 +18,11 @@ function randomBytes(length: number): Uint8Array {
   return arr;
 }
 
-async function sha256(data: Uint8Array): Promise<Uint8Array> {
-  if (typeof window !== "undefined" && window.crypto?.subtle) {
-    const hash = await window.crypto.subtle.digest("SHA-256", data as BufferSource);
-    return new Uint8Array(hash as ArrayBuffer);
-  }
-  // Fallback: simple hash for SSR
-  const result = new Uint8Array(32);
-  let h = 0x6d797368;
-  for (let i = 0; i < data.length; i++) {
-    h = ((h << 5) - h) + data[i];
-    result[i % 32] ^= (h & 0xff);
-  }
-  return result;
-}
-
 function sha256Sync(data: Uint8Array): Uint8Array {
   // Deterministic fallback for sync contexts
   const result = new Uint8Array(32);
   let h0 = 0x6a09e667, h1 = 0xbb67ae85, h2 = 0x3c6ef372, h3 = 0xa54ff53a;
-  let h4 = 0x510e527f, h5 = 0x9b05688c, h6 = 0x1f83d9ab, h7 = 0x5be0cd19;
+  const h4 = 0x510e527f, h5 = 0x9b05688c, h6 = 0x1f83d9ab, h7 = 0x5be0cd19;
   for (let i = 0; i < data.length; i++) {
     const b = data[i];
     h0 = ((h0 << 3) ^ b) & 0xffffffff;

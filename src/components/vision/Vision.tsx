@@ -118,7 +118,7 @@ export default function Vision() {
             textAlign: "right", borderRight: "1px solid rgba(144,200,255,0.15)", 
             paddingRight: "1.5rem", lineHeight: "1.8", fontFamily: "monospace", marginBottom: "5px"
           }}>
-            PROTOCOL_VISION_V1.0<br />// STATE: ACTIVE
+            PROTOCOL_VISION_V1.0<br />{"// STATE: ACTIVE"}
           </div>
         </div>
 

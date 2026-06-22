@@ -10,7 +10,7 @@
 
 import type { MotionVectorFinal } from "@/types/motion-vector";
 import type { PESComponents } from "./presence-entropy";
-import { pedersenCommit, generateZKPresenceProof as generateCircuitProof } from "./zk-circuit";
+import { generateZKPresenceProof as generateCircuitProof } from "./zk-circuit";
 
 // ── §6.2 — Presence Proof (PoP) ──
 // H(FV) — hash of the Feature Vector. The smallest verifiable unit.
@@ -85,19 +85,7 @@ export interface VerificationResult {
   verifier_node?: string;
 }
 
-// ── Hash utilities (Poseidon-compatible stub) ──
-// In production: use @zk-kit/poseidon or similar ZK-friendly hash.
-// For v1: use SHA-256 via Web Crypto as a deterministic stub.
-
-async function sha256(data: string): Promise<string> {
-  if (typeof window === "undefined") return data; // SSR guard
-  const encoder = new TextEncoder();
-  const buffer = encoder.encode(data);
-  const hashBuffer = await window.crypto.subtle.digest("SHA-256", buffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-}
-
+// ── Hash utilities ──
 function sha256Sync(data: string): string {
   // Deterministic stub for environments without Web Crypto
   let hash = 0x6d797368; // "mysh"

@@ -36,7 +36,7 @@ export interface EntropyGap {
   gap_exists: boolean; // true if ΔH > 0 for this dimension
 }
 
-export function computeEntropyGaps(components: PESComponents): EntropyGap[] {
+export function computeEntropyGaps(_components: PESComponents): EntropyGap[] {
   const dimensions: Array<keyof PESComponents> = [
     "microTimingVariance",
     "noiseResidual",

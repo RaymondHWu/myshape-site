@@ -6,7 +6,7 @@
  * Run: npx tsx tests/pes-engine.test.ts
  */
 
-import { computeMicroTimingVariance, computeNoiseResidual, computeFrequencyEntropy, computeBiologicalPerturbation, computePES, computeFullPES } from "../src/engine/presence-entropy";
+import { computeMicroTimingVariance, computeNoiseResidual, computeFrequencyEntropy, computeBiologicalPerturbation, computeFullPES } from "../src/engine/presence-entropy";
 import type { JointPosition } from "../src/types/motion-vector";
 
 // ── Generate synthetic skeleton frames ──
