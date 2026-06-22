@@ -434,11 +434,6 @@ export default function MotionDemoClient() {
         mp: zkp.mp.mp_hash,
         ep: zkp.ep.ep_hash,
       });
-    } else {
-      // Simulated mode — no real camera data, inject sample PES for demonstration
-      setPesData({ score: 0.61, timing: 0.33, noise: 0.68, frequency: 0.14, biological: 0.51 });
-      setThreatVerdict("⚠ SIMULATED_DATA — NOT_A_REAL_PRESENCE_PROOF");
-      setProofHashes({ zkp: "sim_data", pop: "sim_pop", mp: "sim_mp", ep: "sim_ep" });
     }
     setTimeout(() => { playTick(1200, "sine", 0.12, 0.03); setPhase("complete"); }, 1500);
   }, [phase]);
@@ -504,16 +499,10 @@ export default function MotionDemoClient() {
                   Face the camera. Stand naturally.<br />No specific pose or movement needed.
                 </p>
                 <div className="flex flex-col items-center gap-3 mt-4">
-                  <div className="flex gap-4">
-                    <button onClick={startCapture}
-                      className="px-10 py-4 border border-cyan-400/40 text-cyan-400/80 text-[11px] tracking-[0.4em] uppercase hover:bg-cyan-400/10 hover:text-white transition-all">
-                      Activate_Camera
-                    </button>
-                    <button onClick={startSimulated}
-                      className="px-10 py-4 border border-white/10 text-white/30 text-[9px] tracking-[0.3em] uppercase hover:border-white/30 hover:text-white/60 transition-all">
-                      Simulated (no camera)
-                    </button>
-                  </div>
+                  <button onClick={startCapture}
+                    className="px-12 py-4 border border-cyan-400/40 text-cyan-400/80 text-[11px] tracking-[0.4em] uppercase hover:bg-cyan-400/10 hover:text-white transition-all">
+                    Activate_Camera
+                  </button>
                   <button onClick={() => {
                     playTick(800, "sine", 0.10, 0.025);
                     setPesData({ score: 0.64, timing: 0.38, noise: 0.72, frequency: 0.15, biological: 0.55 });
