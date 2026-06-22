@@ -102,6 +102,8 @@ export default function MotionDemoClient() {
         const w = canvas.width = canvas.clientWidth || 640;
         const h = canvas.height = canvas.clientHeight || 400;
         ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = "#02040a";
+        ctx.fillRect(0, 0, w, h);
         ctx.save();
         ctx.translate(w / 2, h / 2);
         ctx.scale(scaleFactor, scaleFactor);
