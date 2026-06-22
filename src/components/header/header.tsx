@@ -310,8 +310,10 @@ const ProtocolHeader = () => {
             style={{
               fontSize: "9px", letterSpacing: "0.2em",
               color: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "rgb(34, 211, 238)" : "rgba(255,255,255,0.45)",
-              textShadow: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "0 0 8px rgba(34,211,238,0.2)" : "none",
+              textShadow: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "0 0 10px rgba(34,211,238,0.5)" : "none",
               textDecoration: "none", textTransform: "uppercase", transition: "all 0.3s ease",
+              borderBottom: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "1px solid rgba(34,211,238,0.5)" : "1px solid transparent",
+              paddingBottom: "2px",
             }}>
             {link.label}
           </Link>
