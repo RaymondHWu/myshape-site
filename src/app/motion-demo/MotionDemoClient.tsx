@@ -112,12 +112,12 @@ export default function MotionDemoClient() {
           const s = 300 / (300 + z);
           const alpha = 0.55 + s * 0.45;
           // Outer glow
-          ctx.fillStyle = `hsla(200, 12%, 92%, ${alpha * 0.35})`;
+          ctx.fillStyle = `rgba(180, 215, 255, ${alpha * 0.35})`;
           ctx.beginPath();
           ctx.arc(x * s, p.y * s, 2.0 * s, 0, Math.PI * 2);
           ctx.fill();
           // Bright core
-          ctx.fillStyle = `hsla(200, 8%, 98%, ${alpha})`;
+          ctx.fillStyle = `rgba(220, 240, 255, ${alpha})`;
           ctx.beginPath();
           ctx.arc(x * s, p.y * s, 0.8 * s, 0, Math.PI * 2);
           ctx.fill();
