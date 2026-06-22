@@ -476,7 +476,7 @@ export default function MotionDemoClient() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Particle Panel */}
-          <div className="lg:col-span-2 border border-white/10 bg-black/60 relative overflow-hidden" style={{ minHeight: 400 }}>
+          <div className="lg:col-span-2 border border-white/10 bg-black/60 relative overflow-hidden" style={{ minHeight: "min(400px, 60vw)" }}>
             {/* Video is the main display — camera feed directly visible */}
             <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover" playsInline muted
               style={{ transform: "scaleX(-1)" }} />
