@@ -80,8 +80,11 @@ export default function Hero() {
         {/* 严格还原：文案位置与字号 */}
         <div className="absolute top-[14vh] left-0 w-full z-100 pointer-events-none text-center px-6">
           <h1
-            className="hero-title-glow text-[1.4rem] md:text-[1.8rem] font-extralight uppercase text-white/90"
-            style={{ letterSpacing: "0.8em", textIndent: "0.8em" }}
+            className="text-[1.4rem] md:text-[1.8rem] font-extralight uppercase text-white/90"
+            style={{
+              letterSpacing: "0.8em", textIndent: "0.8em",
+              animation: "heroGlow 3s ease-in-out infinite",
+            }}
           >
             PROOF OF PRESENCE
           </h1>

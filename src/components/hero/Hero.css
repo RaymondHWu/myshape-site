@@ -62,6 +62,6 @@
   animation: heroGlow 3s ease-in-out infinite;
 }
 @keyframes heroGlow {
-  0%, 100% { text-shadow: 0 0 20px rgba(144,200,255,0.08); }
-  50%      { text-shadow: 0 0 36px rgba(144,200,255,0.2); }
+  0%, 100% { text-shadow: 0 0 24px rgba(144,200,255,0.15), 0 0 48px rgba(144,200,255,0.05); }
+  50%      { text-shadow: 0 0 40px rgba(144,200,255,0.35), 0 0 80px rgba(144,200,255,0.12); }
 }
