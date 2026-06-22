@@ -156,26 +156,8 @@ export default function HomeClient() {
               </p>
             </div>
 
-            {/* Architecture Flow — visual centerpiece */}
-            <div className="relative mb-12">
-              <div className="hidden md:block absolute top-1/2 left-[5%] right-[5%] h-[1px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
-              <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
-                {["Motion", "Behavior", "Identity Vector", "ZK Proof", "Agent Identity"].map((step, i) => (
-                  <div key={step} className="flex items-center gap-3 md:gap-4">
-                    <div className="group relative px-5 py-2.5 border border-cyan-400/10 bg-black/40 hover:border-cyan-400/25 hover:bg-black/60 transition-all duration-500 cursor-default"
-                      style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{ background: "radial-gradient(ellipse at center, rgba(144,200,255,0.06) 0%, transparent 70%)" }} />
-                      <span className="relative z-10 text-cyan-400/40 group-hover:text-cyan-300/80 text-[11px] tracking-[0.15em] uppercase transition-colors duration-500">{step}</span>
-                    </div>
-                    {i < 4 && <span className="text-white/10 text-[12px] font-light">→</span>}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Five Layers — with vertical connecting line */}
-            <div className="relative max-w-2xl mx-auto mb-14">
+            {/* Five Layers — sole visual element */}
+            <div className="relative max-w-xl mx-auto">
               <div className="absolute left-[19px] top-4 bottom-4 w-[1px] bg-gradient-to-b from-cyan-400/20 via-cyan-400/10 to-cyan-400/20" />
               <div className="space-y-0.5">
                 {[
@@ -199,25 +181,20 @@ export default function HomeClient() {
               </div>
             </div>
 
-            {/* Entry Points — matching flow card style */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {[
-                { label: "Read", title: "Technical Spec", desc: "Motion Vector · PES · Proof System", href: "/papers/technical-spec", freq: 800 as const },
-                { label: "Review", title: "Threat Model", desc: "8 Attack Signatures · Entropy Gap Theorem", href: "/papers/threat-model", freq: 900 as const },
-                { label: "Build", title: "Developer SDK", desc: "5 Lines to Integrate · TypeScript · Zero Deps", href: "/developers", freq: 1000 as const },
-              ].map(card => (
-                <a key={card.href} href={card.href}
-                  onMouseEnter={e => { playTick(card.freq, "sine", 0.10, 0.025); }}
-                  className="group relative p-6 border border-cyan-400/10 bg-black/40 hover:border-cyan-400/25 hover:bg-black/60 transition-all duration-500 text-center"
-                  style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{ background: "radial-gradient(ellipse at center, rgba(144,200,255,0.06) 0%, transparent 70%)" }} />
-                  <div className="relative z-10 text-white/40 text-[10px] tracking-[0.3em] uppercase mb-3 group-hover:text-white/70 transition-colors duration-500">{card.label}</div>
-                  <div className="relative z-10 text-white/60 text-[11px] tracking-[0.2em] uppercase mb-2 group-hover:text-white/90 transition-colors duration-500">{card.title}</div>
-                  <div className="relative z-10 text-white/15 text-[9px] tracking-[0.1em] group-hover:text-white/30 transition-colors duration-500">{card.desc}</div>
-                  <div className="relative z-10 mt-4 text-white/15 group-hover:text-white/50 group-hover:translate-x-1.5 transition-all duration-500 inline-block">→</div>
-                </a>
-              ))}
+            {/* Light CTA row */}
+            <div className="flex flex-wrap justify-center gap-6 mt-12">
+              <a href="/papers/technical-spec" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
+                className="text-cyan-400/35 hover:text-cyan-300/80 text-[10px] tracking-[0.2em] uppercase font-mono transition-all duration-500 border-b border-transparent hover:border-cyan-400/30 pb-0.5">
+                Technical Spec →
+              </a>
+              <a href="/papers/threat-model" onMouseEnter={() => playTick(900, "sine", 0.10, 0.025)}
+                className="text-cyan-400/35 hover:text-cyan-300/80 text-[10px] tracking-[0.2em] uppercase font-mono transition-all duration-500 border-b border-transparent hover:border-cyan-400/30 pb-0.5">
+                Threat Model →
+              </a>
+              <a href="/developers" onMouseEnter={() => playTick(1000, "sine", 0.10, 0.025)}
+                className="text-cyan-400/35 hover:text-cyan-300/80 text-[10px] tracking-[0.2em] uppercase font-mono transition-all duration-500 border-b border-transparent hover:border-cyan-400/30 pb-0.5">
+                Developer SDK →
+              </a>
             </div>
           </div>
         </section>
