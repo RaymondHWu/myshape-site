@@ -1,15 +1,8 @@
 "use client";
-import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { AnimatePresence } from 'framer-motion';
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
-// 假設你將儀式組件放在此路徑，若尚未創建請見下方步驟 2
-import GenesisRitual from "@/components/ritual/GenesisRitual"; 
 
 export default function MotionPipeline() {
-  const router = useRouter();
-  const [isRitualActive, setIsRitualActive] = useState(false);
 
   const pipelineSteps = [
     { 
@@ -38,21 +31,8 @@ export default function MotionPipeline() {
     }
   ];
 
-  const handleRitualComplete = () => {
-    // 儀式結束後執行真正的跳轉
-    router.push('/protocol/motion-pipeline/documentation');
-  };
-
   return (
-    <>
-      {/* 儀式遮罩層：當點擊按鈕時觸發 */}
-      <AnimatePresence>
-        {isRitualActive && (
-          <GenesisRitual onComplete={handleRitualComplete} />
-        )}
-      </AnimatePresence>
-
-      <ProtocolLayout 
+    <ProtocolLayout 
         refId="003" 
         category="PROTOCOL_CORE" 
         title="MOTION_PIPELINE" 
@@ -152,18 +132,16 @@ export default function MotionPipeline() {
                 "To build on MyShape is to build on the mathematics of human sovereignty."
               </p>
               
-              {/* 改為 button 並觸發儀式狀態 */}
-              <button 
-                onClick={() => setIsRitualActive(true)}
+              <Link
+                href="/papers/technical-spec"
                 className="inline-block group cursor-pointer"
               >
                  <div className="px-16 py-6 border border-cyan-500/30 bg-cyan-500/5 group-hover:bg-cyan-400 group-hover:text-black transition-all duration-500 text-cyan-400 text-[11px] tracking-[0.6em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.05)]">
                    View Technical Specification →
                  </div>
-              </button>
+              </Link>
           </section>
         </div>
       </ProtocolLayout>
-    </>
   );
 }
