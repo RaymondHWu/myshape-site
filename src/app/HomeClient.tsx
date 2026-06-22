@@ -180,12 +180,12 @@ export default function HomeClient() {
                 { l: "L2", name: "Behavior Encoding", desc: "PES engine — 4-dimensional entropy scoring", color: "cyan" },
                 { l: "L1", name: "Motion Capture", desc: "Real-time capture → MediaPipe → on-device processing", color: "cyan" },
               ].map((layer) => (
-                <div key={layer.l} className="flex items-center gap-4 px-5 py-3 border border-white/5 bg-black/30 group hover:border-cyan-500/20 transition-all">
-                  <span className="w-8 h-8 flex items-center justify-center border border-cyan-500/30 text-cyan-400/60 font-mono text-[10px] shrink-0">{layer.l}</span>
+                <div key={layer.l} className="flex items-center gap-4 px-5 py-3 border border-cyan-400/15 bg-cyan-400/[0.03] group hover:border-cyan-400/40 hover:bg-cyan-400/[0.06] transition-all">
+                  <span className="w-8 h-8 flex items-center justify-center border border-cyan-400/30 text-cyan-400/60 font-mono text-[10px] shrink-0">{layer.l}</span>
                   <div className="flex-1 min-w-0">
                     <span className="text-white/60 text-[11px] tracking-[0.2em] uppercase">{layer.name}</span>
                   </div>
-                  <span className="text-white/20 text-[10px] tracking-[0.1em] hidden md:block">{layer.desc}</span>
+                  <span className="text-white/25 text-[10px] tracking-[0.1em] hidden md:block">{layer.desc}</span>
                 </div>
               ))}
             </div>
