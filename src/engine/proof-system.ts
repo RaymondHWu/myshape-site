@@ -10,6 +10,7 @@
 
 import type { MotionVectorFinal } from "@/types/motion-vector";
 import type { PESComponents } from "./presence-entropy";
+import { pedersenCommit, generateZKPresenceProof as generateCircuitProof } from "./zk-circuit";
 
 // ── §6.2 — Presence Proof (PoP) ──
 // H(FV) — hash of the Feature Vector. The smallest verifiable unit.
@@ -60,6 +61,7 @@ export interface ZKPresenceProof {
   version: 1;
   proof_type: "ZK-Presence";
   zkp_hash: string;           // root hash of all three sub-proofs
+  zk_commitment?: string;     // Pedersen commitment (real ZK proof)
   pop: PresenceProof;
   mp: MotionProof;
   ep: EntropyProof;
@@ -177,10 +179,19 @@ export function generateZKPresenceProof(
   deviceSalt?: string,
 ): ZKPresenceProof {
   const rootData = `${pop.pop_hash}:${mp.mp_hash}:${ep.ep_hash}`;
+  const zkp_hash = sha256Sync(rootData);
+
+  // Generate real ZK commitment via Pedersen + Schnorr circuit
+  const zkResult = generateCircuitProof(
+    `${pop.pop_hash}:${ep.pes}`,
+    deviceSalt ?? "myshape",
+  );
+
   return {
     version: 1,
     proof_type: "ZK-Presence",
-    zkp_hash: sha256Sync(rootData),
+    zkp_hash,
+    zk_commitment: zkResult.commitment.commitment,
     pop,
     mp,
     ep,
