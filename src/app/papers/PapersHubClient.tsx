@@ -2,6 +2,7 @@
 import ProtocolHeader from "@/components/header/header";
 import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import ProtocolFooter from "@/components/footer/footer";
+import { playTick } from "@/utils/useAudioTick";
 
 const PAPERS = [
   {
@@ -67,6 +68,7 @@ export default function PapersHubClient() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {PAPERS.map((p) => (
             <a key={p.path} href={p.path}
+              onMouseEnter={() => playTick(600, "sine", 0.10, 0.02)}
               className="group block border border-white/5 bg-black/30 p-6 hover:border-cyan-500/20 transition-all">
               <div className="flex flex-wrap gap-1.5 mb-3">
                 {p.tags.map((t) => (

@@ -1,48 +1,47 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Typewriter({ text, className = "" }: { text: string; className?: string }) {
   const [display, setDisplay] = useState("");
-  const [showCursor, setShowCursor] = useState(true);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
+    mountedRef.current = true;
     let i = 0;
-    let dir = 1; // 1 = typing, -1 = deleting
-    const type = setInterval(() => {
-      if (dir === 1) {
+    let typing = true; // true = typing, false = deleting
+
+    const tick = () => {
+      if (!mountedRef.current) return;
+
+      if (typing) {
         i++;
         setDisplay(text.slice(0, i));
         if (i >= text.length) {
-          dir = -1;
-          // Pause at full text
-          clearInterval(type);
-          setTimeout(() => {
-            const del = setInterval(() => {
-              i--;
-              setDisplay(text.slice(0, i));
-              if (i <= 0) {
-                dir = 1;
-                clearInterval(del);
-              }
-            }, 25);
-          }, 3000);
+          // Pause at full text, then start deleting
+          setTimeout(() => { typing = false; tick(); }, 2000);
+          return;
+        }
+      } else {
+        i--;
+        setDisplay(text.slice(0, i));
+        if (i <= 0) {
+          // Paused at empty, then start typing again
+          setTimeout(() => { typing = true; tick(); }, 800);
+          return;
         }
       }
-    }, 40);
-    return () => clearInterval(type);
-  }, [text]);
+      setTimeout(tick, typing ? 35 : 20);
+    };
 
-  // Blink cursor
-  useEffect(() => {
-    const blink = setInterval(() => setShowCursor(c => !c), 500);
-    return () => clearInterval(blink);
-  }, []);
+    tick();
+    return () => { mountedRef.current = false; };
+  }, [text]);
 
   return (
     <span className={className}>
       {display}
-      <span style={{ opacity: showCursor ? 1 : 0, transition: "opacity 0.1s" }}>_</span>
+      <span className="animate-pulse" style={{ opacity: 0.7 }}>_</span>
     </span>
   );
 }
