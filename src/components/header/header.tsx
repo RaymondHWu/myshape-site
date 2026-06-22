@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import "./header.css";
 
 /* ============================================================
@@ -17,6 +18,7 @@ import "./header.css";
    ============================================================ */
 
 const ProtocolHeader = () => {
+  const pathname = usePathname();
   const [utcTime, setUtcTime] = useState("");
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [signalStrength, setSignalStrength] = useState(98.4);
@@ -294,20 +296,26 @@ const ProtocolHeader = () => {
         { label: "Build", href: "/developers" },
         { label: "Demo", href: "/motion-demo" },
         { label: "Papers", href: "/papers" },
-      ].map(link => (
-        <Link key={link.href} href={link.href}
-          onMouseEnter={e => {
-            e.currentTarget.style.color = "rgb(34, 211, 238)";
-            e.currentTarget.style.textShadow = "0 0 8px rgba(34,211,238,0.3)";
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.color = "rgba(255,255,255,0.45)";
-            e.currentTarget.style.textShadow = "none";
-          }}
-          style={{ fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.45)", textDecoration: "none", textTransform: "uppercase", transition: "all 0.3s ease" }}>
-          {link.label}
-        </Link>
-      ))}
+      ].map(link =>
+          <Link key={link.href} href={link.href}
+            onMouseEnter={e => {
+              e.currentTarget.style.color = "rgb(34, 211, 238)";
+              e.currentTarget.style.textShadow = "0 0 8px rgba(34,211,238,0.3)";
+            }}
+            onMouseLeave={e => {
+              const active = pathname === link.href || pathname.startsWith(link.href + "/");
+              e.currentTarget.style.color = active ? "rgb(34, 211, 238)" : "rgba(255,255,255,0.45)";
+              e.currentTarget.style.textShadow = active ? "0 0 8px rgba(34,211,238,0.2)" : "none";
+            }}
+            style={{
+              fontSize: "9px", letterSpacing: "0.2em",
+              color: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "rgb(34, 211, 238)" : "rgba(255,255,255,0.45)",
+              textShadow: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "0 0 8px rgba(34,211,238,0.2)" : "none",
+              textDecoration: "none", textTransform: "uppercase", transition: "all 0.3s ease",
+            }}>
+            {link.label}
+          </Link>
+      )}
     </div>
   </>
 );
