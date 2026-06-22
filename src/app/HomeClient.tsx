@@ -164,29 +164,45 @@ export default function HomeClient() {
               {/* Spine glow pulse */}
               <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[3px] opacity-20"
                 style={{ background: "linear-gradient(to bottom, hsla(270,60%,70%,0.6), hsla(200,60%,60%,0.4), hsla(180,50%,50%,0.2))", filter: "blur(4px)" }} />
+              {/* Scanning beam */}
+              <div className="absolute left-1/2 -translate-x-1/2 w-[2px] h-16"
+                style={{
+                  background: "linear-gradient(to bottom, transparent, rgba(200,230,255,0.5), transparent)",
+                  animation: "spineScan 4s ease-in-out infinite",
+                  filter: "blur(1px)",
+                }} />
 
               {[
-                { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F", hue: 270, side: "right" as const },
-                { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK", hue: 230, side: "left" as const },
-                { l: "L3", name: "IDENTITY VECTOR", desc: "Motion geometry distilled into a compact, non-replicable signature.", meta: "GEOMETRY: VECTOR_3D_DISTILLED // SIG_SECURE", hue: 210, side: "right" as const },
-                { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", hue: 195, side: "left" as const },
-                { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", hue: 180, side: "right" as const },
+                { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F", hue: 270, side: "right" as const, delay: "0s" },
+                { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK", hue: 230, side: "left" as const, delay: "0.3s" },
+                { l: "L3", name: "IDENTITY VECTOR", desc: "Motion geometry distilled into a compact, non-replicable signature.", meta: "GEOMETRY: VECTOR_3D_DISTILLED // SIG_SECURE", hue: 210, side: "right" as const, delay: "0.6s" },
+                { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", hue: 195, side: "left" as const, delay: "0.9s" },
+                { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", hue: 180, side: "right" as const, delay: "1.2s" },
               ].map((layer) => (
                 <div key={layer.l} className={`relative flex items-center mb-6 ${layer.side === "left" ? "flex-row" : "flex-row-reverse"}`}>
-                  {/* Spine connector */}
+                  {/* Spine connector — pulsing */}
                   <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full z-10 border-2"
                     style={{
                       borderColor: `hsla(${layer.hue}, 60%, 60%, 0.5)`,
                       background: `hsla(${layer.hue}, 50%, 30%, 0.8)`,
                       boxShadow: `0 0 8px hsla(${layer.hue}, 60%, 60%, 0.3)`,
+                      animation: `nodePulse 2.5s ease-in-out ${layer.delay} infinite`,
                     }} />
 
                   {/* Bracket Card */}
                   <div className={`w-[calc(50%-20px)] group`}>
-                    <div className="relative"
+                    <div className="relative transition-all duration-500 hover:-translate-y-0.5"
                       style={{
                         background: "rgba(2,4,10,0.85)",
                         border: "none",
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.background = "rgba(2,4,10,0.95)";
+                        e.currentTarget.style.boxShadow = `0 8px 24px rgba(0,0,0,0.4), 0 0 20px hsla(${layer.hue},50%,50%,0.08)`;
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.background = "rgba(2,4,10,0.85)";
+                        e.currentTarget.style.boxShadow = "none";
                       }}>
                       {/* Opening bracket */}
                       <span className="absolute top-0 bottom-0 w-[8px] opacity-40 group-hover:opacity-80 transition-opacity duration-500"
