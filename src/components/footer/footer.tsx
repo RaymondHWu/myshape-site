@@ -170,9 +170,13 @@ export default function ProtocolFooter() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 md:px-10 mt-16 pt-6 border-t border-white/5 text-center">
-        <span className="text-[7px] text-white/15 tracking-[0.3em] uppercase font-mono">
-          &copy; {new Date().getFullYear()} MYSHAPE PROTOCOL. ALL RIGHTS RESERVED.
+      <div className="max-w-6xl mx-auto px-4 md:px-10 mt-16 pt-6 border-t border-white/5 text-center space-y-1">
+        <div className="flex items-center justify-center gap-1.5">
+          <span className="w-1 h-1 rounded-full bg-cyan-400/50 shadow-[0_0_4px_rgba(34,211,238,0.4)]" />
+          <span className="text-[7px] text-white/12 tracking-[0.3em] uppercase font-mono">Core v2.0 — 15 Engines · 45 Tests</span>
+        </div>
+        <span className="text-[7px] text-white/10 tracking-[0.3em] uppercase font-mono block">
+          &copy; {new Date().getFullYear()} MYSHAPE PROTOCOL
         </span>
       </div>
     </footer>
