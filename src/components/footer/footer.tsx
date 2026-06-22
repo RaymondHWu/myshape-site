@@ -43,7 +43,8 @@ export default function ProtocolFooter() {
         { name: "MOTION_PIPELINE", href: "/protocol/motion-pipeline" },
         { name: "MOTION_DEMO", href: "/motion-demo" },
         { name: "DEVELOPERS", href: "/developers" },
-        { name: "ZERO_KNOWLEDGE", href: "/protocol/zk" }
+        { name: "ZERO_KNOWLEDGE", href: "/protocol/zk" },
+        { name: "AI_AGENT", href: "/agent" }
       ]
     },
     {
