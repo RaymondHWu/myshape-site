@@ -144,7 +144,7 @@ export default function HomeClient() {
         <HowItWorks />
 
         {/* ── Protocol Stack ── */}
-        <section className="relative py-24 md:py-32 border-y border-white/5">
+        <section className="relative py-24 md:py-32">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-16">
               <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase mb-4">Protocol_Stack</div>
@@ -160,14 +160,14 @@ export default function HomeClient() {
             <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-14">
               {["Motion", "Behavior", "Identity Vector", "ZK Proof", "Agent Identity"].map((step, i) => (
                 <div key={step} className="flex items-center gap-2 md:gap-3">
-                  <div className="px-4 py-2 border border-cyan-400/20 bg-cyan-400/[0.03] text-cyan-400/60 text-[10px] tracking-[0.15em] uppercase whitespace-nowrap hover:border-cyan-400/40 hover:text-cyan-300 transition-all">
+                  <div className="px-4 py-2 border border-white/10 bg-black/30 text-white/40 text-[10px] tracking-[0.15em] uppercase whitespace-nowrap hover:border-white/20 hover:text-white/70 transition-all">
                     {step}
                   </div>
-                  {i < 4 && <span className="text-cyan-400/20 text-[10px]">→</span>}
+                  {i < 4 && <span className="text-white/15 text-[10px]">→</span>}
                 </div>
               ))}
             </div>
-            <p className="text-center text-white/15 text-[9px] tracking-[0.1em] mb-14 -mt-8">
+            <p className="text-center text-white/10 text-[9px] tracking-[0.1em] mb-14 -mt-8">
               Real-time motion → behavioral encoding → identity vector → zero-knowledge proof → cross-species verification
             </p>
 
@@ -180,8 +180,8 @@ export default function HomeClient() {
                 { l: "L2", name: "Behavior Encoding", desc: "PES engine — 4-dimensional entropy scoring", color: "cyan" },
                 { l: "L1", name: "Motion Capture", desc: "Real-time capture → MediaPipe → on-device processing", color: "cyan" },
               ].map((layer) => (
-                <div key={layer.l} className="flex items-center gap-4 px-5 py-3 border border-cyan-400/15 bg-cyan-400/[0.03] group hover:border-cyan-400/40 hover:bg-cyan-400/[0.06] transition-all">
-                  <span className="w-8 h-8 flex items-center justify-center border border-cyan-400/30 text-cyan-400/60 font-mono text-[10px] shrink-0">{layer.l}</span>
+                <div key={layer.l} className="flex items-center gap-4 px-5 py-3 border border-white/5 bg-black/30 group hover:border-white/15 transition-all">
+                  <span className="w-8 h-8 flex items-center justify-center border border-white/15 text-white/30 font-mono text-[10px] shrink-0">{layer.l}</span>
                   <div className="flex-1 min-w-0">
                     <span className="text-white/60 text-[11px] tracking-[0.2em] uppercase">{layer.name}</span>
                   </div>
@@ -193,37 +193,37 @@ export default function HomeClient() {
             {/* Entry Points */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <a href="/papers/technical-spec"
-                onMouseEnter={e => { playTick(800, "sine", 0.10, 0.025); e.currentTarget.style.boxShadow = "0 0 30px rgba(34,211,238,0.12)"; }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 0 0px rgba(34,211,238,0)"; }}
-                className="group p-6 border border-cyan-400/20 bg-cyan-400/[0.03] hover:bg-cyan-400/[0.08] hover:border-cyan-400/50 hover:-translate-y-1 transition-all duration-500 text-center"
+                onMouseEnter={e => { playTick(800, "sine", 0.10, 0.025); e.currentTarget.style.boxShadow = "0 0 30px rgba(255,255,255,0.06)"; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 0 0px rgba(255,255,255,0)"; }}
+                className="group p-6 border border-white/10 bg-black/40 hover:bg-white/[0.04] hover:border-white/20 hover:-translate-y-1 transition-all duration-500 text-center"
                 style={{ boxShadow: "0 0 0px rgba(34,211,238,0)" }}
               >
-                <div className="text-cyan-400/60 text-[11px] tracking-[0.3em] uppercase mb-2 group-hover:text-cyan-300/80 transition-colors duration-500">Read</div>
+                <div className="text-white/30 text-[11px] tracking-[0.3em] uppercase mb-2 group-hover:text-white/60 transition-colors duration-500">Read</div>
                 <div className="text-white/70 text-[11px] tracking-[0.2em] uppercase mb-1 group-hover:text-white transition-colors duration-500">Technical Spec</div>
                 <div className="text-white/20 text-[9px] tracking-[0.1em] group-hover:text-white/35 transition-colors duration-500">Motion Vector · PES · Proof System</div>
-                <div className="mt-4 text-cyan-400/40 group-hover:text-cyan-300 group-hover:translate-x-1.5 transition-all duration-500 inline-block">→</div>
+                <div className="mt-4 text-white/20 group-hover:text-white/60 group-hover:translate-x-1.5 transition-all duration-500 inline-block">→</div>
               </a>
               <a href="/papers/threat-model"
-                onMouseEnter={e => { playTick(900, "sine", 0.10, 0.025); e.currentTarget.style.boxShadow = "0 0 30px rgba(34,211,238,0.12)"; }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 0 0px rgba(34,211,238,0)"; }}
-                className="group p-6 border border-cyan-400/20 bg-cyan-400/[0.03] hover:bg-cyan-400/[0.08] hover:border-cyan-400/50 hover:-translate-y-1 transition-all duration-500 text-center"
+                onMouseEnter={e => { playTick(900, "sine", 0.10, 0.025); e.currentTarget.style.boxShadow = "0 0 30px rgba(255,255,255,0.06)"; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 0 0px rgba(255,255,255,0)"; }}
+                className="group p-6 border border-white/10 bg-black/40 hover:bg-white/[0.04] hover:border-white/20 hover:-translate-y-1 transition-all duration-500 text-center"
                 style={{ boxShadow: "0 0 0px rgba(34,211,238,0)" }}
               >
-                <div className="text-cyan-400/60 text-[11px] tracking-[0.3em] uppercase mb-2 group-hover:text-cyan-300/80 transition-colors duration-500">Review</div>
+                <div className="text-white/30 text-[11px] tracking-[0.3em] uppercase mb-2 group-hover:text-white/60 transition-colors duration-500">Review</div>
                 <div className="text-white/70 text-[11px] tracking-[0.2em] uppercase mb-1 group-hover:text-white transition-colors duration-500">Threat Model</div>
                 <div className="text-white/20 text-[9px] tracking-[0.1em] group-hover:text-white/35 transition-colors duration-500">8 Attack Signatures · Entropy Gap Theorem</div>
-                <div className="mt-4 text-cyan-400/40 group-hover:text-cyan-300 group-hover:translate-x-1.5 transition-all duration-500 inline-block">→</div>
+                <div className="mt-4 text-white/20 group-hover:text-white/60 group-hover:translate-x-1.5 transition-all duration-500 inline-block">→</div>
               </a>
               <a href="/developers"
-                onMouseEnter={e => { playTick(1000, "sine", 0.10, 0.025); e.currentTarget.style.boxShadow = "0 0 30px rgba(34,211,238,0.12)"; }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 0 0px rgba(34,211,238,0)"; }}
-                className="group p-6 border border-cyan-400/20 bg-cyan-400/[0.03] hover:bg-cyan-400/[0.08] hover:border-cyan-400/50 hover:-translate-y-1 transition-all duration-500 text-center"
+                onMouseEnter={e => { playTick(1000, "sine", 0.10, 0.025); e.currentTarget.style.boxShadow = "0 0 30px rgba(255,255,255,0.06)"; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 0 0px rgba(255,255,255,0)"; }}
+                className="group p-6 border border-white/10 bg-black/40 hover:bg-white/[0.04] hover:border-white/20 hover:-translate-y-1 transition-all duration-500 text-center"
                 style={{ boxShadow: "0 0 0px rgba(34,211,238,0)" }}
               >
-                <div className="text-cyan-400/60 text-[11px] tracking-[0.3em] uppercase mb-2 group-hover:text-cyan-300/80 transition-colors duration-500">Build</div>
+                <div className="text-white/30 text-[11px] tracking-[0.3em] uppercase mb-2 group-hover:text-white/60 transition-colors duration-500">Build</div>
                 <div className="text-white/70 text-[11px] tracking-[0.2em] uppercase mb-1 group-hover:text-white transition-colors duration-500">Developer SDK</div>
                 <div className="text-white/20 text-[9px] tracking-[0.1em] group-hover:text-white/35 transition-colors duration-500">5 Lines to Integrate · TypeScript · Zero Deps</div>
-                <div className="mt-4 text-cyan-400/40 group-hover:text-cyan-300 group-hover:translate-x-1.5 transition-all duration-500 inline-block">→</div>
+                <div className="mt-4 text-white/20 group-hover:text-white/60 group-hover:translate-x-1.5 transition-all duration-500 inline-block">→</div>
               </a>
             </div>
           </div>
