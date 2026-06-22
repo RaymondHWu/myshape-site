@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { playTick } from "@/utils/useAudioTick";
 import "./header.css";
 
 /* ============================================================
@@ -237,18 +238,18 @@ const ProtocolHeader = () => {
 
               <div className="panel-actions">
                 {genesisDone ? (
-                  <a href="/identity" className="panel-link">
+                  <a href="/identity" className="panel-link" onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}>
                     <span className="link-icon">›</span> ENTER_IDENTITY_LAYER
                   </a>
                 ) : (
-                  <a href="/genesis" className="panel-link">
+                  <a href="/genesis" className="panel-link" onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}>
                     <span className="link-icon">›</span> INITIALIZE_GENESIS
                   </a>
                 )}
-                <a href="/protocol" className="panel-link">
+                <a href="/protocol" className="panel-link" onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}>
                   <span className="link-icon">›</span> PROTOCOL_ARCHITECTURE
                 </a>
-                <a href="/roadmap" className="panel-link">
+                <a href="/roadmap" className="panel-link" onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}>
                   <span className="link-icon">›</span> DEVELOPMENT_ROADMAP
                 </a>
                 <button
