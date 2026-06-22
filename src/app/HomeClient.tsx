@@ -160,10 +160,10 @@ export default function HomeClient() {
             <div className="relative max-w-3xl mx-auto">
               {/* Quantum Spine — central axis */}
               <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[1px]"
-                style={{ background: "linear-gradient(to bottom, hsla(270,60%,70%,0.4), hsla(200,60%,60%,0.3), hsla(180,50%,50%,0.2))" }} />
+                style={{ background: "linear-gradient(to bottom, transparent, rgba(144,200,255,0.3), rgba(144,200,255,0.2), rgba(144,200,255,0.1), transparent)" }} />
               {/* Spine glow pulse */}
               <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[3px] opacity-20"
-                style={{ background: "linear-gradient(to bottom, hsla(270,60%,70%,0.6), hsla(200,60%,60%,0.4), hsla(180,50%,50%,0.2))", filter: "blur(4px)" }} />
+                style={{ background: "linear-gradient(to bottom, transparent, rgba(144,200,255,0.4), rgba(144,200,255,0.2), transparent)", filter: "blur(4px)" }} />
               {/* Scanning beam */}
               <div className="absolute left-1/2 -translate-x-1/2 w-[2px] h-16"
                 style={{
@@ -183,9 +183,9 @@ export default function HomeClient() {
                   {/* Spine connector — pulsing */}
                   <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full z-10 border-2"
                     style={{
-                      borderColor: `hsla(${layer.hue}, 60%, 60%, 0.5)`,
-                      background: `hsla(${layer.hue}, 50%, 30%, 0.8)`,
-                      boxShadow: `0 0 8px hsla(${layer.hue}, 60%, 60%, 0.3)`,
+                      borderColor: "rgba(144,200,255,0.4)",
+                      background: "rgba(144,200,255,0.15)",
+                      boxShadow: "0 0 8px rgba(144,200,255,0.2)",
                       animation: `nodePulse 2.5s ease-in-out ${layer.delay} infinite`,
                     }} />
 
@@ -198,31 +198,31 @@ export default function HomeClient() {
                       }}
                       onMouseEnter={e => {
                         e.currentTarget.style.background = "rgba(2,4,10,0.95)";
-                        e.currentTarget.style.boxShadow = `0 8px 24px rgba(0,0,0,0.4), 0 0 20px hsla(${layer.hue},50%,50%,0.08)`;
+                        e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.4), 0 0 20px rgba(144,200,255,0.06)";
                       }}
                       onMouseLeave={e => {
                         e.currentTarget.style.background = "rgba(2,4,10,0.85)";
                         e.currentTarget.style.boxShadow = "none";
                       }}>
                       {/* Opening bracket */}
-                      <span className="absolute top-0 bottom-0 w-[8px] opacity-40 group-hover:opacity-80 transition-opacity duration-500"
+                      <span className="absolute top-0 bottom-0 w-[8px] opacity-30 group-hover:opacity-70 transition-opacity duration-500"
                         style={{
                           [layer.side === "left" ? "left" : "right"]: 0,
-                          borderLeft: layer.side === "left" ? "1px solid rgba(144,200,255,0.4)" : "none",
-                          borderRight: layer.side === "right" ? "1px solid rgba(144,200,255,0.4)" : "none",
+                          borderLeft: layer.side === "left" ? "1px solid rgba(144,200,255,0.35)" : "none",
+                          borderRight: layer.side === "right" ? "1px solid rgba(144,200,255,0.35)" : "none",
                           borderTop: "none",
                           borderBottom: "none",
                         }} />
-                      <span className={`absolute top-0 h-[1px] w-6 opacity-40 group-hover:opacity-80 transition-opacity duration-500 ${layer.side === "left" ? "left-0" : "right-0"}`}
-                        style={{ background: "rgba(144,200,255,0.4)" }} />
-                      <span className={`absolute bottom-0 h-[1px] w-6 opacity-40 group-hover:opacity-80 transition-opacity duration-500 ${layer.side === "left" ? "left-0" : "right-0"}`}
-                        style={{ background: "rgba(144,200,255,0.4)" }} />
+                      <span className={`absolute top-0 h-[1px] w-6 opacity-30 group-hover:opacity-70 transition-opacity duration-500 ${layer.side === "left" ? "left-0" : "right-0"}`}
+                        style={{ background: "rgba(144,200,255,0.35)" }} />
+                      <span className={`absolute bottom-0 h-[1px] w-6 opacity-30 group-hover:opacity-70 transition-opacity duration-500 ${layer.side === "left" ? "left-0" : "right-0"}`}
+                        style={{ background: "rgba(144,200,255,0.35)" }} />
 
                       <div className={`${layer.side === "left" ? "pl-5 pr-4" : "pr-5 pl-4"} py-4`}>
                         {/* Layer label + name */}
                         <div className="flex items-center gap-3 mb-2">
                           <span className="font-mono text-[10px] tracking-[0.3em] shrink-0"
-                            style={{ color: `hsla(${layer.hue}, 70%, 70%, 0.6)` }}>
+                            style={{ color: "rgba(144, 200, 255, 0.4)" }}>
                             {layer.l}
                           </span>
                           <span className="text-white/70 text-[11px] tracking-[0.2em] uppercase">
@@ -236,9 +236,9 @@ export default function HomeClient() {
                         {/* Metadata chip */}
                         <div className="inline-block px-2 py-0.5 font-mono text-[8px] tracking-[0.1em]"
                           style={{
-                            border: `1px solid hsla(${layer.hue}, 40%, 50%, 0.25)`,
-                            color: `hsla(${layer.hue}, 50%, 70%, 0.6)`,
-                            background: `hsla(${layer.hue}, 30%, 20%, 0.15)`,
+                            border: "1px solid rgba(144, 200, 255, 0.15)",
+                            color: "rgba(144, 200, 255, 0.5)",
+                            background: "rgba(144, 200, 255, 0.04)",
                           }}>
                           {layer.meta}
                         </div>
