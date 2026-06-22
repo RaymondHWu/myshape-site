@@ -158,15 +158,15 @@ export default function HomeClient() {
               {/* Mobile: simplified stack */}
               <div className="md:hidden space-y-2">
                 {[
-                  { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F" },
-                  { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK" },
-                  { l: "L3", name: "IDENTITY VECTOR", desc: "Motion geometry distilled into a compact, non-replicable signature.", meta: "GEOMETRY: VECTOR_3D_DISTILLED // SIG_SECURE" },
-                  { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL" },
-                  { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE" },
+                  { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F", delay: "0s" },
+                  { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK", delay: "0.3s" },
+                  { l: "L3", name: "IDENTITY VECTOR", desc: "Motion geometry distilled into a compact, non-replicable signature.", meta: "GEOMETRY: VECTOR_3D_DISTILLED // SIG_SECURE", delay: "0.6s" },
+                  { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", delay: "0.9s" },
+                  { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", delay: "1.2s" },
                 ].map(layer => (
                   <div key={layer.l} className="border border-cyan-400/10 bg-black/30 p-4">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="font-mono text-[10px] shrink-0" style={{ color: "rgba(144,200,255,0.4)" }}>{layer.l}</span>
+                      <span className="font-mono text-[11px] shrink-0" style={{ color: "rgba(144,200,255,0.4)", textShadow: "0 0 6px rgba(144,200,255,0.15)", animation: `nodePulse 2.5s ease-in-out ${layer.delay} infinite` }}>{layer.l}</span>
                       <span className="text-white/70 text-[13px] tracking-[0.2em] uppercase">{layer.name}</span>
                     </div>
                     <p className="text-white/25 text-[11px] leading-relaxed mb-2">{layer.desc}</p>
@@ -255,8 +255,12 @@ export default function HomeClient() {
                       <div className={`${layer.side === "left" ? "pl-5 pr-4" : "pr-5 pl-4"} py-4`}>
                         {/* Layer label + name */}
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="font-mono text-[10px] tracking-[0.3em] shrink-0"
-                            style={{ color: "rgba(144, 200, 255, 0.4)" }}>
+                          <span className="font-mono text-[11px] tracking-[0.3em] shrink-0 group-hover:text-cyan-300/80 transition-all duration-500"
+                            style={{
+                              color: "rgba(144, 200, 255, 0.4)",
+                              textShadow: "0 0 6px rgba(144,200,255,0.15)",
+                              animation: `nodePulse 2.5s ease-in-out ${layer.delay} infinite`,
+                            }}>
                             {layer.l}
                           </span>
                           <span className="text-white/70 text-[13px] tracking-[0.2em] uppercase group-hover:text-white transition-colors duration-500">
