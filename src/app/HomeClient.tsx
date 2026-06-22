@@ -205,11 +205,11 @@ export default function HomeClient() {
                       <div className={`${layer.side === "left" ? "pl-5 pr-4" : "pr-5 pl-4"} py-4`}>
                         {/* Layer label + name */}
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="font-mono text-[9px] tracking-[0.3em] shrink-0"
+                          <span className="font-mono text-[10px] tracking-[0.3em] shrink-0"
                             style={{ color: `hsla(${layer.hue}, 70%, 70%, 0.6)` }}>
                             {layer.l}
                           </span>
-                          <span className="text-white/60 text-[11px] tracking-[0.25em] uppercase font-light">
+                          <span className="text-white/70 text-[11px] tracking-[0.2em] uppercase">
                             {layer.name}
                           </span>
                         </div>
