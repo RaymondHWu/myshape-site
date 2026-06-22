@@ -44,6 +44,7 @@ export default function MotionDemoClient() {
   const [proofHashes, setProofHashes] = useState<{ zkp: string; pop: string; mp: string; ep: string } | null>(null);
   const [livePes, setLivePes] = useState<{ score: number; timing: number; noise: number; freq: number; bio: number } | null>(null);
   const [aiCompare, setAiCompare] = useState<{ score: number; timing: number; noise: number; freq: number; bio: number } | null>(null);
+  const [copied, setCopied] = useState(false);
   const [countdown, setCountdown] = useState(8);
   const [, setIsSimulated] = useState(false);
   const framesRef = useRef<FeatureFrame[]>([]);
@@ -454,6 +455,7 @@ export default function MotionDemoClient() {
     setThreatVerdict("");
     setAiCompare(null);
     setLivePes(null);
+    setCopied(false);
     framesRef.current = [];
     sstFramesRef.current = [];
   };
@@ -690,6 +692,18 @@ export default function MotionDemoClient() {
 
             {phase === "complete" && (
               <div className="space-y-2">
+                {pesData && (
+                  <button onClick={() => {
+                    const result = `MyShape PES: ${(pesData.score * 100).toFixed(0)}% | μT:${(pesData.timing * 100).toFixed(0)}% N:${(pesData.noise * 100).toFixed(0)}% F:${(pesData.frequency * 100).toFixed(0)}% B:${(pesData.biological * 100).toFixed(0)}%\nVerified by MyShape Protocol — myshape.com/motion-demo`;
+                    navigator.clipboard.writeText(result).then(() => {
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    });
+                  }}
+                    className="w-full py-1.5 border border-cyan-400/10 text-cyan-400/30 hover:text-cyan-300/60 hover:border-cyan-400/30 text-[8px] tracking-[0.15em] uppercase transition-all">
+                    {copied ? "✓ Copied" : "📋 Copy Results"}
+                  </button>
+                )}
                 {!aiCompare ? (
                   <button onClick={() => {
                     // Simulate AI-generated motion PES (low entropy, over-smooth)
