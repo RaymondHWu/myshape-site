@@ -224,7 +224,7 @@ body {
 }
 
 /* ── Scrollbar — dark, minimal ── */
+html { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.06) transparent; }
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 2px; }
