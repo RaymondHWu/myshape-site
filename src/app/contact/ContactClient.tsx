@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
+import { playTick } from "@/utils/useAudioTick";
 
 export default function ContactClient() {
   // 1. 变量定义必须在函数内部，return 之前
@@ -97,9 +98,10 @@ export default function ContactClient() {
                 // 活跃节点 (X & LinkedIn): 鼠标滑过会亮
                 <a 
                   key={node.id} 
-                  href={node.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                  href={node.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => playTick(700, "sine", 0.08, 0.015)}
                   className="bg-[#02040a] p-10 group hover:bg-cyan-500/[0.08] transition-all relative overflow-hidden block"
                 >
                   <div className="text-cyan-400 text-[9px] font-mono mb-8 font-bold tracking-widest animate-pulse uppercase">● Uplink_Live</div>
