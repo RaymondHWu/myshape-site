@@ -182,13 +182,14 @@ export default function HomeClient() {
               {/* Spine glow pulse */}
               <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[3px] opacity-20"
                 style={{ background: "linear-gradient(to bottom, transparent, rgba(144,200,255,0.4), rgba(144,200,255,0.2), transparent)", filter: "blur(4px)" }} />
-              {/* Scanning droplet — scrolls up and down the spine */}
+              {/* Scanning droplet — ethereal, barely-there */}
               <div className="absolute left-1/2 -translate-x-1/2 z-20"
                 style={{ animation: "dropletScroll 6s ease-in-out infinite" }}>
-                <div className="w-3 h-3 rounded-full"
+                <div className="w-2.5 h-3.5 rounded-full"
                   style={{
-                    background: "radial-gradient(circle at 40% 35%, rgba(200,235,255,0.7), rgba(100,180,255,0.2))",
-                    boxShadow: "0 0 12px rgba(144,200,255,0.3), 0 0 24px rgba(144,200,255,0.1)",
+                    background: "radial-gradient(ellipse at 50% 30%, rgba(180,220,255,0.25), transparent 70%)",
+                    boxShadow: "0 0 16px rgba(144,200,255,0.12)",
+                    filter: "blur(0.5px)",
                   }} />
               </div>
 
