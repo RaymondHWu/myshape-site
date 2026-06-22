@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
+import { playTick } from "@/utils/useAudioTick";
 
 export default function About() {
   const organizationalPrinciples = [
@@ -58,7 +59,7 @@ export default function About() {
           <h3 className="text-white/20 text-[9px] tracking-[0.6em] uppercase text-center">// CORE_VALUES_CONSTITUTION</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {organizationalPrinciples.map((principle) => (
-              <div key={principle.label} className="p-8 border border-white/5 bg-white/[0.01] hover:border-cyan-500/20 transition-all group">
+              <div key={principle.label} onMouseEnter={() => playTick(600, "sine", 0.08, 0.015)} className="p-8 border border-white/5 bg-white/[0.01] hover:border-cyan-500/20 transition-all group">
                 <div className="text-cyan-500 text-[9px] tracking-[0.4em] font-mono mb-6 group-hover:text-cyan-400 transition-colors">
                   {principle.label}
                 </div>
