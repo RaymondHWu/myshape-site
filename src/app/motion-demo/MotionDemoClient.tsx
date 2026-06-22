@@ -518,8 +518,8 @@ export default function MotionDemoClient() {
                     setProofHashes({ zkp: "a1b2c3d4", pop: "e5f6a7b8", mp: "c9d0e1f2", ep: "3a4b5c6d" });
                     setPhase("complete");
                   }}
-                    className="text-cyan-400/20 hover:text-cyan-400/50 text-[8px] tracking-[0.15em] uppercase transition-colors">
-                    Quick Preview (instant demo data) →
+                    className="text-cyan-400/35 hover:text-cyan-300/70 text-[10px] tracking-[0.15em] uppercase transition-colors border-b border-transparent hover:border-cyan-400/30 pb-0.5">
+                    Quick Preview →
                   </button>
                 </div>
               </div>
