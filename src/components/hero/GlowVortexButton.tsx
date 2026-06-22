@@ -25,8 +25,8 @@ export default function GlowVortexButton({
     const ctx = canvas.getContext("2d")!;
     let animationFrameId: number;
 
-    const W = 60;
-    const H = 60;
+    const W = 72;
+    const H = 72;
     canvas.width = W;
     canvas.height = H;
 
