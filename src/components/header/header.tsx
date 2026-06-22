@@ -300,6 +300,7 @@ const ProtocolHeader = () => {
       ].map(link =>
           <Link key={link.href} href={link.href}
             onMouseEnter={e => {
+              playTick(600, "sine", 0.08, 0.02);
               e.currentTarget.style.color = "rgb(34, 211, 238)";
               e.currentTarget.style.textShadow = "0 0 8px rgba(34,211,238,0.3)";
             }}
