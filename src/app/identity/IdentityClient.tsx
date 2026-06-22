@@ -240,6 +240,10 @@ export default function IdentityClient() {
                       <span className="relative z-10">◈&nbsp;RETURN_TO_ORIGIN</span>
                       <span className="relative z-10 text-cyan-400/40 group-hover:text-cyan-200 group-hover:translate-x-0.5 transition-all duration-500">→</span>
                     </a>
+                    <a href="/motion-demo"
+                      className="text-cyan-400/20 hover:text-cyan-300/50 text-[8px] tracking-[0.2em] uppercase font-mono transition-colors mt-1">
+                      Verify_Presence → Motion_Demo
+                    </a>
                   </div>
                 )}
               </form>
