@@ -138,12 +138,8 @@ export default function HomeClient() {
       {/* 🔹 主内容区 🔹 */}
       <main className="relative z-0 w-full overflow-x-hidden bg-black">
         <Hero />
-        <Vision />
-        {/* 注意：Capabilities 或 HowItWorks 组件内应包含指向 /protocol-core 的链接 */}
-        <Capabilities />
-        <HowItWorks />
 
-        {/* ── Protocol Stack ── */}
+        {/* ── Protocol Stack — engineering first ── */}
         <section className="relative py-24 md:py-32">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-16">
@@ -275,6 +271,9 @@ export default function HomeClient() {
           </div>
         </section>
 
+        <Vision />
+        <Capabilities />
+        <HowItWorks />
         <JoinWaitlist id="genesis" />
       </main>
 
