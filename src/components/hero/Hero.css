@@ -56,3 +56,12 @@
 .protocol-command.glitch span {
   animation: textGlitch 0.8s ease-out forwards;
 }
+
+/* ── Hero title glow pulse ── */
+.hero-title-glow {
+  animation: heroGlow 3s ease-in-out infinite;
+}
+@keyframes heroGlow {
+  0%, 100% { text-shadow: 0 0 20px rgba(144,200,255,0.08); }
+  50%      { text-shadow: 0 0 36px rgba(144,200,255,0.2); }
+}
