@@ -544,9 +544,21 @@ export default function MotionDemoClient() {
 
             {phase === "processing" && (
               <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60">
-                <div className="text-center space-y-4">
-                  <div className="w-8 h-8 rounded-full border-2 border-cyan-400/30 border-t-cyan-400 animate-spin mx-auto" />
-                  <span className="text-cyan-400/70 text-[10px] tracking-[0.3em] uppercase block">Generating_Signature...</span>
+                <div className="text-center space-y-5">
+                  <div className="relative w-16 h-16 mx-auto">
+                    <div className="absolute inset-0 rounded-full border border-cyan-400/20 animate-ping" style={{ animationDuration: "1.5s" }} />
+                    <div className="absolute inset-2 rounded-full border border-cyan-400/30 animate-pulse" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.6)] animate-pulse" />
+                    </div>
+                  </div>
+                  <span className="text-cyan-400/70 text-[10px] tracking-[0.3em] uppercase block animate-pulse">Generating ZK-Proof...</span>
+                  <div className="flex gap-1.5 justify-center">
+                    {[0, 1, 2].map(i => (
+                      <div key={i} className="w-1.5 h-1.5 rounded-full bg-cyan-400/50 animate-pulse"
+                        style={{ animationDelay: `${i * 0.25}s` }} />
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
