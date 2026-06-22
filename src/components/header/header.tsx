@@ -127,6 +127,7 @@ const ProtocolHeader = () => {
 
   /* ═══ 渲染 ═══ */
   return (
+    <>
     <nav style={styles.headerNav}>
       <div style={styles.gradientOverlay} />
 
@@ -146,22 +147,6 @@ const ProtocolHeader = () => {
       <Link href="/" style={styles.centerSection} className="brand-logo-link">
         M Y S H A P E
       </Link>
-
-      {/* ── 导航链接 ── */}
-      <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-        <Link href="/protocol" style={{ fontFamily: "monospace", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", textDecoration: "none", textTransform: "uppercase" }}>
-          Protocol
-        </Link>
-        <Link href="/papers/technical-spec" style={{ fontFamily: "monospace", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", textDecoration: "none", textTransform: "uppercase" }}>
-          Technology
-        </Link>
-        <Link href="/developers" style={{ fontFamily: "monospace", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", textDecoration: "none", textTransform: "uppercase" }}>
-          Build
-        </Link>
-        <Link href="/motion-demo" style={{ fontFamily: "monospace", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(144,200,255,0.6)", textDecoration: "none", textTransform: "uppercase" }}>
-          Demo
-        </Link>
-      </div>
 
       {/* ── 右侧：时间、节点与钱包 ── */}
       <div style={styles.rightSection} ref={panelRef}>
@@ -293,7 +278,30 @@ const ProtocolHeader = () => {
       {/* 全屏粒子微颤动效 */}
       {isShimmering && <div className="shimmer-overlay" />}
     </nav>
-  );
+
+    {/* ── 二级导航条 ── */}
+    <div className="hide-mobile" style={{
+      position: "fixed", top: "60px", left: 0, width: "100%", height: "32px",
+      display: "flex", alignItems: "center", justifyContent: "center", gap: "32px",
+      background: "rgba(2,4,10,0.85)", backdropFilter: "blur(4px)",
+      borderBottom: "1px solid rgba(255,255,255,0.05)", zIndex: 9998,
+      fontFamily: "monospace",
+    }}>
+      {[
+        { label: "Protocol", href: "/protocol" },
+        { label: "Technology", href: "/papers/technical-spec" },
+        { label: "Build", href: "/developers" },
+        { label: "Demo", href: "/motion-demo" },
+        { label: "Papers", href: "/papers" },
+      ].map(link => (
+        <Link key={link.href} href={link.href}
+          style={{ fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.45)", textDecoration: "none", textTransform: "uppercase" }}>
+          {link.label}
+        </Link>
+      ))}
+    </div>
+  </>
+);
 };
 
 /* ═══ 布局样式（保留为 JS 对象 — 动态值少、无需 CSS 文件） ═══ */
