@@ -43,6 +43,7 @@ export default function MotionDemoClient() {
   const [threatVerdict, setThreatVerdict] = useState<string>("");
   const [proofHashes, setProofHashes] = useState<{ zkp: string; pop: string; mp: string; ep: string } | null>(null);
   const [livePes, setLivePes] = useState<{ score: number; timing: number; noise: number; freq: number; bio: number } | null>(null);
+  const [aiCompare, setAiCompare] = useState<{ score: number; timing: number; noise: number; freq: number; bio: number } | null>(null);
   const [countdown, setCountdown] = useState(8);
   const [, setIsSimulated] = useState(false);
   const framesRef = useRef<FeatureFrame[]>([]);
@@ -453,6 +454,8 @@ export default function MotionDemoClient() {
     setProofHashes(null);
     setPesData(null);
     setThreatVerdict("");
+    setAiCompare(null);
+    setLivePes(null);
     framesRef.current = [];
     sstFramesRef.current = [];
   };
@@ -670,9 +673,38 @@ export default function MotionDemoClient() {
             )}
 
             {phase === "complete" && (
-              <button onClick={stop} className="w-full mt-3 py-2 border border-white/15 text-white/40 text-[9px] tracking-[0.3em] uppercase hover:border-white/30 hover:text-white/70 transition-all">
-                Run_Again
-              </button>
+              <div className="space-y-2">
+                {!aiCompare ? (
+                  <button onClick={() => {
+                    // Simulate AI-generated motion PES (low entropy, over-smooth)
+                    setAiCompare({
+                      score: 0.22 + Math.random() * 0.12,
+                      timing: 0.02 + Math.random() * 0.04,
+                      noise: 0.04 + Math.random() * 0.06,
+                      freq: 0.02 + Math.random() * 0.04,
+                      bio: 0.04 + Math.random() * 0.08,
+                    });
+                  }} className="w-full py-2 border border-cyan-400/20 text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all">
+                    Compare with AI →
+                  </button>
+                ) : (
+                  <div className="p-3 border border-cyan-400/10 bg-cyan-400/[0.02] space-y-2">
+                    <div className="text-cyan-400/40 text-[7px] tracking-[0.2em] uppercase text-center">AI Simulation (for comparison)</div>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[8px]">
+                      <div className="flex justify-between"><span className="text-white/15">μTiming</span><span className="text-amber-300/50">{(aiCompare.timing * 100).toFixed(0)}%</span></div>
+                      <div className="flex justify-between"><span className="text-white/15">Noise</span><span className="text-amber-300/50">{(aiCompare.noise * 100).toFixed(0)}%</span></div>
+                      <div className="flex justify-between"><span className="text-white/15">Freq</span><span className="text-amber-300/50">{(aiCompare.freq * 100).toFixed(0)}%</span></div>
+                      <div className="flex justify-between"><span className="text-white/15">Bio</span><span className="text-amber-300/50">{(aiCompare.bio * 100).toFixed(0)}%</span></div>
+                    </div>
+                    <div className="text-center text-[8px] text-amber-300/40 mt-1">
+                      AI PES: {(aiCompare.score * 100).toFixed(0)}% — ✗ SYNTHETIC
+                    </div>
+                  </div>
+                )}
+                <button onClick={stop} className="w-full py-2 border border-white/15 text-white/40 text-[9px] tracking-[0.3em] uppercase hover:border-white/30 hover:text-white/70 transition-all">
+                  Run_Again
+                </button>
+              </div>
             )}
           </div>
         </div>
