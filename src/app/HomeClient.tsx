@@ -147,11 +147,11 @@ export default function HomeClient() {
         <section className="relative py-24 md:py-32">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-16">
-              <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase mb-4">Protocol_Stack</div>
-              <h2 className="text-2xl md:text-3xl font-light tracking-[0.15em] text-white uppercase">
+              <div className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">Protocol_Stack</div>
+              <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 200, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#fff", margin: 0 }}>
                 Human Presence Protocol
               </h2>
-              <p className="text-white/40 text-[12px] leading-relaxed max-w-xl mx-auto">
+              <p style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", fontWeight: 300, color: "rgba(255,255,255,0.7)", marginTop: "1.8rem", maxWidth: "550px", lineHeight: 1.7, marginLeft: "auto", marginRight: "auto" }}>
                 Five-layer reference implementation. Open specification. Developer-ready.
               </p>
             </div>
