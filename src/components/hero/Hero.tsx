@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import HeroVisual from "./HeroVisual";
 import GlowVortexButton from "./GlowVortexButton";
+import "./Hero.css";
 import NarrativeText from "./NarrativeText";
 import "./Hero.css";
 
@@ -80,11 +81,8 @@ export default function Hero() {
         {/* 严格还原：文案位置与字号 */}
         <div className="absolute top-[14vh] left-0 w-full z-100 pointer-events-none text-center px-6">
           <h1
-            className="text-[1.4rem] md:text-[1.8rem] font-extralight uppercase text-white/90"
-            style={{
-              letterSpacing: "0.8em", textIndent: "0.8em",
-              animation: "heroGlow 3s ease-in-out infinite",
-            }}
+            className="hero-title-glow text-[1.4rem] md:text-[1.8rem] font-extralight uppercase text-white/90"
+            style={{ letterSpacing: "0.8em", textIndent: "0.8em" }}
           >
             PROOF OF PRESENCE
           </h1>
