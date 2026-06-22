@@ -71,7 +71,7 @@ const sections = [
       "· Sovereign Boundaries — The data‑body must have a boundary that cannot be crossed, copied, or dissolved. This boundary defines what belongs to the individual and prevents systems from reconstructing or absorbing the self.",
       "· Proof Over Exposure — Verification must occur through proofs, not disclosure. Systems may confirm a truth, but they may not access the underlying data.",
       "· Selective Expression — Identity must be capable of appearing in layers, states, and contexts. A person reveals only the dimension required for an interaction, preserving the integrity of the whole.",
-      "· Non‑Replicability — A data‑body must be impossible to duplicate. Even with full access to signals, no system should be able to recreate the individual. Identity must remain singular, inseparable, and untransferable.",
+      "· Non‑Replicability — A data‑body is designed to resist duplication. Even with full access to signals, recreating the individual is computationally infeasible. Identity must remain singular, inseparable, and untransferable.",
       "· Composability Without Surrender — Identity must integrate with systems, agents, and environments without being absorbed by them. It must participate without being owned, and interact without being extracted."
     ]
   }

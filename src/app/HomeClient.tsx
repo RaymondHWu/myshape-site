@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { createClient } from '@supabase/supabase-js';
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
+import { playTick } from "@/utils/useAudioTick";
 import Hero from "@/components/hero/Hero";
 import Vision from "@/components/vision/Vision";
 import Capabilities from "@/components/capabilities/Capabilities";
@@ -141,6 +142,63 @@ export default function HomeClient() {
         {/* 注意：Capabilities 或 HowItWorks 组件内应包含指向 /protocol-core 的链接 */}
         <Capabilities />
         <HowItWorks />
+
+        {/* ── Protocol Stack ── */}
+        <section className="relative py-24 md:py-32 border-y border-white/5">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase mb-4">Protocol_Stack</div>
+              <h2 className="text-2xl md:text-3xl font-light tracking-[0.15em] text-white uppercase">
+                Human Presence Protocol
+              </h2>
+              <p className="text-white/25 text-[11px] tracking-[0.15em] mt-3 max-w-xl mx-auto">
+                Five-layer reference implementation. Open specification. Developer-ready.
+              </p>
+            </div>
+
+            {/* Five Layers */}
+            <div className="space-y-1 mb-14">
+              {[
+                { l: "L5", name: "Agent Identity", desc: "AI-native identity declaration & verification", color: "cyan" },
+                { l: "L4", name: "Proof Layer", desc: "ZK-Presence: PoP + MP + EP → composite proof", color: "cyan" },
+                { l: "L3", name: "Identity Vector", desc: "Motion Vector → SST 18-pt → Feature Pipeline", color: "cyan" },
+                { l: "L2", name: "Behavior Encoding", desc: "PES engine — 4-dimensional entropy scoring", color: "cyan" },
+                { l: "L1", name: "Motion Capture", desc: "Real-time capture → MediaPipe → on-device processing", color: "cyan" },
+              ].map((layer) => (
+                <div key={layer.l} className="flex items-center gap-4 px-5 py-3 border border-white/5 bg-black/30 group hover:border-cyan-500/20 transition-all">
+                  <span className="w-8 h-8 flex items-center justify-center border border-cyan-500/30 text-cyan-400/60 font-mono text-[10px] shrink-0">{layer.l}</span>
+                  <div className="flex-1 min-w-0">
+                    <span className="text-white/60 text-[11px] tracking-[0.2em] uppercase">{layer.name}</span>
+                  </div>
+                  <span className="text-white/20 text-[10px] tracking-[0.1em] hidden md:block">{layer.desc}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Entry Points */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <a href="/papers/technical-spec" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)} className="group p-6 border border-cyan-400/20 bg-cyan-400/[0.03] hover:bg-cyan-400/[0.08] transition-all text-center">
+                <div className="text-cyan-400/60 text-[11px] tracking-[0.3em] uppercase mb-2">Read</div>
+                <div className="text-white/80 text-[13px] tracking-[0.2em] uppercase mb-1">Technical Spec</div>
+                <div className="text-white/20 text-[9px] tracking-[0.1em]">Motion Vector · PES · Proof System</div>
+                <div className="mt-4 text-cyan-400/40 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all inline-block">→</div>
+              </a>
+              <a href="/papers/threat-model" onMouseEnter={() => playTick(900, "sine", 0.10, 0.025)} className="group p-6 border border-cyan-400/20 bg-cyan-400/[0.03] hover:bg-cyan-400/[0.08] transition-all text-center">
+                <div className="text-cyan-400/60 text-[11px] tracking-[0.3em] uppercase mb-2">Review</div>
+                <div className="text-white/80 text-[13px] tracking-[0.2em] uppercase mb-1">Threat Model</div>
+                <div className="text-white/20 text-[9px] tracking-[0.1em]">8 Attack Signatures · Entropy Gap Theorem</div>
+                <div className="mt-4 text-cyan-400/40 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all inline-block">→</div>
+              </a>
+              <a href="/developers" onMouseEnter={() => playTick(1000, "sine", 0.10, 0.025)} className="group p-6 border border-cyan-400/20 bg-cyan-400/[0.03] hover:bg-cyan-400/[0.08] transition-all text-center">
+                <div className="text-cyan-400/60 text-[11px] tracking-[0.3em] uppercase mb-2">Build</div>
+                <div className="text-white/80 text-[13px] tracking-[0.2em] uppercase mb-1">Developer SDK</div>
+                <div className="text-white/20 text-[9px] tracking-[0.1em]">5 Lines to Integrate · TypeScript · Zero Deps</div>
+                <div className="mt-4 text-cyan-400/40 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all inline-block">→</div>
+              </a>
+            </div>
+          </div>
+        </section>
+
         <JoinWaitlist id="genesis" />
       </main>
 

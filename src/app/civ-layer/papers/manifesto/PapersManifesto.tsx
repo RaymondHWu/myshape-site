@@ -10,9 +10,9 @@ const sections = [
     title: 'Motion as Identity',
     subtitle: 'PAPER_01 // IDENTITY_EVOLUTION', 
     content: [
-      "Motion is the only human signal that cannot be copied, predicted, or reconstructed without the individual. Physical identifiers can be stored. Faces can be replicated. Voices can be synthesized. But motion—micro‑timing, micro‑force, micro‑variation—is a living geometry.",
+      "Motion is one of the few human signals that is significantly harder to replicate, predict, or reconstruct without the individual. Physical identifiers can be stored. Faces can be replicated. Voices can be synthesized. But motion—micro‑timing, micro‑force, micro‑variation—is a living geometry.",
       "It is generated in real time, shaped by the nervous system, and inseparable from the being that produces it. Every movement contains a signature: a pattern of acceleration, hesitation, correction, and intention.",
-      "These patterns form behavior vectors—irreversible, unrepeatable, and impossible to forge. They are not 'data points' but expressions of the human system in motion. Physical identifiers extract identity; motion expresses identity. Physical identifiers freeze a human into a static record; motion reveals a human as a dynamic process.",
+      "These patterns form behavior vectors—irreversible, unrepeatable, and designed to resist forgery. They are not 'data points' but expressions of the human system in motion. Physical identifiers extract identity; motion expresses identity. Physical identifiers freeze a human into a static record; motion reveals a human as a dynamic process.",
       "Because motion is generated locally and cannot be reconstructed externally, it becomes the foundation for a sovereign identity layer. Identity returns to the human because only the human can produce the signal that defines it."
     ]
   },
