@@ -226,16 +226,16 @@ export default function HomeClient() {
                             style={{ color: "rgba(144, 200, 255, 0.4)" }}>
                             {layer.l}
                           </span>
-                          <span className="text-white/70 text-[11px] tracking-[0.2em] uppercase">
+                          <span className="text-white/70 text-[11px] tracking-[0.2em] uppercase group-hover:text-white transition-colors duration-500">
                             {layer.name}
                           </span>
                         </div>
                         {/* Description */}
-                        <p className="text-white/25 text-[10px] tracking-[0.06em] leading-relaxed mb-2">
+                        <p className="text-white/25 text-[10px] tracking-[0.06em] leading-relaxed mb-2 group-hover:text-white/45 transition-colors duration-500">
                           {layer.desc}
                         </p>
                         {/* Metadata chip */}
-                        <div className="inline-block px-2 py-0.5 font-mono text-[8px] tracking-[0.1em]"
+                        <div className="inline-block px-2 py-0.5 font-mono text-[8px] tracking-[0.1em] group-hover:border-cyan-400/30 group-hover:text-cyan-300/70 transition-all duration-500"
                           style={{
                             border: "1px solid rgba(144, 200, 255, 0.15)",
                             color: "rgba(144, 200, 255, 0.5)",
