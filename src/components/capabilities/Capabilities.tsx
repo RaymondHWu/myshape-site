@@ -42,17 +42,17 @@ const CapabilityCard = ({
         </div>
 
         <div className="cap-content">
-          <h3 className="cap-title">{title}</h3>
-          <p className="cap-text-main">{line1}</p>
-          <p className="cap-text-sub">{line2}</p>
-          <p className="cap-text-highlight">{line3}</p>
+          <h3 className="cap-title" style={{ color: isHovered ? "#fff" : "rgba(255,255,255,0.85)" }}>{title}</h3>
+          <p className="cap-text-main" style={{ color: isHovered ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.6)" }}>{line1}</p>
+          <p className="cap-text-sub" style={{ color: isHovered ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.28)" }}>{line2}</p>
+          <p className="cap-text-highlight" style={{ color: isHovered ? "rgba(144,200,255,0.85)" : "rgba(144,200,255,0.5)" }}>{line3}</p>
         </div>
 
         <div className="cap-footer">
           {Object.entries(params).map(([k, v]: [string, string]) => (
             <div key={k} className="param-row">
-              <span className="param-key">{k}</span>
-              <span className="param-val">{v}</span>
+              <span className="param-key" style={{ opacity: isHovered ? 0.5 : 0.3 }}>{k}</span>
+              <span className="param-val" style={{ opacity: isHovered ? 0.8 : 0.6 }}>{v}</span>
             </div>
           ))}
         </div>

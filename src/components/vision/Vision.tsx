@@ -55,9 +55,9 @@ const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
       </div>
 
       <div className="vision-text-wrapper">
-        <h3 className="vision-card-title">{title}</h3>
-        <p className="vision-card-desc-main">{desc1}</p>
-        {desc2 && <p className="vision-card-desc-sub">{desc2}</p>}
+        <h3 className="vision-card-title" style={{ color: hover ? "#fff" : "rgba(255,255,255,0.8)" }}>{title}</h3>
+        <p className="vision-card-desc-main" style={{ color: hover ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)" }}>{desc1}</p>
+        {desc2 && <p className="vision-card-desc-sub" style={{ color: hover ? "rgba(255,255,255,0.45)" : "rgba(255,255,255,0.22)" }}>{desc2}</p>}
       </div>
 
     </div>
