@@ -162,6 +162,7 @@ export default function Hero() {
         {/* Motion Demo 入口 — 醒目 CTA */}
         <div className="absolute bottom-[56px] md:bottom-[92px] left-0 w-full z-100 text-center pointer-events-auto">
           <a href="/motion-demo"
+            onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
             className="group relative inline-block px-8 py-2.5 border border-cyan-400/25 text-cyan-400/50 hover:text-cyan-200 hover:border-cyan-400/60 text-[9px] md:text-[10px] tracking-[0.25em] uppercase font-mono transition-all duration-500"
             style={{ boxShadow: "0 0 20px rgba(34,211,238,0.06)" }}>
             <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
