@@ -79,7 +79,7 @@ export default function ContactClient() {
               </div>
               <div className="group">
                 <span className="block text-white/20 text-[8px] tracking-[0.4em] uppercase mb-2">Technical_Uplink</span>
-                <a href="mailto:dev@myshape.com" className="text-white text-lg tracking-[0.2em] font-light hover:text-cyan-400 transition-colors">DEV@MYSHAPE.COM</a>
+                <a href="mailto:protocol@myshape.com" className="text-white text-lg tracking-[0.2em] font-light hover:text-cyan-400 transition-colors">PROTOCOL@MYSHAPE.COM</a>
               </div>
             </div>
           </div>

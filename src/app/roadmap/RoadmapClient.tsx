@@ -2,6 +2,15 @@
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
 import { playTick } from "@/utils/useAudioTick";
 
+const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.hover || ''; });
+};
+const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.default || ''; });
+};
+
 type Status = "COMPLETED" | "CURRENT" | "PENDING";
 
 interface Milestone {
@@ -150,36 +159,32 @@ export default function RoadmapClient() {
                     )}
                   </div>
 
-                  <div className={`border ${cfg.border} ${cfg.glow} bg-[#02040a]/80`}
-                    onMouseEnter={() => playTick([600, 700, 800, 900][epochs.indexOf(epoch)] || 700, "sine", 0.08, 0.015)}>
+                  <div className={`border ${cfg.border} ${cfg.glow} transition-all duration-500`}
+                    style={{ background: "transparent" }}
+                    onMouseEnter={e => { playTick([600, 700, 800, 900][epochs.indexOf(epoch)] || 700, "sine", 0.08, 0.015); hoverOn(e); }}
+                    onMouseLeave={e => hoverOff(e)}>
                     <div className="p-6 md:p-10">
                       <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 mb-2">
-                        <span className="text-cyan-500/50 text-[10px] tracking-[0.4em] font-mono shrink-0">
-                          {epoch.epoch}
-                        </span>
-                        <h3 className="text-lg md:text-xl tracking-[0.3em] font-light uppercase text-white/90">
-                          {epoch.title}
-                        </h3>
-                        <span className="text-white/20 text-[10px] tracking-[0.2em]">{epoch.timeframe}</span>
+                        <span className="text-[10px] tracking-[0.4em] font-mono shrink-0" style={{ color: "rgba(34,211,238,0.5)" }}>{epoch.epoch}</span>
+                        <h3 className="text-lg md:text-xl tracking-[0.3em] font-light uppercase" style={{ color: "rgba(255,255,255,0.85)" }} data-default="rgba(255,255,255,0.85)" data-hover="rgba(255,255,255,1)">{epoch.title}</h3>
+                        <span className="text-[10px] tracking-[0.2em]" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.4)">{epoch.timeframe}</span>
                       </div>
 
-                      <p className="text-cyan-400/50 text-[11px] tracking-[0.3em] uppercase mb-6">
-                        {epoch.thesis}
-                      </p>
+                      <p className="text-[11px] tracking-[0.3em] uppercase mb-6" style={{ color: "rgba(34,211,238,0.5)" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.85)">{epoch.thesis}</p>
 
                       <div className="space-y-2 mb-6">
                         {epoch.milestones.map((m, idx) => (
                           <div key={idx} className="flex gap-3 items-start">
-                            <span className={`text-[9px] mt-0.5 shrink-0 ${
-                              m.status === "COMPLETED" ? "text-cyan-400/60" :
-                              m.status === "CURRENT" ? "text-cyan-400/40" : "text-white/10"
-                            }`}>
+                            <span className="text-[9px] mt-0.5 shrink-0"
+                              style={{ color: m.status === "COMPLETED" ? "rgba(34,211,238,0.6)" : m.status === "CURRENT" ? "rgba(34,211,238,0.4)" : "rgba(255,255,255,0.1)" }}
+                              data-default={m.status === "COMPLETED" ? "rgba(34,211,238,0.6)" : m.status === "CURRENT" ? "rgba(34,211,238,0.4)" : "rgba(255,255,255,0.1)"}
+                              data-hover={m.status === "COMPLETED" ? "rgba(34,211,238,0.9)" : m.status === "CURRENT" ? "rgba(34,211,238,0.75)" : "rgba(255,255,255,0.3)"}>
                               {m.status === "COMPLETED" ? "✓" : m.status === "CURRENT" ? "▶" : "○"}
                             </span>
-                            <span className={`text-[10px] tracking-[0.15em] leading-relaxed uppercase ${
-                              m.status === "COMPLETED" ? "text-white/60" :
-                              m.status === "CURRENT" ? "text-white/40" : "text-white/15"
-                            }`}>
+                            <span className="text-[10px] tracking-[0.15em] leading-relaxed uppercase"
+                              style={{ color: m.status === "COMPLETED" ? "rgba(255,255,255,0.55)" : m.status === "CURRENT" ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.15)" }}
+                              data-default={m.status === "COMPLETED" ? "rgba(255,255,255,0.55)" : m.status === "CURRENT" ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.15)"}
+                              data-hover={m.status === "COMPLETED" ? "rgba(255,255,255,0.85)" : m.status === "CURRENT" ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.4)"}>
                               {m.label}
                             </span>
                           </div>
