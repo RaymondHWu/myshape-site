@@ -51,8 +51,7 @@ export default function ProtocolFooter() {
       links: [
         { name: "DEVELOPERS", href: "/developers" },
         { name: "MOTION_DEMO", href: "/motion-demo" },
-        { name: "AI_AGENT", href: "/agent" },
-        { name: "GITHUB", href: "https://github.com/myshapeprotocol" }
+        { name: "AI_AGENT", href: "/agent" }
       ]
     },
     {
@@ -61,9 +60,7 @@ export default function ProtocolFooter() {
         { name: "WHITEPAPER", href: "/whitepaper" },
         { name: "TECHNICAL_SPEC", href: "/papers/technical-spec" },
         { name: "THREAT_MODEL", href: "/papers/threat-model" },
-        { name: "CORE_PROTOCOL", href: "/papers/core-protocol" },
         { name: "ARCHITECTURE", href: "/papers/protocol-architecture" },
-        { name: "ROADMAP_PAPER", href: "/papers/civilization-roadmap" },
         { name: "ALL_PAPERS", href: "/papers" }
       ]
     },

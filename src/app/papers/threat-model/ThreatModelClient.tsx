@@ -6,11 +6,17 @@ import { playTick } from "@/utils/useAudioTick";
 
 const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
   const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
-  kids.forEach(k => { k.style.color = k.dataset.hover || ''; });
+  kids.forEach(k => {
+    k.style.color = k.dataset.hover || '';
+    if (k.dataset.hoverSize) k.style.fontSize = k.dataset.hoverSize;
+  });
 };
 const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
   const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
-  kids.forEach(k => { k.style.color = k.dataset.default || ''; });
+  kids.forEach(k => {
+    k.style.color = k.dataset.default || '';
+    if (k.dataset.defaultSize) k.style.fontSize = k.dataset.defaultSize;
+  });
 };
 
 const ATTACKS = [
@@ -101,28 +107,30 @@ export default function ThreatModelClient() {
                 onMouseEnter={e => { playTick(700, "sine", 0.08, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
                 onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-white/[0.02]">
-                  <span className="text-cyan-400/70 text-[11px] tracking-[0.15em] uppercase">{a.class}</span>
-                  <span className={`text-[9px] tracking-[0.2em] uppercase px-2 py-0.5 border ${
-                    a.severity === "Critical" ? "text-red-300/70 border-red-400/20" :
-                    a.severity === "High" ? "text-amber-300/70 border-amber-400/20" :
-                    "text-cyan-300/70 border-cyan-400/20"
-                  }`}>{a.severity}</span>
+                  <span className="text-[11px] tracking-[0.15em] uppercase" style={{ color: "rgba(34,211,238,0.7)" }} data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,1)">{a.class}</span>
+                  <span className="text-[9px] tracking-[0.2em] uppercase px-2 py-0.5 border"
+                    style={{
+                      color: a.severity === "Critical" ? "rgba(252,165,165,0.7)" : a.severity === "High" ? "rgba(252,211,77,0.7)" : "rgba(34,211,238,0.7)",
+                      borderColor: a.severity === "Critical" ? "rgba(252,165,165,0.2)" : a.severity === "High" ? "rgba(252,211,77,0.2)" : "rgba(34,211,238,0.2)"
+                    }}
+                    data-default={a.severity === "Critical" ? "rgba(252,165,165,0.7)" : a.severity === "High" ? "rgba(252,211,77,0.7)" : "rgba(34,211,238,0.7)"}
+                    data-hover={a.severity === "Critical" ? "rgba(252,165,165,1)" : a.severity === "High" ? "rgba(252,211,77,1)" : "rgba(34,211,238,1)"}>{a.severity}</span>
                 </div>
                 <div className="p-5 space-y-3">
                   <div>
-                    <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase">Attack Vectors</span>
+                    <span className="text-[9px] tracking-[0.15em] uppercase" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.45)">Attack Vectors</span>
                     <div className="flex flex-wrap gap-2 mt-1">
                       {a.attacks.map((atk, j) => (
-                        <span key={j} className="text-white/35 text-[10px] px-2 py-0.5 border border-white/5">{atk}</span>
+                        <span key={j} className="text-[10px] px-2 py-0.5 border transition-colors duration-500" style={{ color: "rgba(255,255,255,0.3)", borderColor: "rgba(255,255,255,0.08)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)">{atk}</span>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase">Detection</span>
+                    <span className="text-[9px] tracking-[0.15em] uppercase" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.45)">Detection</span>
                     <p className="text-[11px] mt-1" style={{ color: "rgba(255,255,255,0.35)" }} data-default="rgba(255,255,255,0.35)" data-hover="rgba(255,255,255,0.6)">{a.detection}</p>
                   </div>
                   <div className="flex justify-between text-[9px]">
-                    <span className="text-white/20">Success Rate</span>
+                    <span className="text-[9px]" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.4)">Success Rate</span>
                     <span className="text-cyan-300/60" data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.9)">{a.successRate}</span>
                   </div>
                 </div>
@@ -146,11 +154,13 @@ export default function ThreatModelClient() {
               </thead>
               <tbody>
                 {COST_MODEL.map((c, i) => (
-                  <tr key={i} className="border-b border-white/5 hover:bg-cyan-500/[0.02]">
-                    <td className="p-3 text-cyan-400/60 text-[10px]">{c.tier}</td>
-                    <td className="p-3 text-white/40 text-[10px]">{c.cost}</td>
-                    <td className="p-3 text-white/30 text-[10px]">{c.attacks}</td>
-                    <td className="p-3 text-cyan-400/50 text-[10px]">{c.maxSuccess}</td>
+                  <tr key={i} className="border-b border-white/5 transition-all"
+                    onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); }}
+                    onMouseLeave={e => hoverOff(e)}>
+                    <td className="p-3 text-[10px]" style={{ color: "rgba(34,211,238,0.6)", fontSize: "10px" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.9)" data-default-size="10px" data-hover-size="13px">{c.tier}</td>
+                    <td className="p-3 text-[10px]" style={{ color: "rgba(255,255,255,0.4)", fontSize: "10px" }} data-default="rgba(255,255,255,0.4)" data-hover="rgba(255,255,255,0.7)" data-default-size="10px" data-hover-size="13px">{c.cost}</td>
+                    <td className="p-3 text-[10px]" style={{ color: "rgba(255,255,255,0.3)", fontSize: "10px" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)" data-default-size="10px" data-hover-size="13px">{c.attacks}</td>
+                    <td className="p-3 text-[10px]" style={{ color: "rgba(34,211,238,0.5)", fontSize: "10px" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.85)" data-default-size="10px" data-hover-size="13px">{c.maxSuccess}</td>
                   </tr>
                 ))}
               </tbody>
@@ -171,10 +181,10 @@ export default function ThreatModelClient() {
                 onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
                 onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-cyan-400/60 text-[10px] tracking-[0.15em] uppercase">{d.layer}</span>
-                  <span className="text-white/15 text-[8px] tracking-[0.1em]">{d.boundary}</span>
+                  <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(34,211,238,0.6)", fontSize: "10px" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.9)" data-default-size="10px" data-hover-size="13px">{d.layer}</span>
+                  <span className="text-[8px] tracking-[0.1em]" style={{ color: "rgba(255,255,255,0.15)", fontSize: "8px" }} data-default="rgba(255,255,255,0.15)" data-hover="rgba(255,255,255,0.35)" data-default-size="8px" data-hover-size="11px">{d.boundary}</span>
                 </div>
-                <p className="text-[10px] leading-relaxed" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)">{d.mechanism}</p>
+                <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.3)", fontSize: "10px" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)" data-default-size="10px" data-hover-size="13px">{d.mechanism}</p>
               </div>
             ))}
           </div>
@@ -183,13 +193,13 @@ export default function ThreatModelClient() {
         {/* Entropy Gap Theorem */}
         <section className="p-6 border text-center transition-all duration-500"
           style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-          <div className="text-cyan-400/50 text-[10px] tracking-[0.3em] uppercase mb-3">Entropy Gap Theorem (§10)</div>
-          <p className="text-white/40 text-[11px] leading-relaxed mb-2">
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+          onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+          <div className="text-[10px] tracking-[0.3em] uppercase mb-3" style={{ color: "rgba(34,211,238,0.5)" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.9)">Entropy Gap Theorem (§10)</div>
+          <p className="text-[11px] leading-relaxed mb-2" style={{ color: "rgba(255,255,255,0.4)" }} data-default="rgba(255,255,255,0.4)" data-hover="rgba(255,255,255,0.7)">
             Pr[AI generates PES ≥ 0.65] → 0
           </p>
-          <p className="text-white/20 text-[10px] leading-relaxed">
+          <p className="text-[10px] leading-relaxed" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.4)">
             The gap between biological entropy and AI-generated smoothness is a fundamental limit,
             not a technological one. It arises from the informational asymmetry between a living
             nervous system and any external model of it.
@@ -197,12 +207,9 @@ export default function ThreatModelClient() {
         </section>
 
         {/* Citation */}
-        <section className="mt-14 p-5 border transition-all duration-500"
-          style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-          <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-2">Cite This Document</div>
-          <p className="text-white/30 text-[9px] leading-relaxed font-mono">
+        <section className="mt-14 text-center">
+          <div className="text-[8px] tracking-[0.2em] uppercase mb-2" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.4)">Cite This Document</div>
+          <p className="text-[9px] leading-relaxed font-mono" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)">
             MyShape Protocol. "MyShape Threat Model v1.0." June 2026. https://www.myshape.com/papers/threat-model
           </p>
         </section>

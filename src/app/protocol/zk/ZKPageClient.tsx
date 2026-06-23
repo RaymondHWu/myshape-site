@@ -2,6 +2,15 @@
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
 import { playTick } from "@/utils/useAudioTick";
 
+const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.hover || ''; });
+};
+const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.default || ''; });
+};
+
 const PROOF_LAYERS = [
   {
     id: "PoP",
@@ -66,16 +75,16 @@ export default function ZKPage() {
             {PROOF_LAYERS.map((p, i) => (
               <div key={p.id} className="relative p-6 group transition-all duration-500"
                 style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}
-                onMouseEnter={e => { playTick(700, "sine", 0.08, 0.02); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+                onMouseEnter={e => { playTick(700, "sine", 0.08, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-start gap-5">
                   <div className="w-14 h-14 flex items-center justify-center border border-cyan-500/20 text-cyan-400/70 font-mono text-[12px] tracking-[0.2em] shrink-0">
                     {p.id}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-white/70 text-[13px] tracking-[0.3em] uppercase mb-2">{p.name}</div>
-                    <div className="text-white/25 text-[10px] leading-relaxed">{p.desc}</div>
+                    <div className="text-[13px] tracking-[0.3em] uppercase mb-2" style={{ color: "rgba(255,255,255,0.7)" }} data-default="rgba(255,255,255,0.7)" data-hover="rgba(255,255,255,0.95)">{p.name}</div>
+                    <div className="text-[10px] leading-relaxed" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{p.desc}</div>
                   </div>
                   {i < PROOF_LAYERS.length - 1 && (
                     <div className="hidden md:flex items-center text-cyan-400/20 text-lg">↓</div>
@@ -86,14 +95,14 @@ export default function ZKPage() {
             {/* ZKP composite */}
             <div className="relative border p-6 text-center transition-all duration-500"
               style={{ borderColor: "rgba(144,200,255,0.15)", background: "transparent", boxShadow: "0 0 30px rgba(34,211,238,0.06)" }}
-              onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.15)"; }}>
-              <div className="text-cyan-400/50 text-[9px] tracking-[0.5em] uppercase mb-3">Composite Proof</div>
-              <div className="text-cyan-200/80 text-[14px] tracking-[0.4em] uppercase font-light"
-                style={{ textShadow: "0 0 12px rgba(34,211,238,0.3)" }}>
+              onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+              onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.15)"; }}>
+              <div className="text-[9px] tracking-[0.5em] uppercase mb-3" style={{ color: "rgba(34,211,238,0.5)" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.9)">Composite Proof</div>
+              <div className="text-[14px] tracking-[0.4em] uppercase font-light"
+                style={{ color: "rgba(165,243,252,0.8)", textShadow: "0 0 12px rgba(34,211,238,0.3)" }} data-default="rgba(165,243,252,0.8)" data-hover="rgba(165,243,252,1)">
                 ZK-Presence = ZK(PoP, MP, EP)
               </div>
-              <div className="text-white/20 text-[9px] tracking-[0.2em] mt-2">128-512 bytes · verifiable in &lt;1ms · platform-agnostic</div>
+              <div className="text-[9px] tracking-[0.2em] mt-2" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.4)">128-512 bytes · verifiable in &lt;1ms · platform-agnostic</div>
             </div>
           </div>
         </section>
@@ -105,15 +114,15 @@ export default function ZKPage() {
             {VERIFICATION_RULES.map((r) => (
               <div key={r.rule} className="border p-5 group transition-all duration-500"
                 style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="w-5 h-5 flex items-center justify-center border border-cyan-500/30 text-cyan-400/60 font-mono text-[9px]">
                     {r.rule}
                   </span>
-                  <span className="text-white/60 text-[11px] tracking-[0.2em] uppercase">{r.name}</span>
+                  <span className="text-[11px] tracking-[0.2em] uppercase" style={{ color: "rgba(255,255,255,0.6)" }} data-default="rgba(255,255,255,0.6)" data-hover="rgba(255,255,255,0.9)">{r.name}</span>
                 </div>
-                <div className="text-white/25 text-[9px] leading-relaxed">{r.desc}</div>
+                <div className="text-[9px] leading-relaxed" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{r.desc}</div>
               </div>
             ))}
           </div>
@@ -122,21 +131,21 @@ export default function ZKPage() {
         {/* ── 隐私保证 ── */}
         <section className="border p-10 text-center transition-all duration-500"
           style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-          <div className="text-white/30 text-[9px] tracking-[0.6em] uppercase mb-6">Privacy Guarantees</div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-[10px] tracking-[0.15em] text-white/40">
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+          onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+          <div className="text-[9px] tracking-[0.6em] uppercase mb-6" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.6)">Privacy Guarantees</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <div className="text-cyan-400/60 mb-2">Reveals Nothing</div>
-              <div className="text-white/20">No motion data · No identity · No behavior · No device info</div>
+              <div className="text-[10px] tracking-[0.15em] mb-2" style={{ color: "rgba(34,211,238,0.6)" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)">Reveals Nothing</div>
+              <div className="text-[10px] tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.45)">No motion data · No identity · No behavior · No device info</div>
             </div>
             <div>
-              <div className="text-cyan-400/60 mb-2">Stores Nothing</div>
-              <div className="text-white/20">No raw signals · No feature vectors · No personal data</div>
+              <div className="text-[10px] tracking-[0.15em] mb-2" style={{ color: "rgba(34,211,238,0.6)" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)">Stores Nothing</div>
+              <div className="text-[10px] tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.45)">No raw signals · No feature vectors · No personal data</div>
             </div>
             <div>
-              <div className="text-cyan-400/60 mb-2">Leaks Nothing</div>
-              <div className="text-white/20">No inference possible · No statistical attack surface</div>
+              <div className="text-[10px] tracking-[0.15em] mb-2" style={{ color: "rgba(34,211,238,0.6)" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)">Leaks Nothing</div>
+              <div className="text-[10px] tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.45)">No inference possible · No statistical attack surface</div>
             </div>
           </div>
         </section>
