@@ -161,13 +161,16 @@ export default function HomeClient() {
                   { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", delay: "0.9s" },
                   { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", delay: "1.2s" },
                 ].map(layer => (
-                  <div key={layer.l} className="p-6" style={{ border: "1px solid rgba(144,200,255,0.1)", borderRadius: "12px", background: "transparent" }}>
+                  <div key={layer.l} className="group p-6 transition-all duration-500"
+                    style={{ border: "1px solid rgba(144,200,255,0.1)", borderRadius: "12px", background: "transparent" }}
+                    onMouseEnter={e => { playTick(600, "sine", 0.08, 0.02); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                     <div className="flex items-center gap-3 mb-2">
                       <span className="font-mono text-[11px] shrink-0" style={{ color: "rgba(144,200,255,0.4)", textShadow: "0 0 6px rgba(144,200,255,0.15)", animation: `nodePulse 2.5s ease-in-out ${layer.delay} infinite` }}>{layer.l}</span>
-                      <span className="text-white text-[15px] font-light tracking-[0.02em]">{layer.name}</span>
+                      <span className="text-white/80 text-[15px] font-light tracking-[0.02em] group-hover:text-white transition-colors duration-500">{layer.name}</span>
                     </div>
-                    <p className="text-white/30 text-[13px] font-light leading-relaxed mb-2">{layer.desc}</p>
-                    <div className="inline-block px-2 py-0.5 font-mono text-[8px] tracking-[0.1em] rounded border border-cyan-400/10 text-cyan-400/40 bg-cyan-400/[0.02]">{layer.meta}</div>
+                    <p className="text-white/30 text-[13px] font-light leading-relaxed mb-2 group-hover:text-white/55 transition-colors duration-500">{layer.desc}</p>
+                    <div className="inline-block px-2 py-0.5 font-mono text-[8px] tracking-[0.1em] rounded border border-cyan-400/10 text-cyan-400/40 bg-cyan-400/[0.02] group-hover:border-cyan-400/30 group-hover:text-cyan-300/70 transition-all duration-500">{layer.meta}</div>
                   </div>
                 ))}
               </div>
