@@ -3,6 +3,21 @@ import Link from 'next/link';
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
 import { playTick } from "@/utils/useAudioTick";
 
+const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => {
+    k.style.color = k.dataset.hover || '';
+    if (k.dataset.hoverSize) k.style.fontSize = k.dataset.hoverSize;
+  });
+};
+const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => {
+    k.style.color = k.dataset.default || '';
+    if (k.dataset.defaultSize) k.style.fontSize = k.dataset.defaultSize;
+  });
+};
+
 const SPEC_SECTIONS = [
   { id: "§1", title: "Definitions", desc: "Presence, Motion Vector, ZK-Presence — the mathematical vocabulary", status: "implemented" },
   { id: "§2", title: "Motion Vector Format", desc: "Standardized 18-point skeleton topology, 30fps, 1s window, Poseidon hash", status: "implemented" },
@@ -50,15 +65,19 @@ export default function ProtocolClient() {
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">Five-Layer Architecture</h2>
           <div className="space-y-1 max-w-3xl mx-auto">
             {FIVE_LAYERS.map((l) => (
-              <div key={l.layer} className="flex items-center gap-4 p-4 bg-[#02040a] border border-white/5 group hover:border-cyan-500/20 transition-all">
+              <div key={l.layer}
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+                className="flex items-center gap-4 p-4 bg-[#02040a] transition-all"
+                style={{ border: "1px solid rgba(144,200,255,0.1)" }}>
                 <div className="w-8 h-8 flex items-center justify-center border border-cyan-500/30 text-cyan-400/60 font-mono text-[10px] shrink-0">
                   L{l.layer}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-white/70 text-[11px] tracking-[0.3em] uppercase mb-0.5">{l.name}</div>
-                  <div className="text-white/25 text-[9px] tracking-[0.1em] truncate">{l.role}</div>
+                  <div className="text-[11px] tracking-[0.3em] uppercase mb-0.5" style={{ color: "rgba(255,255,255,0.6)" }} data-default="rgba(255,255,255,0.6)" data-hover="rgba(255,255,255,0.95)">{l.name}</div>
+                  <div className="text-[9px] tracking-[0.1em] truncate" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{l.role}</div>
                 </div>
-                <div className="flex items-center gap-1.5 text-[8px] text-cyan-400/50 tracking-[0.2em] uppercase">
+                <div className="flex items-center gap-1.5 text-[8px] tracking-[0.2em] uppercase" style={{ color: "rgba(34,211,238,0.4)" }} data-default="rgba(34,211,238,0.4)" data-hover="rgba(34,211,238,0.8)">
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
                   {l.status}
                 </div>
@@ -70,18 +89,22 @@ export default function ProtocolClient() {
         {/* ── 规范实施状态 ── */}
         <section>
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">Specification Implementation</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {SPEC_SECTIONS.map((s) => (
-              <div key={s.id} onMouseEnter={() => playTick(600, "sine", 0.06, 0.012)} className="bg-[#02040a] p-5 group hover:bg-cyan-500/[0.02] transition-all">
+              <div key={s.id}
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.012); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+                className="bg-[#02040a] p-5 transition-all"
+                style={{ border: "1px solid rgba(144,200,255,0.1)" }}>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-cyan-400/60 font-mono text-[10px] tracking-[0.3em]">{s.id}</span>
-                  <span className="flex items-center gap-1 text-[8px] text-emerald-400/60 tracking-[0.2em] uppercase">
-                    <span className="w-1 h-1 rounded-full bg-emerald-400" />
+                  <span className="flex items-center gap-1 text-[8px] tracking-[0.2em] uppercase" style={{ color: "rgba(34,211,238,0.5)" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.9)">
+                    <span className="w-1 h-1 rounded-full bg-cyan-400" />
                     {s.status}
                   </span>
                 </div>
-                <div className="text-white/70 text-[11px] tracking-[0.15em] uppercase mb-1.5">{s.title}</div>
-                <div className="text-white/25 text-[9px] leading-relaxed">{s.desc}</div>
+                <div className="text-[11px] tracking-[0.15em] uppercase mb-1.5" style={{ color: "rgba(255,255,255,0.6)" }} data-default="rgba(255,255,255,0.6)" data-hover="rgba(255,255,255,0.95)">{s.title}</div>
+                <div className="text-[9px] leading-relaxed" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{s.desc}</div>
               </div>
             ))}
           </div>
@@ -101,10 +124,11 @@ export default function ProtocolClient() {
               </thead>
               <tbody>
                 {ENGINES.map((e) => (
-                  <tr key={e.file} className="border-b border-white/5 hover:bg-cyan-500/[0.02] transition-all">
-                    <td className="p-3 text-white/60 text-[10px] tracking-[0.15em] uppercase">{e.name}</td>
-                    <td className="p-3 text-cyan-400/40 font-mono text-[9px] hidden md:table-cell">{e.file}</td>
-                    <td className="p-3 text-white/25 text-[9px]">{e.desc}</td>
+                  <tr key={e.file} className="border-b border-white/5 hover:bg-cyan-500/[0.02] transition-all"
+                    onMouseEnter={e => { playTick(700, "sine", 0.06, 0.015); hoverOn(e); }} onMouseLeave={e => hoverOff(e)}>
+                    <td className="p-3 tracking-[0.15em] uppercase" style={{ color: "rgba(255,255,255,0.5)", fontSize: "10px" }} data-default="rgba(255,255,255,0.5)" data-hover="rgba(255,255,255,0.9)" data-default-size="10px" data-hover-size="13px">{e.name}</td>
+                    <td className="p-3 font-mono hidden md:table-cell" style={{ color: "rgba(34,211,238,0.35)", fontSize: "9px" }} data-default="rgba(34,211,238,0.35)" data-hover="rgba(34,211,238,0.7)" data-default-size="9px" data-hover-size="12px">{e.file}</td>
+                    <td className="p-3" style={{ color: "rgba(255,255,255,0.25)", fontSize: "9px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="9px" data-hover-size="12px">{e.desc}</td>
                   </tr>
                 ))}
               </tbody>
@@ -117,10 +141,10 @@ export default function ProtocolClient() {
           <Link href="/protocol/manifesto" className="group relative px-10 py-4 border border-cyan-500/30 bg-black text-cyan-400/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-cyan-400 transition-all">
             Protocol_Manifesto →
           </Link>
-          <Link href="/protocol/motion-pipeline" className="group relative px-10 py-4 border border-white/10 bg-black text-white/40 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-white/30 transition-all">
+          <Link href="/protocol/motion-pipeline" className="group relative px-10 py-4 border border-cyan-500/30 bg-black text-cyan-400/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-cyan-400 transition-all">
             Motion_Pipeline →
           </Link>
-          <Link href="/protocol/identity-layer" className="group relative px-10 py-4 border border-white/10 bg-black text-white/40 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-white/30 transition-all">
+          <Link href="/protocol/identity-layer" className="group relative px-10 py-4 border border-cyan-500/30 bg-black text-cyan-400/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-cyan-400 transition-all">
             Identity_Layer →
           </Link>
         </section>

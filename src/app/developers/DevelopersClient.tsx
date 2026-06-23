@@ -2,6 +2,23 @@
 import ProtocolHeader from "@/components/header/header";
 import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import ProtocolFooter from "@/components/footer/footer";
+import VerificationDashboard from "@/components/verification/VerificationDashboard";
+import { playTick } from "@/utils/useAudioTick";
+
+const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => {
+    k.style.color = k.dataset.hover || '';
+    if (k.dataset.hoverSize) k.style.fontSize = k.dataset.hoverSize;
+  });
+};
+const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => {
+    k.style.color = k.dataset.default || '';
+    if (k.dataset.defaultSize) k.style.fontSize = k.dataset.defaultSize;
+  });
+};
 
 const SDK_METHODS = [
   { module: "Presence", method: "generatePresenceProof(frames, timestamps, opts?)", returns: "PresenceProofResult", desc: "Generate PoP + MP + EP + ZKP from MediaPipe frames" },
@@ -73,11 +90,13 @@ export default function DevelopersClient() {
               </thead>
               <tbody>
                 {SDK_METHODS.map((m, i) => (
-                  <tr key={i} className="border-b border-white/5 hover:bg-cyan-500/[0.02] transition-all">
-                    <td className="p-3 text-cyan-400/60 text-[10px] tracking-[0.15em]">{m.module}</td>
-                    <td className="p-3 text-white/50 font-mono text-[10px]">{m.method}</td>
-                    <td className="p-3 text-emerald-400/50 text-[9px] font-mono">{m.returns}</td>
-                    <td className="p-3 text-white/25 text-[10px] leading-relaxed">{m.desc}</td>
+                  <tr key={i} className="border-b border-white/5 transition-all"
+                    onMouseEnter={e => { playTick(700, "sine", 0.06, 0.015); hoverOn(e); }}
+                    onMouseLeave={e => hoverOff(e)}>
+                    <td className="p-3 text-[10px] tracking-[0.15em]" style={{ color: "rgba(34,211,238,0.5)", fontSize: "10px" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.9)" data-default-size="10px" data-hover-size="12px">{m.module}</td>
+                    <td className="p-3 font-mono" style={{ color: "rgba(255,255,255,0.45)", fontSize: "10px" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)" data-default-size="10px" data-hover-size="12px">{m.method}</td>
+                    <td className="p-3 font-mono" style={{ color: "rgba(34,211,238,0.4)", fontSize: "9px" }} data-default="rgba(34,211,238,0.4)" data-hover="rgba(34,211,238,0.8)" data-default-size="9px" data-hover-size="11px">{m.returns}</td>
+                    <td className="p-3 leading-relaxed" style={{ color: "rgba(255,255,255,0.25)", fontSize: "10px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="10px" data-hover-size="12px">{m.desc}</td>
                   </tr>
                 ))}
               </tbody>
@@ -99,10 +118,13 @@ export default function DevelopersClient() {
               { name: "Presence Stream", path: "engine/presence-stream.ts", desc: "Aggregation, multi-device, PSS" },
               { name: "Unforgeability", path: "engine/unforgeability.ts", desc: "Entropy gap theorem, security horizon" },
             ].map((e) => (
-              <div key={e.name} className="border border-white/5 bg-black/30 p-4 hover:border-cyan-500/20 transition-all">
-                <div className="text-white/60 text-[11px] tracking-[0.15em] uppercase mb-1">{e.name}</div>
-                <div className="text-cyan-400/30 text-[9px] font-mono mb-1.5">{e.path}</div>
-                <div className="text-white/20 text-[10px]">{e.desc}</div>
+              <div key={e.name} className="p-4 transition-all"
+                onMouseEnter={e => { playTick(700, "sine", 0.08, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+                style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
+                <div className="text-[11px] tracking-[0.15em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.55)" }} data-default="rgba(255,255,255,0.55)" data-hover="rgba(255,255,255,0.9)">{e.name}</div>
+                <div className="font-mono text-[9px] mb-1.5" style={{ color: "rgba(34,211,238,0.3)" }} data-default="rgba(34,211,238,0.3)" data-hover="rgba(34,211,238,0.7)">{e.path}</div>
+                <div className="text-[10px]" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{e.desc}</div>
               </div>
             ))}
           </div>
@@ -144,12 +166,15 @@ if (threat.overallVerdict === "human") {
 }`,
               },
             ].map((ex, i) => (
-              <div key={i} className="border border-white/10 bg-black/40 overflow-hidden">
+              <div key={i} className="overflow-hidden transition-all"
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+                style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
                 <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02]">
-                  <span className="text-cyan-400/70 text-[10px] tracking-[0.15em] uppercase">{ex.title}</span>
+                  <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(34,211,238,0.6)" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)">{ex.title}</span>
                 </div>
                 <div className="p-5">
-                  <pre className="text-white/35 text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
+                  <pre className="text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)">
                     {ex.code}
                   </pre>
                 </div>
@@ -158,14 +183,22 @@ if (threat.overallVerdict === "human") {
           </div>
         </section>
 
+        {/* ── Verification Dashboard ── */}
+        <section className="mb-20">
+          <VerificationDashboard />
+        </section>
+
         {/* ── REST API ── */}
         <section className="mb-14">
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// REST_API</h2>
           {API_ENDPOINTS.map((ep) => (
-            <div key={ep.path} className="border border-white/10 bg-black/40 p-4 mb-2 flex items-center gap-4">
-              <span className="text-cyan-400/70 text-[10px] tracking-[0.2em] font-bold w-10">{ep.method}</span>
-              <span className="text-white/50 font-mono text-[11px]">{ep.path}</span>
-              <span className="text-white/25 text-[10px]">{ep.desc}</span>
+            <div key={ep.path} className="p-4 mb-2 flex items-center gap-4 transition-all"
+              onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+              onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+              style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
+              <span className="text-[10px] tracking-[0.2em] font-bold w-10" style={{ color: "rgba(34,211,238,0.6)" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)">{ep.method}</span>
+              <span className="font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.45)" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)">{ep.path}</span>
+              <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{ep.desc}</span>
             </div>
           ))}
 
@@ -175,7 +208,7 @@ if (threat.overallVerdict === "human") {
             <div className="space-y-4">
               <div>
                 <div className="text-white/25 text-[9px] tracking-[0.1em] mb-1">GET /api/identity?email=hello@myshape.com</div>
-                <pre className="bg-black/60 p-3 text-emerald-400/60 text-[9px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
+                <pre className="bg-black/60 p-3 text-cyan-400/50 text-[9px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
 {`{
   "found": true,
   "email": "hello@myshape.com",
@@ -186,7 +219,7 @@ if (threat.overallVerdict === "human") {
               </div>
               <div>
                 <div className="text-white/25 text-[9px] tracking-[0.1em] mb-1">GET /api/nodes/count</div>
-                <pre className="bg-black/60 p-3 text-emerald-400/60 text-[9px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
+                <pre className="bg-black/60 p-3 text-cyan-400/50 text-[9px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
 {`{
   "total": 17,
   "humans": 8,

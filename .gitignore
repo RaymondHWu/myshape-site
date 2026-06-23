@@ -12,7 +12,7 @@
 
 # testing
 /coverage
-
+s
 # next.js
 /.next/
 /out/
@@ -39,6 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 🔴 CORE ROOM — never commit
+docs/.core/
 
 .vercel
 .env*.local

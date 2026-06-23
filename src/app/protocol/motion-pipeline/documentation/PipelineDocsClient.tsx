@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import ProtocolFooter from "@/components/footer/footer";
 import BackgroundParticles from "@/components/particles/BackgroundParticles";
+import { playTick } from "@/utils/useAudioTick";
 
 const techSections = [
   {
@@ -85,7 +86,7 @@ export default function PipelineDocs() {
 
       {/* Top Navigation */}
       <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/80 backdrop-blur-md px-10 py-5 flex justify-between items-center text-[10px] tracking-[0.4em]">
-        <Link href="/protocol/motion-pipeline" className="text-cyan-400/70 hover:text-cyan-300 transition-colors uppercase">← EXIT_TECH_STACK</Link>
+        <Link href="/protocol/motion-pipeline" className="text-cyan-400/70 hover:text-cyan-300 transition-colors uppercase" onMouseEnter={() => playTick(500, "sine", 0.06, 0.015)}>← EXIT_TECH_STACK</Link>
         <div className="text-white/20 uppercase font-bold tracking-[0.5em]">TECHNICAL_SPECIFICATION // V0.8.1_CORE</div>
       </nav>
 
@@ -98,7 +99,7 @@ export default function PipelineDocs() {
             {techSections.map(s => {
               const isActive = s.id === activeIndex;
               return (
-                <li key={s.id} className="group cursor-pointer">
+                <li key={s.id} className="group cursor-pointer" onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}>
                   <a href={'#' + s.id} className="block"
                      style={isActive ? { borderLeft: '2px solid #22d3ee', paddingLeft: '22px', marginLeft: '-24px' } : {}}>
                     <div
@@ -125,7 +126,7 @@ export default function PipelineDocs() {
         {/* Content Area */}
         <div className="flex-1 space-y-56 pb-48">
           {techSections.map((s) => (
-            <section key={s.id} id={s.id} className="group max-w-[750px] scroll-mt-56">
+            <section key={s.id} id={s.id} className="group max-w-[750px] scroll-mt-56" onMouseEnter={() => playTick(600, "sine", 0.04, 0.01)}>
 
               {/* Decoration Line */}
               <div className="flex items-center gap-6 mb-12">

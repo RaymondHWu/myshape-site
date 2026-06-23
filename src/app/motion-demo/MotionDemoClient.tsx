@@ -378,12 +378,12 @@ export default function MotionDemoClient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
       <BackgroundParticles />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-28 pb-16">
-        <div className="space-y-4 mb-10">
+      <div className="relative z-10 max-w-5xl mx-auto px-6" style={{ paddingTop: "10rem", paddingBottom: "4rem" }}>
+        <div className="space-y-6 mb-12">
           <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">Presence_Engine // Live_Demo</div>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">
             Motion <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>→</span> Geometry <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>→</span> Signature
@@ -394,7 +394,7 @@ export default function MotionDemoClient() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {/* Particle Panel */}
           <div className="lg:col-span-2 border border-white/10 bg-black/60 relative overflow-hidden" style={{ minHeight: "min(400px, 60vw)" }}>
             {/* Video is the main display — camera feed directly visible */}
@@ -417,8 +417,9 @@ export default function MotionDemoClient() {
                 <p className="text-white/20 text-[11px] tracking-[0.08em] text-center max-w-xs mt-1">
                   Face the camera. Stand naturally.<br />No specific pose or movement needed.
                 </p>
-                <div className="flex flex-col items-center gap-3 mt-4">
+                <div className="flex flex-col items-center gap-5 mt-6">
                   <button onClick={startCapture}
+                    onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
                     className="px-12 py-4 border border-cyan-400/40 text-cyan-400/80 text-[11px] tracking-[0.4em] uppercase hover:bg-cyan-400/10 hover:text-white transition-all">
                     Activate_Camera
                   </button>
@@ -429,6 +430,7 @@ export default function MotionDemoClient() {
                     setProofHashes({ zkp: "a1b2c3d4", pop: "e5f6a7b8", mp: "c9d0e1f2", ep: "3a4b5c6d" });
                     setPhase("complete");
                   }}
+                    onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
                     className="text-cyan-400/35 hover:text-cyan-300/70 text-[10px] tracking-[0.15em] uppercase transition-colors border-b border-transparent hover:border-cyan-400/30 pb-0.5">
                     Quick Preview →
                   </button>
@@ -500,7 +502,7 @@ export default function MotionDemoClient() {
                 </div>
                 {threatVerdict && (
                   <div className={`text-center text-[9px] tracking-[0.15em] uppercase font-mono py-1 ${
-                    threatVerdict.startsWith("✓") ? "text-emerald-300/80" :
+                    threatVerdict.startsWith("✓") ? "text-cyan-300/80" :
                     threatVerdict.startsWith("⚠") ? "text-amber-300/80" : "text-red-300/80"
                   }`} style={{ textShadow: threatVerdict.startsWith("✓") ? "0 0 8px rgba(52,211,153,0.4)" : "0 0 8px rgba(252,211,77,0.4)" }}>
                     {threatVerdict}
@@ -617,6 +619,7 @@ export default function MotionDemoClient() {
                       setTimeout(() => setCopied(false), 2000);
                     });
                   }}
+                    onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
                     className="w-full py-1.5 border border-cyan-400/10 text-cyan-400/30 hover:text-cyan-300/60 hover:border-cyan-400/30 text-[8px] tracking-[0.15em] uppercase transition-all">
                     {copied ? "✓ Copied" : "📋 Copy Results"}
                   </button>
@@ -631,7 +634,9 @@ export default function MotionDemoClient() {
                       freq: 0.02 + Math.random() * 0.04,
                       bio: 0.04 + Math.random() * 0.08,
                     });
-                  }} className="w-full py-2 border border-cyan-400/20 text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all">
+                  }}
+                    onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
+                    className="w-full py-2 border border-cyan-400/20 text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all">
                     Compare with AI →
                   </button>
                 ) : (
@@ -648,7 +653,9 @@ export default function MotionDemoClient() {
                     </div>
                   </div>
                 )}
-                <button onClick={stop} className="w-full py-2.5 border border-cyan-400/15 text-cyan-400/35 text-[9px] tracking-[0.3em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 hover:bg-cyan-400/[0.03] transition-all">
+                <button onClick={stop}
+                  onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
+                  className="w-full py-2.5 border border-cyan-400/15 text-cyan-400/35 text-[9px] tracking-[0.3em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 hover:bg-cyan-400/[0.03] transition-all">
                   ↻ Run_Again
                 </button>
               </div>
@@ -656,7 +663,7 @@ export default function MotionDemoClient() {
           </div>
         </div>
 
-        <div className="mt-10 p-4 border border-cyan-400/10 bg-cyan-400/[0.02] text-center space-y-2">
+        <div className="mt-14 text-center space-y-3">
           <div className="flex items-center justify-center gap-2 text-cyan-400/50 text-[8px] tracking-[0.15em] uppercase">
             <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
             Your motion data never leaves this device. No cloud upload. No server storage.
@@ -664,7 +671,7 @@ export default function MotionDemoClient() {
           <p className="text-white/15 text-[7px] tracking-[0.15em] uppercase">
             This is a proof-of-concept prototype. All processing is local. No data stored or transmitted.
             For best results, use <span className="text-cyan-400/50">Firefox</span> (Chromium-based browsers may show a green screen with some webcams).
-            See the <a href="/papers/technical-spec" className="text-cyan-400/50 hover:text-cyan-300">technical spec</a> for the full architecture.
+            See the <a href="/papers/technical-spec" className="text-cyan-400/50 hover:text-cyan-300" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>technical spec</a> for the full architecture.
           </p>
         </div>
       </div>

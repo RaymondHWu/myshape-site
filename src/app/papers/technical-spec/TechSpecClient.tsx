@@ -2,6 +2,16 @@
 import ProtocolHeader from "@/components/header/header";
 import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import ProtocolFooter from "@/components/footer/footer";
+import { playTick } from "@/utils/useAudioTick";
+
+const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.hover || ''; });
+};
+const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.default || ''; });
+};
 
 const SPECS = [
   {
@@ -105,7 +115,10 @@ export default function TechSpecClient() {
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// PROTOCOL_METRICS</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {METRICS.map((m) => (
-              <div key={m.label} className="border border-white/5 bg-black/30 p-4 text-center">
+              <div key={m.label} className="border p-4 text-center transition-all duration-500"
+                style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="text-cyan-300/80 text-lg md:text-xl font-light tracking-wider">{m.value}</div>
                 <div className="text-white/20 text-[8px] tracking-[0.15em] uppercase mt-1">{m.label}</div>
               </div>
@@ -118,7 +131,10 @@ export default function TechSpecClient() {
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// FIVE_LAYER_ARCHITECTURE</h2>
           <div className="space-y-1">
             {ARCHITECTURE.map((a, i) => (
-              <div key={i} className="border border-white/5 bg-black/30 p-4 group hover:border-cyan-500/20 transition-all">
+              <div key={i} className="border p-4 transition-all duration-500"
+                style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="text-cyan-400/60 text-[10px] tracking-[0.2em] uppercase mb-1">{a.layer}</div>
                 <div className="text-white/30 text-[10px] leading-relaxed">{a.detail}</div>
               </div>
@@ -130,7 +146,10 @@ export default function TechSpecClient() {
         <section className="space-y-10">
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase">// KEY_SPECIFICATIONS</h2>
           {SPECS.map((s, i) => (
-            <div key={i} className="border border-white/10 bg-black/40 overflow-hidden">
+            <div key={i} className="border overflow-hidden transition-all duration-500"
+              style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+              onMouseEnter={e => { playTick(700, "sine", 0.08, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+              onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
               <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02]">
                 <span className="text-cyan-400/70 text-[11px] tracking-[0.15em] uppercase">{s.question}</span>
               </div>
@@ -144,7 +163,10 @@ export default function TechSpecClient() {
         </section>
 
         {/* Citation */}
-        <section className="mt-14 p-5 border border-white/5 bg-black/30">
+        <section className="mt-14 p-5 border transition-all duration-500"
+          style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
           <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-2">Cite This Document</div>
           <p className="text-white/30 text-[9px] leading-relaxed font-mono">
             MyShape Protocol. "MyShape Technical Specification v1.0." June 2026. https://www.myshape.com/papers/technical-spec
@@ -152,7 +174,10 @@ export default function TechSpecClient() {
         </section>
 
         {/* Reference Implementation */}
-        <section className="mt-4 p-6 border border-cyan-400/10 bg-cyan-400/[0.02] text-center">
+        <section className="mt-4 p-6 border text-center transition-all duration-500"
+          style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
           <div className="text-cyan-400/50 text-[10px] tracking-[0.3em] uppercase mb-3">Reference Implementation</div>
           <p className="text-white/30 text-[11px] leading-relaxed mb-4">
             16 protocol engines implemented in TypeScript. Zero external dependencies.

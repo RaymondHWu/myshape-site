@@ -58,6 +58,7 @@ export default function ProtocolFooter() {
     {
       title: "PAPERS",
       links: [
+        { name: "WHITEPAPER", href: "/whitepaper" },
         { name: "TECHNICAL_SPEC", href: "/papers/technical-spec" },
         { name: "THREAT_MODEL", href: "/papers/threat-model" },
         { name: "CORE_PROTOCOL", href: "/papers/core-protocol" },

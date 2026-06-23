@@ -3,6 +3,16 @@ import ProtocolHeader from "@/components/header/header";
 import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import ProtocolFooter from "@/components/footer/footer";
 import { playTick } from "@/utils/useAudioTick";
+import Typewriter from "@/components/ui/Typewriter";
+
+const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.hover || ''; });
+};
+const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.default || ''; });
+};
 
 const PAPERS = [
   {
@@ -68,27 +78,27 @@ export default function PapersHubClient() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {PAPERS.map((p) => (
             <a key={p.path} href={p.path}
-              onMouseEnter={() => playTick(600, "sine", 0.10, 0.02)}
-              className="group block border border-white/5 bg-black/30 p-6 hover:border-cyan-500/20 transition-all">
+              onMouseEnter={e => { playTick(600, "sine", 0.10, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+              onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+              className="group block p-6 transition-all duration-500"
+              style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
               <div className="flex flex-wrap gap-1.5 mb-3">
                 {p.tags.map((t) => (
-                  <span key={t} className="text-cyan-400/30 text-[8px] tracking-[0.15em] uppercase px-2 py-0.5 border border-cyan-400/10">{t}</span>
+                  <span key={t} className="text-[8px] tracking-[0.15em] uppercase px-2 py-0.5 border border-cyan-400/10" style={{ color: "rgba(34,211,238,0.3)" }}>{t}</span>
                 ))}
               </div>
-              <h3 className="text-white/70 text-[11px] tracking-[0.2em] uppercase mb-2 group-hover:text-cyan-300/80 transition-colors">
+              <h3 className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: "rgba(255,255,255,0.6)" }} data-default="rgba(255,255,255,0.6)" data-hover="rgba(255,255,255,0.95)">
                 {p.title}
               </h3>
-              <p className="text-white/25 text-[10px] leading-relaxed mb-3">{p.desc}</p>
-              <p className="text-white/12 text-[8px] tracking-[0.08em] mb-2">{p.author}</p>
-              <span className="text-cyan-400/30 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all inline-block text-[10px]">→</span>
+              <p className="text-[10px] leading-relaxed mb-3" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{p.desc}</p>
+              <p className="text-[8px] tracking-[0.08em] mb-2" style={{ color: "rgba(255,255,255,0.12)" }}>{p.author}</p>
+              <span className="inline-block text-[10px]" style={{ color: "rgba(34,211,238,0.3)" }} data-default="rgba(34,211,238,0.3)" data-hover="rgba(34,211,238,0.7)">→</span>
             </a>
           ))}
         </div>
 
-        <div className="mt-14 p-6 border border-dashed border-white/8 text-center">
-          <p className="text-white/20 text-[10px] tracking-[0.15em]">
-            All papers are living documents. Updated as the protocol evolves.
-          </p>
+        <div className="mt-14 text-center">
+          <Typewriter text="All papers are living documents. Updated as the protocol evolves." className="text-white/40 text-[10px] tracking-[0.15em]" />
         </div>
       </div>
 

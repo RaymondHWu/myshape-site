@@ -1,6 +1,7 @@
 "use client";
 import Link from 'next/link';
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
+import { playTick } from "@/utils/useAudioTick";
 
 export default function MotionPipeline() {
 
@@ -80,7 +81,8 @@ export default function MotionPipeline() {
             
             <div className="grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-8 relative z-10">
               {pipelineSteps.map((item) => (
-                <div key={item.step} className="group flex flex-col items-center text-center">
+                <div key={item.step} className="group flex flex-col items-center text-center"
+                  onMouseEnter={() => playTick(800, "sine", 0.08, 0.02)}>
                   <div className="w-16 h-16 rounded-full border border-white/10 bg-[#02040a] flex items-center justify-center mb-8 group-hover:border-cyan-500 transition-all duration-700 relative">
                     <span className="text-[11px] text-white/30 group-hover:text-cyan-400 font-bold tracking-widest transition-colors">
                       {item.step}
@@ -105,7 +107,8 @@ export default function MotionPipeline() {
           </section>
 
           {/* --- 3. SDK 技術聲明 --- */}
-          <section className="bg-white/[0.01] border border-white/5 p-12 relative overflow-hidden group">
+          <section className="bg-white/[0.01] border border-white/5 p-12 relative overflow-hidden group"
+            onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
             <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
             
             <div className="flex flex-col md:flex-row justify-between items-center gap-12 relative z-10">
@@ -135,6 +138,7 @@ export default function MotionPipeline() {
               <Link
                 href="/papers/technical-spec"
                 className="inline-block group cursor-pointer"
+                onMouseEnter={() => playTick(700, "sine", 0.10, 0.025)}
               >
                  <div className="px-16 py-6 border border-cyan-500/30 bg-cyan-500/5 group-hover:bg-cyan-400 group-hover:text-black transition-all duration-500 text-cyan-400 text-[11px] tracking-[0.6em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.05)]">
                    View Technical Specification →

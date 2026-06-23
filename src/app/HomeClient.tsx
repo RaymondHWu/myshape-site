@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import { createClient } from '@supabase/supabase-js';
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
@@ -31,7 +31,6 @@ export default function HomeClient() {
   };
 
   useEffect(() => {
-    // 优先检查本地 Genesis 状态
     if (typeof window !== "undefined" && sessionStorage.getItem("genesis_completed") === "1") {
       const email = sessionStorage.getItem("genesis_email") || "";
       const st = sessionStorage.getItem("genesis_status") || "ACTIVE";
@@ -82,15 +81,14 @@ export default function HomeClient() {
   useEffect(() => {
     const hashInterval = setInterval(() => {
       setClientHash(`0X${Math.random().toString(16).substring(2, 10).toUpperCase()}`);
-    }, 3000); 
+    }, 3000);
     return () => clearInterval(hashInterval);
   }, []);
 
   return (
     <>
       <ProtocolHeader />
-      
-      {/* 🔹 悬浮 HUD 监控层 🔹 */}
+
       <div className="fixed inset-0 z-[999] pointer-events-none">
         <div className="absolute top-10 right-10 pointer-events-auto">
           <div className="flex items-center gap-2">
@@ -98,7 +96,7 @@ export default function HomeClient() {
              <span className="font-mono text-[9px] tracking-[0.3em] text-white/60 uppercase">LIVE_FEED</span>
           </div>
         </div>
-        
+
         <div className="absolute bottom-10 right-10 text-right">
           <div className="flex flex-col items-end">
             {isGenesisUser ? (
@@ -136,7 +134,6 @@ export default function HomeClient() {
         </div>
       </div>
 
-      {/* 🔹 主内容区 🔹 */}
       <main className="relative z-0 w-full overflow-x-hidden bg-black">
         <Hero />
 
@@ -164,26 +161,23 @@ export default function HomeClient() {
                   { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", delay: "0.9s" },
                   { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", delay: "1.2s" },
                 ].map(layer => (
-                  <div key={layer.l} className="border border-cyan-400/10 bg-black/30 p-4">
+                  <div key={layer.l} className="p-6" style={{ border: "1px solid rgba(144,200,255,0.1)", borderRadius: "12px", background: "transparent" }}>
                     <div className="flex items-center gap-3 mb-2">
                       <span className="font-mono text-[11px] shrink-0" style={{ color: "rgba(144,200,255,0.4)", textShadow: "0 0 6px rgba(144,200,255,0.15)", animation: `nodePulse 2.5s ease-in-out ${layer.delay} infinite` }}>{layer.l}</span>
-                      <span className="text-white/70 text-[13px] tracking-[0.2em] uppercase">{layer.name}</span>
+                      <span className="text-white text-[15px] font-light tracking-[0.02em]">{layer.name}</span>
                     </div>
-                    <p className="text-white/25 text-[11px] leading-relaxed mb-2">{layer.desc}</p>
-                    <div className="inline-block px-2 py-0.5 font-mono text-[8px] border border-cyan-400/10 text-cyan-400/40 bg-cyan-400/[0.02]">{layer.meta}</div>
+                    <p className="text-white/30 text-[13px] font-light leading-relaxed mb-2">{layer.desc}</p>
+                    <div className="inline-block px-2 py-0.5 font-mono text-[8px] tracking-[0.1em] rounded border border-cyan-400/10 text-cyan-400/40 bg-cyan-400/[0.02]">{layer.meta}</div>
                   </div>
                 ))}
               </div>
 
               {/* Desktop: Quantum Spine */}
               <div className="hidden md:block">
-              {/* Quantum Spine — central axis */}
               <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[1px]"
                 style={{ background: "linear-gradient(to bottom, transparent, rgba(144,200,255,0.3), rgba(144,200,255,0.2), rgba(144,200,255,0.1), transparent)" }} />
-              {/* Spine glow pulse */}
               <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[3px] opacity-20"
                 style={{ background: "linear-gradient(to bottom, transparent, rgba(144,200,255,0.4), rgba(144,200,255,0.2), transparent)", filter: "blur(4px)" }} />
-              {/* Water droplet — scrolls along spine */}
               <div className="absolute left-1/2 -translate-x-1/2 z-20"
                 style={{ animation: "dropletScroll 6s ease-in-out infinite" }}>
                 <div className="relative w-3 h-4 rounded-full"
@@ -191,13 +185,11 @@ export default function HomeClient() {
                     background: "radial-gradient(ellipse at 35% 25%, rgba(220,240,255,0.6) 0%, rgba(140,200,240,0.2) 40%, transparent 70%)",
                     boxShadow: "0 0 10px rgba(160,210,240,0.25), inset 0 -1px 2px rgba(100,160,210,0.2)",
                   }}>
-                  {/* Highlight reflection dot */}
                   <div className="absolute top-[20%] left-[30%] w-1 h-1 rounded-full"
                     style={{ background: "rgba(255,255,255,0.5)" }} />
                 </div>
               </div>
 
-              {/* Scanning beam */}
               <div className="absolute left-1/2 -translate-x-1/2 w-[2px] h-16"
                 style={{
                   background: "linear-gradient(to bottom, transparent, rgba(200,230,255,0.3), transparent)",
@@ -212,8 +204,7 @@ export default function HomeClient() {
                 { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", hue: 195, side: "left" as const, delay: "0.9s" },
                 { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", hue: 180, side: "right" as const, delay: "1.2s" },
               ].map((layer) => (
-                <div key={layer.l} className={`relative flex items-center mb-6 ${layer.side === "left" ? "flex-row" : "flex-row-reverse"}`}>
-                  {/* Spine trace — horizontal bridge to card */}
+                <div key={layer.l} className={`relative flex items-center mb-4 ${layer.side === "left" ? "flex-row" : "flex-row-reverse"}`}>
                   <div className="absolute top-1/2 z-10"
                     style={{
                       left: layer.side === "left" ? "calc(50% - 14px)" : "50%",
@@ -222,24 +213,21 @@ export default function HomeClient() {
                       background: "rgba(144,200,255,0.15)",
                     }} />
 
-                  {/* Bracket Card */}
                   <div className={`w-[calc(50%-20px)] group`}>
-                    <div className="relative transition-all duration-500 hover:-translate-y-0.5"
-                      style={{
-                        background: "rgba(2,4,10,0.85)",
-                        border: "none",
-                      }}
+                    <div className="relative overflow-hidden transition-all duration-500 hover:-translate-y-1"
+                      style={{ background: "transparent", border: "1px solid rgba(144,200,255,0.1)", borderRadius: "12px" }}
                       onMouseEnter={e => {
                         playTick([400, 550, 700, 850, 1000][5 - parseInt(layer.l.slice(1))] || 600, "sine", 0.10, 0.02);
-                        e.currentTarget.style.background = "rgba(2,4,10,0.95)";
-                        e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.4), 0 0 20px rgba(144,200,255,0.06)";
+                        e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)";
+                        e.currentTarget.style.background = "radial-gradient(circle at top left, rgba(144,200,255,0.06) 0%, transparent 70%)";
+                        e.currentTarget.style.boxShadow = "0 12px 32px -8px rgba(144,200,255,0.12)";
                       }}
                       onMouseLeave={e => {
-                        e.currentTarget.style.background = "rgba(2,4,10,0.85)";
+                        e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)";
+                        e.currentTarget.style.background = "transparent";
                         e.currentTarget.style.boxShadow = "none";
                       }}>
-                      {/* Opening bracket */}
-                      <span className="absolute top-0 bottom-0 w-[8px] opacity-30 group-hover:opacity-70 transition-opacity duration-500"
+                      <span className="absolute top-0 bottom-0 w-[8px] opacity-20 group-hover:opacity-80 transition-opacity duration-500"
                         style={{
                           [layer.side === "left" ? "left" : "right"]: 0,
                           borderLeft: layer.side === "left" ? "1px solid rgba(144,200,255,0.35)" : "none",
@@ -247,13 +235,12 @@ export default function HomeClient() {
                           borderTop: "none",
                           borderBottom: "none",
                         }} />
-                      <span className={`absolute top-0 h-[1px] w-6 opacity-30 group-hover:opacity-70 transition-opacity duration-500 ${layer.side === "left" ? "left-0" : "right-0"}`}
+                      <span className={`absolute top-0 h-[1px] w-6 opacity-20 group-hover:opacity-80 transition-opacity duration-500 ${layer.side === "left" ? "left-0" : "right-0"}`}
                         style={{ background: "rgba(144,200,255,0.35)" }} />
-                      <span className={`absolute bottom-0 h-[1px] w-6 opacity-30 group-hover:opacity-70 transition-opacity duration-500 ${layer.side === "left" ? "left-0" : "right-0"}`}
+                      <span className={`absolute bottom-0 h-[1px] w-6 opacity-20 group-hover:opacity-80 transition-opacity duration-500 ${layer.side === "left" ? "left-0" : "right-0"}`}
                         style={{ background: "rgba(144,200,255,0.35)" }} />
 
                       <div className={`${layer.side === "left" ? "pl-5 pr-4" : "pr-5 pl-4"} py-4`}>
-                        {/* Layer label + name */}
                         <div className="flex items-center gap-3 mb-2">
                           <span className="font-mono text-[11px] tracking-[0.3em] shrink-0 group-hover:text-cyan-300/80 transition-all duration-500"
                             style={{
@@ -263,16 +250,14 @@ export default function HomeClient() {
                             }}>
                             {layer.l}
                           </span>
-                          <span className="text-white/70 text-[13px] tracking-[0.2em] uppercase group-hover:text-white transition-colors duration-500">
+                          <span className="text-white text-[15px] font-light tracking-[0.02em] group-hover:text-white transition-colors duration-500">
                             {layer.name}
                           </span>
                         </div>
-                        {/* Description */}
-                        <p className="text-white/25 text-[11px] tracking-[0.06em] leading-relaxed mb-2 group-hover:text-white/45 transition-colors duration-500">
+                        <p className="text-white/35 text-[13px] font-light leading-relaxed mb-2 group-hover:text-white/55 transition-colors duration-500">
                           {layer.desc}
                         </p>
-                        {/* Metadata chip */}
-                        <div className="inline-block px-2 py-0.5 font-mono text-[8px] tracking-[0.1em] group-hover:border-cyan-400/30 group-hover:text-cyan-300/70 transition-all duration-500"
+                        <div className="inline-block px-2 py-0.5 font-mono text-[8px] tracking-[0.1em] rounded group-hover:border-cyan-400/30 group-hover:text-cyan-300/70 transition-all duration-500"
                           style={{
                             border: "1px solid rgba(144, 200, 255, 0.15)",
                             color: "rgba(144, 200, 255, 0.5)",
@@ -284,65 +269,51 @@ export default function HomeClient() {
                     </div>
                   </div>
 
-                  {/* Empty spacer for the other side */}
                   <div className="w-[calc(50%-20px)]" />
                 </div>
               ))}
             </div>
-            </div>{/* end desktop-only spine wrapper */}
+            </div>
 
             {/* Protocol Artifacts */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-14">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-10">
               {[
                 { label: "Read", title: "Technical Spec v1", desc: "Motion Vector · PES · Proof System · SST Topology", href: "/papers/technical-spec", freq: 800 as const },
                 { label: "Review", title: "Threat Model", desc: "8 Attack Signatures · Entropy Gap Theorem · Cost Model", href: "/papers/threat-model", freq: 900 as const },
                 { label: "Build", title: "Developer SDK", desc: "5 Lines · TypeScript · Zero Dependencies · MIT License", href: "/developers", freq: 1000 as const },
               ].map(card => (
                 <a key={card.href} href={card.href}
-                  onMouseEnter={e => { playTick(card.freq, "sine", 0.10, 0.025); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.4)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
-                  className="group block p-5 transition-all duration-500 text-center"
-                  style={{ border: "1px solid rgba(144,200,255,0.1)", background: "rgba(2,4,10,0.85)" }}>
-                  <div className="text-cyan-400/30 text-[9px] tracking-[0.3em] uppercase mb-2 group-hover:text-cyan-400/60 transition-colors duration-500">{card.label}</div>
-                  <div className="text-white/70 text-[11px] tracking-[0.2em] uppercase mb-1.5 group-hover:text-white transition-colors duration-500">{card.title}</div>
-                  <div className="text-white/20 text-[9px] tracking-[0.08em] group-hover:text-white/35 transition-colors duration-500">{card.desc}</div>
-                  <div className="mt-3 text-cyan-400/25 group-hover:text-cyan-400/60 group-hover:translate-x-1 transition-all duration-500 inline-block text-[10px]">→</div>
+                  onMouseEnter={e => { playTick(card.freq, "sine", 0.10, 0.025); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.background = "radial-gradient(circle at top left, rgba(144,200,255,0.06) 0%, transparent 70%)"; e.currentTarget.style.boxShadow = "0 12px 32px -8px rgba(144,200,255,0.12)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.boxShadow = "none"; }}
+                  className="group block p-6 overflow-hidden transition-all duration-500"
+                  style={{ border: "1px solid rgba(144,200,255,0.1)", borderRadius: "12px", background: "transparent" }}>
+                  <div className="text-cyan-400/40 text-[11px] tracking-[0.2em] uppercase mb-3 font-mono group-hover:text-cyan-400/70 transition-colors duration-500">{card.label}</div>
+                  <div className="text-white text-[19px] font-light tracking-[0.02em] mb-2 group-hover:text-white transition-colors duration-500">{card.title}</div>
+                  <div className="text-white/35 text-[14px] font-light leading-relaxed group-hover:text-white/55 transition-colors duration-500">{card.desc}</div>
+                  <div className="mt-4 text-cyan-400/25 group-hover:text-cyan-400/60 group-hover:translate-x-1 transition-all duration-500 inline-block text-[10px]">→</div>
                 </a>
               ))}
             </div>
-          </div>
-        </section>
 
-        {/* Protocol Status */}
-        <section className="relative py-6">
-          <div className="max-w-5xl mx-auto px-6 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 border border-cyan-400/15 bg-cyan-400/[0.02]">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)] animate-pulse" />
-              <Typewriter text="Protocol_Status: ACTIVE — 15 engines · 45 tests passing" className="text-cyan-400/50 text-[10px] tracking-[0.2em] uppercase font-mono" />
-            </div>
-          </div>
-        </section>
-
-        {/* Protocol Metrics */}
-        <section className="relative py-12">
-          <div className="max-w-5xl mx-auto px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
-              {[
-                { value: "15", label: "Protocol Engines", sub: "TypeScript · Zero Deps" },
-                { value: "§1–40", label: "Spec Sections", sub: "3863-line Technical Spec" },
-                { value: "8", label: "Attack Signatures", sub: "4D Entropy Detection" },
-                { value: "5", label: "Lines to Integrate", sub: "import MyShape from \"@/sdk\"" },
-              ].map(m => (
-                <div key={m.label}
-                  className="group border border-white/5 bg-black/30 p-4 hover:border-cyan-400/30 hover:bg-black/40 hover:-translate-y-1 transition-all duration-500 cursor-default"
-                  style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.2)" }}
-                  onMouseEnter={e => { playTick(600, "sine", 0.08, 0.02); e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.4), 0 0 16px rgba(34,211,238,0.08)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)"; }}>
-                  <div className="text-cyan-300/80 text-xl md:text-2xl font-light tracking-wider mb-1 group-hover:text-cyan-200/90 group-hover:scale-105 transition-all duration-500">{m.value}</div>
-                  <div className="text-white/40 text-[9px] tracking-[0.15em] uppercase mb-0.5 group-hover:text-white/70 transition-colors duration-500">{m.label}</div>
-                  <div className="text-white/15 text-[8px] tracking-[0.08em] group-hover:text-white/30 transition-colors duration-500">{m.sub}</div>
-                </div>
-              ))}
+            {/* Bottom Dashboard — Status + Metrics in one compact row */}
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 mt-10 text-[11px] tracking-[0.15em] font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)] animate-pulse shrink-0" />
+                <Typewriter text="PROTOCOL_ENCLAVE: ACTIVE" className="text-cyan-400/50 uppercase" />
+                <span className="text-white/10">|</span>
+                <span className="text-white/30">ENGINES</span>
+                <span className="text-white/50">15</span>
+                <span className="text-white/10">|</span>
+                <span className="text-white/30">SPEC</span>
+                <span className="text-white/50">§1–40</span>
+                <span className="text-white/10">|</span>
+                <span className="text-white/30">ATTACK_SIGS</span>
+                <span className="text-white/50">8</span>
+                <span className="text-white/10">|</span>
+                <span className="text-white/30">INTEGRATION</span>
+                <span className="text-white/50">5L</span>
+                <span className="text-white/10">|</span>
+                <span className="text-white/30">CORE</span>
+                <span className="text-white/50">25/25_PASS</span>
             </div>
           </div>
         </section>

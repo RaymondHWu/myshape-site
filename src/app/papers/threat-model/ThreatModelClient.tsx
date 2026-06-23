@@ -2,6 +2,16 @@
 import ProtocolHeader from "@/components/header/header";
 import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import ProtocolFooter from "@/components/footer/footer";
+import { playTick } from "@/utils/useAudioTick";
+
+const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.hover || ''; });
+};
+const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
+  const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
+  kids.forEach(k => { k.style.color = k.dataset.default || ''; });
+};
 
 const ATTACKS = [
   {
@@ -86,7 +96,10 @@ export default function ThreatModelClient() {
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-6">// ATTACK_CLASSIFICATION</h2>
           <div className="space-y-4">
             {ATTACKS.map((a, i) => (
-              <div key={i} className="border border-white/10 bg-black/40 overflow-hidden">
+              <div key={i} className="border overflow-hidden transition-all duration-500"
+                style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+                onMouseEnter={e => { playTick(700, "sine", 0.08, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-white/[0.02]">
                   <span className="text-cyan-400/70 text-[11px] tracking-[0.15em] uppercase">{a.class}</span>
                   <span className={`text-[9px] tracking-[0.2em] uppercase px-2 py-0.5 border ${
@@ -106,11 +119,11 @@ export default function ThreatModelClient() {
                   </div>
                   <div>
                     <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase">Detection</span>
-                    <p className="text-white/35 text-[11px] mt-1">{a.detection}</p>
+                    <p className="text-[11px] mt-1" style={{ color: "rgba(255,255,255,0.35)" }} data-default="rgba(255,255,255,0.35)" data-hover="rgba(255,255,255,0.6)">{a.detection}</p>
                   </div>
                   <div className="flex justify-between text-[9px]">
                     <span className="text-white/20">Success Rate</span>
-                    <span className="text-emerald-300/60">{a.successRate}</span>
+                    <span className="text-cyan-300/60" data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.9)">{a.successRate}</span>
                   </div>
                 </div>
               </div>
@@ -137,7 +150,7 @@ export default function ThreatModelClient() {
                     <td className="p-3 text-cyan-400/60 text-[10px]">{c.tier}</td>
                     <td className="p-3 text-white/40 text-[10px]">{c.cost}</td>
                     <td className="p-3 text-white/30 text-[10px]">{c.attacks}</td>
-                    <td className="p-3 text-emerald-400/50 text-[10px]">{c.maxSuccess}</td>
+                    <td className="p-3 text-cyan-400/50 text-[10px]">{c.maxSuccess}</td>
                   </tr>
                 ))}
               </tbody>
@@ -153,19 +166,25 @@ export default function ThreatModelClient() {
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// DEFENSE_IN_DEPTH</h2>
           <div className="space-y-1">
             {DEFENSES.map((d, i) => (
-              <div key={i} className="border border-white/5 bg-black/30 p-4 group hover:border-cyan-500/20 transition-all">
+              <div key={i} className="border p-4 transition-all duration-500"
+                style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-cyan-400/60 text-[10px] tracking-[0.15em] uppercase">{d.layer}</span>
                   <span className="text-white/15 text-[8px] tracking-[0.1em]">{d.boundary}</span>
                 </div>
-                <p className="text-white/30 text-[10px] leading-relaxed">{d.mechanism}</p>
+                <p className="text-[10px] leading-relaxed" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)">{d.mechanism}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Entropy Gap Theorem */}
-        <section className="p-6 border border-cyan-400/10 bg-cyan-400/[0.02] text-center">
+        <section className="p-6 border text-center transition-all duration-500"
+          style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
           <div className="text-cyan-400/50 text-[10px] tracking-[0.3em] uppercase mb-3">Entropy Gap Theorem (§10)</div>
           <p className="text-white/40 text-[11px] leading-relaxed mb-2">
             Pr[AI generates PES ≥ 0.65] → 0
@@ -178,7 +197,10 @@ export default function ThreatModelClient() {
         </section>
 
         {/* Citation */}
-        <section className="mt-14 p-5 border border-white/5 bg-black/30">
+        <section className="mt-14 p-5 border transition-all duration-500"
+          style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
           <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-2">Cite This Document</div>
           <p className="text-white/30 text-[9px] leading-relaxed font-mono">
             MyShape Protocol. "MyShape Threat Model v1.0." June 2026. https://www.myshape.com/papers/threat-model
