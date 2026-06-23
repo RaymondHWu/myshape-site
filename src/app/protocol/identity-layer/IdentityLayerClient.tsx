@@ -136,7 +136,7 @@ export default function IdentityLayer() {
             Identity_Architecture_Finality
           </p>
 
-          <p className="text-2xl md:text-4xl font-light tracking-[0.15em] text-white leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base md:text-lg font-light tracking-[0.2em] text-white/80 leading-relaxed max-w-2xl mx-auto">
             IDENTITY IS GEOMETRY.
             <br className="md:hidden" />{" "}
             GEOMETRY IS DATA.
