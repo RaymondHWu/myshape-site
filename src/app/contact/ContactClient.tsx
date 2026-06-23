@@ -60,9 +60,12 @@ export default function ContactClient() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* 隐私声明块 */}
-            <div className="bg-[#02040a] p-12">
+            <div className="border p-12 transition-all duration-500"
+              style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+              onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
                 <span className="text-cyan-400 text-[10px] tracking-[0.4em] font-bold uppercase">PRIVACY_PROTOCOL_ACTIVE</span>
@@ -72,37 +75,41 @@ export default function ContactClient() {
               </p>
             </div>
             {/* 邮箱入口块 */}
-            <div className="bg-[#02040a] p-12 flex flex-col justify-center space-y-8">
+            <div className="border p-12 flex flex-col justify-center space-y-8 transition-all duration-500"
+              style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+              onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
               <div className="group">
                 <span className="block text-white/20 text-[8px] tracking-[0.4em] uppercase mb-2">Core_Inquiries</span>
-                <a href="mailto:hello@myshape.com" className="text-white text-lg tracking-[0.2em] font-light hover:text-cyan-400 transition-colors">HELLO@MYSHAPE.COM</a>
+                <a href="mailto:hello@myshape.com" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)} className="text-white text-lg tracking-[0.2em] font-light hover:text-cyan-400 transition-colors">HELLO@MYSHAPE.COM</a>
               </div>
               <div className="group">
                 <span className="block text-white/20 text-[8px] tracking-[0.4em] uppercase mb-2">Technical_Uplink</span>
-                <a href="mailto:protocol@myshape.com" className="text-white text-lg tracking-[0.2em] font-light hover:text-cyan-400 transition-colors">PROTOCOL@MYSHAPE.COM</a>
+                <a href="mailto:protocol@myshape.com" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)} className="text-white text-lg tracking-[0.2em] font-light hover:text-cyan-400 transition-colors">PROTOCOL@MYSHAPE.COM</a>
               </div>
             </div>
           </div>
         </section>
 
         {/* --- SECTION B: CONNECT_NODES (网格区) --- */}
-        <section id="nodes" className="space-y-12 pt-16 border-t border-white/5">
+        <section id="nodes" className="space-y-12 pt-16 border-t" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
           <div className="flex items-center justify-between">
             <h3 className="text-white/20 text-[9px] tracking-[0.6em] uppercase">// CONNECT_NODES_DETECTION</h3>
             <span className="text-[8px] text-cyan-500/50 font-mono animate-pulse uppercase">Scanning_External_Links...</span>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
             {connectNodes.map((node) => (
               node.active ? (
-                // 活跃节点 (X & LinkedIn): 鼠标滑过会亮
-                <a 
-                  key={node.id} 
+                <a
+                  key={node.id}
                   href={node.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onMouseEnter={() => playTick(700, "sine", 0.08, 0.015)}
-                  className="bg-[#02040a] p-10 group hover:bg-cyan-500/[0.08] transition-all relative overflow-hidden block"
+                  onMouseEnter={e => { playTick(700, "sine", 0.08, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+                  className="border p-10 group transition-all duration-500 relative overflow-hidden block"
+                  style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
                 >
                   <div className="text-cyan-400 text-[9px] font-mono mb-8 font-bold tracking-widest animate-pulse uppercase">● Uplink_Live</div>
                   <h4 className="text-white text-[13px] tracking-[0.3em] font-bold uppercase mb-6 group-hover:text-cyan-400 transition-colors">{node.name}</h4>
@@ -117,7 +124,8 @@ export default function ContactClient() {
                 // 锁定节点 (Discord & GitHub): 彻底灰掉，鼠标过去不亮
                 <div 
                   key={node.id} 
-                  className="bg-[#02040a] p-10 opacity-30 grayscale relative overflow-hidden pointer-events-none select-none"
+                  className="border p-10 opacity-30 grayscale relative overflow-hidden pointer-events-none select-none"
+                  style={{ borderColor: "rgba(144,200,255,0.06)", background: "transparent" }}
                 >
                   <div className="text-white/20 text-[9px] font-mono mb-8 tracking-widest uppercase">○ {node.status}</div>
                   <h4 className="text-white/20 text-[13px] tracking-[0.3em] font-bold uppercase mb-6">{node.name}</h4>
@@ -133,7 +141,7 @@ export default function ContactClient() {
         </section>
 
         {/* --- 底部节点状态声明 --- */}
-        <div className="py-12 text-center border-b border-white/5">
+        <div className="py-12 text-center border-b" style={{ borderColor: "rgba(144,200,255,0.08)" }}>
           <p className="text-white/20 text-[9px] tracking-[0.4em] uppercase leading-loose font-light italic">
             DECENTRALIZED NODES ACTIVE // NO PHYSICAL HEADQUARTERS // ZERO_POINT_FAILURE_PROTOCOL
           </p>
