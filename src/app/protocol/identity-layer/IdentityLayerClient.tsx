@@ -128,24 +128,26 @@ export default function IdentityLayer() {
         </section>
 
         {/* ── 3. 底部声明 ── */}
-        <section
-          className="relative p-10 md:p-12 text-center group transition-all duration-500"
-          style={{ border: "1px dashed rgba(144,200,255,0.12)", background: "transparent" }}
-          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.12)"; }}
-        >
-          <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-            style={{ background: "rgba(34,211,238,0.015)" }}
-          />
-          <p className="text-white/30 text-[9px] tracking-[0.8em] uppercase mb-6">
+        <section className="relative py-20 text-center">
+          {/* Top accent line */}
+          <div className="max-w-xs mx-auto mb-14 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
+
+          <p className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-8 font-mono">
             Identity_Architecture_Finality
           </p>
-          <p className="text-sm md:text-base text-white/80 font-light tracking-[0.3em] uppercase leading-loose">
-            IDENTITY IS GEOMETRY. GEOMETRY IS DATA.{" "}
-            <br className="md:hidden" />
-            DATA IS <span className="text-cyan-300/90">SOVEREIGNTY</span>.
+
+          <p className="text-2xl md:text-4xl font-light tracking-[0.15em] text-white leading-relaxed max-w-2xl mx-auto">
+            IDENTITY IS GEOMETRY.
+            <br className="md:hidden" />{" "}
+            GEOMETRY IS DATA.
+            <br className="md:hidden" />{" "}
+            <span className="md:block mt-2">DATA IS{" "}
+              <span className="text-cyan-300/80">SOVEREIGNTY</span>
+            </span>
           </p>
+
+          {/* Bottom accent line */}
+          <div className="max-w-xs mx-auto mt-14 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
         </section>
       </div>
     </ProtocolLayout>
