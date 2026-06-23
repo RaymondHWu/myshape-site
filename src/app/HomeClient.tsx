@@ -296,7 +296,7 @@ export default function HomeClient() {
             </div>
 
             {/* Bottom Dashboard — Status + Metrics in one compact row */}
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 mt-10 text-[11px] tracking-[0.15em] font-mono">
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-10 text-[10px] tracking-[0.15em] font-mono">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)] animate-pulse shrink-0" />
                 <Typewriter text="PROTOCOL_ENCLAVE: ACTIVE" className="text-cyan-400/50 uppercase" />
                 <span className="text-white/10">|</span>
