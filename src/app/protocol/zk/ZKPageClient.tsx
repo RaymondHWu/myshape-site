@@ -120,7 +120,7 @@ export default function ZKPage() {
         </section>
 
         {/* ── 隐私保证 ── */}
-        <section className="border border-dashed p-10 text-center transition-all duration-500"
+        <section className="border p-10 text-center transition-all duration-500"
           style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
           onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
