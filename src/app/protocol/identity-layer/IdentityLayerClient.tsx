@@ -71,8 +71,8 @@ export default function IdentityLayer() {
               <div
                 key={model.name}
                 onMouseEnter={() => playTick(600, "sine", 0.08, 0.015)}
-                className="group relative bg-[#02040a] p-8 md:p-10 transition-all duration-700"
-                style={{ border: "1px solid rgba(255,255,255,0.05)" }}
+                className="group relative p-8 md:p-10 transition-all duration-700"
+                style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}
               >
                 {/* Hover 背景辉光 */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
@@ -129,8 +129,10 @@ export default function IdentityLayer() {
 
         {/* ── 3. 底部声明 ── */}
         <section
-          className="relative p-10 md:p-12 text-center group"
-          style={{ border: "1px dashed rgba(255,255,255,0.08)" }}
+          className="relative p-10 md:p-12 text-center group transition-all duration-500"
+          style={{ border: "1px dashed rgba(144,200,255,0.12)", background: "transparent" }}
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.12)"; }}
         >
           <div
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
