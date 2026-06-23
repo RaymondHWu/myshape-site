@@ -1,5 +1,6 @@
 "use client";
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
+import { playTick } from "@/utils/useAudioTick";
 
 const PROOF_LAYERS = [
   {
@@ -63,7 +64,10 @@ export default function ZKPage() {
           <h2 className="text-white/20 text-[10px] tracking-[0.5em] uppercase mb-10 text-center">Three-Proof Architecture</h2>
           <div className="space-y-4 max-w-3xl mx-auto">
             {PROOF_LAYERS.map((p, i) => (
-              <div key={p.id} className="relative bg-[#02040a] border border-white/5 p-6 group hover:border-cyan-500/20 transition-all">
+              <div key={p.id} className="relative p-6 group transition-all duration-500"
+                style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}
+                onMouseEnter={e => { playTick(700, "sine", 0.08, 0.02); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-start gap-5">
                   <div className="w-14 h-14 flex items-center justify-center border border-cyan-500/20 text-cyan-400/70 font-mono text-[12px] tracking-[0.2em] shrink-0">
@@ -80,8 +84,10 @@ export default function ZKPage() {
               </div>
             ))}
             {/* ZKP composite */}
-            <div className="relative bg-[#02040a] border border-cyan-400/30 p-6 text-center"
-              style={{ boxShadow: "0 0 30px rgba(34,211,238,0.06)" }}>
+            <div className="relative border p-6 text-center transition-all duration-500"
+              style={{ borderColor: "rgba(144,200,255,0.15)", background: "transparent", boxShadow: "0 0 30px rgba(34,211,238,0.06)" }}
+              onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.15)"; }}>
               <div className="text-cyan-400/50 text-[9px] tracking-[0.5em] uppercase mb-3">Composite Proof</div>
               <div className="text-cyan-200/80 text-[14px] tracking-[0.4em] uppercase font-light"
                 style={{ textShadow: "0 0 12px rgba(34,211,238,0.3)" }}>
@@ -95,9 +101,12 @@ export default function ZKPage() {
         {/* ── 六条验证规则 ── */}
         <section>
           <h2 className="text-white/20 text-[10px] tracking-[0.5em] uppercase mb-8 text-center">Six Verification Rules (§9.4)</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {VERIFICATION_RULES.map((r) => (
-              <div key={r.rule} className="bg-[#02040a] p-5 group hover:bg-cyan-500/[0.02] transition-all">
+              <div key={r.rule} className="border p-5 group transition-all duration-500"
+                style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="w-5 h-5 flex items-center justify-center border border-cyan-500/30 text-cyan-400/60 font-mono text-[9px]">
                     {r.rule}
@@ -111,7 +120,10 @@ export default function ZKPage() {
         </section>
 
         {/* ── 隐私保证 ── */}
-        <section className="border border-dashed border-white/8 p-10 text-center">
+        <section className="border border-dashed p-10 text-center transition-all duration-500"
+          style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
           <div className="text-white/30 text-[9px] tracking-[0.6em] uppercase mb-6">Privacy Guarantees</div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-[10px] tracking-[0.15em] text-white/40">
             <div>
