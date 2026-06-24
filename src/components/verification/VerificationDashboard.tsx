@@ -3,6 +3,17 @@
 import { useState, useEffect, useRef } from "react";
 import { playTick } from "@/utils/useAudioTick";
 
+const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
+  e.currentTarget.querySelectorAll<HTMLElement>("[data-hover]").forEach(k => {
+    k.style.color = k.dataset.hover || "";
+  });
+};
+const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
+  e.currentTarget.querySelectorAll<HTMLElement>("[data-hover]").forEach(k => {
+    k.style.color = k.dataset.default || "";
+  });
+};
+
 // ── Demo Run Data (live from myshape-demo CLI) ──────────────────────
 
 const VERIFICATION_RESULTS = [
@@ -35,7 +46,7 @@ const VERIFICATION_RESULTS = [
   {
     id: "impostor",
     label: "IMPOSTOR",
-    subtitle: "Different human body · different device · kinematic mismatch",
+    subtitle: "Different human entity · different device · kinematic mismatch",
     score: 0.0,
     threshold: 0.75,
     passed: false,
@@ -68,9 +79,9 @@ const AI_REJECTION_TAGS = [
   },
   {
     label: "OVER_SMOOTHED",
-    detail: "Muscle micro-perturbations missing",
+    detail: "Motor micro-perturbations missing",
     icon: "◈",
-    full: "Muscle micro-perturbations: MISSING. Real human motion contains non-stationary, multi-scale noise from asynchronous motor unit firing. AI output is geometrically correct but kinematically sterile — too perfect to be biological.",
+    full: "Motor micro-perturbations: MISSING. Real human motion contains non-stationary, multi-scale noise from asynchronous motor unit firing. AI output is geometrically correct but kinematically sterile — too perfect to be biological.",
   },
 ];
 
@@ -123,7 +134,8 @@ function FactorBar({ label, value }: { label: string; value: number }) {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-white/30 text-[10px] tracking-[0.15em] uppercase w-16 shrink-0">
+      <span className="text-white/30 text-[10px] tracking-[0.15em] uppercase w-16 shrink-0"
+        data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.65)">
         {label}
       </span>
       <div className="flex-1 h-1.5 bg-white/[0.04] overflow-hidden">
@@ -132,7 +144,8 @@ function FactorBar({ label, value }: { label: string; value: number }) {
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="text-white/50 font-mono text-[10px] w-12 text-right tabular-nums">
+      <span className="text-white/50 font-mono text-[10px] w-12 text-right tabular-nums"
+        data-default="rgba(255,255,255,0.5)" data-hover="rgba(255,255,255,0.85)">
         {value.toFixed(3)}
       </span>
     </div>
@@ -175,9 +188,10 @@ export default function VerificationDashboard() {
 
       {/* ── The Gap — Hero Metric ── */}
       <div className="mb-10 p-6 transition-all duration-500" style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}
-        onMouseEnter={e => { playTick(600, "sine", 0.08, 0.02); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-        <div className="text-cyan-400/40 text-[8px] tracking-[0.4em] uppercase mb-3 font-mono">
+        onMouseEnter={e => { playTick(600, "sine", 0.08, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+        onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+        <div className="text-cyan-400/40 text-[8px] tracking-[0.4em] uppercase mb-3 font-mono"
+          data-default="rgba(34,211,238,0.4)" data-hover="rgba(34,211,238,0.7)">
           HUMAN—AI DIVERGENCE
         </div>
         <div className="flex items-baseline gap-4 flex-wrap">
@@ -185,10 +199,12 @@ export default function VerificationDashboard() {
             <AnimatedScore target={gap} durationMs={1800} />
           </span>
           <div className="space-y-1">
-            <div className="text-white/30 text-[9px] tracking-[0.3em] uppercase font-mono">
+            <div className="text-white/30 text-[9px] tracking-[0.3em] uppercase font-mono"
+              data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.6)">
               Presence Gap
             </div>
-            <div className="text-white/40 text-[10px] leading-relaxed max-w-md font-mono">
+            <div className="text-white/40 text-[10px] leading-relaxed max-w-md font-mono"
+              data-default="rgba(255,255,255,0.4)" data-hover="rgba(255,255,255,0.65)">
               The irreducible distance between genuine biological motion and
               the best AI-generated forgery. This gap exists because AI models
               cannot replicate the physics of the human nervous system.
@@ -202,14 +218,15 @@ export default function VerificationDashboard() {
         {VERIFICATION_RESULTS.map((r) => (
           <div
             key={r.id}
-            onMouseEnter={e => { playTick(800, "sine", 0.08, 0.02); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+            onMouseEnter={e => { playTick(800, "sine", 0.08, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+            onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
             className={`border p-5 transition-all duration-500 ${r.rowClass} ${r.glowClass}`}
             style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-3">
-              <span className="text-white/20 text-[8px] tracking-[0.4em] uppercase">
+              <span className="text-white/20 text-[8px] tracking-[0.4em] uppercase"
+                data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">
                 {r.label}
               </span>
               <span
@@ -233,12 +250,15 @@ export default function VerificationDashboard() {
             {/* Verdict */}
             <div
               className={`text-[10px] tracking-[0.3em] uppercase mb-3 font-bold ${r.verdictClass}`}
+              data-default={r.passed ? "rgba(34,211,238,0.8)" : "rgba(248,113,113,0.8)"}
+              data-hover={r.passed ? "rgba(34,211,238,1)" : "rgba(248,113,113,1)"}
             >
               {r.verdict}
             </div>
 
             {/* Subtitle */}
-            <div className="text-white/25 text-[10px] leading-relaxed mb-3">
+            <div className="text-white/25 text-[10px] leading-relaxed mb-3"
+              data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.55)">
               {r.subtitle}
             </div>
 
@@ -251,8 +271,10 @@ export default function VerificationDashboard() {
 
             {/* Threshold reference */}
             <div className="mt-3 pt-3 border-t border-white/5 flex justify-between text-[9px]">
-              <span className="text-white/20">Threshold</span>
-              <span className="text-white/40 font-mono">{r.threshold.toFixed(2)}</span>
+              <span className="text-white/20"
+                data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">Threshold</span>
+              <span className="text-white/40 font-mono"
+                data-default="rgba(255,255,255,0.4)" data-hover="rgba(255,255,255,0.7)">{r.threshold.toFixed(2)}</span>
             </div>
           </div>
         ))}
@@ -261,16 +283,18 @@ export default function VerificationDashboard() {
       {/* ── AI Rejection Analysis ── */}
       <div className="border p-6 mb-10 transition-all duration-500"
         style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-        onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+        onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+        onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
         <div className="flex items-center gap-3 mb-5">
           <span className="w-2 h-2 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.8)] animate-pulse" />
-          <span className="text-red-400/60 text-[9px] tracking-[0.4em] uppercase">
+          <span className="text-red-400/60 text-[9px] tracking-[0.4em] uppercase"
+            data-default="rgba(248,113,113,0.6)" data-hover="rgba(248,113,113,0.9)">
             AI REJECTION ROOT CAUSE ANALYSIS
           </span>
         </div>
 
-        <div className="text-white/30 text-[11px] leading-relaxed mb-5 max-w-3xl">
+        <div className="text-white/30 text-[11px] leading-relaxed mb-5 max-w-3xl"
+          data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)">
           The AI forgery failed verification because the Motion Signature
           Engine detected structural deficiencies across four independent
           dimensions. These are not temporary AI limitations — they are
@@ -292,16 +316,20 @@ export default function VerificationDashboard() {
               >
                 <div className="flex items-center gap-2">
                   <span className="text-red-400/50 text-[14px]">{tag.icon}</span>
-                  <span className="text-red-300/70 font-mono text-[10px] tracking-[0.15em]">
+                  <span className="text-red-300/70 font-mono text-[10px] tracking-[0.15em]"
+                    data-default="rgba(252,165,165,0.7)" data-hover="rgba(252,165,165,0.95)">
                     {tag.label}
                   </span>
                 </div>
-                <div className="text-white/40 text-[9px] mt-1 ml-6 leading-relaxed">
+                <div className="text-white/40 text-[9px] mt-1 ml-6 leading-relaxed"
+                  data-default="rgba(255,255,255,0.4)" data-hover="rgba(255,255,255,0.65)">
                   {tag.detail}
                 </div>
               </button>
               {expandedTag === i && (
-                <div className="border border-t-0 p-3 text-[10px] leading-relaxed font-mono" style={{ borderColor: "rgba(248,113,113,0.2)", color: "rgba(255,255,255,0.35)", background: "transparent" }}>
+                <div className="border border-t-0 p-3 text-[10px] leading-relaxed font-mono"
+                  data-default="rgba(255,255,255,0.35)" data-hover="rgba(255,255,255,0.55)"
+                  style={{ borderColor: "rgba(248,113,113,0.2)", color: "rgba(255,255,255,0.35)", background: "transparent" }}>
                   {tag.full}
                 </div>
               )}
@@ -313,42 +341,50 @@ export default function VerificationDashboard() {
       {/* ── Protocol Status Footer ── */}
       <div className="border p-5 transition-all duration-500"
         style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-        onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+        onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+        onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
-            <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase">
+            <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase"
+              data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">
               Engine
             </span>
-            <span className="text-cyan-400/70 font-mono text-[9px]">
+            <span className="text-cyan-400/70 font-mono text-[9px]"
+              data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,0.95)">
               v0.1.0 · 25/25 tests pass
             </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
-            <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase">
+            <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase"
+              data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">
               Features
             </span>
-            <span className="text-cyan-400/70 font-mono text-[9px]">
+            <span className="text-cyan-400/70 font-mono text-[9px]"
+              data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,0.95)">
               K · A · J · J_spec (4/7 active)
             </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
-            <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase">
+            <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase"
+              data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">
               Factors
             </span>
-            <span className="text-cyan-400/70 font-mono text-[9px]">
+            <span className="text-cyan-400/70 font-mono text-[9px]"
+              data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,0.95)">
               M(0.60) · D(0.25) · C(0.15)
             </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
-            <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase">
+            <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase"
+              data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">
               Risk API
             </span>
-            <span className="text-cyan-400/70 font-mono text-[9px]">
+            <span className="text-cyan-400/70 font-mono text-[9px]"
+              data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,0.95)">
               LOW · MEDIUM · HIGH
             </span>
           </div>

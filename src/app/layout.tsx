@@ -181,7 +181,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         style={{
           margin: 0,
           padding: 0,
-          background: "#02040a",
+          background: "transparent",
           overflowX: "hidden",
           width: "100%",
           minHeight: "100vh",
@@ -189,8 +189,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           flexDirection: "column",
         }}
       >
-        {/* 背景视觉层 */}
-        <div style={{ position: "fixed", inset: 0, zIndex: -1, pointerEvents: "none" }}>
+        {/* 背景视觉层 — 星空墙 */}
+        <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}>
           <HeroVisualLoader showCore={false} />
         </div>
 

@@ -6,10 +6,12 @@ import ProtocolFooter from "@/components/footer/footer";
 import { playTick } from "@/utils/useAudioTick";
 import Typewriter from "@/components/ui/Typewriter";
 import Hero from "@/components/hero/Hero";
+import HeroDemo from "@/components/hero-demo/HeroDemo";
 import Vision from "@/components/vision/Vision";
 import Capabilities from "@/components/capabilities/Capabilities";
 import HowItWorks from "@/components/howitworks/HowItWorks";
 import JoinWaitlist from "@/components/joinwaitlist/JoinWaitlist";
+import GenesisProgress from "@/components/genesis-progress/GenesisProgress";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -134,14 +136,21 @@ export default function HomeClient() {
         </div>
       </div>
 
-      <main className="relative z-0 w-full overflow-x-hidden bg-black">
-        <Hero />
+      <main className="relative z-0 w-full overflow-x-hidden">
+        <HeroDemo />
+
+        {/* ── Genesis Cohort Progress ── */}
+        <section className="relative z-10 -mt-6 mb-8">
+          <div className="max-w-3xl mx-auto px-6">
+            <GenesisProgress />
+          </div>
+        </section>
 
         {/* ── Protocol Stack — engineering first ── */}
         <section className="relative py-24 md:py-32">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-16">
-              <div className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">Protocol_Stack</div>
+              <div className="text-white/35 text-[9px] tracking-[0.6em] uppercase mb-4">Protocol_Stack</div>
               <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 200, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#fff", margin: 0 }}>
                 Human <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>Presence</span> Protocol
               </h2>

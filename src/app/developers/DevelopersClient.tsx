@@ -167,14 +167,14 @@ if (threat.overallVerdict === "human") {
               },
             ].map((ex, i) => (
               <div key={i} className="overflow-hidden transition-all"
-                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
                 style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
                 <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02]">
                   <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(34,211,238,0.6)" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)">{ex.title}</span>
                 </div>
                 <div className="p-5">
-                  <pre className="text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)">
+                  <pre className="text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.6)">
                     {ex.code}
                   </pre>
                 </div>

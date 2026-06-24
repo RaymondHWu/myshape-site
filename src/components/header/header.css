@@ -10,15 +10,15 @@
   top: 75px;
   right: 40px;
   width: 280px;
-  background: rgba(10, 25, 47, 0.3);
+  background: rgba(6, 18, 36, 0.55);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(144, 200, 255, 0.2);
+  border: 1px solid rgba(144, 200, 255, 0.25);
   clip-path: polygon(0% 0%, 100% 0%, 100% 92%, 92% 100%, 0% 100%);
   border-radius: 2px;
   color: #90c8ff;
   font-family: monospace;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 25px rgba(144, 200, 255, 0.15);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(144, 200, 255, 0.18);
   z-index: 10000;
   overflow: hidden;
 }
@@ -29,9 +29,9 @@
   left: 0;
   width: 15px;
   height: 15px;
-  border-top: 2px solid #90c8ff;
-  border-left: 2px solid #90c8ff;
-  opacity: 0.6;
+  border-top: 2px solid rgba(144, 200, 255, 0.8);
+  border-left: 2px solid rgba(144, 200, 255, 0.8);
+  opacity: 0.8;
 }
 
 .corner-deco-br {
@@ -40,9 +40,9 @@
   right: 8px;
   width: 15px;
   height: 15px;
-  border-bottom: 2px solid #90c8ff;
-  border-right: 2px solid #90c8ff;
-  opacity: 0.6;
+  border-bottom: 2px solid rgba(144, 200, 255, 0.8);
+  border-right: 2px solid rgba(144, 200, 255, 0.8);
+  opacity: 0.8;
 }
 
 .panel-content {
@@ -57,11 +57,11 @@
 
 .panel-header {
   font-size: 8px;
-  color: rgba(144, 200, 255, 0.4);
+  color: rgba(144, 200, 255, 0.55);
   letter-spacing: 0.4em;
   text-align: center;
   margin-bottom: 15px;
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 .panel-section {
@@ -74,12 +74,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 2px 4px;
+  border-radius: 1px;
+  transition: background 0.3s ease;
+}
+
+.panel-row:hover {
+  background: rgba(144, 200, 255, 0.04);
 }
 
 .panel-row .label {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 9px;
   letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+
+.panel-row:hover .label {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .panel-row .value {
@@ -121,29 +133,33 @@
 
 .panel-link {
   text-decoration: none;
-  color: #90c8ff;
+  color: rgba(160, 210, 250, 0.85);
   font-size: 10px;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 6px;
-  opacity: 0.8;
+  opacity: 0.9;
+  padding: 2px 4px;
+  border-radius: 1px;
 }
 
 .panel-link .link-icon {
-  color: rgba(144, 200, 255, 0.4);
+  color: rgba(144, 200, 255, 0.5);
   font-size: 12px;
+  transition: all 0.3s ease;
 }
 
 .panel-link:hover {
   color: #fff;
   transform: translateX(3px);
   opacity: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 12px rgba(144, 200, 255, 0.5);
+  background: rgba(144, 200, 255, 0.05);
 }
 
 .panel-link:hover .link-icon {
-  color: #fff;
+  color: rgba(144, 200, 255, 0.9);
 }
 
 /* ── SYNC 按钮 ── */
@@ -222,8 +238,8 @@
 
 .panel-btn-disconnect {
   background: transparent;
-  border: 1px solid rgba(144, 200, 255, 0.25);
-  color: rgba(144, 200, 255, 0.7);
+  border: 1px solid rgba(144, 200, 255, 0.2);
+  color: rgba(144, 200, 255, 0.65);
   padding: 8px;
   border-radius: 2px;
   cursor: pointer;
@@ -239,7 +255,8 @@
 
 .panel-btn-disconnect .btn-icon {
   font-size: 12px;
-  opacity: 0.6;
+  opacity: 0.5;
+  transition: opacity 0.3s;
 }
 
 .panel-btn-disconnect .disconnect-text {
@@ -247,12 +264,14 @@
 }
 
 .panel-btn-disconnect:hover {
-  border-color: rgba(144, 200, 255, 0.4);
-  color: rgba(144, 200, 255, 0.9);
+  border-color: rgba(255, 100, 100, 0.5);
+  color: rgba(255, 150, 150, 0.9);
+  background: rgba(255, 100, 100, 0.06);
 }
 
 .panel-btn-disconnect:hover .btn-icon {
   opacity: 1;
+  color: rgba(255, 130, 130, 0.9);
 }
 
 .panel-btn-disconnect.phase-confirm {

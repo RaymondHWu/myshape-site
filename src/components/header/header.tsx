@@ -173,6 +173,7 @@ const ProtocolHeader = () => {
         {/* 钱包按钮 */}
         <button
           onClick={handleWalletClick}
+          onMouseEnter={() => playTick(650, "sine", 0.07, 0.02)}
           style={styles.walletBtn}
           className={`wallet-btn-optimized ${isPanelOpen ? "is-active" : ""}`}
         >

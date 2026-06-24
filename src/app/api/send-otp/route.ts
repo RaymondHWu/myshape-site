@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     const resend = new Resend(resendKey);
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { email } = await req.json();
+    const { email, invite_code } = await req.json();
 
     if (!email || !email.includes("@")) {
       return NextResponse.json(
@@ -42,7 +42,53 @@ export async function POST(req: Request) {
       );
     }
 
-    // 1. 生成 6 位随机验证码
+    // 1a. 如果提供了邀请码，校验并消耗
+    if (invite_code) {
+      const normalized = String(invite_code).trim().toUpperCase();
+
+      const { data: inviteData, error: inviteLookupError } = await supabase
+        .from('invite_codes')
+        .select('code, status')
+        .eq('code', normalized)
+        .single();
+
+      if (inviteLookupError || !inviteData) {
+        return NextResponse.json(
+          { error: "INVITE_CODE_INVALID: This invite code was not found" },
+          { status: 403 }
+        );
+      }
+
+      if (inviteData.status === 'USED') {
+        return NextResponse.json(
+          { error: "INVITE_CODE_ALREADY_USED: This invite code has already been claimed" },
+          { status: 409 }
+        );
+      }
+
+      if (inviteData.status === 'REVOKED') {
+        return NextResponse.json(
+          { error: "INVITE_CODE_REVOKED: This invite code is no longer active" },
+          { status: 410 }
+        );
+      }
+
+      // 消耗邀请码 — 绑定到此邮箱
+      const { error: consumeError } = await supabase
+        .from('invite_codes')
+        .update({ status: 'USED', used_by: email.trim(), used_at: new Date().toISOString() })
+        .eq('code', normalized);
+
+      if (consumeError) {
+        console.error('INVITE_CODE_CONSUME_ERROR:', consumeError);
+        return NextResponse.json(
+          { error: "INVITE_CODE_CONSUME_FAILED" },
+          { status: 500 }
+        );
+      }
+    }
+
+    // 1b. 生成 6 位随机验证码
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     // 2. 将邮箱和验证码存入 Supabase（upsert 按 email 去重）
