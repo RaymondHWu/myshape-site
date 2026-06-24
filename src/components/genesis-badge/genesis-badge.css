@@ -1,183 +1,207 @@
-/* ── GenesisBadge — Ethereal Data Energy Identity Badge ── */
+/* ── GenesisBadge — Sovereign Identity Sigil ── */
+
+.genesis-badge-wrapper {
+  perspective: 800px;
+}
 
 .genesis-badge {
   position: relative;
-  display: inline-block;
-  padding: 0;
+  width: 260px;
+  padding: 20px;
+  background: rgba(4, 14, 28, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(144, 200, 255, 0.18);
   font-family: var(--font-geist-mono), monospace;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  transition: transform 0.3s ease-out;
+  overflow: hidden;
   animation: badgeAppear 0.8s cubic-bezier(0.2, 1, 0.2, 1) forwards;
 }
 
 @keyframes badgeAppear {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ── 粒子流边框 ── */
-.genesis-badge-border {
+.tier-genesis {
+  border-color: rgba(144, 200, 255, 0.3);
+  box-shadow: 0 0 40px rgba(144, 200, 255, 0.06), 0 0 80px rgba(144, 200, 255, 0.03);
+}
+
+/* ── 粒子辉光背景 ── */
+.badge-bg-glow {
   position: absolute;
-  inset: -1px;
-  border-radius: 4px;
-  background: linear-gradient(
-    135deg,
-    rgba(144, 200, 255, 0.15),
-    transparent 30%,
-    transparent 70%,
-    rgba(144, 200, 255, 0.2)
-  );
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  padding: 1px;
-  pointer-events: none;
-  animation: borderFlow 4s ease-in-out infinite;
-}
-
-@keyframes borderFlow {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.9; }
-}
-
-/* ── 外发光 ── */
-.genesis-badge-glow {
-  position: absolute;
-  inset: -8px;
-  border-radius: 8px;
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    rgba(144, 200, 255, 0.08),
-    transparent 60%
-  );
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(34, 211, 238, 0.08), transparent 55%);
   pointer-events: none;
   animation: glowPulse 3s ease-in-out infinite;
 }
 
 @keyframes glowPulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
 }
 
-.genesis-badge.tier-genesis .genesis-badge-glow {
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    rgba(144, 200, 255, 0.12),
-    rgba(34, 211, 238, 0.04) 40%,
-    transparent 60%
-  );
+/* ── 四角锚点 ── */
+.badge-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  z-index: 3;
+  pointer-events: none;
+}
+.badge-corner-tl { top: 1px; left: 1px; border-top: 1px solid rgba(144,200,255,0.6); border-left: 1px solid rgba(144,200,255,0.6); }
+.badge-corner-tr { top: 1px; right: 1px; border-top: 1px solid rgba(144,200,255,0.6); border-right: 1px solid rgba(144,200,255,0.6); }
+.badge-corner-bl { bottom: 1px; left: 1px; border-bottom: 1px solid rgba(144,200,255,0.6); border-left: 1px solid rgba(144,200,255,0.6); }
+.badge-corner-br { bottom: 1px; right: 1px; border-bottom: 1px solid rgba(144,200,255,0.6); border-right: 1px solid rgba(144,200,255,0.6); }
+
+.tier-genesis .badge-corner { animation: cornerPulse 2s ease-in-out infinite; }
+.tier-genesis .badge-corner-tr { animation-delay: 0.3s; }
+.tier-genesis .badge-corner-bl { animation-delay: 0.6s; }
+.tier-genesis .badge-corner-br { animation-delay: 0.9s; }
+
+@keyframes cornerPulse {
+  0%, 100% { border-color: rgba(144,200,255,0.3); }
+  50% { border-color: rgba(144,200,255,0.8); }
 }
 
-/* ── 内部卡片 ── */
-.genesis-badge-inner {
+/* ── 扫描线 ── */
+.badge-scan {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(144,200,255,0.3), transparent);
+  pointer-events: none;
+  z-index: 2;
+  animation: scanDown 4s ease-in-out infinite;
+}
+
+@keyframes scanDown {
+  0% { top: 8px; opacity: 0; }
+  15% { opacity: 0.7; }
+  35% { opacity: 0; }
+  100% { top: calc(100% - 8px); opacity: 0; }
+}
+
+/* ── 内容区 ── */
+.badge-content {
   position: relative;
-  padding: 16px 24px;
-  background: rgba(4, 14, 28, 0.85);
-  border: 1px solid rgba(144, 200, 255, 0.15);
-  border-radius: 3px;
-  backdrop-filter: blur(8px);
   z-index: 1;
 }
 
-.genesis-badge.tier-genesis .genesis-badge-inner {
-  border-color: rgba(144, 200, 255, 0.25);
-  box-shadow: inset 0 0 30px rgba(144, 200, 255, 0.03);
-}
-
-/* ── 顶部状态行 ── */
-.genesis-badge-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.genesis-badge-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #22d3ee;
-  box-shadow: 0 0 8px rgba(34, 211, 238, 0.7);
-  animation: dotBreath 2s ease-in-out infinite;
-}
-
-@keyframes dotBreath {
-  0%, 100% { box-shadow: 0 0 6px rgba(34, 211, 238, 0.5); }
-  50% { box-shadow: 0 0 14px rgba(34, 211, 238, 0.9); }
-}
-
-.genesis-badge-tier {
-  font-size: 8px;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: rgba(34, 211, 238, 0.6);
-}
-
-.genesis-badge.tier-genesis .genesis-badge-tier {
-  color: rgba(34, 211, 238, 0.8);
-  text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
-}
-
-/* ── 主标题 ── */
-.genesis-badge-title {
-  font-size: 13px;
-  font-weight: 300;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 10px;
-  text-shadow: 0 0 15px rgba(144, 200, 255, 0.2);
-}
-
-.genesis-badge.tier-genesis .genesis-badge-title {
-  color: rgba(200, 230, 255, 0.9);
-  text-shadow: 0 0 20px rgba(144, 200, 255, 0.4);
-}
-
-/* ── 底部信息 ── */
-.genesis-badge-footer {
+/* ── 协议顶栏 ── */
+.badge-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 14px;
 }
 
-.genesis-badge-sig {
+.badge-code {
+  font-size: 8px;
+  letter-spacing: 0.35em;
+  color: rgba(144, 200, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.badge-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.badge-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 5px rgba(34, 211, 238, 0.7);
+  animation: dotFlash 2s ease-in-out infinite;
+}
+
+.badge-dot:last-child { animation-delay: 0.6s; }
+
+@keyframes dotFlash {
+  0%, 100% { opacity: 0.3; box-shadow: 0 0 3px rgba(34,211,238,0.3); }
+  50% { opacity: 1; box-shadow: 0 0 8px rgba(34,211,238,0.9); }
+}
+
+/* ── 核心标题 — 故障风 ── */
+.badge-title-main {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: rgba(210, 235, 255, 0.9);
+  letter-spacing: 0.15em;
+  margin-bottom: 2px;
+  position: relative;
+}
+
+.tier-genesis .badge-title-main {
+  text-shadow:
+    0 0 20px rgba(144, 200, 255, 0.5),
+    0 0 60px rgba(144, 200, 255, 0.15);
+  animation: glitchShuffle 6s steps(1) infinite;
+}
+
+@keyframes glitchShuffle {
+  0%, 94%, 96%, 98%, 100% { transform: translate(0); }
+  95% { transform: translate(-2px, 1px); }
+  97% { transform: translate(2px, -1px); }
+}
+
+/* 故障伪影 */
+.tier-genesis .badge-title-main::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(34, 211, 238, 0.3);
+  text-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+  animation: glitchSlice 6s steps(1) infinite;
+  clip-path: inset(0 0 0 0);
+  pointer-events: none;
+}
+
+@keyframes glitchSlice {
+  0%, 93%, 100% { clip-path: inset(0 0 100% 0); }
+  94% { clip-path: inset(20% 0 60% 0); }
+  96% { clip-path: inset(60% 0 20% 0); }
+}
+
+/* ── 副标题 ── */
+.badge-title-sub {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(144, 200, 255, 0.6);
+  margin-bottom: 14px;
+}
+
+.tier-genesis .badge-title-sub {
+  color: rgba(144, 200, 255, 0.8);
+  text-shadow: 0 0 12px rgba(144, 200, 255, 0.3);
+}
+
+/* ── 底部数据行 ── */
+.badge-data-row {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(144, 200, 255, 0.1);
   font-size: 8px;
   letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.3);
 }
 
-.genesis-badge-status {
-  font-size: 7px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(34, 211, 238, 0.4);
+.badge-data-row strong {
+  font-weight: 500;
+  color: rgba(144, 200, 255, 0.65);
 }
 
-.genesis-badge.tier-genesis .genesis-badge-status {
-  color: rgba(34, 211, 238, 0.6);
-}
-
-/* ── 粒子流扫光 ── */
-.genesis-badge-inner::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 0deg,
-    transparent,
-    transparent 80%,
-    rgba(144, 200, 255, 0.06),
-    transparent 85%
-  );
-  animation: particleSpin 8s linear infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes particleSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.tier-genesis .badge-data-row strong {
+  color: rgba(144, 200, 255, 0.85);
 }
