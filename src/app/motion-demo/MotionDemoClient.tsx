@@ -55,6 +55,7 @@ export default function MotionDemoClient() {
   const energyRef = useRef<number>(0);
   const coreParticlesRef = useRef<Array<{ angle: number; radius: number; y: number; speed: number }>>([]);
   const particlesInitRef = useRef(false);
+  const landmarksRef = useRef<Array<{ x: number; y: number; z: number }> | null>(null);
   const sstFramesRef = useRef<Array<{ frame: Record<SSTJointId, JointPosition>; timestamp: number }>>([]);
 
   // ── Real Camera Mode ──
@@ -86,6 +87,7 @@ export default function MotionDemoClient() {
         if (results.poseLandmarks && phaseRef.current === "capturing") {
           const now = Date.now();
           const lm = results.poseLandmarks;
+          landmarksRef.current = lm.map((l: { x: number; y: number; z: number }) => ({ x: l.x, y: l.y, z: l.z }));
           const shoulderAngle = Math.atan2(lm[12].y - lm[11].y, lm[12].x - lm[11].x) * (180 / Math.PI);
           const elbowAngle = Math.atan2(lm[14].y - lm[12].y, lm[14].x - lm[12].x) * (180 / Math.PI);
           const prev = framesRef.current[framesRef.current.length - 1];
@@ -149,179 +151,147 @@ export default function MotionDemoClient() {
         if (phaseRef.current === "capturing") animRef.current = requestAnimationFrame(feedLoop);
       };
 
-      // ── Init scattered "data capture" particles ──
-      if (!particlesInitRef.current) {
-        const particles: Array<{
-          x: number; y: number;    // current position (normalized -1..1)
-          ox: number; oy: number;  // orbit center offset
-          angle: number; speed: number;
-          radius: number; radiusOsc: number;
-          size: number; opacity: number;
-          phase: "orbit" | "drift" | "sample";
-        }> = [];
+      // ── Human pose skeleton connections (MediaPipe 33-point) ──
+      const POSE_BONES: [number, number][] = [
+        [11, 12], [11, 13], [12, 14], [13, 15], [14, 16], // arms
+        [11, 23], [12, 24], [23, 24], [23, 25], [24, 26], [25, 27], [26, 28], // lower
+        [0, 1], [1, 2], [2, 3], [3, 7], [0, 4], [4, 5], [5, 6], [6, 8], // face
+      ];
 
-        // Orbit particles — wide, scattered halo
-        for (let i = 0; i < 600; i++) {
-          particles.push({
-            x: 0, y: 0,
-            ox: (Math.random() - 0.5) * 0.4,
-            oy: (Math.random() - 0.5) * 0.4,
-            angle: Math.random() * Math.PI * 2,
-            speed: 0.003 + Math.random() * 0.012,
-            radius: 0.25 + Math.random() * 0.55,
-            radiusOsc: Math.random() * 0.15,
-            size: 0.8 + Math.random() * 2.5,
-            opacity: 0.18 + Math.random() * 0.45,
-            phase: "orbit",
-          });
-        }
-        // Drift particles — float inward/outward like data being sampled
-        for (let i = 0; i < 250; i++) {
-          const angle = Math.random() * Math.PI * 2;
-          const dist = 0.15 + Math.random() * 0.7;
-          particles.push({
-            x: Math.cos(angle) * dist,
-            y: Math.sin(angle) * dist,
-            ox: 0, oy: 0,
-            angle: angle + (Math.random() - 0.5) * 0.3,
-            speed: 0.0008 + Math.random() * 0.004,
-            radius: 0.05 + Math.random() * 0.2,
-            radiusOsc: 0,
-            size: 0.5 + Math.random() * 1.8,
-            opacity: 0.25 + Math.random() * 0.55,
-            phase: "drift",
-          });
-        }
-        // Sample particles — flash-like tiny dots that appear and fade
-        for (let i = 0; i < 150; i++) {
-          particles.push({
-            x: (Math.random() - 0.5) * 1.4,
-            y: (Math.random() - 0.5) * 1.4,
-            ox: 0, oy: 0,
-            angle: Math.random() * Math.PI * 2,
-            speed: 0.001 + Math.random() * 0.006,
-            radius: 0.02 + Math.random() * 0.08,
-            radiusOsc: 0,
-            size: 0.4 + Math.random() * 1.2,
-            opacity: 0.3 + Math.random() * 0.7,
-            phase: "sample",
-          });
-        }
-        coreParticlesRef.current = particles as unknown as Array<{
-          angle: number; radius: number; y: number; speed: number;
-        }>;
-        particlesInitRef.current = true;
+      // ── Spark particles (tiny, fast-fading, wireframe-based) ──
+      interface SparkParticle {
+        x: number; y: number;
+        life: number; maxLife: number;
+        size: number;
       }
-      const particles = coreParticlesRef.current as unknown as Array<{
-        x: number; y: number; ox: number; oy: number;
-        angle: number; speed: number; radius: number; radiusOsc: number;
-        size: number; opacity: number; phase: "orbit" | "drift" | "sample";
-      }>;
+      const sparkParticles: SparkParticle[] = [];
+      // Store on ref for dissipation access
+      const sparkParticlesRef = useRef<SparkParticle[]>(sparkParticles);
+      (sparkParticlesRef as { current: SparkParticle[] }).current = sparkParticles;
+      particlesInitRef.current = true;
 
-      // ── Canvas draw loop — with dissipation on complete ──
+      // ── Canvas draw loop — wireframe sparks + halo scan ──
       let dissipateStart = 0;
       let dissipating = false;
+      let haloY = 0;            // 扫描带 Y 位置 (0~1)
+      let haloLastAdvance = 0;
 
       const drawLoop = () => {
         const c = canvasRef.current;
         if (!c) return;
         const ctx = c.getContext("2d");
         if (!ctx) return;
-
         const currentPhase = phaseRef.current;
         const w = c.width, h = c.height;
+        const now = performance.now() * 0.001;
 
-        // 消散：粒子向外扩散直到消失
+        // 消散阶段
         if (currentPhase === "complete" || currentPhase === "processing") {
-          if (!dissipating) {
-            dissipating = true;
-            dissipateStart = performance.now();
-          }
-          const elapsed = performance.now() - dissipateStart;
-          const dissipateProgress = Math.min(elapsed / 1500, 1); // 1.5s 消散
-
-          if (dissipateProgress >= 1) {
-            ctx.clearRect(0, 0, w, h);
-            return; // 消散完成，停止渲染
-          }
-
+          if (!dissipating) { dissipating = true; dissipateStart = performance.now(); }
+          const prog = Math.min((performance.now() - dissipateStart) / 1200, 1);
+          if (prog >= 1) { ctx.clearRect(0, 0, w, h); return; }
           ctx.clearRect(0, 0, w, h);
-          ctx.save();
-          ctx.translate(w / 2, h / 2);
-          const baseR = Math.min(w, h) * 0.42;
-
-          particles.forEach(p => {
-            // 粒子向外快速扩散
-            const dx = p.x * (1 + dissipateProgress * 4);
-            const dy = p.y * (1 + dissipateProgress * 4);
-            const fadeAlpha = p.opacity * (1 - dissipateProgress);
-            const size = p.size * (1 + dissipateProgress * 2);
-
-            if (fadeAlpha > 0.01) {
-              ctx.fillStyle = `rgba(180, 220, 255, ${fadeAlpha * 0.5})`;
-              ctx.beginPath();
-              ctx.arc(dx, dy, Math.max(0.3, size * 0.3), 0, Math.PI * 2);
-              ctx.fill();
-            }
+          const s = sparkParticlesRef.current;
+          s.forEach(p => {
+            p.life -= 0.03;
+            if (p.life <= 0) return;
+            const a = p.life / p.maxLife * (1 - prog);
+            const sz = p.size * (1 + prog * 3);
+            const g = ctx.createRadialGradient(p.x * w, p.y * h, 0, p.x * w, p.y * h, sz * 2);
+            g.addColorStop(0, `rgba(180,220,255,${a})`);
+            g.addColorStop(1, "rgba(34,211,238,0)");
+            ctx.fillStyle = g;
+            ctx.beginPath(); ctx.arc(p.x * w, p.y * h, sz * 2, 0, Math.PI * 2); ctx.fill();
           });
-          ctx.restore();
           requestAnimationFrame(drawLoop);
           return;
         }
 
-        // 正常捕捉阶段
-        if (currentPhase !== "capturing") {
-          requestAnimationFrame(drawLoop);
-          return;
-        }
+        if (currentPhase !== "capturing") { requestAnimationFrame(drawLoop); return; }
 
-        const energy = energyRef.current;
-        const now = Date.now() * 0.001;
-
+        const lm = landmarksRef.current;
         ctx.clearRect(0, 0, w, h);
-        ctx.save();
-        ctx.translate(w / 2, h / 2);
-        const baseR = Math.min(w, h) * 0.42;
 
-        particles.forEach(p => {
-          if (p.phase === "orbit") {
-            p.angle += p.speed * (1 + energy * 0.6);
-            const r = (p.radius + Math.sin(now * 1.3 + p.angle) * p.radiusOsc) * baseR;
-            p.x = Math.cos(p.angle) * r + p.ox * baseR;
-            p.y = Math.sin(p.angle) * r * 0.55 + p.oy * baseR;
-          } else if (p.phase === "drift") {
-            p.angle += p.speed * (1 + energy);
-            const r = p.radius * baseR * (0.5 + Math.sin(now * 0.4 + p.angle) * 0.5);
-            p.x = Math.cos(p.angle) * r;
-            p.y = Math.sin(p.angle) * r * 0.55;
-            const dist = Math.sqrt(p.x * p.x + p.y * p.y);
-            if (dist < baseR * 0.08 && p.speed < 0.004) {
-              const a = Math.random() * Math.PI * 2;
-              const d = 0.4 + Math.random() * 0.45;
-              p.x = Math.cos(a) * d * baseR;
-              p.y = Math.sin(a) * d * baseR * 0.55;
-              p.angle = a;
-            }
-          } else {
-            p.angle += p.speed;
-            const r = p.radius * baseR * (0.6 + energy * 0.8);
-            p.x += (Math.cos(p.angle) * r - p.x) * 0.03;
-            p.y += (Math.sin(p.angle) * r * 0.55 - p.y) * 0.03;
-            if (Math.random() < 0.002) {
-              p.x = (Math.random() - 0.5) * 1.6 * baseR;
-              p.y = (Math.random() - 0.5) * 1.2 * baseR;
+        // 扫描带推进
+        if (!haloLastAdvance) haloLastAdvance = now;
+        const dt = now - haloLastAdvance;
+        haloLastAdvance = now;
+        haloY += dt * 0.45; // 0.45 scans/sec = ~2.2s per full scan
+        if (haloY > 1.05) haloY = -0.05;
+
+        if (lm) {
+          // 生成线框火花——沿骨骼线在扫描带附近产生粒子
+          const bandTop = haloY - 0.04;
+          const bandBot = haloY + 0.04;
+
+          for (const [a, b] of POSE_BONES) {
+            const ax = lm[a]?.x, ay = lm[a]?.y;
+            const bx = lm[b]?.x, by = lm[b]?.y;
+            if (ax === undefined || bx === undefined) continue;
+
+            // 骨骼线是否与扫描带相交
+            const minY = Math.min(ay, by);
+            const maxY = Math.max(ay, by);
+            if (maxY < bandTop || minY > bandBot) continue;
+
+            // 在交点上产生 1~3 个火花粒子
+            const count = 1 + Math.floor(Math.random() * 3);
+            for (let i = 0; i < count; i++) {
+              const t = Math.random();
+              const sx = ax + (bx - ax) * t + (Math.random() - 0.5) * 0.015;
+              const sy = ay + (by - ay) * t + (Math.random() - 0.5) * 0.015;
+              const sp: SparkParticle = {
+                x: sx, y: sy,
+                life: 0.3 + Math.random() * 0.5,
+                maxLife: 0.3 + Math.random() * 0.5,
+                size: 0.6 + Math.random() * 1.2,
+              };
+              sparkParticles.push(sp);
             }
           }
+        }
 
-          const dist = Math.sqrt(p.x * p.x + p.y * p.y) / baseR;
-          const alpha = p.opacity * (0.4 + 0.6 / (1 + dist * 2.5));
-          const brightness = 0.4 + alpha * 0.6;
-          ctx.fillStyle = `hsla(210, 20%, ${90 + brightness * 10}%, ${brightness})`;
+        // 渲染所有火花 + 清理过期粒子
+        for (let i = sparkParticles.length - 1; i >= 0; i--) {
+          const p = sparkParticles[i];
+          p.life -= 0.025;
+          if (p.life <= 0) { sparkParticles.splice(i, 1); continue; }
+
+          const alpha = p.life / p.maxLife;
+          const sx = p.x * w;
+          const sy = p.y * h;
+          const glowR = p.size * 3;
+
+          // 辉光（Bloom）
+          const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowR);
+          g.addColorStop(0, `rgba(200,235,255,${alpha * 0.9})`);
+          g.addColorStop(0.3, `rgba(144,200,255,${alpha * 0.5})`);
+          g.addColorStop(1, "rgba(34,211,238,0)");
+          ctx.fillStyle = g;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, Math.max(0.4, p.size * 0.45), 0, Math.PI * 2);
+          ctx.arc(sx, sy, glowR, 0, Math.PI * 2);
           ctx.fill();
-        });
-        ctx.restore();
+
+          // 核心亮点
+          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+          ctx.beginPath();
+          ctx.arc(sx, sy, p.size * 0.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // 限制粒子总数
+        if (sparkParticles.length > 200) sparkParticles.splice(0, sparkParticles.length - 200);
+
+        // 扫描带视觉
+        const bandY = haloY * h;
+        const bandGrad = ctx.createLinearGradient(0, bandY - 12, 0, bandY + 12);
+        bandGrad.addColorStop(0, "rgba(34,211,238,0)");
+        bandGrad.addColorStop(0.4, "rgba(34,211,238,0.08)");
+        bandGrad.addColorStop(0.5, "rgba(34,211,238,0.15)");
+        bandGrad.addColorStop(0.6, "rgba(34,211,238,0.08)");
+        bandGrad.addColorStop(1, "rgba(34,211,238,0)");
+        ctx.fillStyle = bandGrad;
+        ctx.fillRect(0, bandY - 12, w, 24);
 
         requestAnimationFrame(drawLoop);
       };
