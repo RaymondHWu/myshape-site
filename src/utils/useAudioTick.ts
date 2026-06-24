@@ -29,6 +29,11 @@ if (typeof window !== "undefined") {
   );
 }
 
+export function resumeAudio(): void {
+  const ctx = getCtx();
+  if (ctx) ctx.resume().catch(() => {});
+}
+
 export function playTick(
   freq = 800,
   type: OscillatorType = "triangle",

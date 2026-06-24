@@ -3,7 +3,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import ProtocolHeader from "@/components/header/header";
 import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import ProtocolFooter from "@/components/footer/footer";
-import { playTick } from "@/utils/useAudioTick";
+import { playTick, resumeAudio } from "@/utils/useAudioTick";
 import { mediaPipeToSST, normalizeSSTFrame } from "@/engine/skeleton-topology";
 import { computeFullPES } from "@/engine/presence-entropy";
 import { assessThreat } from "@/engine/threat-assessment";
@@ -60,6 +60,9 @@ export default function MotionDemoClient() {
 
   // ── Real Camera Mode ──
   const startCapture = useCallback(async () => {
+    // 在用户点击的同步代码块中恢复 AudioContext（浏览器自动播放策略要求）
+    resumeAudio();
+
     setPhase("capturing");
     phaseRef.current = "capturing";
     setCountdown(8);
