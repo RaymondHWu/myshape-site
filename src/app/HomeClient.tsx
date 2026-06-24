@@ -12,6 +12,7 @@ import HowItWorks from "@/components/howitworks/HowItWorks";
 import JoinWaitlist from "@/components/joinwaitlist/JoinWaitlist";
 import GenesisProgress from "@/components/genesis-progress/GenesisProgress";
 import ParadigmShift from "@/components/paradigm-shift/ParadigmShift";
+import GenesisBadge from "@/components/genesis-badge/GenesisBadge";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -23,7 +24,6 @@ export default function HomeClient() {
   const [isTyping, setIsTyping] = useState(false);
   const [clientHash, setClientHash] = useState("0X7B2E1A9C");
   const [isGenesisUser, setIsGenesisUser] = useState(false);
-  const [genesisStatus, setGenesisStatus] = useState("ACTIVE");
 
   const maskIdentifier = (id: string) => {
     if (!id) return "";
@@ -35,10 +35,8 @@ export default function HomeClient() {
   useEffect(() => {
     if (typeof window !== "undefined" && sessionStorage.getItem("genesis_completed") === "1") {
       const email = sessionStorage.getItem("genesis_email") || "";
-      const st = sessionStorage.getItem("genesis_status") || "ACTIVE";
       setActiveUser(email);
       setIsGenesisUser(true);
-      setGenesisStatus(st);
     }
   }, []);
 
@@ -102,20 +100,9 @@ export default function HomeClient() {
         <div className="absolute bottom-10 right-10 text-right">
           <div className="flex flex-col items-end">
             {isGenesisUser ? (
-              <>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[7px] tracking-[0.3em] text-cyan-400/70 uppercase font-light">YOUR_IDENTITY</span>
-                  <div className="w-1 h-1 bg-cyan-300 rounded-full shadow-[0_0_8px_rgba(144,200,255,0.9)]" />
-                </div>
-                <div className="text-[12px] font-extralight text-cyan-200/90 tracking-[0.4em] uppercase leading-none mb-2 font-mono"
-                  style={{ textShadow: "0 0 10px rgba(144,200,255,0.3)" }}>
-                  {displayText}
-                </div>
-                <div className="pr-3 border-r border-cyan-400/40 text-[7px] text-cyan-300/50 space-y-1 tracking-[0.1em] font-mono">
-                  <p>STATUS: {genesisStatus}</p>
-                  <p className="opacity-50">HASH: {clientHash}</p>
-                </div>
-              </>
+              <div className="pr-1">
+                <GenesisBadge />
+              </div>
             ) : activeUser ? (
               <>
                 <div className="flex items-center gap-2 mb-1">
