@@ -18,6 +18,8 @@ let sparkId = 0;
 export default function GenesisBadge() {
   const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState("");
+  const [scanCount, setScanCount] = useState(0);
+  const [dataContrib, setDataContrib] = useState(0);
   const [sparks, setSparks] = useState<Spark[]>([]);
   const badgeRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number>(0);
@@ -25,7 +27,19 @@ export default function GenesisBadge() {
   useEffect(() => {
     if (typeof window !== "undefined" && sessionStorage.getItem("genesis_completed") === "1") {
       setStatus(sessionStorage.getItem("genesis_status") || "ACTIVE");
+      const email = sessionStorage.getItem("genesis_email") || "";
       setVisible(true);
+
+      // 拉取实时节点数据
+      if (email) {
+        fetch(`/api/node/privileges?email=${encodeURIComponent(email)}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data.scan_count !== undefined) setScanCount(data.scan_count);
+            if (data.data_contribution !== undefined) setDataContrib(data.data_contribution);
+          })
+          .catch(() => {});
+      }
     }
   }, []);
 
@@ -80,12 +94,16 @@ export default function GenesisBadge() {
   useEffect(() => {
     if (!visible) return;
 
-    // 每 1.5~4 秒随机喷射 1~3 个粒子
+    // 粒子散溢频率随 scanCount 动态增长
     let timer: ReturnType<typeof setTimeout>;
     const schedule = () => {
-      const count = 1 + Math.floor(Math.random() * 3);
-      for (let i = 0; i < count; i++) setTimeout(emitSpark, i * 60);
-      timer = setTimeout(schedule, 1500 + Math.random() * 2500);
+      // 基础 1~3 个，scanCount 越高越多（最多 +5）
+      const bonus = Math.min(Math.floor(scanCount / 5), 5);
+      const count = 1 + Math.floor(Math.random() * (2 + bonus));
+      for (let i = 0; i < count; i++) setTimeout(emitSpark, i * 50);
+      // 间隔：基础 2~4s，活跃节点更频繁（最低 0.8s）
+      const interval = Math.max(800, 2000 + Math.random() * 2000 - scanCount * 80);
+      timer = setTimeout(schedule, interval);
     };
     schedule();
 
@@ -104,7 +122,7 @@ export default function GenesisBadge() {
       clearTimeout(timer);
       cancelAnimationFrame(animRef.current);
     };
-  }, [visible, emitSpark]);
+  }, [visible, emitSpark, scanCount]);
 
   if (!visible) return null;
 
@@ -158,8 +176,8 @@ export default function GenesisBadge() {
           </div>
 
           <div className="badge-data-row">
-            <span>TIER: <strong>OMEGA</strong></span>
-            <span>STATUS: <strong>VALIDATED</strong></span>
+            <span>SCANS: <strong>{scanCount}</strong></span>
+            <span>DATA: <strong>{dataContrib}</strong></span>
           </div>
         </div>
       </div>
