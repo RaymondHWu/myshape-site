@@ -218,18 +218,67 @@ export default function MotionDemoClient() {
         size: number; opacity: number; phase: "orbit" | "drift" | "sample";
       }>;
 
-      // ── Canvas draw loop — scattered data-capture particles ──
+      // ── Canvas draw loop — with dissipation on complete ──
+      let dissipateStart = 0;
+      let dissipating = false;
+
       const drawLoop = () => {
         const c = canvasRef.current;
-        if (!c || phaseRef.current !== "capturing") return;
+        if (!c) return;
         const ctx = c.getContext("2d");
         if (!ctx) return;
+
+        const currentPhase = phaseRef.current;
         const w = c.width, h = c.height;
-        ctx.clearRect(0, 0, w, h);
+
+        // 消散：粒子向外扩散直到消失
+        if (currentPhase === "complete" || currentPhase === "processing") {
+          if (!dissipating) {
+            dissipating = true;
+            dissipateStart = performance.now();
+          }
+          const elapsed = performance.now() - dissipateStart;
+          const dissipateProgress = Math.min(elapsed / 1500, 1); // 1.5s 消散
+
+          if (dissipateProgress >= 1) {
+            ctx.clearRect(0, 0, w, h);
+            return; // 消散完成，停止渲染
+          }
+
+          ctx.clearRect(0, 0, w, h);
+          ctx.save();
+          ctx.translate(w / 2, h / 2);
+          const baseR = Math.min(w, h) * 0.42;
+
+          particles.forEach(p => {
+            // 粒子向外快速扩散
+            const dx = p.x * (1 + dissipateProgress * 4);
+            const dy = p.y * (1 + dissipateProgress * 4);
+            const fadeAlpha = p.opacity * (1 - dissipateProgress);
+            const size = p.size * (1 + dissipateProgress * 2);
+
+            if (fadeAlpha > 0.01) {
+              ctx.fillStyle = `rgba(180, 220, 255, ${fadeAlpha * 0.5})`;
+              ctx.beginPath();
+              ctx.arc(dx, dy, Math.max(0.3, size * 0.3), 0, Math.PI * 2);
+              ctx.fill();
+            }
+          });
+          ctx.restore();
+          requestAnimationFrame(drawLoop);
+          return;
+        }
+
+        // 正常捕捉阶段
+        if (currentPhase !== "capturing") {
+          requestAnimationFrame(drawLoop);
+          return;
+        }
 
         const energy = energyRef.current;
         const now = Date.now() * 0.001;
 
+        ctx.clearRect(0, 0, w, h);
         ctx.save();
         ctx.translate(w / 2, h / 2);
         const baseR = Math.min(w, h) * 0.42;
@@ -241,12 +290,10 @@ export default function MotionDemoClient() {
             p.x = Math.cos(p.angle) * r + p.ox * baseR;
             p.y = Math.sin(p.angle) * r * 0.55 + p.oy * baseR;
           } else if (p.phase === "drift") {
-            // Drift slowly inward then reset outward — data sampling motion
             p.angle += p.speed * (1 + energy);
             const r = p.radius * baseR * (0.5 + Math.sin(now * 0.4 + p.angle) * 0.5);
             p.x = Math.cos(p.angle) * r;
             p.y = Math.sin(p.angle) * r * 0.55;
-            // Reset when too close to center
             const dist = Math.sqrt(p.x * p.x + p.y * p.y);
             if (dist < baseR * 0.08 && p.speed < 0.004) {
               const a = Math.random() * Math.PI * 2;
@@ -256,23 +303,18 @@ export default function MotionDemoClient() {
               p.angle = a;
             }
           } else {
-            // Sample: random walk + energy pulse
             p.angle += p.speed;
             const r = p.radius * baseR * (0.6 + energy * 0.8);
             p.x += (Math.cos(p.angle) * r - p.x) * 0.03;
             p.y += (Math.sin(p.angle) * r * 0.55 - p.y) * 0.03;
-            // Occasional random jump
             if (Math.random() < 0.002) {
               p.x = (Math.random() - 0.5) * 1.6 * baseR;
               p.y = (Math.random() - 0.5) * 1.2 * baseR;
             }
           }
 
-          // Fade with distance from center — brighter near silhouette
           const dist = Math.sqrt(p.x * p.x + p.y * p.y) / baseR;
           const alpha = p.opacity * (0.4 + 0.6 / (1 + dist * 2.5));
-
-          // Star: tiny bright pinpoint, slight cool tint
           const brightness = 0.4 + alpha * 0.6;
           ctx.fillStyle = `hsla(210, 20%, ${90 + brightness * 10}%, ${brightness})`;
           ctx.beginPath();
