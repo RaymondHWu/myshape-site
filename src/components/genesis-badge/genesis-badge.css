@@ -4,6 +4,17 @@
   perspective: 800px;
 }
 
+/* ── 粒子散溢 ── */
+.badge-spark {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180, 220, 255, 0.9), rgba(34, 211, 238, 0.4));
+  box-shadow: 0 0 4px rgba(144, 200, 255, 0.6);
+  pointer-events: none;
+  z-index: 5;
+  will-change: transform, opacity;
+}
+
 .genesis-badge {
   position: relative;
   width: 180px;
