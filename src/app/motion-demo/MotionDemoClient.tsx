@@ -13,6 +13,12 @@ import type { JointPosition, SSTJointId } from "@/types/motion-vector";
 
 type Phase = "idle" | "capturing" | "processing" | "complete";
 
+interface SparkParticle {
+  x: number; y: number;
+  life: number; maxLife: number;
+  size: number;
+}
+
 interface PESData {
   score: number;
   timing: number;
@@ -53,10 +59,9 @@ export default function MotionDemoClient() {
   const streamRef = useRef<MediaStream | null>(null);
 
   const energyRef = useRef<number>(0);
-  const coreParticlesRef = useRef<Array<{ angle: number; radius: number; y: number; speed: number }>>([]);
-  const particlesInitRef = useRef(false);
   const landmarksRef = useRef<Array<{ x: number; y: number; z: number }> | null>(null);
   const sstFramesRef = useRef<Array<{ frame: Record<SSTJointId, JointPosition>; timestamp: number }>>([]);
+  const sparkParticlesRef = useRef<SparkParticle[]>([]);
 
   // ── Real Camera Mode ──
   const startCapture = useCallback(async () => {
@@ -162,16 +167,7 @@ export default function MotionDemoClient() {
       ];
 
       // ── Spark particles (tiny, fast-fading, wireframe-based) ──
-      interface SparkParticle {
-        x: number; y: number;
-        life: number; maxLife: number;
-        size: number;
-      }
-      const sparkParticles: SparkParticle[] = [];
-      // Store on ref for dissipation access
-      const sparkParticlesRef = useRef<SparkParticle[]>(sparkParticles);
-      (sparkParticlesRef as { current: SparkParticle[] }).current = sparkParticles;
-      particlesInitRef.current = true;
+      sparkParticlesRef.current = [];
 
       // ── Canvas draw loop — wireframe sparks + halo scan ──
       let dissipateStart = 0;
@@ -249,16 +245,16 @@ export default function MotionDemoClient() {
                 maxLife: 0.3 + Math.random() * 0.5,
                 size: 0.6 + Math.random() * 1.2,
               };
-              sparkParticles.push(sp);
+              sparkParticlesRef.current.push(sp);
             }
           }
         }
 
         // 渲染所有火花 + 清理过期粒子
-        for (let i = sparkParticles.length - 1; i >= 0; i--) {
-          const p = sparkParticles[i];
+        for (let i = sparkParticlesRef.current.length - 1; i >= 0; i--) {
+          const p = sparkParticlesRef.current[i];
           p.life -= 0.025;
-          if (p.life <= 0) { sparkParticles.splice(i, 1); continue; }
+          if (p.life <= 0) { sparkParticlesRef.current.splice(i, 1); continue; }
 
           const alpha = p.life / p.maxLife;
           const sx = p.x * w;
@@ -283,7 +279,7 @@ export default function MotionDemoClient() {
         }
 
         // 限制粒子总数
-        if (sparkParticles.length > 200) sparkParticles.splice(0, sparkParticles.length - 200);
+        if (sparkParticlesRef.current.length > 200) sparkParticlesRef.current.splice(0, sparkParticlesRef.current.length - 200);
 
         // 扫描带视觉
         const bandY = haloY * h;
