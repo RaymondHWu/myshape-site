@@ -136,6 +136,66 @@ export default function ProtocolClient() {
           </div>
         </section>
 
+        {/* ── Protocol Respiration & Evolution ── */}
+        <section className="py-16 border-t" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="text-white/15 text-[9px] tracking-[0.5em] uppercase mb-6">Protocol Respiration &amp; Evolution</div>
+            <h2 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-8">
+              Identity is not static.<br />
+              <span className="text-cyan-300/70">It breathes with you.</span>
+            </h2>
+            <div className="space-y-6 text-white/35 text-[14px] leading-[1.9] font-light">
+              <p>
+                A MyShape identity is not a record. It is a living geometry — a digital entity
+                that grows, strengthens, and evolves with every breath you take in front of the sensor.
+              </p>
+              <p>
+                Each motion captured. Each signature verified. Each proof generated. These are not
+                transactions. They are respirations — the protocol inhaling entropy, exhaling trust.
+              </p>
+              <p>
+                Your particle geometry begins in stillness. With each scan, a new orbital particle
+                ignites — drifting from the core outward, tracing the path from silence to saturation.
+                From emptiness to fullness. From <span className="text-white/50">Awakening</span> to{' '}
+                <span className="text-cyan-300/70">Genesis Sealed</span>.
+              </p>
+              <p>
+                This is not a points system. It is a cartography of presence — a map of how deeply
+                you have inscribed yourself into the protocol&apos;s trust substrate. The particles
+                are not awarded. They emerge, as a natural consequence of entropy contributed.
+              </p>
+            </div>
+
+            {/* 进化阶段视觉指示器 */}
+            <div className="mt-12 flex items-center justify-center gap-2">
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                <div key={n} className="flex flex-col items-center gap-2">
+                  <div
+                    className="rounded-full transition-all duration-1000"
+                    style={{
+                      width: `${6 + n * 3}px`,
+                      height: `${6 + n * 3}px`,
+                      background: n === 0 ? "rgba(255,255,255,0.05)" : n === 8 ? "rgba(34,211,238,0.7)" : `rgba(34,211,238,${0.1 + n * 0.07})`,
+                      boxShadow: n === 8 ? "0 0 16px rgba(34,211,238,0.5)" : n > 0 ? `0 0 ${4 + n}px rgba(34,211,238,${0.1 + n * 0.05})` : "none",
+                      animation: `pulse ${2 + n * 0.3}s ease-in-out infinite`,
+                      animationDelay: `${n * 0.2}s`,
+                    }}
+                  />
+                  <span className="text-[7px] text-white/10 font-mono">{n}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 text-white/10 text-[8px] tracking-[0.3em] uppercase">
+              Stillness → Awakening → Genesis Sealed
+            </div>
+
+            <div className="mt-10 text-white/10 text-[8px] tracking-[0.2em]">
+              Full evolution specification archived in{' '}
+              <a href="/papers/technical-spec" className="text-cyan-400/30 hover:text-cyan-400/50 transition-colors">Technical Specification §12</a>
+            </div>
+          </div>
+        </section>
+
         {/* ── 入口 ── */}
         <section className="flex flex-wrap justify-center gap-6 py-16 border-t" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
           <Link href="/protocol/manifesto" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)} className="group relative px-10 py-4 border border-cyan-500/30 text-cyan-400/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-cyan-400 transition-all" style={{ background: "transparent" }}>
