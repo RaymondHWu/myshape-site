@@ -36,6 +36,8 @@ export default function DashboardClient() {
   const [stats, setStats] = useState<NodeStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [isGenesis, setIsGenesis] = useState(false);
+  const [scanPulse, setScanPulse] = useState(false);
+  const prevScanRef = { current: 0 };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -45,25 +47,31 @@ export default function DashboardClient() {
 
     if (!email) { setLoading(false); return; }
 
-    fetch(`/api/node/privileges?email=${encodeURIComponent(email)}`)
-      .then(r => r.json())
-      .then(data => {
-        if (data.email) setStats(data);
-        else Sentry.captureMessage("Dashboard: empty node data", { extra: { email: email.slice(0, 3) + "***" } });
-        setLoading(false);
-      })
-      .catch(err => {
-        Sentry.captureException(err, { tags: { page: "dashboard", action: "fetch-stats" } });
-        setLoading(false);
-      });
-
-    // 每 30 秒刷新
-    const interval = setInterval(() => {
+    const fetchStats = () => {
       fetch(`/api/node/privileges?email=${encodeURIComponent(email)}`)
         .then(r => r.json())
-        .then(data => { if (data.email) setStats(data); })
-        .catch(() => {});
-    }, 30000);
+        .then(data => {
+          if (data.email) {
+            if (data.scan_count > prevScanRef.current) {
+              setScanPulse(true);
+              setTimeout(() => setScanPulse(false), 800);
+            }
+            prevScanRef.current = data.scan_count;
+            setStats(data);
+          } else {
+            Sentry.captureMessage("Dashboard: empty node data", { extra: { email: email.slice(0, 3) + "***" } });
+          }
+          setLoading(false);
+        })
+        .catch(err => {
+          Sentry.captureException(err, { tags: { page: "dashboard", action: "fetch-stats" } });
+          setLoading(false);
+        });
+    };
+    fetchStats();
+
+    // 每 30 秒刷新
+    const interval = setInterval(fetchStats, 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -99,7 +107,8 @@ export default function DashboardClient() {
         ) : loading ? (
           <div className="text-center py-16 space-y-3">
             <div className="flex items-center justify-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)] animate-pulse" />
+              <span className="w-2 h-2 rounded-full animate-pulse"
+                style={{ background: "#22d3ee", boxShadow: "0 0 10px rgba(34,211,238,0.9)" }} />
               <span className="text-white/15 text-[10px] tracking-[0.3em] uppercase">Decrypting identity stream...</span>
             </div>
           </div>
@@ -128,7 +137,8 @@ export default function DashboardClient() {
                       <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Access Level</div>
                       <div className="text-cyan-300/80 text-[14px] tracking-[0.15em] uppercase" itemProp="additionalType">{stats.early_access ? "OMEGA" : "STANDARD"}</div>
                     </div>
-                    <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]" itemProp="interactionStatistic" itemScope itemType="https://schema.org/InteractionCounter">
+                    <div className={`p-4 border bg-cyan-400/[0.02] transition-all duration-300 ${scanPulse ? "border-cyan-400/50 shadow-[0_0_20px_rgba(34,211,238,0.4)] scale-[1.02]" : "border-cyan-400/10"}`}
+                      itemProp="interactionStatistic" itemScope itemType="https://schema.org/InteractionCounter">
                       <meta itemProp="interactionType" content="https://schema.org/PerformAction" />
                       <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Total Scans</div>
                       <div className="text-white/80 text-[24px] font-light font-mono" itemProp="userInteractionCount">{stats.scan_count}</div>
@@ -149,8 +159,12 @@ export default function DashboardClient() {
                 <span className="text-cyan-400/50 font-mono text-[10px]">{tier.count} / 8 — {tier.name}</span>
               </div>
               <div className="relative h-2 bg-white/[0.04] overflow-hidden mb-2">
-                <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-cyan-500/40 via-cyan-400/60 to-cyan-300/40 transition-all duration-1000"
-                  style={{ width: `${Math.max(progressPct, 1)}%`, boxShadow: "0 0 8px rgba(34,211,238,0.3)" }} />
+                <div className="absolute inset-y-0 left-0 transition-all duration-1000 ease-out"
+                  style={{
+                    width: `${Math.max(progressPct, 1)}%`,
+                    background: "linear-gradient(90deg, rgba(34,211,238,0.4), rgba(34,211,238,0.65), rgba(144,200,255,0.5))",
+                    boxShadow: "0 0 10px rgba(34,211,238,0.35)",
+                  }} />
               </div>
               <div className="flex justify-between text-[7px] text-white/10 tracking-[0.15em] uppercase">
                 <span>Awakening</span><span>Linked</span><span>Resonant</span><span>Fusion</span><span>Anchored</span><span>Stabilized</span><span>Saturated</span><span>Sealed</span>
