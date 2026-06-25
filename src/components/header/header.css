@@ -404,12 +404,32 @@
   .hide-mobile {
     display: none;
   }
+
+  /* 移动端 Header 极简重排 */
   .brand-logo-link {
-    letter-spacing: 0.4em;
-    font-size: 11px;
-    text-indent: 0.4em;
+    letter-spacing: 0.3em;
+    font-size: 12px;
+    text-indent: 0.3em;
+    position: static;
+    transform: none;
   }
+
   .brand-logo-link:hover {
-    letter-spacing: 0.45em;
+    letter-spacing: 0.35em;
+  }
+
+  /* 钱包按钮缩小 */
+  .wallet-btn-optimized {
+    font-size: 8px;
+    padding: 3px 8px;
+    gap: 4px;
+    margin-left: 0;
+  }
+
+  /* 晶体面板适配小屏 */
+  .protocol-crystal-panel {
+    right: 10px;
+    width: 260px;
+    top: 55px;
   }
 }

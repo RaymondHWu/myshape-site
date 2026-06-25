@@ -338,7 +338,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 40px",
+    padding: typeof window !== "undefined" && window.innerWidth < 768 ? "0 16px" : "0 40px",
     background:
       "linear-gradient(to bottom, rgba(2, 4, 10, 0.95) 0%, rgba(2, 4, 10, 0) 100%)",
     backdropFilter: "blur(8px)",
