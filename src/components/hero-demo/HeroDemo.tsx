@@ -294,7 +294,11 @@ export default function HeroDemo() {
 
       ctx.globalAlpha = alpha;
       ctx.save();
-      ctx.translate(W / 2, H * 0.52);
+      // 移动端粒子团缩小并居中
+      const mobileScale = isMobile ? 0.7 : 1;
+      const centerY = H * (isMobile ? 0.48 : 0.52);
+      ctx.translate(W / 2, centerY);
+      if (isMobile) ctx.scale(mobileScale, mobileScale);
 
       // ── 场景粒子渲染 ──
       const t = now * 0.001;
