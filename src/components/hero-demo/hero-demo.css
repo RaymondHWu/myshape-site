@@ -281,47 +281,100 @@
   transform: translateY(-2px);
 }
 
-/* ── 响应式 ── */
+/* ── 移动端极简协议入口 ── */
 @media (max-width: 768px) {
   .hero-demo-root {
-    min-height: 520px;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  /* 40% 黑色遮罩层 */
+  .hero-demo-root::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 4, 10, 0.4);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* 标题上移 — 顶部留负空间 */
+  .hero-demo-title-zone {
+    margin-top: clamp(1rem, 6vh, 3rem);
   }
 
   .hero-demo-title {
-    font-size: clamp(1.6rem, 8vw, 2.8rem);
+    font-size: clamp(1.4rem, 7vw, 2.2rem);
   }
 
+  .hero-demo-tagline {
+    font-size: clamp(0.55rem, 1.2vw, 0.7rem);
+    letter-spacing: 0.2em;
+  }
+
+  /* 场景字幕 — 更靠下，小字 */
   .hero-demo-subtitle {
-    bottom: 135px;
-    max-width: 90vw;
+    bottom: 130px;
+    max-width: 88vw;
+    gap: 6px;
   }
 
   .hero-demo-subtitle-text {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .hero-demo-subtitle-label {
-    font-size: 8px;
+    font-size: 7px;
+    letter-spacing: 0.3em;
   }
 
+  /* 场景指示点 */
   .hero-demo-dots {
-    bottom: 108px;
-    gap: 14px;
+    bottom: 105px;
+    gap: 12px;
   }
 
   .hero-demo-dot {
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
   }
 
+  /* CTA — 屏幕下半部主要交互区 */
   .hero-demo-ctas {
-    bottom: 48px;
-    gap: 8px;
+    bottom: 40px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-demo-cta {
-    padding: 8px 20px;
-    font-size: 8px;
-    letter-spacing: 0.3em;
+    width: 70vw;
+    max-width: 280px;
+    padding: 14px 0;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-align: center;
+  }
+
+  .hero-demo-cta.secondary {
+    font-size: 9px;
+    padding: 10px 0;
+  }
+
+  /* 隐藏漩涡按钮 — 移动端保持极简 */
+  .hero-demo-vortexes {
+    display: none;
+  }
+}
+
+/* 小屏幕性能优化 */
+@media (max-width: 480px) {
+  .hero-demo-root {
+    background: #02040a;
+  }
+
+  .hero-demo-cta {
+    width: 80vw;
   }
 }

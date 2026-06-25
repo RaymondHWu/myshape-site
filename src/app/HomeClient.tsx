@@ -132,18 +132,20 @@ export default function HomeClient() {
       <main className="relative z-0 w-full overflow-x-hidden">
         <HeroDemo />
 
-        {/* ── Genesis Cohort Progress ── */}
-        <section className="relative z-10 -mt-6 mb-8">
+        {/* ── Genesis Cohort Progress — 桌面端专属 ── */}
+        <section className="relative z-10 -mt-6 mb-8 hidden md:block">
           <div className="max-w-3xl mx-auto px-6">
             <GenesisProgress />
           </div>
         </section>
 
-        {/* ── Paradigm Shift — Legacy vs MyShape ── */}
-        <ParadigmShift />
+        {/* ── Paradigm Shift — 桌面端专属 ── */}
+        <div className="hidden md:block">
+          <ParadigmShift />
+        </div>
 
-        {/* ── Protocol Stack — engineering first ── */}
-        <section className="relative py-24 md:py-32">
+        {/* ── Protocol Stack — 桌面端专属 ── */}
+        <section className="relative py-24 md:py-32 hidden md:block">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-16">
               <div className="text-white/35 text-[9px] tracking-[0.6em] uppercase mb-4">Protocol_Stack</div>
@@ -326,10 +328,12 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <Vision />
-        <Capabilities />
-        <HowItWorks />
-        <JoinWaitlist id="genesis" />
+        <div className="hidden md:block">
+          <Vision />
+          <Capabilities />
+          <HowItWorks />
+          <JoinWaitlist id="genesis" />
+        </div>
       </main>
 
       <ProtocolFooter />

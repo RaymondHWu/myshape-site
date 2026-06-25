@@ -17,6 +17,11 @@ import "./hero-demo.css";
 const SCENE_DURATION = 10000;
 const FADE_MS = 600;
 
+function getTorusCount(): number {
+  if (typeof window === "undefined") return 1500;
+  return window.innerWidth < 768 ? 600 : 1500;
+}
+
 const SCENES = [
   {
     name: "formation" as const,
@@ -149,11 +154,13 @@ export default function HeroDemo() {
       isGenesisUser = next.isGenesisUser;
     }, 5000);
 
-    /* ── 星空背景（HeroVisual 同款参数）── */
+    /* ── 星空背景（移动端减半）── */
     const stars: { x: number; y: number; z: number }[] = [];
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     function initStars() {
       stars.length = 0;
-      for (let i = 0; i < 400; i++) {
+      const count = isMobile ? 120 : 400;
+      for (let i = 0; i < count; i++) {
         stars.push({
           x: Math.random() * 2 - 1,
           y: Math.random() * 2 - 1,
@@ -183,7 +190,7 @@ export default function HeroDemo() {
       if (name === "formation") {
         // S1: 粒子从散落 → 聚合为目标 torus
         // 散落范围限制在视野内（半径 ≤ 280，确保 sc 始终为正）
-        particlesRef.current = Array.from({ length: 1500 }, () => {
+        particlesRef.current = Array.from({ length: getTorusCount() }, () => {
           const p = makeBaseParticle();
           p.radius = 80 + Math.random() * 200; // 80-280（视野内）
           p.y = (Math.random() - 0.5) * H * 0.8; // ±40% 视口高度
@@ -221,7 +228,7 @@ export default function HeroDemo() {
         }
       } else {
         // S2/S3: 标准 torus
-        particlesRef.current = Array.from({ length: 1500 }, () => makeBaseParticle());
+        particlesRef.current = Array.from({ length: getTorusCount() }, () => makeBaseParticle());
       }
     }
 
@@ -666,7 +673,7 @@ export default function HeroDemo() {
                   // 按场景创建粒子（与 initParticles 逻辑一致）
                   const H = dimsRef.current.h;
                   if (sName === "formation") {
-                    particlesRef.current = Array.from({ length: 1500 }, () => {
+                    particlesRef.current = Array.from({ length: getTorusCount() }, () => {
                       const r = Math.random() * 120;
                       const y = (Math.random() - 0.5) * 300;
                       const sp = 0.008 + Math.random() * 0.022;
@@ -706,7 +713,7 @@ export default function HeroDemo() {
                       }
                     }
                   } else {
-                    particlesRef.current = Array.from({ length: 1500 }, () => {
+                    particlesRef.current = Array.from({ length: getTorusCount() }, () => {
                       const r = Math.random() * 120;
                       const y = (Math.random() - 0.5) * 300;
                       const sp = 0.008 + Math.random() * 0.022;
