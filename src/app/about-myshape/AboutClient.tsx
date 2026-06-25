@@ -1,9 +1,12 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
 import { playTick } from "@/utils/useAudioTick";
 
 export default function About() {
+  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
+  const principlesRef = useRef<(HTMLDivElement | null)[]>([]);
+
   const organizationalPrinciples = [
     {
       label: "PRINCIPLE_01",
@@ -22,16 +25,73 @@ export default function About() {
     }
   ];
 
+  // IntersectionObserver — 解密动效
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.getAttribute('data-idx'));
+            if (!isNaN(idx)) {
+              setVisibleCards(prev => new Set(prev).add(idx));
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    principlesRef.current.forEach((el, i) => {
+      if (el) { el.setAttribute('data-idx', String(i)); observer.observe(el); }
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <ProtocolLayout 
-      refId="009" 
-      category="SYS_COMP" 
-      title="ABOUT_MYSHAPE" 
-      secLevel="CLASS_GAMMA" 
+    <ProtocolLayout
+      refId="009"
+      category="SYS_COMP"
+      title="ABOUT_MYSHAPE"
+      secLevel="CLASS_GAMMA"
       systemStatus="INTERNAL_REC"
     >
+      <style>{`
+        @keyframes decryptReveal {
+          0% { clip-path: inset(0 100% 0 0); opacity: 0; }
+          40% { clip-path: inset(0 0 0 0); opacity: 0.4; }
+          60% { clip-path: inset(0 0 0 0); opacity: 0.7; }
+          80% { clip-path: inset(0 0 0 0); opacity: 0.9; }
+          100% { clip-path: inset(0 0 0 0); opacity: 1; }
+        }
+        @keyframes scanLineGlitch {
+          0%,100% { top: 0; opacity: 0; }
+          50% { top: 100%; opacity: 0.3; }
+        }
+        @keyframes particleDrift {
+          0% { transform: translateY(0) scale(1); opacity: 0.6; }
+          100% { transform: translateY(-20px) scale(0.4); opacity: 0; }
+        }
+        .decrypt-card {
+          opacity: 0;
+          transform: translateY(12px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .decrypt-card.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .decrypt-card.visible .decrypt-content {
+          animation: decryptReveal 1.2s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+        }
+        .decrypt-card.visible .decrypt-scan {
+          animation: scanLineGlitch 0.8s ease-out forwards;
+        }
+      `}</style>
+
       <div className="space-y-32">
-        {/* --- 1. 深度叙事：找回所有被删减的宏大文案 --- */}
+        {/* --- 1. 深层叙事 --- */}
         <section className="max-w-4xl">
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4 flex items-center gap-4">
             <span className="w-12 h-[1px] bg-cyan-500/30" />
@@ -42,58 +102,127 @@ export default function About() {
               RECLAIMING THE <span className="text-cyan-400">HUMAN GEOMETRY</span> FROM THE SILICON VOID.
             </p>
             <p className="text-white/60 text-base md:text-lg tracking-[0.2em] leading-relaxed font-light">
-              MyShape was founded in 2025 with a singular obsession: to solve the identity crisis of the AI era. 
-              As artificial intelligence begins to dominate the digital landscape, the distinction between 
+              MyShape was founded in 2025 with a singular obsession: to solve the identity crisis of the AI era.
+              As artificial intelligence begins to dominate the digital landscape, the distinction between
               authentic human presence and synthetic simulation becomes the most critical problem of our time.
             </p>
             <p className="text-white/40 text-sm tracking-[0.15em] leading-loose font-light italic">
-              "We observed that while the world was busy digitizing faces and fingerprints—vulnerable, 
-              static data—the true signature of life remained untapped: the unique, irreducible rhythm of 
+              "We observed that while the world was busy digitizing faces and fingerprints—vulnerable,
+              static data—the true signature of life remained untapped: the unique, irreducible rhythm of
               human movement."
             </p>
           </div>
         </section>
 
-        {/* --- 2. 组织原则矩阵 (完整的丰富文本) --- */}
+        {/* --- 2. 核心原则 — 滚动解密动效 --- */}
         <section className="space-y-12">
-          <h3 className="text-white/20 text-[9px] tracking-[0.6em] uppercase text-center">// CORE_VALUES_CONSTITUTION</h3>
+          <h3 className="text-white/20 text-[9px] tracking-[0.6em] uppercase text-center">
+            // CORE_VALUES_CONSTITUTION
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {organizationalPrinciples.map((principle) => (
-              <div key={principle.label} onMouseEnter={e => { playTick(600, "sine", 0.08, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }} onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }} className="p-8 border transition-all group" style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}>
-                <div className="text-cyan-500 text-[9px] tracking-[0.4em] font-mono mb-6 group-hover:text-cyan-400 transition-colors">
-                  {principle.label}
+            {organizationalPrinciples.map((principle, i) => {
+              const isVisible = visibleCards.has(i);
+              return (
+                <div
+                  key={principle.label}
+                  ref={el => { principlesRef.current[i] = el; }}
+                  onMouseEnter={e => { playTick(600, "sine", 0.08, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.4)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.12)"; }}
+                  className={`decrypt-card p-8 border transition-all duration-700 group relative overflow-hidden ${isVisible ? "visible" : ""}`}
+                  style={{
+                    borderColor: "rgba(144,200,255,0.12)",
+                    background: "transparent",
+                    transitionDelay: `${i * 0.2}s`,
+                  }}
+                >
+                  {/* 解密扫描线 */}
+                  <div className="decrypt-scan absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent pointer-events-none" />
+
+                  <div className="decrypt-content relative z-10">
+                    <div className="text-cyan-500/70 text-[9px] tracking-[0.4em] font-mono mb-6 group-hover:text-cyan-400 transition-colors">
+                      {principle.label}
+                    </div>
+                    <h4 className="text-white/70 text-[11px] tracking-[0.2em] uppercase mb-6 group-hover:text-white/90 transition-colors">
+                      {principle.title}
+                    </h4>
+                    <p className="text-white/30 text-[10px] tracking-widest leading-relaxed uppercase group-hover:text-white/50 transition-colors">
+                      {principle.content}
+                    </p>
+                  </div>
                 </div>
-                <h4 className="text-white/70 text-[11px] tracking-[0.2em] uppercase mb-6">
-                  {principle.title}
-                </h4>
-                <p className="text-white/30 text-[10px] tracking-widest leading-relaxed uppercase group-hover:text-white/50 transition-colors">
-                  {principle.content}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
-        {/* --- 3. 找回之前的团队/实验室声明 --- */}
-        <section className="relative group" onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
-          <div className="absolute inset-0 border scale-[1.02] group-hover:scale-100 transition-transform duration-700" style={{ borderColor: "rgba(144,200,255,0.1)" }} />
-          <div className="p-12 border relative z-10 transition-all duration-500" style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}>
+        {/* --- 3. THE_LABORATORY — 强化冷色调粒子感 --- */}
+        <section
+          className="relative group"
+          onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
+        >
+          {/* 外围粒子辉光 */}
+          <div className="absolute -inset-4 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse at 50% 50%, rgba(34,211,238,0.06) 0%, transparent 70%)",
+              filter: "blur(20px)",
+            }}
+          />
+          {/* 冷色调粒子点阵 */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 rounded-full bg-cyan-400/30"
+                style={{
+                  left: `${10 + Math.random() * 80}%`,
+                  top: `${Math.random() * 100}%`,
+                  animation: `particleDrift ${2 + Math.random() * 3}s ease-out infinite`,
+                  animationDelay: `${Math.random() * 2}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="absolute inset-0 border scale-[1.02] group-hover:scale-100 transition-transform duration-700"
+            style={{ borderColor: "rgba(144,200,255,0.12)" }} />
+
+          <div className="p-12 border relative z-10 transition-all duration-500"
+            style={{ borderColor: "rgba(144,200,255,0.12)", background: "rgba(4,14,28,0.3)", backdropFilter: "blur(8px)" }}>
             <div className="flex flex-col md:flex-row gap-12 items-center">
               <div className="flex-1 space-y-6">
-                <h3 className="text-white text-sm tracking-[0.5em] uppercase font-bold">THE_LABORATORY</h3>
-                <p className="text-white/50 text-xs tracking-widest leading-loose uppercase">
-                  OPERATING FROM DECENTRALIZED NODES ACROSS THE GLOBE, OUR TEAM CONSISTS OF CRYPTOGRAPHERS, 
-                  COMPUTER VISION ENGINEERS, AND SOCIOLOGISTS. WE ARE ANONYMOUS BY DESIGN, SOVEREIGN BY CHOICE, 
+                <h3 className="text-white/80 text-sm tracking-[0.5em] uppercase font-bold">
+                  THE_LABORATORY
+                </h3>
+                <p className="text-white/40 text-xs tracking-widest leading-loose uppercase">
+                  OPERATING FROM DECENTRALIZED NODES ACROSS THE GLOBE, OUR TEAM CONSISTS OF CRYPTOGRAPHERS,
+                  COMPUTER VISION ENGINEERS, AND SOCIOLOGISTS. WE ARE ANONYMOUS BY DESIGN, SOVEREIGN BY CHOICE,
                   AND DRIVEN BY THE NECESSITY OF THE PROTOCOL.
                 </p>
               </div>
-              <div className="w-px h-24 bg-white/10 hidden md:block" />
-              <div className="flex flex-col gap-4 text-right min-w-[200px]">
-                <span className="text-cyan-500 text-[9px] tracking-[0.4em] font-bold italic">LOCATION: [ENCRYPTED]</span>
+
+              <div className="w-px h-24 bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent hidden md:block" />
+
+              <div className="flex flex-col gap-4 text-right min-w-[220px]">
+                {/* LOCATION: [ENCRYPTED] — 强化视觉权重 */}
+                <div className="relative">
+                  <div className="absolute inset-0 bg-cyan-400/5 blur-md rounded" />
+                  <span className="relative text-cyan-400/80 text-[12px] tracking-[0.5em] font-bold italic"
+                    style={{ textShadow: "0 0 16px rgba(34,211,238,0.4)" }}>
+                    LOCATION: [ENCRYPTED]
+                  </span>
+                </div>
                 <span className="text-white/20 text-[8px] tracking-[0.2em]">EST. TIMESTAMP: 2024.09.12</span>
+                {/* 频谱条 — 更冷的色调 */}
                 <div className="flex justify-end gap-1">
                   {[...Array(8)].map((_, i) => (
-                    <div key={i} className="w-1 h-2 bg-cyan-500/20" />
+                    <div
+                      key={i}
+                      className="w-1 rounded-sm transition-all duration-700 group-hover:shadow-[0_0_6px_rgba(34,211,238,0.4)]"
+                      style={{
+                        height: `${8 + Math.sin(i * 0.8) * 6 + 6}px`,
+                        background: `rgba(34,211,238,${0.15 + i * 0.06})`,
+                      }}
+                    />
                   ))}
                 </div>
               </div>
