@@ -50,7 +50,8 @@ export default function GenesisBadge() {
       setStatus(storedStatus || "ACTIVE");
       setVisible(true);
       fetchStats(storedEmail);
-      return;
+      const interval = setInterval(() => fetchStats(storedEmail), 30000);
+      return () => clearInterval(interval);
     }
 
     // session 丢失：无法恢复，不显示（用户需重新登录）
