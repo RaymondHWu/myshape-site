@@ -25,6 +25,7 @@ export default function IdentityClient() {
   >("idle");
   const [errorHint, setErrorHint] = useState("");
   const [genesisId, setGenesisId] = useState<string>("—");
+  const isGenesisUser = typeof window !== "undefined" && sessionStorage.getItem("genesis_completed") === "1";
 
   const identityState = useMemo(() => {
     if (!isFormed) return "GENESIS_LOCKING";
@@ -122,6 +123,13 @@ export default function IdentityClient() {
             durationMs={3200}
             colorRgb="128, 191, 255"
           />
+          {/* Genesis Core — 创世节点中心标记 */}
+          {isGenesisUser && isFormed && (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+              style={{ width: "40px", height: "40px", transform: "translate(-50%, -50%)" }}>
+              <div className="genesis-core-glow" />
+            </div>
+          )}
         </div>
       )}
 
