@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import * as Sentry from "@sentry/nextjs";
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
 import BackgroundParticles from "@/components/particles/BackgroundParticles";
@@ -48,9 +49,13 @@ export default function DashboardClient() {
       .then(r => r.json())
       .then(data => {
         if (data.email) setStats(data);
+        else Sentry.captureMessage("Dashboard: empty node data", { extra: { email: email.slice(0, 3) + "***" } });
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(err => {
+        Sentry.captureException(err, { tags: { page: "dashboard", action: "fetch-stats" } });
+        setLoading(false);
+      });
 
     // 每 30 秒刷新
     const interval = setInterval(() => {
@@ -92,28 +97,41 @@ export default function DashboardClient() {
             </Link>
           </div>
         ) : loading ? (
-          <div className="text-center py-16 text-white/15 text-[10px] tracking-[0.3em] uppercase animate-pulse">
-            Decrypting identity stream...
+          <div className="text-center py-16 space-y-3">
+            <div className="flex items-center justify-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)] animate-pulse" />
+              <span className="text-white/15 text-[10px] tracking-[0.3em] uppercase">Decrypting identity stream...</span>
+            </div>
           </div>
         ) : stats ? (
           <>
             {/* Identity Card */}
-            <section>
+            <section itemScope itemType="https://schema.org/Person">
+              <meta itemProp="identifier" content={stats.email.slice(0, 3) + "***"} />
+              <meta itemProp="description" content={`MyShape Protocol node — tier: ${stats.tier}, scans: ${stats.scan_count}`} />
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.7)] animate-pulse" />
+                <span className="text-cyan-400/30 text-[7px] tracking-[0.25em] uppercase">Identity Stream Active</span>
+              </div>
               <div className="flex flex-col md:flex-row gap-8 items-start">
-                <GenesisBadge />
+                <div itemScope itemType="https://schema.org/DefinedTerm" itemProp="memberOf">
+                  <meta itemProp="name" content="Genesis Cohort" />
+                  <GenesisBadge />
+                </div>
                 <div className="flex-1 space-y-6">
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]">
+                    <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]" itemProp="description">
                       <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Status</div>
                       <div className="text-cyan-300/80 text-[14px] tracking-[0.15em] uppercase">{stats.tier}</div>
                     </div>
                     <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]">
                       <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Access Level</div>
-                      <div className="text-cyan-300/80 text-[14px] tracking-[0.15em] uppercase">{stats.early_access ? "OMEGA" : "STANDARD"}</div>
+                      <div className="text-cyan-300/80 text-[14px] tracking-[0.15em] uppercase" itemProp="additionalType">{stats.early_access ? "OMEGA" : "STANDARD"}</div>
                     </div>
-                    <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]">
+                    <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]" itemProp="interactionStatistic" itemScope itemType="https://schema.org/InteractionCounter">
+                      <meta itemProp="interactionType" content="https://schema.org/PerformAction" />
                       <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Total Scans</div>
-                      <div className="text-white/80 text-[24px] font-light font-mono">{stats.scan_count}</div>
+                      <div className="text-white/80 text-[24px] font-light font-mono" itemProp="userInteractionCount">{stats.scan_count}</div>
                     </div>
                     <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]">
                       <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Data Contrib</div>

@@ -32,7 +32,7 @@ export default function GenesisClient() {
 
   const handleCommence = async (e?: React.FormEvent<HTMLFormElement> | React.MouseEvent) => {
     if (e && "preventDefault" in e) e.preventDefault();
-    console.log("[STEP 1] handleCommence triggered", { email, inviteCode });
+    // [STEP 1] handleCommence triggered
 
     try {
       // 邮箱校验
