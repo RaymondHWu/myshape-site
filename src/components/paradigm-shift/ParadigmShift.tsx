@@ -24,7 +24,12 @@ export default function ParadigmShift() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <section className="relative z-10 w-full py-16 md:py-24 font-mono">
+    <section className="relative z-10 w-full py-16 md:py-24 font-mono"
+      itemScope itemType="https://schema.org/DefinedTerm"
+      itemProp="hasDefinedTerm">
+      <meta itemProp="name" content="Sovereign Data-Body" />
+      <meta itemProp="description" content="A decentralized, non-corporeal digital identity representation controlled solely by the user. Constructed from motion-signature data and visualized as dynamic ethereal particle geometry." />
+      <meta itemProp="url" content="https://www.myshape.com/identity" />
 
       {/* 顶部标题 — 左对齐 + 右侧状态指示 */}
       <div className="w-full max-w-4xl mx-auto px-6 mb-12 flex justify-between items-end border-b border-white/[0.06] pb-6"

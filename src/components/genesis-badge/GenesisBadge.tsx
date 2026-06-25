@@ -151,6 +151,11 @@ export default function GenesisBadge() {
         style={{ cursor: "pointer" }}
         title={expanded ? "Collapse" : "Expand stats"}
       >
+        {/* Microdata — Genesis Cohort */}
+        <meta itemProp="hasDefinedTerm" itemScope itemType="https://schema.org/DefinedTerm" />
+        <meta itemProp="name" content="Genesis Cohort" />
+        <meta itemProp="description" content="The inaugural group of sovereign identity nodes initialized during the MyShape Protocol launch phase. Limited to the first 100 human entities. Permanent tier. Never offered again." />
+        <meta itemProp="url" content="https://www.myshape.com/genesis" />
         {/* 粒子散溢 */}
         {sparks.map(s => {
           const dx = Math.cos(s.angle) * s.distance;

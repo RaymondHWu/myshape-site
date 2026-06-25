@@ -588,7 +588,10 @@ export default function HeroDemo() {
   }, []);
 
   return (
-    <section className="hero-demo-root">
+    <section className="hero-demo-root" itemScope itemType="https://schema.org/WebApplication">
+      <meta itemProp="name" content="MyShape Motion-Signature Verification" />
+      <meta itemProp="description" content="Real-time ethereal data energy visualization of sovereign identity through non-corporeal particle geometry." />
+      <meta itemProp="applicationCategory" content="Identity Verification" />
       <canvas ref={canvasRef} className="hero-demo-canvas" />
 
       {/* 左右小漩涡按钮 */}
@@ -639,7 +642,12 @@ export default function HeroDemo() {
 
       <div className="hero-demo-content">
         <div className="hero-demo-title-zone"
-          onMouseEnter={() => playTick(900, "sine", 0.08, 0.03)}>
+          onMouseEnter={() => playTick(900, "sine", 0.08, 0.03)}
+          itemScope itemType="https://schema.org/DefinedTerm"
+          itemProp="hasDefinedTerm">
+          <meta itemProp="name" content="Motion-Signature" />
+          <meta itemProp="description" content="MyShape's proprietary kinetic verification protocol that AI cannot simulate. A 128-dimensional vector extracted from real-time 3D pose sequences." />
+          <meta itemProp="url" content="https://www.myshape.com/protocol/motion-pipeline" />
           <h1
             className="hero-demo-title"
             style={{
