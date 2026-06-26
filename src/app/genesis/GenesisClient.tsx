@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
 import VortexScan from "@/components/ritual/VortexScan";
+import ConnectWallet from "@/components/auth/ConnectWallet";
 import { playTick } from "@/utils/useAudioTick";
 import "./genesis.css";
 
@@ -209,6 +210,21 @@ export default function GenesisClient() {
                       onChange={(e) => setEmail(e.target.value)}
                       className="relative z-10 w-80 max-w-[75vw] bg-transparent py-5 text-center text-xs tracking-[0.3em] text-white/90 focus:outline-none placeholder:text-white/15" />
                   </div>
+                </div>
+                {/* ── 钱包绑定（可选）── */}
+                <div className="flex flex-col items-center space-y-2">
+                  <span className="text-white/10 text-[7px] tracking-[0.3em] uppercase">— or bind wallet —</span>
+                  <ConnectWallet
+                    email={email}
+                    onSuccess={(walletData) => {
+                      if (walletData.skip_otp) {
+                        sessionStorage.setItem("genesis_completed", "1");
+                        sessionStorage.setItem("genesis_email", email.trim().toLowerCase());
+                        sessionStorage.setItem("genesis_status", walletData.is_genesis ? "GENESIS_NODE" : "ACTIVE");
+                        setStage("success");
+                      }
+                    }}
+                  />
                 </div>
                 {/* ── 启动按钮 ── */}
                 <button type="button"

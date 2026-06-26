@@ -43,6 +43,22 @@ export async function POST(req: Request) {
       );
     }
 
+    // 0. 钱包登录快速通道 — 已绑定钱包的活跃节点直接跳过 OTP
+    const { data: walletNode } = await supabase
+      .from('protocol_nodes')
+      .select('email, status, wallet_address')
+      .eq('email', email.trim())
+      .maybeSingle();
+
+    if (walletNode?.wallet_address && ['ACTIVE', 'GENESIS_NODE', 'AGENT_ACTIVE'].includes(walletNode.status)) {
+      return NextResponse.json({
+        success: true,
+        skip_otp: true,
+        message: "Wallet-verified identity confirmed. OTP bypassed.",
+        status: walletNode.status,
+      });
+    }
+
     // 1a. 智慧分流：检查是否为老用户
     const { data: existingNode } = await supabase
       .from('protocol_nodes')
