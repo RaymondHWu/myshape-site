@@ -39,16 +39,35 @@ async function sendWelcomeEmail(
     ? 'GENESIS_COHORT — FOUNDING_ENTITY'
     : 'ACTIVE_NODE — IDENTITY_LAYER';
 
-  const tierBody = isGenesis
-    ? `<p style="font-size:14px; color:#90c8ff; line-height:1.8;">You are now a <strong>Genesis Founding Entity</strong> — part of the first 100 nodes to initialize on the MyShape Protocol identity layer.</p>
-       <p style="font-size:12px; color:#90c8ff; line-height:1.8;">Permanent tier. Never offered again. Your node carries the GENESIS_NODE designation in perpetuity.</p>`
-    : `<p style="font-size:14px; color:#90c8ff; line-height:1.8;">Your node is now <strong>ACTIVE</strong> on the MyShape Protocol identity layer. You are part of the sovereign identity mesh.</p>`;
+  const bodyHtml = isGenesis
+    ? `<p style="font-size:14px; color:#90c8ff; line-height:1.8; margin-bottom:16px;">
+         You have completed the Genesis Ritual. Your Motion Signature is now inscribed into the protocol's root entropy source.
+       </p>
+       <p style="font-size:13px; color:#90c8ff; line-height:1.8; margin-bottom:16px;">
+         This is not an account. It is a <strong>position</strong>.
+       </p>
+       <p style="font-size:12px; color:#90c8ff; line-height:1.8;">
+         As one of the first 100 Genesis Nodes, you are not a user of MyShape — you are part of the cryptographic foundation upon which all subsequent identity verifications derive their statistical significance. Your status (GENESIS_NODE) is permanent. It is not cosmetic. It is structural. Protocol-level metadata, not application-layer decoration.
+       </p>`
+    : `<p style="font-size:14px; color:#90c8ff; line-height:1.8;">Your node is now <strong>ACTIVE</strong> on the MyShape Protocol identity layer. You are part of the sovereign identity mesh — verified, sovereign, and fully functional.</p>`;
+
+  const nextStepsHtml = `
+    <div style="margin:24px 0; padding:16px; border:1px solid rgba(34,211,238,0.15);">
+      <p style="font-size:11px; color:#fff; text-transform:uppercase; letter-spacing:0.2em; margin:0 0 12px 0;">▸ Protocol Access Points:</p>
+      <ol style="padding:0 0 0 18px; margin:0; font-size:11px; color:#90c8ff; line-height:2.2;">
+        <li><a href="https://github.com/myshapeprotocol" style="color:#22d3ee;">GitHub — Protocol Specs &amp; Roadmap</a></li>
+        <li><a href="https://www.myshape.com/dashboard" style="color:#22d3ee;">Dashboard — Monitor your orbital evolution</a></li>
+        <li><a href="https://www.myshape.com/motion-demo" style="color:#22d3ee;">Motion Demo — Contribute entropy to the mesh</a></li>
+        ${isGenesis ? '<li><a href="https://discord.gg/zr8Tczard" style="color:#22d3ee;">Discord — Genesis Cohort coordination channel</a></li>' : ''}
+      </ol>
+    </div>
+  `;
 
   const { error } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL || 'MyShape Protocol <onboarding@resend.dev>',
     to: email,
     subject: isGenesis
-      ? 'GENESIS_CONFIRMED — You are a Founding Entity'
+      ? 'GENESIS_CONFIRMED — You Are Now a Protocol Trust Anchor'
       : 'IDENTITY_ACTIVATED — Welcome to MyShape Protocol',
     html: `
       <div style="background:#000; color:#90c8ff; padding:40px; font-family:monospace; border:1px solid #333; max-width:560px;">
@@ -61,31 +80,24 @@ async function sendWelcomeEmail(
           ${isGenesis ? 'GENESIS_RITUAL_COMPLETE' : 'IDENTITY_LAYER_INITIALIZED'}
         </h2>
 
-        ${tierBody}
+        ${bodyHtml}
 
         <div style="margin:24px 0; padding:16px; border:1px dashed rgba(34,211,238,0.3); background:rgba(34,211,238,0.03);">
-          <p style="font-size:11px; color:#90c8ff; text-transform:uppercase; letter-spacing:0.2em; margin:0 0 8px 0;">▸ What this means:</p>
+          <p style="font-size:11px; color:#90c8ff; text-transform:uppercase; letter-spacing:0.2em; margin:0 0 8px 0;">▸ Your Protocol Primitives:</p>
           <ul style="list-style:none; padding:0; margin:0; font-size:11px; color:#90c8ff; line-height:2;">
-            <li>◈ Sovereign identity initialized on the MyShape Protocol mesh</li>
-            <li>◈ Zero-knowledge presence verification enabled</li>
-            <li>◈ Motion-signature authentication ready for enrollment</li>
-            ${isGenesis ? '<li>◈ Genesis Cohort permanent founding tier — never expires</li>' : ''}
+            <li>◈ Sovereign Data-Body initialized — non-corporeal, platform-independent</li>
+            <li>◈ Motion-Signature enrolled — zero-knowledge presence verification enabled</li>
+            <li>◈ Presence-Engine (PES) calibrated — 128-dim vector, 4D entropy scoring</li>
+            ${isGenesis ? '<li>◈ Genesis Cohort — permanent tier, structural protocol metadata</li>' : ''}
           </ul>
         </div>
 
-        <div style="margin:24px 0; padding:16px; border:1px solid rgba(34,211,238,0.15);">
-          <p style="font-size:11px; color:#fff; text-transform:uppercase; letter-spacing:0.2em; margin:0 0 12px 0;">▸ Next Steps:</p>
-          <ol style="padding:0 0 0 18px; margin:0; font-size:11px; color:#90c8ff; line-height:2.2;">
-            <li><a href="https://www.myshape.com/identity" style="color:#22d3ee;">Enter Identity Layer</a> — view your node on the mesh</li>
-            <li><a href="https://www.myshape.com/motion-demo" style="color:#22d3ee;">Try Motion Demo</a> — see how motion-signature works</li>
-            ${isGenesis ? '<li>Share your invite code with one trusted entity — help grow the Genesis Cohort</li>' : ''}
-          </ol>
-        </div>
+        ${nextStepsHtml}
 
-        <p style="font-size:9px; color:#444; margin-top:24px; text-align:center;">
+        <p style="font-size:8px; color:#333; margin-top:24px; text-align:center;">
           TIMESTAMP: ${new Date().toISOString()}<br/>
-          MYSHAPE_PROTOCOL // SOVEREIGN_IDENTITY_LAYER<br/>
-          DO_NOT_FORWARD_THIS_CONFIRMATION
+          MYSHAPE_PROTOCOL // SPEC_VERSION: V1.0_GENESIS<br/>
+          SOVEREIGN_IDENTITY_LAYER — DO_NOT_FORWARD
         </p>
       </div>
     `,
