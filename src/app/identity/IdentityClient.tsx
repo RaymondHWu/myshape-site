@@ -73,7 +73,7 @@ export default function IdentityClient() {
   };
 
   return (
-    <div className="relative w-full min-h-dvh overflow-hidden font-mono" style={{ background: "radial-gradient(ellipse at 50% 40%, rgba(128,191,255,0.05) 0%, rgba(2,4,10,0.8) 50%, #02040a 100%)" }}>
+    <div className="relative w-full min-h-dvh overflow-hidden font-mono" style={{ background: "radial-gradient(ellipse at 50% 35%, rgba(144,200,255,0.12) 0%, rgba(34,211,238,0.04) 30%, rgba(2,4,10,0.9) 60%, #02040a 100%)" }}>
       <h1 className="sr-only">MyShape Identity — Sovereign Identity Dashboard</h1>
 
       {/* Particle system */}
