@@ -1,0 +1,129 @@
+#!/usr/bin/env node
+/**
+ * Agent Workflow — Process Inbox → Hermes AI → Output Drafts
+ * Connects to existing Hermes/Agnes configuration (~/.hermes/config.yaml)
+ */
+
+const fs = require("fs");
+const path = require("path");
+const yaml = require("js-yaml");
+const axios = require("axios");
+const os = require("os");
+
+// ═══ CONFIG ═══
+const INBOX_PATH = path.join(__dirname, "inbox.json");
+const DRAFTS_PATH = path.join(__dirname, "drafts.json");
+const ARCHIVE_PATH = path.join(__dirname, "archive.json");
+
+function loadHermesConfig() {
+  const p = path.join(os.homedir(), ".hermes", "config.yaml");
+  if (!fs.existsSync(p)) {
+    console.error("Hermes config not found at ~/.hermes/config.yaml");
+    process.exit(1);
+  }
+  const c = yaml.load(fs.readFileSync(p, "utf8"));
+  return {
+    baseUrl: c.model.base_url || "https://apihub.agnes-ai.com/v1",
+    apiKey: c.model.api_key,
+    model: c.model.default || "agnes-2.0-flash",
+  };
+}
+
+const CFG = loadHermesConfig();
+
+// ═══ SYSTEM PROMPT ═══
+const SYSTEM_PROMPT = `You are a sovereign identity protocol AI. You generate content for MyShape Protocol — the 3D identity layer for the decentralized human. All output must be:
+- Cold, precise, protocol-grade language
+- Non-binary aesthetic, de-corporealized vocabulary  
+- Suitable for technical audiences (CTOs, cryptographers, AI researchers)
+- Never mention competitors, never use marketing language
+Format responses as JSON: { "platform": "...", "content": "...", "tags": [...] }`;
+
+// ═══ HERMES CALL ═══
+async function callHermes(text) {
+  try {
+    const res = await axios.post(
+      `${CFG.baseUrl}/chat/completions`,
+      {
+        model: CFG.model,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: `Process this message for MyShape content: ${text}` },
+        ],
+        temperature: 0.7,
+        max_tokens: 500,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${CFG.apiKey}`,
+        },
+        timeout: 45000,
+      }
+    );
+    const content = res.data.choices[0].message.content.trim();
+    try {
+      return JSON.parse(content);
+    } catch {
+      return { platform: "unknown", content, tags: [] };
+    }
+  } catch (e) {
+    console.error(`  API error: ${e.response?.status || e.code}`);
+    return null;
+  }
+}
+
+// ═══ MAIN ═══
+async function processMessages() {
+  if (!fs.existsSync(INBOX_PATH)) {
+    console.log("No inbox found. Creating sample...");
+    fs.writeFileSync(
+      INBOX_PATH,
+      JSON.stringify(
+        [
+          { id: "sample-1", text: "New paper on zero-knowledge proofs for kinetic identity verification", source: "arxiv", timestamp: Date.now() },
+          { id: "sample-2", text: "DeepSeek V5 claims to pass visual Turing test with generated human motion", source: "techcrunch", timestamp: Date.now() },
+          { id: "sample-3", text: "EU eIDAS regulation update mandates sovereign digital identity wallets by 2027", source: "eu-commission", timestamp: Date.now() },
+        ],
+        null,
+        2
+      )
+    );
+    console.log(`Created sample inbox at ${INBOX_PATH}`);
+  }
+
+  const inbox = JSON.parse(fs.readFileSync(INBOX_PATH, "utf8"));
+  console.log(`\nProcessing ${inbox.length} messages...\n`);
+
+  const drafts = [];
+  const processed = [];
+
+  for (const msg of inbox) {
+    console.log(`Processing: ${msg.text.slice(0, 60)}...`);
+    const result = await callHermes(msg.text);
+    if (result) {
+      drafts.push({ ...msg, ...result, processedAt: new Date().toISOString() });
+      processed.push(msg);
+      console.log(`  ✓ ${result.platform}`);
+    } else {
+      console.log(`  ✗ Failed`);
+    }
+    await new Promise((r) => setTimeout(r, 1500));
+  }
+
+  // Save drafts
+  const existingDrafts = fs.existsSync(DRAFTS_PATH) ? JSON.parse(fs.readFileSync(DRAFTS_PATH, "utf8")) : [];
+  const allDrafts = [...existingDrafts, ...drafts];
+  fs.writeFileSync(DRAFTS_PATH, JSON.stringify(allDrafts, null, 2));
+  console.log(`\n✓ ${drafts.length} drafts saved to ${DRAFTS_PATH}`);
+
+  // Archive processed
+  if (processed.length > 0) {
+    const existingArchive = fs.existsSync(ARCHIVE_PATH) ? JSON.parse(fs.readFileSync(ARCHIVE_PATH, "utf8")) : [];
+    fs.writeFileSync(ARCHIVE_PATH, JSON.stringify([...existingArchive, ...processed], null, 2));
+    fs.writeFileSync(INBOX_PATH, JSON.stringify([], null, 2));
+    console.log(`✓ ${processed.length} messages archived, inbox cleared`);
+  }
+}
+
+processMessages().catch(console.error);
