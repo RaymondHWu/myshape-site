@@ -122,13 +122,13 @@ export default function GenesisClient() {
         <div className="fixed inset-0 z-0 pointer-events-none genesis-scan-bg" />
       )}
 
-      <div className="relative z-10 min-h-[60vh] flex flex-col items-center justify-center text-center mt-4 md:mt-8 pb-16">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center mt-0 md:mt-8 pb-4" style={{ flex: 1, gap: "clamp(3rem, 15vh, 10rem)" }}>
         <div className={`transition-all duration-1000 shrink-0 ${isActive ? "opacity-20 blur-sm scale-90" : "opacity-100"}`}>
-          <h2 className="text-white text-2xl md:text-4xl font-light tracking-tight mb-3"
+          <h2 className="text-white text-xl md:text-4xl font-light tracking-tight mb-2 md:mb-3"
             style={{ textShadow: "0 0 40px rgba(144,200,255,0.3), 0 0 80px rgba(144,200,255,0.1)" }}>
             {stage === "success" ? "Genesis Confirmed." : stage === "error" ? "Uplink Interrupted." : "Initialize Genesis."}
           </h2>
-          <p className="text-cyan-400/60 font-mono text-[10px] tracking-[0.6em] uppercase mb-6 md:mb-8"
+          <p className="text-cyan-400/60 font-mono text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.6em] uppercase mb-4 md:mb-8"
             style={{ textShadow: "0 0 16px rgba(34,211,238,0.3)" }}>
             ESTABLISHING_IDENTITY_LAYER_PROTOCOL
           </p>
@@ -140,12 +140,12 @@ export default function GenesisClient() {
               initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6, filter: "blur(2px)" }}
               transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}>
-              <div className="mb-8 flex items-center gap-3 justify-center">
+              <div className="mb-4 md:mb-8 flex items-center gap-3 justify-center">
                 <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-cyan-400/30" />
                 <span className="text-cyan-400/20 font-mono text-[7px] tracking-[0.5em] uppercase">Genesis_Protocol</span>
                 <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-cyan-400/30" />
               </div>
-              <form onSubmit={handleCommence} className="flex flex-col items-center space-y-5">
+              <form onSubmit={handleCommence} className="flex flex-col items-center space-y-3 md:space-y-5">
                 {/* Genesis Cohort 标签 — 滚动数据流 */}
                 <div className="flex items-center justify-center gap-2">
                   <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-cyan-400/30" />
@@ -159,10 +159,10 @@ export default function GenesisClient() {
 
                 {/* ── 主路径：Wallet-First ── */}
                 <div className="flex flex-col items-center space-y-2 relative">
-                  {/* 浮动粒子 */}
-                  <div className="absolute -top-3 -right-2 w-1 h-1 rounded-full bg-cyan-400/40 genesis-float-dot" />
-                  <div className="absolute top-0 -left-3 w-1 h-1 rounded-full bg-cyan-400/30 genesis-float-dot" />
-                  <div className="absolute -bottom-1 right-0 w-1 h-1 rounded-full bg-cyan-400/35 genesis-float-dot" />
+                  {/* 浮动粒子（桌面端专属） */}
+                  <div className="absolute -top-3 -right-2 w-1 h-1 rounded-full bg-cyan-400/40 genesis-float-dot hidden md:block" />
+                  <div className="absolute top-0 -left-3 w-1 h-1 rounded-full bg-cyan-400/30 genesis-float-dot hidden md:block" />
+                  <div className="absolute -bottom-1 right-0 w-1 h-1 rounded-full bg-cyan-400/35 genesis-float-dot hidden md:block" />
                   <ConnectWallet
                     email={email}
                     onSuccess={(walletData) => {
@@ -174,17 +174,18 @@ export default function GenesisClient() {
                       }
                     }}
                   />
-                  <span className="text-cyan-400/40 text-[9px] tracking-[0.18em] uppercase font-light">Recommended: Trustless on-chain binding</span>
+                  <span className="text-cyan-400/40 text-[8px] md:text-[9px] tracking-[0.12em] md:tracking-[0.18em] uppercase font-light">Recommended: Trustless on-chain binding</span>
                 </div>
 
-                {/* ── 分隔 ── */}
-                <div className="flex items-center gap-3 w-full max-w-[260px]">
+                {/* ── 分隔（桌面端专属）── */}
+                <div className="hidden md:flex items-center gap-3 w-full max-w-[260px]">
                   <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                   <span className="text-white/25 text-[10px] tracking-[0.3em] uppercase font-light">or</span>
                   <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                 </div>
 
-                {/* ── 邀请码 — 可折叠 ── */}
+                {/* ── 邀请码 — 桌面端专属 ── */}
+                <div className="hidden md:block">
                 {inviteCode || inviteCodeValid !== null ? (
                   <div className="w-52 max-w-[58vw] mt-1">
                     <div className="relative group"
@@ -220,12 +221,13 @@ export default function GenesisClient() {
                 ) : (
                   <button type="button" onClick={() => setInviteCodeValid(false)}
                     onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
-                    className="text-indigo-300/35 hover:text-indigo-200/55 text-[10px] tracking-[0.22em] uppercase transition-colors border-b border-dashed border-indigo-300/20 pb-0.5">
-                    + Enter invite code
+                    className="text-indigo-300/35 hover:text-indigo-200/55 text-[9px] md:text-[10px] tracking-[0.15em] md:tracking-[0.22em] uppercase transition-colors border-b border-dashed border-indigo-300/20 pb-0.5">
+                    + Invite code
                   </button>
                 )}
-              {/* ── 备选路径：Legacy Email ── */}
-                <div className="flex flex-col items-center space-y-2">
+                </div>
+              {/* ── 备选路径：Legacy Email（桌面端专属）── */}
+                <div className="hidden md:flex flex-col items-center space-y-2">
                   <span className="text-white/35 text-[10px] tracking-[0.15em] uppercase">Legacy Access (Email)</span>
                   <div className="relative flex items-center gap-2">
                     <div className="relative group genesis-terminal-glow flex-1"
@@ -449,17 +451,17 @@ export default function GenesisClient() {
                 </span>
               </motion.a>
 
+              {/* 移动端隐藏：次要链接 */}
               <motion.a
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3, duration: 0.5 }}
                 href="/motion-demo"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                className="text-cyan-400/25 hover:text-cyan-300/60 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
+                className="hidden md:block text-cyan-400/25 hover:text-cyan-300/60 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
                 See_How_It_Works → Motion_Demo
               </motion.a>
 
-              {/* Beta tester feedback */}
               <motion.a
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -467,18 +469,17 @@ export default function GenesisClient() {
                 href="https://tally.so/r/7Rj6z0"
                 target="_blank" rel="noopener noreferrer"
                 onMouseEnter={() => playTick(750, "sine", 0.07, 0.02)}
-                className="text-purple-400/30 hover:text-purple-300/70 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
+                className="hidden md:block text-purple-400/30 hover:text-purple-300/70 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
                 ◈ Beta_Feedback → Report_Experience
               </motion.a>
 
-              {/* Whitepaper deep dive */}
               <motion.a
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.9, duration: 0.5 }}
                 href="/whitepaper#genesis-protocol"
                 onMouseEnter={() => playTick(700, "sine", 0.07, 0.02)}
-                className="text-cyan-400/20 hover:text-cyan-300/60 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
+                className="hidden md:block text-cyan-400/20 hover:text-cyan-300/60 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
                 Deep_Dive → Read §7 of the Whitepaper
               </motion.a>
             </motion.div>
@@ -501,7 +502,8 @@ export default function GenesisClient() {
         </AnimatePresence>
       </div>
 
-      <div className={`fixed bottom-6 left-4 md:bottom-12 md:left-12 transition-opacity duration-1000 ${stage !== "input" ? "opacity-0" : "opacity-20"}`}>
+      {/* 桌面端专属：协议参考信息 */}
+      <div className={`fixed bottom-6 left-4 md:bottom-12 md:left-12 transition-opacity duration-1000 hidden md:block ${stage !== "input" ? "opacity-0" : "opacity-20"}`}>
         <div className="text-[7px] font-mono text-white tracking-[0.6em] leading-relaxed uppercase text-left">
           Protocol_Ref: 005_GEN <br />
           Node: Origin_Verified <br />

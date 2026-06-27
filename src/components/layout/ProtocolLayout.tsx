@@ -28,20 +28,21 @@ export default function ProtocolLayout({
 }: ProtocolLayoutProps) {
   return (
     <div className={`min-h-screen text-white font-mono selection:bg-cyan-500/30 overflow-x-hidden flex flex-col ${transparentBg ? 'bg-transparent' : 'bg-[#02040a]'}`}>
-      {/* 1. 統一背景與動畫裝飾 */}
-      <div className="fixed inset-0 pointer-events-none opacity-10" 
-           style={{ 
-             backgroundImage: 'radial-gradient(circle, #22d3ee 1px, transparent 1px)', 
-             backgroundSize: '60px 60px' 
+      {/* 1. 桌面端：背景動畫裝飾 */}
+      <div className="hidden md:block fixed inset-0 pointer-events-none opacity-10"
+           style={{
+             backgroundImage: 'radial-gradient(circle, #22d3ee 1px, transparent 1px)',
+             backgroundSize: '60px 60px'
            }} />
-      
-      <div className="fixed top-0 left-0 w-full h-[2px] bg-cyan-500/5 shadow-[0_0_15px_rgba(34,211,238,0.2)] animate-scan-slow pointer-events-none z-50" />
+
+      <div className="hidden md:block fixed top-0 left-0 w-full h-[2px] bg-cyan-500/5 shadow-[0_0_15px_rgba(34,211,238,0.2)] animate-scan-slow pointer-events-none z-50" />
 
       <ProtocolHeader />
 
       {/* 2. 頁面內容主體 */}
-      <main className="flex-1 pt-40 pb-10 px-10 max-w-5xl mx-auto relative z-10 animate-fade-in w-full protocol-main">
-        <div className="relative mb-24 border-b border-white/10 pb-12">
+      <main className="flex flex-col flex-1 pt-24 md:pt-40 pb-4 md:pb-10 px-4 md:px-10 max-w-5xl mx-auto relative z-10 animate-fade-in w-full protocol-main">
+        {/* 桌面端：页面标题区 */}
+        <div className="hidden md:block relative mb-8 md:mb-24 border-b border-white/10 pb-6 md:pb-12">
           <div className="flex justify-between items-end">
             <div>
               {renderSigil ? (
@@ -67,12 +68,12 @@ export default function ProtocolLayout({
           </div>
         </div>
 
-        <div className="min-h-[30vh] protocol-main-inner">
+        <div className="flex flex-col min-h-0 md:min-h-[30vh] protocol-main-inner" style={{ flex: 1 }}>
           {children}
         </div>
 
-        {/* 狀態裝飾條 */}
-        <div className="mt-20 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 opacity-30 group transition-opacity hover:opacity-100">
+        {/* 狀態裝飾條 — 桌面端 */}
+        <div className="hidden md:flex mt-20 pt-12 border-t border-white/5 flex-col md:flex-row justify-between items-center gap-8 opacity-30 group transition-opacity hover:opacity-100">
           <div className="text-[9px] tracking-[0.5em] uppercase font-light">
             {category} // {systemStatus} // AUTH_VERIFIED
           </div>

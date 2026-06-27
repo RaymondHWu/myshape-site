@@ -304,9 +304,9 @@
     z-index: 1;
   }
 
-  /* 标题 — 顶部留呼吸空间 */
+  /* 标题 — 避开固定 Header(60px) + 二级导航(32px) */
   .hero-demo-title-zone {
-    margin-top: clamp(1.5rem, 10vh, 4rem);
+    margin-top: clamp(6rem, 12vh, 7rem);
   }
 
   .hero-demo-title {
@@ -324,18 +324,20 @@
   .hero-demo-subtitle {
     bottom: 150px;
     max-width: 85vw;
-    gap: 5px;
+    gap: 4px;
     flex-wrap: wrap;
     justify-content: center;
   }
 
   .hero-demo-subtitle-text {
     font-size: 9px;
+    color: rgba(255, 255, 255, 0.85);
   }
 
   .hero-demo-subtitle-label {
     font-size: 7px;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.15em;
+    color: rgba(34, 211, 238, 0.9);
   }
 
   /* 场景指示点 — 更紧凑 */
@@ -367,8 +369,7 @@
   }
 
   .hero-demo-cta.secondary {
-    font-size: 9px;
-    padding: 10px 0;
+    display: none;
   }
 
   /* 隐藏漩涡按钮 */

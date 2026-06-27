@@ -157,31 +157,27 @@ const ProtocolHeader = () => {
           {utcTime}
         </span>
 
-        <Link href="/protocol" style={{ textDecoration: "none" }}>
+        <Link href="/protocol" style={{ textDecoration: "none" }} className="hide-mobile">
           <div style={styles.nodeBadge} className="node-link-hover">
             KFK_SPC_DC{new Date().getDate()}
           </div>
         </Link>
 
         {/* GitHub DEV 入口 */}
-        <a href="https://github.com/myshapeprotocol" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+        <a href="https://github.com/myshapeprotocol" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }} className="hide-mobile">
           <div style={styles.nodeBadge} className="node-link-hover">
             DEV_HUB
           </div>
         </a>
 
-        {/* 钱包按钮 */}
+        {/* 钱包按钮 — 精简：仅文字 + 边框呼吸 */}
         <button
           onClick={handleWalletClick}
           onMouseEnter={() => playTick(650, "sine", 0.07, 0.02)}
           style={styles.walletBtn}
           className={`wallet-btn-optimized ${isPanelOpen ? "is-active" : ""}`}
         >
-          <div className="scan-line" />
-          <div className="status-pulse-cyan" />
-          <span style={{ position: "relative", zIndex: 1 }}>
-            MYSHAPE.BASE.ETH
-          </span>
+          MYSHAPE.BASE.ETH
         </button>
 
         {/* ── 晶体玻璃/全息协议面板 ── */}
@@ -283,23 +279,30 @@ const ProtocolHeader = () => {
       {isShimmering && <div className="shimmer-overlay" />}
     </nav>
 
-    {/* ── 二级导航条 ── */}
-    <div className="hide-mobile" style={{
+    {/* ── 二级导航条 ──
+         桌面：居中 6 项完整协议导航
+         移动：左对齐 3 项 + 横向滚动 */}
+    <div className="sub-nav-bar" style={{
       position: "fixed", top: "60px", left: 0, width: "100%", height: "32px",
-      display: "flex", alignItems: "center", justifyContent: "center", gap: "32px",
+      display: "flex", alignItems: "center", gap: "32px",
       background: "rgba(2,4,10,0.85)", backdropFilter: "blur(4px)",
       borderBottom: "1px solid rgba(255,255,255,0.05)", zIndex: 9998,
       fontFamily: "monospace",
+      overflowX: "auto", overflowY: "hidden", whiteSpace: "nowrap",
+      paddingLeft: "12px", paddingRight: "12px",
+      WebkitOverflowScrolling: "touch",
+      scrollbarWidth: "none",
     }}>
       {[
-        { label: "Protocol", href: "/protocol" },
-        { label: "Vision", href: "/vision" },
-        { label: "Build", href: "/developers" },
-        { label: "Demo", href: "/motion-demo" },
-        { label: "Genesis", href: "/genesis/cohort" },
-        { label: "Blog", href: "/blog" },
+        { label: "Protocol", href: "/protocol", mobile: true },
+        { label: "Vision",   href: "/vision",    mobile: false },
+        { label: "Build",    href: "/developers", mobile: false },
+        { label: "Demo",     href: "/motion-demo", mobile: false },
+        { label: "Genesis",  href: "/genesis/cohort", mobile: true },
+        { label: "Blog",     href: "/blog",       mobile: true },
       ].map(link =>
           <Link key={link.href} href={link.href}
+            className={!link.mobile ? "hide-mobile" : ""}
             onMouseEnter={e => {
               playTick(600, "sine", 0.08, 0.02);
               e.currentTarget.style.color = "rgb(34, 211, 238)";
@@ -338,7 +341,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: typeof window !== "undefined" && window.innerWidth < 768 ? "0 16px" : "0 40px",
+    padding: "0 12px",
     background:
       "linear-gradient(to bottom, rgba(2, 4, 10, 0.95) 0%, rgba(2, 4, 10, 0) 100%)",
     backdropFilter: "blur(8px)",
@@ -367,15 +370,12 @@ const styles: { [key: string]: React.CSSProperties } = {
   divider: { opacity: 0.2 },
   statusText: { opacity: 0.5 },
   centerSection: {
-    position: "absolute",
-    left: "50%",
-    transform: "translateX(-50%)",
     color: "#fff",
     fontSize: "14px",
-    letterSpacing: "1em",
+    letterSpacing: "0.25em",
     fontWeight: 300,
     whiteSpace: "nowrap",
-    textIndent: "1em",
+    textIndent: "0.25em",
     opacity: 0.9,
   },
   rightSection: {
@@ -408,7 +408,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     letterSpacing: "0.1em",
     fontWeight: "bold",
     outline: "none",
-    marginLeft: "5px",
+    marginLeft: "16px",
   },
 };
 

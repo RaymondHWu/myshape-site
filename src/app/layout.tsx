@@ -152,12 +152,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </script>
 
-        {/* Mediapipe 注入 */}
-        <script 
-          src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" 
-          type="text/javascript"
-        ></script>
-
       </head>
 
       <body
@@ -165,7 +159,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         style={{
           margin: 0,
           padding: 0,
-          background: "transparent",
           overflowX: "hidden",
           width: "100%",
           minHeight: "100vh",

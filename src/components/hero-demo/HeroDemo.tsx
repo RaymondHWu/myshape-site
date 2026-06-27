@@ -118,6 +118,7 @@ export default function HeroDemo() {
 
   /* ═══════════════════════════════════════════
      核心渲染 — 严格对标 HeroVisual useEffect
+     移动端：轻量粒子场（200粒子/50星，零场景切换）
      ═══════════════════════════════════════════ */
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -156,10 +157,10 @@ export default function HeroDemo() {
 
     /* ── 星空背景（移动端减半）── */
     const stars: { x: number; y: number; z: number }[] = [];
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const isMobileLocal = typeof window !== "undefined" && window.innerWidth < 768;
     function initStars() {
       stars.length = 0;
-      const count = isMobile ? 120 : 400;
+      const count = isMobileLocal ? 120 : 400;
       for (let i = 0; i < count; i++) {
         stars.push({
           x: Math.random() * 2 - 1,
@@ -295,10 +296,10 @@ export default function HeroDemo() {
       ctx.globalAlpha = alpha;
       ctx.save();
       // 移动端粒子团缩小并居中
-      const mobileScale = isMobile ? 0.7 : 1;
-      const centerY = H * (isMobile ? 0.48 : 0.52);
+      const mobileScale = isMobileLocal ? 0.7 : 1;
+      const centerY = H * (isMobileLocal ? 0.48 : 0.52);
       ctx.translate(W / 2, centerY);
-      if (isMobile) ctx.scale(mobileScale, mobileScale);
+      if (isMobileLocal) ctx.scale(mobileScale, mobileScale);
 
       // ── 场景粒子渲染 ──
       const t = now * 0.001;

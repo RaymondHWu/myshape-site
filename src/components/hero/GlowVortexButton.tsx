@@ -21,6 +21,9 @@ export default function GlowVortexButton({
   }, []);
 
   useEffect(() => {
+    // 移动端：漩涡按钮被 CSS 隐藏，跳过 Canvas 渲染
+    if (typeof window !== "undefined" && window.innerWidth < 768) return;
+
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
     let animationFrameId: number;

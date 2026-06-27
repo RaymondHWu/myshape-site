@@ -87,9 +87,10 @@ export default function ProtocolFooter() {
 
   return (
     <footer className="relative z-10 w-full bg-transparent font-mono pt-20 md:pt-32 pb-12 md:pb-20">
-      <div className="max-w-6xl mx-auto px-4 md:px-10 grid grid-cols-2 md:grid-cols-5 gap-y-12 md:gap-y-16 gap-x-2 md:gap-x-6">
+      {/* 桌面端专属：导航链接组 */}
+      <div className="max-w-6xl mx-auto px-4 md:px-10 hidden md:grid md:grid-cols-5 gap-y-12 md:gap-y-16 gap-x-2 md:gap-x-6">
         {navGroups.map((group) => (
-          <div key={group.title} className="flex justify-start md:justify-center"> 
+          <div key={group.title} className={`flex justify-start md:justify-center ${(group.title === "BUILD" || group.title === "PAPERS") ? "hidden md:flex" : ""}`}>
             <div className="flex flex-col items-start min-w-[160px]">
               <div className="mb-8 group cursor-default">
                 <h4 className="text-white text-[11px] font-bold tracking-[0.4em] mb-2 opacity-90 uppercase group-hover:text-cyan-400 transition-colors">
@@ -120,7 +121,8 @@ export default function ProtocolFooter() {
       </div>
 
       {/* 2. 狀態條 & 訂閱區 */}
-      <div className="max-w-6xl mx-auto px-4 md:px-10 border-t border-white/5 pt-8 md:pt-12 mt-16 md:mt-28">
+      {/* 桌面端专属：订阅区 */}
+      <div className="max-w-6xl mx-auto px-4 md:px-10 border-t border-white/5 pt-8 md:pt-12 mt-16 md:mt-28 hidden md:block">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
@@ -176,7 +178,7 @@ export default function ProtocolFooter() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 md:px-10 mt-16 pt-6 border-t border-white/5 text-center space-y-1">
+      <div className="max-w-6xl mx-auto px-4 md:px-10 mt-3 md:mt-16 pt-3 md:pt-6 border-t border-white/5 text-center space-y-1">
         <div className="flex items-center justify-center gap-1.5">
           <span className="w-1 h-1 rounded-full bg-cyan-400/60 shadow-[0_0_4px_rgba(34,211,238,0.5)]" />
           <span className="text-[9px] text-white/25 tracking-[0.25em] uppercase font-mono">Core v2.0 — 15 Engines · 45 Tests</span>

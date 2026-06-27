@@ -90,7 +90,8 @@ export default function HomeClient() {
     <>
       <ProtocolHeader />
 
-      <div className="fixed inset-0 z-[999] pointer-events-none">
+      {/* 桌面端专属：LIVE_FEED + 节点信息浮层 */}
+      <div className="fixed inset-0 z-[999] pointer-events-none hidden md:block">
         <div className="absolute top-10 right-10 pointer-events-auto">
           <div className="flex items-center gap-2">
              <div className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_cyan]" />
@@ -337,7 +338,9 @@ export default function HomeClient() {
         </div>
       </main>
 
-      <ProtocolStatus />
+      <div className="hidden md:block">
+        <ProtocolStatus />
+      </div>
       <ProtocolFooter />
     </>
   );

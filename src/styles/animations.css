@@ -249,3 +249,18 @@
   90%  { opacity: 1; }
   100% { top: 92%; opacity: 0; }
 }
+
+/* ═══════════════════════════════════════════════
+   prefers-reduced-motion — 全局动画禁用
+   覆盖所有 @keyframes、transition、animation
+   ═══════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
