@@ -1,15 +1,79 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
 import { playTick } from "@/utils/useAudioTick";
 
+const SECTIONS = [
+  { id: "experiment", label: "The Experiment" },
+  { id: "results", label: "The Results" },
+  { id: "why", label: "Why This Matters" },
+  { id: "how", label: "How It Works" },
+  { id: "truth", label: "The Deeper Truth" },
+  { id: "run", label: "Run It Yourself" },
+  { id: "building", label: "What We're Building" },
+];
+
 export default function BlogClient() {
+  const [active, setActive] = useState("experiment");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY + 150;
+      for (let i = SECTIONS.length - 1; i >= 0; i--) {
+        const el = document.getElementById(SECTIONS[i].id);
+        if (el && el.offsetTop <= scrollY) {
+          setActive(SECTIONS[i].id);
+          break;
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    playTick(600, "sine", 0.06, 0.015);
+  };
+
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
 
-      <article className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 flex flex-col md:flex-row gap-12 md:gap-24">
+        {/* ── Desktop TOC: sidebar ── */}
+        <aside className="md:w-56 shrink-0 h-fit md:sticky md:top-32 hidden md:block">
+          <div className="text-cyan-400/30 text-[9px] tracking-[0.5em] uppercase mb-8 font-mono italic">// ON_THIS_PAGE</div>
+          <ul className="space-y-6 border-l" style={{ borderColor: "rgba(144,200,255,0.08)" }}>
+            {SECTIONS.map(s => {
+              const isActive = s.id === active;
+              return (
+                <li key={s.id}>
+                  <button
+                    onClick={() => scrollTo(s.id)}
+                    onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
+                    className="block text-left w-full transition-all duration-300"
+                    style={{
+                      borderLeft: isActive ? "2px solid rgba(34,211,238,0.6)" : "2px solid transparent",
+                      marginLeft: "-1px",
+                      paddingLeft: "20px",
+                    }}
+                  >
+                    <div className="text-[11px] tracking-[0.15em] uppercase transition-colors duration-300"
+                      style={{ color: isActive ? "rgba(34,211,238,0.9)" : "rgba(255,255,255,0.2)" }}>
+                      {s.label}
+                    </div>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </aside>
+
+        <article className="flex-1 min-w-0">
         {/* Header */}
         <div className="mb-12 md:mb-16">
           <div className="text-cyan-500/40 text-[9px] tracking-[0.4em] uppercase mb-4">TECHNICAL_BLOG // JUNE_2026</div>
@@ -33,7 +97,7 @@ export default function BlogClient() {
         </div>
 
         {/* Visual Hook — Architecture Diagram */}
-        <div className="my-12 md:my-16 border border-cyan-400/15 bg-cyan-400/[0.02] p-5 md:p-8 font-mono"
+        <div className="my-12 md:my-16 border border-cyan-400/15 bg-cyan-400/[0.02] p-5 md:p-8 font-mono transition-all duration-300 hover:border-cyan-400/35"
           onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
           <div className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase mb-4 text-center">SYSTEM_SCHEMA: VERIFICATION PIPELINE</div>
           <pre className="text-cyan-400/40 text-[9px] md:text-[10px] leading-[2.2] tracking-[0.08em] whitespace-pre overflow-x-auto text-center">
@@ -44,7 +108,7 @@ export default function BlogClient() {
    ◄─────────────── 0 DATA UPLOADED ─────────────────►
           All processing on-device. Nothing stored.`}
           </pre>
-          <div className="mt-4 flex justify-center gap-4 text-[7px]">
+          <div className="mt-4 flex justify-center gap-4 text-[8px]">
             <span className="text-cyan-400/25">◈ Engine: Rust + TypeScript</span>
             <span className="text-white/10">|</span>
             <span className="text-cyan-400/25">◈ Human—AI Gap: 0.3960</span>
@@ -57,7 +121,7 @@ export default function BlogClient() {
         <div className="space-y-16 md:space-y-20">
           {/* The Experiment */}
           <section>
-            <h2 className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug"
+            <h2 id="experiment" className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug transition-colors duration-300 hover:text-cyan-200 scroll-mt-28"
               onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>The Experiment</h2>
             <div className="space-y-5">
               <p className="text-white/40 text-[13px] leading-[1.9] font-light">
@@ -73,7 +137,7 @@ export default function BlogClient() {
 
           {/* The Results */}
           <section>
-            <h2 className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug"
+            <h2 id="results" className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug transition-colors duration-300 hover:text-cyan-200 scroll-mt-28"
               onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>The Results</h2>
             <div className="space-y-5">
               <div className="border p-5 my-6 transition-all duration-300 hover:border-cyan-400/40"
@@ -112,7 +176,7 @@ Human—AI Gap: 0.3960`}
 
           {/* Why This Matters */}
           <section>
-            <h2 className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug"
+            <h2 id="why" className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug transition-colors duration-300 hover:text-cyan-200 scroll-mt-28"
               onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>Why This Matters</h2>
             <div className="space-y-5 text-white/40 text-[13px] leading-[1.9] font-light">
               <p>Every identity system in production today — passwords, KYC, hardware wallets — answers one question: "Does the credential match?"</p>
@@ -125,7 +189,7 @@ Human—AI Gap: 0.3960`}
 
           {/* How It Works */}
           <section>
-            <h2 className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug"
+            <h2 id="how" className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug transition-colors duration-300 hover:text-cyan-200 scroll-mt-28"
               onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>How It Works</h2>
             <div className="space-y-5">
               <p className="text-white/40 text-[13px] leading-[1.9] font-light">
@@ -142,7 +206,7 @@ Human—AI Gap: 0.3960`}
 
           {/* The Deeper Truth */}
           <section>
-            <h2 className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug"
+            <h2 id="truth" className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug transition-colors duration-300 hover:text-cyan-200 scroll-mt-28"
               onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>The Deeper Truth</h2>
             <div className="space-y-5 text-white/40 text-[13px] leading-[1.9] font-light">
               <p>Every AI motion model — diffusion, transformer, VAE — is trained with L2 loss. L2 loss penalizes the square of the error. A 1 mm tremor deviation is penalized 100× less than a 10 mm trajectory error. The model learns to suppress high-frequency, low-amplitude signals — exactly the signals that make human motion human.</p>
@@ -153,7 +217,7 @@ Human—AI Gap: 0.3960`}
 
           {/* Run It */}
           <section>
-            <h2 className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug"
+            <h2 id="run" className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug transition-colors duration-300 hover:text-cyan-200 scroll-mt-28"
               onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>Run It Yourself</h2>
             <div className="space-y-5">
               <p className="text-white/40 text-[13px] leading-[1.9] font-light">The core engine is open source:</p>
@@ -175,7 +239,7 @@ cargo run --release --bin myshape-demo -- --verbose`}
 
           {/* What We're Building */}
           <section>
-            <h2 className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug">What We're Building</h2>
+            <h2 id="building" className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug scroll-mt-28">What We're Building</h2>
             <div className="space-y-5 text-white/40 text-[13px] leading-[1.9] font-light">
               <p>MyShape is a presence verification protocol. Not proof of identity — proof of presence.</p>
               <p>World (the orb) proves you are a human. MyShape proves you are <em className="text-white/55">this</em> human — physically present, authorizing this specific operation.</p>
@@ -216,7 +280,8 @@ cargo run --release --bin myshape-demo -- --verbose`}
             </a>
           </div>
         </div>
-      </article>
+        </article>
+      </div>
 
       <ProtocolFooter />
     </div>
