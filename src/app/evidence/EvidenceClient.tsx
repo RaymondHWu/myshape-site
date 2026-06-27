@@ -68,11 +68,12 @@ export default function EvidenceClient() {
               </thead>
               <tbody>
                 {BENCHMARKS.map((b) => (
-                  <tr key={b.test} className="border-b border-white/[0.03] hover:bg-cyan-400/[0.03] transition-colors cursor-default"
-                    onMouseEnter={() => playTick(600, "sine", 0.06, 0.012)}>
-                    <td className="p-3 text-white/40 text-[11px]">{b.test}</td>
-                    <td className={`p-3 font-mono text-[13px] text-cyan-300/80 ${b.glow}`}>{b.score}</td>
-                    <td className={`p-3 text-[10px] text-right font-mono font-bold ${b.accent}`}>{b.verdict}</td>
+                  <tr key={b.test} className="border-b border-white/[0.03] transition-colors cursor-default group/row"
+                    onMouseEnter={e => { playTick(600, "sine", 0.06, 0.012); e.currentTarget.style.background = "rgba(34,211,238,0.04)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
+                    <td className="p-3 text-white/40 group-hover/row:text-white/65 text-[11px] transition-colors">{b.test}</td>
+                    <td className={`p-3 font-mono text-[13px] text-cyan-300/80 group-hover/row:text-cyan-200 transition-colors ${b.glow}`}>{b.score}</td>
+                    <td className={`p-3 text-[10px] text-right font-mono font-bold ${b.accent} group-hover/row:brightness-125 transition-all`}>{b.verdict}</td>
                   </tr>
                 ))}
               </tbody>
@@ -94,13 +95,14 @@ export default function EvidenceClient() {
             <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-5 space-y-1"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
               {VECTOR_SAMPLE.map(({ k, v, desc }) => (
-                <div key={k} className="flex items-center justify-between p-2.5 border border-white/[0.04] hover:border-cyan-400/25 hover:bg-cyan-400/[0.03] transition-all cursor-default"
-                  onMouseEnter={() => playTick(450, "sine", 0.03, 0.008)}>
+                <div key={k} className="flex items-center justify-between p-2.5 border border-white/[0.04] transition-all cursor-default group/v"
+                  onMouseEnter={e => { playTick(450, "sine", 0.03, 0.008); e.currentTarget.style.borderColor = "rgba(34,211,238,0.3)"; e.currentTarget.style.background = "rgba(34,211,238,0.03)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; e.currentTarget.style.background = "transparent"; }}>
                   <div>
-                    <span className="text-white/30 text-[10px]">{k}</span>
-                    <span className="text-white/10 text-[7px] ml-2">{desc}</span>
+                    <span className="text-white/30 group-hover/v:text-white/55 text-[10px] transition-colors">{k}</span>
+                    <span className="text-white/10 group-hover/v:text-white/20 text-[7px] ml-2 transition-colors">{desc}</span>
                   </div>
-                  <span className="text-cyan-300/60 font-mono text-[11px]">{v}</span>
+                  <span className="text-cyan-300/60 group-hover/v:text-cyan-200/90 font-mono text-[11px] transition-colors">{v}</span>
                 </div>
               ))}
             </div>
@@ -111,14 +113,15 @@ export default function EvidenceClient() {
             <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-5 space-y-1.5"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
               {ATTACK_SUMMARY.map((a) => (
-                <div key={a.class} className="flex items-center gap-3 p-2.5 border border-white/[0.04] hover:bg-cyan-400/[0.03] transition-all cursor-default"
-                  onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
+                <div key={a.class} className="flex items-center gap-3 p-2.5 border border-white/[0.04] transition-all cursor-default group/a"
+                  onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(34,211,238,0.25)"; e.currentTarget.style.background = "rgba(34,211,238,0.03)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; e.currentTarget.style.background = "transparent"; }}>
                   <span className={`w-2 h-2 rounded-full shrink-0 ${a.severity === "Critical" ? "bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.5)]" : a.severity === "High" ? "bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.4)]" : "bg-cyan-400 shadow-[0_0_4px_rgba(34,211,238,0.3)]"}`} />
                   <div className="flex-1">
-                    <span className="text-white/35 text-[10px]">{a.class}</span>
-                    <span className="text-white/12 text-[7px] ml-2">{a.detection}</span>
+                    <span className="text-white/35 group-hover/a:text-white/55 text-[10px] transition-colors">{a.class}</span>
+                    <span className="text-white/12 group-hover/a:text-white/22 text-[7px] ml-2 transition-colors">{a.detection}</span>
                   </div>
-                  <span className="text-cyan-300/55 font-mono text-[10px] font-bold">{a.success}</span>
+                  <span className="text-cyan-300/55 group-hover/a:text-cyan-200/85 font-mono text-[10px] font-bold transition-colors">{a.success}</span>
                 </div>
               ))}
             </div>
