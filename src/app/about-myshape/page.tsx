@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MyShape — About the Protocol",
+    title: "MyShape Protocol — About the Protocol",
     description: "About MyShape Protocol — the sovereign identity layer for the AI-native era.",
     images: ["/og-image.png"],
   },
