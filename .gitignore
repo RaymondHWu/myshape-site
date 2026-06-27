@@ -40,6 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Rust build artifacts
+engine/target/
+cli/target/
+wasm/target/
+
 # 🔴 CORE ROOM — never commit
 docs/.core/
 

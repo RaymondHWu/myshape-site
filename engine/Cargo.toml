@@ -1,0 +1,43 @@
+[package]
+name = "myshape-engine"
+version = "0.1.0"
+edition = "2021"
+description = "MyShape Presence Protocol — Core Engine (MVP)"
+
+[dependencies]
+# Linear algebra
+nalgebra = { version = "0.35", features = ["serde-serialize"] }
+
+# Random number generation (CSPRNG for challenges)
+rand = "0.8"
+rand_chacha = "0.3"
+getrandom = "0.2"
+
+# Serialization for API boundaries
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Hashing (for commitments and device fingerprints)
+blake3 = "1"
+sha2 = "0.10"
+
+# FFT for jerk spectrum
+rustfft = "6.4"
+
+# Error handling
+thiserror = "2"
+
+# UUID for challenge IDs
+uuid = { version = "1", features = ["v4", "serde"] }
+
+[dev-dependencies]
+criterion = "0.5"
+
+# Benchmarks are defined in separate files (to be added)
+# [[bench]]
+# name = "signature_bench"
+# harness = false
+#
+# [[bench]]
+# name = "challenge_bench"
+# harness = false

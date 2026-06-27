@@ -1,0 +1,19 @@
+[package]
+name = "myshape-cli"
+version = "0.1.0"
+edition = "2021"
+description = "MyShape Protocol — CLI demo & verification tool"
+
+[[bin]]
+name = "myshape-demo"
+path = "src/demo.rs"
+
+[[bin]]
+name = "myshape-verify"
+path = "src/verify.rs"
+
+[dependencies]
+myshape-engine = { path = "../engine" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+uuid = { version = "1", features = ["v4"] }
