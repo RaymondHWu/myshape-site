@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useEffect, useState, useCallback } from "react";
 import ProtocolHeader from "@/components/header/header";
+import { useMyShapeEngine } from "@/hooks/useMyShapeEngine";
 
 import ProtocolFooter from "@/components/footer/footer";
 import { playTick, resumeAudio } from "@/utils/useAudioTick";
@@ -51,6 +52,8 @@ export default function MotionDemoClient() {
   const [proofHashes, setProofHashes] = useState<{ zkp: string; pop: string; mp: string; ep: string } | null>(null);
   const [livePes, setLivePes] = useState<{ score: number; timing: number; noise: number; freq: number; bio: number } | null>(null);
   const [aiCompare, setAiCompare] = useState<{ score: number; timing: number; noise: number; freq: number; bio: number } | null>(null);
+  const [wasmCompare, setWasmCompare] = useState<{ loading: boolean; similarity: number | null; sigDim: number } | null>(null);
+  const { engine, loading: wasmLoading, load: loadWasm } = useMyShapeEngine();
   const [copied, setCopied] = useState(false);
   const [countdown, setCountdown] = useState(8);
   const framesRef = useRef<FeatureFrame[]>([]);
@@ -657,23 +660,75 @@ export default function MotionDemoClient() {
                   </button>
                 )}
                 {!aiCompare ? (
-                  <button onClick={() => {
-                    // Simulate AI-generated motion PES (low entropy, over-smooth)
-                    setAiCompare({
-                      score: 0.22 + Math.random() * 0.12,
-                      timing: 0.02 + Math.random() * 0.04,
-                      noise: 0.04 + Math.random() * 0.06,
-                      freq: 0.02 + Math.random() * 0.04,
-                      bio: 0.04 + Math.random() * 0.08,
-                    });
+                  <button onClick={async () => {
+                    playTick(700, "sine", 0.08, 0.02);
+                    setWasmCompare({ loading: true, similarity: null, sigDim: 0 });
+                    try {
+                      const sdk = await loadWasm();
+                      if (!sdk) { setWasmCompare(null); return; }
+
+                      // Generate AI-forged motion (1s @ 30fps)
+                      const aiMotion = sdk.generateAIMotion(1.0, 30, 0.15);
+                      // Generate human-like motion with micro-tremor
+                      const humanMotion = sdk.generateHumanMotion(1.0, 30, 0.15);
+
+                      // Extract WASM signatures & compute similarity
+                      const humanSig = sdk.extractSignature(humanMotion);
+                      const aiSig = sdk.extractSignature(aiMotion);
+                      const simScore = sdk.similarity(humanSig, aiSig);
+
+                      setWasmCompare({ loading: false, similarity: simScore, sigDim: humanSig.vector.length });
+
+                      // Feed AI motion through the TypeScript PES engine
+                      // to show the real entropy gap (AI = low PES)
+                      const sstFrames = aiMotion.frames.map((f: { keypoints: Array<{ x: number; y: number; z: number }>; t: number }) => ({
+                        frame: normalizeSSTFrame(mediaPipeToSST(f.keypoints)),
+                        timestamp: f.t * 1000, // Convert to ms for PES
+                      }));
+                      const timestamps = sstFrames.map((f: { timestamp: number }) => f.timestamp);
+                      const { pes, components } = computeFullPES(
+                        sstFrames.map((f: { frame: Record<number, JointPosition> }) => f.frame) as Array<Record<number, JointPosition>>,
+                        timestamps,
+                      );
+                      setAiCompare({
+                        score: pes,
+                        timing: components.microTimingVariance,
+                        noise: components.noiseResidual,
+                        freq: components.frequencyEntropy,
+                        bio: components.biologicalPerturbation,
+                      });
+                    } catch {
+                      // Fallback to simulated values if WASM fails
+                      setAiCompare({
+                        score: 0.22 + Math.random() * 0.12,
+                        timing: 0.02 + Math.random() * 0.04,
+                        noise: 0.04 + Math.random() * 0.06,
+                        freq: 0.02 + Math.random() * 0.04,
+                        bio: 0.04 + Math.random() * 0.08,
+                      });
+                      setWasmCompare(null);
+                    }
                   }}
                     onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                    className="w-full py-2 border border-cyan-400/20 text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all">
-                    Compare with AI →
+                    className="w-full py-2 border border-cyan-400/20 text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all disabled:opacity-30"
+                    disabled={wasmLoading}>
+                    {wasmLoading ? "Loading Engine..." : "Compare with AI →"}
                   </button>
                 ) : (
                   <div className="p-3 border border-cyan-400/10 bg-cyan-400/[0.02] space-y-2">
-                    <div className="text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase text-center">AI Simulation (for comparison)</div>
+                    <div className="text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase text-center">
+                      {wasmCompare?.similarity != null ? "WASM Engine — Real Analysis" : "AI Simulation (for comparison)"}
+                    </div>
+                    {/* WASM Signature similarity */}
+                    {wasmCompare?.similarity != null && (
+                      <div className="flex items-center justify-between px-2 py-1.5 bg-black/30 border border-cyan-400/10 rounded-sm">
+                        <span className="text-white/20 text-[8px]">Sig Similarity</span>
+                        <span className="font-mono text-[10px]" style={{
+                          color: wasmCompare.similarity < 0.5 ? "rgba(239,68,68,0.8)" : "rgba(250,204,21,0.8)",
+                          textShadow: wasmCompare.similarity < 0.5 ? "0 0 6px rgba(239,68,68,0.3)" : "none",
+                        }}>{(wasmCompare.similarity * 100).toFixed(1)}%</span>
+                      </div>
+                    )}
                     <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[8px]">
                       <div className="flex justify-between"><span className="text-white/15">μTiming</span><span className="text-amber-300/50">{(aiCompare.timing * 100).toFixed(0)}%</span></div>
                       <div className="flex justify-between"><span className="text-white/15">Noise</span><span className="text-amber-300/50">{(aiCompare.noise * 100).toFixed(0)}%</span></div>
@@ -683,6 +738,11 @@ export default function MotionDemoClient() {
                     <div className="text-center text-[8px] text-amber-300/40 mt-1">
                       AI PES: {(aiCompare.score * 100).toFixed(0)}% — ✗ SYNTHETIC
                     </div>
+                    {wasmCompare?.similarity != null && (
+                      <div className="text-center text-[7px] text-cyan-400/25 mt-0.5">
+                        128-dim Motion Signature — {wasmCompare.sigDim}d vector similarity
+                      </div>
+                    )}
                   </div>
                 )}
                 {/* Genesis 状态提示 */}

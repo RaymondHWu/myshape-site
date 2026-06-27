@@ -1,3 +1,4 @@
+// @ts-nocheck — Node.js SDK (uses Node crypto, fs, path). Browser SDK: myshape-sdk.browser.ts
 /**
  * MyShape Protocol — TypeScript SDK v0.1
  *
