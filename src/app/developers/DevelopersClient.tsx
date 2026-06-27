@@ -106,9 +106,9 @@ export default function DevelopersClient() {
               </thead>
               <tbody>
                 {SDK_METHODS.map((m, i) => (
-                  <tr key={i} className="border-b border-white/5 transition-all"
-                    onMouseEnter={e => { playTick(700, "sine", 0.06, 0.015); hoverOn(e); }}
-                    onMouseLeave={e => hoverOff(e)}>
+                  <tr key={i} className="border-b border-white/5 transition-all duration-300"
+                    onMouseEnter={ev => { playTick(700, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.background = "rgba(144,200,255,0.04)"; }}
+                    onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.background = "transparent"; }}>
                     <td className="p-3 text-[10px] tracking-[0.15em]" style={{ color: "rgba(34,211,238,0.5)", fontSize: "10px" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.9)" data-default-size="10px" data-hover-size="12px">{m.module}</td>
                     <td className="p-3 font-mono" style={{ color: "rgba(255,255,255,0.45)", fontSize: "10px" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)" data-default-size="10px" data-hover-size="12px">{m.method}</td>
                     <td className="p-3 font-mono" style={{ color: "rgba(34,211,238,0.4)", fontSize: "9px" }} data-default="rgba(34,211,238,0.4)" data-hover="rgba(34,211,238,0.8)" data-default-size="9px" data-hover-size="11px">{m.returns}</td>
@@ -134,13 +134,13 @@ export default function DevelopersClient() {
               { name: "Presence Stream", path: "engine/presence-stream.ts", desc: "Aggregation, multi-device, PSS" },
               { name: "Unforgeability", path: "engine/unforgeability.ts", desc: "Entropy gap theorem, security horizon" },
             ].map((e) => (
-              <div key={e.name} className="p-4 transition-all"
-                onMouseEnter={e => { playTick(700, "sine", 0.08, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+              <div key={e.name} className="p-4 transition-all duration-300"
+                onMouseEnter={ev => { playTick(700, "sine", 0.08, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "scale(1.02)"; }}
+                onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "scale(1)"; }}
                 style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
-                <div className="text-[11px] tracking-[0.15em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.55)" }} data-default="rgba(255,255,255,0.55)" data-hover="rgba(255,255,255,0.9)">{e.name}</div>
-                <div className="font-mono text-[9px] mb-1.5" style={{ color: "rgba(34,211,238,0.3)" }} data-default="rgba(34,211,238,0.3)" data-hover="rgba(34,211,238,0.7)">{e.path}</div>
-                <div className="text-[10px]" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{e.desc}</div>
+                <div className="text-[11px] tracking-[0.15em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.55)", fontSize: "11px" }} data-default="rgba(255,255,255,0.55)" data-hover="rgba(255,255,255,0.9)" data-default-size="11px" data-hover-size="13px">{e.name}</div>
+                <div className="font-mono text-[9px] mb-1.5" style={{ color: "rgba(34,211,238,0.3)", fontSize: "9px" }} data-default="rgba(34,211,238,0.3)" data-hover="rgba(34,211,238,0.7)" data-default-size="9px" data-hover-size="11px">{e.path}</div>
+                <div className="text-[10px]" style={{ color: "rgba(255,255,255,0.25)", fontSize: "10px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="10px" data-hover-size="12px">{e.desc}</div>
               </div>
             ))}
           </div>
@@ -182,15 +182,15 @@ if (threat.overallVerdict === "human") {
 }`,
               },
             ].map((ex, i) => (
-              <div key={i} className="overflow-hidden transition-all"
-                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+              <div key={i} className="overflow-hidden transition-all duration-300"
+                onMouseEnter={ev => { playTick(600, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "scale(1.01)"; }}
+                onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "scale(1)"; }}
                 style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
                 <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02]">
-                  <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(34,211,238,0.6)" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)">{ex.title}</span>
+                  <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(34,211,238,0.6)", fontSize: "10px" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)" data-default-size="10px" data-hover-size="13px">{ex.title}</span>
                 </div>
                 <div className="p-5">
-                  <pre className="text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.6)">
+                  <pre className="text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto" style={{ color: "rgba(255,255,255,0.3)", fontSize: "10px" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.6)" data-default-size="10px" data-hover-size="12px">
                     {ex.code}
                   </pre>
                 </div>
@@ -208,13 +208,13 @@ if (threat.overallVerdict === "human") {
         <section className="mb-14">
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// REST_API</h2>
           {API_ENDPOINTS.map((ep) => (
-            <div key={ep.path} className="p-4 mb-2 flex items-center gap-4 transition-all"
-              onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-              onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
+            <div key={ep.path} className="p-4 mb-2 flex items-center gap-4 transition-all duration-300"
+              onMouseEnter={ev => { playTick(600, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "scale(1.02)"; }}
+              onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "scale(1)"; }}
               style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
-              <span className="text-[10px] tracking-[0.2em] font-bold w-10" style={{ color: "rgba(34,211,238,0.6)" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)">{ep.method}</span>
-              <span className="font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.45)" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)">{ep.path}</span>
-              <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{ep.desc}</span>
+              <span className="text-[10px] tracking-[0.2em] font-bold w-10" style={{ color: "rgba(34,211,238,0.6)", fontSize: "10px" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)" data-default-size="10px" data-hover-size="13px">{ep.method}</span>
+              <span className="font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)" data-default-size="11px" data-hover-size="13px">{ep.path}</span>
+              <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.25)", fontSize: "10px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="10px" data-hover-size="12px">{ep.desc}</span>
             </div>
           ))}
 
