@@ -117,13 +117,26 @@ const ProtocolHeader = () => {
   };
 
   const handleConnectWallet = async () => {
-    console.log("[Header] handleConnectWallet called");
+    const isMock = new URLSearchParams(window.location.search).has("mock");
     try {
       setWalletStatus("connecting");
       setWalletError("");
 
+      // Mock 模式：模拟钱包连接
+      if (isMock) {
+        await new Promise(r => setTimeout(r, 600));
+        setWalletStatus("signing");
+        await new Promise(r => setTimeout(r, 500));
+        setWalletStatus("verifying");
+        await new Promise(r => setTimeout(r, 400));
+        const addr = "0x" + Array.from({ length: 40 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
+        setWalletAddress(addr);
+        setWalletStatus("done");
+        sessionStorage.setItem("wallet_address", addr);
+        return;
+      }
+
       if (!window.ethereum) {
-        console.log("[Header] No window.ethereum");
         setWalletError("No wallet detected");
         setWalletStatus("idle");
         return;
