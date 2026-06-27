@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
+import HeroVisual from "@/components/hero/HeroVisual";
 import ParticleEngine from "@/components/animations/ParticleEngine";
 import GenesisBadge from "@/components/genesis-badge/GenesisBadge";
 import { playTick } from "@/utils/useAudioTick";
@@ -73,8 +74,13 @@ export default function IdentityClient() {
   };
 
   return (
-    <div className="relative w-full min-h-dvh overflow-hidden font-mono" style={{ background: "radial-gradient(ellipse at 50% 35%, rgba(144,200,255,0.12) 0%, rgba(34,211,238,0.04) 30%, rgba(2,4,10,0.9) 60%, #02040a 100%)" }}>
+    <div className="relative w-full min-h-dvh overflow-hidden bg-[#02040a] font-mono">
       <h1 className="sr-only">MyShape Identity — Sovereign Identity Dashboard</h1>
+
+      {/* 星空背景墙 */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <HeroVisual showCore={false} />
+      </div>
 
       {/* Particle system */}
       {clientReady && (
