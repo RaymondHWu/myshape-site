@@ -44,6 +44,7 @@ export default function ProtocolFooter() {
         { name: "IDENTITY_LAYER", href: "/protocol/identity-layer" },
         { name: "MOTION_PIPELINE", href: "/protocol/motion-pipeline" },
         { name: "ZERO_KNOWLEDGE", href: "/protocol/zk" },
+        { name: "GENESIS", href: "/genesis" },
         { name: "EVIDENCE", href: "/evidence" }
       ]
     },
@@ -63,16 +64,18 @@ export default function ProtocolFooter() {
         { name: "TECHNICAL_SPEC", href: "/papers/technical-spec" },
         { name: "THREAT_MODEL", href: "/papers/threat-model" },
         { name: "ARCHITECTURE", href: "/papers/protocol-architecture" },
+        { name: "BLOG", href: "/blog" },
         { name: "ALL_PAPERS", href: "/papers" }
       ]
     },
-    { 
-      title: "SYS_COMPANY", 
+    {
+      title: "SYS_COMPANY",
       links: [
         { name: "ABOUT_MYSHAPE", href: "/about-myshape" },
+        { name: "VISION", href: "/vision" },
         { name: "ROADMAP_PLAN", href: "/roadmap" },
         { name: "CONTACT_SYSTEM", href: "/contact" }
-      ] 
+      ]
     },
     { 
       title: "CONNECT_NODES", 
