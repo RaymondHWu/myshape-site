@@ -234,8 +234,10 @@ body {
 }
 
 /* ── Scrollbar — dark, minimal ── */
-html { scrollbar-width: thin; scrollbar-color: rgba(34,211,238,0.25) transparent; }
+/* Firefox */
+html { scrollbar-width: thin; scrollbar-color: rgba(34,211,238,0.45) transparent; }
+/* Chrome / Edge / Safari */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.25); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(34,211,238,0.45); }
+::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(34,211,238,0.55); }
