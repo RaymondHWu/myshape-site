@@ -296,8 +296,8 @@ const ProtocolHeader = () => {
         { label: "Vision", href: "/vision" },
         { label: "Build", href: "/developers" },
         { label: "Demo", href: "/motion-demo" },
-        { label: "Blog", href: "/blog" },
         { label: "Genesis", href: "/genesis/cohort" },
+        { label: "Blog", href: "/blog" },
       ].map(link =>
           <Link key={link.href} href={link.href}
             onMouseEnter={e => {
