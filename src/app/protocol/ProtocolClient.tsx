@@ -207,44 +207,66 @@ export default function ProtocolClient() {
         {/* ── Protocol Lifecycle ── */}
         <section className="py-16 border-t" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
           <div className="max-w-3xl mx-auto">
-            <div className="text-white/25 text-[10px] tracking-[0.5em] uppercase mb-10 text-center hover:text-cyan-300/50 transition-colors cursor-default"
-              onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>Protocol Lifecycle</div>
+            <div className="text-white/30 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-12 text-center hover:text-cyan-300/50 transition-colors cursor-default"
+              onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>Protocol Lifecycle</div>
 
-            {/* 流水线图 */}
-            <div className="relative border border-cyan-400/15 bg-gradient-to-b from-cyan-400/[0.03] to-transparent p-8 md:p-10 font-mono group"
-              onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(34,211,238,0.35)"; e.currentTarget.style.boxShadow = "0 0 40px rgba(34,211,238,0.06)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(34,211,238,0.15)"; e.currentTarget.style.boxShadow = "none"; }}>
-              {/* 步骤条 */}
-              <div className="flex flex-wrap justify-center gap-x-2 gap-y-3">
+            {/* Lifecycle Flow */}
+            <div className="relative">
+              {/* Connecting line — desktop */}
+              <div className="hidden md:block absolute left-[10%] right-[10%] top-10 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+
+              <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
                 {[
-                  { label: "WALLET", sub: "EIP-4361" },
-                  { label: "SIWE_VERIFY", sub: "on-chain" },
-                  { label: "PROTOCOL_NODES", sub: "local anchor" },
-                  { label: "ZK_PROOF", sub: "zero-knowledge" },
-                  { label: "IDENTITY_MESH", sub: "decentralized" },
-                ].map((step, i) => (
-                  <div key={step.label} className="flex items-center">
-                    <div className="border border-cyan-400/20 bg-cyan-400/[0.03] px-4 py-3 text-center transition-all duration-300 hover:border-cyan-400/50 hover:bg-cyan-400/[0.06]"
-                      onMouseEnter={() => playTick(500 + i * 80, "sine", 0.05, 0.01)}>
-                      <div className="text-cyan-300/70 text-[11px] tracking-[0.15em] font-bold mb-1">{step.label}</div>
-                      <div className="text-cyan-400/25 text-[8px] tracking-[0.2em]">{step.sub}</div>
+                  { step: "01", label: "Wallet", sub: "EIP-4361 Sign-In", desc: "Connect any EIP-1193 wallet. SIWE signature anchors your address to the protocol." },
+                  { step: "02", label: "Verify", sub: "On-Chain Validation", desc: "Signature verified against Base Mainnet. Wallet address bound to protocol node." },
+                  { step: "03", label: "Anchor", sub: "Protocol Nodes", desc: "Node created in local registry. Genesis scan initializes Motion Signature entropy." },
+                  { step: "04", label: "Prove", sub: "ZK-Presence", desc: "Zero-knowledge proof generated. Presence verified without exposing motion data." },
+                  { step: "05", label: "Mesh", sub: "Identity Mesh", desc: "Node joins the decentralized identity mesh. Sovereign. Permanent. Verifiable." },
+                ].map((s, i) => (
+                  <div key={s.step} className="flex items-center">
+                    <div className="flex flex-col items-center group cursor-default w-36 md:w-40"
+                      onMouseEnter={e => {
+                        playTick(600 + i * 100, "sine", 0.06, 0.015);
+                        e.currentTarget.querySelector<HTMLElement>('[data-node="circle"]')!.style.borderColor = "rgba(34,211,238,0.9)";
+                        e.currentTarget.querySelector<HTMLElement>('[data-node="circle"]')!.style.boxShadow = "0 0 20px rgba(34,211,238,0.4)";
+                        e.currentTarget.querySelector<HTMLElement>('[data-node="circle"]')!.style.color = "rgba(200,240,255,0.9)";
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.querySelector<HTMLElement>('[data-node="circle"]')!.style.borderColor = "rgba(34,211,238,0.25)";
+                        e.currentTarget.querySelector<HTMLElement>('[data-node="circle"]')!.style.boxShadow = "none";
+                        e.currentTarget.querySelector<HTMLElement>('[data-node="circle"]')!.style.color = "rgba(34,211,238,0.5)";
+                      }}>
+                      {/* Node circle */}
+                      <div data-node="circle" className="w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center font-mono text-[11px] md:text-[13px] transition-all duration-300 shrink-0"
+                        style={{ borderColor: "rgba(34,211,238,0.25)", color: "rgba(34,211,238,0.5)", background: "#02040a" }}>
+                        {s.step}
+                      </div>
+                      {/* Labels */}
+                      <span className="text-[11px] md:text-[12px] tracking-[0.15em] uppercase mt-3 font-medium text-center transition-colors duration-300 group-hover:text-white"
+                        style={{ color: "rgba(255,255,255,0.55)" }}>{s.label}</span>
+                      <span className="text-[9px] md:text-[10px] tracking-[0.1em] font-mono mt-1 text-center transition-colors duration-300 group-hover:text-cyan-200"
+                        style={{ color: "rgba(34,211,238,0.4)" }}>{s.sub}</span>
+                      {/* Description — desktop only */}
+                      <span className="hidden md:block text-[9px] text-center mt-2 leading-relaxed transition-colors duration-300 group-hover:text-white/40"
+                        style={{ color: "rgba(255,255,255,0.2)" }}>{s.desc}</span>
                     </div>
+                    {/* Arrow between nodes */}
                     {i < 4 && (
-                      <span className="text-cyan-400/30 mx-1 text-[14px] font-light">→</span>
+                      <div className="flex items-center mx-1 md:mx-0 shrink-0">
+                        <span className="text-cyan-400/25 text-[18px] md:text-[20px] font-light rotate-90 md:rotate-0">→</span>
+                      </div>
                     )}
                   </div>
                 ))}
               </div>
 
-              {/* 底部说明 */}
-              <p className="mt-8 text-white/40 text-[11px] leading-[1.7] font-light text-center max-w-xl mx-auto">
-                From wallet signature to decentralized identity mesh. Each step is cryptographically
-                verifiable. No raw data stored. No centralized intermediary.
+              <p className="mt-10 md:mt-14 text-white/30 text-[10px] md:text-[11px] leading-[1.7] font-light text-center max-w-xl mx-auto">
+                From wallet signature to decentralized identity mesh. Each step cryptographically verifiable. No raw data stored. No centralized intermediary.
               </p>
             </div>
 
             {/* Agent 角色说明 */}
-            <p className="mt-6 text-white/30 text-[11px] leading-[1.8] font-light text-center max-w-lg mx-auto italic"
+            <p className="mt-8 text-white/25 text-[10px] md:text-[11px] leading-[1.8] font-light text-center max-w-lg mx-auto italic"
               onMouseEnter={() => playTick(450, "sine", 0.03, 0.01)}>
               Agents such as Hermes operate at the application layer — they consume
               protocol-anchored identity signals but never possess the underlying
