@@ -45,11 +45,17 @@ function confBrightness(c: number) {
 
 const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
   const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
-  kids.forEach(k => { k.style.color = k.dataset.hover || ''; });
+  kids.forEach(k => {
+    k.style.color = k.dataset.hover || '';
+    if (k.dataset.hoverSize) k.style.fontSize = k.dataset.hoverSize;
+  });
 };
 const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
   const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
-  kids.forEach(k => { k.style.color = k.dataset.default || ''; });
+  kids.forEach(k => {
+    k.style.color = k.dataset.default || '';
+    if (k.dataset.defaultSize) k.style.fontSize = k.dataset.defaultSize;
+  });
 };
 
 export default function ArchitectureClient() {
@@ -188,13 +194,13 @@ export default function ArchitectureClient() {
               <tbody>
                 {ENTROPY_DIMS.map(d => (
                   <tr key={d.dim} className="border-b border-white/[0.03] transition-all duration-300"
-                    onMouseEnter={e => { playTick(550, "sine", 0.05, 0.012); e.currentTarget.style.background = "rgba(144,200,255,0.04)"; e.currentTarget.style.borderLeft = "1px solid rgba(34,211,238,0.5)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeft = "1px solid transparent"; }}
+                    onMouseEnter={e => { playTick(550, "sine", 0.05, 0.012); hoverOn(e); e.currentTarget.style.background = "rgba(144,200,255,0.04)"; e.currentTarget.style.borderLeft = "1px solid rgba(34,211,238,0.5)"; }}
+                    onMouseLeave={e => { hoverOff(e); e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeft = "1px solid transparent"; }}
                     style={{ borderLeft: "1px solid transparent" }}>
-                    <td className="py-3 pr-2 align-top font-medium" style={{ color: "rgba(34,211,238,0.7)" }}>{d.dim}</td>
-                    <td className="py-3 pr-2 align-top hidden md:table-cell" style={{ color: "rgba(255,255,255,0.35)" }}>{d.what}</td>
-                    <td className="py-3 pr-2 align-top" style={{ color: "rgba(255,255,255,0.55)" }}>{d.human}</td>
-                    <td className="py-3 align-top" style={{ color: "rgba(255,255,255,0.3)" }}>{d.ai}</td>
+                    <td className="py-3 pr-2 align-top font-medium" style={{ color: "rgba(34,211,238,0.7)", fontSize: "9px" }} data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,1)" data-default-size="9px" data-hover-size="11px">{d.dim}</td>
+                    <td className="py-3 pr-2 align-top hidden md:table-cell" style={{ color: "rgba(255,255,255,0.35)", fontSize: "9px" }} data-default="rgba(255,255,255,0.35)" data-hover="rgba(255,255,255,0.6)" data-default-size="9px" data-hover-size="11px">{d.what}</td>
+                    <td className="py-3 pr-2 align-top" style={{ color: "rgba(255,255,255,0.55)", fontSize: "9px" }} data-default="rgba(255,255,255,0.55)" data-hover="rgba(255,255,255,0.85)" data-default-size="9px" data-hover-size="11px">{d.human}</td>
+                    <td className="py-3 align-top" style={{ color: "rgba(255,255,255,0.3)", fontSize: "9px" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)" data-default-size="9px" data-hover-size="11px">{d.ai}</td>
                   </tr>
                 ))}
               </tbody>
@@ -224,13 +230,13 @@ export default function ArchitectureClient() {
               <tbody>
                 {THREATS.map(t => (
                   <tr key={t.attack} className="border-b border-white/[0.03] transition-all duration-300"
-                    onMouseEnter={e => { playTick(550, "sine", 0.05, 0.012); e.currentTarget.style.background = "rgba(144,200,255,0.04)"; e.currentTarget.style.borderLeft = "1px solid rgba(34,211,238,0.5)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeft = "1px solid transparent"; }}
+                    onMouseEnter={e => { playTick(550, "sine", 0.05, 0.012); hoverOn(e); e.currentTarget.style.background = "rgba(144,200,255,0.04)"; e.currentTarget.style.borderLeft = "1px solid rgba(34,211,238,0.5)"; }}
+                    onMouseLeave={e => { hoverOff(e); e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeft = "1px solid transparent"; }}
                     style={{ borderLeft: "1px solid transparent" }}>
-                    <td className="py-3 pr-3 font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>{t.attack}</td>
-                    <td className="py-3 pr-3 hidden md:table-cell" style={{ color: "rgba(255,255,255,0.3)" }}>{t.vector}</td>
-                    <td className="py-3 pr-3" style={{ color: "rgba(34,211,238,0.6)" }}>{t.defense}</td>
-                    <td className="py-3 text-right font-mono font-medium" style={{ color: `rgba(34,211,238,${confBrightness(t.confidence)})` }}>{(t.confidence * 100).toFixed(1)}%</td>
+                    <td className="py-3 pr-3 font-medium" style={{ color: "rgba(255,255,255,0.6)", fontSize: "9px" }} data-default="rgba(255,255,255,0.6)" data-hover="rgba(255,255,255,0.9)" data-default-size="9px" data-hover-size="12px">{t.attack}</td>
+                    <td className="py-3 pr-3 hidden md:table-cell" style={{ color: "rgba(255,255,255,0.3)", fontSize: "9px" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)" data-default-size="9px" data-hover-size="11px">{t.vector}</td>
+                    <td className="py-3 pr-3" style={{ color: "rgba(34,211,238,0.6)", fontSize: "9px" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.9)" data-default-size="9px" data-hover-size="11px">{t.defense}</td>
+                    <td className="py-3 text-right font-mono font-medium" style={{ color: `rgba(34,211,238,${confBrightness(t.confidence)})`, fontSize: "9px" }} data-default={`rgba(34,211,238,${confBrightness(t.confidence)})`} data-hover={`rgba(34,211,238,1)`} data-default-size="9px" data-hover-size="12px">{(t.confidence * 100).toFixed(1)}%</td>
                   </tr>
                 ))}
               </tbody>
