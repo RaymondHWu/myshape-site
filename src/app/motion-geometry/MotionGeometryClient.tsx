@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
+
 import { playTick } from "@/utils/useAudioTick";
 
 // ── 模拟数据 ──
@@ -108,9 +108,9 @@ export default function MotionGeometryClient() {
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
+      
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-28 pb-16">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="text-center mb-16">
           <div className="text-cyan-500/40 text-[10px] tracking-[0.5em] uppercase mb-6">MOTION_GEOMETRY // VISUAL_PIPELINE</div>
           <h1 className="text-2xl md:text-4xl font-light tracking-[0.08em] text-white mb-4"
@@ -161,7 +161,7 @@ export default function MotionGeometryClient() {
               ))}
             </div>
             <div className="mt-4 pt-3 border-t border-white/5">
-              <div className="text-white/15 text-[7px] tracking-[0.2em] uppercase mb-1">Proof Hash</div>
+              <div className="text-white/15 text-[8px] tracking-[0.2em] uppercase mb-1">Proof Hash</div>
               <div className="text-cyan-400/40 font-mono text-[9px] break-all">
                 0x{Math.floor(Math.random() * 0xFFFFFFFFFFFF).toString(16).padStart(12, "0")}
               </div>

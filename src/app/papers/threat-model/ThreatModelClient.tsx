@@ -1,6 +1,6 @@
 "use client";
 import ProtocolHeader from "@/components/header/header";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
+
 import ProtocolFooter from "@/components/footer/footer";
 import { playTick } from "@/utils/useAudioTick";
 
@@ -82,9 +82,9 @@ export default function ThreatModelClient() {
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
+      
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 pt-28 pb-16">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="space-y-4 mb-14">
           <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">SECURITY_ANALYSIS // V1.0</div>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase"
@@ -104,7 +104,7 @@ export default function ThreatModelClient() {
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(34,211,238,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
                 <div className="text-cyan-300/70 text-[22px] font-light font-mono mb-1">{m.value}</div>
                 <div className="text-white/30 text-[8px] tracking-[0.2em] uppercase">{m.label}</div>
-                <div className="text-white/12 text-[7px] mt-1">{m.sub}</div>
+                <div className="text-white/12 text-[8px] mt-1">{m.sub}</div>
               </div>
             ))}
           </div>

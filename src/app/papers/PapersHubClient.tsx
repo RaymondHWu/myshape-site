@@ -1,6 +1,6 @@
 "use client";
 import ProtocolHeader from "@/components/header/header";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
+
 import ProtocolFooter from "@/components/footer/footer";
 import { playTick } from "@/utils/useAudioTick";
 import Typewriter from "@/components/ui/Typewriter";
@@ -63,9 +63,9 @@ export default function PapersHubClient() {
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
+      
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 pt-28 pb-16">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="space-y-4 mb-14">
           <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">RESEARCH_&_DOCUMENTATION</div>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">Papers</h1>

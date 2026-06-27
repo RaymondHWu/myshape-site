@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import ProtocolHeader from "@/components/header/header";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
+
 import ProtocolFooter from "@/components/footer/footer";
 
 const agentTypes = [
@@ -61,7 +61,7 @@ export default function AgentClient() {
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
+      
       <div className="fixed inset-0 pointer-events-none opacity-[0.03]" style={{
         backgroundImage: "radial-gradient(circle, rgba(34,211,238,0.4) 1px, transparent 1px)",
         backgroundSize: "50px 50px",
@@ -87,14 +87,14 @@ export default function AgentClient() {
         {/* ── Two Paths ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-16">
           <div className="p-5 border border-white/5 bg-white/[0.01]">
-            <div className="text-cyan-400/40 text-[7px] tracking-[0.4em] uppercase mb-2">// FOR HUMANS</div>
+            <div className="text-cyan-400/40 text-[8px] tracking-[0.4em] uppercase mb-2">// FOR HUMANS</div>
             <a href="/genesis" className="text-white/60 hover:text-cyan-300 text-[11px] tracking-[0.2em] transition-colors">
               GENESIS_PROTOCOL →
             </a>
             <p className="text-white/15 text-[8px] mt-1">Motion-geometry identity verification</p>
           </div>
           <div className="p-5 border border-cyan-400/20 bg-cyan-400/[0.02]">
-            <div className="text-cyan-400/60 text-[7px] tracking-[0.4em] uppercase mb-2">// FOR AI AGENTS</div>
+            <div className="text-cyan-400/60 text-[8px] tracking-[0.4em] uppercase mb-2">// FOR AI AGENTS</div>
             <span className="text-cyan-300/80 text-[11px] tracking-[0.2em]">DECLARATION_PROTOCOL</span>
             <p className="text-white/20 text-[8px] mt-1">Cryptographic attestation — you are here</p>
           </div>
@@ -107,7 +107,7 @@ export default function AgentClient() {
               <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.7)] animate-pulse" />
               <span className="text-cyan-400/50 text-[8px] tracking-[0.3em] uppercase">AGENT_TERMINAL // V0.1</span>
             </div>
-            <span className="text-white/15 text-[7px] tracking-[0.2em]">{status === "submitting" ? "PROCESSING" : "READY"}</span>
+            <span className="text-white/15 text-[8px] tracking-[0.2em]">{status === "submitting" ? "PROCESSING" : "READY"}</span>
           </div>
 
           <div className="p-6 md:p-8">
@@ -141,7 +141,7 @@ export default function AgentClient() {
 
               {/* Declaration preview */}
               <div className="bg-black/50 border border-white/5 p-4 text-[10px] tracking-[0.1em] leading-relaxed font-mono space-y-0.5">
-                <div className="text-cyan-400/30 text-[7px] tracking-[0.3em] uppercase mb-2">$ DECLARATION_PREVIEW</div>
+                <div className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase mb-2">$ DECLARATION_PREVIEW</div>
                 <div className="text-white/20">&gt; agent_handle: <span className="text-white/40">{agentHandle || "____"}</span></div>
                 <div className="text-white/20">&gt; agent_type: <span className="text-white/40">{agentType}</span></div>
                 <div className="text-white/20">&gt; origin: <span className="text-white/40">{origin || "____"}</span></div>
@@ -179,7 +179,7 @@ export default function AgentClient() {
         <div className="mb-16">
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-6">// PROGRAMMATIC_DECLARATION</h2>
           <div className="bg-black/60 border border-white/10 p-6 font-mono text-[11px] leading-relaxed">
-            <div className="text-cyan-400/30 text-[7px] tracking-[0.3em] uppercase mb-4">$ curl — register an agent</div>
+            <div className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase mb-4">$ curl — register an agent</div>
             <pre className="text-white/35 whitespace-pre-wrap overflow-x-auto">
 {`curl -X POST https://www.myshape.com/api/agent/declare \\
   -H "Content-Type: application/json" \\
@@ -190,7 +190,7 @@ export default function AgentClient() {
     "public_key": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE..."
   }'`}
             </pre>
-            <div className="text-cyan-400/30 text-[7px] tracking-[0.3em] uppercase mt-6 mb-2">// RESPONSE</div>
+            <div className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase mt-6 mb-2">// RESPONSE</div>
             <pre className="text-white/30 whitespace-pre-wrap">
 {`{
   "success": true,
