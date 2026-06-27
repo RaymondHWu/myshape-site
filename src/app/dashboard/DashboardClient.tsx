@@ -4,7 +4,6 @@ import Link from "next/link";
 import * as Sentry from "@sentry/nextjs";
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import GenesisBadge from "@/components/genesis-badge/GenesisBadge";
 import { playTick } from "@/utils/useAudioTick";
 
@@ -76,9 +75,8 @@ export default function DashboardClient() {
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-6 pt-28 pb-16 space-y-14">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 space-y-12 md:space-y-14">
         {/* Header */}
         <div>
           <div className="text-cyan-500/45 text-[10px] tracking-[0.5em] uppercase mb-4">SOVEREIGN_IDENTITY_HUB</div>
@@ -146,7 +144,7 @@ export default function DashboardClient() {
                 <div className="absolute inset-y-0 left-0 transition-all duration-1000 ease-out"
                   style={{ width: `${Math.max(progressPct, 1)}%`, background: "linear-gradient(90deg, rgba(34,211,238,0.45), rgba(34,211,238,0.7), rgba(144,200,255,0.55))", boxShadow: "0 0 12px rgba(34,211,238,0.4)" }} />
               </div>
-              <div className="flex justify-between text-[7px] text-white/12 tracking-[0.15em] uppercase">
+              <div className="flex justify-between text-[8px] text-white/12 tracking-[0.15em] uppercase">
                 <span>Awakening</span><span>Linked</span><span>Resonant</span><span>Fusion</span><span>Anchored</span><span>Stabilized</span><span>Saturated</span><span>Sealed</span>
               </div>
             </section>
