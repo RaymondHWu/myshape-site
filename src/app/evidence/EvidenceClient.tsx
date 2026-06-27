@@ -2,14 +2,13 @@
 import Link from "next/link";
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import VerificationDashboard from "@/components/verification/VerificationDashboard";
 import { playTick } from "@/utils/useAudioTick";
 
 const BENCHMARKS = [
-  { test: "Genuine Human", score: "0.9817", verdict: "PASS ✓", accent: "text-cyan-300", glow: "shadow-[0_0_6px_rgba(34,211,238,0.3)]" },
-  { test: "AI Forgery (GPT-5)", score: "0.5857", verdict: "FAIL ✗", accent: "text-amber-300/70", glow: "" },
-  { test: "Impostor", score: "0.0000", verdict: "FAIL ✗", accent: "text-red-300/60", glow: "" },
+  { test: "Genuine Human", score: "0.9817", verdict: "PASS ✓", accent: "text-cyan-200", glow: "shadow-[0_0_6px_rgba(34,211,238,0.3)]" },
+  { test: "AI Forgery (GPT-5)", score: "0.5857", verdict: "FAIL ✗", accent: "text-white/30", glow: "" },
+  { test: "Impostor", score: "0.0000", verdict: "FAIL ✗", accent: "text-white/20", glow: "" },
 ];
 
 const VECTOR_SAMPLE = [
@@ -40,14 +39,13 @@ export default function EvidenceClient() {
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-28 pb-16 space-y-20">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 space-y-16 md:space-y-20">
         <div className="text-center">
-          <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase mb-6">PROTOCOL_EVIDENCE // V1.0_GENESIS</div>
-          <h1 className="text-3xl md:text-5xl font-light tracking-[0.08em] text-white mb-4"
-            style={{ textShadow: "0 0 50px rgba(144,200,255,0.2)" }}>Show Me</h1>
-          <p className="text-white/35 text-[13px] max-w-xl mx-auto leading-relaxed">
+          <div className="text-cyan-400/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase mb-6"
+            onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>PROTOCOL_EVIDENCE // V1.0_GENESIS</div>
+          <h1 className="text-3xl md:text-5xl font-light tracking-[0.08em] text-white mb-4">Show Me</h1>
+          <p className="text-white/40 md:text-white/45 text-[11px] md:text-[13px] max-w-xl mx-auto leading-relaxed font-light">
             Verifiable proof that MyShape Protocol distinguishes human presence from synthetic simulation.
             Every claim on this page is reproducible.
           </p>
@@ -100,7 +98,7 @@ export default function EvidenceClient() {
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; e.currentTarget.style.background = "transparent"; }}>
                   <div>
                     <span className="text-white/30 group-hover/v:text-white/55 text-[10px] transition-colors">{k}</span>
-                    <span className="text-white/10 group-hover/v:text-white/20 text-[7px] ml-2 transition-colors">{desc}</span>
+                    <span className="text-white/10 group-hover/v:text-white/20 text-[8px] ml-2 transition-colors">{desc}</span>
                   </div>
                   <span className="text-cyan-300/60 group-hover/v:text-cyan-200/90 font-mono text-[11px] transition-colors">{v}</span>
                 </div>
@@ -116,10 +114,10 @@ export default function EvidenceClient() {
                 <div key={a.class} className="flex items-center gap-3 p-2.5 border border-white/[0.04] transition-all cursor-default group/a"
                   onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(34,211,238,0.25)"; e.currentTarget.style.background = "rgba(34,211,238,0.03)"; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; e.currentTarget.style.background = "transparent"; }}>
-                  <span className={`w-2 h-2 rounded-full shrink-0 ${a.severity === "Critical" ? "bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.5)]" : a.severity === "High" ? "bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.4)]" : "bg-cyan-400 shadow-[0_0_4px_rgba(34,211,238,0.3)]"}`} />
+                  <span className={`w-2 h-2 rounded-full shrink-0 ${a.severity === "Critical" ? "bg-cyan-200 shadow-[0_0_10px_rgba(34,211,238,0.6)]" : a.severity === "High" ? "bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.4)]" : "bg-cyan-400/60 shadow-[0_0_4px_rgba(34,211,238,0.2)]"}`} />
                   <div className="flex-1">
                     <span className="text-white/35 group-hover/a:text-white/55 text-[10px] transition-colors">{a.class}</span>
-                    <span className="text-white/12 group-hover/a:text-white/22 text-[7px] ml-2 transition-colors">{a.detection}</span>
+                    <span className="text-white/12 group-hover/a:text-white/22 text-[8px] ml-2 transition-colors">{a.detection}</span>
                   </div>
                   <span className="text-cyan-300/55 group-hover/a:text-cyan-200/85 font-mono text-[10px] font-bold transition-colors">{a.success}</span>
                 </div>
