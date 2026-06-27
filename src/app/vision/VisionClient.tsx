@@ -143,21 +143,30 @@ export default function VisionClient() {
         </section>
 
         {/* ── 4. 哲学 ── */}
-        <section className="py-16 border-y border-white/[0.03] relative overflow-hidden"
+        <section className="py-20 border-y border-white/[0.04] relative overflow-hidden"
           onMouseEnter={() => playTick(400, "sine", 0.03, 0.01)}>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.02] to-transparent" />
-          <div className="max-w-xl mx-auto text-center space-y-6 relative z-10">
-            <div className="text-white/12 text-[8px] tracking-[0.5em] uppercase">Internal_Projection_088</div>
-            <p className="text-white/50 text-[13px] tracking-[0.15em] leading-loose uppercase italic">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.03] to-transparent" />
+          <div className="max-w-xl mx-auto text-center space-y-8 relative z-10">
+            <div className="flex items-center justify-center gap-3">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-cyan-400/20" />
+              <span className="text-white/18 text-[9px] tracking-[0.4em] uppercase font-mono hover:text-cyan-400/40 transition-colors cursor-default"
+                onMouseEnter={() => playTick(450, "sine", 0.03, 0.01)}>Internal_Projection_088</span>
+              <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-cyan-400/20" />
+            </div>
+            <blockquote className="text-white/60 text-[14px] md:text-[16px] tracking-[0.12em] leading-[1.9] font-light italic">
               &ldquo;The history of identity is the history of control.<br />
               The future of identity is the geometry of motion.&rdquo;
-            </p>
-            <div className="flex justify-center gap-2.5">
+            </blockquote>
+            <div className="flex justify-center gap-3">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="w-1.5 h-1.5 bg-cyan-400/25 rounded-full hover:bg-cyan-400/60 transition-all duration-300 hover:scale-125 cursor-default"
+                <div key={i} className="w-2 h-2 bg-cyan-400/20 rounded-full hover:bg-cyan-400/50 transition-all duration-300 hover:scale-125 cursor-default"
+                  style={{ boxShadow: "0 0 6px rgba(34,211,238,0.15)" }}
                   onMouseEnter={() => playTick(350, "sine", 0.02, 0.005)} />
               ))}
             </div>
+            <p className="text-white/12 text-[9px] tracking-[0.2em] uppercase">
+              — MyShape Protocol &middot; V1.0_GENESIS
+            </p>
           </div>
         </section>
 
