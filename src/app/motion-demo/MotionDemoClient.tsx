@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useEffect, useState, useCallback } from "react";
 import ProtocolHeader from "@/components/header/header";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
+
 import ProtocolFooter from "@/components/footer/footer";
 import { playTick, resumeAudio } from "@/utils/useAudioTick";
 import PresenceSignature from "@/components/presence-signature/PresenceSignature";
@@ -404,9 +404,9 @@ export default function MotionDemoClient() {
   return (
     <div className="bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
+      
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6" style={{ paddingTop: "10rem", paddingBottom: "4rem" }}>
+      <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6" style={{ paddingTop: "6rem", paddingBottom: "4rem" }}>
         <div className="space-y-6 mb-12">
           <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">Presence_Engine // Live_Demo</div>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">
@@ -514,7 +514,7 @@ export default function MotionDemoClient() {
             {/* ── PES Dashboard ── */}
             {pesData && (
               <>
-                <div className="text-cyan-400/40 text-[7px] tracking-[0.3em] uppercase">Presence_Entropy_Score (PES)</div>
+                <div className="text-cyan-400/40 text-[8px] tracking-[0.3em] uppercase">Presence_Entropy_Score (PES)</div>
                 {/* PES Ring */}
                 <div className="flex items-center justify-center py-2">
                   <div className="relative w-20 h-20">
@@ -569,7 +569,7 @@ export default function MotionDemoClient() {
             {/* Live PES Preview (during capture) */}
             {phase === "capturing" && livePes && (
               <div className="p-3 border border-cyan-400/10 bg-cyan-400/[0.02] space-y-2">
-                <div className="text-cyan-400/40 text-[7px] tracking-[0.2em] uppercase">Live PES Estimate</div>
+                <div className="text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase">Live PES Estimate</div>
                 <div className="flex items-center justify-between">
                   <span className="text-white/30 text-[9px]">Score</span>
                   <span className="text-cyan-200/80 font-mono text-[13px]">{(livePes.score * 100).toFixed(0)}%</span>
@@ -581,7 +581,7 @@ export default function MotionDemoClient() {
                   { label: "Bio", value: livePes.bio },
                 ].map(g => (
                   <div key={g.label} className="space-y-0.5">
-                    <div className="flex justify-between text-[7px]">
+                    <div className="flex justify-between text-[8px]">
                       <span className="text-white/20">{g.label}</span>
                       <span className="text-cyan-300/40 font-mono">{(g.value * 100).toFixed(0)}%</span>
                     </div>
@@ -597,7 +597,7 @@ export default function MotionDemoClient() {
               </div>
             )}
 
-            <div className="text-cyan-400/40 text-[7px] tracking-[0.3em] uppercase">Motion_Telemetry</div>
+            <div className="text-cyan-400/40 text-[8px] tracking-[0.3em] uppercase">Motion_Telemetry</div>
             <div className="space-y-2.5 text-[10px] font-mono">
               <div className="flex justify-between">
                 <span className="text-white/25">SST Frames</span>
@@ -612,18 +612,18 @@ export default function MotionDemoClient() {
                 <span className="text-cyan-400/50">{phase.toUpperCase()}</span>
               </div>
               {phase === "capturing" && sstFramesRef.current.length < 30 && (
-                <div className="text-cyan-400/30 text-[7px] italic">Collecting frames... ({sstFramesRef.current.length}/30)</div>
+                <div className="text-cyan-400/30 text-[8px] italic">Collecting frames... ({sstFramesRef.current.length}/30)</div>
               )}
             </div>
 
             {proofHashes && (
               <div className="mt-4 p-3 border border-cyan-400/20 bg-cyan-400/[0.03] space-y-2">
-                <div className="text-cyan-400/50 text-[7px] tracking-[0.3em] uppercase">ZK-Presence_Proof</div>
+                <div className="text-cyan-400/50 text-[8px] tracking-[0.3em] uppercase">ZK-Presence_Proof</div>
                 <div className="text-cyan-200/70 text-[9px] font-mono break-all leading-relaxed"
                   style={{ textShadow: "0 0 8px rgba(144,200,255,0.3)" }}>
                   {proofHashes.zkp}
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-[7px]">
+                <div className="grid grid-cols-3 gap-2 text-[8px]">
                   <div>
                     <span className="text-white/20">PoP</span>
                     <div className="text-cyan-300/50 font-mono truncate">{proofHashes.pop.slice(0,6)}</div>
@@ -637,7 +637,7 @@ export default function MotionDemoClient() {
                     <div className="text-cyan-300/50 font-mono truncate">{proofHashes.ep.slice(0,6)}</div>
                   </div>
                 </div>
-                <div className="text-white/15 text-[7px] mt-1 tracking-[0.15em]">§6 ZK-PRESENCE — PROOF-OF-CONCEPT</div>
+                <div className="text-white/15 text-[8px] mt-1 tracking-[0.15em]">§6 ZK-PRESENCE — PROOF-OF-CONCEPT</div>
               </div>
             )}
 
@@ -673,7 +673,7 @@ export default function MotionDemoClient() {
                   </button>
                 ) : (
                   <div className="p-3 border border-cyan-400/10 bg-cyan-400/[0.02] space-y-2">
-                    <div className="text-cyan-400/40 text-[7px] tracking-[0.2em] uppercase text-center">AI Simulation (for comparison)</div>
+                    <div className="text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase text-center">AI Simulation (for comparison)</div>
                     <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[8px]">
                       <div className="flex justify-between"><span className="text-white/15">μTiming</span><span className="text-amber-300/50">{(aiCompare.timing * 100).toFixed(0)}%</span></div>
                       <div className="flex justify-between"><span className="text-white/15">Noise</span><span className="text-amber-300/50">{(aiCompare.noise * 100).toFixed(0)}%</span></div>
@@ -695,7 +695,7 @@ export default function MotionDemoClient() {
                     <div className="text-amber-400/25 text-[8px] tracking-[0.15em] uppercase">
                       ⚠ Demo mode — scan not bound to identity
                     </div>
-                    <a href="/genesis" className="inline-block text-cyan-400/25 hover:text-cyan-300/50 text-[7px] tracking-[0.2em] uppercase transition-colors">
+                    <a href="/genesis" className="inline-block text-cyan-400/25 hover:text-cyan-300/50 text-[8px] tracking-[0.2em] uppercase transition-colors">
                       Complete Genesis to bind scans →
                     </a>
                   </div>
@@ -730,7 +730,7 @@ export default function MotionDemoClient() {
             <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
             Your motion data never leaves this device. No cloud upload. No server storage.
           </div>
-          <p className="text-white/15 text-[7px] tracking-[0.15em] uppercase">
+          <p className="text-white/15 text-[8px] tracking-[0.15em] uppercase">
             This is a proof-of-concept prototype. All processing is local. No data stored or transmitted.
             For best results, use <span className="text-cyan-400/50">Firefox</span> (Chromium-based browsers may show a green screen with some webcams).
             See the <a href="/papers/technical-spec" className="text-cyan-400/50 hover:text-cyan-300" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>technical spec</a> for the full architecture.

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
+
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -102,9 +102,9 @@ export default function BlogPost() {
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
+      
 
-      <article className="relative z-10 max-w-3xl mx-auto px-6 pt-28 pb-16">
+      <article className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="mb-16">
           <div className="text-cyan-500/40 text-[9px] tracking-[0.4em] uppercase mb-4">PROTOCOL_ESSAY // 001</div>
           <h1 className="text-2xl md:text-4xl font-light tracking-[0.04em] text-white leading-tight mb-6"
@@ -134,7 +134,7 @@ export default function BlogPost() {
   ◄──────────────── 0 DATA UPLOADED ────────────────►
          All processing on-device. Nothing stored.`}
           </pre>
-          <div className="mt-4 flex justify-center gap-4 text-[7px]">
+          <div className="mt-4 flex justify-center gap-4 text-[8px]">
             <span className="text-cyan-400/25">◈ Benchmark: 0.3960 Human—AI Gap</span>
             <span className="text-white/10">|</span>
             <span className="text-cyan-400/25">◈ Engine: Rust → WASM</span>

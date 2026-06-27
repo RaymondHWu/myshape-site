@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import ProtocolHeader from "@/components/header/header";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import ProtocolFooter from "@/components/footer/footer";
 import { playTick } from "@/utils/useAudioTick";
 
@@ -223,7 +222,6 @@ export default function WhitepaperClient() {
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
 
       <style>{`
         @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
@@ -237,7 +235,7 @@ export default function WhitepaperClient() {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.04] to-transparent" />
         </div>
       )}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-16 flex flex-col md:flex-row gap-24">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 flex flex-col md:flex-row gap-12 md:gap-24">
         {/* ── Sidebar Nav ── */}
         <aside className="md:w-56 shrink-0 h-fit md:sticky md:top-32 hidden md:block">
           <div className="text-cyan-400/30 text-[9px] tracking-[0.5em] uppercase mb-10 font-mono italic">
@@ -342,7 +340,7 @@ export default function WhitepaperClient() {
                           {isSealed ? "Genesis Cohort — Sealed & Immutable" : "Genesis Cohort — Live Registry"}
                         </span>
                         {isSealed && (
-                          <span className="text-cyan-400/40 text-[7px] tracking-[0.2em] border border-cyan-400/20 px-2 py-0.5">FINAL</span>
+                          <span className="text-cyan-400/40 text-[8px] tracking-[0.2em] border border-cyan-400/20 px-2 py-0.5">FINAL</span>
                         )}
                       </div>
 
@@ -362,7 +360,7 @@ export default function WhitepaperClient() {
                         ) : (
                           <>
                             <div className="flex items-center justify-between mb-1.5">
-                              <span className="text-white/10 text-[7px] tracking-[0.3em] uppercase">Protocol Sync</span>
+                              <span className="text-white/10 text-[8px] tracking-[0.3em] uppercase">Protocol Sync</span>
                               <span className="text-cyan-400/30 font-mono text-[8px]">{(genesisNodes.total / 100 * 100).toFixed(1)}%</span>
                             </div>
                             <div className="relative h-1 bg-white/[0.04] overflow-hidden">
@@ -377,7 +375,7 @@ export default function WhitepaperClient() {
                             </div>
                             <div className="flex items-center gap-1.5 mt-1">
                               <span className={`w-1 h-1 rounded-full transition-all duration-500 ${nodePulse ? "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]" : "bg-cyan-400/30"}`} />
-                              <span className="text-white/10 text-[6px] tracking-[0.2em] uppercase">
+                              <span className="text-white/10 text-[8px] tracking-[0.2em] uppercase">
                                 {genesisNodes.total === 0 ? "Awaiting genesis initialization" :
                                  genesisNodes.total < 100 ? "Network bootstrapping in progress" :
                                  "Genesis Cohort sealed — network active"}
