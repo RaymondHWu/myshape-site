@@ -129,7 +129,23 @@ export default function MotionPipeline() {
             </div>
           </section>
 
-          {/* --- 4. 儀式觸發按鈕 --- */}
+          {/* --- 4. Protocol Note: Replay Defense --- */}
+          <section className="py-12 border-t border-white/5">
+            <div className="max-w-2xl mx-auto text-center">
+              <p className="text-white/20 text-[9px] tracking-[0.15em] uppercase italic leading-relaxed">
+                Protocol Note: The motion engine utilizes non-deterministic continuous entropy sampling. Any replay of fixed-length recordings fails the temporal-coherence check, converging to zero entropy within the sampling window.
+              </p>
+            </div>
+          </section>
+
+          {/* --- 5. ZK Phase Disclaimer --- */}
+          <section className="pb-8 text-center">
+            <p className="text-white/10 text-[8px] tracking-[0.12em] uppercase italic">
+              Phase 1: Local proof generation &amp; cryptographic signing. On-chain ZK-verification is scheduled for Genesis-v2 integration.
+            </p>
+          </section>
+
+          {/* --- 6. 儀式觸發按鈕 --- */}
           <section className="py-20 border-y border-white/5 text-center space-y-12">
               <p className="text-white/50 text-[11px] tracking-[0.3em] uppercase italic max-w-xl mx-auto">
                 "To build on MyShape is to build on the mathematics of human sovereignty."

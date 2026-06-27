@@ -17,7 +17,8 @@ const NODES: ConceptNode[] = [
   { id: "RECOVERY_PATH", legacyText: "Account recovery email", myshapeText: "Identity mesh", statusCode: "0x05_RCVR" },
   { id: "VISUAL_FORM", legacyText: "2D static image", myshapeText: "3D wireframe anatomy", statusCode: "0x06_VSUL" },
   { id: "PORTABILITY", legacyText: "Fragmented across platforms", myshapeText: "Single identity vector", statusCode: "0x07_PORT" },
-  { id: "TRUST_MODEL", legacyText: "KYC / third-party trust", myshapeText: "Zero-knowledge verified", statusCode: "0x08_TRST" },
+  { id: "TRUST_MODEL", legacyText: "KYC / third-party trust", myshapeText: "ZK-capable (local proof)", statusCode: "0x08_TRST" },
+  { id: "REPLAY_DEFENSE", legacyText: "Static identity sample", myshapeText: "Continuous entropy sampling", statusCode: "0x09_RPLY" },
 ];
 
 export default function ParadigmShift() {
