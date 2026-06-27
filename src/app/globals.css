@@ -223,6 +223,16 @@ body {
   .narrative-card h3 { font-size: 18px; }
 }
 
+/* ── Mobile safety — prevent overflow on deep pages ── */
+@media (max-width: 768px) {
+  main, .max-w-3xl, .max-w-4xl, .max-w-5xl, .max-w-6xl {
+    overflow-x: hidden;
+  }
+  table, pre, .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* ── Scrollbar — dark, minimal ── */
 html { scrollbar-width: thin; scrollbar-color: rgba(34,211,238,0.25) transparent; }
 ::-webkit-scrollbar { width: 5px; }
