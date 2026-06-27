@@ -2,7 +2,8 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import ProtocolHeader from "@/components/header/header";
 import { useMyShapeEngine } from "@/hooks/useMyShapeEngine";
-import MotionGuide, { TOTAL_DURATION_MS } from "@/components/motion-guide/MotionGuide";
+import MotionGuide, { TOTAL_DURATION_MS, type VelocitySnapshot } from "@/components/motion-guide/MotionGuide";
+import SkeletonOverlay from "@/components/motion-guide/SkeletonOverlay";
 
 import ProtocolFooter from "@/components/footer/footer";
 import { playTick, resumeAudio } from "@/utils/useAudioTick";
@@ -61,10 +62,13 @@ export default function MotionDemoClient() {
   const [captureElapsedMs, setCaptureElapsedMs] = useState(0);
   const [validFrameCount, setValidFrameCount] = useState(0);
   const [allPhasesComplete, setAllPhasesComplete] = useState(false);
+  const [currentVelocity, setCurrentVelocity] = useState<VelocitySnapshot | null>(null);
   const framesRef = useRef<FeatureFrame[]>([]);
   const animRef = useRef<number>(0);
   const phaseRef = useRef<Phase>("idle");
   const captureStartRef = useRef<number>(0);
+  const prevLandmarksRef = useRef<Array<{ x: number; y: number; z: number }> | null>(null);
+  const prevTimestampRef = useRef<number>(0);
   const poseRef = useRef<PoseInstance | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -86,6 +90,9 @@ export default function MotionDemoClient() {
     setValidFrameCount(0);
     setLandmarkVisibility([]);
     setAllPhasesComplete(false);
+    setCurrentVelocity(null);
+    prevLandmarksRef.current = null;
+    prevTimestampRef.current = 0;
     framesRef.current = [];
     setProofHashes(null);
 
@@ -126,6 +133,48 @@ export default function MotionDemoClient() {
           if (elapsed >= TOTAL_DURATION_MS && !allPhasesComplete) {
             setAllPhasesComplete(true);
           }
+          // ── Velocity computation (m/s, deg/s) for constraint enforcement ──
+          const prevLm = prevLandmarksRef.current;
+          const prevTs = prevTimestampRef.current;
+          if (prevLm && prevTs > 0) {
+            const dt = (now - prevTs) / 1000; // seconds
+            if (dt > 0.005 && dt < 0.5) {
+              // Tracked joints for velocity: wrists, elbows, shoulders, hips
+              const trackJoints = [11, 12, 13, 14, 15, 16, 23, 24];
+              let maxVel = 0;
+              let wristVel = 0;
+              let torsoDrift = 0;
+              for (const i of trackJoints) {
+                const cl = rawLm[i]; const pl = prevLm[i];
+                if (!cl || !pl) continue;
+                const dx = cl.x - pl.x; const dy = cl.y - pl.y; const dz = (cl.z ?? 0) - (pl.z ?? 0);
+                const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                // Normalized coords → approximate meters (shoulder width ≈ 0.4m ≈ 0.25 norm units)
+                const vel = (dist / 0.25) * 0.4 / dt;
+                if (vel > maxVel) maxVel = vel;
+                if (i === 15 || i === 16) { if (vel > wristVel) wristVel = vel; }
+              }
+              // Torso drift: shoulder midpoint velocity
+              if (rawLm[11] && rawLm[12] && prevLm[11] && prevLm[12]) {
+                const mx = (rawLm[11].x + rawLm[12].x) / 2;
+                const my = (rawLm[11].y + rawLm[12].y) / 2;
+                const pmx = (prevLm[11].x + prevLm[12].x) / 2;
+                const pmy = (prevLm[11].y + prevLm[12].y) / 2;
+                torsoDrift = Math.sqrt((mx - pmx) ** 2 + (my - pmy) ** 2) / 0.25 * 0.4 / dt;
+              }
+              // Head angular velocity: nose direction change
+              let headAngVel = 0;
+              if (rawLm[0] && prevLm[0] && rawLm[11] && rawLm[12]) {
+                const dx = rawLm[0].x - prevLm[0].x;
+                const dy = rawLm[0].y - prevLm[0].y;
+                const noseDist = Math.sqrt(dx * dx + dy * dy) / 0.25 * 0.4;
+                headAngVel = Math.atan2(noseDist, 0.15) * (180 / Math.PI) / dt; // approx radius 0.15m
+              }
+              setCurrentVelocity({ wristVelocity: wristVel, maxJointVelocity: maxVel, headAngularVelocity: headAngVel, torsoVelocity: torsoDrift });
+            }
+          }
+          prevLandmarksRef.current = rawLm.map(l => ({ x: l.x, y: l.y, z: l.z ?? 0 })) as Array<{ x: number; y: number; z: number }>;
+          prevTimestampRef.current = now;
           const shoulderAngle = Math.atan2(lm[12].y - lm[11].y, lm[12].x - lm[11].x) * (180 / Math.PI);
           const elbowAngle = Math.atan2(lm[14].y - lm[12].y, lm[14].x - lm[12].x) * (180 / Math.PI);
           const prev = framesRef.current[framesRef.current.length - 1];
@@ -503,10 +552,23 @@ export default function MotionDemoClient() {
 
             {phase === "capturing" && (
               <>
-                {/* ── MotionGuide: 5-phase gold standard protocol overlay ── */}
+                {/* ── SkeletonOverlay: ethereal wireframe on camera feed ── */}
+                <SkeletonOverlay
+                  landmarks={landmarksRef.current as Array<{ x: number; y: number; z: number; visibility?: number }> | null}
+                  width={canvasRef.current?.width ?? 640}
+                  height={canvasRef.current?.height ?? 400}
+                  active={true}
+                />
+                {/* ── MotionGuide: 5-phase state machine + constraint overlay ── */}
                 <MotionGuide
                   elapsedMs={captureElapsedMs}
                   landmarkVisibility={landmarkVisibility}
+                  velocity={currentVelocity}
+                  anchorsAllVisible={
+                    [0, 11, 12, 13, 14, 15, 16, 23, 24].every(
+                      i => (landmarkVisibility[i] ?? 0) > 0.5
+                    )
+                  }
                   active={true}
                 />
                 {/* Mini status badge — frame counter */}
