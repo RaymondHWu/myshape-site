@@ -84,6 +84,16 @@ export default function EcosystemMap() {
             animation: "spineScan 4s ease-in-out infinite",
             filter: "blur(1px)",
           }} />
+        {/* 滚动水珠 */}
+        <div className="absolute left-[-4px] w-[10px] h-[14px] rounded-full z-20"
+          style={{
+            background: "radial-gradient(ellipse at 35% 25%, rgba(220,240,255,0.7) 0%, rgba(140,200,240,0.3) 40%, transparent 70%)",
+            boxShadow: "0 0 10px rgba(160,210,240,0.3), inset 0 -1px 2px rgba(100,160,210,0.2)",
+            animation: "dropletScroll 5s ease-in-out infinite",
+          }}>
+          <div className="absolute top-[20%] left-[30%] w-[3px] h-[3px] rounded-full"
+            style={{ background: "rgba(255,255,255,0.6)" }} />
+        </div>
         {/* 各层节点圆点 */}
         {LAYERS.map((_, i) => (
           <div key={i} className="absolute w-2 h-2 rounded-full bg-[#02040a] border border-cyan-400/40 z-10"
