@@ -9,15 +9,9 @@ import GenesisBadge from "@/components/genesis-badge/GenesisBadge";
 import { playTick } from "@/utils/useAudioTick";
 
 interface NodeStats {
-  email: string;
-  status: string;
-  is_genesis: boolean;
-  is_active: boolean;
-  scan_count: number;
-  data_contribution: number;
-  tier: string;
-  early_access: boolean;
-  registered_at: string;
+  email: string; status: string; is_genesis: boolean; is_active: boolean;
+  scan_count: number; data_contribution: number; tier: string;
+  early_access: boolean; registered_at: string;
 }
 
 function getOrbitalTier(sc: number): { count: number; name: string } {
@@ -32,6 +26,18 @@ function getOrbitalTier(sc: number): { count: number; name: string } {
   return { count: 0, name: "Awaiting" };
 }
 
+function StatCard({ label, value, pulse, extra }: { label: string; value: string | number; pulse?: boolean; extra?: string }) {
+  return (
+    <div
+      onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
+      className={`p-4 border bg-cyan-400/[0.02] transition-all duration-300 group cursor-default ${pulse ? "border-cyan-400/50 shadow-[0_0_20px_rgba(34,211,238,0.4)] scale-[1.02]" : "border-white/[0.06] hover:border-cyan-400/30"}`}>
+      <div className="text-white/25 text-[8px] tracking-[0.3em] uppercase mb-2 group-hover:text-white/40 transition-colors">{label}</div>
+      <div className="text-white/85 text-[26px] font-light font-mono">{value}</div>
+      {extra && <div className="text-cyan-400/30 text-[9px] mt-1">{extra}</div>}
+    </div>
+  );
+}
+
 export default function DashboardClient() {
   const [stats, setStats] = useState<NodeStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -44,7 +50,6 @@ export default function DashboardClient() {
     const email = sessionStorage.getItem("genesis_email");
     const completed = sessionStorage.getItem("genesis_completed") === "1";
     setIsGenesis(completed);
-
     if (!email) { setLoading(false); return; }
 
     const fetchStats = () => {
@@ -52,25 +57,15 @@ export default function DashboardClient() {
         .then(r => r.json())
         .then(data => {
           if (data.email) {
-            if (data.scan_count > prevScanRef.current) {
-              setScanPulse(true);
-              setTimeout(() => setScanPulse(false), 800);
-            }
+            if (data.scan_count > prevScanRef.current) { setScanPulse(true); setTimeout(() => setScanPulse(false), 800); }
             prevScanRef.current = data.scan_count;
             setStats(data);
-          } else {
-            Sentry.captureMessage("Dashboard: empty node data", { extra: { email: email.slice(0, 3) + "***" } });
-          }
+          } else Sentry.captureMessage("Dashboard: empty node data", { extra: { email: email.slice(0, 3) + "***" } });
           setLoading(false);
         })
-        .catch(err => {
-          Sentry.captureException(err, { tags: { page: "dashboard", action: "fetch-stats" } });
-          setLoading(false);
-        });
+        .catch(err => { Sentry.captureException(err, { tags: { page: "dashboard" } }); setLoading(false); });
     };
     fetchStats();
-
-    // 每 30 秒刷新
     const interval = setInterval(fetchStats, 30000);
     return () => clearInterval(interval);
   }, []);
@@ -83,90 +78,75 @@ export default function DashboardClient() {
       <ProtocolHeader />
       <BackgroundParticles />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-6 pt-28 pb-16 space-y-16">
+      <div className="relative z-10 max-w-3xl mx-auto px-6 pt-28 pb-16 space-y-14">
         {/* Header */}
         <div>
-          <div className="text-cyan-500/40 text-[9px] tracking-[0.5em] uppercase mb-4">SOVEREIGN_IDENTITY_HUB</div>
-          <h1 className="text-2xl md:text-3xl font-light tracking-[0.15em] text-white uppercase mb-2">Dashboard</h1>
-          <p className="text-white/30 text-[11px] tracking-[0.1em]">Your Genesis identity, consolidated.</p>
+          <div className="text-cyan-500/45 text-[10px] tracking-[0.5em] uppercase mb-4">SOVEREIGN_IDENTITY_HUB</div>
+          <h1 className="text-2xl md:text-3xl font-light tracking-[0.15em] text-white uppercase mb-2"
+            style={{ textShadow: "0 0 40px rgba(144,200,255,0.2)" }}>Dashboard</h1>
+          <p className="text-white/35 text-[11px] tracking-[0.1em]">Your Genesis identity, consolidated.</p>
         </div>
 
         {!isGenesis ? (
-          /* Not Genesis — prompt */
-          <div className="text-center py-16 border border-cyan-400/10 bg-cyan-400/[0.02] space-y-6">
-            <div className="text-cyan-400/30 text-[9px] tracking-[0.4em] uppercase">Identity Not Initialized</div>
-            <p className="text-white/25 text-[12px] leading-relaxed max-w-md mx-auto">
+          <div className="text-center py-16 border border-cyan-400/12 bg-cyan-400/[0.02] space-y-6"
+            onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
+            <div className="text-cyan-400/35 text-[10px] tracking-[0.4em] uppercase">Identity Not Initialized</div>
+            <p className="text-white/30 text-[12px] leading-relaxed max-w-md mx-auto">
               Complete the Genesis Ritual to unlock your sovereign identity dashboard — scan tracking, orbital particle tier, and protocol contribution metrics.
             </p>
             <Link href="/genesis"
               onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-              className="inline-block px-8 py-3 border border-cyan-400/30 text-cyan-300/70 text-[10px] tracking-[0.3em] uppercase hover:bg-cyan-400/[0.04] transition-all">
+              className="inline-block px-10 py-3.5 border border-cyan-400/30 text-cyan-300/70 text-[10px] tracking-[0.3em] uppercase hover:bg-cyan-400/[0.04] hover:text-white transition-all"
+              style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)", background: "rgba(34,211,238,0.03)" }}>
               Initialize Genesis →
             </Link>
           </div>
         ) : loading ? (
           <div className="text-center py-16 space-y-3">
             <div className="flex items-center justify-center gap-2">
-              <span className="w-2 h-2 rounded-full animate-pulse"
-                style={{ background: "#22d3ee", boxShadow: "0 0 10px rgba(34,211,238,0.9)" }} />
-              <span className="text-white/15 text-[10px] tracking-[0.3em] uppercase">Decrypting identity stream...</span>
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22d3ee", boxShadow: "0 0 10px rgba(34,211,238,0.9)" }} />
+              <span className="text-white/20 text-[10px] tracking-[0.3em] uppercase">Decrypting identity stream...</span>
             </div>
           </div>
         ) : stats ? (
           <>
             {/* Identity Card */}
-            <section itemScope itemType="https://schema.org/Person">
+            <section itemScope itemType="https://schema.org/Person"
+              onMouseEnter={() => playTick(550, "sine", 0.05, 0.012)}>
               <meta itemProp="identifier" content={stats.email.slice(0, 3) + "***"} />
               <meta itemProp="description" content={`MyShape Protocol node — tier: ${stats.tier}, scans: ${stats.scan_count}`} />
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.7)] animate-pulse" />
-                <span className="text-cyan-400/30 text-[7px] tracking-[0.25em] uppercase">Identity Stream Active</span>
+                <span className="text-cyan-400/30 text-[8px] tracking-[0.25em] uppercase">Identity Stream Active</span>
               </div>
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div itemScope itemType="https://schema.org/DefinedTerm" itemProp="memberOf">
                   <meta itemProp="name" content="Genesis Cohort" />
                   <GenesisBadge />
                 </div>
-                <div className="flex-1 space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]" itemProp="description">
-                      <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Status</div>
-                      <div className="text-cyan-300/80 text-[14px] tracking-[0.15em] uppercase">{stats.tier}</div>
-                    </div>
-                    <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]">
-                      <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Access Level</div>
-                      <div className="text-cyan-300/80 text-[14px] tracking-[0.15em] uppercase" itemProp="additionalType">{stats.early_access ? "OMEGA" : "STANDARD"}</div>
-                    </div>
-                    <div className={`p-4 border bg-cyan-400/[0.02] transition-all duration-300 ${scanPulse ? "border-cyan-400/50 shadow-[0_0_20px_rgba(34,211,238,0.4)] scale-[1.02]" : "border-cyan-400/10"}`}
-                      itemProp="interactionStatistic" itemScope itemType="https://schema.org/InteractionCounter">
-                      <meta itemProp="interactionType" content="https://schema.org/PerformAction" />
-                      <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Total Scans</div>
-                      <div className="text-white/80 text-[24px] font-light font-mono" itemProp="userInteractionCount">{stats.scan_count}</div>
-                    </div>
-                    <div className="p-4 border border-cyan-400/10 bg-cyan-400/[0.02]">
-                      <div className="text-white/20 text-[7px] tracking-[0.3em] uppercase mb-2">Data Contrib</div>
-                      <div className="text-white/80 text-[24px] font-light font-mono">{stats.data_contribution}</div>
-                    </div>
+                <div className="flex-1">
+                  <div className="grid grid-cols-2 gap-3">
+                    <StatCard label="Status" value={stats.tier} />
+                    <StatCard label="Access Level" value={stats.early_access ? "OMEGA" : "STANDARD"} />
+                    <StatCard label="Total Scans" value={stats.scan_count} pulse={scanPulse} />
+                    <StatCard label="Data Contrib" value={stats.data_contribution} />
                   </div>
                 </div>
               </div>
             </section>
 
             {/* Orbital Tier Progress */}
-            <section className="border border-cyan-400/10 p-6">
+            <section className="border border-cyan-400/12 p-6 bg-cyan-400/[0.01]"
+              onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase">Orbital Evolution</span>
-                <span className="text-cyan-400/50 font-mono text-[10px]">{tier.count} / 8 — {tier.name}</span>
+                <span className="text-white/25 text-[9px] tracking-[0.3em] uppercase">Orbital Evolution</span>
+                <span className="text-cyan-400/55 font-mono text-[11px]">{tier.count} / 8 — {tier.name}</span>
               </div>
               <div className="relative h-2 bg-white/[0.04] overflow-hidden mb-2">
                 <div className="absolute inset-y-0 left-0 transition-all duration-1000 ease-out"
-                  style={{
-                    width: `${Math.max(progressPct, 1)}%`,
-                    background: "linear-gradient(90deg, rgba(34,211,238,0.4), rgba(34,211,238,0.65), rgba(144,200,255,0.5))",
-                    boxShadow: "0 0 10px rgba(34,211,238,0.35)",
-                  }} />
+                  style={{ width: `${Math.max(progressPct, 1)}%`, background: "linear-gradient(90deg, rgba(34,211,238,0.45), rgba(34,211,238,0.7), rgba(144,200,255,0.55))", boxShadow: "0 0 12px rgba(34,211,238,0.4)" }} />
               </div>
-              <div className="flex justify-between text-[7px] text-white/10 tracking-[0.15em] uppercase">
+              <div className="flex justify-between text-[7px] text-white/12 tracking-[0.15em] uppercase">
                 <span>Awakening</span><span>Linked</span><span>Resonant</span><span>Fusion</span><span>Anchored</span><span>Stabilized</span><span>Saturated</span><span>Sealed</span>
               </div>
             </section>
@@ -175,23 +155,28 @@ export default function DashboardClient() {
             <section className="flex flex-wrap gap-4 justify-center">
               <Link href="/motion-demo"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                className="px-6 py-3 border border-cyan-400/20 text-cyan-300/50 text-[9px] tracking-[0.25em] uppercase hover:border-cyan-400/40 hover:text-cyan-200 transition-all">
+                className="px-6 py-3 border border-cyan-400/25 text-cyan-300/55 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/45 hover:text-cyan-200 hover:bg-cyan-400/[0.03] transition-all">
                 ◈ Scan Now →
               </Link>
               <Link href="/whitepaper"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                className="px-6 py-3 border border-cyan-400/15 text-white/20 text-[9px] tracking-[0.25em] uppercase hover:border-cyan-400/30 hover:text-white/40 transition-all">
+                className="px-6 py-3 border border-cyan-400/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/35 hover:text-white/45 transition-all">
                 Whitepaper →
               </Link>
               <Link href="/protocol"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                className="px-6 py-3 border border-cyan-400/15 text-white/20 text-[9px] tracking-[0.25em] uppercase hover:border-cyan-400/30 hover:text-white/40 transition-all">
+                className="px-6 py-3 border border-cyan-400/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/35 hover:text-white/45 transition-all">
                 Protocol →
+              </Link>
+              <Link href="/genesis/cohort"
+                onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
+                className="px-6 py-3 border border-cyan-400/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/35 hover:text-white/45 transition-all">
+                Cohort →
               </Link>
             </section>
           </>
         ) : (
-          <div className="text-center py-16 text-white/15 text-[10px] tracking-[0.3em] uppercase">
+          <div className="text-center py-16 text-white/20 text-[10px] tracking-[0.3em] uppercase">
             Unable to load identity data. Please re-initialize Genesis.
           </div>
         )}
