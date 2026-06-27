@@ -163,11 +163,11 @@ export default function HomeClient() {
               {/* Mobile: simplified stack */}
               <div className="md:hidden space-y-2">
                 {[
-                  { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F", delay: "0s" },
-                  { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK", delay: "0.3s" },
+                  { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", delay: "0s" },
+                  { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", delay: "0.3s" },
                   { l: "L3", name: "IDENTITY VECTOR", desc: "Motion geometry distilled into a compact, non-replicable signature.", meta: "GEOMETRY: VECTOR_3D_DISTILLED // SIG_SECURE", delay: "0.6s" },
-                  { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", delay: "0.9s" },
-                  { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", delay: "1.2s" },
+                  { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK", delay: "0.9s" },
+                  { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F", delay: "1.2s" },
                 ].map(layer => (
                   <div key={layer.l} className="group p-6 transition-all duration-500"
                     style={{ border: "1px solid rgba(144,200,255,0.1)", borderRadius: "12px", background: "transparent" }}
@@ -209,11 +209,11 @@ export default function HomeClient() {
                 }} />
 
               {[
-                { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F", hue: 270, side: "right" as const, delay: "0s" },
-                { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK", hue: 230, side: "left" as const, delay: "0.3s" },
+                { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", hue: 180, side: "right" as const, delay: "0s" },
+                { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", hue: 195, side: "left" as const, delay: "0.3s" },
                 { l: "L3", name: "IDENTITY VECTOR", desc: "Motion geometry distilled into a compact, non-replicable signature.", meta: "GEOMETRY: VECTOR_3D_DISTILLED // SIG_SECURE", hue: 210, side: "right" as const, delay: "0.6s" },
-                { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", hue: 195, side: "left" as const, delay: "0.9s" },
-                { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", hue: 180, side: "right" as const, delay: "1.2s" },
+                { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK", hue: 230, side: "left" as const, delay: "0.9s" },
+                { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F", hue: 270, side: "right" as const, delay: "1.2s" },
               ].map((layer) => (
                 <div key={layer.l} className={`relative flex items-center mb-4 ${layer.side === "left" ? "flex-row" : "flex-row-reverse"}`}>
                   <div className="absolute top-1/2 z-10"
@@ -228,7 +228,7 @@ export default function HomeClient() {
                     <div className="relative overflow-hidden transition-all duration-500 hover:-translate-y-1"
                       style={{ background: "transparent", border: "1px solid rgba(144,200,255,0.1)", borderRadius: "12px" }}
                       onMouseEnter={e => {
-                        playTick([400, 550, 700, 850, 1000][5 - parseInt(layer.l.slice(1))] || 600, "sine", 0.10, 0.02);
+                        playTick([400, 550, 700, 850, 1000][parseInt(layer.l.slice(1)) - 1] || 600, "sine", 0.10, 0.02);
                         e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)";
                         e.currentTarget.style.background = "radial-gradient(circle at top left, rgba(144,200,255,0.06) 0%, transparent 70%)";
                         e.currentTarget.style.boxShadow = "0 12px 32px -8px rgba(144,200,255,0.12)";
