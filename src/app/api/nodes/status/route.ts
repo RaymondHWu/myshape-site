@@ -19,7 +19,7 @@ export async function GET() {
   const { count: genesisNodes } = await supabase.from("protocol_nodes").select("*", { count: "exact", head: true }).eq("status", "GENESIS_NODE");
   const { count: activeHumans } = await supabase.from("protocol_nodes").select("*", { count: "exact", head: true }).in("status", ["ACTIVE", "GENESIS_NODE"]);
   const { count: agents } = await supabase.from("protocol_nodes").select("*", { count: "exact", head: true }).eq("status", "AGENT_ACTIVE");
-  const { data: recentScan } = await supabase.from("protocol_nodes").select("last_scan_date").order("last_scan_date", { ascending: false, nullsLast: true }).limit(1);
+  const { data: recentScan } = await supabase.from("protocol_nodes").select("last_scan_date").not("last_scan_date", "is", null).order("last_scan_date", { ascending: false }).limit(1);
 
   return NextResponse.json({
     total_nodes: total ?? 0,
