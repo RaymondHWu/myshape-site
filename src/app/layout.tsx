@@ -12,13 +12,13 @@ import HeroVisualLoader from "@/components/hero/HeroVisualLoader";
 -------------------------------- */
 export const metadata = {
   metadataBase: new URL("https://www.myshape.com"),
-  title: "MyShape Protocol — AI-Native Identity for the Post-Human Era",
+  title: "MyShape Protocol — Presence is the New Identity",
   description:
-    "MyShape is the identity protocol for the AI-native era. A particle-based data-body system enabling sovereign, zero-knowledge, cross-platform identity. Body is data. Data is sovereignty.",
+    "The identity layer for the simulation age. MyShape transforms human motion into verifiable presence — sovereign, zero-knowledge, cross-platform. Human and AI identities coexist in one protocol.",
   openGraph: {
-    title: "MyShape Protocol — Identity for the AI-Native Future",
+    title: "MyShape Protocol — Presence is the New Identity",
     description:
-      "A new identity standard built on data-body architecture, halo scan, particle aesthetics, and zero-knowledge sovereignty. Enter the Genesis era.",
+      "The identity layer for the simulation age. Motion-signature verification, particle aesthetics, and zero-knowledge sovereignty. Human and AI identities coexist in one protocol.",
     url: "https://www.myshape.com",
     siteName: "MyShape Protocol",
     images: [
@@ -33,9 +33,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MyShape Protocol — AI-Native Identity",
+    title: "MyShape Protocol — Presence is the New Identity",
     description:
-      "A particle-based identity protocol for the AI-native era. Presence is data. Data is sovereignty.",
+      "The identity layer for the simulation age. Motion-signature verification, zero-knowledge presence, sovereign identity.",
     images: ["/og-image.png"],
   },
 };

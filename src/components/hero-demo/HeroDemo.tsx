@@ -662,7 +662,7 @@ export default function HeroDemo() {
             PROOF OF PRESENCE
           </h1>
           <p className="hero-demo-tagline">
-            Presence is the identity. Everything else is just a record.
+            Presence is the new identity.<br />The identity layer for the simulation age.
           </p>
         </div>
 
