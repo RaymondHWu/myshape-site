@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
-
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -124,7 +123,7 @@ export default function BlogPost() {
         </div>
 
         {/* Visual Hook — Architecture Diagram */}
-        <div className="my-16 border border-cyan-400/15 bg-cyan-400/[0.02] p-6 md:p-8 font-mono">
+        <div className="my-16 border border-cyan-400/15 bg-cyan-400/[0.02] p-6 md:p-8 font-mono transition-all duration-300 hover:border-cyan-400/35">
           <div className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase mb-4 text-center">SYSTEM_SCHEMA: PRESENCE PIPELINE</div>
           <pre className="text-cyan-400/40 text-[10px] leading-[2.2] tracking-[0.08em] whitespace-pre overflow-x-auto text-center">
 {`CAMERA ──→ SST_18PT ──→ PES_4D ──→ 128D_VECTOR ──→ ZK_PROOF
@@ -146,7 +145,7 @@ export default function BlogPost() {
         <div className="space-y-20">
           {SECTIONS.map((s, i) => (
             <section key={i}>
-              <h2 className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug">
+              <h2 className="text-white/60 text-[15px] tracking-[0.08em] font-light mb-6 leading-snug transition-colors duration-300 hover:text-cyan-200">
                 {s.heading}
               </h2>
               <div className="space-y-5">
