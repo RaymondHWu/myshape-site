@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useCallback, useEffect } from "react";
 import { ethers } from "ethers";
+import { playTick } from "@/utils/useAudioTick";
 
 interface Props {
   onSuccess?: (data: { address: string; skip_otp: boolean; is_genesis: boolean }) => void;
@@ -138,6 +139,7 @@ export default function ConnectWallet({ onSuccess, email, className = "" }: Prop
       ) : (
         <button
           onClick={handleConnect}
+          onMouseEnter={() => playTick(650, "sine", 0.07, 0.02)}
           disabled={status === "connecting" || status === "signing" || status === "verifying"}
           className="relative group px-5 py-2.5 transition-all duration-500 overflow-hidden font-mono text-[9px] tracking-[0.3em] uppercase"
           style={{
