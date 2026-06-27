@@ -79,6 +79,7 @@ export default function ProtocolFooter() {
 		{ name: "LINKED_IN", href: "https://www.linkedin.com/company/111557251/" },
 			{ name: "GITHUB / PROTOCOL_SPECS", href: "https://github.com/myshapeprotocol" },
 		{ name: "DISCORD", href: "https://discord.gg/zr8Tczard" },
+		{ name: "EVIDENCE", href: "/evidence" },
       ] 
     }
   ];
