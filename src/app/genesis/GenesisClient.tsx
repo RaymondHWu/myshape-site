@@ -182,41 +182,6 @@ export default function GenesisClient() {
                   <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                 </div>
 
-                {/* ── 备选路径：Legacy Email ── */}
-                <div className="flex flex-col items-center space-y-2">
-                  <span className="text-white/20 text-[8px] tracking-[0.15em] uppercase">Legacy Access (Email)</span>
-                  <div className="relative flex items-center gap-2">
-                    <div className="relative group genesis-terminal-glow flex-1">
-                      <div className="absolute -inset-[1px] rounded-sm opacity-35 group-focus-within:opacity-70 transition-opacity duration-700"
-                        style={{ background: "linear-gradient(135deg, rgba(34,211,238,0.2), transparent 40%, transparent 60%, rgba(34,211,238,0.2))", filter: "blur(5px)" }} />
-                      <div className="relative pl-5 pr-12 py-0.5 overflow-hidden"
-                        style={{ border: "1px solid rgba(34,211,238,0.18)", background: "rgba(2,10,20,0.85)" }}>
-                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-400/60 genesis-corner-tl" />
-                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-400/60 genesis-corner-tr" />
-                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-400/60 genesis-corner-bl" />
-                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-400/60 genesis-corner-br" />
-                        <div className="absolute inset-0 pointer-events-none genesis-scan-line" />
-                        <div className="absolute left-0 top-[15%] bottom-[15%] w-[1px] genesis-data-stream-l" />
-                        <div className="absolute right-0 top-[15%] bottom-[15%] w-[1px] genesis-data-stream-r" />
-                        <input type="text" placeholder="GENESIS_EMAIL@ADDRESS.IO" value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          onKeyDown={(e) => { if (e.key === "Enter") handleCommence(); }}
-                          className="relative z-10 w-52 max-w-[50vw] bg-transparent py-3 pr-2 text-center text-[10px] tracking-[0.25em] text-white/75 focus:outline-none placeholder:text-white/12" />
-                        {/* 提交箭头 */}
-                        <button type="button" onClick={() => handleCommence()}
-                          onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-8 h-8 transition-all duration-300 group/arrow"
-                          style={{ color: "rgba(34,211,238,0.4)" }}>
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-hover/arrow:translate-x-0.5 transition-transform">
-                            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <span className="text-white/12 text-[7px] tracking-[0.1em]">For restricted environments only</span>
-                </div>
-
                 {/* ── 邀请码 — 可折叠 ── */}
                 {inviteCode || inviteCodeValid !== null ? (
                   <div className="w-52 max-w-[58vw] mt-1">
@@ -255,7 +220,42 @@ export default function GenesisClient() {
                     + Enter invite code
                   </button>
                 )}
-              </form>
+              {/* ── 备选路径：Legacy Email ── */}
+                <div className="flex flex-col items-center space-y-2">
+                  <span className="text-white/20 text-[8px] tracking-[0.15em] uppercase">Legacy Access (Email)</span>
+                  <div className="relative flex items-center gap-2">
+                    <div className="relative group genesis-terminal-glow flex-1">
+                      <div className="absolute -inset-[1px] rounded-sm opacity-35 group-focus-within:opacity-70 transition-opacity duration-700"
+                        style={{ background: "linear-gradient(135deg, rgba(34,211,238,0.2), transparent 40%, transparent 60%, rgba(34,211,238,0.2))", filter: "blur(5px)" }} />
+                      <div className="relative pl-5 pr-12 py-0.5 overflow-hidden"
+                        style={{ border: "1px solid rgba(34,211,238,0.18)", background: "rgba(2,10,20,0.85)" }}>
+                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-400/60 genesis-corner-tl" />
+                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-400/60 genesis-corner-tr" />
+                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-400/60 genesis-corner-bl" />
+                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-400/60 genesis-corner-br" />
+                        <div className="absolute inset-0 pointer-events-none genesis-scan-line" />
+                        <div className="absolute left-0 top-[15%] bottom-[15%] w-[1px] genesis-data-stream-l" />
+                        <div className="absolute right-0 top-[15%] bottom-[15%] w-[1px] genesis-data-stream-r" />
+                        <input type="text" placeholder="GENESIS_EMAIL@ADDRESS.IO" value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          onKeyDown={(e) => { if (e.key === "Enter") handleCommence(); }}
+                          className="relative z-10 w-52 max-w-[50vw] bg-transparent py-3 pr-2 text-center text-[10px] tracking-[0.25em] text-white/75 focus:outline-none placeholder:text-white/12" />
+                        {/* 提交箭头 */}
+                        <button type="button" onClick={() => handleCommence()}
+                          onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-8 h-8 transition-all duration-300 group/arrow"
+                          style={{ color: "rgba(34,211,238,0.4)" }}>
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-hover/arrow:translate-x-0.5 transition-transform">
+                            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-white/12 text-[7px] tracking-[0.1em]">For restricted environments only</span>
+                </div>
+
+                </form>
             </motion.div>
           )}
 
