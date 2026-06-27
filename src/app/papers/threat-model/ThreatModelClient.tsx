@@ -115,7 +115,8 @@ export default function ThreatModelClient() {
 
         {/* Attack Classification */}
         <section className="mb-14">
-          <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-6">// ATTACK_CLASSIFICATION</h2>
+          <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-6 hover:text-cyan-300/50 transition-colors cursor-default"
+            onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>// ATTACK_CLASSIFICATION</h2>
           <div className="space-y-4">
             {ATTACKS.map((a, i) => (
               <div key={i} className="border overflow-hidden transition-all duration-500"
@@ -157,7 +158,8 @@ export default function ThreatModelClient() {
 
         {/* Cost Model */}
         <section className="mb-14">
-          <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// ATTACK_COST_MODEL (§5.5)</h2>
+          <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-6 hover:text-cyan-300/50 transition-colors cursor-default"
+            onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>// ATTACK_COST_MODEL (§5.5)</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse border border-white/5">
               <thead>
@@ -189,7 +191,8 @@ export default function ThreatModelClient() {
 
         {/* Defense-in-Depth */}
         <section className="mb-14">
-          <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// DEFENSE_IN_DEPTH</h2>
+          <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-6 hover:text-cyan-300/50 transition-colors cursor-default"
+            onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>// DEFENSE_IN_DEPTH</h2>
           <div className="space-y-1">
             {DEFENSES.map((d, i) => (
               <div key={i} className="border p-4 transition-all duration-500"
@@ -223,10 +226,12 @@ export default function ThreatModelClient() {
         </section>
 
         {/* Citation */}
-        <section className="mt-14 text-center">
-          <div className="text-[8px] tracking-[0.2em] uppercase mb-2" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.4)">Cite This Document</div>
-          <p className="text-[9px] leading-relaxed font-mono" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)">
-            MyShape Protocol. "MyShape Threat Model v1.0." June 2026. https://www.myshape.com/papers/threat-model
+        <section className="mt-14 text-center border-t border-white/[0.04] pt-10">
+          <div className="text-white/30 text-[10px] tracking-[0.25em] uppercase mb-3 hover:text-cyan-300/50 transition-colors cursor-default"
+            onMouseEnter={() => playTick(450, "sine", 0.03, 0.01)}>Cite This Document</div>
+          <p className="text-white/25 text-[10px] leading-relaxed font-mono hover:text-white/40 transition-colors cursor-default"
+            onMouseEnter={() => playTick(450, "sine", 0.03, 0.01)}>
+            MyShape Protocol. "Threat Model v1.0." June 2026. https://www.myshape.com/papers/threat-model
           </p>
         </section>
       </div>
