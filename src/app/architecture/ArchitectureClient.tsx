@@ -187,8 +187,10 @@ export default function ArchitectureClient() {
               </thead>
               <tbody>
                 {ENTROPY_DIMS.map(d => (
-                  <tr key={d.dim} className="border-b border-white/[0.03] hover:bg-white/[0.015] transition-colors"
-                    onMouseEnter={() => playTick(550, "sine", 0.05, 0.012)}>
+                  <tr key={d.dim} className="border-b border-white/[0.03] transition-all duration-300"
+                    onMouseEnter={e => { playTick(550, "sine", 0.05, 0.012); e.currentTarget.style.background = "rgba(144,200,255,0.04)"; e.currentTarget.style.borderLeft = "1px solid rgba(34,211,238,0.5)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeft = "1px solid transparent"; }}
+                    style={{ borderLeft: "1px solid transparent" }}>
                     <td className="py-3 pr-2 align-top font-medium" style={{ color: "rgba(34,211,238,0.7)" }}>{d.dim}</td>
                     <td className="py-3 pr-2 align-top hidden md:table-cell" style={{ color: "rgba(255,255,255,0.35)" }}>{d.what}</td>
                     <td className="py-3 pr-2 align-top" style={{ color: "rgba(255,255,255,0.55)" }}>{d.human}</td>
@@ -221,8 +223,10 @@ export default function ArchitectureClient() {
               </thead>
               <tbody>
                 {THREATS.map(t => (
-                  <tr key={t.attack} className="border-b border-white/[0.03] hover:bg-white/[0.015] transition-colors"
-                    onMouseEnter={() => playTick(550, "sine", 0.05, 0.012)}>
+                  <tr key={t.attack} className="border-b border-white/[0.03] transition-all duration-300"
+                    onMouseEnter={e => { playTick(550, "sine", 0.05, 0.012); e.currentTarget.style.background = "rgba(144,200,255,0.04)"; e.currentTarget.style.borderLeft = "1px solid rgba(34,211,238,0.5)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeft = "1px solid transparent"; }}
+                    style={{ borderLeft: "1px solid transparent" }}>
                     <td className="py-3 pr-3 font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>{t.attack}</td>
                     <td className="py-3 pr-3 hidden md:table-cell" style={{ color: "rgba(255,255,255,0.3)" }}>{t.vector}</td>
                     <td className="py-3 pr-3" style={{ color: "rgba(34,211,238,0.6)" }}>{t.defense}</td>
