@@ -42,8 +42,8 @@
 
 /* Genesis 层级：金色文字 */
 .tier-genesis .badge-tier-label-collapsed {
-  color: rgba(245, 200, 100, 0.95);
-  text-shadow: 0 0 16px rgba(245, 180, 60, 0.5), 0 0 32px rgba(200, 150, 40, 0.25);
+  color: rgba(255, 220, 140, 1);
+  text-shadow: 0 0 16px rgba(245, 180, 60, 0.6), 0 0 32px rgba(200, 150, 40, 0.3);
 }
 
 /* 折叠态呼吸光环 */
