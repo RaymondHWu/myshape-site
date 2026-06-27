@@ -27,25 +27,25 @@ const SCENES = [
     name: "formation" as const,
     label: "PRESENCE",
     subtitle:
-      "Your being generates a non-corporeal data-body. Sovereign identity as pure energy — no physical form required.",
+      "Your motion is the key. No password. No physical scan. No stored data. Presence is the proof — and the proof is the identity.",
   },
   {
     name: "motion" as const,
-    label: "FIELD",
+    label: "ENTROPY",
     subtitle:
-      "Motion creates a field of memory. Every kinetic signature is unique — AI cannot forge the entropy gap.",
+      "AI cannot forge biological motion. The 4D entropy gap — timing, noise, frequency, perturbation — is mathematically irreducible.",
   },
   {
     name: "genesis" as const,
-    label: "MEMORY_GEOMETRY",
+    label: "SOVEREIGNTY",
     subtitle:
-      "Geometry holds memory. The scan extracts your motion-signature into a permanent, verifiable imprint.",
+      "Your identity vector is yours alone. Non-invertible. Non-custodial. No platform can revoke what you generate through your own motion.",
   },
   {
     name: "mesh" as const,
-    label: "GENESIS_RITUAL",
+    label: "CONTINUITY",
     subtitle:
-      "The ritual completes. Your node joins the sovereign identity mesh. One Genesis. Permanent tier.",
+      "Human and AI identities coexist in one protocol. Presence Receipts form a continuous verifiable timeline — your identity infrastructure.",
   },
 ];
 
@@ -662,7 +662,7 @@ export default function HeroDemo() {
             PROOF OF PRESENCE
           </h1>
           <p className="hero-demo-tagline">
-            Stored identity can be copied. Presence must be generated.
+            Presence is the identity. Everything else is just a record.
           </p>
         </div>
 
