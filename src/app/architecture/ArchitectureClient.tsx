@@ -171,8 +171,9 @@ export default function ArchitectureClient() {
           {/* Identity Vector */}
           <div className="mb-6 md:mb-8">
             <h3 className="text-cyan-400/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Identity Vector <span className="text-white/15">— 128-dim, Poseidon-hashed, non-invertible</span></h3>
-            <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-4 md:p-5 overflow-x-auto font-mono">
-              <pre className="text-cyan-300/60 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
+            <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-4 md:p-5 overflow-x-auto font-mono transition-all duration-300 hover:border-cyan-400/40"
+              onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
+              <pre className="text-cyan-300/70 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
 {`// Motion Vector hash — the geometric signature
 {
   "mv_hash": "0x7a3f1b2c8d4e9f01...3a6b5c7d2e8f4a9b",
@@ -188,8 +189,9 @@ export default function ArchitectureClient() {
           {/* Presence Proof */}
           <div className="mb-6 md:mb-8">
             <h3 className="text-cyan-400/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Presence Proof <span className="text-white/15">— &lt; 512 bytes, verifiable in &lt; 1ms</span></h3>
-            <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-4 md:p-5 overflow-x-auto font-mono">
-              <pre className="text-cyan-300/60 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
+            <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-4 md:p-5 overflow-x-auto font-mono transition-all duration-300 hover:border-cyan-400/40"
+              onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
+              <pre className="text-cyan-300/70 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
 {`// ZK-Presence composite proof
 {
   "proof_type": "ZK-Presence",
@@ -207,7 +209,8 @@ export default function ArchitectureClient() {
           {/* Entropy Gap Distribution */}
           <div>
             <h3 className="text-cyan-400/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Entropy Gap Distribution <span className="text-white/15">— zero overlap between human and AI</span></h3>
-            <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-5 md:p-6">
+            <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-5 md:p-6 transition-all duration-300 hover:border-cyan-400/40"
+              onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
               <div className="space-y-5">
                 {/* Human distribution */}
                 <div>
@@ -225,8 +228,8 @@ export default function ArchitectureClient() {
                 </div>
                 {/* Threshold line */}
                 <div className="relative h-0">
-                  <div className="absolute left-[65%] -top-1 w-[1px] h-12" style={{ background: "rgba(250,204,21,0.5)" }} />
-                  <span className="absolute left-[65%] -top-4 text-[7px] md:text-[8px] tracking-[0.15em] uppercase font-mono -translate-x-1/2 whitespace-nowrap" style={{ color: "rgba(250,204,21,0.6)" }}>
+                  <div className="absolute left-[65%] -top-1 w-[1px] h-12" style={{ background: "rgba(34,211,238,0.5)" }} />
+                  <span className="absolute left-[65%] -top-4 text-[8px] tracking-[0.15em] uppercase font-mono -translate-x-1/2 whitespace-nowrap" style={{ color: "rgba(34,211,238,0.7)" }}>
                     threshold 0.65
                   </span>
                 </div>
@@ -237,12 +240,12 @@ export default function ArchitectureClient() {
                     <span className="font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>0.01 — 0.15</span>
                   </div>
                   <div className="h-5 md:h-6 rounded-sm flex overflow-hidden" style={{ background: "rgba(255,255,255,0.03)" }}>
-                    <div className="w-[10%] h-full" style={{ background: "rgba(255,255,255,0.06)" }} />
-                    <div className="w-[5%] h-full" style={{ background: "rgba(255,255,255,0.15)" }} />
-                    <div className="w-[85%] h-full" style={{ background: "rgba(255,255,255,0.02)" }} />
+                    <div className="w-[5%] h-full" style={{ background: "rgba(255,255,255,0.03)" }} />
+                    <div className="w-[15%] h-full" style={{ background: "rgba(34,211,238,0.2)" }} />
+                    <div className="w-[80%] h-full" style={{ background: "rgba(255,255,255,0.02)" }} />
                   </div>
                 </div>
-                <p className="text-white/20 text-[7px] md:text-[8px] tracking-[0.15em] uppercase mt-3">
+                <p className="text-white/20 text-[8px] tracking-[0.15em] uppercase mt-3">
                   Zero overlap between distributions. AI cannot cross the entropy threshold — <span className="text-cyan-400/50">mathematically provable</span> via §10.
                 </p>
               </div>
