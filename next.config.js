@@ -6,6 +6,14 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  webpack: (config, { isServer }) => {
+    // WASM support for MyShape engine
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true,
+    };
+    return config;
+  },
 };
 
 module.exports = withSentryConfig(nextConfig, {
