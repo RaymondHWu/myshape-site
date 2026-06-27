@@ -68,7 +68,7 @@ export default function DevelopersClient() {
             </a>
             <a href="https://github.com/myshapeprotocol" target="_blank" rel="noopener noreferrer"
               onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-              className="inline-flex items-center gap-2 px-6 py-2.5 border border-white/10 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-white/25 hover:text-white/50 transition-all">
+              className="inline-flex items-center gap-2 px-6 py-2.5 border border-cyan-400/20 text-cyan-300/50 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/40 hover:text-cyan-200/80 hover:bg-cyan-400/[0.03] transition-all">
               GitHub →
             </a>
           </div>
