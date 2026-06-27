@@ -94,15 +94,15 @@ export default function ArchitectureClient() {
                   <div className="flex flex-col items-center group cursor-default"
                     title={p.desc}
                     onMouseEnter={() => playTick(800, "sine", 0.08, 0.02)}>
-                    <div className="w-14 h-14 rounded-full border border-cyan-400/30 flex items-center justify-center font-mono text-[13px] tracking-[0.05em] transition-all duration-500 group-hover:border-cyan-300/90 group-hover:shadow-[0_0_24px_rgba(34,211,238,0.45)]"
+                    <div className="w-14 h-14 rounded-full border border-cyan-400/30 flex items-center justify-center font-mono text-[13px] tracking-[0.05em] transition-all duration-300 group-hover:border-cyan-300 group-hover:shadow-[0_0_28px_rgba(34,211,238,0.55)] group-hover:text-cyan-200"
                       style={{ color: "rgba(34,211,238,0.55)", background: "#02040a" }}>
                       {p.step}
                     </div>
-                    <span className="text-[11px] tracking-[0.15em] uppercase mt-3 text-center leading-tight font-medium transition-colors duration-500 group-hover:text-white/80"
+                    <span className="text-[11px] tracking-[0.15em] uppercase mt-3 text-center leading-tight font-medium transition-all duration-300 group-hover:text-white group-hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.3)]"
                       style={{ color: "rgba(255,255,255,0.55)" }}>
                       {p.name}
                     </span>
-                    <span className="text-[8px] tracking-[0.1em] font-mono mt-1.5 transition-colors duration-500 group-hover:text-cyan-300/60"
+                    <span className="text-[8px] tracking-[0.1em] font-mono mt-1.5 transition-all duration-300 group-hover:text-cyan-200 group-hover:drop-shadow-[0_0_4px_rgba(34,211,238,0.4)]"
                       style={{ color: "rgba(34,211,238,0.3)" }}>
                       {p.output}
                     </span>
