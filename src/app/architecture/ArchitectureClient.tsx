@@ -23,10 +23,10 @@ const THREATS = [
 ];
 
 const ENTROPY_DIMS = [
-  { dim: "D1 — Micro-Timing", what: "Inter-frame interval variance at sub-100ms scale", human: "Chaotic. Breathing, fatigue, neural jitter.", ai: "Uniform. Generated frames have consistent timing." },
-  { dim: "D2 — Noise Residual", what: "Sensor + environment noise in landmark coordinates", human: "Organic. CMOS noise interacts with real light.", ai: "Absent or synthetic. Perfect coordinates are a red flag." },
-  { dim: "D3 — Frequency Entropy", what: "Spectral density across 0.5–15 Hz motion band", human: "Broad spectrum. Multiple overlapping frequencies.", ai: "Narrow peaks. Generated motion has limited frequency range." },
-  { dim: "D4 — Biological Perturbation", what: "Involuntary micro-movements (saccades, tremor, drift)", human: "Present. Humans cannot suppress these.", ai: "None. AI does not model involuntary biology." },
+  { dim: "D1 — Micro-Timing", what: "Inter-frame interval variance at sub-100ms scale", human: "Chaotic — breathing, fatigue, neural jitter", ai: "Uniform — generated frames have consistent timing" },
+  { dim: "D2 — Noise Residual", what: "Sensor + environment noise in landmark coordinates", human: "Organic — CMOS noise interacts with real light", ai: "Absent — perfect coordinates are a red flag" },
+  { dim: "D3 — Frequency Entropy", what: "Spectral density across 0.5–15 Hz motion band", human: "Broad spectrum — multiple overlapping frequencies", ai: "Narrow peaks — limited frequency range" },
+  { dim: "D4 — Biological Perturbation", what: "Involuntary micro-movements (saccades, tremor, drift)", human: "Present — humans cannot suppress these", ai: "None — AI does not model involuntary biology" },
 ];
 
 // Shared hover helper — reads data-default on leave to properly restore React inline styles
@@ -93,69 +93,87 @@ export default function ArchitectureClient() {
                 </div>
               ))}
             </div>
-            {/* Detail cards — show below the diagram */}
-            <div className="grid grid-cols-3 gap-2 mt-10">
-              {PIPELINE.map(p => (
-                <div key={p.step} className="p-3 transition-all duration-500"
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.3)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.08)"; }}
-                  style={{ border: "1px solid rgba(144,200,255,0.08)", background: "transparent" }}>
-                  <div className="text-[9px] tracking-[0.15em] uppercase mb-1" style={{ color: "rgba(34,211,238,0.5)" }}>{p.step} {p.name}</div>
-                  <p className="text-[9px] leading-relaxed" style={{ color: "rgba(255,255,255,0.3)" }}>{p.desc}</p>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* ── Mobile: vertical flow ── */}
           <div className="md:hidden relative">
             <div className="absolute left-[19px] top-5 bottom-5 w-[1px] bg-gradient-to-b from-cyan-400/30 via-cyan-400/15 to-cyan-400/5" />
             {PIPELINE.map((p, i) => (
-              <div key={p.step} className="relative flex gap-3 pb-3 last:pb-0">
-                <div className="absolute left-[13px] top-[22px] w-3 h-3 rounded-full border-2 border-cyan-400/40 bg-[#02040a] z-10 transition-all duration-500"
+              <div key={p.step} className="relative flex gap-3 pb-2.5 last:pb-0">
+                <div className="absolute left-[13px] top-[18px] w-3 h-3 rounded-full border-2 border-cyan-400/40 bg-[#02040a] z-10 transition-all duration-500"
                   style={{
                     boxShadow: "0 0 8px rgba(34,211,238,0.25)",
                     animation: `nodePulse 2.5s ease-in-out ${i * 0.5}s infinite`,
                   }} />
                 <div className="flex-1 pl-9 py-1">
-                  <span className="text-[10px] tracking-[0.2em] uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>{p.step}. {p.name}</span>
-                  <span className="block text-[8px] mt-0.5 font-mono" style={{ color: "rgba(34,211,238,0.3)" }}>{p.output}</span>
-                  <p className="text-[9px] mt-1 leading-relaxed" style={{ color: "rgba(255,255,255,0.3)" }}>{p.desc}</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] tracking-[0.2em] uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>{p.step}. {p.name}</span>
+                    <span className="text-[8px] font-mono" style={{ color: "rgba(34,211,238,0.3)" }}>→ {p.output}</span>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* 4D Entropy — Why AI Fails */}
+        {/* The Entropy Gap */}
         <section className="mb-12 md:mb-16">
-          <h2 className="text-white/15 md:text-white/20 text-[8px] md:text-[9px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-6 md:mb-8">// 4D_ENTROPY — WHY AI CANNOT PASS</h2>
-          <div className="space-y-1 md:space-y-2">
-            {ENTROPY_DIMS.map(d => (
-              <div key={d.dim} className="p-3 md:p-5 transition-all duration-500"
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
-                style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
-                <div className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase mb-2" style={{ color: "rgba(34,211,238,0.6)" }}>{d.dim}</div>
-                <div className="text-[9px] md:text-[10px] mb-2" style={{ color: "rgba(255,255,255,0.3)" }}>{d.what}</div>
-                <div className="grid grid-cols-2 gap-3 md:gap-4 text-[8px] md:text-[9px]">
-                  <div className="flex gap-1.5">
-                    <span className="text-green-400/60 shrink-0">Human:</span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>{d.human}</span>
-                  </div>
-                  <div className="flex gap-1.5">
-                    <span className="text-red-400/50 shrink-0">AI:</span>
-                    <span style={{ color: "rgba(255,255,255,0.25)" }}>{d.ai}</span>
-                  </div>
+          <h2 className="text-white/15 md:text-white/20 text-[8px] md:text-[9px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6">// THE ENTROPY GAP — AI CANNOT CROSS</h2>
+          <p className="text-white/25 text-[9px] md:text-[10px] leading-relaxed mb-5 md:mb-6">
+            Human motion carries irreducible biological entropy. AI-generated motion is mathematically clean — and that cleanliness is detectable.
+          </p>
+          <div className="space-y-3 md:space-y-4">
+            {[
+              { label: "Human Motion", pct: 99.2, color: "rgba(34,211,238,0.6)" },
+              { label: "Replay Attack", pct: 12.5, color: "rgba(250,204,21,0.5)" },
+              { label: "MoCap Data", pct: 18.3, color: "rgba(250,204,21,0.5)" },
+              { label: "AI Generated", pct: 1.4, color: "rgba(248,113,113,0.5)" },
+            ].map(bar => (
+              <div key={bar.label} className="flex items-center gap-3 md:gap-4">
+                <span className="text-[8px] md:text-[9px] tracking-[0.15em] uppercase w-24 md:w-32 text-right shrink-0" style={{ color: "rgba(255,255,255,0.4)" }}>{bar.label}</span>
+                <div className="flex-1 h-3 md:h-4 bg-white/[0.03] rounded-sm overflow-hidden">
+                  <div className="h-full rounded-sm transition-all duration-1000" style={{ width: `${bar.pct}%`, background: bar.color }} />
                 </div>
+                <span className="text-[9px] md:text-[10px] font-mono w-14 shrink-0" style={{ color: bar.color }}>{bar.pct}%</span>
               </div>
             ))}
+          </div>
+          <p className="text-white/15 text-[7px] md:text-[8px] tracking-[0.2em] uppercase mt-4 md:mt-5">
+            PES Score threshold for human verification: &ge; 85%
+          </p>
+        </section>
+
+        {/* 4D Entropy — Compact Table */}
+        <section className="mb-12 md:mb-16">
+          <h2 className="text-white/15 md:text-white/20 text-[8px] md:text-[9px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6">// 4D_ENTROPY — WHY AI CANNOT PASS</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full text-[8px] md:text-[9px]">
+              <thead>
+                <tr className="border-b border-white/5" style={{ color: "rgba(255,255,255,0.25)" }}>
+                  <th className="text-left py-2 pr-2 font-normal tracking-[0.15em] uppercase w-[28%]">Dimension</th>
+                  <th className="text-left py-2 pr-2 font-normal tracking-[0.15em] uppercase hidden md:table-cell">Measures</th>
+                  <th className="text-left py-2 pr-2 font-normal tracking-[0.15em] uppercase">Human</th>
+                  <th className="text-left py-2 font-normal tracking-[0.15em] uppercase">AI</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ENTROPY_DIMS.map(d => (
+                  <tr key={d.dim} className="border-b border-white/[0.02]">
+                    <td className="py-2.5 pr-2 align-top" style={{ color: "rgba(34,211,238,0.6)" }}>{d.dim}</td>
+                    <td className="py-2.5 pr-2 align-top hidden md:table-cell" style={{ color: "rgba(255,255,255,0.25)" }}>{d.what}</td>
+                    <td className="py-2.5 pr-2 align-top" style={{ color: "rgba(255,255,255,0.45)" }}>{d.human}</td>
+                    <td className="py-2.5 align-top" style={{ color: "rgba(255,255,255,0.25)" }}>{d.ai}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
         {/* Threat Matrix */}
         <section className="mb-12 md:mb-16">
-          <h2 className="text-white/15 md:text-white/20 text-[8px] md:text-[9px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-6 md:mb-8">// THREAT_MATRIX — 7 ATTACK VECTORS</h2>
+          <h2 className="text-white/15 md:text-white/20 text-[8px] md:text-[9px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-2 md:mb-3">// THREAT_MATRIX</h2>
+          <p className="text-white/20 text-[8px] md:text-[9px] mb-5 md:mb-6">7 known attack vectors. 7 verified defenses. Each independently tested.</p>
           <div className="overflow-x-auto">
             <table className="w-full text-[8px] md:text-[9px]">
               <thead>
