@@ -1,16 +1,21 @@
 "use client";
 import ProtocolHeader from "@/components/header/header";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import ProtocolFooter from "@/components/footer/footer";
 import { playTick } from "@/utils/useAudioTick";
 
 const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
   const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
-  kids.forEach(k => { k.style.color = k.dataset.hover || ''; });
+  kids.forEach(k => {
+    k.style.color = k.dataset.hover || '';
+    if (k.dataset.hoverSize) k.style.fontSize = k.dataset.hoverSize;
+  });
 };
 const hoverOff = (e: React.MouseEvent<HTMLElement>) => {
   const kids = e.currentTarget.querySelectorAll<HTMLElement>('[data-hover]');
-  kids.forEach(k => { k.style.color = k.dataset.default || ''; });
+  kids.forEach(k => {
+    k.style.color = k.dataset.default || '';
+    if (k.dataset.defaultSize) k.style.fontSize = k.dataset.defaultSize;
+  });
 };
 
 const SPECS = [
@@ -95,95 +100,123 @@ export default function TechSpecClient() {
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
       <ProtocolHeader />
-      <BackgroundParticles />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 pt-28 pb-16">
-        <div className="space-y-4 mb-14">
-          <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">TECHNICAL_SPECIFICATION // V1.0</div>
-          <h1 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">Protocol Reference</h1>
-          <p className="text-white/40 text-[12px] leading-relaxed max-w-2xl">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
+        <div className="space-y-4 mb-12 md:mb-14">
+          <div className="text-cyan-400/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase"
+            onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>TECHNICAL_SPECIFICATION // V1.0</div>
+          <h1 className="text-3xl md:text-5xl font-light tracking-[0.08em] md:tracking-[0.12em] text-white uppercase">Protocol Reference</h1>
+          <p className="text-white/45 md:text-white/50 text-[11px] md:text-[14px] leading-relaxed max-w-2xl font-light">
             The engineering document behind the MyShape Protocol. Motion Vector format,
             PES engine, proof system, SST topology, and reference implementation.
           </p>
-          <p className="text-white/15 text-[10px] tracking-[0.15em] mt-2">
-            By MyShape Protocol &nbsp;·&nbsp; V1.0 &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Technical Specification — Not an Academic Paper
+          <p className="text-white/20 text-[9px] md:text-[10px] tracking-[0.15em] mt-2">
+            By MyShape Protocol &nbsp;·&nbsp; V1.0 &nbsp;·&nbsp; June 2026
           </p>
         </div>
 
         {/* Metrics */}
-        <section className="mb-14">
-          <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// PROTOCOL_METRICS</h2>
+        <section className="mb-12 md:mb-14">
+          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-5 md:mb-6"
+            onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>// PROTOCOL_METRICS</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {METRICS.map((m) => (
-              <div key={m.label} className="border p-4 text-center transition-all duration-500"
+              <div key={m.label} className="border p-3 md:p-4 text-center transition-all duration-300"
                 style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-                <div className="text-cyan-300/80 text-lg md:text-xl font-light tracking-wider">{m.value}</div>
-                <div className="text-white/20 text-[8px] tracking-[0.15em] uppercase mt-1">{m.label}</div>
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.4)"; e.currentTarget.style.transform = "scale(1.03)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; e.currentTarget.style.transform = "scale(1)"; }}>
+                <div className="text-cyan-300/80 text-lg md:text-xl font-light tracking-wider"
+                  data-default="rgba(200,240,255,0.8)" data-hover="rgba(200,240,255,1)">{m.value}</div>
+                <div className="text-white/20 text-[8px] tracking-[0.15em] uppercase mt-1"
+                  style={{ fontSize: "8px" }}
+                  data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)"
+                  data-default-size="8px" data-hover-size="10px">{m.label}</div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Architecture */}
-        <section className="mb-14">
-          <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// FIVE_LAYER_ARCHITECTURE</h2>
+        <section className="mb-12 md:mb-14">
+          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-5 md:mb-6"
+            onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>// FIVE_LAYER_ARCHITECTURE</h2>
           <div className="space-y-1">
             {ARCHITECTURE.map((a, i) => (
-              <div key={i} className="border p-4 transition-all duration-500"
+              <div key={i} className="border p-4 transition-all duration-300"
                 style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-                <div className="text-cyan-400/60 text-[10px] tracking-[0.2em] uppercase mb-1">{a.layer}</div>
-                <div className="text-white/30 text-[10px] leading-relaxed">{a.detail}</div>
+                onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.4)"; e.currentTarget.style.background = "rgba(144,200,255,0.03)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; e.currentTarget.style.background = "transparent"; }}>
+                <div className="text-cyan-400/60 text-[10px] tracking-[0.2em] uppercase mb-1"
+                  data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,1)">{a.layer}</div>
+                <div className="text-white/30 text-[10px] leading-relaxed"
+                  style={{ fontSize: "10px" }}
+                  data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.6)"
+                  data-default-size="10px" data-hover-size="12px">{a.detail}</div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Key Questions */}
-        <section className="space-y-10">
-          <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase">// KEY_SPECIFICATIONS</h2>
-          {SPECS.map((s, i) => (
-            <div key={i} className="border overflow-hidden transition-all duration-500"
-              style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-              onMouseEnter={e => { playTick(700, "sine", 0.08, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-              onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-              <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02]">
-                <span className="text-cyan-400/70 text-[11px] tracking-[0.15em] uppercase">{s.question}</span>
+        <section className="mb-12 md:mb-14">
+          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-5 md:mb-6"
+            onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>// KEY_SPECIFICATIONS</h2>
+          <div className="space-y-3 md:space-y-4">
+            {SPECS.map((s, i) => (
+              <div key={i} className="border overflow-hidden transition-all duration-300"
+                style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
+                onMouseEnter={e => { playTick(700, "sine", 0.08, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.4)"; }}
+                onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+                <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02]">
+                  <span className="text-cyan-400/70 text-[11px] md:text-[12px] tracking-[0.15em] uppercase font-medium"
+                    style={{ fontSize: "11px" }}
+                    data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,1)"
+                    data-default-size="11px" data-hover-size="14px">{s.question}</span>
+                </div>
+                <div className="p-5 space-y-2">
+                  {s.answer.map((line, j) => (
+                    <p key={j} className="text-white/35 text-[11px] leading-relaxed"
+                      style={{ fontSize: "11px" }}
+                      data-default="rgba(255,255,255,0.35)" data-hover="rgba(255,255,255,0.6)"
+                      data-default-size="11px" data-hover-size="13px">{line}</p>
+                  ))}
+                </div>
               </div>
-              <div className="p-5 space-y-2">
-                {s.answer.map((line, j) => (
-                  <p key={j} className="text-white/35 text-[11px] leading-relaxed">{line}</p>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </section>
 
         {/* Citation */}
-        <section className="mt-14 p-5 border transition-all duration-500"
+        <section className="mt-14 p-5 border transition-all duration-300"
           style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-          <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-2">Cite This Document</div>
-          <p className="text-white/30 text-[9px] leading-relaxed font-mono">
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.4)"; }}
+          onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+          <div className="text-white/25 text-[8px] tracking-[0.2em] uppercase mb-2"
+            data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">Cite This Document</div>
+          <p className="text-white/30 text-[9px] leading-relaxed font-mono"
+            style={{ fontSize: "9px" }}
+            data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.6)"
+            data-default-size="9px" data-hover-size="11px">
             MyShape Protocol. "MyShape Technical Specification v1.0." June 2026. https://www.myshape.com/papers/technical-spec
           </p>
         </section>
 
         {/* Reference Implementation */}
-        <section className="mt-4 p-6 border text-center transition-all duration-500"
+        <section className="mt-4 p-6 border text-center transition-all duration-300"
           style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
-          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-          <div className="text-cyan-400/50 text-[10px] tracking-[0.3em] uppercase mb-3">Reference Implementation</div>
-          <p className="text-white/30 text-[11px] leading-relaxed mb-4">
+          onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.4)"; }}
+          onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
+          <div className="text-cyan-400/50 text-[10px] tracking-[0.3em] uppercase mb-3"
+            data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.9)">Reference Implementation</div>
+          <p className="text-white/30 text-[11px] leading-relaxed mb-4"
+            style={{ fontSize: "11px" }}
+            data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.6)"
+            data-default-size="11px" data-hover-size="13px">
             16 protocol engines implemented in TypeScript. Zero external dependencies.
             All processing on-device. No data stored or transmitted.
           </p>
-          <a href="/developers" className="inline-block px-8 py-2 border border-cyan-400/30 text-cyan-400/60 text-[10px] tracking-[0.2em] uppercase hover:border-cyan-300 hover:text-cyan-200 transition-all">
+          <a href="/developers" className="inline-block px-8 py-2 border border-cyan-400/30 text-cyan-400/60 text-[10px] tracking-[0.2em] uppercase hover:border-cyan-300 hover:text-cyan-200 transition-all"
+            onMouseEnter={e => { playTick(700, "sine", 0.08, 0.02); }}>
             View SDK →
           </a>
         </section>
