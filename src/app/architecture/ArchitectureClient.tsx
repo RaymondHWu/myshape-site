@@ -158,6 +158,98 @@ export default function ArchitectureClient() {
           </div>
         </section>
 
+        {/* Protocol Artifacts — What the outputs actually look like */}
+        <section className="mb-14 md:mb-20">
+          <h2 className="section-h text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6"
+            onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>
+            // PROTOCOL ARTIFACTS
+          </h2>
+          <p className="text-white/25 md:text-white/30 text-[9px] md:text-[10px] mb-6 md:mb-8">
+            These are the concrete outputs of the MyShape pipeline. This is what your application receives.
+          </p>
+
+          {/* Identity Vector */}
+          <div className="mb-6 md:mb-8">
+            <h3 className="text-cyan-400/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Identity Vector <span className="text-white/15">— 128-dim, Poseidon-hashed, non-invertible</span></h3>
+            <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-4 md:p-5 overflow-x-auto font-mono">
+              <pre className="text-cyan-300/60 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
+{`// Motion Vector hash — the geometric signature
+{
+  "mv_hash": "0x7a3f1b2c8d4e9f01...3a6b5c7d2e8f4a9b",
+  "dimensions": 128,
+  "feature_groups": ["kinematics", "acceleration", "jerk", "spectrum"],
+  "sst_topology": "18-point",
+  "poseidon_params": { "t": 5, "rounds": 80, "field": "BN254" },
+  "non_invertible": true
+}`}</pre>
+            </div>
+          </div>
+
+          {/* Presence Proof */}
+          <div className="mb-6 md:mb-8">
+            <h3 className="text-cyan-400/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Presence Proof <span className="text-white/15">— &lt; 512 bytes, verifiable in &lt; 1ms</span></h3>
+            <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-4 md:p-5 overflow-x-auto font-mono">
+              <pre className="text-cyan-300/60 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
+{`// ZK-Presence composite proof
+{
+  "proof_type": "ZK-Presence",
+  "pes_score": 0.94,
+  "pes_components": { "timing": 0.91, "noise": 0.96, "frequency": 0.89, "biological": 0.97 },
+  "timestamp": 1719000000,
+  "session_id": "sess_7b3f2a1c...",
+  "zkp_hash": "0x9f2a8b1c3d4e...",
+  "proof_size": 486,
+  "verification_ms": 0.8
+}`}</pre>
+            </div>
+          </div>
+
+          {/* Entropy Gap Distribution */}
+          <div>
+            <h3 className="text-cyan-400/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Entropy Gap Distribution <span className="text-white/15">— zero overlap between human and AI</span></h3>
+            <div className="border border-cyan-400/15 bg-cyan-400/[0.02] p-5 md:p-6">
+              <div className="space-y-5">
+                {/* Human distribution */}
+                <div>
+                  <div className="flex justify-between text-[8px] md:text-[9px] mb-1.5">
+                    <span style={{ color: "rgba(255,255,255,0.5)" }}>Human PES</span>
+                    <span className="font-mono" style={{ color: "rgba(34,211,238,0.7)" }}>0.65 — 0.99</span>
+                  </div>
+                  <div className="h-5 md:h-6 rounded-sm flex overflow-hidden" style={{ background: "rgba(255,255,255,0.03)" }}>
+                    <div className="w-[5%] h-full" style={{ background: "rgba(255,255,255,0.03)" }} />
+                    <div className="w-[30%] h-full" style={{ background: "rgba(34,211,238,0.1)" }} />
+                    <div className="w-[35%] h-full" style={{ background: "rgba(34,211,238,0.35)" }} />
+                    <div className="w-[25%] h-full" style={{ background: "rgba(34,211,238,0.6)", boxShadow: "0 0 8px rgba(34,211,238,0.3)" }} />
+                    <div className="w-[5%] h-full" style={{ background: "rgba(34,211,238,0.15)" }} />
+                  </div>
+                </div>
+                {/* Threshold line */}
+                <div className="relative h-0">
+                  <div className="absolute left-[65%] -top-1 w-[1px] h-12" style={{ background: "rgba(250,204,21,0.5)" }} />
+                  <span className="absolute left-[65%] -top-4 text-[7px] md:text-[8px] tracking-[0.15em] uppercase font-mono -translate-x-1/2 whitespace-nowrap" style={{ color: "rgba(250,204,21,0.6)" }}>
+                    threshold 0.65
+                  </span>
+                </div>
+                {/* AI distribution */}
+                <div>
+                  <div className="flex justify-between text-[8px] md:text-[9px] mb-1.5 mt-2">
+                    <span style={{ color: "rgba(255,255,255,0.4)" }}>AI / Synthetic PES</span>
+                    <span className="font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>0.01 — 0.15</span>
+                  </div>
+                  <div className="h-5 md:h-6 rounded-sm flex overflow-hidden" style={{ background: "rgba(255,255,255,0.03)" }}>
+                    <div className="w-[10%] h-full" style={{ background: "rgba(255,255,255,0.06)" }} />
+                    <div className="w-[5%] h-full" style={{ background: "rgba(255,255,255,0.15)" }} />
+                    <div className="w-[85%] h-full" style={{ background: "rgba(255,255,255,0.02)" }} />
+                  </div>
+                </div>
+                <p className="text-white/20 text-[7px] md:text-[8px] tracking-[0.15em] uppercase mt-3">
+                  Zero overlap between distributions. AI cannot cross the entropy threshold — <span className="text-cyan-400/50">mathematically provable</span> via §10.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* The Entropy Gap */}
         <section className="mb-14 md:mb-20">
           <h2 className="section-h text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6"
