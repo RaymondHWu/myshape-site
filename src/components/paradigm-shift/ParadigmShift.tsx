@@ -41,7 +41,7 @@ export default function ParadigmShift() {
             Legacy <span style={{ color: "rgba(144,200,255,0.6)" }}>vs</span> MyShape
           </h2>
           <p style={{ fontSize: "clamp(0.8rem, 1.4vw, 1rem)", fontWeight: 300, color: "rgba(255,255,255,0.45)", marginTop: "0.8rem" }}>
-            From fragmented 2D identity to sovereign 3D presence.
+            Stored identity can be copied. Stored identity can be stolen. Presence must be generated — and presence cannot be forged.
           </p>
         </div>
         <div className="text-right text-[9px] tracking-widest hidden md:block pb-1">

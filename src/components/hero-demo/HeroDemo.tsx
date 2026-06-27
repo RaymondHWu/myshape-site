@@ -661,7 +661,7 @@ export default function HeroDemo() {
             PROOF OF PRESENCE
           </h1>
           <p className="hero-demo-tagline">
-            Identity is not stored. Presence is the identity.
+            Stored identity can be copied. Presence must be generated.
           </p>
         </div>
 
