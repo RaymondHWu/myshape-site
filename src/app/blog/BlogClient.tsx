@@ -20,7 +20,7 @@ export default function BlogClient() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY + 150;
+      const scrollY = window.scrollY + 120;
       for (let i = SECTIONS.length - 1; i >= 0; i--) {
         const el = document.getElementById(SECTIONS[i].id);
         if (el && el.offsetTop <= scrollY) {
