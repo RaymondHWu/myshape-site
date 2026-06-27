@@ -230,8 +230,9 @@ pub fn create_enrollment(
     user_id: &str,
     device_json: &str,
 ) -> Result<String, JsValue> {
-    let signatures: Vec<MotionSignature> = serde_json::from_str(signatures_json)
+    let flat_sigs: Vec<FlatMotionSignatureInput> = serde_json::from_str(signatures_json)
         .map_err(|e| JsValue::from_str(&format!("Invalid signatures: {}", e)))?;
+    let signatures: Vec<MotionSignature> = flat_sigs.into_iter().map(to_motion_signature).collect();
 
     let device_info: DeviceInfo = serde_json::from_str(device_json)
         .map_err(|e| JsValue::from_str(&format!("Invalid device info: {}", e)))?;
