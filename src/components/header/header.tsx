@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ethers } from "ethers";
 import { playTick } from "@/utils/useAudioTick";
 import "./header.css";
 
@@ -32,6 +33,21 @@ const ProtocolHeader = () => {
   const confirmTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [genesisDone, setGenesisDone] = useState(false);
   const [maskedEmail, setMaskedEmail] = useState("");
+
+  /* ── 钱包连接状态 ── */
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [walletStatus, setWalletStatus] = useState<"idle" | "connecting" | "signing" | "verifying" | "done">("idle");
+  const [walletError, setWalletError] = useState("");
+
+  const SIWE_STATEMENT = "MyShape Protocol — Sovereign Identity Initialization";
+  const BASE_MAINNET = 8453;
+  const BASE_MAINNET_HEX = "0x2105";
+
+  // 初始化时检查是否已连接
+  useEffect(() => {
+    const saved = sessionStorage.getItem("wallet_address");
+    if (saved) { setWalletAddress(saved); setWalletStatus("done"); }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined" && sessionStorage.getItem("genesis_completed") === "1") {
@@ -96,8 +112,71 @@ const ProtocolHeader = () => {
 
   /* ═══ 事件处理 ═══ */
 
-  const handleWalletClick = () => {
-    setIsPanelOpen(!isPanelOpen);
+  const handleWalletClick = async () => {
+    // 已连接 → 切换面板
+    if (walletStatus === "done") {
+      setIsPanelOpen(!isPanelOpen);
+      return;
+    }
+    // 连接中 → 忽略
+    if (walletStatus !== "idle") return;
+
+    // 开始连接
+    try {
+      setWalletStatus("connecting");
+      setWalletError("");
+
+      if (!window.ethereum) {
+        setWalletError("No wallet detected");
+        setWalletStatus("idle");
+        return;
+      }
+
+      // 切换至 Base 链
+      try {
+        const chainId = await window.ethereum.request({ method: "eth_chainId" }) as string;
+        if (parseInt(chainId, 16) !== BASE_MAINNET) {
+          await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: BASE_MAINNET_HEX }] });
+        }
+      } catch { /* 静默 */ }
+
+      // 请求账户
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" }) as string[];
+      if (!accounts?.length) throw new Error("No accounts");
+      const addr = accounts[0];
+
+      // SIWE 签名
+      setWalletStatus("signing");
+      const domain = window.location.host;
+      const now = new Date().toISOString();
+      const message = `${domain} wants you to sign in:\n${addr}\n\n${SIWE_STATEMENT}\n\nURI: https://${domain}\nVersion: 1\nChain ID: ${BASE_MAINNET}\nNonce: ${Date.now()}\nIssued At: ${now}`;
+
+      const provider = new ethers.BrowserProvider(window.ethereum as unknown as ethers.Eip1193Provider);
+      const signer = await provider.getSigner();
+      const signature = await signer.signMessage(message);
+
+      // 验证
+      setWalletStatus("verifying");
+      const res = await fetch("/api/auth/siwe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, signature, address: addr }),
+      });
+      const data = await res.json();
+
+      setWalletAddress(addr);
+      setWalletStatus("done");
+      sessionStorage.setItem("wallet_address", addr);
+      setIsPanelOpen(true);
+
+      if (data.is_genesis) {
+        sessionStorage.setItem("genesis_completed", "1");
+        setGenesisDone(true);
+      }
+    } catch (err: unknown) {
+      setWalletError((err as Error).message?.slice(0, 60) || "Connect failed");
+      setWalletStatus("idle");
+    }
   };
 
   const handleSync = () => {
@@ -111,6 +190,14 @@ const ProtocolHeader = () => {
   };
 
   const handleDisconnect = () => {
+    if (walletAddress) {
+      // 断开钱包
+      setWalletAddress(null);
+      setWalletStatus("idle");
+      sessionStorage.removeItem("wallet_address");
+      setIsPanelOpen(false);
+      return;
+    }
     if (disconnectPhase === "IDLE") {
       setDisconnectPhase("CONFIRM");
       if (confirmTimerRef.current) clearTimeout(confirmTimerRef.current);
@@ -170,14 +257,23 @@ const ProtocolHeader = () => {
           </div>
         </a>
 
-        {/* 钱包按钮 — 精简：仅文字 + 边框呼吸 */}
+        {/* 钱包按钮 — 全局身份入口 */}
         <button
           onClick={handleWalletClick}
           onMouseEnter={() => playTick(650, "sine", 0.07, 0.02)}
           style={styles.walletBtn}
           className={`wallet-btn-optimized ${isPanelOpen ? "is-active" : ""}`}
         >
-          MYSHAPE.BASE.ETH
+          {walletStatus === "connecting" || walletStatus === "signing" || walletStatus === "verifying" ? (
+            <span className="flex items-center gap-1.5">
+              <span className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse" />
+              {walletStatus === "connecting" ? "CONNECTING" : walletStatus === "signing" ? "SIGNING" : "VERIFYING"}
+            </span>
+          ) : walletAddress ? (
+            <span className="font-mono text-[8px] tracking-[0.05em]">{walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}</span>
+          ) : (
+            "MYSHAPE.BASE.ETH"
+          )}
         </button>
 
         {/* ── 晶体玻璃/全息协议面板 ── */}
@@ -192,35 +288,43 @@ const ProtocolHeader = () => {
               </div>
 
               <div className="panel-section">
-                {genesisDone ? (
+                {walletAddress ? (
                   <>
                     <div className="panel-row">
-                      <span className="label">IDENTITY</span>
-                      <span className="value">{maskedEmail || "MYSHAPE.BASE.ETH"}</span>
+                      <span className="label">WALLET</span>
+                      <span className="value font-mono text-[9px]">{walletAddress.slice(0, 8)}...{walletAddress.slice(-6)}</span>
                     </div>
                     <div className="panel-row">
-                      <span className="label">STATUS</span>
-                      <div className="value-group">
-                        <div className="status-pulse-cyan-small" />
-                        <span className="value-cyan">GENESIS_VERIFIED</span>
-                      </div>
+                      <span className="label">NETWORK</span>
+                      <span className="value-cyan">BASE_MAINNET</span>
                     </div>
                   </>
                 ) : (
                   <>
                     <div className="panel-row">
-                      <span className="label">IDENTITY</span>
-                      <span className="value">UNINITIALIZED</span>
+                      <span className="label">WALLET</span>
+                      <span className="value" style={{ color: "rgba(255,255,255,0.3)" }}>NOT_CONNECTED</span>
                     </div>
                     <div className="panel-row">
-                      <span className="label">STATUS</span>
-                      <span className="value" style={{ color: "rgba(255,255,255,0.3)" }}>AWAITING_GENESIS</span>
+                      <span className="label">NETWORK</span>
+                      <span className="value">BASE_MAINNET</span>
                     </div>
                   </>
                 )}
+                {genesisDone && (
+                  <div className="panel-row">
+                    <span className="label">IDENTITY</span>
+                    <span className="value">{maskedEmail || "MYSHAPE.BASE.ETH"}</span>
+                  </div>
+                )}
                 <div className="panel-row">
-                  <span className="label">NETWORK</span>
-                  <span className="value">BASE_MAINNET</span>
+                  <span className="label">STATUS</span>
+                  <div className="value-group">
+                    <div className="status-pulse-cyan-small" />
+                    <span className="value-cyan">
+                      {genesisDone ? "GENESIS_VERIFIED" : walletAddress ? "WALLET_LINKED" : "AWAITING_GENESIS"}
+                    </span>
+                  </div>
                 </div>
                 <div className="panel-row">
                   <span className="label">SIGNAL</span>
@@ -230,6 +334,10 @@ const ProtocolHeader = () => {
                   </div>
                 </div>
               </div>
+
+              {walletError && (
+                <div className="text-red-300/50 text-[8px] tracking-[0.1em] uppercase text-center mb-3">{walletError}</div>
+              )}
 
               <div className="panel-divider" />
 
@@ -261,7 +369,9 @@ const ProtocolHeader = () => {
                       disconnectPhase === "SIGNAL_LOSS" ? "text-fade-out" : ""
                     }`}
                   >
-                    {disconnectPhase === "CONFIRM"
+                    {walletAddress
+                      ? "DISCONNECT_WALLET"
+                      : disconnectPhase === "CONFIRM"
                       ? "[ !! RECONFIRM_DISCONNECT !! ]"
                       : "DISCONNECT_SESSION"}
                   </span>
