@@ -7,40 +7,14 @@ import { playTick } from "@/utils/useAudioTick";
 
 const SECTIONS = [
   {
-    id: "continuity", num: "0", heading: "The Continuity Problem",
-    content: `Every identity system in production today answers the wrong question.
-
-They ask: Who are you?
-They ask: Are you human?
-No one asks: Have you been continuously present?
-
-In 2026, AI can generate a face. Clone a voice. Forge a writing style. Deepfake detection is an arms race — and the defenders are losing. But the deeper crisis is architectural.
-
-Imagine the digital world of 2030. A single human subject operates through a constellation of agents: a personal agent managing schedules, a work agent executing contracts, a finance agent moving assets, a creative agent producing work, a healthcare agent monitoring vitals. Some of these agents act autonomously for hours or days between human check-ins.
-
-The critical question is not whether these agents are human. The critical question is whether each agent still represents the same human subject — continuously, verifiably, without assumption.
-
-Today, there is no protocol that answers this question.
-
-Accounts can be copied. Profiles can be fabricated. Biometrics can be replayed. Continuity cannot be assumed. It must be verified.
-
-This is the problem MyShape Protocol solves.
-
-Identity is static. Presence is dynamic. Continuity is the long-term value — the proof that a subject has been continuously, verifiably present across time, across devices, across agents.
-
-MyShape verifies continuity through presence.
-
-This document presents the physics, the mathematics, and the reference implementation behind that claim.`,
-  },
-  {
-    id: "proposition", num: "1", heading: "The Proposition",
+    id: "proposition", num: "0", heading: "The Proposition",
     content: `AI can generate a visage. AI can clone a voice. AI can forge a digital identity.
 But AI cannot generate you — because you are not a file. You are a field.
 
 This document explains why the most advanced AI models on Earth — including DeepSeek, GPT-5, and multimodal motion diffusion architectures — structurally fail to replicate the deep kinetic signature of a living human entity. It is not a claim about temporary AI limitations. It is a claim about physics, information theory, and the irreducible entropy of biological control systems.`,
   },
   {
-    id: "physics", num: "2", heading: "The Physics of Unforgeability",
+    id: "physics", num: "1", heading: "The Physics of Unforgeability",
     content: `The human motor system is not a transformer. It is a multi-scale, non-linear, noise-driven biological control system built from motor units (asynchronous stochastic recruitment at 5–50 Hz), the stretch reflex arc (~25 ms feedback loop producing 8–12 Hz micro-oscillations), the corticospinal tract (50–80 m/s conduction, creating individual-specific timing signatures), cerebellar feedforward (always slightly wrong, producing 3–5 Hz error-correction micro-motions), and musculoskeletal biomechanics (bone lengths, joint surface geometries, tendon stiffness — physically unique to each entity).
 
 These are not "features" that can be extracted and replicated. They are physical properties of a specific human entity.
@@ -48,7 +22,7 @@ These are not "features" that can be extracted and replicated. They are physical
 AI-generated motion, trained with L2 loss, is mathematically optimized to suppress high-frequency, low-amplitude signals — exactly the signals that make human motion human. The optimal L2 predictor is the conditional mean of the training distribution. It converges to the average motion, not any specific human's motion. The result: AI motion looks correct to the human eye but is kinematically sterile — too smooth, too regular, too average.`,
   },
   {
-    id: "info-theory", num: "3", heading: "The Information-Theoretic Limit",
+    id: "info-theory", num: "2", heading: "The Information-Theoretic Limit",
     content: `Even with infinite training data, an AI model faces a fundamental information bottleneck:
 
 Nyquist limit: 2D video at 30 fps cannot resolve dynamics above 15 Hz. The 8–12 Hz physiological tremor band is at the Nyquist boundary — its phase information is fundamentally aliased in any video-based training set.
@@ -60,7 +34,7 @@ Sensor noise floor: Even high-quality 3D pose data carries measurement noise at 
 The consequence: no finite training dataset can fully determine a target's Motion Signature. There is an irreducible gap — not because AI is not good enough yet, but because the information is not in the data.`,
   },
   {
-    id: "engine", num: "4", heading: "The MyShape Motion Signature Engine",
+    id: "engine", num: "3", heading: "The MyShape Motion Signature Engine",
     content: `The MyShape core engine is written in Rust. It compiles to native binaries (macOS, Linux, Windows) and WebAssembly. It has zero runtime dependencies beyond the Rust standard library and a handful of audited cryptographic and linear algebra crates.
 
 The engine extracts a 128-dimensional Motion Signature vector from raw 3D pose sequences across four independent feature groups:
@@ -74,7 +48,7 @@ The engine extracts a 128-dimensional Motion Signature vector from raw 3D pose s
 Φ_Jspec — Jerk Spectrum (30 dims): Frequency-domain analysis. Energy in 4 frequency bands, spectral slope (log-log power vs frequency), and spectral entropy. Human jerk exhibits 1/f^α scaling (α ≈ 1.0–1.5). AI jerk exhibits α > 2.0 (over-smoothed) or α ≈ 0 (white noise). Neither is human.`,
   },
   {
-    id: "results", num: "5", heading: "Live Verification Results",
+    id: "results", num: "4", heading: "Live Verification Results",
     content: `The following results were generated by the MyShape CLI demo tool (myshape-demo) running the Rust core engine:
 
   Test Case              Presence Score   Verdict
@@ -92,7 +66,7 @@ The AI forgery failed across four independent rejection dimensions:
   • OVER_SMOOTHED — Motor micro-perturbations missing`,
   },
   {
-    id: "integration", num: "6", heading: "Integration: Five Lines to Proof of Intent",
+    id: "integration", num: "5", heading: "Integration: Five Lines to Proof of Intent",
     content: `TypeScript SDK (Node.js / Deno / Browser via WASM):
 
   import { MyShapeSDK } from "myshape-sdk";
@@ -121,7 +95,7 @@ Smart Contract (Solidity):
   }`,
   },
   {
-    id: "deeper-truth", num: "7", heading: "The Deeper Truth",
+    id: "deeper-truth", num: "6", heading: "The Deeper Truth",
     content: `Every AI motion model is a function approximator. It learns a mapping from inputs to outputs. It does not have a spinal cord, motor spindles, a cerebellum, motor neurons firing asynchronously, a stretch reflex arc operating at 25 ms latency, tendons with viscoelastic properties, or joints with anisotropic friction.
 
 An AI can approximate the output of these systems to arbitrary precision given enough data and compute. But the approximation will always be a projection — a lower-dimensional shadow of a higher-dimensional physical process.
@@ -131,7 +105,7 @@ The MyShape engine detects the shadow by measuring what the shadow cannot cast: 
 The AI Paradox: The better AI gets at generating realistic motion, the more aggressively it smooths, averages, and regularizes — and the more detectable it becomes to spectral analysis. Every improvement in visual fidelity comes at the cost of spectral fidelity. The AI faces an impossible tradeoff: look more real, or be more real. It cannot do both.`,
   },
   {
-    id: "genesis-protocol", num: "8", heading: "Genesis Protocol — The Entropy Source of Trust",
+    id: "genesis-protocol", num: "7", heading: "Genesis Protocol — The Entropy Source of Trust",
     content: `§7.1 The Logical Primitive
 
 A protocol without an origin is a protocol without sovereignty. Every decentralized system must answer a single question: where does the first bit of trust come from?
@@ -178,10 +152,43 @@ Genesis Nodes are limited to the first 100 human entities to complete the Genesi
 
 New nodes may join the protocol after the Genesis Cohort is sealed, but they enter as ACTIVE nodes — verified, sovereign, and fully functional, but without the permanent genesis flag. The protocol is open. The Genesis is finite.`,
   },
+  {
+    id: "continuity", num: "8", heading: "The Continuity Horizon",
+    content: `Every identity system in production today answers the wrong question.
+
+They ask: Who are you?
+They ask: Are you human?
+
+No one asks: Have you been continuously present?
+
+Imagine the digital world of 2030. A single human subject operates through a constellation of agents: a personal agent managing schedules, a work agent executing contracts, a finance agent moving assets, a creative agent producing work, a healthcare agent monitoring vitals. Some of these agents act autonomously for hours or days between human check-ins.
+
+The critical question is not whether these agents are human. The critical question is whether each agent still represents the same human subject — continuously, verifiably, without assumption.
+
+Today, there is no protocol that answers this question.
+
+Accounts can be copied. Profiles can be fabricated. Biometrics can be replayed. Continuity cannot be assumed. It must be verified.
+
+This is the long arc of MyShape Protocol.
+
+Phase 1 — Proof of Presence. The 128-dimensional Motion Signature verifies that a living entity is physically present, right now, in front of the sensor. This phase is operational today.
+
+Phase 2 — Proof of Agency. An autonomous agent — carrying delegated authority from its human subject — proves that its authorization chain is unbroken. The agent holds a tamper-proof signature pen, continuously endorsed by verified presence.
+
+Phase 3 — Proof of Continuity. Across devices, across agents, across time — the protocol verifies that the same sovereign subject has been continuously, verifiably present. The continuity proof becomes a new cryptographic primitive: a chain of presence receipts that no adversary can forge.
+
+Phase 4 — Persistent Digital Subjects. The protocol becomes invisible infrastructure. Presence verification dissolves into the network layer. A digital subject is no longer a collection of accounts and credentials — it is a persistent, verifiable entity whose continuity is mathematically guaranteed.
+
+Identity is static. Presence is dynamic. Continuity is the long-term value.
+
+MyShape verifies continuity through presence.
+
+This is not a product roadmap. It is the definition of a new protocol layer — one that the simulation age will require. We invite the world to build it with us.`,
+  },
 ];
 
 export default function WhitepaperClient() {
-  const [activeId, setActiveId] = useState("continuity");
+  const [activeId, setActiveId] = useState("proposition");
   const [genesisNodes, setGenesisNodes] = useState<{ total: number; remaining: number; nodes: Array<{ index: number; id: string; joined: string }> } | null>(null);
   const [prevTotal, setPrevTotal] = useState(0);
   const [nodePulse, setNodePulse] = useState(false);
