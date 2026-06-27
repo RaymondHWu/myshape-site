@@ -46,8 +46,9 @@ export default function ZKFlow() {
         ))}
       </div>
 
-      <div className="text-center mt-10">
-        <span className="text-white/15 text-[8px] tracking-[0.4em] uppercase">
+      <div className="text-center mt-10"
+        onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
+        <span className="text-white/30 hover:text-cyan-300/60 text-[9px] tracking-[0.3em] uppercase transition-colors cursor-default">
           From Geometry → Proof. Zero raw data leaves the device.
         </span>
       </div>
