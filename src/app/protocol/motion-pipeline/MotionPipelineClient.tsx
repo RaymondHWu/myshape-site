@@ -1,6 +1,7 @@
 "use client";
 import Link from 'next/link';
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
+import ZKFlow from "@/components/zk-flow/ZKFlow";
 import { playTick } from "@/utils/useAudioTick";
 
 export default function MotionPipeline() {
@@ -104,6 +105,12 @@ export default function MotionPipeline() {
                 </div>
               ))}
             </div>
+          </section>
+
+          {/* --- 2.5 ZK Flow 可视化 ── */}
+          <section className="py-8">
+            <h3 className="text-white/15 text-[8px] tracking-[0.4em] uppercase text-center mb-8">From Geometry → Proof: Visual Pipeline</h3>
+            <ZKFlow />
           </section>
 
           {/* --- 3. SDK 技術聲明 --- */}
