@@ -117,11 +117,13 @@ const ProtocolHeader = () => {
   };
 
   const handleConnectWallet = async () => {
+    console.log("[Header] handleConnectWallet called");
     try {
       setWalletStatus("connecting");
       setWalletError("");
 
       if (!window.ethereum) {
+        console.log("[Header] No window.ethereum");
         setWalletError("No wallet detected");
         setWalletStatus("idle");
         return;
