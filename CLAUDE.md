@@ -132,10 +132,11 @@ chore: upgrade Next.js to 16.1.6
 
 ## 8. 已知技术债务（供优先级参考）
 
-1. ✅ ~~`any` 类型未完全消除~~ — 已清零（2026-06-27 验证）
-2. 内联 `<style>` 标签残留 — 2 个文件待提取：`WhitepaperClient.tsx`、`AboutClient.tsx`（`@keyframes` 应迁入 `src/styles/animations.css`）
-3. 部分 CIV layer 页面仍使用 `"use client"` — 可考虑拆分为 Server + Client 组件
+1. ✅ ~~`any` 类型未完全消除~~ — 已清零（2026-06-27）
+2. ✅ ~~内联 `<style>` 标签残留~~ — 已全部提取至 `animations.css`（2026-06-28）
+3. ✅ ~~CIV layer `"use client"`~~ — 已拆分：`page.tsx`（Server + metadata）+ `*Client.tsx`（交互）
 4. ✅ ~~`useSound.ts` hook~~ — 已移除
 5. ✅ ~~`public/protocol-b-o-d-y.glb`~~ — 已移除
 6. ✅ ~~`src/components/joinwaitlist/index.tsx`~~ — 已移除
 7. Architecture 页面大量内联 `style={{}}` — 后续可提取为 CSS 类，但非紧急（不影响功能）
+8. ✅ ~~主路由纯客户端页面~~ — 全部已拆分：`page.tsx`（Server + metadata）+ `*Client.tsx`（交互）
