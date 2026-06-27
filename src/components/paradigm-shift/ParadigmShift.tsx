@@ -138,8 +138,16 @@ export default function ParadigmShift() {
         })}
       </div>
 
+      {/* 不可伪造性总结 */}
+      <div className="w-full max-w-4xl mx-auto px-6 mt-10 text-center">
+        <p className="text-white/30 text-[11px] tracking-[0.08em] leading-relaxed italic max-w-2xl mx-auto"
+          onMouseEnter={() => playTick(550, "sine", 0.05, 0.012)}>
+          All primitives are non-replicable due to motion entropy, local enclave isolation, and ZK‑Presence verification.
+        </p>
+      </div>
+
       {/* 底部校准线 */}
-      <div className="w-full max-w-4xl mx-auto px-6 mt-14 pt-4 border-t border-white/[0.06] flex justify-center text-[9px] tracking-widest" style={{ color: "rgba(255,255,255,0.25)" }}
+      <div className="w-full max-w-4xl mx-auto px-6 mt-10 pt-4 border-t border-white/[0.06] flex justify-center text-[9px] tracking-widest" style={{ color: "rgba(255,255,255,0.25)" }}
         onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
         SYSTEM_SHIFT_CALIBRATION: [ COMPLETED_100% ]
       </div>
