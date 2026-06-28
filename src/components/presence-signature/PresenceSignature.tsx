@@ -96,7 +96,7 @@ myshape.com/motion-demo`;
         </button>
         <button onClick={handleShare}
           onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-          className="flex-1 py-2 border border-cyan-400/15 text-white/40 text-[10px] tracking-[0.2em] uppercase hover:border-cyan-400/30 hover:text-white/60 transition-all hover:text-white/80">
+          className="flex-1 py-2 border-2 border-red-500 text-red-400 text-[10px] font-bold tracking-[0.2em] uppercase hover:border-cyan-400/30 hover:text-white/60 transition-all hover:text-white/80">
           Share Presence
         </button>
       </div>
