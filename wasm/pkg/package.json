@@ -1,0 +1,12 @@
+{
+  "name": "myshape-wasm",
+  "description": "MyShape Presence Protocol — WASM bindings for the core engine",
+  "version": "0.1.0",
+  "files": [
+    "myshape_wasm_bg.wasm",
+    "myshape_wasm.js",
+    "myshape_wasm.d.ts"
+  ],
+  "main": "myshape_wasm.js",
+  "types": "myshape_wasm.d.ts"
+}
