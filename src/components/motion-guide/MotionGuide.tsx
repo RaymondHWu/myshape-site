@@ -10,7 +10,7 @@
  * Spec: MyShape_Documentation/Module_D_Engineering/MOTION_SEQUENCE_SPEC.md
  */
 
-import { useMemo } from "react";
+import { useMemo, useEffect, useRef } from "react";
 
 // ═══════════════════════════════════════════════════════════════════
 // Phase Definitions — extracted directly from MOTION_SEQUENCE_SPEC.md
@@ -262,6 +262,21 @@ export default function MotionGuide({
   const violations = useMemo(
     () => checkConstraints(phase, velocity), [phase, velocity]
   );
+
+  // ── Voice Guidance ──
+  const prevPhaseRef = useRef(-1);
+  useEffect(() => {
+    if (!active) return;
+    if (prevPhaseRef.current === phaseIndex) return;
+    prevPhaseRef.current = phaseIndex;
+
+    const utterance = new SpeechSynthesisUtterance(phase.instruction.replace(/\n/g, ". "));
+    utterance.rate = 0.9;
+    utterance.pitch = 1.0;
+    utterance.volume = 0.7;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }, [phaseIndex, phase.instruction, active]);
 
   const totalProgress = Math.min(elapsedMs / TOTAL_DURATION_MS, 1);
   const remainingSec = Math.max(0, (TOTAL_DURATION_MS - elapsedMs) / 1000);
