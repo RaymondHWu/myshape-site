@@ -26,6 +26,8 @@ function ApplyForm() {
   const [technicalBg, setTechnicalBg] = useState("");
   const [handle, setHandle] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
+  const [countdown, setCountdown] = useState(5);
+
   const [result, setResult] = useState<{
     cohort?: string;
     position?: string;
@@ -59,11 +61,19 @@ function ApplyForm() {
         setResult(data);
         setStatus("done");
         playTick(800, "sine", 0.10, 0.025);
+        setCountdown(5);
 
-        // Give user time to read before redirect
-        setTimeout(() => {
-          router.push("/motion-demo");
-        }, 5000);
+        // Countdown + redirect
+        const timer = setInterval(() => {
+          setCountdown((prev) => {
+            if (prev <= 1) {
+              clearInterval(timer);
+              router.push("/motion-demo");
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
       } else {
         setResult({ error: data.error || "Submission failed" });
         setStatus("error");
@@ -112,7 +122,7 @@ function ApplyForm() {
                 </div>
               )}
               <p className="text-white/20 text-[10px]">
-                Redirecting to Motion Demo in 5s...
+                <span style={{ animation: "genesisBadgePulse 1s ease-in-out infinite" }}>Redirecting in {countdown}s...</span>
                 <br /><span className="text-cyan-400/30 text-[9px]">(Complete a 30s motion capture to calibrate the engine)</span>
               </p>
             </div>
