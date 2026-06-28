@@ -37,10 +37,48 @@ export function create_enrollment(signatures_json, user_id, device_json) {
 }
 
 /**
+ * Extract the raw 120-dimensional feature vector from a motion sequence.
+ *
+ * This is the SAME feature vector the engine uses internally for signature
+ * extraction. Exposing it allows the TypeScript calibration pipeline to
+ * compute PCA and population statistics in the engine's native feature space.
+ *
+ * Input: JSON MotionSequence (same format as extract_signature)
+ * Returns: JSON number array — [120 f32 values] = [K(40) | A(25) | J(25) | J_spec(30)]
+ * @param {string} motion_json
+ * @returns {string}
+ */
+export function extract_feature_vector(motion_json) {
+    let deferred3_0;
+    let deferred3_1;
+    try {
+        const ptr0 = passStringToWasm0(motion_json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.extract_feature_vector(ptr0, len0);
+        var ptr2 = ret[0];
+        var len2 = ret[1];
+        if (ret[3]) {
+            ptr2 = 0; len2 = 0;
+            throw takeFromExternrefTable0(ret[2]);
+        }
+        deferred3_0 = ptr2;
+        deferred3_1 = len2;
+        return getStringFromWasm0(ptr2, len2);
+    } finally {
+        wasm.__wbindgen_free(deferred3_0, deferred3_1, 1);
+    }
+}
+
+/**
  * Extract a Motion Signature from a motion sequence.
  *
  * `motion_json` should be a JSON MotionSequence:
  *   { "fps": 30, "frames": [{ "t": 0.0, "keypoints": [{ "x": 0, "y": 0, "z": 0 }, ...] }, ...] }
+ *
+ * Phase E-4: Uses calibration-aware engine. If a calibration artifact is loaded
+ * with matching feature dimensions, PCA projection and population z-score
+ * normalization are applied during extraction. Falls back to vacuum defaults
+ * (identity projection, zero means, unit stds) if not calibrated.
  *
  * Returns a JSON FlatMotionSignature: { "vector": [128 floats], "version": 1 }
  * @param {string} motion_json
@@ -155,8 +193,73 @@ export function generate_human_motion(duration_s, fps, amplitude) {
     }
 }
 
+/**
+ * Get calibration metadata as a JSON string.
+ * Returns `null` (JS null) if not calibrated.
+ * @returns {string | undefined}
+ */
+export function get_calibration_info() {
+    const ret = wasm.get_calibration_info();
+    let v1;
+    if (ret[0] !== 0) {
+        v1 = getStringFromWasm0(ret[0], ret[1]).slice();
+        wasm.__wbindgen_free(ret[0], ret[1] * 1, 1);
+    }
+    return v1;
+}
+
+/**
+ * Get the raw feature dimension (120 for the current engine).
+ * @returns {number}
+ */
+export function get_feature_dim() {
+    const ret = wasm.get_feature_dim();
+    return ret >>> 0;
+}
+
 export function init_panic_hook() {
     wasm.init_panic_hook();
+}
+
+/**
+ * Check whether a calibration artifact is currently active.
+ * @returns {boolean}
+ */
+export function is_calibrated() {
+    const ret = wasm.is_calibrated();
+    return ret !== 0;
+}
+
+/**
+ * Load a calibration artifact from JSON.
+ *
+ * The artifact is produced by the TypeScript Phase E-2 calibration pipeline
+ * (runCalibration()). Once loaded, the engine uses:
+ *   - ROC operating points for verification thresholds
+ *   - Population feature statistics for z-score normalization (if dims match)
+ *   - PCA projection matrix (if dims match)
+ *
+ * Returns `true` if calibration was successfully parsed and activated.
+ * Returns `false` if the JSON represents an empty/vacuum calibration.
+ * Throws a JS error if the JSON is malformed.
+ * @param {string} artifact_json
+ * @returns {boolean}
+ */
+export function load_calibration(artifact_json) {
+    const ptr0 = passStringToWasm0(artifact_json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+    const len0 = WASM_VECTOR_LEN;
+    const ret = wasm.load_calibration(ptr0, len0);
+    if (ret[2]) {
+        throw takeFromExternrefTable0(ret[1]);
+    }
+    return ret[0] !== 0;
+}
+
+/**
+ * Reset calibration to vacuum state (for testing).
+ */
+export function reset_calibration() {
+    wasm.reset_calibration();
 }
 
 /**
