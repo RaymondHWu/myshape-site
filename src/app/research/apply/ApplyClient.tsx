@@ -106,21 +106,59 @@ function ApplyForm() {
 
         {/* Status: done */}
         {status === "done" && (
-          <div className="border p-6 space-y-4 mb-8" style={{ borderColor: isGenesis ? "rgba(34,211,238,0.3)" : "rgba(144,200,255,0.15)", borderRadius: 4, background: isGenesis ? "rgba(34,211,238,0.03)" : "transparent" }}>
-            <div className="text-center space-y-3">
-              <div className={`text-2xl font-light tracking-[0.05em] ${isGenesis ? "text-cyan-300" : "text-white/50"}`} style={isGenesis ? { textShadow: "0 0 24px rgba(34,211,238,0.6)" } : undefined}>
+          <div className="border p-6 space-y-5 mb-8" style={{ borderColor: isGenesis ? "rgba(34,211,238,0.3)" : "rgba(144,200,255,0.15)", borderRadius: 4, background: isGenesis ? "rgba(34,211,238,0.03)" : "transparent" }}>
+            <div className="text-center space-y-4">
+
+              {/* ── 勋章 ── */}
+              <div className="flex justify-center">
+                <div
+                  className="relative flex items-center justify-center"
+                  style={{
+                    width: 100, height: 100,
+                    borderRadius: "50%",
+                    border: isGenesis ? "2px solid rgba(34,211,238,0.5)" : "2px solid rgba(255,255,255,0.15)",
+                    background: isGenesis
+                      ? "radial-gradient(circle at 40% 35%, rgba(34,211,238,0.2) 0%, rgba(34,211,238,0.05) 50%, transparent 70%)"
+                      : "radial-gradient(circle at 40% 35%, rgba(255,255,255,0.05) 0%, transparent 70%)",
+                    boxShadow: isGenesis ? "0 0 40px rgba(34,211,238,0.3), inset 0 0 20px rgba(34,211,238,0.1)" : "0 0 16px rgba(255,255,255,0.05)",
+                    animation: "genesisWitnessGlow 3s ease-in-out infinite",
+                  }}
+                >
+                  <div className="text-center">
+                    <div className="text-cyan-400/40 text-[7px] tracking-[0.3em] uppercase">Witness</div>
+                    <div className={`font-light tracking-[-0.02em] ${isGenesis ? "text-cyan-200" : "text-white/40"}`}
+                      style={{ fontSize: "28px", textShadow: isGenesis ? "0 0 16px rgba(34,211,238,0.6)" : "none", lineHeight: 1 }}>
+                      #{result.position_number}
+                    </div>
+                  </div>
+                  {/* 光环 */}
+                  {isGenesis && (
+                    <div className="absolute inset-0 rounded-full"
+                      style={{
+                        border: "1px solid rgba(34,211,238,0.2)",
+                        animation: "genesisBadgePulse 2s ease-in-out infinite",
+                      }} />
+                  )}
+                </div>
+              </div>
+
+              {/* ── 标题 ── */}
+              <div className={`text-xl font-light tracking-[0.05em] ${isGenesis ? "text-cyan-300" : "text-white/50"}`} style={isGenesis ? { textShadow: "0 0 24px rgba(34,211,238,0.6)" } : undefined}>
                 {isGenesis ? "◈ Genesis Cohort — Confirmed" : "✓ Application Received"}
               </div>
-              <p className="text-white/35 text-[12px] leading-relaxed">
+
+              <p className="text-white/35 text-[12px] leading-relaxed max-w-sm mx-auto">
                 {isGenesis
                   ? `You are founding tester #${result.position_number}. This status is permanent — not cosmetic, structural.`
                   : `You are applicant #${result.position_number}. Genesis slots are filled, but you are part of the public calibration cohort.`}
               </p>
+
               {isGenesis && (
                 <div className="inline-block px-3 py-1 border border-cyan-400/20 bg-cyan-400/[0.04] text-cyan-400/60 text-[9px] tracking-[0.15em] uppercase rounded-sm">
                   {result.genesis_slots_remaining} genesis slots remaining
                 </div>
               )}
+
               <p>
                 <span className="text-cyan-300/90 text-[16px] font-light tracking-[0.05em]" style={{ textShadow: "0 0 18px rgba(34,211,238,0.5)", animation: "genesisBadgePulse 0.8s ease-in-out infinite" }}>
                   Redirecting in {countdown}s...
