@@ -794,7 +794,8 @@ export default function MotionDemoClient() {
                   </div>
                 </div>
                 {!aiCompare ? (
-                  <button onClick={async () => { playTick(700,"sine",0.08,0.02); setWasmCompare({loading:true,similarity:null,sigDim:0}); try { const sdk=await loadWasm(); if(!sdk){setWasmCompare({loading:false,similarity:null,sigDim:0});return} const aiM=sdk.generateAIMotion(1,30,0.15); const hM=sdk.generateHumanMotion(1,30,0.15); const hS=sdk.extractSignature(hM); const aS=sdk.extractSignature(aiM); const sim=sdk.similarity(hS,aS); setWasmCompare({loading:false,similarity:sim,sigDim:hS.vector.length}) } catch(err) { setWasmCompare({loading:false,similarity:null,sigDim:0}) } }}
+                  <button onClick={async () => { playTick(700,"sine",0.08,0.02); const prevText = (typeof document !== 'undefined' && document.getElementById('aiCompareBtn')?.textContent) || ''; setWasmCompare({loading:true,similarity:null,sigDim:0}); try { const sdk=await loadWasm(); if(!sdk){setWasmCompare({loading:false,similarity:null,sigDim:0});return} const aiM=sdk.generateAIMotion(1,30,0.15); const hM=sdk.generateHumanMotion(1,30,0.15); const hS=sdk.extractSignature(hM); const aS=sdk.extractSignature(aiM); const sim=sdk.similarity(hS,aS); setWasmCompare({loading:false,similarity:sim,sigDim:hS.vector.length}) } catch(err) { console.log('WASM error:', err); setWasmCompare({loading:false,similarity:null,sigDim:0}) } }}
+                    id="aiCompareBtn"
                     className="w-full py-1.5 border border-cyan-400/15 text-cyan-400/35 text-[9px] tracking-[0.15em] uppercase hover:border-cyan-400/30 hover:text-cyan-300/60 transition-all">
                     {wasmCompare?.loading ? "Loading WASM..." : "Compare with AI →"}
                   </button>
