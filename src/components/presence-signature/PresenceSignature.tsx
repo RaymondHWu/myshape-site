@@ -33,14 +33,8 @@ export default function PresenceSignature({ proof }: { proof: ProofData }) {
   const [shared, setShared] = React.useState(false);
   const handleShare = () => {
     playTick(700, "sine", 0.08, 0.02);
-    const text = `My Presence has been verified.
-PES: ${pesPct}% | Protocol: MyShape V1.0_GENESIS
-Generated locally. Zero data uploaded. ZK-verified.
-myshape.com/motion-demo`;
-    navigator.clipboard.writeText(text).then(() => {
-      setShared(true);
-      setTimeout(() => setShared(false), 2000);
-    });
+    const text = "MyShape PES: " + pesPct + "% | Verified by MyShape Protocol";
+    navigator.clipboard.writeText(text).then(() => { setShared(true); setTimeout(() => setShared(false), 2000); });
   };
 
   return (
