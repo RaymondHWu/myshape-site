@@ -60,10 +60,10 @@ function ApplyForm() {
         setStatus("done");
         playTick(800, "sine", 0.10, 0.025);
 
-        // Redirect to motion-demo after a short pause
+        // Give user time to read before redirect
         setTimeout(() => {
           router.push("/motion-demo");
-        }, 2500);
+        }, 5000);
       } else {
         setResult({ error: data.error || "Submission failed" });
         setStatus("error");
@@ -111,7 +111,10 @@ function ApplyForm() {
                   {result.genesis_slots_remaining} genesis slots remaining
                 </div>
               )}
-              <p className="text-white/20 text-[10px]">Redirecting to Motion Demo...</p>
+              <p className="text-white/20 text-[10px]">
+                Redirecting to Motion Demo in 5s...
+                <br /><span className="text-cyan-400/30 text-[9px]">(Complete a 30s motion capture to calibrate the engine)</span>
+              </p>
             </div>
           </div>
         )}
