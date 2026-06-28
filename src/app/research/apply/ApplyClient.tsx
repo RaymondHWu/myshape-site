@@ -63,6 +63,13 @@ function ApplyForm() {
         playTick(800, "sine", 0.10, 0.025);
         setCountdown(5);
 
+        // 持久化到 sessionStorage，Dashboard 读取
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("witness_cohort", data.cohort || "");
+          sessionStorage.setItem("witness_number", String(data.position_number || ""));
+          sessionStorage.setItem("witness_slots_remaining", String(data.genesis_slots_remaining || 0));
+        }
+
         // Countdown + redirect
         const timer = setInterval(() => {
           setCountdown((prev) => {
