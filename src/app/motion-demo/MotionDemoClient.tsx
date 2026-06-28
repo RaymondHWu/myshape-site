@@ -813,7 +813,7 @@ export default function MotionDemoClient() {
                   </div>
                 </div>
                 <button onClick={handleAICompare}
-                  className="w-full py-1.5 border-2 border-red-500 text-red-400 text-[10px] font-bold tracking-[0.15em] uppercase hover:border-cyan-400/30 hover:text-cyan-300/60 transition-all">
+                  className="w-full py-1.5 border border-cyan-400/15 text-cyan-400/35 text-[9px] tracking-[0.15em] uppercase hover:border-cyan-400/30 hover:text-cyan-300/60 transition-all">
                   {wasmCompare?.loading ? "Loading WASM..." : wasmCompare?.similarity != null ? `AI: ${(wasmCompare.similarity*100).toFixed(0)}%` : "Compare with AI →"}
                 </button>
                 {proofHashes&&(<div className="p-3 border border-cyan-400/20 bg-cyan-400/[0.03] space-y-1 mt-auto"><div className="text-cyan-400/60 text-[9px] tracking-[0.2em] uppercase">ZK-Presence Proof</div><div className="text-cyan-200/80 text-[10px] font-mono break-all leading-relaxed">{proofHashes.zkp}</div><div className="grid grid-cols-3 gap-2 text-[9px] pt-1"><div><span className="text-white/25">PoP</span><div className="text-cyan-300/60 font-mono">{proofHashes.pop.slice(0,6)}</div></div><div><span className="text-white/25">MP</span><div className="text-cyan-300/60 font-mono">{proofHashes.mp.slice(0,6)}</div></div><div><span className="text-white/25">EP</span><div className="text-cyan-300/60 font-mono">{proofHashes.ep.slice(0,6)}</div></div></div></div>)}
