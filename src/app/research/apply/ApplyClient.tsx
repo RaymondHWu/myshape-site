@@ -110,34 +110,44 @@ function ApplyForm() {
             <div className="text-center space-y-4">
 
               {/* ── 勋章 ── */}
-              <div className="flex justify-center">
-                <div
-                  className="relative flex items-center justify-center"
-                  style={{
-                    width: 100, height: 100,
-                    borderRadius: "50%",
-                    border: isGenesis ? "2px solid rgba(212,175,55,0.6)" : "2px solid rgba(255,255,255,0.15)",
-                    background: isGenesis
-                      ? "radial-gradient(circle at 40% 35%, rgba(212,175,55,0.22) 0%, rgba(180,140,40,0.06) 50%, transparent 70%)"
-                      : "radial-gradient(circle at 40% 35%, rgba(255,255,255,0.05) 0%, transparent 70%)",
-                    boxShadow: isGenesis ? "0 0 40px rgba(212,175,55,0.3), inset 0 0 20px rgba(212,175,55,0.08)" : "0 0 16px rgba(255,255,255,0.05)",
-                    animation: "genesisWitnessGlow 3s ease-in-out infinite",
-                  }}
-                >
-                  <div className="text-center">
-                    <div className="text-amber-400/50 text-[7px] tracking-[0.3em] uppercase">Witness</div>
-                    <div className={`font-light tracking-[-0.02em] ${isGenesis ? "text-amber-200" : "text-white/40"}`}
-                      style={{ fontSize: "28px", textShadow: isGenesis ? "0 0 16px rgba(212,175,55,0.5)" : "none", lineHeight: 1 }}>
-                      #{result.position_number}
-                    </div>
-                  </div>
-                  {/* 光环 */}
+              <div className="flex justify-center" style={{ perspective: 800 }}>
+                <div className="relative" style={{ width: 160, height: 200, animation: "genesisBadgePulse 3s ease-in-out infinite" }}>
+                  <svg viewBox="0 0 160 200" width="160" height="200" style={{ filter: isGenesis ? "drop-shadow(0 0 16px rgba(212,175,55,0.4))" : "drop-shadow(0 0 6px rgba(255,255,255,0.08))" }}>
+                    {/* 外圈齿轮边 */}
+                    <circle cx="80" cy="72" r="54" fill="none" stroke={isGenesis ? "url(#goldGrad)" : "rgba(255,255,255,0.12)"} strokeWidth="1.5" strokeDasharray="4 2.5" />
+                    {/* 外圈实线 */}
+                    <circle cx="80" cy="72" r="48" fill="none" stroke={isGenesis ? "url(#goldGrad)" : "rgba(255,255,255,0.18)"} strokeWidth="2" />
+                    {/* 内圈 */}
+                    <circle cx="80" cy="72" r="38" fill={isGenesis ? "rgba(20,16,8,0.9)" : "rgba(255,255,255,0.02)"} stroke={isGenesis ? "url(#goldGradInner)" : "rgba(255,255,255,0.1)"} strokeWidth="1" />
+                    {/* 文字 */}
+                    <text x="80" y="64" textAnchor="middle" fill={isGenesis ? "rgba(212,175,55,0.5)" : "rgba(255,255,255,0.2)"} fontSize="6" fontFamily="monospace" letterSpacing="3">WITNESS</text>
+                    <text x="80" y="84" textAnchor="middle" fill={isGenesis ? "rgba(212,175,55,0.95)" : "rgba(255,255,255,0.25)"} fontSize="22" fontFamily="monospace" fontWeight="300" style={{ textShadow: isGenesis ? "0 0 12px rgba(212,175,55,0.6)" : "none" }}>#{result.position_number}</text>
+                    {/* 星标 */}
+                    {isGenesis && (
+                      <>
+                        <polygon points="80,26 82,32 88,32 83,36 85,42 80,38 75,42 77,36 72,32 78,32" fill="rgba(212,175,55,0.7)" />
+                        <polygon points="80,112 82,106 88,106 83,102 85,96 80,100 75,96 77,102 72,106 78,106" fill="rgba(212,175,55,0.25)" />
+                      </>
+                    )}
+                    {/* 渐变定义 */}
+                    <defs>
+                      <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="rgba(212,175,55,0.9)" />
+                        <stop offset="50%" stopColor="rgba(180,140,40,0.3)" />
+                        <stop offset="100%" stopColor="rgba(212,175,55,0.9)" />
+                      </linearGradient>
+                      <linearGradient id="goldGradInner" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="rgba(180,140,40,0.5)" />
+                        <stop offset="100%" stopColor="rgba(212,175,55,0.5)" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  {/* 绶带 */}
                   {isGenesis && (
-                    <div className="absolute inset-0 rounded-full"
-                      style={{
-                        border: "1px solid rgba(212,175,55,0.25)",
-                        animation: "genesisBadgePulse 2s ease-in-out infinite",
-                      }} />
+                    <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ bottom: 4 }}>
+                      <div className="text-amber-400/40 text-[8px] tracking-[0.25em] uppercase font-mono">Genesis</div>
+                      <div className="text-amber-300/30 text-[7px] tracking-[0.15em] font-mono">Founding Tester</div>
+                    </div>
                   )}
                 </div>
               </div>
