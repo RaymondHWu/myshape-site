@@ -601,14 +601,17 @@ export default function MotionDemoClient() {
 
             {phase === "idle" && (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/30 z-10">
-                {/* Edge browser warning */}
-                {typeof window !== "undefined" && /Edg\//.test(window.navigator.userAgent) && (
+                {/* Chromium green screen warning */}
+                {typeof window !== "undefined" && /Chrome|Edg\//.test(window.navigator.userAgent) && !/Firefox/i.test(window.navigator.userAgent) && (
                   <div className="px-4 py-3 border border-amber-400/30 bg-amber-400/[0.06] text-center max-w-sm" style={{ borderRadius: 4 }}>
                     <p className="text-amber-300/80 text-[11px] leading-relaxed">
-                      Edge does not support camera access for this demo.
+                      Green screen or no camera? Chromium browsers (Chrome/Edge) often have WebGL webcam issues.
                     </p>
-                    <p className="text-white/30 text-[9px] mt-1">
-                      Please switch to <span className="text-white/50">Chrome</span> or <span className="text-white/50">Firefox</span>.
+                    <p className="text-white/50 text-[10px] mt-1.5">
+                      <span className="text-cyan-300">Firefox</span> is recommended — it works reliably with MediaPipe.
+                    </p>
+                    <p className="text-white/20 text-[8px] mt-1">
+                      On Chrome, try <span className="text-white/30">chrome://flags/#use-angle → OpenGL → Relaunch</span>
                     </p>
                   </div>
                 )}
