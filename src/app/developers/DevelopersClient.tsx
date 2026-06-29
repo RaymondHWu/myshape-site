@@ -3,6 +3,7 @@ import ProtocolHeader from "@/components/header/header";
 import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import ProtocolFooter from "@/components/footer/footer";
 import VerificationDashboard from "@/components/verification/VerificationDashboard";
+import DeveloperPlayground from "@/components/developer-playground/DeveloperPlayground";
 import { playTick } from "@/utils/useAudioTick";
 
 const hoverOn = (e: React.MouseEvent<HTMLElement>) => {
@@ -74,20 +75,87 @@ export default function DevelopersClient() {
           </div>
         </div>
 
-        {/* ── Quick Start ── */}
+        {/* ── Quick Start: 5-minute interactive ── */}
         <section className="mb-14">
-          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4">// QUICK_START</h2>
-          <div className="border border-cyan-400/20 bg-cyan-400/[0.02] p-5 overflow-x-auto relative group">
-            <pre className="text-cyan-200/70 text-[11px] leading-relaxed font-mono whitespace-pre">
-              {QUICK_START}
-            </pre>
-            <button onClick={() => { navigator.clipboard.writeText(QUICK_START); playTick(600, "sine", 0.06, 0.015); }}
-              className="absolute top-3 right-3 text-white/10 hover:text-cyan-400/60 text-[8px] tracking-[0.15em] uppercase transition-colors opacity-0 group-hover:opacity-100">
-              Copy
-            </button>
-          </div>
-          <div className="mt-2 text-white/20 text-[8px] tracking-[0.15em]">
-            TypeScript · Zero dependencies · Works with any MediaPipe-compatible camera
+          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-6">// QUICK_START (5 MIN)</h2>
+          <div className="space-y-4">
+            {[
+              {
+                step: "01",
+                title: "Get the SDK",
+                time: "30 sec",
+                code: `git clone https://github.com/myshapeprotocol/sdk.git
+cd sdk && npm install`,
+                desc: "Zero dependencies. TypeScript native. Works with Node.js 18+.",
+              },
+              {
+                step: "02",
+                title: "Capture Motion Frames",
+                time: "2 min",
+                code: `import { Pose } from "@mediapipe/pose";
+
+const pose = new Pose({ locateFile: (f) => ... });
+pose.onResults((results) => {
+  const frames = results.poseLandmarks;
+  // Each frame: 33 joints × { x, y, z, visibility }
+});`,
+                desc: "Use any MediaPipe-compatible camera. We recommend Firefox for WebGL stability.",
+              },
+              {
+                step: "03",
+                title: "Verify Presence",
+                time: "1 min",
+                code: QUICK_START,
+                desc: "That's it. Your app now rejects AI-generated motion at the protocol level.",
+              },
+              {
+                step: "04",
+                title: "See It Working",
+                time: "30 sec",
+                code: "",
+                desc: "",
+                isAction: true,
+              },
+            ].map((s) => (
+              <div key={s.step}
+                className="border border-white/5 bg-white/[0.01] hover:border-cyan-400/20 transition-all duration-500 overflow-hidden">
+                <div className="flex items-center gap-4 px-5 py-3 border-b border-white/5">
+                  <span className="text-cyan-400/40 text-[18px] font-light tracking-[0.1em]">{s.step}</span>
+                  <div className="flex-1">
+                    <span className="text-white/50 text-[11px] tracking-[0.2em] uppercase">{s.title}</span>
+                  </div>
+                  <span className="text-white/15 text-[9px] tracking-[0.1em]">{s.time}</span>
+                </div>
+                {!s.isAction && (
+                  <div className="p-5 bg-black/30 relative group">
+                    <pre className="text-cyan-200/60 text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
+                      {s.code}
+                    </pre>
+                    <button onClick={() => { navigator.clipboard.writeText(s.code.trim()); playTick(600, "sine", 0.06, 0.015); }}
+                      className="absolute top-3 right-3 text-white/10 hover:text-cyan-400/60 text-[8px] tracking-[0.15em] uppercase transition-colors opacity-0 group-hover:opacity-100">
+                      Copy
+                    </button>
+                  </div>
+                )}
+                {s.isAction && (
+                  <div className="p-5 flex gap-3">
+                    <a href="/motion-demo"
+                      onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
+                      className="px-5 py-2 border border-cyan-400/30 text-cyan-300/70 text-[10px] tracking-[0.2em] uppercase hover:bg-cyan-400/[0.06] hover:text-white transition-all">
+                      ◈ Try Live Demo →
+                    </a>
+                    <a href="#playground"
+                      onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
+                      className="px-5 py-2 border border-white/10 text-white/30 text-[10px] tracking-[0.2em] uppercase hover:border-cyan-400/30 hover:text-cyan-300/60 transition-all">
+                      ▼ Skip to Playground
+                    </a>
+                  </div>
+                )}
+                {s.desc && (
+                  <div className="px-5 pb-3 text-white/20 text-[9px] tracking-[0.08em]">{s.desc}</div>
+                )}
+              </div>
+            ))}
           </div>
         </section>
 
@@ -196,6 +264,53 @@ if (threat.overallVerdict === "human") {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* ── Developer Playground ── */}
+        <section className="mb-14" id="playground">
+          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4">// ONLINE_PLAYGROUND</h2>
+          <DeveloperPlayground />
+        </section>
+
+        {/* ── Developer Cohort ── */}
+        <section className="mb-14">
+          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4">// DEVELOPER_COHORT</h2>
+          <div className="border border-purple-400/20 bg-purple-400/[0.02] p-6">
+            <div className="flex flex-col lg:flex-row gap-6 items-start">
+              <div className="flex-1 space-y-3">
+                <div className="text-purple-300/60 text-[10px] tracking-[0.2em] uppercase">Early Ecosystem</div>
+                <p className="text-white/40 text-[12px] leading-relaxed max-w-lg">
+                  MyShape SDK is in active development. Join the Developer Cohort to get early access,
+                  influence the API design, and build the first wave of presence-verified applications.
+                </p>
+                <div className="space-y-1.5 pt-1">
+                  {[
+                    "Early SDK access before public release",
+                    "Direct line to protocol architects",
+                    "Your app featured on myshape.com/build",
+                    "Genesis Developer badge (on-chain record)",
+                  ].map((benefit, i) => (
+                    <div key={i} className="flex items-center gap-2 text-white/25 text-[10px]">
+                      <span className="text-purple-400/40 text-[8px]">◆</span>
+                      {benefit}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col gap-3 min-w-[220px]">
+                <a href="https://github.com/myshapeprotocol" target="_blank" rel="noopener noreferrer"
+                  onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
+                  className="px-6 py-3 border border-purple-400/30 text-purple-300/70 text-[10px] tracking-[0.2em] uppercase text-center hover:bg-purple-400/[0.06] hover:text-purple-200 transition-all">
+                  Star on GitHub →
+                </a>
+                <a href="/genesis"
+                  onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
+                  className="px-6 py-3 border border-cyan-400/25 text-cyan-300/60 text-[10px] tracking-[0.2em] uppercase text-center hover:bg-cyan-400/[0.06] hover:text-cyan-200 transition-all">
+                  Join Genesis Cohort →
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 
