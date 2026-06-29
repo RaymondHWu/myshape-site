@@ -845,7 +845,7 @@ async function main() {
   console.log("\n═".repeat(64));
   console.log("  Dashboard -> " + outPath);
   console.log("  HN: " + data.hn.length + " | LinkedIn: " + data.linkedin.length +
-    " | X: " + data.x.length + " | Bluesky: " + bskyCount +
+    " | X: " + data.x.length + " | Bluesky: " + (data.bluesky ? data.bluesky.length : 0) +
     " | 财经: " + (data.finance ? "✓" : "—"));
   console.log("  Protocol log synced -> PROTOCOL_LOG.md");
   console.log("═".repeat(64) + "\n");
