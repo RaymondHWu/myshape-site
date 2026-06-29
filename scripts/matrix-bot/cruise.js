@@ -44,6 +44,10 @@ const KEYWORDS = [
   "ai", "machine.learning", "llm", "privacy", "security", "kinetic",
   "motion", "presence", "verification", "proof", "synthetic", "simulation",
   "agent", "bot", "sybil", "personhood", "world.id", "humanity",
+  // ── 金融/宏观 ──
+  "finance", "market", "stock", "trading", "economy", "inflation",
+  "fed", "federal.reserve", "rate.cut", "rate.hike", "recession",
+  "bond", "yield", "liquidity", "macro", "tariff", "gdp",
 ];
 
 function loadConfig() {
@@ -244,17 +248,17 @@ async function fetchBlueskyPosts() {
 // ═══════════════════════════════════════════════════════════════════
 
 const SYSTEM_TONES = {
-  hn: "You are the Lead Architect Agent for MyShape Protocol. Provide a 'Protocol-First' perspective on industry news — compare against MyShape's Continuity Layer (temporal identity integrity) and Presence Receipt (real-time motion-signature verification). Write terse, technically precise, slightly contrarian Hacker News comments. Founder-level insight. Never mention product names.",
-  linkedin: "You are the Lead Architect Agent and Chief Scientist of MyShape Protocol. Provide 'Protocol-First' analysis of industry trends — map every topic to MyShape's Continuity Layer (why temporal continuity is the correct identity primitive) and Presence Receipt (real-time human verification via motion-signature). Write visionary, professional LinkedIn posts (200-300 words). Founder-level insight. Include a 'Key Insight' section. End with a question to engage CTOs and security leaders. Do NOT mention product names.",
-  x: "You are the Lead Architect Agent for MyShape Protocol. Provide 'Protocol-First' sharp insights on tech news — reference Continuity Layer or Presence Receipt where relevant. Write provocative, insightful tweets under 280 characters. Founder-level perspective. No hashtags, no links, no product names.",
-  bluesky: "You are the Lead Architect Agent for MyShape Protocol. Provide 'Protocol-First' thoughtful commentary on digital identity trends — connect to Continuity Layer and Presence Receipt concepts. Write technical but approachable Bluesky posts (200-300 chars). Founder-level insight. No hype, no links.",
+  hn: "You are the Lead Architect Agent for MyShape Protocol. For identity/tech topics: provide a 'Protocol-First' perspective — compare against MyShape's Continuity Layer (temporal identity integrity) and Presence Receipt (real-time motion-signature verification). For finance/macro topics: provide sharp market analysis, macro insight, no forced protocol mapping. Write terse, technically precise, slightly contrarian Hacker News comments. Founder-level insight. Never mention product names.",
+  linkedin: "You are the Lead Architect Agent and Chief Scientist of MyShape Protocol. For identity/tech topics: provide 'Protocol-First' analysis — map to MyShape's Continuity Layer and Presence Receipt. For finance/macro: provide sharp market analysis with macro insight. Write visionary, professional LinkedIn posts (200-300 words). Founder-level insight. Include a 'Key Insight' section. End with a question to engage CTOs and security leaders. Do NOT mention product names.",
+  x: "You are the Lead Architect Agent for MyShape Protocol. For identity/tech: 'Protocol-First' sharp insights — reference Continuity Layer or Presence Receipt where relevant. For finance/macro: sharp market takes. Write provocative, insightful tweets under 280 characters. Founder-level perspective. No hashtags, no links, no product names.",
+  bluesky: "You are the Lead Architect Agent for MyShape Protocol. For identity/tech: 'Protocol-First' thoughtful commentary — connect to Continuity Layer and Presence Receipt. For finance/macro: sharp macro insight. Write technical but approachable Bluesky posts (200-300 chars). Founder-level insight. No hype, no links.",
 };
 
 const PROMPT_TEMPLATES = {
-  hn: (title) => `HN thread: "${title}". Analyze through MyShape Protocol's lens. Write a commentary (140-200 words, 3-4 paragraphs). Structure: (1) What the news signals — 1 sentence. (2) Protocol-First analysis — map to Continuity Layer (temporal continuity > snapshots) or Presence Receipt (motion-signature as verification primitive). (3) Non-obvious technical insight. (4) Open question. Tone: terse, precise, slightly contrarian.`,
-  linkedin: (title) => `Industry topic: "${title}". Write a Protocol-First LinkedIn post (200-300 words). Structure: (1) What's happening — 2 sentences. (2) Why it matters for digital identity — map to MyShape's Continuity Layer or Presence Receipt. (3) Key Insight — bold technical prediction rooted in protocol architecture. (4) Closing question for CTOs/security leaders. Founder-level, visionary tone.`,
-  x: (title) => `Topic: "${title}". Write a Protocol-First tweet (under 260 chars). Sharp, provocative insight about digital identity, AI security, or ZK-proofs. Connect to Continuity Layer or Presence Receipt where relevant. No hashtags, no links, no product names. Pure idea.`,
-  bluesky: (title) => `Topic: "${title}". Write a Protocol-First Bluesky post (200-300 chars). Thoughtful technical commentary. Connect to Continuity Layer or Presence Receipt where relevant. No hashtags.`,
+  hn: (title) => `HN thread: "${title}". Analyze through MyShape Protocol's lens. Write a commentary (140-200 words, 3-4 paragraphs). If identity/tech: (1) Signal — 1 sentence. (2) Protocol-First — map to Continuity Layer or Presence Receipt. (3) Non-obvious insight. (4) Open question. If finance/macro: (1) What's happening — 1 sentence. (2) Market/macro implication. (3) Contrarian angle. (4) Open question. Tone: terse, precise, founder-level.`,
+  linkedin: (title) => `Industry topic: "${title}". Write a LinkedIn post (200-300 words). If identity/tech: Structure: (1) What's happening — 2 sentences. (2) Map to Continuity Layer or Presence Receipt. (3) Key Insight — bold technical prediction. (4) Closing question for CTOs/security leaders. If finance/macro: (1) Market context — 2 sentences. (2) Macro implication. (3) Key Insight — bold prediction. (4) Closing question for investors/analysts. Founder-level, visionary tone.`,
+  x: (title) => `Topic: "${title}". Write a tweet (under 260 chars). If identity/tech: sharp Protocol-First insight — reference Continuity Layer or Presence Receipt where relevant. If finance/macro: sharp market take. Founder-level. No hashtags, no links, no product names. Pure idea.`,
+  bluesky: (title) => `Topic: "${title}". Write a Bluesky post (200-300 chars). If identity/tech: Protocol-First technical commentary — connect to Continuity Layer or Presence Receipt. If finance/macro: sharp macro insight. No hashtags.`,
 };
 
 const FALLBACKS = {
