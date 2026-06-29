@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProtocolLayout from "@/components/layout/ProtocolLayout";
 import VortexScan from "@/components/ritual/VortexScan";
 import ConnectWallet from "@/components/auth/ConnectWallet";
+import GenesisIdentityCard from "@/components/genesis-identity-card/GenesisIdentityCard";
 import { playTick } from "@/utils/useAudioTick";
 import "./genesis.css";
 
@@ -17,6 +18,13 @@ export default function GenesisClient() {
   const [otp, setOtp] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [headerWallet, setHeaderWallet] = useState<string | null>(null);
+  const [nodeData, setNodeData] = useState<{
+    nodeHandle?: string;
+    positionNumber?: number;
+    entropyScore?: number;
+    particleLevel?: number;
+    timestamp?: string;
+  } | null>(null);
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   // 检测 Header 是否已连接钱包
@@ -24,6 +32,24 @@ export default function GenesisClient() {
     const saved = sessionStorage.getItem("wallet_address");
     if (saved) setHeaderWallet(saved);
   }, []);
+
+  // 校验完成 → 拉取节点身份数据
+  const finalizeGenesis = async (targetEmail: string) => {
+    try {
+      const res = await fetch(`/api/node/privileges?email=${encodeURIComponent(targetEmail)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setNodeData({
+          nodeHandle: data.node_handle || undefined,
+          positionNumber: data.position_number || undefined,
+          entropyScore: data.entropy_score ?? 0,
+          particleLevel: data.particle_level ?? 1,
+          timestamp: data.registered_at || undefined,
+        });
+      }
+    } catch { /* graceful — card shows defaults */ }
+    setStage("success");
+  };
 
   // 实时校验邀请码格式
   const handleInviteCodeChange = (value: string) => {
@@ -73,7 +99,7 @@ export default function GenesisClient() {
         sessionStorage.setItem("genesis_completed", "1");
         sessionStorage.setItem("genesis_email", cleanEmail || "wallet@" + headerWallet!.slice(2, 10));
         sessionStorage.setItem("genesis_status", "GENESIS_NODE");
-        setStage("success");
+        finalizeGenesis(cleanEmail || "wallet@" + headerWallet!.slice(2, 10));
         return;
       }
 
@@ -115,7 +141,7 @@ export default function GenesisClient() {
       sessionStorage.setItem("genesis_email", email.trim());
       if (data.status) sessionStorage.setItem("genesis_status", data.status);
       if (data.node_handle) sessionStorage.setItem("genesis_node_handle", data.node_handle);
-      setStage("success");
+      finalizeGenesis(email);
     } catch (err: unknown) {
       setStage("error");
       setErrorMsg((err as Error).message?.slice(0, 60) || "VERIFY_FAILED");
@@ -215,7 +241,7 @@ export default function GenesisClient() {
                             sessionStorage.setItem("genesis_completed", "1");
                             sessionStorage.setItem("genesis_email", email.trim().toLowerCase());
                             sessionStorage.setItem("genesis_status", walletData.is_genesis ? "GENESIS_NODE" : "ACTIVE");
-                            setStage("success");
+                            finalizeGenesis(email.trim().toLowerCase());
                           }
                         }}
                       />
@@ -420,13 +446,9 @@ export default function GenesisClient() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.7, ease: [0, 0.6, 0.3, 1] }}
                 className="relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
-                {/* 外光环 1 — 慢速大圈 */}
                 <div className="absolute inset-0 rounded-full genesis-halo-outer" />
-                {/* 外光环 2 — 中速中圈 */}
                 <div className="absolute inset-3 rounded-full genesis-halo-mid" />
-                {/* 内光环 — 快速小圈 */}
                 <div className="absolute inset-6 rounded-full genesis-halo-inner" />
-                {/* 中央辉点 */}
                 <motion.div
                   animate={{ scale: [1, 1.25, 1] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -434,59 +456,21 @@ export default function GenesisClient() {
                   style={{ background: "radial-gradient(circle at 35% 35%, #fff, rgba(120,200,255,0.9))" }} />
               </motion.div>
 
-              {/* ── Genesis Cohort 身份卡 ── */}
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                className="relative w-full max-w-sm genesis-success-card">
-                <div className="absolute -inset-[1px] rounded-sm genesis-card-glow" />
-                <div className="relative px-5 py-3 md:px-7 md:py-4 text-center"
-                  style={{ border: "1px solid rgba(144,200,255,0.2)", background: "rgba(4,14,28,0.9)" }}>
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <div className="w-1 h-1 rounded-full bg-cyan-300 genesis-success-dot-small" />
-                    <span className="text-cyan-400/50 font-mono text-[7px] tracking-[0.5em] uppercase">SIGNATURE_ACCEPTED</span>
-                  </div>
-                  <div className="text-cyan-200/85 font-mono text-[11px] tracking-[0.35em] uppercase mb-2"
-                    style={{ textShadow: "0 0 14px rgba(144,200,255,0.5)" }}>
-                    GENESIS_COHORT<br />IDENTITY_INITIALIZED
-                  </div>
-                  <div className="w-12 h-[1px] mx-auto mb-2 bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
-                  <p className="text-white/50 text-[9px] tracking-[0.2em] uppercase leading-relaxed mb-2">
-                    You are now a <span className="text-cyan-300/80">Genesis Founding Entity</span>.
-                  </p>
-                  <p className="text-white/35 text-[9px] tracking-[0.15em] uppercase leading-relaxed">
-                    Permanent tier. Never offered again.
-                  </p>
-                  <div className="mt-2 pt-2 border-t border-white/10">
-                    <span className="text-white/30 text-[9px] tracking-[0.15em] font-mono">
-                      SIG_KEY: {email.slice(0, 3)}****{email.slice(-4)}
-                    </span>
-                  </div>
-                </div>
-                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-300/60 genesis-card-corner" />
-                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-300/60 genesis-card-corner-tr" />
-                <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-300/60 genesis-card-corner-bl" />
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-300/60 genesis-card-corner" />
-              </motion.div>
-
-              {/* ── Genesis Cohort 专属徽标 ── */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.9, duration: 0.5 }}
-                className="flex items-center gap-3 px-5 py-2 border border-cyan-400/15 bg-cyan-400/[0.02]">
-                <span className="text-[9px] tracking-[0.3em] uppercase text-cyan-300/60"
-                  style={{ textShadow: "0 0 8px rgba(144,200,255,0.3)" }}>
-                  ◈ GENESIS_COHORT — FOUNDING_ENTITY
-                </span>
-              </motion.div>
+              {/* ── Genesis 身份卡（含权益+能量体+时间线+治理） ── */}
+              <GenesisIdentityCard
+                email={email}
+                nodeHandle={nodeData?.nodeHandle || sessionStorage.getItem("genesis_node_handle")}
+                positionNumber={nodeData?.positionNumber}
+                entropyScore={nodeData?.entropyScore}
+                particleLevel={nodeData?.particleLevel}
+                timestamp={nodeData?.timestamp}
+              />
 
               {/* ── 行动按钮 ── */}
               <motion.a
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.0, duration: 0.5 }}
+                transition={{ delay: 1.6, duration: 0.5 }}
                 href="/identity"
                 onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
                 className="relative group px-14 py-3.5 font-mono text-[9px] tracking-[0.35em] uppercase transition-all duration-500 overflow-hidden"
@@ -498,36 +482,14 @@ export default function GenesisClient() {
                 </span>
               </motion.a>
 
-              {/* 移动端隐藏：次要链接 */}
               <motion.a
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.3, duration: 0.5 }}
+                transition={{ delay: 1.8, duration: 0.5 }}
                 href="/motion-demo"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
                 className="hidden md:block text-cyan-400/25 hover:text-cyan-300/60 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
                 See_How_It_Works → Motion_Demo
-              </motion.a>
-
-              <motion.a
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.6, duration: 0.5 }}
-                href="https://tally.so/r/7Rj6z0"
-                target="_blank" rel="noopener noreferrer"
-                onMouseEnter={() => playTick(750, "sine", 0.07, 0.02)}
-                className="hidden md:block text-purple-400/30 hover:text-purple-300/70 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
-                ◈ Beta_Feedback → Report_Experience
-              </motion.a>
-
-              <motion.a
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.9, duration: 0.5 }}
-                href="/whitepaper#genesis-protocol"
-                onMouseEnter={() => playTick(700, "sine", 0.07, 0.02)}
-                className="hidden md:block text-cyan-400/20 hover:text-cyan-300/60 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
-                Deep_Dive → Read §7 of the Whitepaper
               </motion.a>
             </motion.div>
           )}
