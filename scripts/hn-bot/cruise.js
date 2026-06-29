@@ -14,6 +14,15 @@ const path = require("path");
 const yaml = require("js-yaml");
 const os = require("os");
 
+// ── 代理自动检测：VEE (15236) 自动挂载 ──
+const { execSync } = require("child_process");
+try {
+  execSync('netstat -ano | findstr "127.0.0.1:15236.*LISTENING"', { timeout: 2000, stdio: "ignore" });
+  process.env.HTTP_PROXY = "http://127.0.0.1:15236";
+  process.env.HTTPS_PROXY = "http://127.0.0.1:15236";
+  console.log("  Proxy: VEE detected (127.0.0.1:15236)");
+} catch { /* VEE not running */ }
+
 // ── Constants ──
 const HN_TOP_STORIES = "https://hacker-news.firebaseio.com/v0/topstories.json";
 const HN_ITEM = (id) => `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
