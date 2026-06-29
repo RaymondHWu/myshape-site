@@ -241,6 +241,51 @@ export async function POST(request: Request) {
       }
     }
 
+    // ── Reddit ──
+    if (platform === "reddit") {
+      const clientId = process.env.REDDIT_CLIENT_ID;
+      const clientSecret = process.env.REDDIT_CLIENT_SECRET;
+      const username = process.env.REDDIT_USERNAME;
+      const password = process.env.REDDIT_PASSWORD;
+      if (!clientId || !clientSecret || !username || !password) {
+        result.status = "SKIPPED";
+        result.error = "REDDIT_CREDENTIALS_MISSING (REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_USERNAME, REDDIT_PASSWORD)";
+        console.log("[matrix/publish] Reddit skipped — missing credentials");
+        return NextResponse.json({ success: false, ...result });
+      }
+      try {
+        // ① Get access token (password grant for script apps)
+        const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
+        const tokenRes = await fetch("https://www.reddit.com/api/v1/access_token", {
+          method: "POST",
+          headers: { "Authorization": `Basic ${auth}`, "Content-Type": "application/x-www-form-urlencoded" },
+          body: `grant_type=password&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`,
+        });
+        if (!tokenRes.ok) throw new Error("Reddit auth failed: " + tokenRes.status);
+        const tokenData = await tokenRes.json() as { access_token?: string };
+        if (!tokenData.access_token) throw new Error("Reddit: no access token returned");
+
+        // ② Submit post to user's profile (r/u_username)
+        const subreddit = process.env.REDDIT_SUBREDDIT || `u_${username}`;
+        const postRes = await fetch(`https://oauth.reddit.com/api/submit`, {
+          method: "POST",
+          headers: { "Authorization": `Bearer ${tokenData.access_token}`, "Content-Type": "application/x-www-form-urlencoded", "User-Agent": "MyShapeProtocol/1.0" },
+          body: `sr=${subreddit}&title=${encodeURIComponent(title || "MyShape Protocol Update")}&kind=self&text=${encodeURIComponent(content.slice(0, 40000))}`,
+        });
+        if (!postRes.ok) throw new Error("Reddit post failed: " + postRes.status + " " + (await postRes.text()).slice(0, 100));
+        const postData = await postRes.json() as { json?: { data?: { id?: string } } };
+        result.status = "PUBLISHED";
+        result.platform_post_id = postData.json?.data?.id || "unknown";
+        console.log("[matrix/publish] Reddit published:", result.platform_post_id);
+        return NextResponse.json({ success: true, ...result });
+      } catch (err: unknown) {
+        result.status = "FAILED";
+        result.error = err instanceof Error ? err.message : "Reddit error";
+        console.error("[matrix/publish] Reddit error:", result.error);
+        return NextResponse.json({ success: false, ...result });
+      }
+    }
+
     // ── Unknown / LINK-type platforms ──
     result.status = "PREVIEW";
     result.note = "LINK-type platform — handled client-side via clipboard + window.open";

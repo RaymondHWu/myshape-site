@@ -596,6 +596,13 @@ const PLATFORM_MAPPING = {
     cssClass: "tg-tag",
     cardClass: "card",
   },
+  reddit: {
+    type: "API",
+    label: "REDDIT",
+    icon: "🔴",
+    cssClass: "rd-tag",
+    cardClass: "card",
+  },
 };
 
 function generateDashboard(data) {
@@ -702,7 +709,8 @@ function generateDashboard(data) {
 	  .xhs-tag { color:#ff2442; border:1px solid rgba(255,36,66,.3); background:rgba(255,36,66,.06); }
 	  .th-tag { color:#ddd; border:1px solid rgba(221,221,221,.2); background:rgba(255,255,255,.03); }
 
-	  .fc-tag { color:#8b5cf6; border:1px solid rgba(139,92,246,.3); background:rgba(139,92,246,.06); } .dc-tag { color:#5865f2; border:1px solid rgba(88,101,242,.3); background:rgba(88,101,242,.06); } .tg-tag { color:#2aabee; border:1px solid rgba(42,171,238,.3); background:rgba(42,171,238,.06); }  .footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); color:var(--muted); font-size:10px; text-align:center; }
+	  .fc-tag { color:#8b5cf6; border:1px solid rgba(139,92,246,.3); background:rgba(139,92,246,.06); } .dc-tag { color:#5865f2; border:1px solid rgba(88,101,242,.3); background:rgba(88,101,242,.06); } .tg-tag { color:#2aabee; border:1px solid rgba(42,171,238,.3); background:rgba(42,171,238,.06); } 
+	  .rd-tag { color:#ff4500; border:1px solid rgba(255,69,0,.3); background:rgba(255,69,0,.06); } .footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); color:var(--muted); font-size:10px; text-align:center; }
   .copy-btn { background:var(--cyan); color:#000; border:none; padding:2px 8px; border-radius:3px; font-size:9px; cursor:pointer; float:right; opacity:.6; transition:opacity .2s; }
   .copy-btn:hover { opacity:1; }
   @media(max-width:900px){ .grid{grid-template-columns:1fr;} }
