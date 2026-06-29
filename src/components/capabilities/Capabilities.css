@@ -29,6 +29,14 @@
 .center:hover { transform: translateY(35px) scale(1.01); }
 .right:hover  { transform: translateY(-25px) scale(1.01); }
 
+/* Text hover states (replaces JS isHovered) */
+.cap-box:hover .cap-title          { color: #fff; }
+.cap-box:hover .cap-text-main      { color: rgba(255,255,255,0.85); }
+.cap-box:hover .cap-text-sub       { color: rgba(255,255,255,0.5); }
+.cap-box:hover .cap-text-highlight { color: rgba(144,200,255,0.85); }
+.cap-box:hover .param-key          { opacity: 0.5; }
+.cap-box:hover .param-val          { opacity: 0.8; }
+
 .cap-inner {
   position: relative;
   z-index: 2;

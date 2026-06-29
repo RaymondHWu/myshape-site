@@ -1,68 +1,46 @@
 "use client";
-
 import React, { useState, useCallback } from "react";
 import { playTick } from "@/utils/useAudioTick";
 import { useRouter } from "next/navigation";
 import "./Capabilities.css";
 
 /* ---------------------- 卡片组件 ---------------------- */
-
 type CardProps = {
   index: string; title: string; line1: string; line2: string; line3: string;
   params: Record<string, string>; side: string; motionType: string;
 };
 
-const CapabilityCard = ({
-  index, title, line1, line2, line3, params, side, motionType,
-}: CardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const themeColor = "144, 200, 255";
-
-  const playPrimitiveTick = () => playTick(750, "triangle", 0.10, 0.025);
-
-  return (
-    <div 
-      className={`cap-box ${side}`}
-      onMouseEnter={() => {
-        setIsHovered(true);
-        playPrimitiveTick();
-      }}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="cap-scan-line" />
-
-      <div className="cap-inner">
-        <div className="cap-header">
-          <span className="cap-index">PRIMITIVE_{index}</span>
-          <div className={`cap-visual-icon ${motionType}`}>
-            <div className="core-dot" />
-            <div className="ring r1" />
-            <div className="ring r2" />
-          </div>
-        </div>
-
-        <div className="cap-content">
-          <h3 className="cap-title" style={{ color: isHovered ? "#fff" : "rgba(255,255,255,0.85)" }}>{title}</h3>
-          <p className="cap-text-main" style={{ color: isHovered ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.6)" }}>{line1}</p>
-          <p className="cap-text-sub" style={{ color: isHovered ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.28)" }}>{line2}</p>
-          <p className="cap-text-highlight" style={{ color: isHovered ? "rgba(144,200,255,0.85)" : "rgba(144,200,255,0.5)" }}>{line3}</p>
-        </div>
-
-        <div className="cap-footer">
-          {Object.entries(params).map(([k, v]: [string, string]) => (
-            <div key={k} className="param-row">
-              <span className="param-key" style={{ opacity: isHovered ? 0.5 : 0.3 }}>{k}</span>
-              <span className="param-val" style={{ opacity: isHovered ? 0.8 : 0.6 }}>{v}</span>
-            </div>
-          ))}
+const CapabilityCard = ({ index, title, line1, line2, line3, params, side, motionType }: CardProps) => (
+  <div className={`cap-box ${side}`} onMouseEnter={() => playTick(750, "triangle", 0.10, 0.025)}>
+    <div className="cap-scan-line" />
+    <div className="cap-inner">
+      <div className="cap-header">
+        <span className="cap-index">PRIMITIVE_{index}</span>
+        <div className={`cap-visual-icon ${motionType}`}>
+          <div className="core-dot" />
+          <div className="ring r1" />
+          <div className="ring r2" />
         </div>
       </div>
+      <div className="cap-content">
+        <h3 className="cap-title">{title}</h3>
+        <p className="cap-text-main">{line1}</p>
+        <p className="cap-text-sub">{line2}</p>
+        <p className="cap-text-highlight">{line3}</p>
+      </div>
+      <div className="cap-footer">
+        {Object.entries(params).map(([k, v]) => (
+          <div key={k} className="param-row">
+            <span className="param-key">{k}</span>
+            <span className="param-val">{v}</span>
+          </div>
+        ))}
+      </div>
     </div>
-  );
-};
+  </div>
+);
 
 /* ---------------------- 主模块 ---------------------- */
-
 export default function Capabilities() {
   const router = useRouter();
   const [isDecrypting, setIsDecrypting] = useState(false);
@@ -78,153 +56,65 @@ export default function Capabilities() {
 
   const handleDecrypt = useCallback(() => {
     if (isDecrypting) return;
-    setIsDecrypting(true);
-    setIsGlitching(true);
-    setProgress(0);
-    setStatusText("");
+    setIsDecrypting(true); setIsGlitching(true); setProgress(0); setStatusText("");
     const startTime = Date.now();
-
-    // Phase 1: intensified glitch 0-400ms
     setTimeout(() => setIsGlitching(false), 400);
 
-    // Phase 2: typewriter sequence starting at 400ms
     const typeSequence = async () => {
       await new Promise((r) => setTimeout(r, 400));
-      for (let i = 1; i <= statusLines[0].length; i++) {
-        setStatusText(statusLines[0].substring(0, i));
-        await new Promise((r) => setTimeout(r, 15));
-      }
+      for (let i = 1; i <= statusLines[0].length; i++) { setStatusText(statusLines[0].substring(0, i)); await new Promise((r) => setTimeout(r, 15)); }
       await new Promise((r) => setTimeout(r, 120));
-      const prefix1 = statusLines[0] + "\n";
-      for (let i = 1; i <= statusLines[1].length; i++) {
-        setStatusText(prefix1 + statusLines[1].substring(0, i));
-        await new Promise((r) => setTimeout(r, 15));
-      }
+      const p1 = statusLines[0] + "\n";
+      for (let i = 1; i <= statusLines[1].length; i++) { setStatusText(p1 + statusLines[1].substring(0, i)); await new Promise((r) => setTimeout(r, 15)); }
       await new Promise((r) => setTimeout(r, 120));
-      const prefix2 = statusLines[0] + "\n" + statusLines[1] + "\n";
-      for (let i = 1; i <= statusLines[2].length; i++) {
-        setStatusText(prefix2 + statusLines[2].substring(0, i));
-        await new Promise((r) => setTimeout(r, 12));
-      }
+      const p2 = statusLines[0] + "\n" + statusLines[1] + "\n";
+      for (let i = 1; i <= statusLines[2].length; i++) { setStatusText(p2 + statusLines[2].substring(0, i)); await new Promise((r) => setTimeout(r, 12)); }
     };
     typeSequence();
 
-    // Phase 3: progress bar from 400ms to 2500ms
     const animate = () => {
       const elapsed = Date.now() - startTime;
-      if (elapsed < 400) {
-        setProgress(0);
-        requestAnimationFrame(animate);
-        return;
-      }
+      if (elapsed < 400) { setProgress(0); requestAnimationFrame(animate); return; }
       const t = Math.min((elapsed - 400) / 2100, 1);
-      const eased = 1 - Math.pow(1 - t, 3);
-      setProgress(eased * 100);
-      if (elapsed < 2500) {
-        requestAnimationFrame(animate);
-      } else {
-        router.push("/protocol");
-        setTimeout(() => {
-          setIsDecrypting(false);
-          setProgress(0);
-          setStatusText("");
-        }, 2000);
-      }
+      setProgress((1 - Math.pow(1 - t, 3)) * 100);
+      if (elapsed < 2500) requestAnimationFrame(animate);
+      else { router.push("/protocol"); setTimeout(() => { setIsDecrypting(false); setProgress(0); setStatusText(""); }, 2000); }
     };
     requestAnimationFrame(animate);
   }, [isDecrypting, router]);
 
   return (
-    <section style={{ 
-      width: "100%", 
-      padding: "clamp(4rem, 8vw, 10rem) 6%", 
-      display: "flex", 
-      flexDirection: "column", 
-      alignItems: "center",
-      background: "transparent"
-    }}>
-      
-      <div style={{ width: "100%", maxWidth: "1200px", display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "clamp(4rem, 10vw, 10rem)" }}>
-        <div style={{ maxWidth: "650px" }}>
-          <span style={{ fontSize: "9px", letterSpacing: "0.6em", color: "rgba(255, 255, 255, 0.2)", display: "block", marginBottom: "1rem", textTransform: "uppercase" }}>
-            CAPABILITIES
-          </span>
-          <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 300, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#fff", margin: 0 }}>
-            Sovereignty as <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>Protocol.</span>
+    <section className="w-full flex flex-col items-center bg-transparent"
+      style={{ padding: "clamp(4rem, 8vw, 10rem) 6%" }}>
+
+      <div className="w-full max-w-[1200px] flex justify-between items-end mb-[clamp(4rem,10vw,10rem)]">
+        <div className="max-w-[650px]">
+          <span className="text-[9px] tracking-[0.6em] text-white/20 block mb-4 uppercase">CAPABILITIES</span>
+          <h2 className="text-[clamp(2rem,5vw,3.2rem)] font-light -tracking-[0.02em] leading-[1.1] text-white m-0">
+            Sovereignty as <span className="text-cyan-400/80">Protocol.</span>
           </h2>
-          <p style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", fontWeight: 300, color: "rgba(255,255,255,0.7)", marginTop: "1.8rem", maxWidth: "550px", lineHeight: 1.7 }}>
+          <p className="text-[clamp(0.9rem,2vw,1.1rem)] font-light text-white/70 mt-7 max-w-[550px] leading-[1.7]">
             A unified suite of primitives for secure, behavioral identity in the age of AI.
           </p>
         </div>
 
-        {/* 2. 修改右侧区域：增加跳转按钮 */}
-        <div style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "2rem" }}>
-          <div style={{ 
-            fontSize: "0.8rem", opacity: 0.3, color: "rgba(144,200,255,0.7)", 
-            textAlign: "right", borderRight: "1px solid rgba(144,200,255,0.15)", 
-            paddingRight: "1.5rem", lineHeight: "1.8", fontFamily: "monospace"
-          }}>
+        <div className="text-right flex flex-col items-end gap-8">
+          <div className="text-[0.8rem] text-cyan-400/30 text-right border-r border-cyan-400/15 pr-6 leading-[1.8] font-mono">
             PROTOCOL_CORE_V1.86<br />// STREAM: ENCRYPTED<br />// STATE: ACTIVE
           </div>
-          
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.6rem", marginTop: "20px" }}>
-            <button
-              onClick={handleDecrypt}
-              disabled={isDecrypting}
-              className={`decrypt-btn ${isGlitching ? 'glitch-active' : ''}`}
-              style={{
-                padding: "0.8rem 1.5rem",
-                border: "none",
-                color: isDecrypting ? "rgba(144, 200, 255, 0.4)" : "rgba(144, 200, 255, 0.8)",
-                fontSize: "0.7rem",
-                letterSpacing: "0.6em",
-                textTransform: "uppercase",
-                cursor: isDecrypting ? "not-allowed" : "pointer",
-                background: "transparent",
-                transition: "all 0.3s",
-                position: "relative",
-                overflow: "hidden",
-              }}
-              onMouseOver={(e) => {
-                if (!isDecrypting) {
-                  e.currentTarget.style.color = "#fff";
-                }
-              }}
-              onMouseOut={(e) => {
-                if (!isDecrypting) {
-                  e.currentTarget.style.color = "rgba(144, 200, 255, 0.8)";
-                }
-              }}
-            >
+          <div className="flex flex-col items-end gap-2.5 mt-5">
+            <button onClick={handleDecrypt} disabled={isDecrypting}
+              className="decrypt-btn px-5 py-3 border-none bg-transparent transition-all duration-300 relative overflow-hidden uppercase tracking-[0.6em] text-[0.7rem]"
+              style={{ color: isDecrypting ? "rgba(144,200,255,0.4)" : "rgba(144,200,255,0.8)", cursor: isDecrypting ? "not-allowed" : "pointer" }}>
               DECRYPT_CORE_DOCS →
             </button>
-
             {isDecrypting && (
               <>
-                <div style={{
-                  width: "100%",
-                  height: "4px",
-                  background: "rgba(255,255,255,0.1)",
-                  borderRadius: "2px",
-                  overflow: "hidden",
-                }}>
-                  <div style={{
-                    width: `${progress}%`,
-                    height: "100%",
-                    background: "#22d3ee",
-                    borderRadius: "2px",
-                    transition: "width 0.08s linear",
-                  }} />
+                <div className="w-full h-1 bg-white/10 rounded-sm overflow-hidden">
+                  <div className="h-full bg-cyan-400 rounded-sm transition-[width] duration-[0.08s] ease-linear"
+                    style={{ width: `${progress}%` }} />
                 </div>
-                <span style={{
-                  fontFamily: "monospace",
-                  fontSize: "0.5rem",
-                  color: "rgba(255,255,255,0.4)",
-                  letterSpacing: "0.2em",
-                  whiteSpace: "pre-line",
-                  textAlign: "right",
-                  lineHeight: "1.6",
-                }}>
+                <span className="font-mono text-[0.5rem] text-white/40 tracking-[0.2em] whitespace-pre-line text-right leading-[1.6]">
                   {statusText}
                 </span>
               </>
@@ -233,31 +123,22 @@ export default function Capabilities() {
         </div>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", maxWidth: "1200px", gap: "3rem", flexWrap: "wrap" }}>
-        <CapabilityCard
-          index="01" side="left" motionType="lock"
-          title="Neural Lock"
-          line1="Bind identity to your motion geometry."
+      <div className="flex items-center justify-center w-full max-w-[1200px] gap-12 flex-wrap">
+        <CapabilityCard index="01" side="left" motionType="lock"
+          title="Neural Lock" line1="Bind identity to your motion geometry."
           line2="A cryptographic tether forged from your unique physiological topology."
           line3="Unforgeable. Uncopyable. Irreversible."
-          params={{ MOTION_HASH: "SEALED", FORGE_RISK: "NULL" }}
-        />
-        <CapabilityCard
-          index="02" side="center" motionType="privacy"
-          title="ZK-Privacy"
-          line1="Protect your geometry with zero-knowledge proofs."
+          params={{ MOTION_HASH: "SEALED", FORGE_RISK: "NULL" }} />
+        <CapabilityCard index="02" side="center" motionType="privacy"
+          title="ZK-Privacy" line1="Protect your geometry with zero-knowledge proofs."
           line2="Verification without exposure. Data never leaves the enclave."
           line3="EXPOSURE: ZERO. PRIVACY: ABSOLUTE."
-          params={{ EXPOSURE: "ZERO", ZK_STATE: "ACTIVE" }}
-        />
-        <CapabilityCard
-          index="03" side="right" motionType="omni"
-          title="Omni-Presence"
-          line1="Deploy one identity across infinite agents."
+          params={{ EXPOSURE: "ZERO", ZK_STATE: "ACTIVE" }} />
+        <CapabilityCard index="03" side="right" motionType="omni"
+          title="Omni-Presence" line1="Deploy one identity across infinite agents."
           line2="A unified protocol presence that persists across systems."
           line3="SYNC: CONTINUOUS. PERSISTENCE: 100%."
-          params={{ SYNC_STATE: "CONTI", AGENT_LINKS: "ACTIVE" }}
-        />
+          params={{ SYNC_STATE: "CONTI", AGENT_LINKS: "ACTIVE" }} />
       </div>
     </section>
   );
