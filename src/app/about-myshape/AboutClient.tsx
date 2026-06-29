@@ -94,14 +94,9 @@ export default function About() {
                 <div
                   key={principle.label}
                   ref={el => { principlesRef.current[i] = el; }}
-                  onMouseEnter={e => { playTick(600, "sine", 0.08, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.4)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.12)"; }}
+                  onMouseEnter={() => playTick(600, "sine", 0.08, 0.015)}
                   className={`decrypt-card p-8 border transition-all duration-700 group relative overflow-hidden ${isVisible ? "visible" : ""}`}
-                  style={{
-                    borderColor: "rgba(144,200,255,0.12)",
-                    background: "transparent",
-                    transitionDelay: `${i * 0.2}s`,
-                  }}
+                  style={{ transitionDelay: `${i * 0.2}s` }}
                 >
                   {/* 解密扫描线 */}
                   <div className="decrypt-scan absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent pointer-events-none" />
@@ -129,12 +124,7 @@ export default function About() {
           onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
         >
           {/* 外围粒子辉光 */}
-          <div className="absolute -inset-4 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
-            style={{
-              background: "radial-gradient(ellipse at 50% 50%, rgba(34,211,238,0.06) 0%, transparent 70%)",
-              filter: "blur(20px)",
-            }}
-          />
+          <div className="absolute -inset-4 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none about-lab-glow" />
           {/* 冷色调粒子点阵 */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             {Array.from({ length: 12 }).map((_, i) => (
@@ -151,11 +141,9 @@ export default function About() {
             ))}
           </div>
 
-          <div className="absolute inset-0 border scale-[1.02] group-hover:scale-100 transition-transform duration-700"
-            style={{ borderColor: "rgba(144,200,255,0.12)" }} />
+          <div className="absolute inset-0 border scale-[1.02] group-hover:scale-100 transition-transform duration-700 about-lab-border" />
 
-          <div className="p-12 border relative z-10 transition-all duration-500"
-            style={{ borderColor: "rgba(144,200,255,0.12)", background: "rgba(4,14,28,0.3)", backdropFilter: "blur(8px)" }}>
+          <div className="p-12 border relative z-10 transition-all duration-500 about-lab-panel">
             <div className="flex flex-col md:flex-row gap-12 items-center">
               <div className="flex-1 space-y-6">
                 <h3 className="text-white/80 text-sm tracking-[0.5em] uppercase font-bold">
@@ -174,8 +162,7 @@ export default function About() {
                 {/* LOCATION: [ENCRYPTED] — 强化视觉权重 */}
                 <div className="relative">
                   <div className="absolute inset-0 bg-cyan-400/5 blur-md rounded" />
-                  <span className="relative text-cyan-400/80 text-[12px] tracking-[0.5em] font-bold italic"
-                    style={{ textShadow: "0 0 16px rgba(34,211,238,0.4)" }}>
+                  <span className="relative text-cyan-400/80 text-[12px] tracking-[0.5em] font-bold italic about-location-text">
                     LOCATION: [ENCRYPTED]
                   </span>
                 </div>
