@@ -21,15 +21,8 @@ const os = require("os");
 //  CONFIG
 // ═══════════════════════════════════════════════════════════════════
 
-// ── 代理自动检测：VEE (15236) 用于日常，Clash (7890) 仅用于 Bluesky ──
-const { execSync } = require("child_process");
-try {
-  execSync('netstat -ano | findstr "127.0.0.1:15236.*LISTENING"', { timeout: 2000, stdio: "ignore" });
-  process.env.HTTP_PROXY = "http://127.0.0.1:15236";
-  process.env.HTTPS_PROXY = "http://127.0.0.1:15236";
-  console.log("  ╺ Proxy: VEE detected (127.0.0.1:15236) — routing external traffic via VEE");
-} catch { /* VEE not running, direct connection */ }
-
+// ── 代理策略：国内API直连，仅Bluesky走Clash ──
+// 不再设置全局代理——避免干扰东方财富/网易财经等国内数据源
 const CLASH_PROXY = { protocol: "http", host: "127.0.0.1", port: 7890 };
 const CLASH_PROXY_URL = "http://127.0.0.1:7890";
 
