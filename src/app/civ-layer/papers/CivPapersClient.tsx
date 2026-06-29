@@ -99,7 +99,7 @@ export default function CivPapers() {
                     {paper.locked ? (
                       <div className="text-[8px] text-white/10 tracking-[0.3em] font-bold uppercase">Encrypted_Access</div>
                     ) : (
-                      <a href={paper.id === "PAPER_01" ? "/civ-layer/papers/core-protocol" : paper.id === "PAPER_06" ? "/civ-layer/papers/protocol-architecture" : paper.id === "PAPER_10" ? "/civ-layer/papers/civilization-roadmap" : "#"} className="text-cyan-500 hover:text-white text-[10px] tracking-[0.4em] uppercase font-bold transition-all flex items-center gap-2 group/btn">
+                      <a href={paper.id === "PAPER_01" ? "/civ-layer/papers/core-protocol" : paper.id === "PAPER_06" ? "/civ-layer/papers/protocol-architecture" : paper.id === "PAPER_10" ? "/civ-layer/papers/civilization-roadmap" : "/papers"} className="text-cyan-500 hover:text-white text-[10px] tracking-[0.4em] uppercase font-bold transition-all flex items-center gap-2 group/btn">
                         <span>READ_PAPER</span>
                         <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                       </a>
