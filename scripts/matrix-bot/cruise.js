@@ -21,6 +21,10 @@ const os = require("os");
 //  CONFIG
 // ═══════════════════════════════════════════════════════════════════
 
+// ── 代理分流：仅 Bluesky 走 Clash，其余 API 全部直连 ──
+const CLASH_PROXY = { protocol: "http", host: "127.0.0.1", port: 7890 };
+const CLASH_PROXY_URL = "http://127.0.0.1:7890";
+
 const AGNES_URL = "https://apihub.agnes-ai.com/v1/chat/completions";
 const HN_TOP = "https://hacker-news.firebaseio.com/v0/topstories.json";
 const HN_ITEM = (id) => `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
@@ -202,7 +206,7 @@ async function fetchBlueskyPosts() {
   const queries = ["digital+identity", "zk+proof"];
   for (const q of queries) {
     try {
-      const { data } = await axios.get(BLUESKY_SEARCH + "?q=" + q + "&limit=3", { timeout: 8000 });
+      const { data } = await axios.get(BLUESKY_SEARCH + "?q=" + q + "&limit=3", { proxy: CLASH_PROXY, timeout: 30000 });
       if (data?.posts) {
         for (const p of data.posts) {
           const text = (p.record?.text || "").slice(0, 200);
@@ -369,6 +373,12 @@ async function pushToBluesky(text, replyText) {
     return { success: false };
   }
 
+  // ── Bluesky 专属代理：仅此调用走 Clash ──
+  const prevHttp = process.env.HTTP_PROXY;
+  const prevHttps = process.env.HTTPS_PROXY;
+  process.env.HTTP_PROXY = CLASH_PROXY_URL;
+  process.env.HTTPS_PROXY = CLASH_PROXY_URL;
+
   const agent = new BskyAgent({ service: "https://bsky.social" });
 
   try {
@@ -399,6 +409,9 @@ async function pushToBluesky(text, replyText) {
   } catch (error) {
     console.error("  ❌ Bluesky synchronizer encountered an error:", error.message);
     return { success: false };
+  } finally {
+    process.env.HTTP_PROXY = prevHttp;
+    process.env.HTTPS_PROXY = prevHttps;
   }
 }
 
