@@ -1,68 +1,25 @@
 "use client";
-
-import React, { useState } from "react";
+import React from "react";
 import { playTick } from "@/utils/useAudioTick";
 import "./Vision.css";
 
 /* ---------------------- 卡片组件 ---------------------- */
-interface CardProps {
-  index: number;
-  glyph: string;
-  title: string;
-  desc1: string;
-  desc2?: string;
-}
+interface CardProps { index: number; glyph: string; title: string; desc1: string; desc2?: string; }
 
-const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => {
-  const [hover, setHover] = useState(false);
-  const themeColor = "144, 200, 255"; 
-
-  const playHoverTick = () => playTick(800, "triangle", 0.10, 0.025);
-
-  return (
-    <div
-      onMouseEnter={() => {
-        setHover(true);
-        playHoverTick();
-      }}
-      onMouseLeave={() => setHover(false)}
-      className="vision-card-container"
-      style={hover ? {
-        border: `1px solid rgba(${themeColor}, 0.35)`,
-        background: `radial-gradient(circle at top left, rgba(${themeColor}, 0.06) 0%, transparent 70%)`,
-        boxShadow: `0 12px 32px -8px rgba(${themeColor}, 0.12)`,
-        transform: "translateY(-4px)",
-        transition: "all 0.5s cubic-bezier(0.2, 1, 0.3, 1)",
-        '--v-hover': 1,
-      } as React.CSSProperties : {
-        border: `1px solid rgba(${themeColor}, 0.1)`,
-        background: "transparent",
-        boxShadow: "none",
-        transform: "none",
-        transition: "all 0.5s cubic-bezier(0.2, 1, 0.3, 1)",
-        '--v-hover': 0.4,
-      } as React.CSSProperties}
-    >
-      <div className="v-scan-line" />
-
-      <div className="vision-card-header">
-         <div className={`vision-glyph ${hover ? 'active' : ''}`}>
-            {glyph}
-          </div>
-          <div className="vision-card-index">
-            V_{String(index).padStart(2, "0")}
-          </div>
-      </div>
-
-      <div className="vision-text-wrapper">
-        <h3 className="vision-card-title" style={{ color: hover ? "#fff" : "rgba(255,255,255,0.8)" }}>{title}</h3>
-        <p className="vision-card-desc-main" style={{ color: hover ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)" }}>{desc1}</p>
-        {desc2 && <p className="vision-card-desc-sub" style={{ color: hover ? "rgba(255,255,255,0.45)" : "rgba(255,255,255,0.22)" }}>{desc2}</p>}
-      </div>
-
+const VisionCard = ({ index, glyph, title, desc1, desc2 }: CardProps) => (
+  <div className="vision-card-container" onMouseEnter={() => playTick(800, "triangle", 0.10, 0.025)}>
+    <div className="v-scan-line" />
+    <div className="vision-card-header">
+      <div className="vision-glyph">{glyph}</div>
+      <div className="vision-card-index">V_{String(index).padStart(2, "0")}</div>
     </div>
-  );
-};
+    <div className="vision-text-wrapper">
+      <h3 className="vision-card-title">{title}</h3>
+      <p className="vision-card-desc-main">{desc1}</p>
+      {desc2 && <p className="vision-card-desc-sub">{desc2}</p>}
+    </div>
+  </div>
+);
 
 /* ---------------------- 主模块 ---------------------- */
 export default function Vision() {
@@ -72,65 +29,30 @@ export default function Vision() {
     { glyph: "◎", title: "AI‑Native Existence", desc1: "Persistent across agents.", desc2: "Continuity in synthetic layers." },
     { glyph: "⊡", title: "Temporal Record", desc1: "Immutable history of presence.", desc2: "Decentralized state persistence." },
     { glyph: "⟁", title: "Kinematic Privacy", desc1: "End-to-end motion encryption.", desc2: "Secure physical intent." },
-    { glyph: "⌬", title: "Neural Synthesis", desc1: "Bridge between form and code.", desc2: "Algorithmic self-definition." }
+    { glyph: "⌬", title: "Neural Synthesis", desc1: "Bridge between form and code.", desc2: "Algorithmic self-definition." },
   ];
 
   return (
-    <section style={{ 
-      width: "100%", padding: "10rem 6%", display: "flex", 
-      flexDirection: "column", alignItems: "center",
-      background: "transparent",
-      fontFamily: "var(--font-geist-sans), sans-serif",
-    }}>
-      <div style={{ maxWidth: "1200px", width: "100%" }}>
-        
-        {/* 标题组 */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "8rem" }}>
-          <div style={{ maxWidth: "650px" }}>
-            <span style={{ fontSize: "9px", letterSpacing: "0.6em", color: "rgba(255, 255, 255, 0.2)", display: "block", marginBottom: "1rem", textTransform: "uppercase" }}>
-              VISION
-            </span>
-            <h2 style={{ 
-              fontSize: "3.2rem", 
-              fontWeight: 300, 
-              letterSpacing: "-0.02em", 
-              lineHeight: 1.1, 
-              color: "#fff", 
-              margin: 0 
-            }}>
-              Identity as <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>Geometry.</span>
+    <section className="w-full py-40 px-[6%] flex flex-col items-center bg-transparent"
+      style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}>
+      <div className="max-w-[1200px] w-full">
+        <div className="flex justify-between items-end mb-32">
+          <div className="max-w-[650px]">
+            <span className="text-[9px] tracking-[0.6em] text-white/20 block mb-4 uppercase">VISION</span>
+            <h2 className="text-[3.2rem] font-light -tracking-[0.02em] leading-[1.1] text-white m-0">
+              Identity as <span className="text-cyan-400/80">Geometry.</span>
             </h2>
-            <p style={{ 
-              fontSize: "1.1rem", 
-              fontWeight: 300, 
-              color: "rgba(255,255,255,0.7)", 
-              marginTop: "1.8rem", 
-              maxWidth: "550px", 
-              lineHeight: 1.7 
-            }}>
+            <p className="text-[1.1rem] font-light text-white/70 mt-7 max-w-[550px] leading-[1.7]">
               A cryptographic layer defining the future of human-AI interaction through motion-native primitives.
             </p>
           </div>
-
-          {/* 右侧协议状态 */}
-          <div style={{
-            fontSize: "0.8rem", opacity: 0.3, color: "rgba(144,200,255,0.7)", 
-            textAlign: "right", borderRight: "1px solid rgba(144,200,255,0.15)", 
-            paddingRight: "1.5rem", lineHeight: "1.8", fontFamily: "monospace", marginBottom: "5px"
-          }}>
+          <div className="text-[0.8rem] text-cyan-400/30 text-right border-r border-cyan-400/15 pr-6 leading-[1.8] font-mono mb-[5px]">
             PROTOCOL_VISION_V1.0<br />{"// STATE: ACTIVE"}
           </div>
         </div>
 
-        {/* 网格布局 */}
-        <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", 
-          gap: "2.5rem" 
-        }}>
-          {cards.map((c, i) => (
-            <VisionCard key={i} index={i + 1} {...c} />
-          ))}
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-10">
+          {cards.map((c, i) => <VisionCard key={i} index={i + 1} {...c} />)}
         </div>
       </div>
     </section>
