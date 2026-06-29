@@ -41,8 +41,8 @@ export default function ProtocolLayout({
 
       {/* 2. 頁面內容主體 */}
       <main className="flex flex-col flex-1 pt-24 md:pt-40 pb-4 md:pb-10 px-4 md:px-10 max-w-5xl mx-auto relative z-10 animate-fade-in w-full protocol-main">
-        {/* 桌面端：页面标题区 */}
-        <div className="hidden md:block relative mb-8 md:mb-24 border-b border-white/10 pb-6 md:pb-12">
+        {/* 页面标题区 */}
+        <div className="relative mb-8 md:mb-24 border-b border-white/10 pb-6 md:pb-12">
           <div className="flex justify-between items-end">
             <div>
               {renderSigil ? (
@@ -56,7 +56,7 @@ export default function ProtocolLayout({
                 {title.replace(/_/g, ' ')}
               </h1>
             </div>
-            <div className="hidden md:block text-[9px] tracking-[0.3em] text-right uppercase leading-loose font-mono">
+            <div className="text-[10px] tracking-[0.3em] text-right uppercase leading-loose font-mono">
               <span style={{ color: 'rgba(255,255,255,0.35)' }}>
                 SECURITY_LVL: {secLevel}
               </span>

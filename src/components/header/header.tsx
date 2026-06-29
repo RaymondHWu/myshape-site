@@ -425,9 +425,9 @@ const ProtocolHeader = () => {
     }}>
       {[
         { label: "Protocol", href: "/protocol", mobile: true },
-        { label: "Vision",   href: "/vision",    mobile: false },
-        { label: "Build",    href: "/developers", mobile: false },
-        { label: "Demo",     href: "/motion-demo", mobile: false },
+        { label: "Vision",   href: "/vision",    mobile: true },
+        { label: "Build",    href: "/developers", mobile: true },
+        { label: "Demo",     href: "/motion-demo", mobile: true },
         { label: "Arch",     href: "/architecture", mobile: true },
         { label: "Genesis",  href: "/genesis", mobile: true },
         { label: "Blog",     href: "/blog",       mobile: true },
@@ -445,7 +445,7 @@ const ProtocolHeader = () => {
               e.currentTarget.style.textShadow = active ? "0 0 8px rgba(34,211,238,0.2)" : "none";
             }}
             style={{
-              fontSize: "9px", letterSpacing: "0.2em",
+              fontSize: "10px", letterSpacing: "0.15em", padding: "6px 4px",
               color: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "rgb(34, 211, 238)" : "rgba(255,255,255,0.45)",
               textShadow: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "0 0 10px rgba(34,211,238,0.5)" : "none",
               textDecoration: "none", textTransform: "uppercase", transition: "all 0.3s ease",
