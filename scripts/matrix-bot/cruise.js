@@ -475,8 +475,7 @@ async function generateLinkedInTopics(hnStories) {
 // ═══════════════════════════════════════════════════════════════════
 
 async function pushToBluesky(text, replyText) {
-  const bskyHandle = process.env.BLUESKY_IDENTIFIER || process.env.BLUESKY_HANDLE;
-  if (!bskyHandle || !process.env.BLUESKY_PASSWORD) {
+  if (!process.env.BLUESKY_HANDLE || !process.env.BLUESKY_PASSWORD) {
     console.log("  ⚠️  Bluesky credentials missing in .env. Skipping broadcast.");
     return { success: false };
   }
@@ -491,7 +490,7 @@ async function pushToBluesky(text, replyText) {
 
   try {
     await agent.login({
-      identifier: bskyHandle,
+      identifier: process.env.BLUESKY_HANDLE,
       password: process.env.BLUESKY_PASSWORD,
     });
     console.log("  🤖 Bluesky Matrix Client authenticated successfully.");
@@ -529,94 +528,23 @@ async function pushToBluesky(text, replyText) {
 
 // ── 全平台分发协议映射 ──
 const PLATFORM_MAPPING = {
-  linkedin: {
-    type: "API",
-    label: "LINKEDIN",
-    icon: "🔗",
-    cssClass: "li-tag",
-    cardClass: "linkedin",
-  },
-  bluesky: {
-    type: "API",
-    label: "BLUESKY",
-    icon: "☁",
-    cssClass: "bs-tag",
-    cardClass: "bluesky-card",
-  },
-  x: {
-    type: "LINK",
-    label: "X / TWITTER",
-    icon: "𝕏",
-    cssClass: "x-tag",
-    cardClass: "x-card",
-    targetUrl: "https://twitter.com/intent/tweet?text=",
-  },
-  xiaohongshu: {
-    type: "LINK",
-    label: "小红书 / RED",
-    icon: "📕",
-    cssClass: "xhs-tag",
-    cardClass: "card",
-    targetUrl: "https://www.xiaohongshu.com/explore",
-  },
-  threads: {
-    type: "LINK",
-    label: "THREADS",
-    icon: "🧵",
-    cssClass: "th-tag",
-    cardClass: "card",
-    targetUrl: "https://www.threads.net/intent/post?text=",
-  },
-  hn: {
-    type: "LINK",
-    label: "HACKER NEWS",
-    icon: "▲",
-    cssClass: "hn-tag",
-    cardClass: "hn",
-    targetUrl: "https://news.ycombinator.com/submit",
-  },
-  farcaster: {
-    type: "API",
-    label: "FARCASTER",
-    icon: "⊡",
-    cssClass: "fc-tag",
-    cardClass: "card",
-  },
-  discord: {
-    type: "API",
-    label: "DISCORD",
-    icon: "◆",
-    cssClass: "dc-tag",
-    cardClass: "card",
-  },
-  telegram: {
-    type: "API",
-    label: "TELEGRAM",
-    icon: "✈",
-    cssClass: "tg-tag",
-    cardClass: "card",
-  },
-  reddit: {
-    type: "API",
-    label: "REDDIT",
-    icon: "🔴",
-    cssClass: "rd-tag",
-    cardClass: "card",
-  },
+  linkedin:  { type: "API",  icon: "🔗", tagClass: "li-tag" },
+  bluesky:   { type: "API",  icon: "☁",  tagClass: "bs-tag" },
+  farcaster: { type: "API",  icon: "⊡",  tagClass: "fc-tag" },
+  discord:   { type: "API",  icon: "◆",  tagClass: "dc-tag" },
+  telegram:  { type: "API",  icon: "✈",  tagClass: "tg-tag" },
+  reddit:    { type: "API",  icon: "🔴", tagClass: "rd-tag" },
+  x:         { type: "LINK", icon: "𝕏",  tagClass: "x-tag" },
+  hn:        { type: "LINK", icon: "▲",  tagClass: "hn-tag" },
 };
 
 function generateDashboard(data) {
   const now = new Date().toISOString().replace("T", " ").slice(0, 19);
 
   const hnCards = (data.hn || []).map((d) => {
-    const p = PLATFORM_MAPPING.hn;
-    const payload = JSON.stringify({
-      platform: "hn", publishType: p.type,
-      targetUrl: (p.targetUrl || "") + encodeURIComponent(d.title),
-      content: d.post || d.comment || "", title: d.title, url: d.url,
-    }).replace(/"/g, "&quot;");
-    return '<div class="card ' + p.cardClass + '" data-platform="hn" data-publish-type="' + p.type + '" data-target-url="' + ((p.targetUrl || "") + encodeURIComponent(d.title || "")) + '" data-payload="' + payload + '">' +
-    '<div class="platform-tag ' + p.cssClass + '">' + p.icon + ' HACKER NEWS</div>' +
+    const payload = JSON.stringify({ platform: "hn", content: d.post || d.comment || "", title: d.title, url: d.url }).replace(/"/g, "&quot;");
+    return '<div class="card hn" data-platform="hn" data-payload="' + payload + '">' +
+    '<div class="platform-tag hn-tag">HACKER NEWS</div>' +
     '<div class="source"><a href="' + d.url + '" target="_blank">' + esc(d.title) + '</a>' +
     '<span class="meta">' + d.score + ' pts &middot; ' + d.comments + ' comments</span></div>' +
     '<div class="text">' + esc(d.post || d.comment || "") + '</div>' +
@@ -624,14 +552,10 @@ function generateDashboard(data) {
   }).join("");
 
   const linkedInCards = (data.linkedin || []).map((d) => {
-    const p = PLATFORM_MAPPING.linkedin;
-    const payload = JSON.stringify({
-      platform: "linkedin", publishType: p.type,
-      content: d.post || "", title: d.title, url: d.source,
-    }).replace(/"/g, "&quot;");
-    return '<div class="card ' + p.cardClass + '" data-platform="linkedin" data-publish-type="' + p.type + '" data-payload="' + payload + '">' +
+    const payload = JSON.stringify({ platform: "linkedin", content: d.post || "", title: d.title, url: d.source }).replace(/"/g, "&quot;");
+    return '<div class="card linkedin" data-platform="linkedin" data-payload="' + payload + '">' +
     (d.image ? '<img src="' + d.image + '" style="width:100%;max-height:200px;object-fit:cover;border-radius:4px;margin-bottom:12px;" loading="lazy" />' : '') +
-    '<div class="platform-tag ' + p.cssClass + '">' + p.icon + ' LINKEDIN</div>' +
+    '<div class="platform-tag li-tag">LINKEDIN</div>' +
     '<div class="source"><a href="' + d.source + '" target="_blank">' + esc(d.title) + '</a>' +
     '<span class="meta">' + esc(d.angle || "Industry Insight") + '</span></div>' +
     '<div class="text li-text">' + esc(d.post || "") + '</div>' +
@@ -639,27 +563,18 @@ function generateDashboard(data) {
   }).join("");
 
   const xCards = (data.x || []).map((d) => {
-    const p = PLATFORM_MAPPING.x;
-    const payload = JSON.stringify({
-      platform: "x", publishType: p.type,
-      targetUrl: p.targetUrl + encodeURIComponent(d.post || ""),
-      content: d.post || "", title: d.topic || "", url: "",
-    }).replace(/"/g, "&quot;");
-    return '<div class="card ' + p.cardClass + '" data-platform="x" data-publish-type="' + p.type + '" data-target-url="' + (p.targetUrl + encodeURIComponent(d.post || "")) + '" data-payload="' + payload + '">' +
-    '<div class="platform-tag ' + p.cssClass + '">' + p.icon + ' X / TWITTER</div>' +
+    const payload = JSON.stringify({ platform: "x", content: d.post || "", title: d.topic || "", url: "" }).replace(/"/g, "&quot;");
+    return '<div class="card x-card" data-platform="x" data-payload="' + payload + '">' +
+    '<div class="platform-tag x-tag">X / TWITTER</div>' +
     '<div class="text x-text">' + esc(d.post || "") + '</div>' +
     '<div class="meta">Topic: ' + esc(d.topic || "") + '</div>' +
     '<div class="card-actions" style="margin-top:10px;display:flex;gap:6px;justify-content:flex-end"></div></div>';
   }).join("");
 
   const blueskyCards = (data.bluesky || []).map((d) => {
-    const p = PLATFORM_MAPPING.bluesky;
-    const payload = JSON.stringify({
-      platform: "bluesky", publishType: p.type,
-      content: d.text || "", title: "@" + (d.author || ""), url: d.url || "",
-    }).replace(/"/g, "&quot;");
-    return '<div class="card ' + p.cardClass + '" data-platform="bluesky" data-publish-type="' + p.type + '" data-payload="' + payload + '">' +
-    '<div class="platform-tag ' + p.cssClass + '">' + p.icon + ' BLUESKY</div>' +
+    const payload = JSON.stringify({ platform: "bluesky", content: d.text || "", title: "@" + (d.author || ""), url: d.url || "" }).replace(/"/g, "&quot;");
+    return '<div class="card bluesky-card" data-platform="bluesky" data-payload="' + payload + '">' +
+    '<div class="platform-tag bs-tag">BLUESKY</div>' +
     '<div class="source"><a href="' + (d.url || "#") + '" target="_blank">@' + esc(d.author || "unknown") + '</a>' +
     '<span class="meta">' + (d.likes || 0) + ' likes &middot; ' + (d.reposts || 0) + ' reposts</span></div>' +
     '<div class="text">' + esc(d.text || "") + '</div>' +
@@ -696,7 +611,7 @@ function generateDashboard(data) {
   .hn-tag { color:var(--amber); border:1px solid rgba(210,153,29,.3); background:rgba(210,153,29,.06); }
   .li-tag { color:var(--cyan); border:1px solid rgba(88,166,255,.3); background:rgba(88,166,255,.06); }
   .x-tag { color:#ddd; border:1px solid rgba(221,221,221,.2); background:rgba(255,255,255,.03); }
-  .bs-tag { color:var(--purple); border:1px solid rgba(163,113,247,.3); background:rgba(163,113,247,.06); }
+  .bs-tag { color:var(--purple); border:1px solid rgba(163,113,247,.3); background:rgba(163,113,247,.06); } .fc-tag { color:#8b5cf6; border:1px solid rgba(139,92,246,.3); background:rgba(139,92,246,.06); } .dc-tag { color:#5865f2; border:1px solid rgba(88,101,242,.3); background:rgba(88,101,242,.06); } .tg-tag { color:#2aabee; border:1px solid rgba(42,171,238,.3); background:rgba(42,171,238,.06); } .rd-tag { color:#ff4500; border:1px solid rgba(255,69,0,.3); background:rgba(255,69,0,.06); } .matrix-status { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;padding:14px 18px;border:1px solid rgba(144,200,255,.1);border-radius:8px;background:rgba(144,200,255,.02);align-items:center } .ms-chip { display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:3px;font-size:9px;letter-spacing:.08em } .ms-api { background:rgba(63,185,80,.1);color:#3fb950;border:1px solid rgba(63,185,80,.2) } .ms-link { background:rgba(88,166,255,.1);color:#58a6ff;border:1px solid rgba(88,166,255,.2) }
   .source { margin-bottom:10px; }
   .source a { color:var(--cyan); text-decoration:none; font-size:13px; font-weight:600; }
   .source a:hover { text-decoration:underline; }
@@ -706,43 +621,28 @@ function generateDashboard(data) {
   .x-text { font-size:13px; line-height:1.5; }
   .x-card { border-left:2px solid rgba(255,255,255,.1); }
   .bluesky-card { border-left:2px solid rgba(163,113,247,.2); }
-	  .xhs-tag { color:#ff2442; border:1px solid rgba(255,36,66,.3); background:rgba(255,36,66,.06); }
-	  .th-tag { color:#ddd; border:1px solid rgba(221,221,221,.2); background:rgba(255,255,255,.03); }
-
-	  .fc-tag { color:#8b5cf6; border:1px solid rgba(139,92,246,.3); background:rgba(139,92,246,.06); } .dc-tag { color:#5865f2; border:1px solid rgba(88,101,242,.3); background:rgba(88,101,242,.06); } .tg-tag { color:#2aabee; border:1px solid rgba(42,171,238,.3); background:rgba(42,171,238,.06); } 
-	  .rd-tag { color:#ff4500; border:1px solid rgba(255,69,0,.3); background:rgba(255,69,0,.06); } .footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); color:var(--muted); font-size:10px; text-align:center; }
+  .footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); color:var(--muted); font-size:10px; text-align:center; }
   .copy-btn { background:var(--cyan); color:#000; border:none; padding:2px 8px; border-radius:3px; font-size:9px; cursor:pointer; float:right; opacity:.6; transition:opacity .2s; }
   .copy-btn:hover { opacity:1; }
-	  .matrix-status { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; padding:14px 18px; border:1px solid rgba(144,200,255,0.1); border-radius:8px; background:rgba(144,200,255,0.02); align-items:center; }
-	  .ms-chip { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:3px; font-size:9px; letter-spacing:.08em; }
-	  .ms-api { background:rgba(63,185,80,0.1); color:#3fb950; border:1px solid rgba(63,185,80,0.2); }
-	  .ms-link { background:rgba(88,166,255,0.1); color:#58a6ff; border:1px solid rgba(88,166,255,0.2); }
-	  .ms-count { font-family:monospace; font-size:11px; margin-left:2px; }
-	  .ms-sep { color:rgba(255,255,255,0.1); margin:0 4px; }
   @media(max-width:900px){ .grid{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
 <h1>MyShape Protocol — Matrix Dashboard <span class="cn">矩阵仪表盘</span></h1>
 <div class="subtitle">Generated / 生成时间: ${now} UTC &middot; HN + LinkedIn + X + Bluesky &middot; <span style="color:var(--green)">●</span> Live</div>
-	<div id="linkedin-auth-bar" style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding:10px 16px;border:1px solid rgba(88,166,255,0.2);border-radius:6px;background:rgba(88,166,255,0.03)">
+	<div id="linkedin-auth-bar" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 16px;border:1px solid rgba(88,166,255,0.2);border-radius:6px;background:rgba(88,166,255,0.03)">
 	  <span style="color:#58a6ff;font-size:11px;letter-spacing:.1em">LinkedIn</span>
-	  <span id="linkedin-auth-status" style="font-size:10px;color:#8b949e">unknown</span>
-	  <a href="/api/matrix/auth/linkedin" target="_blank" id="linkedin-auth-btn"
-	    style="margin-left:auto;padding:6px 16px;background:rgba(88,166,255,0.15);color:#58a6ff;border:1px solid rgba(88,166,255,0.3);border-radius:4px;font-size:10px;text-decoration:none;letter-spacing:.1em;cursor:pointer;transition:all .2s"
-	    onmouseenter="this.style.background='rgba(88,166,255,0.3)';this.style.color='#fff'"
-	    onmouseleave="this.style.background='rgba(88,166,255,0.15)';this.style.color='#58a6ff'"
-	    >Authorize / 授权</a>
+	  <span style="font-size:10px;color:#8b949e">OAuth needed for publish</span>
+	  <a href="/api/matrix/auth/linkedin" target="_blank" style="margin-left:auto;padding:6px 16px;background:rgba(88,166,255,0.15);color:#58a6ff;border:1px solid rgba(88,166,255,0.3);border-radius:4px;font-size:10px;text-decoration:none;letter-spacing:.1em">Authorize / 授权</a>
+	</div>
+	<div class="matrix-status">
+	  <span class="ms-chip ms-api">⚡ API Auto: <span style="font-family:monospace;font-size:11px;margin-left:2px">6</span></span>
+	  <span style="color:rgba(255,255,255,0.1);margin:0 4px">|</span>
+	  <span class="ms-chip ms-link">🔗 Link Manual: <span style="font-family:monospace;font-size:11px;margin-left:2px">3</span></span>
+	  <span style="font-size:9px;color:#484f58;margin-left:auto">API = push &middot; LINK = clipboard+open</span>
 	</div>
 
-
-	<div class="matrix-status">
-	  <span class="ms-chip ms-api">⚡ API Auto: <span class="ms-count">5</span></span>
-	  <span class="ms-sep">|</span>
-	  <span class="ms-chip ms-link">🔗 Link Manual: <span class="ms-count">4</span></span>
-	  <span class="ms-sep">|</span>
-	  <span style="font-size:9px;color:#484f58;margin-left:auto">API = 异步推送 &middot; LINK = 剪贴板+跳转</span>
-	</div><div class="grid">
+<div class="grid">
   <div>
     <div class="section-title full">Hacker News — Technical Comments<span class="cn">技术评论</span></div>
     ${hnCards || '<div class="card"><div class="text" style="color:var(--muted)">No HN stories matched this cycle. / 本轮无匹配的 HN 文章。</div></div>'}
@@ -838,205 +738,6 @@ ${financeCard}
 	      }, 3000);
 	    });
 	  };
-	  actions.appendChild(pubBtn);
-	});
-	</script>
-</body>
-</html>`;
-}
-
-function esc(s) {
-  return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  MAIN
-// ═══════════════════════════════════════════════════════════════════
-
-async function main() {
-  console.log("═".repeat(64));
-  console.log("  MyShape Protocol — Social Matrix Cruiser v2.0");
-  console.log("═".repeat(64));
-
-  const data = { hn: [], linkedin: [], x: [], bluesky: [], finance: null };
-
-  // 1. HN — fetch + generate comments
-  const hnStories = await fetchHNStories();
-  for (const s of hnStories.slice(0, 8)) {
-    console.log('  HN: "' + s.title.slice(0, 55) + '..."');
-    const post = await generatePost("hn", s.title);
-    data.hn.push({ ...s, post });
-    await DELAY(1200);
-  }
-  console.log("  HN done: " + data.hn.length + " drafts");
-
-  // 2. LinkedIn — derived from HN enterprise-angle
-  const liTopics = await generateLinkedInTopics(hnStories);
-  data.linkedin = liTopics;
-
-  // 3. X — generate short tweets from HN topics
-  console.log("\n--- X / Twitter ---");
-  for (const s of hnStories.slice(0, 5)) {
-    console.log('  X: "' + s.title.slice(0, 50) + '..."');
-    const post = await generatePost("x", s.title);
-    const media = (data.x.length < 2) ? await attachMedia("x", s.title) : {};
-    data.x.push({ topic: s.title, post, ...media });
-    await DELAY(2000);
-  }
-  console.log("  X done: " + data.x.length + " tweets");
-
-  // 4. Bluesky — fetch real posts + troll detection
-  const bsPosts = await fetchBlueskyPosts();
-  for (const post of bsPosts.slice(0, 6)) {
-    if (isTroll(post.text || "")) {
-      const defense = await handleTrollResponse(post.text);
-      if (defense) data.x.push({ topic: "Troll Response", post: defense.content, image: null });
-    }
-  }
-  data.bluesky = bsPosts.slice(0, 6);
-
-  // 5. 自动执行：同步创世集结文案到 Bluesky
-  console.log("\n--- Matrix Automator: Broadcasting Genesis to Bluesky ---");
-  const mainText = `We leaked the core Rust/WASM code for MYSHAPE PROTOCOL — The Sovereign 3D Identity Layer. 🌐✨\n\nThe 120-dim motion-signature engine is LIVE, but running on "vacuum defaults."\n\nWe need exactly 300 pioneers to ignite the core PCA defense. Drop your specimen. 👇`;
-  const subText = `🔬 The Genesis Calibration Ritual\n\n1️⃣ Go to: myshape.com/motion-demo\n2️⃣ Connect via SIWE or OTP (sets your node_handle)\n3️⃣ Complete a 30-sec anonymous motion scan\n\nWatch the RESEARCH bar dot from 0 to 300. Help us train the ROC defense. ◈ Let's build it.`;
-  
-  const bskyResult = await pushToBluesky(mainText, subText);
-  let bskyCount = data.bluesky.length;
-  if (bskyResult.success) {
-    bskyCount += 1;
-  }
-
-  // ── 5.5 财经早报 (A股 + 中文财经) ──
-  const isWeekday = new Date().getDay();
-  if (isWeekday >= 1 && isWeekday <= 5) {
-    const [marketData, cnNews] = await Promise.all([fetchAMarketData(), fetchCNFinanceNews()]);
-    if (marketData.length || cnNews.length) {
-      console.log("\n--- 财经早报 ---");
-      const briefing = await generateFinanceBriefing(marketData, cnNews);
-      data.finance = { briefing, marketData, newsCount: cnNews.length, generatedAt: new Date().toISOString() };
-      console.log("  财经早报: " + (briefing ? briefing.length + " chars" : "failed"));
-    }
-  } else {
-    console.log("\n--- 财经早报: 周末跳过 ---");
-  }
-
-  // 6. Dashboard
-  const outPath = path.join(__dirname, "matrix_dashboard.html");
-  const html = generateDashboard(data);
-  fs.writeFileSync(outPath, html, "utf8");
-  try { const pd = path.join(__dirname, "..", "..", "public"); if (fs.existsSync(pd)) fs.writeFileSync(path.join(pd, "matrix-dashboard.html"), html, "utf8"); } catch {}
-
-  // 7. Sync to protocol log — all posts become immutable protocol record
-  const publishedPath = path.join(__dirname, "..", "agent-workflow", "published.json");
-  try {
-    const allPosts = [
-      ...data.hn.map(p => ({ platform: "hn", content: p.post || "", tags: [], source: p.url, publishedAt: new Date().toISOString() })),
-      ...data.linkedin.map(p => ({ platform: "linkedin", content: p.post || "", tags: [], source: p.source, publishedAt: new Date().toISOString() })),
-      ...data.x.map(p => ({ platform: "x", content: p.post || "", tags: [], source: p.topic, publishedAt: new Date().toISOString() })),
-    ];
-    const existing = fs.existsSync(publishedPath) ? JSON.parse(fs.readFileSync(publishedPath, "utf8")) : [];
-    fs.writeFileSync(publishedPath, JSON.stringify([...existing, ...allPosts], null, 2));
-    try { require(path.join(__dirname, "..", "agent-workflow", "log")); } catch {}
-  } catch { /* graceful */ }
-
-  console.log("\n═".repeat(64));
-  console.log("  Dashboard -> " + outPath);
-  console.log("  HN: " + data.hn.length + " | LinkedIn: " + data.linkedin.length +
-    " | X: " + data.x.length + " | Bluesky: " + bskyCount +
-    " | 财经: " + (data.finance ? "✓" : "—"));
-  console.log("  Protocol log synced -> PROTOCOL_LOG.md");
-  console.log("═".repeat(64) + "\n");
-}
-
-main().catch((e) => { console.error("Fatal:", e.message); process.exit(1); })<script>
-	// ── 全平台分发：API 异步推送 / LINK 剪贴板+跳转 ──
-	document.querySelectorAll('.card').forEach(card => {
-	  const actions = card.querySelector('.card-actions');
-	  if (!actions) return;
-
-	  const publishType = card.getAttribute('data-publish-type') || 'LINK';
-	  const targetUrl = card.getAttribute('data-target-url') || '';
-
-	  // Copy button
-	  const copyBtn = document.createElement('button');
-	  copyBtn.className = 'copy-btn';
-	  copyBtn.textContent = 'Copy / 复制';
-	  copyBtn.onclick = () => {
-	    const text = card.querySelector('.text')?.textContent || '';
-	    navigator.clipboard.writeText(text.trim()).then(() => {
-	      copyBtn.textContent = 'Copied / 已复制';
-	      setTimeout(() => { copyBtn.textContent = 'Copy / 复制'; }, 1500);
-	    });
-	  };
-	  actions.appendChild(copyBtn);
-
-	  // Publish button — dual mode
-	  const pubBtn = document.createElement('button');
-	  pubBtn.className = 'publish-btn';
-	  const isAPI = publishType === 'API';
-
-	  if (isAPI) {
-	    // ── API 模式：异步推送到 /api/matrix/publish ──
-	    pubBtn.textContent = 'API Push / 推送';
-	    pubBtn.style.cssText = 'background:rgba(63,185,80,0.15);color:#3fb950;border:1px solid rgba(63,185,80,0.3);padding:2px 8px;border-radius:3px;font-size:9px;cursor:pointer;transition:all .2s';
-	    pubBtn.onmouseenter = () => { pubBtn.style.background = 'rgba(63,185,80,0.3)'; pubBtn.style.color = '#fff'; };
-	    pubBtn.onmouseleave = () => { pubBtn.style.background = 'rgba(63,185,80,0.15)'; pubBtn.style.color = '#3fb950'; };
-	    pubBtn.onclick = () => {
-	      const ps = card.getAttribute('data-payload') || '{}';
-	      const payload = JSON.parse(ps.replace(/&quot;/g, '"'));
-	      pubBtn.textContent = 'Pushing...';
-	      pubBtn.disabled = true; pubBtn.style.opacity = '0.6';
-	      fetch('/api/matrix/publish', {
-	        method: 'POST',
-	        headers: { 'Content-Type': 'application/json' },
-	        body: JSON.stringify(payload),
-	      })
-	      .then(r => r.json())
-	      .then(data => {
-	        pubBtn.textContent = data.success ? 'Published / 已推送' : (data.error || 'Failed');
-	        pubBtn.style.background = data.success ? 'rgba(63,185,80,0.4)' : 'rgba(210,153,29,0.3)';
-	        pubBtn.style.color = data.success ? '#3fb950' : '#d2991d';
-	      })
-	      .catch(() => {
-	        console.log('== API Publish Failed — Preview ==', payload);
-	        pubBtn.textContent = 'API Down / 预览';
-	        pubBtn.style.background = 'rgba(88,166,255,0.3)';
-	        pubBtn.style.color = '#58a6ff';
-	      })
-	      .finally(() => {
-	        setTimeout(() => {
-	          pubBtn.disabled = false; pubBtn.style.opacity = '1';
-	          pubBtn.textContent = 'API Push / 推送';
-	          pubBtn.style.background = 'rgba(63,185,80,0.15)';
-	          pubBtn.style.color = '#3fb950';
-	        }, 3000);
-	      });
-	    };
-	  } else {
-	    // ── LINK 模式：剪贴板复制 + 打开发布页 ──
-	    pubBtn.textContent = 'Copy + Open / 复制并发布';
-	    pubBtn.style.cssText = 'background:rgba(88,166,255,0.15);color:#58a6ff;border:1px solid rgba(88,166,255,0.3);padding:2px 8px;border-radius:3px;font-size:9px;cursor:pointer;transition:all .2s';
-	    pubBtn.onmouseenter = () => { pubBtn.style.background = 'rgba(88,166,255,0.3)'; pubBtn.style.color = '#fff'; };
-	    pubBtn.onmouseleave = () => { pubBtn.style.background = 'rgba(88,166,255,0.15)'; pubBtn.style.color = '#58a6ff'; };
-	    pubBtn.onclick = () => {
-	      const text = card.querySelector('.text')?.textContent || '';
-	      navigator.clipboard.writeText(text.trim()).then(() => {
-	        pubBtn.textContent = 'Copied! Opening...';
-	        pubBtn.style.background = 'rgba(88,166,255,0.3)';
-	        if (targetUrl) {
-	          setTimeout(() => { window.open(targetUrl, '_blank'); }, 500);
-	        }
-	        setTimeout(() => {
-	          pubBtn.textContent = 'Copy + Open / 复制并发布';
-	          pubBtn.style.background = 'rgba(88,166,255,0.15)';
-	        }, 3000);
-	      }).catch(() => {
-	        pubBtn.textContent = 'Clipboard Error';
-	        pubBtn.style.background = 'rgba(210,153,29,0.3)';
-	        pubBtn.style.color = '#d2991d';
-	      });
-	    };
-	  }
 	  actions.appendChild(pubBtn);
 	});
 	</script>
