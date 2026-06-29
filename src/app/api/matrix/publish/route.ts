@@ -97,20 +97,63 @@ export async function POST(request: Request) {
 
     // ── LinkedIn ──
     if (platform === "linkedin") {
-      const clientId = process.env.LINKEDIN_CLIENT_ID;
-      const clientSecret = process.env.LINKEDIN_CLIENT_SECRET;
-      // LinkedIn requires OAuth2 user token — not yet implemented
-      // For now: log + return preview status
-      if (!clientId || !clientSecret) {
+      const userToken = process.env.LINKEDIN_USER_ACCESS_TOKEN;
+
+      if (!userToken) {
         result.status = "SKIPPED";
-        result.error = "LINKEDIN_CREDENTIALS_MISSING";
-        console.log("[matrix/publish] LinkedIn skipped — missing LINKEDIN_CLIENT_ID or LINKEDIN_CLIENT_SECRET");
-      } else {
-        result.status = "PREVIEW";
-        result.note = "LinkedIn OAuth2 user token not configured. Credentials found — ready for next phase.";
-        console.log("[matrix/publish] LinkedIn preview:", JSON.stringify({ title, content_length: content.length }));
+        result.error = "LINKEDIN_USER_ACCESS_TOKEN not configured. Run /api/matrix/auth/linkedin to authorize.";
+        console.log("[matrix/publish] LinkedIn skipped — no user access token");
+        return NextResponse.json({ success: false, ...result });
       }
-      return NextResponse.json({ success: true, ...result });
+
+      try {
+        // Get user info to find the member URN
+        const meRes = await fetch("https://api.linkedin.com/v2/userinfo", {
+          headers: { Authorization: "Bearer " + userToken },
+        });
+        if (!meRes.ok) throw new Error("LinkedIn userinfo failed: " + meRes.status);
+        const me = await meRes.json() as { sub: string };
+        const memberUrn = `urn:li:person:${me.sub}`;
+
+        // Post using /v2/posts (LinkedIn Community Management API)
+        const postBody = {
+          author: memberUrn,
+          commentary: content,
+          visibility: "PUBLIC",
+          distribution: { feedDistribution: "MAIN_FEED", targetEntities: [], thirdPartyDistributionChannels: [] },
+          lifecycleState: "PUBLISHED",
+          isReshareDisabledByAuthor: false,
+        };
+
+        const postRes = await fetch("https://api.linkedin.com/v2/posts", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + userToken,
+            "Content-Type": "application/json",
+            "X-Restli-Protocol-Version": "2.0.0",
+            "LinkedIn-Version": "202406",
+          },
+          body: JSON.stringify(postBody),
+        });
+
+        if (!postRes.ok) {
+          const errText = await postRes.text();
+          throw new Error("LinkedIn post failed: " + postRes.status + " " + errText.slice(0, 200));
+        }
+
+        const postId = postRes.headers.get("x-restli-id") || "unknown";
+        result.status = "PUBLISHED";
+        result.platform_post_id = postId;
+        console.log("[matrix/publish] LinkedIn published:", postId);
+        return NextResponse.json({ success: true, ...result });
+
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : "Unknown LinkedIn error";
+        result.status = "FAILED";
+        result.error = msg;
+        console.error("[matrix/publish] LinkedIn error:", msg);
+        return NextResponse.json({ success: false, ...result });
+      }
     }
 
     // ── Unknown / LINK-type platforms ──

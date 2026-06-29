@@ -689,6 +689,15 @@ function generateDashboard(data) {
 <body>
 <h1>MyShape Protocol — Matrix Dashboard <span class="cn">矩阵仪表盘</span></h1>
 <div class="subtitle">Generated / 生成时间: ${now} UTC &middot; HN + LinkedIn + X + Bluesky &middot; <span style="color:var(--green)">●</span> Live</div>
+	<div id="linkedin-auth-bar" style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding:10px 16px;border:1px solid rgba(88,166,255,0.2);border-radius:6px;background:rgba(88,166,255,0.03)">
+	  <span style="color:#58a6ff;font-size:11px;letter-spacing:.1em">LinkedIn</span>
+	  <span id="linkedin-auth-status" style="font-size:10px;color:#8b949e">unknown</span>
+	  <a href="/api/matrix/auth/linkedin" target="_blank" id="linkedin-auth-btn"
+	    style="margin-left:auto;padding:6px 16px;background:rgba(88,166,255,0.15);color:#58a6ff;border:1px solid rgba(88,166,255,0.3);border-radius:4px;font-size:10px;text-decoration:none;letter-spacing:.1em;cursor:pointer;transition:all .2s"
+	    onmouseenter="this.style.background='rgba(88,166,255,0.3)';this.style.color='#fff'"
+	    onmouseleave="this.style.background='rgba(88,166,255,0.15)';this.style.color='#58a6ff'"
+	    >Authorize / 授权</a>
+	</div>
 
 <div class="grid">
   <div>
