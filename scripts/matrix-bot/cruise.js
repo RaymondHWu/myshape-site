@@ -616,7 +616,7 @@ function generateDashboard(data) {
   .bluesky-card { border-left:2px solid rgba(163,113,247,.2); }
   .footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); color:var(--muted); font-size:10px; text-align:center; }
   .copy-btn { background:var(--cyan); color:#000; border:none; padding:2px 8px; border-radius:3px; font-size:9px; cursor:pointer; float:right; opacity:.6; transition:opacity .2s; }
-  .copy-btn:hover { opacity:1; }
+  .copy-btn:hover { opacity:1; }.recruit-panel { margin-top:20px;border:1px solid rgba(144,200,255,0.1);border-radius:8px;padding:14px 18px;background:rgba(144,200,255,0.02) } .recruit-row { display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03);font-size:10px } .recruit-row:last-child { border-bottom:none } .recruit-cohort { font-size:8px;padding:1px 6px;border-radius:2px } .rc-genesis { background:rgba(210,153,29,0.15);color:#d2991d } .rc-public { background:rgba(88,166,255,0.1);color:#58a6ff }
 	  .cmd-center { margin-bottom:20px;padding:16px 20px;border:1px solid rgba(144,200,255,0.2);border-radius:8px;background:rgba(144,200,255,0.03); }
 	  .cmd-input { width:100%;min-height:80px;background:#02040a;border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#c9d1d9;padding:10px;font-size:11px;resize:vertical;font-family:inherit;margin-bottom:10px;outline:none }
 	  .cmd-input:focus { border-color:rgba(88,166,255,0.5); }
@@ -705,7 +705,14 @@ function generateDashboard(data) {
 
 ${financeCard}
 
-<div class="footer">
+
+	<div class="recruit-panel" id="recruit-panel">
+	  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+	    <span style="color:#d2991d;font-size:10px;letter-spacing:.15em;font-weight:600">◈ RECRUITMENT / 招募看板</span>
+	    <span style="font-size:9px;color:#8b949e" id="recruit-count">Loading...</span>
+	  </div>
+	  <div id="recruit-list" style="color:#6e7681;font-size:10px">Loading...</div>
+	</div><div class="footer">
   MyShape Protocol &middot; Social Matrix Cruiser v2.0 &middot; Protocol-First Analysis 协议优先分析 &middot; Generated ${now}
 </div>
 
@@ -766,7 +773,13 @@ ${financeCard}
 	  status.textContent='完成! '+ok.length+' 成功'+(fail.length?', '+fail.length+' 失败':'');
 	  if(fail.length)console.log('Failures:',fail.join('; '));
 	}
-	</script>
+	
+	fetch('/api/recruitment/list').then(r=>r.json()).then(d=>{
+	  var el=document.getElementById('recruit-count');el.textContent=d.total+'申请 | Genesis '+d.genesis_count+'/'+d.genesis_cap;
+	  var list=document.getElementById('recruit-list');list.innerHTML=d.applications.slice(0,20).map(function(a){return '<div class="recruit-row"><span style="color:#484f58;width:100px">'+a.email+'</span><span class="recruit-cohort '+(a.cohort==='genesis'?'rc-genesis':'rc-public')+'">'+a.cohort.toUpperCase()+'</span><span style="flex:1;color:#6e7681">'+a.technical_bg+'</span><span style="color:#484f58;width:60px">'+(a.handle||'-')+'</span><span style="color:#30363d;width:40px">'+(a.position?'#'+a.position:'-')+'</span><span style="color:#21262d;font-size:9px;width:100px">'+(a.applied_at||'').slice(0,10)+'</span></div>'}).join('');
+	  if(!d.applications.length)list.innerHTML='<span style="color:#30363d">暂无申请 / No applications yet</span>';
+	}).catch(function(){document.getElementById('recruit-count').textContent='API unreachable'});
+</script>
 </body>
 </html>`;
 }
