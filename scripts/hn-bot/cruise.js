@@ -23,7 +23,7 @@ const AGNES_URL = "https://api.agnes-ai.com/api/v1/chat/completions";
 const KEYWORDS = [
   "identity", "auth", "zk", "zero.knowledge", "crypto",
   "deepfake", "deep.fake", "ai", "machine.learning", "llm",
-  "privacy", "security", "biometric", "motion", "presence",
+  "privacy", "security", "motion", "presence",
   "verification", "proof", "synthetic", "simulation", "agent",
   "bot", "sybil", "personhood", "world.id", "humanity",
 ];
@@ -72,7 +72,7 @@ function matchesKeywords(text) {
 }
 
 // ── Comment generator ──
-function fallbackComment(story) {
+function fallbackComment(story, isDashboardView = true) {
   const intros = [
     "This touches on something I've been thinking about — the distinction between verifying *identity* and verifying *presence*. Most systems conflate the two, but they have fundamentally different security properties.",
     "There's an architectural assumption here worth unpacking: identity verification doesn't require knowing *who* someone is, only confirming *that they are present and real* in this moment.",
@@ -90,21 +90,31 @@ function fallbackComment(story) {
     "Anyone aware of research quantifying minimum entropy thresholds needed to distinguish biological from synthetic signals at scale?",
   ];
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-  return pick(intros) + "\n\n" + pick(bodies) + "\n\n" + pick(endings);
+  const en = pick(intros) + "\n\n" + pick(bodies) + "\n\n" + pick(endings);
+  if (!isDashboardView) return en;
+  return "[English]\n" + en + "\n\n[中文]\n（中文翻译待 API 恢复后生成 / Chinese translation pending API recovery）";
 }
 
-async function generateComment(story) {
-  const prompt = `Write a single Hacker News comment (120-180 words, 3-4 paragraphs, no bullet points, no links, no promotion). Be purely technical. Connect to: motion geometry as identity primitive, failure of 2D biometrics against diffusion models, zero-knowledge presence proofs, or the entropy gap between synthetic and biological motion. End with an open question. Tone: calm, precise, slightly contrarian. Thread title: "${story.title}"`;
+async function generateComment(story, isDashboardView = true) {
+  const formatInstr = isDashboardView
+    ? "\nOutput format: [English] section first, then [中文] section with complete Chinese translation."
+    : " Output in English only.";
+
+  const prompt = `Analyze this HN thread through MyShape Protocol's lens and write a technical commentary (140-200 words, 3-4 paragraphs). Structure: (1) What the news signals about the identity/verification landscape — 1 sentence. (2) Protocol-First analysis — map to MyShape's Continuity Layer (why temporal continuity defeats snapshot-based auth) or Presence Receipt (why real-time motion-signature verification is the correct primitive). (3) Non-obvious technical insight. (4) Open question that challenges assumptions. Tone: terse, precise, slightly contrarian.${formatInstr} Thread title: "${story.title}"`;
+
+  const systemFormat = isDashboardView
+    ? " Output format must ALWAYS be: [English] content first, then [中文] translation."
+    : " Output in English only.";
 
   try {
     const res = await axios.post(AGNES_URL, {
       model: CONFIG.model,
       messages: [
-        { role: "system", content: "You are a senior cryptographer writing insightful Hacker News comments. Never mention products." },
+        { role: "system", content: "You are the Lead Architect Agent for MyShape Protocol. Provide a 'Protocol-First' perspective on industry news — compare against MyShape's Continuity Layer (temporal identity integrity — identity is not a snapshot but a continuous signal) and Presence Receipt (real-time human verification via motion-signature, not biometrics). Use a founder-level, insightful tone. Write in the style of a seasoned Hacker News commenter: terse, technically precise, slightly contrarian. Never mention product names." + systemFormat },
         { role: "user", content: prompt },
       ],
       temperature: 0.7,
-      max_tokens: 500,
+      max_tokens: 1000,
     }, {
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +127,7 @@ async function generateComment(story) {
   } catch (err) {
     console.log("  API unavailable (" + (err.response?.status || err.code) + "), using fallback");
   }
-  return fallbackComment(story);
+  return fallbackComment(story, isDashboardView);
 }
 
 // ── HTML report ──
@@ -130,20 +140,21 @@ function generateHtml(results) {
     '<div class="comment">' + esc(r.comment) + '</div></div>'
   ).join("\n");
 
-  return '<!DOCTYPE html>\n<html lang="en"><head><meta charset="UTF-8">' +
+  return '<!DOCTYPE html>\n<html lang="zh-CN"><head><meta charset="UTF-8">' +
     '<title>MyShape HN Feed — ' + now + '</title>' +
-    '<style>body{margin:40px;background:#0a0f14;color:#c9d1d9;font-family:monospace}' +
+    '<style>body {margin:40px;background:#0a0f14;color:#c9d1d9;font-family:system-ui,-apple-system,sans-serif}' +
     'h1{color:#58a6ff;font-weight:300;letter-spacing:.1em}.meta-bar{color:#8b949e;font-size:12px;margin-bottom:30px}' +
     '.card{border:1px solid #21262d;border-radius:6px;padding:20px;margin-bottom:16px;background:#0d1117}' +
     '.title{margin-bottom:12px}.title a{color:#58a6ff;text-decoration:none;font-size:14px;font-weight:600}' +
     '.title a:hover{text-decoration:underline}.meta{color:#484f58;font-size:11px;margin-left:12px}' +
     '.comment{color:#8b949e;font-size:12px;line-height:1.7;white-space:pre-wrap}' +
-    '.comment::before{content:"Draft comment";display:block;color:#3fb950;font-size:10px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.15em}' +
+    '.comment::before{content:"协议评论 / Protocol Commentary";display:block;color:#3fb950;font-size:10px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.15em}' +
+    '.bilingual-hint{color:#30363d;font-size:10px;margin-top:10px;font-style:italic}' +
     '.footer{margin-top:40px;color:#30363d;font-size:10px;text-align:center}</style></head><body>' +
-    '<h1>MyShape Protocol — HN Feed</h1>' +
-    '<div class="meta-bar">Generated: ' + now + ' UTC &middot; ' + results.length + ' threads matched</div>' +
+    '<h1>MyShape Protocol — HN Feed <span style="font-size:14px;color:#6e7681;">| 协议情报</span></h1>' +
+    '<div class="meta-bar">Generated / 生成时间: ' + now + ' UTC &middot; ' + results.length + ' threads matched / 条匹配</div>' +
     rows +
-    '<div class="footer">MyShape Protocol &middot; HN Community Cruiser v1.0 &middot; No links, no ads.</div></body></html>';
+    '<div class="footer">MyShape Protocol &middot; HN Community Cruiser v1.0 &middot; Protocol-First Analysis &middot; 协议优先分析</div></body></html>';
 }
 
 function esc(s) {

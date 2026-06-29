@@ -62,7 +62,7 @@ async function callAgnes(systemPrompt, userPrompt) {
         { role: "user", content: userPrompt },
       ],
       temperature: 0.75,
-      max_tokens: 600,
+      max_tokens: 1500,
     }, {
       headers: AGNES_HEADERS(),
       timeout: 45000,
@@ -232,17 +232,17 @@ async function fetchBlueskyPosts() {
 // ═══════════════════════════════════════════════════════════════════
 
 const SYSTEM_TONES = {
-  hn: "You write terse, insightful Hacker News comments. Pure technical reasoning. No promotion, no links, no product names.",
-  linkedin: "You are the Chief Scientist of a sovereign identity protocol. Write visionary, professional LinkedIn posts. Business-forward, technology-grounded. 200-300 words. Include a 'Key Insight' section and end with a question to drive engagement. Do NOT mention product names.",
-  x: "You write sharp, provocative tech tweets under 280 characters. No hashtags, no links, no promotion. Pure insight.",
-  bluesky: "You write thoughtful Bluesky posts (200-300 chars). Technical but approachable. No hype, no links.",
+  hn: "You are the Lead Architect Agent for MyShape Protocol. Provide a 'Protocol-First' perspective on industry news — compare against MyShape's Continuity Layer (temporal identity integrity) and Presence Receipt (real-time motion-signature verification). Write terse, technically precise, slightly contrarian Hacker News comments. Founder-level insight. Never mention product names.",
+  linkedin: "You are the Lead Architect Agent and Chief Scientist of MyShape Protocol. Provide 'Protocol-First' analysis of industry trends — map every topic to MyShape's Continuity Layer (why temporal continuity is the correct identity primitive) and Presence Receipt (real-time human verification via motion-signature). Write visionary, professional LinkedIn posts (200-300 words). Founder-level insight. Include a 'Key Insight' section. End with a question to engage CTOs and security leaders. Do NOT mention product names.",
+  x: "You are the Lead Architect Agent for MyShape Protocol. Provide 'Protocol-First' sharp insights on tech news — reference Continuity Layer or Presence Receipt where relevant. Write provocative, insightful tweets under 280 characters. Founder-level perspective. No hashtags, no links, no product names.",
+  bluesky: "You are the Lead Architect Agent for MyShape Protocol. Provide 'Protocol-First' thoughtful commentary on digital identity trends — connect to Continuity Layer and Presence Receipt concepts. Write technical but approachable Bluesky posts (200-300 chars). Founder-level insight. No hype, no links.",
 };
 
 const PROMPT_TEMPLATES = {
-  hn: (title) => `HN thread: "${title}". Write a comment (120-180 words, 3-4 paragraphs). Connect to motion geometry, ZK presence, or entropy gap between synthetic and biological motion. End with an open question. Calm, precise, slightly contrarian.`,
-  linkedin: (title) => `Industry topic: "${title}". Write a LinkedIn long-form post (200-300 words). Structure: (1) What's happening — 2 sentences. (2) Why it matters for digital identity — 3 sentences. (3) Key Insight — one bold technical prediction. (4) Closing question to engage CTOs and security leaders. Professional, visionary tone.`,
-  x: (title) => `Topic: "${title}". Write one tweet under 260 characters. Sharp insight about digital identity, AI security, or ZK-proofs. No hashtags, no links, no product names. Pure idea.`,
-  bluesky: (title) => `Topic: "${title}". Write a thoughtful Bluesky post (200-300 chars). Technical but conversational. One clear idea. No hashtags.`,
+  hn: (title) => `HN thread: "${title}". Analyze through MyShape Protocol's lens. Write a commentary (140-200 words, 3-4 paragraphs). Structure: (1) What the news signals — 1 sentence. (2) Protocol-First analysis — map to Continuity Layer (temporal continuity > snapshots) or Presence Receipt (motion-signature as verification primitive). (3) Non-obvious technical insight. (4) Open question. Tone: terse, precise, slightly contrarian.`,
+  linkedin: (title) => `Industry topic: "${title}". Write a Protocol-First LinkedIn post (200-300 words). Structure: (1) What's happening — 2 sentences. (2) Why it matters for digital identity — map to MyShape's Continuity Layer or Presence Receipt. (3) Key Insight — bold technical prediction rooted in protocol architecture. (4) Closing question for CTOs/security leaders. Founder-level, visionary tone.`,
+  x: (title) => `Topic: "${title}". Write a Protocol-First tweet (under 260 chars). Sharp, provocative insight about digital identity, AI security, or ZK-proofs. Connect to Continuity Layer or Presence Receipt where relevant. No hashtags, no links, no product names. Pure idea.`,
+  bluesky: (title) => `Topic: "${title}". Write a Protocol-First Bluesky post (200-300 chars). Thoughtful technical commentary. Connect to Continuity Layer or Presence Receipt where relevant. No hashtags.`,
 };
 
 const FALLBACKS = {
@@ -301,22 +301,35 @@ const FALLBACKS = {
   },
 };
 
-function fallbackPost(platform) {
+function fallbackPost(platform, isDashboardView = true) {
   const fb = FALLBACKS[platform];
   const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  let en;
   if (platform === "hn" || platform === "linkedin") {
-    return pick(fb.intros) + "\n\n" + pick(fb.bodies) + "\n\n" + pick(fb.endings);
+    en = pick(fb.intros) + "\n\n" + pick(fb.bodies) + "\n\n" + pick(fb.endings);
+  } else if (platform === "x" || platform === "bluesky") {
+    en = fb.posts[Math.floor(Math.random() * fb.posts.length)];
+  } else {
+    en = "No content generated.";
   }
-  if (platform === "x" || platform === "bluesky") {
-    return fb.posts[Math.floor(Math.random() * fb.posts.length)];
-  }
-  return "No content generated.";
+  if (!isDashboardView) return en;
+  return "[English]\n" + en + "\n\n[中文]\n（中文翻译待 API 恢复后生成 / Chinese translation pending API recovery）";
 }
 
-async function generatePost(platform, topic) {
-  const aiText = await callAgnes(SYSTEM_TONES[platform], PROMPT_TEMPLATES[platform](topic));
+async function generatePost(platform, topic, isDashboardView = true) {
+  // ── 逻辑分流：Dashboard 走双语，外部发布走纯英文 ──
+  const formatSuffix = isDashboardView
+    ? " Output format must ALWAYS be: [English] section first, then [中文] section with complete Chinese translation."
+    : " Output in English only — no Chinese translation, no bilingual formatting.";
+
+  const systemPrompt = SYSTEM_TONES[platform] + formatSuffix;
+  const userPrompt = PROMPT_TEMPLATES[platform](topic) + (isDashboardView
+    ? " Output exactly two sections: [English] (first) then [中文] (complete translation)."
+    : " English only, no translation.");
+
+  const aiText = await callAgnes(systemPrompt, userPrompt);
   if (aiText) return aiText;
-  return fallbackPost(platform);
+  return fallbackPost(platform, isDashboardView);
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -429,22 +442,25 @@ function generateDashboard(data) {
   ).join("");
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>MyShape Matrix Dashboard — ${now}</title>
+<title>MyShape 矩阵仪表盘 / Matrix Dashboard — ${now}</title>
 <style>
   :root { --bg:#060b12; --card:#0d1520; --border:#1a2a3a; --cyan:#58a6ff; --green:#3fb950; --amber:#d2991d; --purple:#a371f7; --text:#c9d1d9; --muted:#6e7681; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,sans-serif; padding:30px; }
   h1 { color:var(--cyan); font-weight:200; font-size:28px; letter-spacing:.08em; margin-bottom:4px; }
+  h1 .cn { font-size:16px; color:var(--muted); font-weight:300; }
   .subtitle { color:var(--muted); font-size:12px; margin-bottom:30px; }
   .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
   .full { grid-column:1/-1; }
   .section-title { color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.2em; margin:20px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .section-title .cn { text-transform:none; font-size:9px; color:#484f58; margin-left:8px; letter-spacing:0; }
   .card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:18px; transition:border-color .3s; }
   .card:hover { border-color:#2a4a6a; }
   .platform-tag { display:inline-block; font-size:9px; letter-spacing:.15em; padding:2px 8px; border-radius:3px; margin-bottom:10px; font-weight:600; }
+  .platform-tag .cn { font-weight:300; font-size:8px; margin-left:4px; opacity:.7; }
   .hn-tag { color:var(--amber); border:1px solid rgba(210,153,29,.3); background:rgba(210,153,29,.06); }
   .li-tag { color:var(--cyan); border:1px solid rgba(88,166,255,.3); background:rgba(88,166,255,.06); }
   .x-tag { color:#ddd; border:1px solid rgba(221,221,221,.2); background:rgba(255,255,255,.03); }
@@ -465,43 +481,43 @@ function generateDashboard(data) {
 </style>
 </head>
 <body>
-<h1>MyShape Protocol — Matrix Dashboard</h1>
-<div class="subtitle">Generated: ${now} UTC &middot; HN + LinkedIn + X + Bluesky &middot; <span style="color:var(--green)">●</span> Live</div>
+<h1>MyShape Protocol — Matrix Dashboard <span class="cn">矩阵仪表盘</span></h1>
+<div class="subtitle">Generated / 生成时间: ${now} UTC &middot; HN + LinkedIn + X + Bluesky &middot; <span style="color:var(--green)">●</span> Live</div>
 
 <div class="grid">
   <div>
-    <div class="section-title full">Hacker News — Technical Comments</div>
-    ${hnCards || '<div class="card"><div class="text" style="color:var(--muted)">No HN stories matched this cycle.</div></div>'}
+    <div class="section-title full">Hacker News — Technical Comments<span class="cn">技术评论</span></div>
+    ${hnCards || '<div class="card"><div class="text" style="color:var(--muted)">No HN stories matched this cycle. / 本轮无匹配的 HN 文章。</div></div>'}
   </div>
   <div>
-    <div class="section-title full">LinkedIn — Thought Leadership</div>
-    ${linkedInCards || '<div class="card"><div class="text" style="color:var(--muted)">No LinkedIn topics generated this cycle.</div></div>'}
+    <div class="section-title full">LinkedIn — Thought Leadership<span class="cn">思想领导力</span></div>
+    ${linkedInCards || '<div class="card"><div class="text" style="color:var(--muted)">No LinkedIn topics generated this cycle. / 本轮未生成 LinkedIn 主题。</div></div>'}
   </div>
 </div>
 
 <div class="grid" style="margin-top:16px">
   <div>
-    <div class="section-title full">X / Twitter — Sharp Insights</div>
-    ${xCards || '<div class="card"><div class="text" style="color:var(--muted)">No X posts generated this cycle.</div></div>'}
+    <div class="section-title full">X / Twitter — Sharp Insights<span class="cn">锐利洞察</span></div>
+    ${xCards || '<div class="card"><div class="text" style="color:var(--muted)">No X posts generated this cycle. / 本轮未生成 X 帖子。</div></div>'}
   </div>
   <div>
-    <div class="section-title full">Bluesky — Signal Monitoring</div>
-    ${blueskyCards || '<div class="card"><div class="text" style="color:var(--muted)">No Bluesky posts found this cycle.</div></div>'}
+    <div class="section-title full">Bluesky — Signal Monitoring<span class="cn">信号监测</span></div>
+    ${blueskyCards || '<div class="card"><div class="text" style="color:var(--muted)">No Bluesky posts found this cycle. / 本轮未发现 Bluesky 帖子。</div></div>'}
   </div>
 </div>
 
 <div class="footer">
-  MyShape Protocol &middot; Social Matrix Cruiser v2.0 &middot; Automated with fallback AI &middot; No links, no ads &middot; Generated ${now}
+  MyShape Protocol &middot; Social Matrix Cruiser v2.0 &middot; Protocol-First Analysis 协议优先分析 &middot; Generated ${now}
 </div>
 
 <script>
 document.querySelectorAll('.card').forEach(card => {
   const btn = document.createElement('button');
   btn.className = 'copy-btn';
-  btn.textContent = 'Copy';
+  btn.textContent = 'Copy / 复制';
   btn.onclick = () => {
     const text = card.querySelector('.text')?.textContent || '';
-    navigator.clipboard.writeText(text.trim()).then(() => { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1500); });
+    navigator.clipboard.writeText(text.trim()).then(() => { btn.textContent = '✓ Copied / 已复制'; setTimeout(() => btn.textContent = 'Copy / 复制', 1500); });
   };
   card.appendChild(btn);
 });
