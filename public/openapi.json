@@ -1,0 +1,943 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MyShape Protocol API",
+    "description": "The Sovereign 3D Identity Layer for the Decentralized Human. AI-native identity, zero-knowledge presence, motion-signature verification. This API enables human and AI agent identity declaration, motion verification, and protocol node management.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "MyShape Protocol",
+      "url": "https://www.myshape.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://www.myshape.com",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "System health check",
+        "description": "Verifies Supabase connectivity, WASM engine loadability, and calibration state.",
+        "operationId": "healthCheck",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "Healthy or degraded status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "enum": ["healthy", "degraded"] },
+                    "timestamp": { "type": "string", "format": "date-time" },
+                    "services": {
+                      "type": "object",
+                      "properties": {
+                        "supabase": { "$ref": "#/components/schemas/ServiceStatus" },
+                        "wasm": { "$ref": "#/components/schemas/ServiceStatus" }
+                      }
+                    },
+                    "calibration": { "$ref": "#/components/schemas/CalibrationBrief" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/research/stats": {
+      "get": {
+        "summary": "Research pipeline statistics",
+        "description": "Returns anonymous motion research pipeline state including session count and calibration progress.",
+        "operationId": "getResearchStats",
+        "tags": ["Research"],
+        "responses": {
+          "200": {
+            "description": "Research statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "session_count": { "type": "integer" },
+                    "sessions_needed": { "type": "integer" },
+                    "meets_threshold": { "type": "boolean" },
+                    "progress_pct": { "type": "integer" },
+                    "latest_session_at": { "type": "string", "format": "date-time", "nullable": true },
+                    "checked_at": { "type": "string", "format": "date-time" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/research/upload": {
+      "post": {
+        "summary": "Upload anonymous motion data",
+        "description": "Anonymous motion landmark ingestion for engine calibration. Rate limited to 5 uploads per IP per 24 hours.",
+        "operationId": "uploadResearch",
+        "tags": ["Research"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ResearchUpload" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Upload accepted"
+          },
+          "409": {
+            "description": "Duplicate session"
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "headers": {
+              "Retry-After": { "schema": { "type": "integer" } },
+              "X-RateLimit-Remaining": { "schema": { "type": "integer" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/nodes/count": {
+      "get": {
+        "summary": "Node counts",
+        "description": "Returns aggregate counts: total nodes, humans, agents, genesis nodes.",
+        "operationId": "getNodeCounts",
+        "tags": ["Nodes"],
+        "responses": {
+          "200": {
+            "description": "Node counts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": { "type": "integer" },
+                    "humans": { "type": "integer" },
+                    "agents": { "type": "integer" },
+                    "genesis_nodes": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nodes/genesis": {
+      "get": {
+        "summary": "Genesis Cohort list",
+        "description": "Returns the Genesis Cohort with privacy-protected anonymous node IDs.",
+        "operationId": "getGenesisNodes",
+        "tags": ["Nodes"],
+        "responses": {
+          "200": {
+            "description": "Genesis cohort list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": { "type": "integer" },
+                    "remaining": { "type": "integer" },
+                    "nodes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "index": { "type": "integer" },
+                          "id": { "type": "string" },
+                          "joined": { "type": "string", "format": "date-time" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nodes/status": {
+      "get": {
+        "summary": "Protocol health dashboard",
+        "description": "Returns live node counts, genesis status, and protocol uptime indicators.",
+        "operationId": "getNodeStatus",
+        "tags": ["Nodes"],
+        "responses": {
+          "200": {
+            "description": "Protocol status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_nodes": { "type": "integer" },
+                    "genesis_nodes": { "type": "integer" },
+                    "genesis_remaining": { "type": "integer" },
+                    "active_humans": { "type": "integer" },
+                    "agents": { "type": "integer" },
+                    "last_scan": { "type": "string", "format": "date-time", "nullable": true },
+                    "cohort_sealed": { "type": "boolean" },
+                    "status": { "type": "string" },
+                    "timestamp": { "type": "string", "format": "date-time" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/identity": {
+      "get": {
+        "summary": "Lookup node by email",
+        "description": "Verifies whether an email is registered and returns node handle, status, and registration timestamp.",
+        "operationId": "lookupIdentity",
+        "tags": ["Identity"],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "format": "email" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lookup result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "found": { "type": "boolean" },
+                    "email": { "type": "string" },
+                    "node_handle": { "type": "string" },
+                    "status": { "type": "string" },
+                    "registered_at": { "type": "string", "format": "date-time" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/node/privileges": {
+      "get": {
+        "summary": "Node privileges and stats",
+        "description": "Query a node's tier, entropy score, particle level, streak, best PES, and genesis status.",
+        "operationId": "getNodePrivileges",
+        "tags": ["Nodes"],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "format": "email" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Node privileges",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NodePrivileges" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/node/entropy": {
+      "get": {
+        "summary": "Read entropy state",
+        "description": "Returns current entropy score, particle level, streak, best PES, and progress for a node.",
+        "operationId": "getEntropy",
+        "tags": ["Entropy"],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "format": "email" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entropy state",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EntropyState" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Record entropy gain",
+        "description": "Calculates and records entropy gain after a motion scan. May trigger level-up, decay, or spike events.",
+        "operationId": "recordEntropy",
+        "tags": ["Entropy"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "pesScore"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "pesScore": { "type": "number", "minimum": 0, "maximum": 1 },
+                  "pesTiming": { "type": "number", "minimum": 0, "maximum": 1 },
+                  "pesNoise": { "type": "number", "minimum": 0, "maximum": 1 },
+                  "pesFrequency": { "type": "number", "minimum": 0, "maximum": 1 },
+                  "pesBiological": { "type": "number", "minimum": 0, "maximum": 1 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Entropy gain result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/EntropyState" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "success": { "type": "boolean" },
+                        "entropyGain": { "type": "number" },
+                        "leveledUp": { "type": "boolean" },
+                        "decayApplied": { "type": "boolean" },
+                        "spikeTriggered": { "type": "boolean" }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agent/declare": {
+      "post": {
+        "summary": "AI Agent identity declaration",
+        "description": "Register an AI agent as a protocol node. No email, OTP, or camera required. Cryptographic declaration for autonomous entities.",
+        "operationId": "declareAgent",
+        "tags": ["Agent"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["agent_handle", "agent_type", "origin", "public_key"],
+                "properties": {
+                  "agent_handle": { "type": "string", "description": "Unique handle for the agent" },
+                  "agent_type": { "type": "string", "description": "Type of agent (e.g. 'ai', 'bot')" },
+                  "origin": { "type": "string", "description": "Origin domain or platform" },
+                  "public_key": { "type": "string", "description": "Public key for future signature verification" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent declaration result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "agent_id": { "type": "string" },
+                    "alreadyDeclared": { "type": "boolean" },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/subscribe": {
+      "post": {
+        "summary": "Join waitlist",
+        "description": "Add an email to the protocol node waitlist. Sends confirmation email via Resend.",
+        "operationId": "subscribe",
+        "tags": ["Identity"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Subscription result"
+          }
+        }
+      }
+    },
+    "/api/send-otp": {
+      "post": {
+        "summary": "Send OTP",
+        "description": "Generate and send a 6-digit OTP via email. Wallet-verified nodes bypass OTP. New users require invite code.",
+        "operationId": "sendOtp",
+        "tags": ["Identity"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "invite_code": { "type": "string", "pattern": "^MYSHAPE-[A-Z0-9]{4}-[A-Z0-9]{4}$" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent or bypassed"
+          }
+        }
+      }
+    },
+    "/api/verify-otp": {
+      "post": {
+        "summary": "Verify OTP",
+        "description": "Verify 6-digit OTP and activate node. First 100 become GENESIS_NODE, rest become ACTIVE.",
+        "operationId": "verifyOtp",
+        "tags": ["Identity"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "otp"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "otp": { "type": "string", "pattern": "^[0-9]{6}$" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification result with node status"
+          }
+        }
+      }
+    },
+    "/api/verify": {
+      "post": {
+        "summary": "Server-side presence verification",
+        "description": "Runs the MyShape WASM engine to verify a challenge response. Applies calibrated thresholds when available.",
+        "operationId": "verifyPresence",
+        "tags": ["Verification"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["enrollment", "challenge", "response", "signature"],
+                "properties": {
+                  "enrollment": { "type": "object" },
+                  "challenge": {
+                    "type": "object",
+                    "required": ["challenge_token", "challenge_id"],
+                    "properties": {
+                      "challenge_token": { "type": "string" },
+                      "challenge_id": { "type": "string" }
+                    }
+                  },
+                  "response": { "type": "object" },
+                  "signature": { "type": "object" },
+                  "risk_level": { "type": "string", "enum": ["low", "medium", "high"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "verified": { "type": "boolean" },
+                    "presence_score": { "type": "number" },
+                    "factors": { "type": "object" },
+                    "risk_level": { "type": "string" },
+                    "threshold": { "type": "number" },
+                    "threshold_source": { "type": "string" },
+                    "rejection_reason": { "type": "string", "nullable": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/siwe": {
+      "post": {
+        "summary": "Sign-In with Ethereum",
+        "description": "EIP-4361 SIWE verification. Binds wallet address to a protocol node.",
+        "operationId": "signInWithEthereum",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["message", "signature", "address"],
+                "properties": {
+                  "message": { "type": "string" },
+                  "signature": { "type": "string" },
+                  "address": { "type": "string" },
+                  "email": { "type": "string", "format": "email" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIWE result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "address": { "type": "string" },
+                    "is_bound": { "type": "boolean" },
+                    "is_genesis": { "type": "boolean" },
+                    "status": { "type": "string" },
+                    "node_handle": { "type": "string", "nullable": true },
+                    "skip_otp": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/presence/network": {
+      "get": {
+        "summary": "Presence network dashboard",
+        "description": "Returns all active nodes with anonymized data for live network visualization.",
+        "operationId": "getPresenceNetwork",
+        "tags": ["Presence"],
+        "responses": {
+          "200": {
+            "description": "Network state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalNodes": { "type": "integer" },
+                    "activeHumans": { "type": "integer" },
+                    "genesisNodes": { "type": "integer" },
+                    "agents": { "type": "integer" },
+                    "activeToday": { "type": "integer" },
+                    "totalScans": { "type": "integer" },
+                    "protocolEnclave": { "type": "boolean" },
+                    "nodes": { "type": "array", "items": { "$ref": "#/components/schemas/NetworkNode" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/motion/record": {
+      "post": {
+        "summary": "Record motion scan",
+        "description": "Record a successful motion-signature verification scan. Limited to 3 per day per node.",
+        "operationId": "recordMotionScan",
+        "tags": ["Motion"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scan recorded"
+          },
+          "429": {
+            "description": "Daily limit reached"
+          }
+        }
+      }
+    },
+    "/api/invite/validate": {
+      "post": {
+        "summary": "Validate invite code",
+        "description": "Check if a beta invite code is valid and unused.",
+        "operationId": "validateInvite",
+        "tags": ["Identity"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["code"],
+                "properties": {
+                  "code": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validation result"
+          }
+        }
+      }
+    },
+    "/api/recruitment/apply": {
+      "post": {
+        "summary": "Apply for research program",
+        "description": "Submit a recruitment application. First 50 get genesis cohort (founding tester).",
+        "operationId": "applyRecruitment",
+        "tags": ["Recruitment"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "technical_bg": { "type": "string", "maxLength": 200 },
+                  "handle": { "type": "string", "maxLength": 100 },
+                  "source": { "type": "string", "maxLength": 50 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application result"
+          }
+        }
+      }
+    },
+    "/api/uplink": {
+      "post": {
+        "summary": "Register genesis node",
+        "description": "Direct node registration into the protocol mesh. Lower-level alternative to /api/subscribe.",
+        "operationId": "uplinkNode",
+        "tags": ["Identity"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "node_handle"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "node_handle": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registration result"
+          }
+        }
+      }
+    },
+    "/api/matrix/publish": {
+      "post": {
+        "summary": "Cross-platform publish",
+        "description": "Publish content to social platforms (Bluesky, LinkedIn, Farcaster, Discord, Telegram, Reddit).",
+        "operationId": "matrixPublish",
+        "tags": ["Matrix"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["platform", "content"],
+                "properties": {
+                  "platform": { "type": "string", "enum": ["bluesky", "linkedin", "farcaster", "discord", "telegram", "reddit"] },
+                  "content": { "type": "string" },
+                  "title": { "type": "string" },
+                  "url": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Publish result (PUBLISHED, SKIPPED, or PREVIEW for LINK-type)"
+          }
+        }
+      }
+    },
+    "/api/admin/calibration/status": {
+      "get": {
+        "summary": "Calibration status",
+        "description": "Returns current calibration state: thresholds, session count, artifact metadata.",
+        "operationId": "getCalibrationStatus",
+        "tags": ["Admin"],
+        "responses": {
+          "200": {
+            "description": "Calibration status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "calibrated": { "type": "boolean" },
+                    "source": { "type": "string" },
+                    "thresholds": {
+                      "type": "object",
+                      "properties": {
+                        "low": { "type": "number" },
+                        "medium": { "type": "number" },
+                        "high": { "type": "number" }
+                      }
+                    },
+                    "research_sessions_count": { "type": "integer" },
+                    "meets_minimum_threshold": { "type": "boolean" },
+                    "sessions_needed": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/calibration/run": {
+      "post": {
+        "summary": "Run calibration",
+        "description": "Trigger a full calibration run. Requires ≥300 research sessions. Requires x-admin-secret header.",
+        "operationId": "runCalibration",
+        "tags": ["Admin"],
+        "security": [{ "adminSecret": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pca_output_dim": { "type": "integer" },
+                  "feature_mode": { "type": "string" },
+                  "target_fars": { "type": "array", "items": { "type": "number" } },
+                  "min_variance": { "type": "number" },
+                  "use_rust_features": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Calibration completed"
+          },
+          "400": {
+            "description": "Insufficient data"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ServiceStatus": {
+        "type": "object",
+        "properties": {
+          "ok": { "type": "boolean" },
+          "latency_ms": { "type": "number" },
+          "error": { "type": "string" }
+        }
+      },
+      "CalibrationBrief": {
+        "type": "object",
+        "properties": {
+          "active": { "type": "boolean" },
+          "source": { "type": "string" },
+          "sessions_collected": { "type": "integer" }
+        }
+      },
+      "NodePrivileges": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "status": { "type": "string" },
+          "is_genesis": { "type": "boolean" },
+          "is_active": { "type": "boolean" },
+          "scan_count": { "type": "integer" },
+          "tier": { "type": "string", "enum": ["FOUNDING_ENTITY", "ACTIVE_NODE", "SUBSCRIBER"] },
+          "early_access": { "type": "boolean" },
+          "entropy_score": { "type": "number" },
+          "particle_level": { "type": "integer" },
+          "streak_days": { "type": "integer" },
+          "streak_multiplier": { "type": "number" },
+          "best_pes": { "type": "number" },
+          "registered_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "EntropyState": {
+        "type": "object",
+        "properties": {
+          "entropyScore": { "type": "number" },
+          "particleLevel": { "type": "integer" },
+          "streakDays": { "type": "integer" },
+          "streakMultiplier": { "type": "number" },
+          "bestPes": { "type": "number" },
+          "lastEntropyDate": { "type": "string", "format": "date" },
+          "scanCount": { "type": "integer" },
+          "progress": {
+            "type": "object",
+            "properties": {
+              "current": { "type": "number" },
+              "nextLevel": { "type": "integer" },
+              "pct": { "type": "number" }
+            }
+          }
+        }
+      },
+      "NetworkNode": {
+        "type": "object",
+        "properties": {
+          "handle": { "type": "string" },
+          "mask": { "type": "string" },
+          "status": { "type": "string" },
+          "particleLevel": { "type": "integer" },
+          "entropy": { "type": "number" },
+          "lastSeen": { "type": "string", "format": "date-time" },
+          "scans": { "type": "integer" },
+          "isGenesis": { "type": "boolean" }
+        }
+      },
+      "ResearchUpload": {
+        "type": "object",
+        "required": ["session_id", "device", "lighting", "duration_ms", "landmarks", "pes_score", "total_frames", "valid_frames", "phases"],
+        "properties": {
+          "session_id": { "type": "string", "format": "uuid" },
+          "device": {
+            "type": "object",
+            "required": ["os", "browser", "viewportWidth", "viewportHeight"],
+            "properties": {
+              "os": { "type": "string", "enum": ["Windows", "macOS", "Linux", "Android", "iOS", "Unknown"] },
+              "browser": { "type": "string", "enum": ["Firefox", "Chrome", "Safari", "Edge", "Unknown"] },
+              "viewportWidth": { "type": "integer", "minimum": 320, "maximum": 7680 },
+              "viewportHeight": { "type": "integer", "minimum": 240, "maximum": 4320 },
+              "imuAvailable": { "type": "boolean" }
+            }
+          },
+          "lighting": { "type": "string", "enum": ["indoor_day", "indoor_night", "outdoor_day", "outdoor_night"] },
+          "duration_ms": { "type": "integer", "minimum": 1000, "maximum": 60000 },
+          "node_handle": { "type": "string" },
+          "pes_score": { "type": "number", "minimum": 0, "maximum": 1 },
+          "pes_micro_timing": { "type": "number", "minimum": 0, "maximum": 1 },
+          "pes_noise_residual": { "type": "number", "minimum": 0, "maximum": 1 },
+          "pes_freq_entropy": { "type": "number", "minimum": 0, "maximum": 1 },
+          "pes_bio_perturb": { "type": "number", "minimum": 0, "maximum": 1 },
+          "total_frames": { "type": "integer", "minimum": 1, "maximum": 1200 },
+          "valid_frames": { "type": "integer", "minimum": 0 },
+          "phases": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "required": ["phase", "frameCount"],
+              "properties": {
+                "phase": { "type": "integer", "minimum": 1, "maximum": 5 },
+                "frameCount": { "type": "integer", "minimum": 0, "maximum": 1200 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "adminSecret": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-admin-secret",
+        "description": "Admin secret for calibration and privileged operations"
+      }
+    }
+  },
+  "tags": [
+    { "name": "System", "description": "Health and status endpoints" },
+    { "name": "Identity", "description": "Node registration, verification, and lookup" },
+    { "name": "Agent", "description": "AI Agent identity declaration" },
+    { "name": "Verification", "description": "Motion-signature presence verification" },
+    { "name": "Entropy", "description": "Entropy scoring and gamification engine" },
+    { "name": "Motion", "description": "Motion scan recording" },
+    { "name": "Nodes", "description": "Node queries and protocol health" },
+    { "name": "Presence", "description": "Live presence network visualization" },
+    { "name": "Research", "description": "Anonymous motion data collection for calibration" },
+    { "name": "Auth", "description": "Wallet-based authentication (EIP-4361 SIWE)" },
+    { "name": "Recruitment", "description": "Research tester applications" },
+    { "name": "Matrix", "description": "Cross-platform social publishing" },
+    { "name": "Admin", "description": "Calibration and system administration" }
+  ]
+}

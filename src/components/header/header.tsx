@@ -164,10 +164,16 @@ const ProtocolHeader = () => {
 
       // 验证
       setWalletStatus("verifying");
+      const genesisEmail = typeof window !== "undefined" ? sessionStorage.getItem("genesis_email") : null;
       const res = await fetch("/api/auth/siwe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, signature, address: addr }),
+        body: JSON.stringify({
+          message,
+          signature,
+          address: addr,
+          ...(genesisEmail ? { email: genesisEmail } : {}),
+        }),
       });
       const data = await res.json();
 
@@ -278,7 +284,18 @@ const ProtocolHeader = () => {
           ) : walletAddress ? (
             <span className="font-mono text-[8px] tracking-[0.05em]">{walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}</span>
           ) : (
-            "MYSHAPE.BASE.ETH"
+            <a
+              href="https://basescan.org/enslookup-search?search=MYSHAPE.BASE.ETH"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-inherit no-underline hover:opacity-80 transition-opacity"
+              title="Verify on BaseScan"
+            >
+              MYSHAPE.BASE.ETH
+              <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-50">
+                <path d="M1 8L8 1M8 1H3M8 1V6" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
           )}
         </button>
 
@@ -320,7 +337,17 @@ const ProtocolHeader = () => {
                 {genesisDone && (
                   <div className="panel-row">
                     <span className="label">IDENTITY</span>
-                    <span className="value">{maskedEmail || "MYSHAPE.BASE.ETH"}</span>
+                    <span className="value">{maskedEmail || (
+                    <a
+                      href="https://basescan.org/enslookup-search?search=MYSHAPE.BASE.ETH"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "inherit", textDecoration: "none" }}
+                      title="Verify on BaseScan"
+                    >
+                      MYSHAPE.BASE.ETH ↗
+                    </a>
+                  )}</span>
                   </div>
                 )}
                 <div className="panel-row">

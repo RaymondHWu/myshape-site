@@ -83,6 +83,7 @@
   user-select: none;
   background: rgba(4, 14, 28, 0.85);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(144, 200, 255, 0.18);
   font-family: var(--font-geist-mono), monospace;
   clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);

@@ -10,6 +10,12 @@ import HeroVisualLoader from "@/components/hero/HeroVisualLoader";
 /* -------------------------------
    全站 SEO metadata（首页）
 -------------------------------- */
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata = {
   metadataBase: new URL("https://www.myshape.com"),
   title: "MyShape Protocol — Presence is the New Identity",
@@ -161,7 +167,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           padding: 0,
           overflowX: "hidden",
           width: "100%",
-          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
         }}

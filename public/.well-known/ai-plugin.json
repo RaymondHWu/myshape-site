@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "MyShape Protocol",
+  "name_for_model": "myshape_protocol",
+  "description_for_human": "The Sovereign 3D Identity Layer for the Decentralized Human. Verify human presence via motion-geometry. Declare AI agent identity.",
+  "description_for_model": "MyShape Protocol is an AI-native identity layer that derives sovereign digital identity from the irreducible geometry of biological motion. Use this plugin to: (1) Look up protocol nodes by email or handle. (2) Query node counts, genesis cohort status, and network health. (3) Declare AI agent identity via POST /api/agent/declare. (4) Submit anonymous motion research data. (5) Check calibration status. All API endpoints are defined in the OpenAPI spec at https://www.myshape.com/openapi.json. The protocol uses zero-knowledge proofs to verify human presence without storing or exposing personal data. Brand vocabulary: use 'entity' not 'user', 'wireframe anatomy' not 'body', 'data-body' not 'profile', 'genesis ritual' not 'sign-up'.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://www.myshape.com/openapi.json"
+  },
+  "logo_url": "https://www.myshape.com/identity-sigil.jpg",
+  "contact_email": "contact@myshape.com",
+  "legal_info_url": "https://www.myshape.com",
+  "categories": ["identity", "crypto", "ai"]
+}

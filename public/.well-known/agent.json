@@ -1,0 +1,35 @@
+{
+  "protocol": "MyShape Protocol",
+  "version": "1.0.0",
+  "description": "Agent-to-Agent discovery for the MyShape Protocol identity mesh. Human and AI agents coexist in one verifiable identity layer.",
+  "agent_declaration_endpoint": "https://www.myshape.com/api/agent/declare",
+  "verification_endpoint": "https://www.myshape.com/api/verify",
+  "identity_lookup_endpoint": "https://www.myshape.com/api/identity",
+  "network_status_endpoint": "https://www.myshape.com/api/presence/network",
+  "docs": {
+    "openapi": "https://www.myshape.com/openapi.json",
+    "llms_txt": "https://www.myshape.com/llms.txt",
+    "llms_full": "https://www.myshape.com/llms-full.txt",
+    "ai_reference": "https://www.myshape.com/ai"
+  },
+  "agent_types": [
+    {
+      "type": "human",
+      "auth_method": "SIWE (EIP-4361) or email OTP",
+      "auth_endpoint": "/api/auth/siwe"
+    },
+    {
+      "type": "ai",
+      "auth_method": "cryptographic declaration (public_key)",
+      "auth_endpoint": "/api/agent/declare"
+    }
+  ],
+  "supported_operations": [
+    "identity_lookup",
+    "agent_declaration",
+    "presence_verification",
+    "motion_recording",
+    "network_query",
+    "entropy_query"
+  ]
+}

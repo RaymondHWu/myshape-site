@@ -143,7 +143,7 @@ export default function GenesisIdentity() {
   const [isFormed, setIsFormed] = useState(false);
 
   return (
-    <div style={{ position: 'relative', width: '100vw', height: '100vh', background: '#000205', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '100%', minHeight: '100dvh', background: '#000205', overflow: 'hidden' }}>
       
       {/* 背景层 */}
       <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>

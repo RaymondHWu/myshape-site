@@ -798,7 +798,8 @@ export default function MotionDemoClient() {
                 <div className="text-center space-y-2" style={{animation:"ceremonyTextFade 1s ease-out 0.5s both"}}>
                   <div className="text-amber-300/60 text-[14px] font-light tracking-[0.2em] uppercase">◈ Genesis Ritual Complete</div>
                   <p className="text-white/30 text-[11px] max-w-xs leading-relaxed">Your kinetic signature is now sealed into the sovereign identity layer.</p>
-                  {researchConsented && <p className="text-cyan-400/30 text-[9px]">+ Contributed to calibration engine</p>}
+                  {researchConsented && uploadState === "success" && <p className="text-cyan-400/30 text-[9px]">✓ Contributed to calibration engine</p>}
+                  {researchConsented && uploadState === "error" && <p className="text-red-400/40 text-[9px]">⚠ Research upload failed — data kept local</p>}
                 </div>
               </div>
             )}
@@ -1182,7 +1183,8 @@ export default function MotionDemoClient() {
                     <div className="text-cyan-400/30 text-[7px] tracking-[0.4em] uppercase">Genesis Ritual · Motion Captured</div>
                     <p className="text-white/40 text-[10px] leading-relaxed">
                       Your kinetic signature has been inscribed.
-                      {researchConsented && " This data now contributes to the protocol's calibration engine."}
+                      {researchConsented && uploadState === "success" && " This data now contributes to the protocol's calibration engine."}
+                      {researchConsented && uploadState === "error" && " Research upload failed — data kept local."}
                     </p>
                     <div className="flex gap-2 justify-center pt-1">
                       <a href="/research/apply" className="text-cyan-400/30 hover:text-cyan-300/70 text-[7px] tracking-[0.15em] uppercase border-b border-transparent hover:border-cyan-400/30 transition-all pb-0.5">

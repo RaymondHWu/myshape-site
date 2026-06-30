@@ -23,13 +23,13 @@ export default function ContactClient() {
       url: "https://www.linkedin.com/company/111557251/",
       active: true 
     },
-    { 
-      id: "14", 
-      name: "DISCORD", 
-      desc: "DEVELOPER COMMUNITY, PROTOCOL DISCUSSIONS, AND INTEGRATION SUPPORT.", 
-      status: "GATEWAY_LOCKED",
-      url: "#", 
-      active: false 
+    {
+      id: "14",
+      name: "DISCORD",
+      desc: "DEVELOPER COMMUNITY, PROTOCOL DISCUSSIONS, AND INTEGRATION SUPPORT.",
+      status: "GATEWAY_OPEN",
+      url: "https://discord.gg/zr8Tczard",
+      active: true
     },
     { 
       id: "15", 
