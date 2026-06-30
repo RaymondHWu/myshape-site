@@ -94,13 +94,21 @@ export default function GenesisClient() {
       setStage("scanning");
       await new Promise((r) => setTimeout(r, 8000));
 
-      // 钱包模式：跳过 OTP，直接用 SIWE 验证结果
+      // 钱包模式：跳过 OTP
       if (hasWallet) {
+        // Ensure the node exists in the database via uplink
+        const nodeKey = cleanEmail || "wallet:" + headerWallet!.slice(2, 10);
+        await fetch("/api/uplink", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: nodeKey, node_handle: "SIG_" + headerWallet!.slice(2, 10) }),
+        }).catch(() => {});
+
         sessionStorage.setItem("genesis_completed", "1");
-        sessionStorage.setItem("genesis_email", cleanEmail || "wallet@" + headerWallet!.slice(2, 10));
+        sessionStorage.setItem("genesis_email", nodeKey);
         sessionStorage.setItem("genesis_status", "GENESIS_NODE");
         window.dispatchEvent(new CustomEvent("genesis:updated"));
-        finalizeGenesis(cleanEmail || "wallet@" + headerWallet!.slice(2, 10));
+        finalizeGenesis(nodeKey);
         return;
       }
 
