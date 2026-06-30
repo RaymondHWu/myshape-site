@@ -16,6 +16,7 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const os = require("os");
+const { patchDashboard } = require("./dashboard-patcher.js");
 
 // ═══════════════════════════════════════════════════════════════════
 //  CONFIG
@@ -855,7 +856,7 @@ async function main() {
 
   // 6. Dashboard
   const outPath = path.join(__dirname, "matrix_dashboard.html");
-  const html = generateDashboard(data);
+  const html = patchDashboard(generateDashboard(data));
   fs.writeFileSync(outPath, html, "utf8");
   try { const pd = path.join(__dirname, "..", "..", "public"); if (fs.existsSync(pd)) fs.writeFileSync(path.join(pd, "matrix-dashboard.html"), html, "utf8"); } catch {}
 
