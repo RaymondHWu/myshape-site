@@ -13,6 +13,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "MyShape Evidence — Verifiable Protocol Proofs",
+    description: "Empirical evidence: PES benchmarks, attack model, identity vectors, and live verification results.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function EvidencePage() {

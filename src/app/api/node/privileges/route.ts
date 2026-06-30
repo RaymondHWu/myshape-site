@@ -1,6 +1,21 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
+// ── Rate limiter: 10 lookups per IP per minute ──
+const rateMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRate(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateMap.set(ip, { count: 1, resetAt: now + 60_000 });
+    return true;
+  }
+  if (entry.count >= 10) return false;
+  entry.count++;
+  return true;
+}
+
 /**
  * GET /api/node/privileges?email=... — 查询节点的权限标记
  *
@@ -22,6 +37,11 @@ function validateEnv() {
 
 export async function GET(req: Request) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    if (!checkRate(ip)) {
+      return NextResponse.json({ error: "RATE_LIMIT" }, { status: 429 });
+    }
+
     const { supabaseUrl, supabaseKey } = validateEnv();
     const supabase = createClient(supabaseUrl, supabaseKey);
 

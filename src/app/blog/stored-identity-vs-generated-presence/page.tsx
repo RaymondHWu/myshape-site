@@ -14,6 +14,12 @@ export const metadata: Metadata = {
     authors: ["MyShape Protocol"],
     tags: ["identity", "presence", "AI", "protocol"],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Stored Identity vs. Generated Presence",
+    description: "Every identity system today stores a snapshot. Snapshots can be copied. Presence cannot.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function Page() {

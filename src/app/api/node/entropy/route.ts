@@ -6,6 +6,21 @@ import {
   type EntropyState,
 } from "@/engine/entropy-growth";
 
+// ── Rate limiter: 10 requests per IP per minute ──
+const rateMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRate(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateMap.set(ip, { count: 1, resetAt: now + 60_000 });
+    return true;
+  }
+  if (entry.count >= 10) return false;
+  entry.count++;
+  return true;
+}
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -13,6 +28,11 @@ const supabase = createClient(
 
 // POST — calculate entropy after a motion scan
 export async function POST(request: Request) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!checkRate(ip)) {
+    return NextResponse.json({ error: "RATE_LIMIT" }, { status: 429 });
+  }
+
   const { email, pesScore, pesTiming, pesNoise, pesFrequency, pesBiological } = await request.json();
   if (!email || typeof pesScore !== "number") {
     return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
@@ -86,6 +106,11 @@ export async function POST(request: Request) {
 
 // GET — read current entropy state
 export async function GET(request: Request) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!checkRate(ip)) {
+    return NextResponse.json({ error: "RATE_LIMIT" }, { status: 429 });
+  }
+
   const { searchParams } = new URL(request.url);
   const email = searchParams.get("email");
   if (!email) {

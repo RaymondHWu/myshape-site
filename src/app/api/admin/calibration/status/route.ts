@@ -4,7 +4,7 @@
  * Returns the current calibration status — session count, active artifact
  * metadata, and whether the system meets the minimum threshold for calibration.
  *
- * No authentication required for GET (read-only status).
+ * Requires x-admin-secret header (same as calibration run).
  * Full artifact JSON is NOT exposed — only summary metadata.
  */
 
@@ -15,8 +15,19 @@ import { getSessionCount } from "@/lib/research-data-loader";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function GET(): Promise<Response> {
+export async function GET(request: Request): Promise<Response> {
   try {
+    // Admin auth — same validation as calibration run
+    const secret = request.headers.get("x-admin-secret");
+    const expected = process.env.ADMIN_SECRET;
+    const isDev = process.env.NODE_ENV === "development";
+    if (!expected && !isDev) {
+      return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
+    }
+    if (expected && secret !== expected) {
+      return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
+    }
+
     const loader = await getCalibrationLoader();
     const state = loader.getState();
 

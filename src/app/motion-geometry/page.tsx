@@ -13,6 +13,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "MyShape Motion Geometry — Visual Pipeline Demo",
+    description: "See how human motion becomes cryptographic identity — visual demonstration of the 5-step pipeline.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function MotionGeometryPage() {

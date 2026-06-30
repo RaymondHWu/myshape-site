@@ -13,6 +13,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "MyShape Genesis Cohort — The First 100",
+    description: "Founding entities of the sovereign identity layer. Permanent tier. Never offered again.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function CohortPage() {

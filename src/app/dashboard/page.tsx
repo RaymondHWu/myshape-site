@@ -13,6 +13,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "MyShape Dashboard — Sovereign Identity Hub",
+    description: "Track your Genesis identity, scan history, and particle tier on MyShape Protocol.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function DashboardPage() {
