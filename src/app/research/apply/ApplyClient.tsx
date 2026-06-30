@@ -123,6 +123,11 @@ function ApplyForm() {
             We are looking for the first 100 people who believe that
             <span style={{ color: "rgba(144,200,255,0.7)" }}> digital continuity should be verifiable</span>.
           </p>
+          <div className="mt-4 border-l-2 pl-4" style={{ borderColor: "rgba(144,200,255,0.25)" }}>
+            <p className="text-white/50 text-[13px] font-light italic">
+              Help build the world's first protocol for verifiable digital continuity.
+            </p>
+          </div>
         </div>
 
         {/* ── Research Question ── */}
@@ -255,9 +260,14 @@ function ApplyForm() {
               </p>
 
               {isGenesis && (
-                <div className="inline-block px-3 py-1 border border-amber-400/20 bg-amber-400/[0.04] text-amber-300/60 text-[9px] tracking-[0.15em] uppercase rounded-sm">
-                  {result.genesis_slots_remaining} genesis slots remaining
-                </div>
+                <>
+                  <div className="inline-block px-3 py-1 border border-amber-400/20 bg-amber-400/[0.04] text-amber-300/60 text-[9px] tracking-[0.15em] uppercase rounded-sm">
+                    Genesis #{String(result.position_number).padStart(3, '0')}
+                  </div>
+                  <div className="text-amber-400/25 text-[9px] mt-1">
+                    {result.genesis_slots_remaining} genesis slots remaining
+                  </div>
+                </>
               )}
 
               <p>
