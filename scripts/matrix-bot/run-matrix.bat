@@ -1,7 +1,14 @@
 @echo off
+title MyShape Matrix Updater
 echo ========================================
 echo   MyShape Matrix Dashboard Updater
 echo ========================================
+cd /d "%~dp0"
+
+echo.
+echo [*] Pulling latest code...
+cd /d "..\..\"
+git pull origin master
 cd /d "%~dp0"
 
 echo.
