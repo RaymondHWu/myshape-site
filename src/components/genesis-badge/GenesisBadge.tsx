@@ -42,19 +42,21 @@ export default function GenesisBadge() {
     if (typeof window === "undefined") return;
 
     const storedEmail = sessionStorage.getItem("genesis_email") || "";
+    const walletAddr = sessionStorage.getItem("wallet_address") || "";
     const isCompleted = sessionStorage.getItem("genesis_completed") === "1";
     const storedStatus = sessionStorage.getItem("genesis_status") || "";
 
-    // 有 session 记录：直接显示
-    if (isCompleted && storedEmail) {
+    // Use email if available, fall back to wallet address as identity
+    const identityKey = storedEmail || walletAddr;
+    if (isCompleted && identityKey) {
       setStatus(storedStatus || "ACTIVE");
       setVisible(true);
-      fetchStats(storedEmail);
-      const interval = setInterval(() => fetchStats(storedEmail), 30000);
-      return () => clearInterval(interval);
+      if (storedEmail) {
+        fetchStats(storedEmail);
+        const interval = setInterval(() => fetchStats(storedEmail), 30000);
+        return () => clearInterval(interval);
+      }
     }
-
-    // session 丢失：无法恢复，不显示（用户需重新登录）
   }, []);
 
   // 鼠标视差倾斜

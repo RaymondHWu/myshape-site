@@ -185,6 +185,16 @@ const ProtocolHeader = () => {
         sessionStorage.setItem("genesis_completed", "1");
         setGenesisDone(true);
       }
+      // Ensure genesis_email is stored — required by GenesisBadge to render
+      if (genesisEmail && !sessionStorage.getItem("genesis_email")) {
+        sessionStorage.setItem("genesis_email", genesisEmail);
+      }
+      if (data.node_handle) {
+        sessionStorage.setItem("genesis_node_handle", data.node_handle);
+      }
+      if (data.status) {
+        sessionStorage.setItem("genesis_status", data.status);
+      }
     } catch (err: unknown) {
       setWalletError((err as Error).message?.slice(0, 60) || "Connect failed");
       setWalletStatus("idle");
