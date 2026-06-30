@@ -308,7 +308,7 @@ const ProtocolHeader = () => {
 
             <div className="panel-content">
               <div className="panel-header">
-                {genesisDone ? "IDENTITY_SESSION_ACTIVE" : "PROTOCOL_ACCESS_SESSION"}
+                {genesisDone ? "IDENTITY_SESSION_ACTIVE" : walletAddress ? "WALLET_CONNECTED — INITIALIZE BELOW" : "PROTOCOL_ACCESS_SESSION"}
               </div>
 
               <div className="panel-section">
