@@ -11,6 +11,8 @@ interface NodeStats {
   email: string; status: string; is_genesis: boolean; is_active: boolean;
   scan_count: number; data_contribution: number; tier: string;
   early_access: boolean; registered_at: string;
+  entropy_score?: number; particle_level?: number; streak_days?: number;
+  position_number?: number;
 }
 
 function getOrbitalTier(sc: number): { count: number; name: string } {
@@ -52,13 +54,21 @@ export default function DashboardClient() {
     if (!email) { setLoading(false); return; }
 
     const fetchStats = () => {
-      fetch(`/api/node/privileges?email=${encodeURIComponent(email)}`)
-        .then(r => r.json())
-        .then(data => {
-          if (data.email) {
-            if (data.scan_count > prevScanRef.current) { setScanPulse(true); setTimeout(() => setScanPulse(false), 800); }
-            prevScanRef.current = data.scan_count;
-            setStats(data);
+      Promise.all([
+        fetch(`/api/node/privileges?email=${encodeURIComponent(email)}`).then(r => r.json()),
+        fetch(`/api/node/entropy?email=${encodeURIComponent(email)}`).then(r => r.json()),
+      ])
+        .then(([priv, ent]) => {
+          if (priv.email) {
+            if (priv.scan_count > prevScanRef.current) { setScanPulse(true); setTimeout(() => setScanPulse(false), 800); }
+            prevScanRef.current = priv.scan_count;
+            setStats({
+              ...priv,
+              entropy_score: ent.entropyScore,
+              particle_level: ent.particleLevel,
+              streak_days: ent.streakDays,
+              position_number: priv.position_number || (typeof window !== "undefined" ? parseInt(sessionStorage.getItem("witness_number") || "0") || undefined : undefined),
+            });
           } else Sentry.captureMessage("Dashboard: empty node data", { extra: { email: email.slice(0, 3) + "***" } });
           setLoading(false);
         })
@@ -79,10 +89,12 @@ export default function DashboardClient() {
       <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 space-y-12 md:space-y-14">
         {/* Header */}
         <div>
-          <div className="text-cyan-500/45 text-[10px] tracking-[0.5em] uppercase mb-4">SOVEREIGN_IDENTITY_HUB</div>
+          <div className="text-cyan-500/45 text-[10px] tracking-[0.5em] uppercase mb-4">Evolutionary Trajectory</div>
           <h1 className="text-2xl md:text-3xl font-light tracking-[0.15em] text-white uppercase mb-2"
-            style={{ textShadow: "0 0 40px rgba(144,200,255,0.2)" }}>Dashboard</h1>
-          <p className="text-white/35 text-[11px] tracking-[0.1em]">Your Genesis identity, consolidated.</p>
+            style={{ textShadow: "0 0 40px rgba(144,200,255,0.2)" }}>Your Continuity</h1>
+          <p className="text-white/35 text-[11px] tracking-[0.1em]">
+            Identity is a snapshot. Continuity is a trajectory.
+          </p>
         </div>
 
         {!isGenesis ? (
@@ -123,21 +135,26 @@ export default function DashboardClient() {
                   <GenesisBadge />
                 </div>
                 <div className="flex-1">
+                  {stats.position_number && (
+                    <div className="text-amber-400/60 text-[10px] tracking-[0.2em] uppercase mb-3 font-mono">
+                      Genesis #{String(stats.position_number).padStart(3, '0')}
+                    </div>
+                  )}
                   <div className="grid grid-cols-2 gap-3">
-                    <StatCard label="Status" value={stats.tier} />
-                    <StatCard label="Access Level" value={stats.early_access ? "OMEGA" : "STANDARD"} />
-                    <StatCard label="Total Scans" value={stats.scan_count} pulse={scanPulse} />
-                    <StatCard label="Data Contrib" value={stats.data_contribution} />
+                    <StatCard label="Presence Receipts" value={stats.scan_count} pulse={scanPulse} extra="notarized becomings" />
+                    <StatCard label="Continuity Sessions" value={stats.data_contribution} extra="research contributions" />
+                    <StatCard label="Entropy Score" value={stats.entropy_score != null ? stats.entropy_score.toFixed(0) : "—"} extra={stats.particle_level != null ? `Level ${stats.particle_level}` : undefined} />
+                    <StatCard label="Streak" value={stats.streak_days != null ? `${stats.streak_days} days` : "—"} extra="continuity chain" />
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* Orbital Tier Progress */}
+            {/* Trajectory Evolution */}
             <section className="border border-cyan-400/12 p-6 bg-cyan-400/[0.01]"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-white/25 text-[9px] tracking-[0.3em] uppercase">Orbital Evolution</span>
+                <span className="text-white/25 text-[9px] tracking-[0.3em] uppercase">Trajectory Evolution</span>
                 <span className="text-cyan-400/55 font-mono text-[11px]">{tier.count} / 8 — {tier.name}</span>
               </div>
               <div className="relative h-2 bg-white/[0.04] overflow-hidden mb-2">
@@ -147,6 +164,9 @@ export default function DashboardClient() {
               <div className="flex justify-between text-[8px] text-white/12 tracking-[0.15em] uppercase">
                 <span>Awakening</span><span>Linked</span><span>Resonant</span><span>Fusion</span><span>Anchored</span><span>Stabilized</span><span>Saturated</span><span>Sealed</span>
               </div>
+              <p className="text-white/15 text-[8px] mt-3 text-center tracking-[0.1em]">
+                Each Presence Receipt advances your trajectory. You cannot rush continuity — it accrues.
+              </p>
             </section>
 
             {/* Quick Actions */}
