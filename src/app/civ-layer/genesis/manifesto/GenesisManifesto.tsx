@@ -74,6 +74,7 @@ const sections = [
 
 export default function GenesisManifesto() {
   const [activeIndex, setActiveIndex] = useState('01');
+  const [tocShow, setTocShow] = useState(true);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
@@ -90,6 +91,15 @@ export default function GenesisManifesto() {
     return () => observerRef.current?.disconnect();
   }, []);
 
+  useEffect(() => {
+    const check = () => {
+      const footer = document.querySelector("footer");
+      if (footer) setTocShow(footer.getBoundingClientRect().top > window.innerHeight * 0.5);
+    };
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       {/* 細微落星背景 */}
@@ -103,8 +113,15 @@ export default function GenesisManifesto() {
 
       <main className="relative z-10 pt-56 px-10 max-w-7xl mx-auto flex flex-col md:flex-row gap-24 ">
 
-        {/* 2. 固定側邊導航 (Sticky Sidebar Index) */}
-        <aside className="md:w-64 shrink-0 h-fit md:sticky md:top-56 hidden md:block">
+        {/* Spacer */}
+        <div className="md:w-64 shrink-0 hidden md:block" />
+        {/* 2. 固定側邊導航 (Fixed Sidebar Index) */}
+        <aside className="hidden md:block" style={{
+          position: "fixed", top: "224px", width: "256px",
+          left: "max(40px, calc((100vw - 1280px) / 2 + 40px))",
+          opacity: tocShow ? 1 : 0, pointerEvents: tocShow ? "auto" : "none",
+          transition: "opacity 0.3s", zIndex: 10,
+        }}>
           <div className="text-[9px] text-[#90c8ff]/40 mb-12 tracking-[0.5em] uppercase font-bold">ARCHIVE_INDEX</div>
           <ul className="space-y-10 border-l border-white/5 pl-6">
             {sections.map(s => {

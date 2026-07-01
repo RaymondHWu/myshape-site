@@ -278,7 +278,7 @@ export default function PostClient() {
               </h2>
               <div className="space-y-5">
                 {s.content.split("\n\n").map((para, j) => (
-                  <p key={j} className="text-white/55 text-[14px] leading-[1.9] font-light">
+                  <p key={j} className="text-white/50 text-[18px] leading-[1.85] font-light">
                     {para.trim()}
                   </p>
                 ))}

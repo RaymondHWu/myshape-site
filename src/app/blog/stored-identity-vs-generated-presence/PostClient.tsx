@@ -177,7 +177,7 @@ export default function PostClient() {
             style={{ textShadow: "0 0 40px rgba(144,200,255,0.15)" }}>
             Stored Identity vs. Generated Presence
           </h1>
-          <p className="text-white/45 text-[14px] leading-relaxed">
+          <p className="text-white/40 text-[18px] leading-relaxed">
             Why your &ldquo;identity&rdquo; is just a copyable database record — and what comes next.
           </p>
           <div className="flex items-center gap-3 mt-4 text-[9px]">
@@ -219,7 +219,7 @@ export default function PostClient() {
               </h2>
               <div className="space-y-5">
                 {s.content.split("\n\n").map((para, j) => (
-                  <p key={j} className="text-white/55 text-[14px] leading-[1.9] font-light">
+                  <p key={j} className="text-white/50 text-[18px] leading-[1.85] font-light">
                     {para.trim()}
                   </p>
                 ))}

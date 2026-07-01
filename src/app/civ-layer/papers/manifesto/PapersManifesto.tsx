@@ -70,6 +70,7 @@ const sections = [
 
 export default function PapersManifesto() {
   const [activeIndex, setActiveIndex] = useState('01');
+  const [tocShow, setTocShow] = useState(true);
   const observerRef = useRef<IntersectionObserver | null>(null);
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -78,6 +79,11 @@ export default function PapersManifesto() {
     );
     document.querySelectorAll('section[id]').forEach(el => observerRef.current?.observe(el));
     return () => observerRef.current?.disconnect();
+  }, []);
+  useEffect(() => {
+    const check = () => { const f = document.querySelector("footer"); if (f) setTocShow(f.getBoundingClientRect().top > window.innerHeight * 0.5); };
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
   }, []);
 
   return (
@@ -95,7 +101,13 @@ export default function PapersManifesto() {
 
       <main className="relative z-10 pt-56 px-6 md:px-10 max-w-7xl mx-auto flex flex-col md:flex-row gap-24">
         {/* Sticky Sidebar */}
-        <aside className="md:w-64 shrink-0 h-fit md:sticky md:top-56 hidden md:block">
+        <div className="md:w-64 shrink-0 hidden md:block" />
+        <aside className="hidden md:block" style={{
+          position: "fixed", top: "224px", width: "256px",
+          left: "calc((100vw - 1280px) / 2 + 40px)",
+          opacity: tocShow ? 1 : 0, pointerEvents: tocShow ? "auto" : "none",
+          transition: "opacity 0.3s", zIndex: 10,
+        }}>
           <div className="text-[9px] text-[#90c8ff]/40 mb-12 tracking-[0.5em] uppercase font-bold">RESEARCH_INDEX</div>
           <ul className="space-y-10 border-l border-white/5 pl-6">
             {sections.map(s => {
