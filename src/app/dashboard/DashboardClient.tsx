@@ -42,6 +42,8 @@ function StatCard({ label, value, pulse, extra }: { label: string; value: string
 export default function DashboardClient() {
   const [stats, setStats] = useState<NodeStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [witnessNumber, setWitnessNumber] = useState<number | undefined>(undefined);
+  useEffect(() => { setWitnessNumber(parseInt(sessionStorage.getItem("witness_number") || "0") || undefined); }, []);
   const [isGenesis, setIsGenesis] = useState(false);
   const [scanPulse, setScanPulse] = useState(false);
   const prevScanRef = { current: 0 };
@@ -67,7 +69,7 @@ export default function DashboardClient() {
               entropy_score: ent.entropyScore,
               particle_level: ent.particleLevel,
               streak_days: ent.streakDays,
-              position_number: priv.position_number || (typeof window !== "undefined" ? parseInt(sessionStorage.getItem("witness_number") || "0") || undefined : undefined),
+              position_number: priv.position_number || witnessNumber,
             });
           } else Sentry.captureMessage("Dashboard: empty node data", { extra: { email: email.slice(0, 3) + "***" } });
           setLoading(false);

@@ -55,6 +55,7 @@ export default function MotionDemoClient() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isChromium, setIsChromium] = useState(false);
+  const [genesisDone, setGenesisDone] = useState(false);
   const [phase, setPhase] = useState<Phase>("idle");
   const [features, setFeatures] = useState<FeatureFrame | null>(null);
   const [pesData, setPesData] = useState<PESData | null>(null);
@@ -428,7 +429,7 @@ export default function MotionDemoClient() {
   }, []);
 
   // ── Sync phaseRef with phase state (keeps feed loop + onResults in sync) ──
-  useEffect(() => { setIsChromium(/Chrome|Edg\//.test(window.navigator.userAgent) && !/Firefox/i.test(window.navigator.userAgent)); }, []);
+  useEffect(() => { setIsChromium(/Chrome|Edg\//.test(window.navigator.userAgent) && !/Firefox/i.test(window.navigator.userAgent)); setGenesisDone(sessionStorage.getItem("genesis_completed") === "1"); }, []);
   useEffect(() => { phaseRef.current = phase; }, [phase]);
 
   // ── Countdown (30s protocol) ──
@@ -841,7 +842,7 @@ export default function MotionDemoClient() {
                 </div>
                 {witnessData?.position_number&&(<div className="p-3 border border-amber-400/20 bg-amber-400/[0.03] text-center space-y-1"><div className="text-amber-300/60 text-[9px] uppercase tracking-[0.12em]">{witnessData.cohort==="genesis"?"Genesis Witness":"Protocol Witness"}</div><div className="text-amber-200/90 text-[18px] font-light">#{witnessData.position_number}</div></div>)}
                 {/* Genesis status */}
-                {typeof window !== "undefined" && sessionStorage.getItem("genesis_completed") === "1" ? (
+                {genesisDone ? (
                   <div className="text-center text-[#90c8ff]/40 text-[10px] tracking-[0.1em]">◈ Scan recorded — contributing to orbital evolution</div>
                 ) : (
                   <div className="text-center text-amber-400/40 text-[10px] tracking-[0.1em]">⚠ Demo mode — scan not bound to identity</div>
@@ -1090,7 +1091,7 @@ export default function MotionDemoClient() {
                   </div>
                 )}
                 {/* Genesis 状态提示 */}
-                {typeof window !== "undefined" && sessionStorage.getItem("genesis_completed") === "1" ? (
+                {genesisDone ? (
                   <div className="text-center text-[#90c8ff]/25 text-[8px] tracking-[0.15em] uppercase">
                     ◈ Scan recorded — contributing to your orbital evolution
                   </div>

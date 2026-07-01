@@ -26,6 +26,8 @@ function ApplyForm() {
   const [technicalBg, setTechnicalBg] = useState("");
   const [handle, setHandle] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
+  const [isEdge, setIsEdge] = useState(false);
+  useEffect(() => { setIsEdge(/Edg\//.test(window.navigator.userAgent)); }, []);
   const [countdown, setCountdown] = useState(5);
 
   const [result, setResult] = useState<{
@@ -99,7 +101,7 @@ function ApplyForm() {
 
       <div className="relative z-10 max-w-2xl mx-auto px-4 md:px-6" style={{ paddingTop: "7rem", paddingBottom: "4rem" }}>
         {/* Edge warning */}
-        {typeof window !== "undefined" && /Edg\//.test(window.navigator.userAgent) && (
+        {isEdge && (
           <div className="px-4 py-3 border border-amber-400/30 bg-amber-400/[0.06] text-center mb-6" style={{ borderRadius: 4 }}>
             <p className="text-amber-300/80 text-[11px] leading-relaxed">
               Edge does not support the motion capture demo.
