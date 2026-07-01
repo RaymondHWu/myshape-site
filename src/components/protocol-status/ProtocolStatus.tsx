@@ -80,10 +80,10 @@ export default function ProtocolStatus() {
               onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}
             >
               <Dot color={hasNodes ? "green" : "cyan"} pulse={hasNodes} />
-              <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
+              <span className="text-white/20 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
                 PROTOCOL
               </span>
-              <span className="text-cyan-300/80 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/90 transition-colors">
+              <span className="text-cyan-400/60 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-400/80 transition-colors">
                 {status.status}
               </span>
             </div>
@@ -95,14 +95,14 @@ export default function ProtocolStatus() {
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
             >
               <Dot color={status.cohort_sealed ? "green" : "amber"} pulse={!status.cohort_sealed && status.genesis_nodes > 0} />
-              <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
+              <span className="text-white/20 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
                 GENESIS
               </span>
-              <span className="text-amber-300/80 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-amber-300/90 transition-colors">
+              <span className="text-amber-400/60 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-amber-400/80 transition-colors">
                 {status.genesis_nodes}<span className="text-white/10">/100</span>
               </span>
               {status.cohort_sealed && (
-                <span className="text-green-300/80 text-[7px] tracking-[0.2em] uppercase font-mono">SEALED</span>
+                <span className="text-green-400/60 text-[7px] tracking-[0.2em] uppercase font-mono">SEALED</span>
               )}
               {!status.cohort_sealed && status.genesis_nodes > 0 && (
                 <span className="text-white/10 text-[7px] tracking-[0.1em] uppercase font-mono">{status.genesis_remaining} open</span>
@@ -116,14 +116,14 @@ export default function ProtocolStatus() {
               onMouseEnter={() => playTick(550, "sine", 0.04, 0.01)}
             >
               <Dot color={hasNodes ? "cyan" : "muted"} pulse={hasNodes} />
-              <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
+              <span className="text-white/20 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
                 NODES
               </span>
-              <span className="text-cyan-300/80 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/90 transition-colors">
+              <span className="text-cyan-400/60 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-400/80 transition-colors">
                 {status.active_humans}h
               </span>
               <span className="text-white/[0.06]">+</span>
-              <span className="text-cyan-300/80 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/90 transition-colors">
+              <span className="text-cyan-400/60 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-400/80 transition-colors">
                 {status.agents}a
               </span>
             </div>
