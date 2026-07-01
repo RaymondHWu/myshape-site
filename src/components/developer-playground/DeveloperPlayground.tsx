@@ -43,11 +43,11 @@ export default function DeveloperPlayground() {
   }, []);
 
   return (
-    <div className="border border-cyan-400/20 bg-cyan-400/[0.02] overflow-hidden">
+    <div className="border border-[#90c8ff]/20 bg-[#90c8ff]/[0.02] overflow-hidden">
       {/* Header */}
       <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
         <div>
-          <span className="text-cyan-400/60 text-[10px] tracking-[0.3em] uppercase">Developer Playground</span>
+          <span className="text-[#90c8ff]/60 text-[10px] tracking-[0.3em] uppercase">Developer Playground</span>
           <span className="text-white/15 text-[8px] ml-3 tracking-[0.1em]">No setup · No camera · Browser only</span>
         </div>
         <span className="text-white/10 text-[8px] tracking-[0.15em]">PLAYGROUND_ENGINE_V1</span>
@@ -63,33 +63,33 @@ export default function DeveloperPlayground() {
               style={{ border: "1px solid rgba(144,200,255,0.08)" }}>
               <span className="text-white/20">{"// 1. Pre-recorded frames from a real human scan"}</span>
               <br />
-              <span className="text-cyan-400/50">import</span>
+              <span className="text-[#90c8ff]/50">import</span>
               <span className="text-white/40"> {"{ computeFullPES }"} </span>
-              <span className="text-cyan-400/50">from</span>
-              <span className="text-cyan-300/40"> "@/engine/presence-entropy"</span>;
+              <span className="text-[#90c8ff]/50">from</span>
+              <span className="text-[#90c8ff]/40"> "@/engine/presence-entropy"</span>;
               <br />
-              <span className="text-cyan-400/50">import</span>
+              <span className="text-[#90c8ff]/50">import</span>
               <span className="text-white/40"> {"{ assessThreat }"} </span>
-              <span className="text-cyan-400/50">from</span>
-              <span className="text-cyan-300/40"> "@/engine/threat-assessment"</span>;
+              <span className="text-[#90c8ff]/50">from</span>
+              <span className="text-[#90c8ff]/40"> "@/engine/threat-assessment"</span>;
               <br />
               <br />
               <span className="text-white/20">{"// 2. Run PES + Threat Assessment"}</span>
               <br />
-              <span className="text-cyan-400/50">const</span>
+              <span className="text-[#90c8ff]/50">const</span>
               <span className="text-white/50"> {"{ pes, components }"} = </span>
-              <span className="text-cyan-300/40">computeFullPES</span>
+              <span className="text-[#90c8ff]/40">computeFullPES</span>
               <span className="text-white/40">(sampleFrames, timestamps)</span>;
               <br />
-              <span className="text-cyan-400/50">const</span>
+              <span className="text-[#90c8ff]/50">const</span>
               <span className="text-white/50"> threat = </span>
-              <span className="text-cyan-300/40">assessThreat</span>
+              <span className="text-[#90c8ff]/40">assessThreat</span>
               <span className="text-white/40">(pes, components)</span>;
               <br />
               <br />
               <span className="text-white/20">{"// 3. Check result"}</span>
               <br />
-              <span className="text-cyan-400/50">if</span>
+              <span className="text-[#90c8ff]/50">if</span>
               <span className="text-white/40"> (threat.overallVerdict === </span>
               <span className="text-green-400/60">"human"</span>
               <span className="text-white/40">) {"{"}</span>
@@ -116,7 +116,7 @@ export default function DeveloperPlayground() {
               {step === "done" && (
                 <>
                   <button onClick={handleReset}
-                    className="px-5 py-2 border border-cyan-400/30 text-cyan-300/70 text-[10px] tracking-[0.2em] uppercase hover:bg-cyan-400/[0.06] hover:text-cyan-200 transition-all">
+                    className="px-5 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.2em] uppercase hover:bg-[#90c8ff]/[0.06] hover:text-[#90c8ff] transition-all">
                     ↻ Run Again
                   </button>
                   <span className="flex items-center text-green-400/60 text-[10px] tracking-[0.15em]">
@@ -164,10 +164,10 @@ export default function DeveloperPlayground() {
                     <span className="text-white/15 ml-2">{"{"}</span>
                   </div>
                   <div className="ml-4 space-y-0.5">
-                    <div><span className="text-cyan-400/40">timing:</span> <span className="text-white/40">{SAMPLE_DATA.components.timing}</span></div>
-                    <div><span className="text-cyan-400/40">noise:</span> <span className="text-white/40">{SAMPLE_DATA.components.noise}</span></div>
-                    <div><span className="text-cyan-400/40">frequency:</span> <span className="text-white/40">{SAMPLE_DATA.components.frequency}</span></div>
-                    <div><span className="text-cyan-400/40">biological:</span> <span className="text-white/40">{SAMPLE_DATA.components.biological}</span></div>
+                    <div><span className="text-[#90c8ff]/40">timing:</span> <span className="text-white/40">{SAMPLE_DATA.components.timing}</span></div>
+                    <div><span className="text-[#90c8ff]/40">noise:</span> <span className="text-white/40">{SAMPLE_DATA.components.noise}</span></div>
+                    <div><span className="text-[#90c8ff]/40">frequency:</span> <span className="text-white/40">{SAMPLE_DATA.components.frequency}</span></div>
+                    <div><span className="text-[#90c8ff]/40">biological:</span> <span className="text-white/40">{SAMPLE_DATA.components.biological}</span></div>
                   </div>
                   <div><span className="text-white/15 ml-2">{"}"}</span></div>
 
@@ -183,10 +183,10 @@ export default function DeveloperPlayground() {
                     <span className="text-white/15 ml-2">{"{"}</span>
                   </div>
                   <div className="ml-4 space-y-0.5 text-[9px]">
-                    <div><span className="text-cyan-400/30">zkp:</span> <span className="text-white/25">{SAMPLE_DATA.proof.zkp}</span></div>
-                    <div><span className="text-cyan-400/30">pop:</span> <span className="text-white/25">{SAMPLE_DATA.proof.pop}</span></div>
-                    <div><span className="text-cyan-400/30">mp:</span> <span className="text-white/25">{SAMPLE_DATA.proof.mp}</span></div>
-                    <div><span className="text-cyan-400/30">ep:</span> <span className="text-white/25">{SAMPLE_DATA.proof.ep}</span></div>
+                    <div><span className="text-[#90c8ff]/30">zkp:</span> <span className="text-white/25">{SAMPLE_DATA.proof.zkp}</span></div>
+                    <div><span className="text-[#90c8ff]/30">pop:</span> <span className="text-white/25">{SAMPLE_DATA.proof.pop}</span></div>
+                    <div><span className="text-[#90c8ff]/30">mp:</span> <span className="text-white/25">{SAMPLE_DATA.proof.mp}</span></div>
+                    <div><span className="text-[#90c8ff]/30">ep:</span> <span className="text-white/25">{SAMPLE_DATA.proof.ep}</span></div>
                   </div>
                   <div><span className="text-white/15 ml-2">{"}"}</span></div>
 
@@ -217,7 +217,7 @@ export default function DeveloperPlayground() {
           <span className="text-white/10 text-[8px] tracking-[0.15em]">
             Sample data: 30s scan · 180 frames · Real human · MediaPipe 33-pt → SST 18-pt
           </span>
-          <a href="/motion-demo" className="text-cyan-400/30 hover:text-cyan-400/60 text-[8px] tracking-[0.15em] transition-colors">
+          <a href="/motion-demo" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 text-[8px] tracking-[0.15em] transition-colors">
             Try with YOUR motion →
           </a>
         </div>

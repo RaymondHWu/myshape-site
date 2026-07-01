@@ -67,7 +67,7 @@ export default function ContinuityClient() {
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 space-y-10">
         {/* Header */}
         <div className="space-y-3">
-          <div className="text-cyan-500/45 text-[10px] tracking-[0.5em] uppercase">State Chain of Subject Evolution</div>
+          <div className="text-[#90c8ff]/45 text-[10px] tracking-[0.5em] uppercase">State Chain of Subject Evolution</div>
           <h1 className="text-2xl md:text-3xl font-light tracking-[0.15em] text-white uppercase"
             style={{ textShadow: "0 0 40px rgba(144,200,255,0.2)" }}>
             Global Continuity Network
@@ -88,11 +88,11 @@ export default function ContinuityClient() {
             ].map(kpi => (
               <div key={kpi.label}
                 onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
-                className="p-4 border bg-cyan-400/[0.01] transition-all hover:border-cyan-400/30"
+                className="p-4 border bg-[#90c8ff]/[0.01] transition-all hover:border-[#90c8ff]/30"
                 style={{ borderColor: "rgba(144,200,255,0.1)" }}>
                 <div className="text-white/20 text-[8px] tracking-[0.25em] uppercase mb-2">{kpi.label}</div>
                 <div className="text-white/80 text-[28px] font-light font-mono">{kpi.value}</div>
-                <div className="text-cyan-400/25 text-[8px] mt-1">{kpi.extra}</div>
+                <div className="text-[#90c8ff]/25 text-[8px] mt-1">{kpi.extra}</div>
               </div>
             ))}
           </div>
@@ -134,13 +134,13 @@ export default function ContinuityClient() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {data.nodes.slice(0, 20).map((node) => (
                 <div key={node.handle || node.mask}
-                  className="flex items-center justify-between p-3 border transition-all hover:border-cyan-400/20"
+                  className="flex items-center justify-between p-3 border transition-all hover:border-[#90c8ff]/20"
                   style={{ borderColor: "rgba(144,200,255,0.08)", background: "rgba(144,200,255,0.01)" }}>
                   <div className="flex items-center gap-3">
                     <div className="w-1.5 h-1.5 rounded-full"
                       style={{
-                        background: node.isGenesis ? "#d4af37" : node.scans > 0 ? "#22d3ee" : "#333",
-                        boxShadow: node.isGenesis ? "0 0 6px rgba(212,175,55,0.6)" : node.scans > 0 ? "0 0 6px rgba(34,211,238,0.4)" : "none",
+                        background: node.isGenesis ? "#d4af37" : node.scans > 0 ? "#90c8ff" : "#333",
+                        boxShadow: node.isGenesis ? "0 0 6px rgba(212,175,55,0.6)" : node.scans > 0 ? "0 0 6px rgba(144,200,255,0.4)" : "none",
                       }} />
                     <div>
                       <div className="text-white/40 text-[10px] tracking-[0.05em]">{node.handle || node.mask}</div>
@@ -150,7 +150,7 @@ export default function ContinuityClient() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-cyan-400/40 text-[8px] font-mono">{node.entropy?.toFixed(0) || "—"}</div>
+                    <div className="text-[#90c8ff]/40 text-[8px] font-mono">{node.entropy?.toFixed(0) || "—"}</div>
                     <div className="text-white/10 text-[7px]">entropy</div>
                   </div>
                 </div>
@@ -161,13 +161,13 @@ export default function ContinuityClient() {
 
         {/* Empty State */}
         {!loading && (!data || data.nodes.length === 0) && (
-          <div className="text-center py-20 border border-cyan-400/12 bg-cyan-400/[0.01] space-y-4">
-            <div className="text-cyan-400/30 text-[10px] tracking-[0.4em] uppercase">No Trajectories Yet</div>
+          <div className="text-center py-20 border border-[#90c8ff]/12 bg-[#90c8ff]/[0.01] space-y-4">
+            <div className="text-[#90c8ff]/30 text-[10px] tracking-[0.4em] uppercase">No Trajectories Yet</div>
             <p className="text-white/25 text-[12px] max-w-md mx-auto leading-relaxed">
               The network is waiting for its first verified trajectories. Be the first to establish a sovereign continuity chain.
             </p>
             <Link href="/genesis"
-              className="inline-block px-10 py-3.5 border border-cyan-400/30 text-cyan-300/70 text-[10px] tracking-[0.3em] uppercase hover:bg-cyan-400/[0.04] hover:text-white transition-all mt-4"
+              className="inline-block px-10 py-3.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase hover:bg-[#90c8ff]/[0.04] hover:text-white transition-all mt-4"
               style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)" }}>
               Initialize Your Trajectory →
             </Link>
@@ -195,7 +195,7 @@ export default function ContinuityClient() {
         {loading && (
           <div className="text-center py-16">
             <div className="flex items-center justify-center gap-2">
-              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22d3ee", boxShadow: "0 0 10px rgba(34,211,238,0.9)" }} />
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#90c8ff", boxShadow: "0 0 10px rgba(144,200,255,0.9)" }} />
               <span className="text-white/20 text-[10px] tracking-[0.3em] uppercase">Scanning network...</span>
             </div>
           </div>

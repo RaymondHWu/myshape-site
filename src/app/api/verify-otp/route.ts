@@ -52,13 +52,13 @@ async function sendWelcomeEmail(
     : `<p style="font-size:14px; color:#90c8ff; line-height:1.8;">Your node is now <strong>ACTIVE</strong> on the MyShape Protocol identity layer. You are part of the sovereign identity mesh — verified, sovereign, and fully functional.</p>`;
 
   const nextStepsHtml = `
-    <div style="margin:24px 0; padding:16px; border:1px solid rgba(34,211,238,0.15);">
+    <div style="margin:24px 0; padding:16px; border:1px solid rgba(144,200,255,0.15);">
       <p style="font-size:11px; color:#fff; text-transform:uppercase; letter-spacing:0.2em; margin:0 0 12px 0;">▸ Protocol Access Points:</p>
       <ol style="padding:0 0 0 18px; margin:0; font-size:11px; color:#90c8ff; line-height:2.2;">
-        <li><a href="https://github.com/myshapeprotocol" style="color:#22d3ee;">GitHub — Protocol Specs &amp; Roadmap</a></li>
-        <li><a href="https://www.myshape.com/dashboard" style="color:#22d3ee;">Dashboard — Monitor your orbital evolution</a></li>
-        <li><a href="https://www.myshape.com/motion-demo" style="color:#22d3ee;">Motion Demo — Contribute entropy to the mesh</a></li>
-        ${isGenesis ? '<li><a href="https://discord.gg/zr8Tczard" style="color:#22d3ee;">Discord — Genesis Cohort coordination channel</a></li>' : ''}
+        <li><a href="https://github.com/myshapeprotocol" style="color:#90c8ff;">GitHub — Protocol Specs &amp; Roadmap</a></li>
+        <li><a href="https://www.myshape.com/dashboard" style="color:#90c8ff;">Dashboard — Monitor your orbital evolution</a></li>
+        <li><a href="https://www.myshape.com/motion-demo" style="color:#90c8ff;">Motion Demo — Contribute entropy to the mesh</a></li>
+        ${isGenesis ? '<li><a href="https://discord.gg/zr8Tczard" style="color:#90c8ff;">Discord — Genesis Cohort coordination channel</a></li>' : ''}
       </ol>
     </div>
   `;
@@ -72,8 +72,8 @@ async function sendWelcomeEmail(
     html: `
       <div style="background:#000; color:#90c8ff; padding:40px; font-family:monospace; border:1px solid #333; max-width:560px;">
         <div style="text-align:center; margin-bottom:24px;">
-          <div style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#22d3ee; box-shadow:0 0 12px rgba(34,211,238,0.8); margin-right:8px;"></div>
-          <span style="color:#22d3ee; font-size:9px; letter-spacing:0.5em; text-transform:uppercase;">${tierLabel}</span>
+          <div style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#90c8ff; box-shadow:0 0 12px rgba(144,200,255,0.8); margin-right:8px;"></div>
+          <span style="color:#90c8ff; font-size:9px; letter-spacing:0.5em; text-transform:uppercase;">${tierLabel}</span>
         </div>
 
         <h2 style="border-bottom:1px solid #333; padding-bottom:12px; font-size:18px; font-weight:300; letter-spacing:0.15em; text-align:center; color:#fff;">
@@ -82,7 +82,7 @@ async function sendWelcomeEmail(
 
         ${bodyHtml}
 
-        <div style="margin:24px 0; padding:16px; border:1px dashed rgba(34,211,238,0.3); background:rgba(34,211,238,0.03);">
+        <div style="margin:24px 0; padding:16px; border:1px dashed rgba(144,200,255,0.3); background:rgba(144,200,255,0.03);">
           <p style="font-size:11px; color:#90c8ff; text-transform:uppercase; letter-spacing:0.2em; margin:0 0 8px 0;">▸ Your Protocol Primitives:</p>
           <ul style="list-style:none; padding:0; margin:0; font-size:11px; color:#90c8ff; line-height:2;">
             <li>◈ Sovereign Data-Body initialized — non-corporeal, platform-independent</li>

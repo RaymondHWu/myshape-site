@@ -100,7 +100,7 @@ export default function ProtocolManifesto() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
 
       {/* Background Grid */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.04]"
@@ -111,7 +111,7 @@ export default function ProtocolManifesto() {
 
       {/* Top Navigation */}
       <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/80 backdrop-blur-md px-10 py-5 flex justify-between items-center text-[10px] tracking-[0.4em]">
-        <Link href="/protocol" className="text-cyan-400/70 hover:text-cyan-300 transition-colors uppercase">← EXIT_ARCHIVE</Link>
+        <Link href="/protocol" className="text-[#90c8ff]/70 hover:text-[#90c8ff] transition-colors uppercase">← EXIT_ARCHIVE</Link>
         <div className="text-white/20 uppercase font-bold tracking-[0.5em]">PROTOCOL_MANIFESTO // DATA_SEQUENCE</div>
       </nav>
 
@@ -119,25 +119,25 @@ export default function ProtocolManifesto() {
 
         {/* Sidebar Nav */}
         <aside className="md:w-64 shrink-0 h-fit md:sticky md:top-56 hidden md:block">
-          <div className="text-[9px] text-cyan-500/40 mb-12 tracking-[0.5em] uppercase font-bold">ARCHIVE_INDEX</div>
+          <div className="text-[9px] text-[#90c8ff]/40 mb-12 tracking-[0.5em] uppercase font-bold">ARCHIVE_INDEX</div>
           <ul className="space-y-10 border-l border-white/5 pl-6">
             {sections.map(s => {
               const isActive = s.id === activeIndex;
               return (
                 <li key={s.id} className="group cursor-pointer">
                   <a href={'#' + s.id} className="block"
-                     style={isActive ? { borderLeft: '2px solid #22d3ee', paddingLeft: '22px', marginLeft: '-24px' } : {}}>
+                     style={isActive ? { borderLeft: '2px solid #90c8ff', paddingLeft: '22px', marginLeft: '-24px' } : {}}>
                     <div
-                      className={isActive ? 'text-[#22d3ee] font-bold text-[13px] transition-all duration-300 mb-1' : 'text-white/10 text-[10px] transition-all duration-300 mb-1'}
-                      style={isActive ? { textShadow: '0 0 12px rgba(34,211,238,0.7)' } : {}}>
+                      className={isActive ? 'text-[#90c8ff] font-bold text-[13px] transition-all duration-300 mb-1' : 'text-white/10 text-[10px] transition-all duration-300 mb-1'}
+                      style={isActive ? { textShadow: '0 0 12px rgba(144,200,255,0.7)' } : {}}>
                       {s.id}
                     </div>
                     <div
-                      className={(isActive ? 'text-[#22d3ee] font-bold opacity-100' : 'text-white/20 group-hover:text-cyan-400/80') + ' text-[11px] uppercase tracking-[0.2em] transition-all duration-300'}>
+                      className={(isActive ? 'text-[#90c8ff] font-bold opacity-100' : 'text-white/20 group-hover:text-[#90c8ff]/80') + ' text-[11px] uppercase tracking-[0.2em] transition-all duration-300'}>
                       {s.title}
                     </div>
                     {isActive && (
-                      <div className="text-[8px] tracking-[0.3em] text-cyan-400/60 mt-1.5 animate-pulse">
+                      <div className="text-[8px] tracking-[0.3em] text-[#90c8ff]/60 mt-1.5 animate-pulse">
                         [ READING_SYNC ]
                       </div>
                     )}
@@ -155,8 +155,8 @@ export default function ProtocolManifesto() {
               
               {/* Decoration Line */}
               <div className="flex items-center gap-6 mb-12">
-                <span className="text-cyan-500/50 text-[10px] tracking-[0.6em] font-bold">{s.subtitle}</span>
-                <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-cyan-500/30 transition-colors duration-700" />
+                <span className="text-[#90c8ff]/50 text-[10px] tracking-[0.6em] font-bold">{s.subtitle}</span>
+                <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-[#90c8ff]/30 transition-colors duration-700" />
               </div>
 
               {/* Title with Hover Effect */}

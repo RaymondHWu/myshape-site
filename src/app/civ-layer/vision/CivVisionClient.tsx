@@ -23,11 +23,11 @@ export default function CivVision() {
         
         {/* --- 1. CORE VISION & THE EYE --- */}
         <section className="relative pt-20">
-          <div className="text-cyan-500/10 text-[100px] md:text-[180px] font-bold absolute -top-10 -left-6 select-none pointer-events-none font-mono tracking-tighter">EYE</div>
+          <div className="text-[#90c8ff]/10 text-[100px] md:text-[180px] font-bold absolute -top-10 -left-6 select-none pointer-events-none font-mono tracking-tighter">EYE</div>
           <div className="relative z-10">
             <h2 className="text-3xl md:text-5xl font-extralight tracking-[0.5em] text-white leading-tight uppercase mb-10">
               Beyond Surveillance, <br/>
-              Towards <span className="text-cyan-400">Expression</span>.
+              Towards <span className="text-[#90c8ff]">Expression</span>.
             </h2>
             <p className="text-white/60 text-lg md:text-xl tracking-[0.15em] leading-relaxed font-light max-w-3xl">
               We envision a future where the digital version of yourself is as authentic, 
@@ -37,10 +37,10 @@ export default function CivVision() {
         </section>
 
         {/* --- 2. THE 2026 WINDOW --- */}
-        <section className="relative p-10 border-l border-cyan-500/30 bg-white/[0.01]">
+        <section className="relative p-10 border-l border-[#90c8ff]/30 bg-white/[0.01]">
           <div className="flex flex-col md:flex-row gap-12 items-start">
             <div className="shrink-0">
-              <div className="text-cyan-400 font-mono text-xs tracking-[0.4em] mb-4">TIME_WINDOW_ANALYSIS</div>
+              <div className="text-[#90c8ff] font-mono text-xs tracking-[0.4em] mb-4">TIME_WINDOW_ANALYSIS</div>
               <div className="text-white text-5xl font-bold font-mono tracking-tighter">2026</div>
             </div>
             <div className="flex-1 space-y-6">
@@ -57,9 +57,9 @@ export default function CivVision() {
         {/* --- 3. VISION PILLARS --- */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {visionPillars.map((pillar) => (
-            <div key={pillar.id} className="group border-b border-white/5 pb-12 hover:border-cyan-500/30 transition-all duration-700">
-              <div className="text-cyan-500 text-[10px] tracking-[0.4em] font-bold mb-4 opacity-50 group-hover:opacity-100">{pillar.id}</div>
-              <h4 className="text-white text-[14px] tracking-[0.3em] font-bold uppercase mb-6 group-hover:text-cyan-400 transition-colors">{pillar.title}</h4>
+            <div key={pillar.id} className="group border-b border-white/5 pb-12 hover:border-[#90c8ff]/30 transition-all duration-700">
+              <div className="text-[#90c8ff] text-[10px] tracking-[0.4em] font-bold mb-4 opacity-50 group-hover:opacity-100">{pillar.id}</div>
+              <h4 className="text-white text-[14px] tracking-[0.3em] font-bold uppercase mb-6 group-hover:text-[#90c8ff] transition-colors">{pillar.title}</h4>
               <p className="text-white/30 text-[10px] tracking-[0.2em] leading-loose uppercase group-hover:text-white/50">{pillar.desc}</p>
             </div>
           ))}
@@ -67,12 +67,12 @@ export default function CivVision() {
 
         {/* --- 4. PROTOCOL BRIDGE --- */}
         <section className="max-w-4xl mx-auto text-center space-y-8">
-          <div className="h-px w-24 bg-cyan-500/50 mx-auto" />
+          <div className="h-px w-24 bg-[#90c8ff]/50 mx-auto" />
           <p className="text-white/80 text-base md:text-lg tracking-[0.2em] leading-relaxed uppercase px-6">
-            To realize this future, MyShape introduces a <span className="text-cyan-400 font-bold">motion-native identity protocol</span>—a geometric anchor that 
+            To realize this future, MyShape introduces a <span className="text-[#90c8ff] font-bold">motion-native identity protocol</span>—a geometric anchor that 
             separates your human existence from the algorithmic extraction of platforms.
           </p>
-          <div className="h-px w-24 bg-cyan-500/50 mx-auto" />
+          <div className="h-px w-24 bg-[#90c8ff]/50 mx-auto" />
         </section>
 
         {/* --- 5. SCALE EXPECTATION --- */}
@@ -84,14 +84,14 @@ export default function CivVision() {
                  <div className="text-[8px] text-white/30 text-center tracking-widest uppercase italic">Initial_Nodes</div>
                </div>
                <div className="flex-1 space-y-4 w-full">
-                 <div className="h-24 bg-cyan-500/10 border border-cyan-500/20 w-full" />
-                 <div className="text-[8px] text-cyan-500/30 text-center tracking-widest uppercase italic">1M_MESH_SYST</div>
+                 <div className="h-24 bg-[#90c8ff]/10 border border-[#90c8ff]/20 w-full" />
+                 <div className="text-[8px] text-[#90c8ff]/30 text-center tracking-widest uppercase italic">1M_MESH_SYST</div>
                </div>
                <div className="flex-1 space-y-4 w-full">
-                 <div className="h-48 bg-cyan-500/30 border border-cyan-500/50 w-full relative group">
-                    <div className="absolute inset-0 bg-cyan-400 animate-pulse opacity-20" />
+                 <div className="h-48 bg-[#90c8ff]/30 border border-[#90c8ff]/50 w-full relative group">
+                    <div className="absolute inset-0 bg-[#90c8ff] animate-pulse opacity-20" />
                  </div>
-                 <div className="text-[8px] text-cyan-400 text-center tracking-[0.4em] uppercase font-bold">Global_Identity_Layer</div>
+                 <div className="text-[8px] text-[#90c8ff] text-center tracking-[0.4em] uppercase font-bold">Global_Identity_Layer</div>
                </div>
             </div>
         </section>
@@ -103,7 +103,7 @@ export default function CivVision() {
             </p>
             {/* ⚠️ 路徑修正：從 /publication 改為 /vision/manifesto */}
             <Link href="/civ-layer/vision/manifesto" className="inline-block group">
-               <div className="px-16 py-6 border border-cyan-500/30 bg-cyan-500/5 group-hover:bg-cyan-400 group-hover:text-black transition-all duration-500 text-cyan-400 text-[11px] tracking-[0.6em] uppercase font-bold">
+               <div className="px-16 py-6 border border-[#90c8ff]/30 bg-[#90c8ff]/5 group-hover:bg-[#90c8ff] group-hover:text-black transition-all duration-500 text-[#90c8ff] text-[11px] tracking-[0.6em] uppercase font-bold">
                  Access Full Strategic Manifesto →
                </div>
             </Link>

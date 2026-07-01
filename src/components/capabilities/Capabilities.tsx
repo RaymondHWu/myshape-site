@@ -91,7 +91,7 @@ export default function Capabilities() {
         <div className="max-w-[650px]">
           <span className="text-[9px] tracking-[0.6em] text-white/20 block mb-4 uppercase">CAPABILITIES</span>
           <h2 className="text-[clamp(2rem,5vw,3.2rem)] font-light -tracking-[0.02em] leading-[1.1] text-white m-0">
-            Sovereignty as <span className="text-cyan-400/80">Protocol.</span>
+            Sovereignty as <span className="text-[#90c8ff]/80">Protocol.</span>
           </h2>
           <p className="text-[clamp(0.9rem,2vw,1.1rem)] font-light text-white/70 mt-7 max-w-[550px] leading-[1.7]">
             A unified suite of primitives for secure, behavioral identity in the age of AI.
@@ -99,7 +99,7 @@ export default function Capabilities() {
         </div>
 
         <div className="text-right flex flex-col items-end gap-8">
-          <div className="text-[0.8rem] text-cyan-400/30 text-right border-r border-cyan-400/15 pr-6 leading-[1.8] font-mono">
+          <div className="text-[0.8rem] text-[#90c8ff]/30 text-right border-r border-[#90c8ff]/15 pr-6 leading-[1.8] font-mono">
             PROTOCOL_CORE_V1.86<br />// STREAM: ENCRYPTED<br />// STATE: ACTIVE
           </div>
           <div className="flex flex-col items-end gap-2.5 mt-5">
@@ -111,7 +111,7 @@ export default function Capabilities() {
             {isDecrypting && (
               <>
                 <div className="w-full h-1 bg-white/10 rounded-sm overflow-hidden">
-                  <div className="h-full bg-cyan-400 rounded-sm transition-[width] duration-[0.08s] ease-linear"
+                  <div className="h-full bg-[#90c8ff] rounded-sm transition-[width] duration-[0.08s] ease-linear"
                     style={{ width: `${progress}%` }} />
                 </div>
                 <span className="font-mono text-[0.5rem] text-white/40 tracking-[0.2em] whitespace-pre-line text-right leading-[1.6]">

@@ -61,13 +61,13 @@ const PAPERS = [
 
 export default function PapersHubClient() {
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
       
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="space-y-4 mb-14">
-          <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">RESEARCH_&_DOCUMENTATION</div>
+          <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">RESEARCH_&_DOCUMENTATION</div>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">Papers</h1>
           <p className="text-white/40 text-[12px] leading-relaxed max-w-xl">
             Technical documentation, security analysis, and architectural specifications
@@ -84,7 +84,7 @@ export default function PapersHubClient() {
               style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
               <div className="flex flex-wrap gap-1.5 mb-3">
                 {p.tags.map((t) => (
-                  <span key={t} className="text-[8px] tracking-[0.15em] uppercase px-2 py-0.5 border border-cyan-400/10" style={{ color: "rgba(34,211,238,0.3)" }}>{t}</span>
+                  <span key={t} className="text-[8px] tracking-[0.15em] uppercase px-2 py-0.5 border border-[#90c8ff]/10" style={{ color: "rgba(144,200,255,0.3)" }}>{t}</span>
                 ))}
               </div>
               <h3 className="text-[11px] tracking-[0.2em] uppercase mb-2" style={{ color: "rgba(255,255,255,0.6)" }} data-default="rgba(255,255,255,0.6)" data-hover="rgba(255,255,255,0.95)">
@@ -92,7 +92,7 @@ export default function PapersHubClient() {
               </h3>
               <p className="text-[10px] leading-relaxed mb-3" style={{ color: "rgba(255,255,255,0.25)" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)">{p.desc}</p>
               <p className="text-[8px] tracking-[0.08em] mb-2" style={{ color: "rgba(255,255,255,0.12)" }}>{p.author}</p>
-              <span className="inline-block text-[10px]" style={{ color: "rgba(34,211,238,0.3)" }} data-default="rgba(34,211,238,0.3)" data-hover="rgba(34,211,238,0.7)">→</span>
+              <span className="inline-block text-[10px]" style={{ color: "rgba(144,200,255,0.3)" }} data-default="rgba(144,200,255,0.3)" data-hover="rgba(144,200,255,0.7)">→</span>
             </a>
           ))}
         </div>

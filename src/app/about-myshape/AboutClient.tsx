@@ -62,12 +62,12 @@ export default function About() {
         {/* --- 1. 深层叙事 --- */}
         <section className="max-w-4xl">
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4 flex items-center gap-4">
-            <span className="w-12 h-[1px] bg-cyan-500/30" />
+            <span className="w-12 h-[1px] bg-[#90c8ff]/30" />
             ORGANIZATION_ETHOS
           </h2>
           <div className="space-y-8">
             <p className="text-xl md:text-3xl font-extralight tracking-widest text-white leading-tight uppercase">
-              RECLAIMING THE <span className="text-cyan-400">HUMAN GEOMETRY</span> FROM THE SILICON VOID.
+              RECLAIMING THE <span className="text-[#90c8ff]">HUMAN GEOMETRY</span> FROM THE SILICON VOID.
             </p>
             <p className="text-white/60 text-base md:text-lg tracking-[0.2em] leading-relaxed font-light">
               MyShape was founded in 2025 with a singular obsession: to solve the identity crisis of the AI era.
@@ -99,10 +99,10 @@ export default function About() {
                   style={{ transitionDelay: `${i * 0.2}s` }}
                 >
                   {/* 解密扫描线 */}
-                  <div className="decrypt-scan absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent pointer-events-none" />
+                  <div className="decrypt-scan absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#90c8ff]/60 to-transparent pointer-events-none" />
 
                   <div className="decrypt-content relative z-10">
-                    <div className="text-cyan-500/70 text-[9px] tracking-[0.4em] font-mono mb-6 group-hover:text-cyan-400 transition-colors">
+                    <div className="text-[#90c8ff]/70 text-[9px] tracking-[0.4em] font-mono mb-6 group-hover:text-[#90c8ff] transition-colors">
                       {principle.label}
                     </div>
                     <h4 className="text-white/70 text-[11px] tracking-[0.2em] uppercase mb-6 group-hover:text-white/90 transition-colors">
@@ -130,7 +130,7 @@ export default function About() {
             {Array.from({ length: 12 }).map((_, i) => (
               <div
                 key={i}
-                className="absolute w-1 h-1 rounded-full bg-cyan-400/30"
+                className="absolute w-1 h-1 rounded-full bg-[#90c8ff]/30"
                 style={{
                   left: `${10 + Math.random() * 80}%`,
                   top: `${Math.random() * 100}%`,
@@ -156,13 +156,13 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="w-px h-24 bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent hidden md:block" />
+              <div className="w-px h-24 bg-gradient-to-b from-transparent via-[#90c8ff]/20 to-transparent hidden md:block" />
 
               <div className="flex flex-col gap-4 text-right min-w-[220px]">
                 {/* LOCATION: [ENCRYPTED] — 强化视觉权重 */}
                 <div className="relative">
-                  <div className="absolute inset-0 bg-cyan-400/5 blur-md rounded" />
-                  <span className="relative text-cyan-400/80 text-[12px] tracking-[0.5em] font-bold italic about-location-text">
+                  <div className="absolute inset-0 bg-[#90c8ff]/5 blur-md rounded" />
+                  <span className="relative text-[#90c8ff]/80 text-[12px] tracking-[0.5em] font-bold italic about-location-text">
                     LOCATION: [ENCRYPTED]
                   </span>
                 </div>
@@ -172,10 +172,10 @@ export default function About() {
                   {[...Array(8)].map((_, i) => (
                     <div
                       key={i}
-                      className="w-1 rounded-sm transition-all duration-700 group-hover:shadow-[0_0_6px_rgba(34,211,238,0.4)]"
+                      className="w-1 rounded-sm transition-all duration-700 group-hover:shadow-[0_0_6px_rgba(144,200,255,0.4)]"
                       style={{
                         height: `${8 + Math.sin(i * 0.8) * 6 + 6}px`,
-                        background: `rgba(34,211,238,${0.15 + i * 0.06})`,
+                        background: `rgba(144,200,255,${0.15 + i * 0.06})`,
                       }}
                     />
                   ))}

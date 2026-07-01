@@ -374,8 +374,8 @@ export default function HeroDemo() {
           const dx = Math.cos(da) * radius;
           const dy = Math.sin(da) * radius * 0.45;
           const dg = ctx.createRadialGradient(dx, dy, 0, dx, dy, 7);
-          dg.addColorStop(0, `rgba(34,211,238,${ra * 3})`);
-          dg.addColorStop(1, "rgba(34,211,238,0)");
+          dg.addColorStop(0, `rgba(144,200,255,${ra * 3})`);
+          dg.addColorStop(1, "rgba(144,200,255,0)");
           ctx.fillStyle = dg;
           ctx.beginPath();
           ctx.arc(dx, dy, 7, 0, Math.PI * 2);
@@ -505,8 +505,8 @@ export default function HeroDemo() {
           const cg = ctx.createRadialGradient(0, 0, 0, 0, 0, 16 * corePulse);
           cg.addColorStop(0, "rgba(220,240,255,0.65)");
           cg.addColorStop(0.3, "rgba(144,200,255,0.25)");
-          cg.addColorStop(0.6, "rgba(34,211,238,0.06)");
-          cg.addColorStop(1, "rgba(34,211,238,0)");
+          cg.addColorStop(0.6, "rgba(144,200,255,0.06)");
+          cg.addColorStop(1, "rgba(144,200,255,0)");
           ctx.fillStyle = cg;
           ctx.beginPath();
           ctx.arc(0, 0, 16 * corePulse, 0, Math.PI * 2);
@@ -517,10 +517,10 @@ export default function HeroDemo() {
         if (isFullLoad) {
           const ha = 0.12 + Math.sin(timeSec * 2) * 0.05;
           const hg = ctx.createRadialGradient(0, 0, 20, 0, 0, 35);
-          hg.addColorStop(0, "rgba(34,211,238,0)");
+          hg.addColorStop(0, "rgba(144,200,255,0)");
           hg.addColorStop(0.4, `rgba(144,200,255,${ha})`);
           hg.addColorStop(0.7, `rgba(144,200,255,${ha * 0.5})`);
-          hg.addColorStop(1, "rgba(34,211,238,0)");
+          hg.addColorStop(1, "rgba(144,200,255,0)");
           ctx.fillStyle = hg;
           ctx.beginPath();
           ctx.arc(0, 0, 35, 0, Math.PI * 2);
@@ -549,7 +549,7 @@ export default function HeroDemo() {
             const pg = ctx.createRadialGradient(px, py, 0, px, py, 3.5);
             pg.addColorStop(0, `rgba(220,240,255,${a})`);
             pg.addColorStop(0.5, `rgba(144,200,255,${a * 0.4})`);
-            pg.addColorStop(1, "rgba(34,211,238,0)");
+            pg.addColorStop(1, "rgba(144,200,255,0)");
             ctx.fillStyle = pg;
             ctx.beginPath();
             ctx.arc(px, py, 3.5, 0, Math.PI * 2);

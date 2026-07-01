@@ -177,14 +177,14 @@ export default function PostClient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
       <BackgroundParticles />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 flex flex-col md:flex-row gap-12 md:gap-24">
         {/* TOC sidebar */}
         <aside className="md:w-56 shrink-0 h-fit md:sticky md:top-32 hidden md:block">
-          <div className="text-cyan-400/30 text-[9px] tracking-[0.5em] uppercase mb-8 font-mono italic">// ON_THIS_PAGE</div>
+          <div className="text-[#90c8ff]/30 text-[9px] tracking-[0.5em] uppercase mb-8 font-mono italic">// ON_THIS_PAGE</div>
           <ul className="space-y-6 border-l" style={{ borderColor: "rgba(144,200,255,0.08)" }}>
             {TOC_ITEMS.map(s => {
               const isActive = s.id === active;
@@ -193,9 +193,9 @@ export default function PostClient() {
                   <button onClick={() => scrollTo(s.id)}
                     onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
                     className="block text-left w-full transition-all duration-300"
-                    style={{ borderLeft: isActive ? "2px solid rgba(34,211,238,0.6)" : "2px solid transparent", marginLeft: "-1px", paddingLeft: "20px" }}>
+                    style={{ borderLeft: isActive ? "2px solid rgba(144,200,255,0.6)" : "2px solid transparent", marginLeft: "-1px", paddingLeft: "20px" }}>
                     <div className="text-[11px] tracking-[0.15em] uppercase transition-colors duration-300"
-                      style={{ color: isActive ? "rgba(34,211,238,0.9)" : "rgba(255,255,255,0.2)" }}>
+                      style={{ color: isActive ? "rgba(144,200,255,0.9)" : "rgba(255,255,255,0.2)" }}>
                       {s.label}
                     </div>
                   </button>
@@ -207,7 +207,7 @@ export default function PostClient() {
 
         <article className="flex-1 min-w-0">
         <div className="mb-16">
-          <div className="text-cyan-500/40 text-[9px] tracking-[0.4em] uppercase mb-4">PROTOCOL_ESSAY // 002</div>
+          <div className="text-[#90c8ff]/40 text-[9px] tracking-[0.4em] uppercase mb-4">PROTOCOL_ESSAY // 002</div>
           <h1 className="text-2xl md:text-4xl font-light tracking-[0.04em] text-white leading-tight mb-6"
             style={{ textShadow: "0 0 40px rgba(144,200,255,0.15)" }}>
             The Continuity Layer for the Simulation Age
@@ -225,10 +225,10 @@ export default function PostClient() {
         </div>
 
         {/* Visual Hook — Paradigm Diagram */}
-        <div className="my-16 border border-cyan-400/15 bg-cyan-400/[0.02] p-6 md:p-8 font-mono transition-all duration-300 hover:border-cyan-400/35"
+        <div className="my-16 border border-[#90c8ff]/15 bg-[#90c8ff]/[0.02] p-6 md:p-8 font-mono transition-all duration-300 hover:border-[#90c8ff]/35"
           onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
-          <div className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase mb-4 text-center">SYSTEM_SCHEMA: CONTINUITY LAYER</div>
-          <pre className="text-cyan-400/40 text-[10px] leading-[2.2] tracking-[0.08em] whitespace-pre overflow-x-auto text-center">
+          <div className="text-[#90c8ff]/30 text-[8px] tracking-[0.3em] uppercase mb-4 text-center">SYSTEM_SCHEMA: CONTINUITY LAYER</div>
+          <pre className="text-[#90c8ff]/40 text-[10px] leading-[2.2] tracking-[0.08em] whitespace-pre overflow-x-auto text-center">
 {`IDENTITY                              CONTINUITY
   Who are you?                           Who continues to be you?
   Verifies a credential at time T        Verifies an unbroken chain T₀ → Tₙ
@@ -240,18 +240,18 @@ export default function PostClient() {
          Motion-Signature → Continuity Proof → Agent Verification`}
           </pre>
           <div className="mt-4 flex justify-center gap-4 text-[8px]">
-            <span className="text-cyan-400/25">◈ Pipeline: Capture → Encoding → Vector → Proof → Agent</span>
+            <span className="text-[#90c8ff]/25">◈ Pipeline: Capture → Encoding → Vector → Proof → Agent</span>
             <span className="text-white/10">|</span>
-            <span className="text-cyan-400/25">◈ Engine: Rust → WASM</span>
+            <span className="text-[#90c8ff]/25">◈ Engine: Rust → WASM</span>
             <span className="text-white/10">|</span>
-            <span className="text-cyan-400/25">◈ A Continuity Protocol for Persistent Digital Subjects</span>
+            <span className="text-[#90c8ff]/25">◈ A Continuity Protocol for Persistent Digital Subjects</span>
           </div>
         </div>
 
         <div className="space-y-20">
           {SECTIONS.map((s, i) => (
             <section key={i}>
-              <h2 id={s.id} className="text-white/65 text-[17px] md:text-[19px] tracking-[0.06em] font-light mb-6 leading-snug transition-colors duration-300 hover:text-cyan-200 scroll-mt-28"
+              <h2 id={s.id} className="text-white/65 text-[17px] md:text-[19px] tracking-[0.06em] font-light mb-6 leading-snug transition-colors duration-300 hover:text-[#90c8ff] scroll-mt-28"
                 onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>
                 {s.heading}
               </h2>
@@ -266,7 +266,7 @@ export default function PostClient() {
           ))}
         </div>
 
-        <div className="mt-16 p-6 border border-cyan-400/10 bg-cyan-400/[0.02]">
+        <div className="mt-16 p-6 border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02]">
           <p className="text-white/30 text-[11px] leading-relaxed mb-4">
             <strong className="text-white/50">The Continuity Layer is operational.</strong> The Capture → Encoding → Identity Vector → Continuity Proof pipeline is running. Genesis Cohort is validating the first persistent digital subjects. The protocol is open for inspection.
           </p>
@@ -280,17 +280,17 @@ export default function PostClient() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <a href="https://github.com/myshapeprotocol" target="_blank" rel="noopener noreferrer"
               onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-              className="px-6 py-3 border border-cyan-400/20 text-cyan-300/50 text-[10px] tracking-[0.3em] uppercase text-center hover:border-cyan-400/45 hover:text-white hover:bg-cyan-400/[0.04] transition-all">
+              className="px-6 py-3 border border-[#90c8ff]/20 text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase text-center hover:border-[#90c8ff]/45 hover:text-white hover:bg-[#90c8ff]/[0.04] transition-all">
               View on GitHub →
             </a>
             <Link href="/vision"
               onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
-              className="px-6 py-3 border border-cyan-400/20 text-cyan-300/50 text-[10px] tracking-[0.3em] uppercase text-center hover:border-cyan-400/45 hover:text-white hover:bg-cyan-400/[0.04] transition-all">
+              className="px-6 py-3 border border-[#90c8ff]/20 text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase text-center hover:border-[#90c8ff]/45 hover:text-white hover:bg-[#90c8ff]/[0.04] transition-all">
               Vision →
             </Link>
             <Link href="/blog"
               onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
-              className="px-6 py-3 border border-cyan-400/20 text-cyan-300/50 text-[10px] tracking-[0.3em] uppercase text-center hover:border-cyan-400/45 hover:text-white hover:bg-cyan-400/[0.04] transition-all">
+              className="px-6 py-3 border border-[#90c8ff]/20 text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase text-center hover:border-[#90c8ff]/45 hover:text-white hover:bg-[#90c8ff]/[0.04] transition-all">
               All Essays →
             </Link>
           </div>

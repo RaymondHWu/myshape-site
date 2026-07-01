@@ -9,7 +9,7 @@ const FOUNDATION = [
     status: "IMMUTABLE",
     desc: "Your motion is a physical signature — unique, irreproducible, sovereign. No authority can revoke what physics verifies.",
     detail: "The philosophical root: identity as a property of existence, not a grant from institutions.",
-    accent: "from-cyan-400/70 to-cyan-400/0",
+    accent: "from-[#90c8ff]/70 to-[#90c8ff]/0",
   },
   {
     name: "KINEMATIC PRIVACY",
@@ -23,7 +23,7 @@ const FOUNDATION = [
     status: "ACTIVE",
     desc: "Zero-knowledge proof of human presence. Verifiable by any third party without access to raw sensor data.",
     detail: "The proof layer: PoP + MP + EP composite — 128-dimensional cryptographic identity vector.",
-    accent: "from-cyan-300/70 to-cyan-300/0",
+    accent: "from-[#90c8ff]/70 to-[#90c8ff]/0",
   },
 ];
 
@@ -64,14 +64,14 @@ export default function IdentityLayer() {
         {/* ── 核心锤子句 ── */}
         <section className="max-w-3xl">
           <h2 className="text-white/25 text-[10px] tracking-[0.6em] uppercase mb-8 flex items-center gap-4">
-            <span className="w-8 h-[1px] bg-gradient-to-r from-cyan-500/60 to-transparent" />
+            <span className="w-8 h-[1px] bg-gradient-to-r from-[#90c8ff]/60 to-transparent" />
             Core_Concept
           </h2>
           <p className="text-xl md:text-2xl font-light tracking-widest text-white leading-relaxed">
             In the MyShape ecosystem, identity is not a string of characters, but a{" "}
-            <span className="text-cyan-300/90">dynamic geometric expression</span>.
+            <span className="text-[#90c8ff]/90">dynamic geometric expression</span>.
           </p>
-          <p className="mt-4 text-cyan-300/60 text-sm tracking-[0.15em] uppercase font-light italic">
+          <p className="mt-4 text-[#90c8ff]/60 text-sm tracking-[0.15em] uppercase font-light italic">
             Geometry is distilled into a non-replicable identity vector.
           </p>
           <p className="mt-6 text-white/40 text-sm tracking-widest leading-loose font-light">
@@ -109,8 +109,8 @@ export default function IdentityLayer() {
 
         {/* ── The Geometric Primitive ── */}
         <section className="max-w-3xl">
-          <div className="p-6 border border-cyan-400/10 bg-cyan-400/[0.02]">
-            <div className="text-cyan-400/40 text-[8px] tracking-[0.3em] uppercase mb-4">The Geometric Primitive</div>
+          <div className="p-6 border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02]">
+            <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.3em] uppercase mb-4">The Geometric Primitive</div>
             <p className="text-white/35 text-sm leading-[1.9] font-light">
               2D images are projections. They collapse depth into pixels, discarding the
               spatial relationships that make a motion signature unique. A 3D Motion
@@ -131,14 +131,14 @@ export default function IdentityLayer() {
           <div className="text-white/10 text-[7px] tracking-[0.3em] uppercase mb-6">Identity Pipeline</div>
           <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3 text-[10px] tracking-[0.2em] uppercase font-mono">
             <span className="text-white/20 px-3 py-1.5 border border-white/[0.06]">Motion</span>
-            <span className="text-cyan-400/15 text-lg">→</span>
+            <span className="text-[#90c8ff]/15 text-lg">→</span>
             <span className="text-white/20 px-3 py-1.5 border border-white/[0.06]">Geometry</span>
-            <span className="text-cyan-400/15 text-lg">→</span>
+            <span className="text-[#90c8ff]/15 text-lg">→</span>
             <span className="text-white/20 px-3 py-1.5 border border-white/[0.06]">Vector</span>
-            <span className="text-cyan-400/15 text-lg">→</span>
-            <span className="text-cyan-300/40 px-3 py-1.5 border border-cyan-400/20">Proof</span>
-            <span className="text-cyan-400/15 text-lg">→</span>
-            <span className="text-cyan-300/50 px-3 py-1.5 border border-cyan-400/30 bg-cyan-400/[0.03]">Presence</span>
+            <span className="text-[#90c8ff]/15 text-lg">→</span>
+            <span className="text-[#90c8ff]/40 px-3 py-1.5 border border-[#90c8ff]/20">Proof</span>
+            <span className="text-[#90c8ff]/15 text-lg">→</span>
+            <span className="text-[#90c8ff]/50 px-3 py-1.5 border border-[#90c8ff]/30 bg-[#90c8ff]/[0.03]">Presence</span>
           </div>
           <p className="text-white/15 text-[8px] tracking-[0.2em] uppercase mt-6">
             Real-time · On-device · Zero upload · Cryptographically verifiable
@@ -156,14 +156,14 @@ function IdentityCard({ model }: { model: { name: string; status: string; desc: 
       className="group relative p-6 md:p-8 transition-all duration-700"
       style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 30% 20%, rgba(34,211,238,0.04) 0%, transparent 60%)" }} />
+        style={{ background: "radial-gradient(ellipse at 30% 20%, rgba(144,200,255,0.04) 0%, transparent 60%)" }} />
       <div className={`absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r ${model.accent} opacity-30 group-hover:opacity-80 transition-opacity duration-700`} />
       <div className="flex justify-between items-start mb-5">
-        <h4 className="text-[13px] tracking-[0.3em] font-bold text-white/75 group-hover:text-cyan-300/90 transition-colors duration-500 uppercase">
+        <h4 className="text-[13px] tracking-[0.3em] font-bold text-white/75 group-hover:text-[#90c8ff]/90 transition-colors duration-500 uppercase">
           {model.name}
         </h4>
         <span className="text-[8px] tracking-[0.2em] uppercase font-mono px-2.5 py-0.5 transition-all duration-500"
-          style={{ border: "1px solid rgba(34,211,238,0.25)", color: "rgba(34,211,238,0.55)", textShadow: "0 0 6px rgba(34,211,238,0.15)" }}>
+          style={{ border: "1px solid rgba(144,200,255,0.25)", color: "rgba(144,200,255,0.55)", textShadow: "0 0 6px rgba(144,200,255,0.15)" }}>
           {model.status}
         </span>
       </div>
@@ -171,7 +171,7 @@ function IdentityCard({ model }: { model: { name: string; status: string; desc: 
         {model.desc}
       </p>
       <div className="h-[1px] mb-4 bg-white/5 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent w-0 group-hover:w-full transition-all duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#90c8ff]/25 to-transparent w-0 group-hover:w-full transition-all duration-700" />
       </div>
       <p className="text-white/20 text-[9px] tracking-[0.1em] leading-relaxed uppercase group-hover:text-white/30 transition-colors duration-500">
         {model.detail}

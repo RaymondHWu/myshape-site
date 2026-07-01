@@ -31,8 +31,8 @@ async function sendSubscriptionConfirmation(
     html: `
       <div style="background:#000; color:#90c8ff; padding:40px; font-family:monospace; border:1px solid #333; max-width:560px;">
         <div style="text-align:center; margin-bottom:24px;">
-          <div style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#22d3ee; box-shadow:0 0 12px rgba(34,211,238,0.8); margin-right:8px;"></div>
-          <span style="color:#22d3ee; font-size:9px; letter-spacing:0.5em; text-transform:uppercase;">SIGNAL_SUBSCRIPTION_ACTIVE</span>
+          <div style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#90c8ff; box-shadow:0 0 12px rgba(144,200,255,0.8); margin-right:8px;"></div>
+          <span style="color:#90c8ff; font-size:9px; letter-spacing:0.5em; text-transform:uppercase;">SIGNAL_SUBSCRIPTION_ACTIVE</span>
         </div>
 
         <h2 style="border-bottom:1px solid #333; padding-bottom:12px; font-size:18px; font-weight:300; letter-spacing:0.15em; text-align:center; color:#fff;">
@@ -47,7 +47,7 @@ async function sendSubscriptionConfirmation(
           Genesis Cohort invitations are rolling out in batches. When your slot opens, you will receive an invitation to complete the identity initialization ritual.
         </p>
 
-        <div style="margin:24px 0; padding:16px; border:1px dashed rgba(34,211,238,0.3); background:rgba(34,211,238,0.03);">
+        <div style="margin:24px 0; padding:16px; border:1px dashed rgba(144,200,255,0.3); background:rgba(144,200,255,0.03);">
           <p style="font-size:11px; color:#90c8ff; text-transform:uppercase; letter-spacing:0.2em; margin:0 0 8px 0;">▸ What to expect:</p>
           <ul style="list-style:none; padding:0; margin:0; font-size:11px; color:#90c8ff; line-height:2;">
             <li>◈ Genesis Cohort: First 100 nodes receive permanent founding tier</li>
@@ -56,12 +56,12 @@ async function sendSubscriptionConfirmation(
           </ul>
         </div>
 
-        <div style="margin:24px 0; padding:16px; border:1px solid rgba(34,211,238,0.15);">
+        <div style="margin:24px 0; padding:16px; border:1px solid rgba(144,200,255,0.15);">
           <p style="font-size:11px; color:#fff; text-transform:uppercase; letter-spacing:0.2em; margin:0 0 12px 0;">▸ While you wait:</p>
           <ol style="padding:0 0 0 18px; margin:0; font-size:11px; color:#90c8ff; line-height:2.2;">
-            <li><a href="https://www.myshape.com/papers" style="color:#22d3ee;">Read the Papers</a> — understand the protocol</li>
-            <li><a href="https://www.myshape.com/motion-demo" style="color:#22d3ee;">Try the Motion Demo</a> — see the tech in action</li>
-            <li><a href="https://x.com/myshapeprotocol" style="color:#22d3ee;">Follow on X</a> — stay updated on Genesis rollouts</li>
+            <li><a href="https://www.myshape.com/papers" style="color:#90c8ff;">Read the Papers</a> — understand the protocol</li>
+            <li><a href="https://www.myshape.com/motion-demo" style="color:#90c8ff;">Try the Motion Demo</a> — see the tech in action</li>
+            <li><a href="https://x.com/myshapeprotocol" style="color:#90c8ff;">Follow on X</a> — stay updated on Genesis rollouts</li>
           </ol>
         </div>
 

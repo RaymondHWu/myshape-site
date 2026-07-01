@@ -83,14 +83,14 @@ export default function VortexScan() {
         const ry = rx * ring.squash;
 
         // 主环
-        ctx.strokeStyle = `rgba(34, 211, 238, ${ring.opacity})`;
+        ctx.strokeStyle = `rgba(144, 200, 255, ${ring.opacity})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
         ctx.stroke();
 
         // 次环（微偏移，增加深度感）
-        ctx.strokeStyle = `rgba(34, 211, 238, ${ring.opacity * 0.35})`;
+        ctx.strokeStyle = `rgba(144, 200, 255, ${ring.opacity * 0.35})`;
         ctx.lineWidth = 0.5;
         ctx.beginPath();
         ctx.ellipse(
@@ -122,9 +122,9 @@ export default function VortexScan() {
         // 两层光晕：外层柔光 + 内层亮点
         const glow = ctx.createRadialGradient(x, y, 0, x, y, 5);
         glow.addColorStop(0, "rgba(180, 240, 255, 1)");
-        glow.addColorStop(0.25, "rgba(34, 211, 238, 0.7)");
-        glow.addColorStop(0.6, "rgba(34, 211, 238, 0.15)");
-        glow.addColorStop(1, "rgba(34, 211, 238, 0)");
+        glow.addColorStop(0.25, "rgba(144, 200, 255, 0.7)");
+        glow.addColorStop(0.6, "rgba(144, 200, 255, 0.15)");
+        glow.addColorStop(1, "rgba(144, 200, 255, 0)");
         ctx.fillStyle = glow;
         ctx.beginPath();
         ctx.arc(x, y, 5, 0, Math.PI * 2);
@@ -168,7 +168,7 @@ export default function VortexScan() {
         const ta = scanAngle - (i + 1) * 0.035;
         const alpha = 0.14 - i * 0.013;
         if (alpha <= 0) continue;
-        ctx.strokeStyle = `rgba(34, 211, 238, ${alpha})`;
+        ctx.strokeStyle = `rgba(144, 200, 255, ${alpha})`;
         ctx.lineWidth = 0.8;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
@@ -183,9 +183,9 @@ export default function VortexScan() {
         cx + Math.cos(scanAngle) * scanR,
         cy + Math.sin(scanAngle) * scanR
       );
-      scanGrad.addColorStop(0, "rgba(34, 211, 238, 0.7)");
-      scanGrad.addColorStop(0.5, "rgba(34, 211, 238, 0.25)");
-      scanGrad.addColorStop(1, "rgba(34, 211, 238, 0)");
+      scanGrad.addColorStop(0, "rgba(144, 200, 255, 0.7)");
+      scanGrad.addColorStop(0.5, "rgba(144, 200, 255, 0.25)");
+      scanGrad.addColorStop(1, "rgba(144, 200, 255, 0)");
       ctx.strokeStyle = scanGrad;
       ctx.lineWidth = 1.2;
       ctx.beginPath();
@@ -201,11 +201,11 @@ export default function VortexScan() {
       // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       const beamY = cy + Math.sin(time * 0.75) * (base * 0.72);
       const beamGrad = ctx.createLinearGradient(0, beamY, 0, beamY + 2);
-      beamGrad.addColorStop(0, "rgba(34, 211, 238, 0)");
-      beamGrad.addColorStop(0.4, "rgba(34, 211, 238, 0.18)");
-      beamGrad.addColorStop(0.5, "rgba(34, 211, 238, 0.35)");
-      beamGrad.addColorStop(0.6, "rgba(34, 211, 238, 0.18)");
-      beamGrad.addColorStop(1, "rgba(34, 211, 238, 0)");
+      beamGrad.addColorStop(0, "rgba(144, 200, 255, 0)");
+      beamGrad.addColorStop(0.4, "rgba(144, 200, 255, 0.18)");
+      beamGrad.addColorStop(0.5, "rgba(144, 200, 255, 0.35)");
+      beamGrad.addColorStop(0.6, "rgba(144, 200, 255, 0.18)");
+      beamGrad.addColorStop(1, "rgba(144, 200, 255, 0)");
       ctx.fillStyle = beamGrad;
       ctx.fillRect(cx - base * 0.78, beamY - 0.5, base * 1.56, 2);
 
@@ -214,10 +214,10 @@ export default function VortexScan() {
       // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 18);
       coreGlow.addColorStop(0, "rgba(210, 245, 255, 1)");
-      coreGlow.addColorStop(0.15, "rgba(34, 211, 238, 0.85)");
-      coreGlow.addColorStop(0.4, "rgba(34, 211, 238, 0.25)");
-      coreGlow.addColorStop(0.7, "rgba(34, 211, 238, 0.05)");
-      coreGlow.addColorStop(1, "rgba(34, 211, 238, 0)");
+      coreGlow.addColorStop(0.15, "rgba(144, 200, 255, 0.85)");
+      coreGlow.addColorStop(0.4, "rgba(144, 200, 255, 0.25)");
+      coreGlow.addColorStop(0.7, "rgba(144, 200, 255, 0.05)");
+      coreGlow.addColorStop(1, "rgba(144, 200, 255, 0)");
       ctx.fillStyle = coreGlow;
       ctx.beginPath();
       ctx.arc(cx, cy, 18, 0, Math.PI * 2);
@@ -232,7 +232,7 @@ export default function VortexScan() {
       // 脉冲外晕
       const pulseOuter = ctx.createRadialGradient(cx, cy, pulseR, cx, cy, pulseR * 2.5);
       pulseOuter.addColorStop(0, "rgba(180, 230, 255, 0.5)");
-      pulseOuter.addColorStop(1, "rgba(34, 211, 238, 0)");
+      pulseOuter.addColorStop(1, "rgba(144, 200, 255, 0)");
       ctx.fillStyle = pulseOuter;
       ctx.beginPath();
       ctx.arc(cx, cy, pulseR * 2.5, 0, Math.PI * 2);
@@ -246,7 +246,7 @@ export default function VortexScan() {
         const rayAngle =
           (Math.PI * 2 / rayCount) * i + time * 0.25;
         const rayLen = 15 + Math.sin(time * 4.5 + i * 1.2) * 8;
-        ctx.strokeStyle = `rgba(34, 211, 238, ${0.12 + Math.sin(time * 4.5 + i) * 0.08})`;
+        ctx.strokeStyle = `rgba(144, 200, 255, ${0.12 + Math.sin(time * 4.5 + i) * 0.08})`;
         ctx.lineWidth = 0.6;
         ctx.beginPath();
         ctx.moveTo(
@@ -277,7 +277,7 @@ export default function VortexScan() {
     <canvas
       ref={canvasRef}
       className="block mx-auto"
-      style={{ filter: "drop-shadow(0 0 20px rgba(34,211,238,0.12))" }}
+      style={{ filter: "drop-shadow(0 0 20px rgba(144,200,255,0.12))" }}
     />
   );
 }

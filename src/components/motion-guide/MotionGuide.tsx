@@ -293,7 +293,7 @@ export default function MotionGuide({
 
   // Frame border color
   const borderColor = anchorsAllVisible
-    ? "rgba(34,211,238,0.5)"
+    ? "rgba(144,200,255,0.5)"
     : missingCount < 3
     ? "rgba(250,204,21,0.5)"
     : "rgba(239,68,68,0.5)";
@@ -313,7 +313,7 @@ export default function MotionGuide({
         style={{ background: "linear-gradient(180deg, rgba(2,4,10,0.9) 60%, rgba(2,4,10,0) 100%)" }}>
         {/* Phase pill */}
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-cyan-400/70 text-[10px] tracking-[0.3em] font-mono">
+          <span className="text-[#90c8ff]/70 text-[10px] tracking-[0.3em] font-mono">
             PHASE {phase.phase}/5
           </span>
           <span className="text-white/70 text-[11px] tracking-[0.15em] font-medium">
@@ -324,10 +324,10 @@ export default function MotionGuide({
             {PHASES.map((_, i) => (
               <div key={i} className="w-1 h-1 rounded-full transition-colors duration-500"
                 style={{
-                  background: i < phaseIndex ? "rgba(34,211,238,0.6)"
-                    : i === phaseIndex ? "rgba(34,211,238,0.9)"
+                  background: i < phaseIndex ? "rgba(144,200,255,0.6)"
+                    : i === phaseIndex ? "rgba(144,200,255,0.9)"
                     : "rgba(255,255,255,0.1)",
-                  boxShadow: i === phaseIndex ? "0 0 4px rgba(34,211,238,0.5)" : "none",
+                  boxShadow: i === phaseIndex ? "0 0 4px rgba(144,200,255,0.5)" : "none",
                 }} />
             ))}
           </div>
@@ -340,10 +340,10 @@ export default function MotionGuide({
               width: `${(totalProgress * 100).toFixed(1)}%`,
               background: hasViolation
                 ? "linear-gradient(90deg, rgba(239,68,68,0.4), rgba(239,68,68,0.8))"
-                : "linear-gradient(90deg, rgba(34,211,238,0.4), rgba(34,211,238,0.8))",
+                : "linear-gradient(90deg, rgba(144,200,255,0.4), rgba(144,200,255,0.8))",
               boxShadow: hasViolation
                 ? "0 0 6px rgba(239,68,68,0.3)"
-                : "0 0 6px rgba(34,211,238,0.3)",
+                : "0 0 6px rgba(144,200,255,0.3)",
             }} />
         </div>
 
@@ -363,7 +363,7 @@ export default function MotionGuide({
           <div className="h-full rounded-full transition-all duration-300 ease-linear"
             style={{
               width: `${(phaseProgress * 100).toFixed(1)}%`,
-              background: `linear-gradient(90deg, rgba(34,211,238,0.3), rgba(34,211,238,0.7))`,
+              background: `linear-gradient(90deg, rgba(144,200,255,0.3), rgba(144,200,255,0.7))`,
             }} />
         </div>
 
@@ -371,7 +371,7 @@ export default function MotionGuide({
           {phase.instruction}
         </p>
 
-        <p className="text-cyan-400/30 text-[8px] tracking-[0.1em] uppercase mt-2 leading-tight">
+        <p className="text-[#90c8ff]/30 text-[8px] tracking-[0.1em] uppercase mt-2 leading-tight">
           {phase.dominantFeature}
         </p>
       </div>
@@ -405,7 +405,7 @@ export default function MotionGuide({
             Anchors
           </span>
           <span className="text-[8px] font-mono"
-            style={{ color: anchorsAllVisible ? "rgba(34,211,238,0.7)" : "rgba(250,204,21,0.7)" }}>
+            style={{ color: anchorsAllVisible ? "rgba(144,200,255,0.7)" : "rgba(250,204,21,0.7)" }}>
             {anchorsAllVisible ? "✓ LOCKED" : `${missingCount} MISSING`}
           </span>
         </div>
@@ -414,9 +414,9 @@ export default function MotionGuide({
             <div key={a.index} className="flex items-center gap-1.5">
               <div className="w-1.5 h-1.5 rounded-full transition-colors duration-300"
                 style={{
-                  background: a.visible ? "rgba(34,211,238,0.8)" : "rgba(239,68,68,0.6)",
+                  background: a.visible ? "rgba(144,200,255,0.8)" : "rgba(239,68,68,0.6)",
                   boxShadow: a.visible
-                    ? "0 0 5px rgba(34,211,238,0.5)"
+                    ? "0 0 5px rgba(144,200,255,0.5)"
                     : "0 0 4px rgba(239,68,68,0.3)",
                 }} />
               <span className="text-[7px] tracking-[0.06em] transition-colors duration-300"
@@ -436,12 +436,12 @@ export default function MotionGuide({
           borderColor: hasViolation
             ? "rgba(239,68,68,0.35)"
             : anchorsAllVisible
-            ? "rgba(34,211,238,0.25)"
+            ? "rgba(144,200,255,0.25)"
             : "rgba(255,255,255,0.05)",
           boxShadow: hasViolation
             ? "inset 0 0 60px rgba(239,68,68,0.06)"
             : anchorsAllVisible
-            ? "inset 0 0 40px rgba(34,211,238,0.04), 0 0 20px rgba(34,211,238,0.06)"
+            ? "inset 0 0 40px rgba(144,200,255,0.04), 0 0 20px rgba(144,200,255,0.06)"
             : "none",
         }} />
 
@@ -451,7 +451,7 @@ export default function MotionGuide({
       {phaseElapsed < 400 && (
         <div className="absolute inset-0 pointer-events-none transition-opacity duration-300"
           style={{
-            background: "radial-gradient(circle at center, rgba(34,211,238,0.08) 0%, transparent 70%)",
+            background: "radial-gradient(circle at center, rgba(144,200,255,0.08) 0%, transparent 70%)",
             opacity: 1 - phaseElapsed / 400,
           }} />
       )}

@@ -75,7 +75,7 @@ export default function PipelineDocs() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30 antialiased">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30 antialiased">
 
       {/* Background Grid */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03]"
@@ -86,7 +86,7 @@ export default function PipelineDocs() {
 
       {/* Top Navigation */}
       <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/80 backdrop-blur-md px-10 py-5 flex justify-between items-center text-[10px] tracking-[0.4em]">
-        <Link href="/protocol/motion-pipeline" className="text-cyan-400/70 hover:text-cyan-300 transition-colors uppercase" onMouseEnter={() => playTick(500, "sine", 0.06, 0.015)}>← EXIT_TECH_STACK</Link>
+        <Link href="/protocol/motion-pipeline" className="text-[#90c8ff]/70 hover:text-[#90c8ff] transition-colors uppercase" onMouseEnter={() => playTick(500, "sine", 0.06, 0.015)}>← EXIT_TECH_STACK</Link>
         <div className="text-white/20 uppercase font-bold tracking-[0.5em]">TECHNICAL_SPECIFICATION // V0.8.1_CORE</div>
       </nav>
 
@@ -94,25 +94,25 @@ export default function PipelineDocs() {
 
         {/* Sidebar Nav */}
         <aside className="md:w-64 shrink-0 h-fit md:sticky md:top-56 hidden md:block">
-          <div className="text-[9px] text-cyan-500/40 mb-12 tracking-[0.5em] uppercase font-bold italic">// SYSTEM_DOCS_INDEX</div>
+          <div className="text-[9px] text-[#90c8ff]/40 mb-12 tracking-[0.5em] uppercase font-bold italic">// SYSTEM_DOCS_INDEX</div>
           <ul className="space-y-10 border-l border-white/5 pl-6">
             {techSections.map(s => {
               const isActive = s.id === activeIndex;
               return (
                 <li key={s.id} className="group cursor-pointer" onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}>
                   <a href={'#' + s.id} className="block"
-                     style={isActive ? { borderLeft: '2px solid #22d3ee', paddingLeft: '22px', marginLeft: '-24px' } : {}}>
+                     style={isActive ? { borderLeft: '2px solid #90c8ff', paddingLeft: '22px', marginLeft: '-24px' } : {}}>
                     <div
-                      className={isActive ? 'text-[#22d3ee] font-bold text-[13px] transition-all duration-300 mb-1' : 'text-white/10 text-[10px] transition-all duration-300 mb-1'}
-                      style={isActive ? { textShadow: '0 0 12px rgba(34,211,238,0.7)' } : {}}>
+                      className={isActive ? 'text-[#90c8ff] font-bold text-[13px] transition-all duration-300 mb-1' : 'text-white/10 text-[10px] transition-all duration-300 mb-1'}
+                      style={isActive ? { textShadow: '0 0 12px rgba(144,200,255,0.7)' } : {}}>
                       {s.id}
                     </div>
                     <div
-                      className={(isActive ? 'text-[#22d3ee] font-bold opacity-100' : 'text-white/20 group-hover:text-cyan-400/80') + ' text-[11px] uppercase tracking-[0.2em] transition-all duration-300'}>
+                      className={(isActive ? 'text-[#90c8ff] font-bold opacity-100' : 'text-white/20 group-hover:text-[#90c8ff]/80') + ' text-[11px] uppercase tracking-[0.2em] transition-all duration-300'}>
                       {s.title}
                     </div>
                     {isActive && (
-                      <div className="text-[8px] tracking-[0.3em] text-cyan-400/60 mt-1.5 animate-pulse">
+                      <div className="text-[8px] tracking-[0.3em] text-[#90c8ff]/60 mt-1.5 animate-pulse">
                         [ SYSTEM_LINK_ACTIVE ]
                       </div>
                     )}
@@ -130,8 +130,8 @@ export default function PipelineDocs() {
 
               {/* Decoration Line */}
               <div className="flex items-center gap-6 mb-12">
-                <span className="text-cyan-500/50 text-[10px] tracking-[0.6em] font-bold uppercase">{s.subtitle}</span>
-                <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-cyan-500/30 transition-all duration-700" />
+                <span className="text-[#90c8ff]/50 text-[10px] tracking-[0.6em] font-bold uppercase">{s.subtitle}</span>
+                <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-[#90c8ff]/30 transition-all duration-700" />
               </div>
 
               {/* Title with Hover Effect */}
@@ -141,7 +141,7 @@ export default function PipelineDocs() {
 
               {/* Protocol Code Block or Regular Paragraphs */}
               {s.isProtocol ? (
-                <div className="bg-cyan-500/[0.03] border border-cyan-500/20 p-8 font-mono text-[13px] leading-loose text-cyan-400/80 space-y-2 relative overflow-hidden shadow-[inset_0_0_40px_rgba(6,182,212,0.05)]">
+                <div className="bg-[#90c8ff]/[0.03] border border-[#90c8ff]/20 p-8 font-mono text-[13px] leading-loose text-[#90c8ff]/80 space-y-2 relative overflow-hidden shadow-[inset_0_0_40px_rgba(6,182,212,0.05)]">
                    <div className="absolute top-0 right-0 p-4 opacity-20 text-[8px]">SPEC_V1.0</div>
                    {s.content.map((line, i) => (
                      <div key={i} className="whitespace-pre-wrap">{line}</div>

@@ -52,9 +52,9 @@ export default function GenesisIdentityCard({
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse"
+              <div className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] animate-pulse"
                 style={{ boxShadow: "0 0 8px rgba(144,200,255,0.6)" }} />
-              <span className="text-cyan-400/50 font-mono text-[7px] tracking-[0.4em] uppercase">IDENTITY_CARD</span>
+              <span className="text-[#90c8ff]/50 font-mono text-[7px] tracking-[0.4em] uppercase">IDENTITY_CARD</span>
             </div>
             {positionNumber && (
               <span className="text-white/20 font-mono text-[8px] tracking-[0.2em]">
@@ -65,7 +65,7 @@ export default function GenesisIdentityCard({
 
           {/* Title */}
           <div className="text-center mb-4">
-            <div className="text-cyan-200/85 font-mono text-[12px] md:text-[14px] tracking-[0.3em] uppercase"
+            <div className="text-[#90c8ff]/85 font-mono text-[12px] md:text-[14px] tracking-[0.3em] uppercase"
               style={{ textShadow: "0 0 18px rgba(144,200,255,0.4)" }}>
               GENESIS_COHORT
             </div>
@@ -74,51 +74,51 @@ export default function GenesisIdentityCard({
             </div>
           </div>
 
-          <div className="w-16 h-[1px] mx-auto mb-4 bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
+          <div className="w-16 h-[1px] mx-auto mb-4 bg-gradient-to-r from-transparent via-[#90c8ff]/50 to-transparent" />
 
           {/* Node Info */}
           <div className="grid grid-cols-2 gap-2 mb-4 font-mono">
             <div>
               <div className="text-white/20 text-[7px] tracking-[0.2em] uppercase">NODE_HANDLE</div>
-              <div className="text-cyan-300/60 text-[9px] tracking-[0.1em]">{nodeHandle || "UNASSIGNED"}</div>
+              <div className="text-[#90c8ff]/60 text-[9px] tracking-[0.1em]">{nodeHandle || "UNASSIGNED"}</div>
             </div>
             <div>
               <div className="text-white/20 text-[7px] tracking-[0.2em] uppercase">SIG_KEY</div>
-              <div className="text-cyan-300/60 text-[9px] tracking-[0.1em]">
+              <div className="text-[#90c8ff]/60 text-[9px] tracking-[0.1em]">
                 {email ? email.slice(0, 3) + "****" + email.slice(-4) : "N/A"}
               </div>
             </div>
             <div>
               <div className="text-white/20 text-[7px] tracking-[0.2em] uppercase">PARTICLE_LV</div>
-              <div className="text-cyan-300/60 text-[9px] tracking-[0.1em]">
+              <div className="text-[#90c8ff]/60 text-[9px] tracking-[0.1em]">
                 {"●".repeat(Math.min(particleLevel, 8))}
                 <span className="text-white/20 ml-1">Lv.{particleLevel}</span>
               </div>
             </div>
             <div>
               <div className="text-white/20 text-[7px] tracking-[0.2em] uppercase">ENTROPY</div>
-              <div className="text-cyan-300/60 text-[9px] tracking-[0.1em]">{entropyScore}</div>
+              <div className="text-[#90c8ff]/60 text-[9px] tracking-[0.1em]">{entropyScore}</div>
             </div>
             <div className="col-span-2">
               <div className="text-white/20 text-[7px] tracking-[0.2em] uppercase">GENESIS_TIMESTAMP</div>
-              <div className="text-cyan-300/40 text-[8px] tracking-[0.1em]">{timeStr} UTC</div>
+              <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.1em]">{timeStr} UTC</div>
             </div>
           </div>
 
           {/* Declaration */}
           <div className="border-t border-white/5 pt-3 text-center">
             <p className="text-white/40 text-[8px] tracking-[0.15em] leading-relaxed">
-              This node is a <span className="text-cyan-300/70">permanent founding entity</span> of MyShape Protocol.
+              This node is a <span className="text-[#90c8ff]/70">permanent founding entity</span> of MyShape Protocol.
               Its identity is cryptographically anchored in the Genesis Cohort — a finite set of 100 nodes
               that form the statistical foundation for all future presence verifications.
             </p>
           </div>
 
           {/* Corners */}
-          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-300/60" />
-          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-300/60" />
-          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-300/60" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-300/60" />
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#90c8ff]/60" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#90c8ff]/60" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#90c8ff]/60" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#90c8ff]/60" />
         </div>
       </motion.div>
 
@@ -127,12 +127,12 @@ export default function GenesisIdentityCard({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.5 }}
-        className="border border-cyan-400/10 bg-cyan-400/[0.02] px-5 py-4">
-        <div className="text-cyan-400/40 text-[8px] tracking-[0.3em] uppercase mb-3">// GENESIS_RIGHTS</div>
+        className="border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02] px-5 py-4">
+        <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.3em] uppercase mb-3">// GENESIS_RIGHTS</div>
         <div className="space-y-2">
           {GENESIS_RIGHTS.map((right) => (
             <div key={right.key} className="flex items-start gap-2">
-              <span className="text-cyan-400/50 text-[8px] mt-0.5">◆</span>
+              <span className="text-[#90c8ff]/50 text-[8px] mt-0.5">◆</span>
               <div>
                 <div className="text-white/50 text-[9px] tracking-[0.1em]">{right.label}</div>
                 <div className="text-white/20 text-[8px] leading-relaxed">{right.desc}</div>

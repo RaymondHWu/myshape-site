@@ -4,26 +4,26 @@
 
 /* ── Pipeline nodes ── */
 .arch-pipeline-node {
-  color: rgba(34,211,238,0.55);
+  color: rgba(144,200,255,0.55);
   background: #02040a;
 }
 .arch-pipeline-circle {
-  border-color: rgba(34,211,238,0.3);
+  border-color: rgba(144,200,255,0.3);
   box-shadow: none;
-  color: rgba(34,211,238,0.55);
+  color: rgba(144,200,255,0.55);
 }
 .arch-pipeline-name {
   color: rgba(255,255,255,0.55);
   text-shadow: none;
 }
 .arch-pipeline-output {
-  color: rgba(34,211,238,0.3);
+  color: rgba(144,200,255,0.3);
   text-shadow: none;
 }
 /* Hover group: all children respond together */
 .arch-pipeline-node:hover .arch-pipeline-circle {
-  border-color: rgba(34,211,238,1);
-  box-shadow: 0 0 28px rgba(34,211,238,0.55);
+  border-color: rgba(144,200,255,1);
+  box-shadow: 0 0 28px rgba(144,200,255,0.55);
   color: rgba(200,240,255,1);
 }
 .arch-pipeline-node:hover .arch-pipeline-name {
@@ -32,7 +32,7 @@
 }
 .arch-pipeline-node:hover .arch-pipeline-output {
   color: rgba(160,230,255,1);
-  text-shadow: 0 0 4px rgba(34,211,238,0.4);
+  text-shadow: 0 0 4px rgba(144,200,255,0.4);
 }
 /* Mobile pulse animation */
 @keyframes nodePulse {
@@ -40,7 +40,7 @@
   50% { transform: scale(1.3); opacity: 1; }
 }
 .arch-mobile-dot {
-  box-shadow: 0 0 10px rgba(34,211,238,0.35);
+  box-shadow: 0 0 10px rgba(144,200,255,0.35);
   animation: nodePulse 2.5s ease-in-out infinite;
 }
 
@@ -65,14 +65,14 @@
 }
 .arch-table-row:hover {
   background: rgba(144,200,255,0.04);
-  border-left-color: rgba(34,211,238,0.5);
+  border-left-color: rgba(144,200,255,0.5);
 }
-.arch-col-dim  { color: rgba(34,211,238,0.7); }
+.arch-col-dim  { color: rgba(144,200,255,0.7); }
 .arch-col-what { color: rgba(255,255,255,0.35); }
 .arch-col-human { color: rgba(255,255,255,0.55); }
 .arch-col-ai   { color: rgba(255,255,255,0.3); }
 
-.arch-table-row:hover .arch-col-dim  { color: rgba(34,211,238,1); font-size: 11px; }
+.arch-table-row:hover .arch-col-dim  { color: rgba(144,200,255,1); font-size: 11px; }
 .arch-table-row:hover .arch-col-what { color: rgba(255,255,255,0.6); font-size: 11px; }
 .arch-table-row:hover .arch-col-human { color: rgba(255,255,255,0.85); font-size: 11px; }
 .arch-table-row:hover .arch-col-ai   { color: rgba(255,255,255,0.55); font-size: 11px; }
@@ -84,15 +84,15 @@
 }
 .arch-threat-row:hover {
   background: rgba(144,200,255,0.04);
-  border-left-color: rgba(34,211,238,0.5);
+  border-left-color: rgba(144,200,255,0.5);
 }
 .arch-threat-attack  { color: rgba(255,255,255,0.6); }
 .arch-threat-vector  { color: rgba(255,255,255,0.3); }
-.arch-threat-defense { color: rgba(34,211,238,0.6); }
+.arch-threat-defense { color: rgba(144,200,255,0.6); }
 
 .arch-threat-row:hover .arch-threat-attack  { color: rgba(255,255,255,0.9); font-size: 12px; }
 .arch-threat-row:hover .arch-threat-vector  { color: rgba(255,255,255,0.55); font-size: 11px; }
-.arch-threat-row:hover .arch-threat-defense { color: rgba(34,211,238,0.9); font-size: 11px; }
+.arch-threat-row:hover .arch-threat-defense { color: rgba(144,200,255,0.9); font-size: 11px; }
 
 /* ── CTA cards ── */
 .arch-cta-card {
@@ -105,15 +105,15 @@
   background: radial-gradient(circle at top left, rgba(144,200,255,0.08) 0%, transparent 70%);
   transform: translateY(-2px);
 }
-.arch-cta-label { color: rgba(34,211,238,0.4); }
+.arch-cta-label { color: rgba(144,200,255,0.4); }
 .arch-cta-title { color: rgba(255,255,255,0.75); }
 .arch-cta-desc  { color: rgba(255,255,255,0.3); }
-.arch-cta-arrow { color: rgba(34,211,238,0.35); }
+.arch-cta-arrow { color: rgba(144,200,255,0.35); }
 
-.arch-cta-card:hover .arch-cta-label { color: rgba(34,211,238,0.8); }
+.arch-cta-card:hover .arch-cta-label { color: rgba(144,200,255,0.8); }
 .arch-cta-card:hover .arch-cta-title { color: rgba(255,255,255,1); }
 .arch-cta-card:hover .arch-cta-desc  { color: rgba(255,255,255,0.6); }
-.arch-cta-card:hover .arch-cta-arrow { color: rgba(34,211,238,0.8); }
+.arch-cta-card:hover .arch-cta-arrow { color: rgba(144,200,255,0.8); }
 
 /* ── Section headings ── */
 .arch-section-h {
@@ -126,18 +126,18 @@
 
 /* ── Container backgrounds ── */
 .arch-code-block {
-  border-color: rgba(34,211,238,0.15);
-  background: rgba(34,211,238,0.02);
+  border-color: rgba(144,200,255,0.15);
+  background: rgba(144,200,255,0.02);
   transition: border-color 0.3s;
 }
 .arch-code-block:hover {
-  border-color: rgba(34,211,238,0.4);
+  border-color: rgba(144,200,255,0.4);
 }
 .arch-dist-block {
-  border-color: rgba(34,211,238,0.15);
-  background: rgba(34,211,238,0.02);
+  border-color: rgba(144,200,255,0.15);
+  background: rgba(144,200,255,0.02);
   transition: border-color 0.3s;
 }
 .arch-dist-block:hover {
-  border-color: rgba(34,211,238,0.4);
+  border-color: rgba(144,200,255,0.4);
 }

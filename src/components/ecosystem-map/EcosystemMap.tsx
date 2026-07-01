@@ -6,9 +6,9 @@ const LAYERS = [
   {
     name: "APPLICATION LAYER",
     tag: "USER_INTERFACE",
-    color: "rgba(34,211,238,0.9)",
-    bg: "rgba(34,211,238,0.04)",
-    border: "rgba(34,211,238,0.2)",
+    color: "rgba(144,200,255,0.9)",
+    bg: "rgba(144,200,255,0.04)",
+    border: "rgba(144,200,255,0.2)",
     items: [
       { label: "myshape.com", desc: "Protocol homepage" },
       { label: "Dashboard", desc: "Identity hub" },
@@ -21,9 +21,9 @@ const LAYERS = [
   {
     name: "INTELLIGENCE LAYER",
     tag: "AI_AGENTS",
-    color: "rgba(34,211,238,0.75)",
-    bg: "rgba(34,211,238,0.03)",
-    border: "rgba(34,211,238,0.18)",
+    color: "rgba(144,200,255,0.75)",
+    bg: "rgba(144,200,255,0.03)",
+    border: "rgba(144,200,255,0.18)",
     items: [
       { label: "Hermes Agent", desc: "Social matrix cruiser" },
       { label: "Matrix Bot", desc: "HN/X/LinkedIn/Bluesky" },
@@ -32,9 +32,9 @@ const LAYERS = [
   {
     name: "DEVELOPER LAYER",
     tag: "BUILD_AND_INTEGRATE",
-    color: "rgba(34,211,238,0.6)",
-    bg: "rgba(34,211,238,0.03)",
-    border: "rgba(34,211,238,0.15)",
+    color: "rgba(144,200,255,0.6)",
+    bg: "rgba(144,200,255,0.03)",
+    border: "rgba(144,200,255,0.15)",
     items: [
       { label: "TypeScript SDK", desc: "5 lines to integrate" },
       { label: "REST API", desc: "8 endpoints, read-only" },
@@ -45,9 +45,9 @@ const LAYERS = [
   {
     name: "PROTOCOL LAYER",
     tag: "CORE_PRIMITIVES",
-    color: "rgba(34,211,238,0.45)",
-    bg: "rgba(34,211,238,0.02)",
-    border: "rgba(34,211,238,0.12)",
+    color: "rgba(144,200,255,0.45)",
+    bg: "rgba(144,200,255,0.02)",
+    border: "rgba(144,200,255,0.12)",
     items: [
       { label: "Camera → SST → PES → ZK → Mesh", desc: "5-step pipeline" },
       { label: "JSON-LD + Microdata", desc: "Semantic identity layer" },
@@ -76,11 +76,11 @@ export default function EcosystemMap() {
       {/* 左侧 DATA_FLOW 动态轴线 */}
       <div className="absolute left-2 md:left-5 top-0 bottom-0 flex flex-col items-center z-10">
         {/* 主轴线 */}
-        <div className="flex-1 w-[1px] bg-gradient-to-b from-cyan-400/10 via-cyan-400/40 to-cyan-400/60" />
+        <div className="flex-1 w-[1px] bg-gradient-to-b from-[#90c8ff]/10 via-[#90c8ff]/40 to-[#90c8ff]/60" />
         {/* 扫描脉冲 */}
         <div className="absolute inset-0 w-[2px] left-[-0.5px]"
           style={{
-            background: "linear-gradient(to bottom, transparent, rgba(34,211,238,0.3), transparent)",
+            background: "linear-gradient(to bottom, transparent, rgba(144,200,255,0.3), transparent)",
             animation: "spineScan 4s ease-in-out infinite",
             filter: "blur(1px)",
           }} />
@@ -96,18 +96,18 @@ export default function EcosystemMap() {
         </div>
         {/* 各层节点圆点 */}
         {LAYERS.map((_, i) => (
-          <div key={i} className="absolute w-2 h-2 rounded-full bg-[#02040a] border border-cyan-400/40 z-10"
+          <div key={i} className="absolute w-2 h-2 rounded-full bg-[#02040a] border border-[#90c8ff]/40 z-10"
             style={{
               top: `${(i + 0.5) * (100 / LAYERS.length)}%`,
               left: "-4px",
-              boxShadow: "0 0 6px rgba(34,211,238,0.3)",
+              boxShadow: "0 0 6px rgba(144,200,255,0.3)",
               animation: `nodePulse 2.5s ease-in-out ${i * 0.4}s infinite`,
             }} />
         ))}
         {/* DATA_FLOW 标签 */}
         <div className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center"
           style={{ left: "-24px", width: "52px" }}>
-          <span className="text-cyan-400/45 text-[8px] tracking-[0.3em] uppercase -rotate-90 origin-center whitespace-nowrap leading-none"
+          <span className="text-[#90c8ff]/45 text-[8px] tracking-[0.3em] uppercase -rotate-90 origin-center whitespace-nowrap leading-none"
             style={{ animation: "cyanPulse 2s infinite ease-in-out" }}>
             DATA_FLOW
           </span>
@@ -133,7 +133,7 @@ export default function EcosystemMap() {
               e.currentTarget.style.borderColor = layer.color;
               e.currentTarget.style.boxShadow = layer.highlight
                 ? "0 0 50px rgba(144,200,255,0.1)"
-                : "0 0 25px rgba(34,211,238,0.06)";
+                : "0 0 25px rgba(144,200,255,0.06)";
             }}
             onMouseLeave={e => {
               e.currentTarget.style.borderColor = layer.border;
@@ -211,7 +211,7 @@ export default function EcosystemMap() {
 
       {/* 底部标注 */}
       <div className="mt-8 text-center ml-10 md:ml-14">
-        <span className="text-cyan-400/35 text-[9px] tracking-[0.25em] uppercase hover:text-cyan-300/60 transition-colors cursor-default"
+        <span className="text-[#90c8ff]/35 text-[9px] tracking-[0.25em] uppercase hover:text-[#90c8ff]/60 transition-colors cursor-default"
           onMouseEnter={() => playTick(400, "sine", 0.03, 0.01)}>
           DATA_FLOW: RAW_ENTROPY → VERIFIED_IDENTITY
         </span>

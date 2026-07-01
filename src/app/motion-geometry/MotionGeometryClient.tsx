@@ -20,7 +20,7 @@ const SIM_STEPS = [
   { t: 4.5, timing: 0.38, noise: 0.85, freq: 0.14, bio: 0.72, score: 0.98 },
 ];
 
-function Gauge({ label, value, max = 1, color = "#22d3ee" }: { label: string; value: number; max?: number; color?: string }) {
+function Gauge({ label, value, max = 1, color = "#90c8ff" }: { label: string; value: number; max?: number; color?: string }) {
   const pct = Math.min((value / max) * 100, 100);
   return (
     <div className="flex items-center gap-3">
@@ -78,8 +78,8 @@ function WireframePreview() {
         const x = j[0] * c.width + jx * 0.3;
         const y = j[1] * c.height + jy * 0.3;
         const glow = ctx.createRadialGradient(x, y, 0, x, y, 3);
-        glow.addColorStop(0, "rgba(34,211,238,0.6)");
-        glow.addColorStop(1, "rgba(34,211,238,0)");
+        glow.addColorStop(0, "rgba(144,200,255,0.6)");
+        glow.addColorStop(1, "rgba(144,200,255,0)");
         ctx.fillStyle = glow;
         ctx.beginPath();
         ctx.arc(x, y, 3, 0, Math.PI * 2);
@@ -106,13 +106,13 @@ export default function MotionGeometryClient() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
       
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="text-center mb-16">
-          <div className="text-cyan-500/40 text-[10px] tracking-[0.5em] uppercase mb-6">MOTION_GEOMETRY // VISUAL_PIPELINE</div>
+          <div className="text-[#90c8ff]/40 text-[10px] tracking-[0.5em] uppercase mb-6">MOTION_GEOMETRY // VISUAL_PIPELINE</div>
           <h1 className="text-2xl md:text-4xl font-light tracking-[0.08em] text-white mb-4"
             style={{ textShadow: "0 0 40px rgba(144,200,255,0.2)" }}>
             Entity → Geometry → Proof
@@ -124,45 +124,45 @@ export default function MotionGeometryClient() {
 
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           {/* 骨骼动画 */}
-          <div className="border border-cyan-400/10 p-6 text-center"
+          <div className="border border-[#90c8ff]/10 p-6 text-center"
             onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
-            <div className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase mb-4">01 — Capture</div>
+            <div className="text-[#90c8ff]/30 text-[8px] tracking-[0.3em] uppercase mb-4">01 — Capture</div>
             <WireframePreview />
             <div className="text-white/20 text-[9px] mt-4 tracking-[0.2em] uppercase">33-pt → 18-pt SST</div>
-            <div className="text-cyan-400/30 font-mono text-[8px] mt-1">Frame {step + 1}/10</div>
+            <div className="text-[#90c8ff]/30 font-mono text-[8px] mt-1">Frame {step + 1}/10</div>
           </div>
 
           {/* 仪表盘 */}
-          <div className="border border-cyan-400/10 p-6 space-y-4 flex flex-col justify-center"
+          <div className="border border-[#90c8ff]/10 p-6 space-y-4 flex flex-col justify-center"
             onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
-            <div className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase mb-2 text-center">02 — PES_4D</div>
-            <Gauge label="μTiming" value={data.timing} color="#22d3ee" />
+            <div className="text-[#90c8ff]/30 text-[8px] tracking-[0.3em] uppercase mb-2 text-center">02 — PES_4D</div>
+            <Gauge label="μTiming" value={data.timing} color="#90c8ff" />
             <Gauge label="Noise" value={data.noise} color="#a78bfa" />
             <Gauge label="Freq" value={data.freq} color="#f472b6" />
             <Gauge label="Bio" value={data.bio} color="#34d399" />
             <div className="pt-3 border-t border-white/5 flex justify-between items-center">
               <span className="text-white/20 text-[8px] tracking-[0.2em] uppercase">PES Score</span>
-              <span className="text-cyan-300/80 font-mono text-[18px] font-light">{(data.score * 100).toFixed(0)}</span>
+              <span className="text-[#90c8ff]/80 font-mono text-[18px] font-light">{(data.score * 100).toFixed(0)}</span>
             </div>
           </div>
 
           {/* 向量输出 */}
-          <div className="border border-cyan-400/10 p-6 flex flex-col justify-center"
+          <div className="border border-[#90c8ff]/10 p-6 flex flex-col justify-center"
             onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
-            <div className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase mb-4 text-center">03 — 128D Vector</div>
+            <div className="text-[#90c8ff]/30 text-[8px] tracking-[0.3em] uppercase mb-4 text-center">03 — 128D Vector</div>
             <div className="space-y-1 font-mono text-[8px]">
               {["K:0.42 A:0.88 J:0.15 S:0.71",
                 "K:0.39 A:0.84 J:0.11 S:0.69",
                 "K:0.41 A:0.87 J:0.14 S:0.72",
                 "K:0.44 A:0.89 J:0.16 S:0.73"].map((line, i) => (
-                <div key={i} className="text-cyan-400/25 hover:text-cyan-300/50 transition-colors cursor-default px-2 py-0.5 hover:bg-cyan-400/[0.02]">
+                <div key={i} className="text-[#90c8ff]/25 hover:text-[#90c8ff]/50 transition-colors cursor-default px-2 py-0.5 hover:bg-[#90c8ff]/[0.02]">
                   {line}
                 </div>
               ))}
             </div>
             <div className="mt-4 pt-3 border-t border-white/5">
               <div className="text-white/15 text-[8px] tracking-[0.2em] uppercase mb-1">Proof Hash</div>
-              <div className="text-cyan-400/40 font-mono text-[9px] break-all">
+              <div className="text-[#90c8ff]/40 font-mono text-[9px] break-all">
                 0x{Math.floor(Math.random() * 0xFFFFFFFFFFFF).toString(16).padStart(12, "0")}
               </div>
             </div>
@@ -174,8 +174,8 @@ export default function MotionGeometryClient() {
           <p className="text-white/20 text-[10px]">This is a simulation. Experience the real pipeline with your own motion.</p>
           <Link href="/motion-demo"
             onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-            className="inline-block px-10 py-3.5 border border-cyan-400/30 text-cyan-300/70 text-[10px] tracking-[0.3em] uppercase font-mono hover:bg-cyan-400/[0.04] hover:text-white transition-all"
-            style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)", background: "rgba(34,211,238,0.03)" }}>
+            className="inline-block px-10 py-3.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] hover:text-white transition-all"
+            style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)", background: "rgba(144,200,255,0.03)" }}>
             Try Live Demo →
           </Link>
         </div>

@@ -46,22 +46,22 @@ function confBrightness(c: number) {
 
 export default function ArchitectureClient() {
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         {/* Header */}
         <div className="space-y-4 md:space-y-5 mb-12 md:mb-16">
-          <div className="text-cyan-400/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase"
+          <div className="text-[#90c8ff]/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase"
             onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>
             Protocol_Architecture
           </div>
           <h1 className="text-3xl md:text-5xl font-light tracking-[0.08em] md:tracking-[0.12em] text-white uppercase leading-tight">
-            Camera <span className="text-cyan-400/50">→</span> Presence Receipt
+            Camera <span className="text-[#90c8ff]/50">→</span> Presence Receipt
           </h1>
           <p className="text-white/45 md:text-white/50 text-[11px] md:text-[14px] leading-relaxed max-w-2xl font-light">
             Six stages. One pipeline. Zero data stored.<br />
-            <span className="text-cyan-400/60">Human and AI identities coexist in one protocol.</span>
+            <span className="text-[#90c8ff]/60">Human and AI identities coexist in one protocol.</span>
           </p>
         </div>
 
@@ -92,9 +92,9 @@ export default function ArchitectureClient() {
                   </div>
                   {i < PIPELINE.length - 1 && (
                     <div className="flex items-center pt-7 mx-2">
-                      <div className="w-8 h-[1px] bg-gradient-to-r from-cyan-400/35 to-cyan-400/15" />
+                      <div className="w-8 h-[1px] bg-gradient-to-r from-[#90c8ff]/35 to-[#90c8ff]/15" />
                       <div className="w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[6px]"
-                        style={{ borderLeftColor: "rgba(34,211,238,0.4)" }} />
+                        style={{ borderLeftColor: "rgba(144,200,255,0.4)" }} />
                     </div>
                   )}
                 </div>
@@ -104,15 +104,15 @@ export default function ArchitectureClient() {
 
           {/* Mobile: vertical flow */}
           <div className="md:hidden relative">
-            <div className="absolute left-[20px] top-5 bottom-5 w-[1px] bg-gradient-to-b from-cyan-400/40 via-cyan-400/20 to-cyan-400/5" />
+            <div className="absolute left-[20px] top-5 bottom-5 w-[1px] bg-gradient-to-b from-[#90c8ff]/40 via-[#90c8ff]/20 to-[#90c8ff]/5" />
             {PIPELINE.map((p, i) => (
               <div key={p.step} className="relative flex gap-3 pb-3 last:pb-0"
                 onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}>
-                <div className="absolute left-[14px] top-[20px] w-3.5 h-3.5 rounded-full border-2 border-cyan-400/50 bg-[#02040a] z-10 transition-all duration-500 arch-mobile-dot"
+                <div className="absolute left-[14px] top-[20px] w-3.5 h-3.5 rounded-full border-2 border-[#90c8ff]/50 bg-[#02040a] z-10 transition-all duration-500 arch-mobile-dot"
                   style={{ animationDelay: `${i * 0.5}s` }} />
                 <div className="flex-1 pl-10 py-1.5">
                   <span className="text-[11px] tracking-[0.2em] uppercase font-medium text-white/60">{p.step}. {p.name}</span>
-                  <span className="block text-[9px] mt-0.5 font-mono text-cyan-400/45">→ {p.output}</span>
+                  <span className="block text-[9px] mt-0.5 font-mono text-[#90c8ff]/45">→ {p.output}</span>
                 </div>
               </div>
             ))}
@@ -131,10 +131,10 @@ export default function ArchitectureClient() {
 
           {/* Identity Vector */}
           <div className="mb-6 md:mb-8">
-            <h3 className="text-cyan-400/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Identity Vector <span className="text-white/15">— 128-dim, Poseidon-hashed, non-invertible</span></h3>
+            <h3 className="text-[#90c8ff]/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Identity Vector <span className="text-white/15">— 128-dim, Poseidon-hashed, non-invertible</span></h3>
             <div className="border p-4 md:p-5 overflow-x-auto font-mono arch-code-block"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
-              <pre className="text-cyan-300/70 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
+              <pre className="text-[#90c8ff]/70 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
 {`// Motion Vector hash — the geometric signature
 {
   "mv_hash": "0x7a3f1b2c8d4e9f01...3a6b5c7d2e8f4a9b",
@@ -149,10 +149,10 @@ export default function ArchitectureClient() {
 
           {/* Presence Proof */}
           <div className="mb-6 md:mb-8">
-            <h3 className="text-cyan-400/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Presence Proof <span className="text-white/15">— &lt; 512 bytes, verifiable in &lt; 1ms</span></h3>
+            <h3 className="text-[#90c8ff]/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Presence Proof <span className="text-white/15">— &lt; 512 bytes, verifiable in &lt; 1ms</span></h3>
             <div className="border p-4 md:p-5 overflow-x-auto font-mono arch-code-block"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
-              <pre className="text-cyan-300/70 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
+              <pre className="text-[#90c8ff]/70 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
 {`// ZK-Presence composite proof
 {
   "proof_type": "ZK-Presence",
@@ -169,7 +169,7 @@ export default function ArchitectureClient() {
 
           {/* Entropy Gap Distribution */}
           <div>
-            <h3 className="text-cyan-400/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Entropy Gap Distribution <span className="text-white/15">— zero overlap between human and AI</span></h3>
+            <h3 className="text-[#90c8ff]/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Entropy Gap Distribution <span className="text-white/15">— zero overlap between human and AI</span></h3>
             <div className="border p-5 md:p-6 arch-dist-block"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
               <div className="space-y-5">
@@ -177,20 +177,20 @@ export default function ArchitectureClient() {
                 <div>
                   <div className="flex justify-between text-[8px] md:text-[9px] mb-1.5">
                     <span className="text-white/50">Human PES</span>
-                    <span className="font-mono text-cyan-400/70">0.65 — 0.99</span>
+                    <span className="font-mono text-[#90c8ff]/70">0.65 — 0.99</span>
                   </div>
                   <div className="h-5 md:h-6 rounded-sm flex overflow-hidden arch-entropy-track">
                     <div className="w-[5%] h-full" style={{ background: "rgba(255,255,255,0.03)" }} />
-                    <div className="w-[30%] h-full" style={{ background: "rgba(34,211,238,0.1)" }} />
-                    <div className="w-[35%] h-full" style={{ background: "rgba(34,211,238,0.35)" }} />
-                    <div className="w-[25%] h-full" style={{ background: "rgba(34,211,238,0.6)", boxShadow: "0 0 8px rgba(34,211,238,0.3)" }} />
-                    <div className="w-[5%] h-full" style={{ background: "rgba(34,211,238,0.15)" }} />
+                    <div className="w-[30%] h-full" style={{ background: "rgba(144,200,255,0.1)" }} />
+                    <div className="w-[35%] h-full" style={{ background: "rgba(144,200,255,0.35)" }} />
+                    <div className="w-[25%] h-full" style={{ background: "rgba(144,200,255,0.6)", boxShadow: "0 0 8px rgba(144,200,255,0.3)" }} />
+                    <div className="w-[5%] h-full" style={{ background: "rgba(144,200,255,0.15)" }} />
                   </div>
                 </div>
                 {/* Threshold line */}
                 <div className="relative h-0">
-                  <div className="absolute left-[65%] -top-1 w-[1px] h-12" style={{ background: "rgba(34,211,238,0.5)" }} />
-                  <span className="absolute left-[65%] -top-4 text-[8px] tracking-[0.15em] uppercase font-mono -translate-x-1/2 whitespace-nowrap text-cyan-400/70">
+                  <div className="absolute left-[65%] -top-1 w-[1px] h-12" style={{ background: "rgba(144,200,255,0.5)" }} />
+                  <span className="absolute left-[65%] -top-4 text-[8px] tracking-[0.15em] uppercase font-mono -translate-x-1/2 whitespace-nowrap text-[#90c8ff]/70">
                     threshold 0.65
                   </span>
                 </div>
@@ -202,12 +202,12 @@ export default function ArchitectureClient() {
                   </div>
                   <div className="h-5 md:h-6 rounded-sm flex overflow-hidden arch-entropy-track">
                     <div className="w-[5%] h-full" style={{ background: "rgba(255,255,255,0.03)" }} />
-                    <div className="w-[15%] h-full" style={{ background: "rgba(34,211,238,0.2)" }} />
+                    <div className="w-[15%] h-full" style={{ background: "rgba(144,200,255,0.2)" }} />
                     <div className="w-[80%] h-full" style={{ background: "rgba(255,255,255,0.02)" }} />
                   </div>
                 </div>
                 <p className="text-white/20 text-[8px] tracking-[0.15em] uppercase mt-3">
-                  Zero overlap between distributions. AI cannot cross the entropy threshold — <span className="text-cyan-400/50">mathematically provable</span> via §10.
+                  Zero overlap between distributions. AI cannot cross the entropy threshold — <span className="text-[#90c8ff]/50">mathematically provable</span> via §10.
                 </p>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default function ArchitectureClient() {
             // THE ENTROPY GAP
           </h2>
           <p className="text-white/35 md:text-white/40 text-[10px] md:text-[12px] leading-relaxed mb-6 md:mb-8">
-            Human motion carries irreducible biological entropy. AI-generated motion is mathematically clean — and that cleanliness is <span className="text-cyan-400/60">detectable</span>.
+            Human motion carries irreducible biological entropy. AI-generated motion is mathematically clean — and that cleanliness is <span className="text-[#90c8ff]/60">detectable</span>.
           </p>
           <div className="space-y-4 md:space-y-5">
             {ENTROPY_BARS.map(bar => (
@@ -232,17 +232,17 @@ export default function ArchitectureClient() {
                   <div className="h-full rounded-sm arch-entropy-fill"
                     style={{
                       width: `${bar.pct}%`,
-                      background: `linear-gradient(90deg, rgba(34,211,238,${bar.opacity * 0.5}), rgba(34,211,238,${bar.opacity}))`,
-                      boxShadow: bar.pct > 50 ? "0 0 12px rgba(34,211,238,0.25)" : "none",
+                      background: `linear-gradient(90deg, rgba(144,200,255,${bar.opacity * 0.5}), rgba(144,200,255,${bar.opacity}))`,
+                      boxShadow: bar.pct > 50 ? "0 0 12px rgba(144,200,255,0.25)" : "none",
                     }} />
                 </div>
                 <span className="text-[10px] md:text-[12px] font-mono w-16 shrink-0 font-medium arch-entropy-value"
-                  style={{ color: `rgba(34,211,238,${0.4 + bar.opacity * 0.6})` }}>{bar.pct}%</span>
+                  style={{ color: `rgba(144,200,255,${0.4 + bar.opacity * 0.6})` }}>{bar.pct}%</span>
               </div>
             ))}
           </div>
           <p className="text-white/20 text-[8px] md:text-[9px] tracking-[0.2em] uppercase mt-5 md:mt-6">
-            PES Score threshold for human verification: <span className="text-cyan-400/50">&ge; 85%</span>
+            PES Score threshold for human verification: <span className="text-[#90c8ff]/50">&ge; 85%</span>
           </p>
         </section>
 
@@ -307,7 +307,7 @@ export default function ArchitectureClient() {
                     <td className="py-3 pr-3 hidden md:table-cell arch-threat-vector text-[9px]">{t.vector}</td>
                     <td className="py-3 pr-3 arch-threat-defense text-[9px]">{t.defense}</td>
                     <td className="py-3 text-right font-mono font-medium text-[9px]"
-                      style={{ color: `rgba(34,211,238,${confBrightness(t.confidence)})` }}>
+                      style={{ color: `rgba(144,200,255,${confBrightness(t.confidence)})` }}>
                       {(t.confidence * 100).toFixed(1)}%
                     </td>
                   </tr>

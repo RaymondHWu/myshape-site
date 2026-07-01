@@ -6,7 +6,7 @@ export default function IdentityAnchor() {
     <section className="relative w-full py-48 px-[6%] flex flex-col items-center bg-transparent z-20">
       {/* 标题组 */}
       <div className="text-center mb-24">
-        <span className="block text-[0.7rem] tracking-[0.8em] text-cyan-400/50 mb-5">
+        <span className="block text-[0.7rem] tracking-[0.8em] text-[#90c8ff]/50 mb-5">
           IDENTITY ANCHOR
         </span>
         <h2 className="text-[3.2rem] font-extralight text-white m-0 -tracking-[0.02em]">
@@ -27,7 +27,7 @@ export default function IdentityAnchor() {
       </div>
 
       {/* 状态栏 */}
-      <div className="mt-12 font-mono text-[0.65rem] text-cyan-400/35 text-center">
+      <div className="mt-12 font-mono text-[0.65rem] text-[#90c8ff]/35 text-center">
         BODY_STATE: ACTIVE
         <br />
         GEOMETRY: VERIFIED

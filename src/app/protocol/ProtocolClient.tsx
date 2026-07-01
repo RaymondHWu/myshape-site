@@ -63,7 +63,7 @@ export default function ProtocolClient() {
       <div className="space-y-20 md:space-y-28">
         {/* ── 五层架构 ── */}
         <section>
-          <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-6 hover:text-cyan-300/50 transition-colors cursor-default"
+          <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-6 hover:text-[#90c8ff]/50 transition-colors cursor-default"
             onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>Five-Layer Architecture</h2>
           <div className="space-y-1 max-w-3xl mx-auto">
             {FIVE_LAYERS.map((l) => (
@@ -72,15 +72,15 @@ export default function ProtocolClient() {
                 onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}
                 className="flex items-center gap-4 p-4 bg-[#02040a] transition-all"
                 style={{ border: "1px solid rgba(144,200,255,0.1)" }}>
-                <div className="w-8 h-8 flex items-center justify-center border border-cyan-500/30 text-cyan-400/60 font-mono text-[10px] shrink-0">
+                <div className="w-8 h-8 flex items-center justify-center border border-[#90c8ff]/30 text-[#90c8ff]/60 font-mono text-[10px] shrink-0">
                   L{l.layer}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[12px] tracking-[0.25em] uppercase mb-0.5" style={{ color: "rgba(255,255,255,0.65)" }} data-default="rgba(255,255,255,0.65)" data-hover="rgba(255,255,255,1)">{l.name}</div>
                   <div className="text-[10px] tracking-[0.1em] truncate" style={{ color: "rgba(255,255,255,0.3)" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.55)">{l.role}</div>
                 </div>
-                <div className="flex items-center gap-1.5 text-[8px] tracking-[0.2em] uppercase" style={{ color: "rgba(34,211,238,0.4)" }} data-default="rgba(34,211,238,0.4)" data-hover="rgba(34,211,238,0.8)">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
+                <div className="flex items-center gap-1.5 text-[8px] tracking-[0.2em] uppercase" style={{ color: "rgba(144,200,255,0.4)" }} data-default="rgba(144,200,255,0.4)" data-hover="rgba(144,200,255,0.8)">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)]" />
                   {l.status}
                 </div>
               </div>
@@ -90,7 +90,7 @@ export default function ProtocolClient() {
 
         {/* ── 规范实施状态 ── */}
         <section>
-          <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-6 hover:text-cyan-300/50 transition-colors cursor-default"
+          <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-6 hover:text-[#90c8ff]/50 transition-colors cursor-default"
             onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>Specification Implementation</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {SPEC_SECTIONS.map((s) => (
@@ -100,9 +100,9 @@ export default function ProtocolClient() {
                 className="bg-[#02040a] p-5 transition-all"
                 style={{ border: "1px solid rgba(144,200,255,0.1)" }}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-cyan-400/60 font-mono text-[10px] tracking-[0.3em]">{s.id}</span>
-                  <span className="flex items-center gap-1 text-[8px] tracking-[0.2em] uppercase" style={{ color: "rgba(34,211,238,0.5)" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.9)">
-                    <span className="w-1 h-1 rounded-full bg-cyan-400" />
+                  <span className="text-[#90c8ff]/60 font-mono text-[10px] tracking-[0.3em]">{s.id}</span>
+                  <span className="flex items-center gap-1 text-[8px] tracking-[0.2em] uppercase" style={{ color: "rgba(144,200,255,0.5)" }} data-default="rgba(144,200,255,0.5)" data-hover="rgba(144,200,255,0.9)">
+                    <span className="w-1 h-1 rounded-full bg-[#90c8ff]" />
                     {s.status}
                   </span>
                 </div>
@@ -115,7 +115,7 @@ export default function ProtocolClient() {
 
         {/* ── 引擎清单 ── */}
         <section>
-          <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-6 hover:text-cyan-300/50 transition-colors cursor-default"
+          <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-6 hover:text-[#90c8ff]/50 transition-colors cursor-default"
             onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>Protocol Engines</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -128,10 +128,10 @@ export default function ProtocolClient() {
               </thead>
               <tbody>
                 {ENGINES.map((e) => (
-                  <tr key={e.file} className="border-b border-white/5 hover:bg-cyan-500/[0.02] transition-all"
+                  <tr key={e.file} className="border-b border-white/5 hover:bg-[#90c8ff]/[0.02] transition-all"
                     onMouseEnter={e => { playTick(700, "sine", 0.06, 0.015); hoverOn(e); }} onMouseLeave={e => hoverOff(e)}>
                     <td className="p-3 tracking-[0.15em] uppercase" style={{ color: "rgba(255,255,255,0.5)", fontSize: "10px" }} data-default="rgba(255,255,255,0.5)" data-hover="rgba(255,255,255,0.9)" data-default-size="10px" data-hover-size="13px">{e.name}</td>
-                    <td className="p-3 font-mono hidden md:table-cell" style={{ color: "rgba(34,211,238,0.35)", fontSize: "9px" }} data-default="rgba(34,211,238,0.35)" data-hover="rgba(34,211,238,0.7)" data-default-size="9px" data-hover-size="12px">{e.file}</td>
+                    <td className="p-3 font-mono hidden md:table-cell" style={{ color: "rgba(144,200,255,0.35)", fontSize: "9px" }} data-default="rgba(144,200,255,0.35)" data-hover="rgba(144,200,255,0.7)" data-default-size="9px" data-hover-size="12px">{e.file}</td>
                     <td className="p-3" style={{ color: "rgba(255,255,255,0.25)", fontSize: "9px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="9px" data-hover-size="12px">{e.desc}</td>
                   </tr>
                 ))}
@@ -143,11 +143,11 @@ export default function ProtocolClient() {
         {/* ── Protocol Respiration & Evolution ── */}
         <section className="py-16 border-t" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
           <div className="max-w-2xl mx-auto text-center">
-            <div className="text-white/25 text-[10px] tracking-[0.5em] uppercase mb-6 hover:text-cyan-300/50 transition-colors cursor-default"
+            <div className="text-white/25 text-[10px] tracking-[0.5em] uppercase mb-6 hover:text-[#90c8ff]/50 transition-colors cursor-default"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>Protocol Respiration &amp; Evolution</div>
             <h2 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-8">
               Identity is not static.<br />
-              <span className="text-cyan-300/70">It breathes with you.</span>
+              <span className="text-[#90c8ff]/70">It breathes with you.</span>
             </h2>
             <div className="space-y-6 text-white/35 text-[14px] leading-[1.9] font-light">
               <p>
@@ -162,7 +162,7 @@ export default function ProtocolClient() {
                 Your particle geometry begins in stillness. With each scan, a new orbital particle
                 ignites — drifting from the core outward, tracing the path from silence to saturation.
                 From emptiness to fullness. From <span className="text-white/50">Awakening</span> to{' '}
-                <span className="text-cyan-300/70">Genesis Sealed</span>.
+                <span className="text-[#90c8ff]/70">Genesis Sealed</span>.
               </p>
               <p>
                 This is not a points system. It is a cartography of presence — a map of how deeply
@@ -180,8 +180,8 @@ export default function ProtocolClient() {
                     style={{
                       width: `${6 + n * 3}px`,
                       height: `${6 + n * 3}px`,
-                      background: n === 0 ? "rgba(255,255,255,0.05)" : n === 8 ? "rgba(34,211,238,0.7)" : `rgba(34,211,238,${0.1 + n * 0.07})`,
-                      boxShadow: n === 8 ? "0 0 16px rgba(34,211,238,0.5)" : n > 0 ? `0 0 ${4 + n}px rgba(34,211,238,${0.1 + n * 0.05})` : "none",
+                      background: n === 0 ? "rgba(255,255,255,0.05)" : n === 8 ? "rgba(144,200,255,0.7)" : `rgba(144,200,255,${0.1 + n * 0.07})`,
+                      boxShadow: n === 8 ? "0 0 16px rgba(144,200,255,0.5)" : n > 0 ? `0 0 ${4 + n}px rgba(144,200,255,${0.1 + n * 0.05})` : "none",
                       animation: `pulse ${2 + n * 0.3}s ease-in-out infinite`,
                       animationDelay: `${n * 0.2}s`,
                     }}
@@ -190,7 +190,7 @@ export default function ProtocolClient() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 text-white/25 hover:text-cyan-300/50 text-[9px] tracking-[0.25em] uppercase transition-colors cursor-default"
+            <div className="mt-4 text-white/25 hover:text-[#90c8ff]/50 text-[9px] tracking-[0.25em] uppercase transition-colors cursor-default"
               onMouseEnter={() => playTick(450, "sine", 0.03, 0.01)}>
               Stillness → Awakening → Genesis Sealed
             </div>
@@ -199,7 +199,7 @@ export default function ProtocolClient() {
               Full evolution specification archived in{' '}
               <a href="/papers/technical-spec"
                 onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
-                className="text-cyan-400/40 hover:text-cyan-300/70 transition-colors underline decoration-cyan-400/20 hover:decoration-cyan-400/40">Technical Specification §12</a>
+                className="text-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-colors underline decoration-[#90c8ff]/20 hover:decoration-[#90c8ff]/40">Technical Specification §12</a>
             </div>
           </div>
         </section>
@@ -207,13 +207,13 @@ export default function ProtocolClient() {
         {/* ── Protocol Lifecycle ── */}
         <section className="py-16 border-t" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
           <div className="max-w-3xl mx-auto">
-            <div className="text-white/30 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-12 text-center hover:text-cyan-300/50 transition-colors cursor-default"
+            <div className="text-white/30 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-12 text-center hover:text-[#90c8ff]/50 transition-colors cursor-default"
               onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>Protocol Lifecycle</div>
 
             {/* Lifecycle Flow */}
             <div className="relative">
               {/* Connecting line — desktop */}
-              <div className="hidden md:block absolute left-[10%] right-[10%] top-10 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+              <div className="hidden md:block absolute left-[10%] right-[10%] top-10 h-[1px] bg-gradient-to-r from-transparent via-[#90c8ff]/20 to-transparent" />
 
               <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
                 {[
@@ -228,8 +228,8 @@ export default function ProtocolClient() {
                       onMouseEnter={e => {
                         playTick(600 + i * 100, "sine", 0.06, 0.015);
                         const el = e.currentTarget;
-                        el.querySelector<HTMLElement>('[data-node="circle"]')!.style.borderColor = "rgba(34,211,238,0.9)";
-                        el.querySelector<HTMLElement>('[data-node="circle"]')!.style.boxShadow = "0 0 20px rgba(34,211,238,0.4)";
+                        el.querySelector<HTMLElement>('[data-node="circle"]')!.style.borderColor = "rgba(144,200,255,0.9)";
+                        el.querySelector<HTMLElement>('[data-node="circle"]')!.style.boxShadow = "0 0 20px rgba(144,200,255,0.4)";
                         el.querySelector<HTMLElement>('[data-node="circle"]')!.style.color = "rgba(200,240,255,0.9)";
                         el.querySelector<HTMLElement>('[data-node="label"]')!.style.color = "#fff";
                         el.querySelector<HTMLElement>('[data-node="sub"]')!.style.color = "rgba(160,230,255,0.9)";
@@ -239,32 +239,32 @@ export default function ProtocolClient() {
                       }}
                       onMouseLeave={e => {
                         const el = e.currentTarget;
-                        el.querySelector<HTMLElement>('[data-node="circle"]')!.style.borderColor = "rgba(34,211,238,0.25)";
+                        el.querySelector<HTMLElement>('[data-node="circle"]')!.style.borderColor = "rgba(144,200,255,0.25)";
                         el.querySelector<HTMLElement>('[data-node="circle"]')!.style.boxShadow = "none";
-                        el.querySelector<HTMLElement>('[data-node="circle"]')!.style.color = "rgba(34,211,238,0.5)";
+                        el.querySelector<HTMLElement>('[data-node="circle"]')!.style.color = "rgba(144,200,255,0.5)";
                         el.querySelector<HTMLElement>('[data-node="label"]')!.style.color = "rgba(255,255,255,0.55)";
-                        el.querySelector<HTMLElement>('[data-node="sub"]')!.style.color = "rgba(34,211,238,0.4)";
+                        el.querySelector<HTMLElement>('[data-node="sub"]')!.style.color = "rgba(144,200,255,0.4)";
                         if (el.querySelector<HTMLElement>('[data-node="desc"]')) {
                           el.querySelector<HTMLElement>('[data-node="desc"]')!.style.color = "rgba(255,255,255,0.2)";
                         }
                       }}>
                       {/* Node circle */}
                       <div data-node="circle" className="w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center font-mono text-[11px] md:text-[13px] transition-all duration-300 shrink-0"
-                        style={{ borderColor: "rgba(34,211,238,0.25)", color: "rgba(34,211,238,0.5)", background: "#02040a" }}>
+                        style={{ borderColor: "rgba(144,200,255,0.25)", color: "rgba(144,200,255,0.5)", background: "#02040a" }}>
                         {s.step}
                       </div>
                       {/* Labels */}
                       <span data-node="label" className="text-[11px] md:text-[12px] tracking-[0.15em] uppercase mt-3 font-medium text-center transition-colors duration-300"
                         style={{ color: "rgba(255,255,255,0.55)" }}>{s.label}</span>
                       <span data-node="sub" className="text-[9px] md:text-[10px] tracking-[0.1em] font-mono mt-1 text-center transition-colors duration-300"
-                        style={{ color: "rgba(34,211,238,0.4)" }}>{s.sub}</span>
+                        style={{ color: "rgba(144,200,255,0.4)" }}>{s.sub}</span>
                       <span data-node="desc" className="hidden md:block text-[9px] text-center mt-2 leading-relaxed transition-colors duration-300"
                         style={{ color: "rgba(255,255,255,0.2)" }}>{s.desc}</span>
                     </div>
                     {/* Arrow between nodes */}
                     {i < 4 && (
                       <div className="flex items-center mx-1 md:mx-0 shrink-0">
-                        <span className="text-cyan-400/25 text-[18px] md:text-[20px] font-light rotate-90 md:rotate-0">→</span>
+                        <span className="text-[#90c8ff]/25 text-[18px] md:text-[20px] font-light rotate-90 md:rotate-0">→</span>
                       </div>
                     )}
                   </div>
@@ -288,21 +288,21 @@ export default function ProtocolClient() {
 
         {/* ── Ecosystem Map ── */}
         <section className="py-16 border-t" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
-          <div className="text-white/35 text-[11px] tracking-[0.5em] uppercase mb-10 text-center hover:text-cyan-300/60 transition-colors cursor-default"
+          <div className="text-white/35 text-[11px] tracking-[0.5em] uppercase mb-10 text-center hover:text-[#90c8ff]/60 transition-colors cursor-default"
             onMouseEnter={() => playTick(500, "sine", 0.05, 0.015)}
-            style={{ textShadow: "0 0 20px rgba(34,211,238,0.15)" }}>Protocol Ecosystem</div>
+            style={{ textShadow: "0 0 20px rgba(144,200,255,0.15)" }}>Protocol Ecosystem</div>
           <EcosystemMap />
         </section>
 
         {/* ── 入口 ── */}
         <section className="flex flex-wrap justify-center gap-6 py-16 border-t" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
-          <Link href="/protocol/manifesto" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)} className="group relative px-10 py-4 border border-cyan-500/30 text-cyan-400/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-cyan-400 transition-all" style={{ background: "transparent" }}>
+          <Link href="/protocol/manifesto" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)} className="group relative px-10 py-4 border border-[#90c8ff]/30 text-[#90c8ff]/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-[#90c8ff] transition-all" style={{ background: "transparent" }}>
             Protocol_Manifesto →
           </Link>
-          <Link href="/protocol/motion-pipeline" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)} className="group relative px-10 py-4 border border-cyan-500/30 text-cyan-400/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-cyan-400 transition-all" style={{ background: "transparent" }}>
+          <Link href="/protocol/motion-pipeline" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)} className="group relative px-10 py-4 border border-[#90c8ff]/30 text-[#90c8ff]/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-[#90c8ff] transition-all" style={{ background: "transparent" }}>
             Motion_Pipeline →
           </Link>
-          <Link href="/protocol/identity-layer" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)} className="group relative px-10 py-4 border border-cyan-500/30 text-cyan-400/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-cyan-400 transition-all" style={{ background: "transparent" }}>
+          <Link href="/protocol/identity-layer" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)} className="group relative px-10 py-4 border border-[#90c8ff]/30 text-[#90c8ff]/80 text-[10px] tracking-[0.4em] uppercase hover:text-white hover:border-[#90c8ff] transition-all" style={{ background: "transparent" }}>
             Identity_Layer →
           </Link>
         </section>

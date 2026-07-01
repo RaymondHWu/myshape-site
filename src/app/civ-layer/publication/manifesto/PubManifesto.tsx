@@ -47,15 +47,15 @@ export default function PubManifesto() {
     >
       <div className="space-y-32 pb-32">
         {/* --- Back Link --- */}
-        <Link href="/civ-layer/publication" className="text-cyan-500/40 hover:text-cyan-400 text-[10px] tracking-[0.4em] transition-colors uppercase flex items-center gap-2">
+        <Link href="/civ-layer/publication" className="text-[#90c8ff]/40 hover:text-[#90c8ff] text-[10px] tracking-[0.4em] transition-colors uppercase flex items-center gap-2">
           <span>← Back_to_Publication</span>
         </Link>
 
         {/* --- 1. 引言區塊 --- */}
         <section className="max-w-4xl relative">
-          <div className="absolute -left-10 top-0 w-1 h-full bg-gradient-to-b from-cyan-500 to-transparent opacity-30" />
+          <div className="absolute -left-10 top-0 w-1 h-full bg-gradient-to-b from-[#90c8ff] to-transparent opacity-30" />
           <h2 className="text-2xl md:text-3xl font-extralight tracking-[0.4em] text-white leading-tight uppercase mb-8">
-            The <span className="text-cyan-400">Sovereign Presence</span> is the irreducible baseline of the new civilization.
+            The <span className="text-[#90c8ff]">Sovereign Presence</span> is the irreducible baseline of the new civilization.
           </h2>
           <p className="text-white/50 text-base tracking-[0.2em] leading-relaxed font-light">
             In the age of distributed intelligence, the truth of human existence must be defended, not assumed. 
@@ -66,7 +66,7 @@ export default function PubManifesto() {
         {/* --- 2. 核心立場 --- */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           <div className="space-y-6">
-            <h3 className="text-cyan-500/80 text-[10px] tracking-[0.6em] font-bold uppercase">// THE_REJECTION</h3>
+            <h3 className="text-[#90c8ff]/80 text-[10px] tracking-[0.6em] font-bold uppercase">// THE_REJECTION</h3>
             <p className="text-white/40 text-xs tracking-widest leading-loose uppercase">
               We reject the structures that treat the individual as a resource to be extracted, analyzed, and replicated. 
               A human must remain whole—even when intelligence surrounds them and acts on their behalf.
@@ -85,9 +85,9 @@ export default function PubManifesto() {
           <h3 className="text-white/20 text-[9px] tracking-[0.6em] uppercase text-center">// MANIFESTO_SEGMENTS</h3>
           <div className="space-y-px bg-white/5 border border-white/5">
             {manifestoSegments.map((segment) => (
-              <div key={segment.id} className="grid grid-cols-1 md:grid-cols-12 bg-[#02040a] p-12 group hover:bg-cyan-500/[0.03] transition-all duration-500">
+              <div key={segment.id} className="grid grid-cols-1 md:grid-cols-12 bg-[#02040a] p-12 group hover:bg-[#90c8ff]/[0.03] transition-all duration-500">
                 <div className="md:col-span-3 space-y-2 mb-6 md:mb-0">
-                  <div className="text-cyan-500 text-[10px] tracking-[0.4em] font-bold">
+                  <div className="text-[#90c8ff] text-[10px] tracking-[0.4em] font-bold">
                     {segment.id}
                   </div>
                   <div className="text-white/20 text-[8px] tracking-[0.2em]">
@@ -95,7 +95,7 @@ export default function PubManifesto() {
                   </div>
                 </div>
                 <div className="md:col-span-9 space-y-4">
-                  <h4 className="text-white text-lg tracking-[0.3em] font-light uppercase group-hover:text-cyan-400 transition-colors">
+                  <h4 className="text-white text-lg tracking-[0.3em] font-light uppercase group-hover:text-[#90c8ff] transition-colors">
                     {segment.title}
                   </h4>
                   <p className="text-white/40 text-[11px] tracking-[0.2em] leading-relaxed uppercase group-hover:text-white transition-colors duration-500 text-justify">

@@ -15,8 +15,8 @@
   background: radial-gradient(circle,
     rgba(220,240,255,0.7) 0%,
     rgba(144,200,255,0.25) 30%,
-    rgba(34,211,238,0.06) 60%,
-    rgba(34,211,238,0) 100%
+    rgba(144,200,255,0.06) 60%,
+    rgba(144,200,255,0) 100%
   );
   box-shadow: 0 0 30px rgba(144,200,255,0.3), 0 0 60px rgba(144,200,255,0.08);
   animation: corePulse 3s ease-in-out infinite;

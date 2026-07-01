@@ -318,7 +318,7 @@ export default function MotionDemoClient() {
             const sz = p.size * (1 + prog * 3);
             const g = ctx.createRadialGradient(p.x * w, p.y * h, 0, p.x * w, p.y * h, sz * 2);
             g.addColorStop(0, `rgba(180,220,255,${a})`);
-            g.addColorStop(1, "rgba(34,211,238,0)");
+            g.addColorStop(1, "rgba(144,200,255,0)");
             ctx.fillStyle = g;
             ctx.beginPath(); ctx.arc(p.x * w, p.y * h, sz * 2, 0, Math.PI * 2); ctx.fill();
           });
@@ -385,7 +385,7 @@ export default function MotionDemoClient() {
           const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowR);
           g.addColorStop(0, `rgba(200,235,255,${alpha * 0.9})`);
           g.addColorStop(0.3, `rgba(144,200,255,${alpha * 0.5})`);
-          g.addColorStop(1, "rgba(34,211,238,0)");
+          g.addColorStop(1, "rgba(144,200,255,0)");
           ctx.fillStyle = g;
           ctx.beginPath();
           ctx.arc(sx, sy, glowR, 0, Math.PI * 2);
@@ -404,11 +404,11 @@ export default function MotionDemoClient() {
         // 扫描带视觉
         const bandY = haloY * h;
         const bandGrad = ctx.createLinearGradient(0, bandY - 12, 0, bandY + 12);
-        bandGrad.addColorStop(0, "rgba(34,211,238,0)");
-        bandGrad.addColorStop(0.4, "rgba(34,211,238,0.08)");
-        bandGrad.addColorStop(0.5, "rgba(34,211,238,0.15)");
-        bandGrad.addColorStop(0.6, "rgba(34,211,238,0.08)");
-        bandGrad.addColorStop(1, "rgba(34,211,238,0)");
+        bandGrad.addColorStop(0, "rgba(144,200,255,0)");
+        bandGrad.addColorStop(0.4, "rgba(144,200,255,0.08)");
+        bandGrad.addColorStop(0.5, "rgba(144,200,255,0.15)");
+        bandGrad.addColorStop(0.6, "rgba(144,200,255,0.08)");
+        bandGrad.addColorStop(1, "rgba(144,200,255,0)");
         ctx.fillStyle = bandGrad;
         ctx.fillRect(0, bandY - 12, w, 24);
 
@@ -610,13 +610,13 @@ export default function MotionDemoClient() {
   };
 
   return (
-    <div className="bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
       
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6" style={{ paddingTop: "6rem", paddingBottom: "4rem" }}>
         <div className="space-y-6 mb-12">
-          <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">Presence_Engine // Live_Demo</div>
+          <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">Presence_Engine // Live_Demo</div>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">
             Motion <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>→</span> Geometry <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>→</span> Signature
           </h1>
@@ -644,7 +644,7 @@ export default function MotionDemoClient() {
                       Green screen or no camera? Chromium browsers (Chrome/Edge) often have WebGL webcam issues.
                     </p>
                     <p className="text-white/50 text-[10px] mt-1.5">
-                      <span className="text-cyan-300">Firefox</span> is recommended — it works reliably with MediaPipe.
+                      <span className="text-[#90c8ff]">Firefox</span> is recommended — it works reliably with MediaPipe.
                     </p>
                     <p className="text-white/20 text-[8px] mt-1">
                       On Chrome, try <span className="text-white/30">chrome://flags/#use-angle → OpenGL → Relaunch</span>
@@ -652,9 +652,9 @@ export default function MotionDemoClient() {
                   </div>
                 )}
                 {/* Privacy notice */}
-                <div className="flex items-center gap-2 px-3 py-1.5 border border-cyan-400/20 bg-cyan-400/[0.04] rounded-full">
-                  <svg className="w-3 h-3 text-cyan-400/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
-                  <span className="text-cyan-400/60 text-[8px] tracking-[0.15em] uppercase">100% Local Processing — Nothing Uploaded</span>
+                <div className="flex items-center gap-2 px-3 py-1.5 border border-[#90c8ff]/20 bg-[#90c8ff]/[0.04] rounded-full">
+                  <svg className="w-3 h-3 text-[#90c8ff]/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+                  <span className="text-[#90c8ff]/60 text-[8px] tracking-[0.15em] uppercase">100% Local Processing — Nothing Uploaded</span>
                 </div>
                 <p className="text-white/30 text-[13px] tracking-[0.12em] text-center max-w-md leading-relaxed">
                   Activate your camera to generate a real-time<br />
@@ -681,7 +681,7 @@ export default function MotionDemoClient() {
                 <div className="flex flex-col items-center gap-3 mt-3">
                   <button onClick={startCapture}
                     onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                    className="px-10 py-5 border border-cyan-400/40 text-cyan-400/80 text-[13px] tracking-[0.25em] uppercase hover:bg-cyan-400/10 hover:text-white transition-all">
+                    className="px-10 py-5 border border-[#90c8ff]/40 text-[#90c8ff]/80 text-[13px] tracking-[0.25em] uppercase hover:bg-[#90c8ff]/10 hover:text-white transition-all">
                     Activate_Camera
                   </button>
                   <button onClick={() => {
@@ -700,7 +700,7 @@ export default function MotionDemoClient() {
                     }
                   }}
                     onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
-                    className="text-cyan-400/35 hover:text-cyan-300/70 text-[10px] tracking-[0.15em] uppercase transition-colors border-b border-transparent hover:border-cyan-400/30 pb-0.5">
+                    className="text-[#90c8ff]/35 hover:text-[#90c8ff]/70 text-[10px] tracking-[0.15em] uppercase transition-colors border-b border-transparent hover:border-[#90c8ff]/30 pb-0.5">
                     Quick Preview →
                   </button>
                 </div>
@@ -729,8 +729,8 @@ export default function MotionDemoClient() {
                   active={true}
                 />
                 {/* Mini status badge — frame counter */}
-                <div className="absolute top-3 right-3 z-30 flex items-center gap-2 px-2.5 py-1 bg-black/70 border border-cyan-400/20 rounded-sm pointer-events-none">
-                  <span className="text-cyan-400/60 text-[8px] tracking-[0.15em] font-mono">
+                <div className="absolute top-3 right-3 z-30 flex items-center gap-2 px-2.5 py-1 bg-black/70 border border-[#90c8ff]/20 rounded-sm pointer-events-none">
+                  <span className="text-[#90c8ff]/60 text-[8px] tracking-[0.15em] font-mono">
                     {validFrameCount} valid
                   </span>
                 </div>
@@ -741,16 +741,16 @@ export default function MotionDemoClient() {
               <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60">
                 <div className="text-center space-y-3.5">
                   <div className="relative w-16 h-16 mx-auto">
-                    <div className="absolute inset-0 rounded-full border border-cyan-400/20 animate-ping" style={{ animationDuration: "1.5s" }} />
-                    <div className="absolute inset-2 rounded-full border border-cyan-400/30 animate-pulse" />
+                    <div className="absolute inset-0 rounded-full border border-[#90c8ff]/20 animate-ping" style={{ animationDuration: "1.5s" }} />
+                    <div className="absolute inset-2 rounded-full border border-[#90c8ff]/30 animate-pulse" />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.6)] animate-pulse" />
+                      <div className="w-3 h-3 rounded-full bg-[#90c8ff] shadow-[0_0_12px_rgba(144,200,255,0.6)] animate-pulse" />
                     </div>
                   </div>
-                  <span className="text-cyan-400/70 text-[10px] tracking-[0.3em] uppercase block animate-pulse">Generating ZK-Proof...</span>
+                  <span className="text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase block animate-pulse">Generating ZK-Proof...</span>
                   <div className="flex gap-1.5 justify-center">
                     {[0, 1, 2].map(i => (
-                      <div key={i} className="w-1.5 h-1.5 rounded-full bg-cyan-400/50 animate-pulse"
+                      <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#90c8ff]/50 animate-pulse"
                         style={{ animationDelay: `${i * 0.25}s` }} />
                     ))}
                   </div>
@@ -764,7 +764,7 @@ export default function MotionDemoClient() {
                 {[...Array(30)].map((_,i) => {
                   const a = (i/30)*Math.PI*2;
                   const x = Math.cos(a)*120; const y = Math.sin(a)*120;
-                  const colors = ["#22d3ee","#d4af37","#34d399","#90c8ff"];
+                  const colors = ["#90c8ff","#d4af37","#34d399","#90c8ff"];
                   return (
                     <div key={i} className="absolute left-1/2 top-1/2 pointer-events-none rounded-full"
                       style={{width:4,height:4,background:colors[i%4],boxShadow:`0 0 10px ${colors[i%4]}`,
@@ -798,7 +798,7 @@ export default function MotionDemoClient() {
                 <div className="text-center space-y-2" style={{animation:"ceremonyTextFade 1s ease-out 0.5s both"}}>
                   <div className="text-amber-300/60 text-[14px] font-light tracking-[0.2em] uppercase">◈ Genesis Ritual Complete</div>
                   <p className="text-white/30 text-[11px] max-w-xs leading-relaxed">Your kinetic signature is now sealed into the sovereign identity layer.</p>
-                  {researchConsented && uploadState === "success" && <p className="text-cyan-400/30 text-[9px]">✓ Contributed to calibration engine</p>}
+                  {researchConsented && uploadState === "success" && <p className="text-[#90c8ff]/30 text-[9px]">✓ Contributed to calibration engine</p>}
                   {researchConsented && uploadState === "error" && <p className="text-red-400/40 text-[9px]">⚠ Research upload failed — data kept local</p>}
                 </div>
               </div>
@@ -811,26 +811,26 @@ export default function MotionDemoClient() {
               <div className="flex-1 border border-white/10 bg-black/40 p-4 flex flex-col space-y-3.5">
                 {/* Box 1: PES + Telemetry + ZK Proof */}
                 <div>
-                  <div className="text-cyan-400/50 text-[10px] tracking-[0.2em] uppercase mb-1.5">Presence Entropy Score</div>
+                  <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.2em] uppercase mb-1.5">Presence Entropy Score</div>
                   <div className="flex items-center justify-center"><div className="relative w-20 h-20"><svg viewBox="0 0 100 100" className="w-full h-full -rotate-90"><circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="6"/><circle cx="50" cy="50" r="42" fill="none" stroke={pesData.score>0.5?"rgba(52,211,153,0.7)":"rgba(144,200,255,0.6)"} strokeWidth="6" strokeDasharray={`${pesData.score*264} 264`} strokeLinecap="round" style={{filter:`drop-shadow(0 0 8px ${pesData.score>0.5?"rgba(52,211,153,0.5)":"rgba(144,200,255,0.4)"})`}}/></svg><div className="absolute inset-0 flex items-center justify-center"><span className="text-white/90 font-mono text-[20px]" style={{textShadow:pesData.score>0.5?"0 0 14px rgba(52,211,153,0.6)":"0 0 14px rgba(144,200,255,0.5)"}}>{(pesData.score*100).toFixed(0)}</span></div></div></div>
-                  {threatVerdict&&<div className={`text-center text-[10px] tracking-[0.08em] uppercase font-mono mt-2 ${threatVerdict.startsWith("✓")?"text-cyan-300/80":"text-amber-300/80"}`}>{threatVerdict}</div>}
+                  {threatVerdict&&<div className={`text-center text-[10px] tracking-[0.08em] uppercase font-mono mt-2 ${threatVerdict.startsWith("✓")?"text-[#90c8ff]/80":"text-amber-300/80"}`}>{threatVerdict}</div>}
                 </div>
-                <div className="space-y-2">{[{l:"μTiming",v:pesData.timing,h:200},{l:"Noise",v:pesData.noise,h:190},{l:"Frequency",v:pesData.frequency,h:210},{l:"Biological",v:pesData.biological,h:180}].map(g=>(<div key={g.l}><div className="flex justify-between text-[10px]"><span className="text-white/35">{g.l}</span><span className="text-cyan-300/60 font-mono text-[11px]">{(g.v*100).toFixed(0)}%</span></div><div className="h-2 bg-white/5 rounded-full overflow-hidden mt-0.5"><div className="h-full rounded-full transition-all duration-700" style={{width:`${Math.min(g.v*100,100)}%`,background:`linear-gradient(90deg,hsla(${g.h},60%,50%,0.4),hsla(${g.h},70%,60%,0.8))`,boxShadow:`0 0 6px hsla(${g.h},60%,60%,0.3)`}}/></div></div>))}</div>
+                <div className="space-y-2">{[{l:"μTiming",v:pesData.timing,h:200},{l:"Noise",v:pesData.noise,h:190},{l:"Frequency",v:pesData.frequency,h:210},{l:"Biological",v:pesData.biological,h:180}].map(g=>(<div key={g.l}><div className="flex justify-between text-[10px]"><span className="text-white/35">{g.l}</span><span className="text-[#90c8ff]/60 font-mono text-[11px]">{(g.v*100).toFixed(0)}%</span></div><div className="h-2 bg-white/5 rounded-full overflow-hidden mt-0.5"><div className="h-full rounded-full transition-all duration-700" style={{width:`${Math.min(g.v*100,100)}%`,background:`linear-gradient(90deg,hsla(${g.h},60%,50%,0.4),hsla(${g.h},70%,60%,0.8))`,boxShadow:`0 0 6px hsla(${g.h},60%,60%,0.3)`}}/></div></div>))}</div>
                 <div className="h-px bg-white/5"/>
                 <div>
-                  <div className="text-cyan-400/50 text-[10px] tracking-[0.2em] uppercase mb-1.5">Telemetry</div>
+                  <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.2em] uppercase mb-1.5">Telemetry</div>
                   <div className="space-y-2 text-[11px] font-mono">
-                    <div className="flex justify-between"><span className="text-white/30">SST Frames</span><span className="text-cyan-300/60">{sstFramesRef.current.length}</span></div>
-                    <div className="flex justify-between"><span className="text-white/30">Valid Frames</span><span className="text-cyan-300/60">{validFrameCount}</span></div>
-                    <div className="flex justify-between"><span className="text-white/30">Energy</span><span className="text-cyan-300/60">{features?.features.energy.toFixed(2)??"—"}</span></div>
-                    <div className="flex justify-between"><span className="text-white/30">Phase</span><span className="text-cyan-400/60">COMPLETE</span></div>
+                    <div className="flex justify-between"><span className="text-white/30">SST Frames</span><span className="text-[#90c8ff]/60">{sstFramesRef.current.length}</span></div>
+                    <div className="flex justify-between"><span className="text-white/30">Valid Frames</span><span className="text-[#90c8ff]/60">{validFrameCount}</span></div>
+                    <div className="flex justify-between"><span className="text-white/30">Energy</span><span className="text-[#90c8ff]/60">{features?.features.energy.toFixed(2)??"—"}</span></div>
+                    <div className="flex justify-between"><span className="text-white/30">Phase</span><span className="text-[#90c8ff]/60">COMPLETE</span></div>
                   </div>
                 </div>
                 <button onClick={handleAICompare}
-                  className="w-full py-1.5 border border-cyan-400/15 text-cyan-400/35 text-[9px] tracking-[0.15em] uppercase hover:border-cyan-400/30 hover:text-cyan-300/60 transition-all">
+                  className="w-full py-1.5 border border-[#90c8ff]/15 text-[#90c8ff]/35 text-[9px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all">
                   {wasmCompare?.loading ? "Loading WASM..." : wasmCompare?.similarity != null ? `AI: ${(wasmCompare.similarity*100).toFixed(0)}%` : "Compare with AI →"}
                 </button>
-                {proofHashes&&(<div className="p-3 border border-cyan-400/20 bg-cyan-400/[0.03] space-y-1 mt-auto"><div className="text-cyan-400/60 text-[9px] tracking-[0.2em] uppercase">ZK-Presence Proof</div><div className="text-cyan-200/80 text-[10px] font-mono break-all leading-relaxed">{proofHashes.zkp}</div><div className="grid grid-cols-3 gap-2 text-[9px] pt-1"><div><span className="text-white/25">PoP</span><div className="text-cyan-300/60 font-mono">{proofHashes.pop.slice(0,6)}</div></div><div><span className="text-white/25">MP</span><div className="text-cyan-300/60 font-mono">{proofHashes.mp.slice(0,6)}</div></div><div><span className="text-white/25">EP</span><div className="text-cyan-300/60 font-mono">{proofHashes.ep.slice(0,6)}</div></div></div></div>)}
+                {proofHashes&&(<div className="p-3 border border-[#90c8ff]/20 bg-[#90c8ff]/[0.03] space-y-1 mt-auto"><div className="text-[#90c8ff]/60 text-[9px] tracking-[0.2em] uppercase">ZK-Presence Proof</div><div className="text-[#90c8ff]/80 text-[10px] font-mono break-all leading-relaxed">{proofHashes.zkp}</div><div className="grid grid-cols-3 gap-2 text-[9px] pt-1"><div><span className="text-white/25">PoP</span><div className="text-[#90c8ff]/60 font-mono">{proofHashes.pop.slice(0,6)}</div></div><div><span className="text-white/25">MP</span><div className="text-[#90c8ff]/60 font-mono">{proofHashes.mp.slice(0,6)}</div></div><div><span className="text-white/25">EP</span><div className="text-[#90c8ff]/60 font-mono">{proofHashes.ep.slice(0,6)}</div></div></div></div>)}
               </div>
               <div className="flex-1 border border-white/10 bg-black/40 p-4 flex flex-col space-y-3.5">
                 {/* Box 2: Presence Signature + Witness + Actions */}
@@ -840,13 +840,13 @@ export default function MotionDemoClient() {
                 {witnessData?.position_number&&(<div className="p-3 border border-amber-400/20 bg-amber-400/[0.03] text-center space-y-1"><div className="text-amber-300/60 text-[9px] uppercase tracking-[0.12em]">{witnessData.cohort==="genesis"?"Genesis Witness":"Protocol Witness"}</div><div className="text-amber-200/90 text-[18px] font-light">#{witnessData.position_number}</div></div>)}
                 {/* Genesis status */}
                 {typeof window !== "undefined" && sessionStorage.getItem("genesis_completed") === "1" ? (
-                  <div className="text-center text-cyan-400/40 text-[10px] tracking-[0.1em]">◈ Scan recorded — contributing to orbital evolution</div>
+                  <div className="text-center text-[#90c8ff]/40 text-[10px] tracking-[0.1em]">◈ Scan recorded — contributing to orbital evolution</div>
                 ) : (
                   <div className="text-center text-amber-400/40 text-[10px] tracking-[0.1em]">⚠ Demo mode — scan not bound to identity</div>
                 )}
                 <div className="mt-auto space-y-2">
-                  <button onClick={()=>{const r=`MyShape PES: ${(pesData.score*100).toFixed(0)}% | μT:${(pesData.timing*100).toFixed(0)}% N:${(pesData.noise*100).toFixed(0)}% F:${(pesData.frequency*100).toFixed(0)}% B:${(pesData.biological*100).toFixed(0)}%\nVerified by MyShape Protocol — myshape.com/motion-demo`;navigator.clipboard.writeText(r).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),2000)})}} className="w-full py-2.5 border border-cyan-400/20 text-cyan-400/40 text-[10px] tracking-[0.15em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all">{copied?"✓ Copied":"📋 Copy Results"}</button>
-                  <button onClick={stop} className="w-full py-2.5 border border-cyan-400/15 text-cyan-400/35 text-[10px] tracking-[0.2em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all">↻ Run Again</button>
+                  <button onClick={()=>{const r=`MyShape PES: ${(pesData.score*100).toFixed(0)}% | μT:${(pesData.timing*100).toFixed(0)}% N:${(pesData.noise*100).toFixed(0)}% F:${(pesData.frequency*100).toFixed(0)}% B:${(pesData.biological*100).toFixed(0)}%\nVerified by MyShape Protocol — myshape.com/motion-demo`;navigator.clipboard.writeText(r).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),2000)})}} className="w-full py-2.5 border border-[#90c8ff]/20 text-[#90c8ff]/40 text-[10px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all">{copied?"✓ Copied":"📋 Copy Results"}</button>
+                  <button onClick={stop} className="w-full py-2.5 border border-[#90c8ff]/15 text-[#90c8ff]/35 text-[10px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all">↻ Run Again</button>
                 </div>
               </div>
             </div>
@@ -855,7 +855,7 @@ export default function MotionDemoClient() {
             {/* ── PES Dashboard ── */}
             {pesData && (
               <>
-                <div className="text-cyan-400/40 text-[8px] tracking-[0.3em] uppercase">Presence_Entropy_Score (PES)</div>
+                <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.3em] uppercase">Presence_Entropy_Score (PES)</div>
                 {/* PES Ring */}
                 <div className="flex items-center justify-center py-2">
                   <div className="relative w-20 h-20">
@@ -875,7 +875,7 @@ export default function MotionDemoClient() {
                 </div>
                 {threatVerdict && (
                   <div className={`text-center text-[9px] tracking-[0.15em] uppercase font-mono py-1 ${
-                    threatVerdict.startsWith("✓") ? "text-cyan-300/80" :
+                    threatVerdict.startsWith("✓") ? "text-[#90c8ff]/80" :
                     threatVerdict.startsWith("⚠") ? "text-amber-300/80" : "text-red-300/80"
                   }`} style={{ textShadow: threatVerdict.startsWith("✓") ? "0 0 8px rgba(52,211,153,0.4)" : "0 0 8px rgba(252,211,77,0.4)" }}>
                     {threatVerdict}
@@ -892,7 +892,7 @@ export default function MotionDemoClient() {
                   <div key={g.label} className="space-y-1">
                     <div className="flex justify-between text-[8px]">
                       <span className="text-white/25">{g.label}</span>
-                      <span className="text-cyan-300/50 font-mono">{(g.value * 100).toFixed(0)}%</span>
+                      <span className="text-[#90c8ff]/50 font-mono">{(g.value * 100).toFixed(0)}%</span>
                     </div>
                     <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
                       <div className="h-full rounded-full transition-all duration-1000 ease-out"
@@ -909,11 +909,11 @@ export default function MotionDemoClient() {
 
             {/* Live PES Preview (during capture) */}
             {phase === "capturing" && livePes && (
-              <div className="p-3 border border-cyan-400/10 bg-cyan-400/[0.02] space-y-2">
-                <div className="text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase">Live PES Estimate</div>
+              <div className="p-3 border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02] space-y-2">
+                <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.2em] uppercase">Live PES Estimate</div>
                 <div className="flex items-center justify-between">
                   <span className="text-white/30 text-[9px]">Score</span>
-                  <span className="text-cyan-200/80 font-mono text-[13px]">{(livePes.score * 100).toFixed(0)}%</span>
+                  <span className="text-[#90c8ff]/80 font-mono text-[13px]">{(livePes.score * 100).toFixed(0)}%</span>
                 </div>
                 {[
                   { label: "μTiming", value: livePes.timing },
@@ -924,7 +924,7 @@ export default function MotionDemoClient() {
                   <div key={g.label} className="space-y-0.5">
                     <div className="flex justify-between text-[8px]">
                       <span className="text-white/20">{g.label}</span>
-                      <span className="text-cyan-300/40 font-mono">{(g.value * 100).toFixed(0)}%</span>
+                      <span className="text-[#90c8ff]/40 font-mono">{(g.value * 100).toFixed(0)}%</span>
                     </div>
                     <div className="h-1 bg-white/5 rounded-full overflow-hidden">
                       <div className="h-full rounded-full transition-all duration-300"
@@ -938,48 +938,48 @@ export default function MotionDemoClient() {
               </div>
             )}
 
-            <div className="text-cyan-400/40 text-[8px] tracking-[0.3em] uppercase">Motion_Telemetry</div>
+            <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.3em] uppercase">Motion_Telemetry</div>
             <div className="space-y-2.5 text-[10px] font-mono">
               <div className="flex justify-between">
                 <span className="text-white/25">SST Frames</span>
-                <span className="text-cyan-300/60">{sstFramesRef.current.length}</span>
+                <span className="text-[#90c8ff]/60">{sstFramesRef.current.length}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/25">Valid Frames</span>
-                <span className="text-cyan-300/60">{validFrameCount} <span className="text-white/15">/ {sstFramesRef.current.length || 0}</span></span>
+                <span className="text-[#90c8ff]/60">{validFrameCount} <span className="text-white/15">/ {sstFramesRef.current.length || 0}</span></span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/25">Energy</span>
-                <span className="text-cyan-300/60">{features?.features.energy.toFixed(2) ?? "—"}</span>
+                <span className="text-[#90c8ff]/60">{features?.features.energy.toFixed(2) ?? "—"}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/25">Phase</span>
-                <span className="text-cyan-400/50">{phase.toUpperCase()}</span>
+                <span className="text-[#90c8ff]/50">{phase.toUpperCase()}</span>
               </div>
               {phase === "capturing" && sstFramesRef.current.length < 30 && (
-                <div className="text-cyan-400/30 text-[8px] italic">Collecting frames... ({sstFramesRef.current.length}/30)</div>
+                <div className="text-[#90c8ff]/30 text-[8px] italic">Collecting frames... ({sstFramesRef.current.length}/30)</div>
               )}
             </div>
 
             {proofHashes && (
-              <div className="mt-4 p-3 border border-cyan-400/20 bg-cyan-400/[0.03] space-y-2">
-                <div className="text-cyan-400/50 text-[8px] tracking-[0.3em] uppercase">ZK-Presence_Proof</div>
-                <div className="text-cyan-200/70 text-[9px] font-mono break-all leading-relaxed"
+              <div className="mt-4 p-3 border border-[#90c8ff]/20 bg-[#90c8ff]/[0.03] space-y-2">
+                <div className="text-[#90c8ff]/50 text-[8px] tracking-[0.3em] uppercase">ZK-Presence_Proof</div>
+                <div className="text-[#90c8ff]/70 text-[9px] font-mono break-all leading-relaxed"
                   style={{ textShadow: "0 0 8px rgba(144,200,255,0.3)" }}>
                   {proofHashes.zkp}
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-[8px]">
                   <div>
                     <span className="text-white/20">PoP</span>
-                    <div className="text-cyan-300/50 font-mono truncate">{proofHashes.pop.slice(0,6)}</div>
+                    <div className="text-[#90c8ff]/50 font-mono truncate">{proofHashes.pop.slice(0,6)}</div>
                   </div>
                   <div>
                     <span className="text-white/20">MP</span>
-                    <div className="text-cyan-300/50 font-mono truncate">{proofHashes.mp.slice(0,6)}</div>
+                    <div className="text-[#90c8ff]/50 font-mono truncate">{proofHashes.mp.slice(0,6)}</div>
                   </div>
                   <div>
                     <span className="text-white/20">EP</span>
-                    <div className="text-cyan-300/50 font-mono truncate">{proofHashes.ep.slice(0,6)}</div>
+                    <div className="text-[#90c8ff]/50 font-mono truncate">{proofHashes.ep.slice(0,6)}</div>
                   </div>
                 </div>
                 <div className="text-white/15 text-[8px] mt-1 tracking-[0.15em]">§6 ZK-PRESENCE — PROOF-OF-CONCEPT</div>
@@ -997,7 +997,7 @@ export default function MotionDemoClient() {
                     });
                   }}
                     onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
-                    className="w-full py-1.5 border border-cyan-400/10 text-cyan-400/30 hover:text-cyan-300/60 hover:border-cyan-400/30 text-[8px] tracking-[0.15em] uppercase transition-all">
+                    className="w-full py-1.5 border border-[#90c8ff]/10 text-[#90c8ff]/30 hover:text-[#90c8ff]/60 hover:border-[#90c8ff]/30 text-[8px] tracking-[0.15em] uppercase transition-all">
                     {copied ? "✓ Copied" : "📋 Copy Results"}
                   </button>
                 )}
@@ -1052,18 +1052,18 @@ export default function MotionDemoClient() {
                     }
                   }}
                     onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                    className="w-full py-2 border border-cyan-400/20 text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all disabled:opacity-30"
+                    className="w-full py-2 border border-[#90c8ff]/20 text-[#90c8ff]/40 text-[8px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all disabled:opacity-30"
                     disabled={wasmLoading}>
                     {wasmLoading ? "Loading Engine..." : "Compare with AI →"}
                   </button>
                 ) : (
-                  <div className="p-3 border border-cyan-400/10 bg-cyan-400/[0.02] space-y-2">
-                    <div className="text-cyan-400/40 text-[8px] tracking-[0.2em] uppercase text-center">
+                  <div className="p-3 border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02] space-y-2">
+                    <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.2em] uppercase text-center">
                       {wasmCompare?.similarity != null ? "WASM Engine — Real Analysis" : "AI Simulation (for comparison)"}
                     </div>
                     {/* WASM Signature similarity */}
                     {wasmCompare?.similarity != null && (
-                      <div className="flex items-center justify-between px-2 py-1.5 bg-black/30 border border-cyan-400/10 rounded-sm">
+                      <div className="flex items-center justify-between px-2 py-1.5 bg-black/30 border border-[#90c8ff]/10 rounded-sm">
                         <span className="text-white/20 text-[8px]">Sig Similarity</span>
                         <span className="font-mono text-[10px]" style={{
                           color: wasmCompare.similarity < 0.5 ? "rgba(239,68,68,0.8)" : "rgba(250,204,21,0.8)",
@@ -1081,7 +1081,7 @@ export default function MotionDemoClient() {
                       AI PES: {(aiCompare.score * 100).toFixed(0)}% — ✗ SYNTHETIC
                     </div>
                     {wasmCompare?.similarity != null && (
-                      <div className="text-center text-[7px] text-cyan-400/25 mt-0.5">
+                      <div className="text-center text-[7px] text-[#90c8ff]/25 mt-0.5">
                         128-dim Motion Signature — {wasmCompare.sigDim}d vector similarity
                       </div>
                     )}
@@ -1089,7 +1089,7 @@ export default function MotionDemoClient() {
                 )}
                 {/* Genesis 状态提示 */}
                 {typeof window !== "undefined" && sessionStorage.getItem("genesis_completed") === "1" ? (
-                  <div className="text-center text-cyan-400/25 text-[8px] tracking-[0.15em] uppercase">
+                  <div className="text-center text-[#90c8ff]/25 text-[8px] tracking-[0.15em] uppercase">
                     ◈ Scan recorded — contributing to your orbital evolution
                   </div>
                 ) : (
@@ -1097,7 +1097,7 @@ export default function MotionDemoClient() {
                     <div className="text-amber-400/25 text-[8px] tracking-[0.15em] uppercase">
                       ⚠ Demo mode — scan not bound to identity
                     </div>
-                    <a href="/genesis" className="inline-block text-cyan-400/25 hover:text-cyan-300/50 text-[8px] tracking-[0.2em] uppercase transition-colors">
+                    <a href="/genesis" className="inline-block text-[#90c8ff]/25 hover:text-[#90c8ff]/50 text-[8px] tracking-[0.2em] uppercase transition-colors">
                       Complete Genesis to bind scans →
                     </a>
                   </div>
@@ -1108,8 +1108,8 @@ export default function MotionDemoClient() {
                     className="p-3 border space-y-2 relative overflow-hidden"
                     style={{
                       borderRadius: 4,
-                      borderColor: witnessData.cohort === "genesis" ? "rgba(34,211,238,0.35)" : "rgba(34,211,238,0.15)",
-                      background: witnessData.cohort === "genesis" ? "rgba(34,211,238,0.05)" : "rgba(34,211,238,0.02)",
+                      borderColor: witnessData.cohort === "genesis" ? "rgba(144,200,255,0.35)" : "rgba(144,200,255,0.15)",
+                      background: witnessData.cohort === "genesis" ? "rgba(144,200,255,0.05)" : "rgba(144,200,255,0.02)",
                       animation: witnessData.cohort === "genesis" ? "genesisWitnessGlow 3s ease-in-out infinite" : undefined,
                     }}
                   >
@@ -1118,17 +1118,17 @@ export default function MotionDemoClient() {
                       <div
                         className="absolute inset-0 pointer-events-none"
                         style={{
-                          background: "linear-gradient(90deg, transparent 0%, rgba(34,211,238,0.06) 40%, rgba(34,211,238,0.12) 50%, rgba(34,211,238,0.06) 60%, transparent 100%)",
+                          background: "linear-gradient(90deg, transparent 0%, rgba(144,200,255,0.06) 40%, rgba(144,200,255,0.12) 50%, rgba(144,200,255,0.06) 60%, transparent 100%)",
                           animation: "genesisScanLine 2.5s ease-in-out infinite",
                         }}
                       />
                     )}
-                    <div className="text-cyan-400/40 text-[7px] tracking-[0.2em] uppercase text-center">
+                    <div className="text-[#90c8ff]/40 text-[7px] tracking-[0.2em] uppercase text-center">
                       {witnessData.cohort === "genesis" ? "Genesis Cohort — Witness Confirmed" : "Protocol Witness"}
                     </div>
                     <div className="text-center">
                       <span
-                        className="text-cyan-200/80 text-[14px] font-light tracking-[0.05em]"
+                        className="text-[#90c8ff]/80 text-[14px] font-light tracking-[0.05em]"
                         style={witnessData.cohort === "genesis" ? { animation: "genesisBadgePulse 2s ease-in-out infinite" } : undefined}
                       >
                         ◈ Witness #{witnessData.position_number}
@@ -1144,7 +1144,7 @@ export default function MotionDemoClient() {
                       <a
                         href={`https://bsky.app/intent/compose?text=I+just+became+MyShape+Protocol+Witness+%23${witnessData.position_number}.+Join+the+first+300+to+calibrate+the+motion-signature+engine.%0A%0Ahttps://myshape.com/research/apply`}
                         target="_blank" rel="noopener noreferrer"
-                        className="px-2.5 py-1 border border-cyan-400/15 text-cyan-400/40 text-[7px] tracking-[0.1em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all"
+                        className="px-2.5 py-1 border border-[#90c8ff]/15 text-[#90c8ff]/40 text-[7px] tracking-[0.1em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all"
                         style={{ borderRadius: 2 }}
                       >
                         Share on Bluesky
@@ -1152,7 +1152,7 @@ export default function MotionDemoClient() {
                       <a
                         href={`https://www.linkedin.com/sharing/share-offsite/?url=https://myshape.com/research/apply?ref=witness_share`}
                         target="_blank" rel="noopener noreferrer"
-                        className="px-2.5 py-1 border border-cyan-400/15 text-cyan-400/40 text-[7px] tracking-[0.1em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 transition-all"
+                        className="px-2.5 py-1 border border-[#90c8ff]/15 text-[#90c8ff]/40 text-[7px] tracking-[0.1em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all"
                         style={{ borderRadius: 2 }}
                       >
                         Share on LinkedIn
@@ -1178,30 +1178,30 @@ export default function MotionDemoClient() {
                 )}
                 {/* ── Completion Ceremony ── */}
                 <div className="space-y-3 pt-2">
-                  <div className="h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+                  <div className="h-px bg-gradient-to-r from-transparent via-[#90c8ff]/20 to-transparent" />
                   <div className="text-center space-y-2">
-                    <div className="text-cyan-400/30 text-[7px] tracking-[0.4em] uppercase">Genesis Ritual · Motion Captured</div>
+                    <div className="text-[#90c8ff]/30 text-[7px] tracking-[0.4em] uppercase">Genesis Ritual · Motion Captured</div>
                     <p className="text-white/40 text-[10px] leading-relaxed">
                       Your kinetic signature has been inscribed.
                       {researchConsented && uploadState === "success" && " This data now contributes to the protocol's calibration engine."}
                       {researchConsented && uploadState === "error" && " Research upload failed — data kept local."}
                     </p>
                     <div className="flex gap-2 justify-center pt-1">
-                      <a href="/research/apply" className="text-cyan-400/30 hover:text-cyan-300/70 text-[7px] tracking-[0.15em] uppercase border-b border-transparent hover:border-cyan-400/30 transition-all pb-0.5">
+                      <a href="/research/apply" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/70 text-[7px] tracking-[0.15em] uppercase border-b border-transparent hover:border-[#90c8ff]/30 transition-all pb-0.5">
                         Join Genesis Cohort →
                       </a>
                       <span className="text-white/10">|</span>
-                      <a href="/dashboard" className="text-cyan-400/30 hover:text-cyan-300/70 text-[7px] tracking-[0.15em] uppercase border-b border-transparent hover:border-cyan-400/30 transition-all pb-0.5">
+                      <a href="/dashboard" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/70 text-[7px] tracking-[0.15em] uppercase border-b border-transparent hover:border-[#90c8ff]/30 transition-all pb-0.5">
                         View Dashboard →
                       </a>
                     </div>
                   </div>
-                  <div className="h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+                  <div className="h-px bg-gradient-to-r from-transparent via-[#90c8ff]/20 to-transparent" />
                 </div>
 
                 <button onClick={stop}
                   onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                  className="w-full py-2.5 border border-cyan-400/15 text-cyan-400/35 text-[9px] tracking-[0.3em] uppercase hover:border-cyan-400/40 hover:text-cyan-300/70 hover:bg-cyan-400/[0.03] transition-all">
+                  className="w-full py-2.5 border border-[#90c8ff]/15 text-[#90c8ff]/35 text-[9px] tracking-[0.3em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 hover:bg-[#90c8ff]/[0.03] transition-all">
                   ↻ Run_Again
                 </button>
               </div>
@@ -1213,7 +1213,7 @@ export default function MotionDemoClient() {
       </div>
 
         <div className="max-w-5xl mx-auto px-4 md:px-6 -mt-4 pb-2">
-          <div className="flex items-center justify-center gap-2 text-cyan-400/50 text-[12px] tracking-[0.05em]">
+          <div className="flex items-center justify-center gap-2 text-[#90c8ff]/50 text-[12px] tracking-[0.05em]">
             <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
             {researchConsented ? "Camera images stay local. Only joint-position data is uploaded anonymously." : "Your motion data never leaves this device. No cloud upload. No server storage."}
           </div>

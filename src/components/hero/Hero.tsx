@@ -143,7 +143,7 @@ export default function Hero() {
             onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
             className="enter-genesis group relative inline-block px-12 py-4 bg-transparent"
           >
-            <span className="relative z-10 font-mono font-extralight text-[12px] tracking-[0.6em] text-white/90 group-hover:text-cyan-400 transition-all duration-700">
+            <span className="relative z-10 font-mono font-extralight text-[12px] tracking-[0.6em] text-white/90 group-hover:text-[#90c8ff] transition-all duration-700">
               [ ENTER_GENESIS ]
             </span>
             <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-1000 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(144,200,255,0.12) 0%, transparent 70%)', filter: 'blur(12px)' }} />
@@ -163,12 +163,12 @@ export default function Hero() {
         <div className="absolute bottom-[56px] md:bottom-[92px] left-0 w-full z-100 text-center pointer-events-auto">
           <a href="/motion-demo"
             onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-            className="group relative inline-block px-8 py-2.5 border border-cyan-400/25 text-cyan-400/50 hover:text-cyan-200 hover:border-cyan-400/60 text-[9px] md:text-[10px] tracking-[0.25em] uppercase font-mono transition-all duration-500"
-            style={{ boxShadow: "0 0 20px rgba(34,211,238,0.06)" }}>
+            className="group relative inline-block px-8 py-2.5 border border-[#90c8ff]/25 text-[#90c8ff]/50 hover:text-[#90c8ff] hover:border-[#90c8ff]/60 text-[9px] md:text-[10px] tracking-[0.25em] uppercase font-mono transition-all duration-500"
+            style={{ boxShadow: "0 0 20px rgba(144,200,255,0.06)" }}>
             <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: "radial-gradient(ellipse at center, rgba(34,211,238,0.08) 0%, transparent 70%)" }} />
+              style={{ background: "radial-gradient(ellipse at center, rgba(144,200,255,0.08) 0%, transparent 70%)" }} />
             <span className="relative z-10 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] animate-pulse shadow-[0_0_6px_rgba(144,200,255,0.6)]" />
               TRY_LIVE_DEMO →
             </span>
           </a>

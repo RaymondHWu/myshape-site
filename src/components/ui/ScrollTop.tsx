@@ -16,11 +16,11 @@ export default function ScrollTop() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-6 right-6 z-[9999] w-9 h-9 flex items-center justify-center border border-cyan-400/20 bg-black/60 hover:border-cyan-400/50 hover:bg-black/80 transition-all duration-500 group"
+      className="fixed bottom-6 right-6 z-[9999] w-9 h-9 flex items-center justify-center border border-[#90c8ff]/20 bg-black/60 hover:border-[#90c8ff]/50 hover:bg-black/80 transition-all duration-500 group"
       style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
       aria-label="Scroll to top"
     >
-      <span className="text-cyan-400/40 group-hover:text-cyan-300/80 text-[14px] transition-colors duration-500 leading-none">↑</span>
+      <span className="text-[#90c8ff]/40 group-hover:text-[#90c8ff]/80 text-[14px] transition-colors duration-500 leading-none">↑</span>
     </button>
   );
 }

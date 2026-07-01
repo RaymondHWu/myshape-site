@@ -40,13 +40,13 @@ export default function Vision() {
           <div className="max-w-[650px]">
             <span className="text-[9px] tracking-[0.6em] text-white/20 block mb-4 uppercase">VISION</span>
             <h2 className="text-[3.2rem] font-light -tracking-[0.02em] leading-[1.1] text-white m-0">
-              Identity as <span className="text-cyan-400/80">Geometry.</span>
+              Identity as <span className="text-[#90c8ff]/80">Geometry.</span>
             </h2>
             <p className="text-[1.1rem] font-light text-white/70 mt-7 max-w-[550px] leading-[1.7]">
               A cryptographic layer defining the future of human-AI interaction through motion-native primitives.
             </p>
           </div>
-          <div className="text-[0.8rem] text-cyan-400/30 text-right border-r border-cyan-400/15 pr-6 leading-[1.8] font-mono mb-[5px]">
+          <div className="text-[0.8rem] text-[#90c8ff]/30 text-right border-r border-[#90c8ff]/15 pr-6 leading-[1.8] font-mono mb-[5px]">
             PROTOCOL_VISION_V1.0<br />{"// STATE: ACTIVE"}
           </div>
         </div>

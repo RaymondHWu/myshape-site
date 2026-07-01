@@ -31,10 +31,10 @@ function StatCard({ label, value, pulse, extra }: { label: string; value: string
   return (
     <div
       onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
-      className={`p-4 border bg-cyan-400/[0.02] transition-all duration-300 group cursor-default ${pulse ? "border-cyan-400/50 shadow-[0_0_20px_rgba(34,211,238,0.4)] scale-[1.02]" : "border-white/[0.06] hover:border-cyan-400/30"}`}>
+      className={`p-4 border bg-[#90c8ff]/[0.02] transition-all duration-300 group cursor-default ${pulse ? "border-[#90c8ff]/50 shadow-[0_0_20px_rgba(144,200,255,0.4)] scale-[1.02]" : "border-white/[0.06] hover:border-[#90c8ff]/30"}`}>
       <div className="text-white/25 text-[8px] tracking-[0.3em] uppercase mb-2 group-hover:text-white/40 transition-colors">{label}</div>
       <div className="text-white/85 text-[26px] font-light font-mono">{value}</div>
-      {extra && <div className="text-cyan-400/30 text-[9px] mt-1">{extra}</div>}
+      {extra && <div className="text-[#90c8ff]/30 text-[9px] mt-1">{extra}</div>}
     </div>
   );
 }
@@ -83,13 +83,13 @@ export default function DashboardClient() {
   const progressPct = stats ? Math.min((stats.scan_count / 100) * 100, 100) : 0;
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
 
       <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 space-y-12 md:space-y-14">
         {/* Header */}
         <div>
-          <div className="text-cyan-500/45 text-[10px] tracking-[0.5em] uppercase mb-4">Evolutionary Trajectory</div>
+          <div className="text-[#90c8ff]/45 text-[10px] tracking-[0.5em] uppercase mb-4">Evolutionary Trajectory</div>
           <h1 className="text-2xl md:text-3xl font-light tracking-[0.15em] text-white uppercase mb-2"
             style={{ textShadow: "0 0 40px rgba(144,200,255,0.2)" }}>Your Continuity</h1>
           <p className="text-white/35 text-[11px] tracking-[0.1em]">
@@ -98,23 +98,23 @@ export default function DashboardClient() {
         </div>
 
         {!isGenesis ? (
-          <div className="text-center py-16 border border-cyan-400/12 bg-cyan-400/[0.02] space-y-6"
+          <div className="text-center py-16 border border-[#90c8ff]/12 bg-[#90c8ff]/[0.02] space-y-6"
             onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
-            <div className="text-cyan-400/35 text-[10px] tracking-[0.4em] uppercase">Identity Not Initialized</div>
+            <div className="text-[#90c8ff]/35 text-[10px] tracking-[0.4em] uppercase">Identity Not Initialized</div>
             <p className="text-white/30 text-[12px] leading-relaxed max-w-md mx-auto">
               Complete the Genesis Ritual to unlock your sovereign identity dashboard — scan tracking, orbital particle tier, and protocol contribution metrics.
             </p>
             <Link href="/genesis"
               onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-              className="inline-block px-10 py-3.5 border border-cyan-400/30 text-cyan-300/70 text-[10px] tracking-[0.3em] uppercase hover:bg-cyan-400/[0.04] hover:text-white transition-all"
-              style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)", background: "rgba(34,211,238,0.03)" }}>
+              className="inline-block px-10 py-3.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase hover:bg-[#90c8ff]/[0.04] hover:text-white transition-all"
+              style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)", background: "rgba(144,200,255,0.03)" }}>
               Initialize Genesis →
             </Link>
           </div>
         ) : loading ? (
           <div className="text-center py-16 space-y-3">
             <div className="flex items-center justify-center gap-2">
-              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22d3ee", boxShadow: "0 0 10px rgba(34,211,238,0.9)" }} />
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#90c8ff", boxShadow: "0 0 10px rgba(144,200,255,0.9)" }} />
               <span className="text-white/20 text-[10px] tracking-[0.3em] uppercase">Decrypting identity stream...</span>
             </div>
           </div>
@@ -126,8 +126,8 @@ export default function DashboardClient() {
               <meta itemProp="identifier" content={stats.email.slice(0, 3) + "***"} />
               <meta itemProp="description" content={`MyShape Protocol node — tier: ${stats.tier}, scans: ${stats.scan_count}`} />
               <div className="flex items-center gap-2 mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.7)] animate-pulse" />
-                <span className="text-cyan-400/30 text-[8px] tracking-[0.25em] uppercase">Identity Stream Active</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.7)] animate-pulse" />
+                <span className="text-[#90c8ff]/30 text-[8px] tracking-[0.25em] uppercase">Identity Stream Active</span>
               </div>
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div itemScope itemType="https://schema.org/DefinedTerm" itemProp="memberOf">
@@ -151,15 +151,15 @@ export default function DashboardClient() {
             </section>
 
             {/* Trajectory Evolution */}
-            <section className="border border-cyan-400/12 p-6 bg-cyan-400/[0.01]"
+            <section className="border border-[#90c8ff]/12 p-6 bg-[#90c8ff]/[0.01]"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-white/25 text-[9px] tracking-[0.3em] uppercase">Trajectory Evolution</span>
-                <span className="text-cyan-400/55 font-mono text-[11px]">{tier.count} / 8 — {tier.name}</span>
+                <span className="text-[#90c8ff]/55 font-mono text-[11px]">{tier.count} / 8 — {tier.name}</span>
               </div>
               <div className="relative h-2 bg-white/[0.04] overflow-hidden mb-2">
                 <div className="absolute inset-y-0 left-0 transition-all duration-1000 ease-out"
-                  style={{ width: `${Math.max(progressPct, 1)}%`, background: "linear-gradient(90deg, rgba(34,211,238,0.45), rgba(34,211,238,0.7), rgba(144,200,255,0.55))", boxShadow: "0 0 12px rgba(34,211,238,0.4)" }} />
+                  style={{ width: `${Math.max(progressPct, 1)}%`, background: "linear-gradient(90deg, rgba(144,200,255,0.45), rgba(144,200,255,0.7), rgba(144,200,255,0.55))", boxShadow: "0 0 12px rgba(144,200,255,0.4)" }} />
               </div>
               <div className="flex justify-between text-[8px] text-white/12 tracking-[0.15em] uppercase">
                 <span>Awakening</span><span>Linked</span><span>Resonant</span><span>Fusion</span><span>Anchored</span><span>Stabilized</span><span>Saturated</span><span>Sealed</span>
@@ -173,22 +173,22 @@ export default function DashboardClient() {
             <section className="flex flex-wrap gap-4 justify-center">
               <Link href="/motion-demo"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                className="px-6 py-3 border border-cyan-400/25 text-cyan-300/55 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/45 hover:text-cyan-200 hover:bg-cyan-400/[0.03] transition-all">
+                className="px-6 py-3 border border-[#90c8ff]/25 text-[#90c8ff]/55 text-[10px] tracking-[0.25em] uppercase hover:border-[#90c8ff]/45 hover:text-[#90c8ff] hover:bg-[#90c8ff]/[0.03] transition-all">
                 ◈ Scan Now →
               </Link>
               <Link href="/whitepaper"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                className="px-6 py-3 border border-cyan-400/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/35 hover:text-white/45 transition-all">
+                className="px-6 py-3 border border-[#90c8ff]/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-[#90c8ff]/35 hover:text-white/45 transition-all">
                 Whitepaper →
               </Link>
               <Link href="/protocol"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                className="px-6 py-3 border border-cyan-400/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/35 hover:text-white/45 transition-all">
+                className="px-6 py-3 border border-[#90c8ff]/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-[#90c8ff]/35 hover:text-white/45 transition-all">
                 Protocol →
               </Link>
               <Link href="/genesis/cohort"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                className="px-6 py-3 border border-cyan-400/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/35 hover:text-white/45 transition-all">
+                className="px-6 py-3 border border-[#90c8ff]/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-[#90c8ff]/35 hover:text-white/45 transition-all">
                 Cohort →
               </Link>
             </section>

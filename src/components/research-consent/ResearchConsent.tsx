@@ -41,10 +41,10 @@ export default function ResearchConsent({
       className="border-2 bg-black/50 transition-all duration-500"
       style={{
         borderRadius: 4,
-        borderColor: consented ? "rgba(34,211,238,0.5)" : "rgba(34,211,238,0.3)",
+        borderColor: consented ? "rgba(144,200,255,0.5)" : "rgba(144,200,255,0.3)",
         boxShadow: consented
-          ? "0 0 18px rgba(34,211,238,0.12)"
-          : "0 0 10px rgba(34,211,238,0.08), inset 0 0 10px rgba(34,211,238,0.02)",
+          ? "0 0 18px rgba(144,200,255,0.12)"
+          : "0 0 10px rgba(144,200,255,0.08), inset 0 0 10px rgba(144,200,255,0.02)",
         animation: consented ? "none" : "genesisWitnessGlow 3s ease-in-out infinite",
       }}
     >
@@ -58,14 +58,14 @@ export default function ResearchConsent({
           className="w-6 h-6 flex items-center justify-center border-2 transition-all shrink-0"
           style={{
             borderRadius: 3,
-            borderColor: consented ? "rgba(34,211,238,0.7)" : "rgba(255,255,255,0.35)",
-            background: consented ? "rgba(34,211,238,0.18)" : "rgba(255,255,255,0.03)",
-            boxShadow: consented ? "0 0 14px rgba(34,211,238,0.3)" : "none",
+            borderColor: consented ? "rgba(144,200,255,0.7)" : "rgba(255,255,255,0.35)",
+            background: consented ? "rgba(144,200,255,0.18)" : "rgba(255,255,255,0.03)",
+            boxShadow: consented ? "0 0 14px rgba(144,200,255,0.3)" : "none",
           }}
         >
           {consented && (
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-              <path d="M1.5 5L5 8.5L12.5 1.5" stroke="rgba(34,211,238,1)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M1.5 5L5 8.5L12.5 1.5" stroke="rgba(144,200,255,1)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           )}
         </div>
@@ -75,7 +75,7 @@ export default function ResearchConsent({
           <div className="text-white/90 text-[14px] tracking-[0.06em] font-mono leading-tight">
             Contribute to Anonymous Research
           </div>
-          <div className="text-cyan-400/60 text-[11px] tracking-[0.04em] mt-0.5 font-mono">
+          <div className="text-[#90c8ff]/60 text-[11px] tracking-[0.04em] mt-0.5 font-mono">
             Help calibrate the motion-signature engine
           </div>
         </div>
@@ -83,9 +83,9 @@ export default function ResearchConsent({
 
       {/* Expanded details — compact single-line */}
       {expanded && consented && (
-        <div className="px-5 pb-1.5 border-t border-cyan-400/10 pt-1.5">
+        <div className="px-5 pb-1.5 border-t border-[#90c8ff]/10 pt-1.5">
           {uploadDone ? (
-            <span className="text-cyan-300/70 text-[8px] font-mono">✓ Contribution recorded</span>
+            <span className="text-[#90c8ff]/70 text-[8px] font-mono">✓ Contribution recorded</span>
           ) : uploadState === "uploading" ? (
             <span className="text-amber-300/70 text-[8px] font-mono">⟳ Uploading...</span>
           ) : uploadState === "error" ? (

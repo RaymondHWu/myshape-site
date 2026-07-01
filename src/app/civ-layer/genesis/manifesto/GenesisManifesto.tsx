@@ -91,13 +91,13 @@ export default function GenesisManifesto() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       {/* 細微落星背景 */}
       <BackgroundParticles />
 
       {/* 1. 固定導航欄 (Fixed Top Nav) */}
       <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/80 backdrop-blur-md px-10 py-5 flex justify-between items-center text-[10px] tracking-[0.4em]">
-        <Link href="/civ-layer/genesis" className="text-cyan-400/70 hover:text-cyan-300 transition-colors uppercase">← EXIT_ARCHIVE</Link>
+        <Link href="/civ-layer/genesis" className="text-[#90c8ff]/70 hover:text-[#90c8ff] transition-colors uppercase">← EXIT_ARCHIVE</Link>
         <div className="text-white/20 uppercase font-bold tracking-[0.5em]">GENESIS_MANIFESTO // DATA_SEQUENCE</div>
       </nav>
 
@@ -105,15 +105,15 @@ export default function GenesisManifesto() {
 
         {/* 2. 固定側邊導航 (Sticky Sidebar Index) */}
         <aside className="md:w-64 shrink-0 h-fit md:sticky md:top-56 hidden md:block">
-          <div className="text-[9px] text-cyan-500/40 mb-12 tracking-[0.5em] uppercase font-bold">ARCHIVE_INDEX</div>
+          <div className="text-[9px] text-[#90c8ff]/40 mb-12 tracking-[0.5em] uppercase font-bold">ARCHIVE_INDEX</div>
           <ul className="space-y-10 border-l border-white/5 pl-6">
             {sections.map(s => {
               const isActive = s.id === activeIndex;
               return (
               <li key={s.id} className="group cursor-pointer">
                 <a href={`#${s.id}`} className="block">
-                  <div className={`text-[10px] font-bold mb-1 transition-colors duration-300 ${isActive ? 'text-cyan-400' : 'text-white/10 group-hover:text-cyan-400'}`}>{s.id}</div>
-                  <div className={`text-[11px] uppercase tracking-[0.2em] transition-all duration-300 ${isActive ? 'text-cyan-300' : 'text-white/20 group-hover:text-cyan-400'}`}>
+                  <div className={`text-[10px] font-bold mb-1 transition-colors duration-300 ${isActive ? 'text-[#90c8ff]' : 'text-white/10 group-hover:text-[#90c8ff]'}`}>{s.id}</div>
+                  <div className={`text-[11px] uppercase tracking-[0.2em] transition-all duration-300 ${isActive ? 'text-[#90c8ff]' : 'text-white/20 group-hover:text-[#90c8ff]'}`}>
                     {s.title}
                   </div>
                 </a>
@@ -129,8 +129,8 @@ export default function GenesisManifesto() {
               
               {/* 段落裝飾線條 - 滑鼠移動會變色 */}
               <div className="flex items-center gap-6 mb-12">
-                <span className="text-cyan-500/50 text-[10px] tracking-[0.6em] font-bold">{s.subtitle}</span>
-                <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-cyan-500/30 transition-colors duration-700" />
+                <span className="text-[#90c8ff]/50 text-[10px] tracking-[0.6em] font-bold">{s.subtitle}</span>
+                <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-[#90c8ff]/30 transition-colors duration-700" />
               </div>
 
               {/* 段落大標題 - 滑鼠移動會變色且發光 */}

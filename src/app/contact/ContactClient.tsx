@@ -56,7 +56,7 @@ export default function ContactClient() {
           <div className="max-w-4xl">
             <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// ESTABLISHING_CONNECTION</h2>
             <p className="text-xl md:text-2xl font-light tracking-[0.2em] text-white leading-tight uppercase">
-              FOR PARTNERSHIPS, RESEARCH COLLABORATION, OR <span className="text-cyan-400">PROTOCOL INTEGRATION</span>.
+              FOR PARTNERSHIPS, RESEARCH COLLABORATION, OR <span className="text-[#90c8ff]">PROTOCOL INTEGRATION</span>.
             </p>
           </div>
 
@@ -67,8 +67,8 @@ export default function ContactClient() {
               onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
-                <span className="text-cyan-400 text-[10px] tracking-[0.4em] font-bold uppercase">PRIVACY_PROTOCOL_ACTIVE</span>
+                <div className="w-1.5 h-1.5 bg-[#90c8ff] rounded-full animate-pulse shadow-[0_0_8px_rgba(144,200,255,0.5)]" />
+                <span className="text-[#90c8ff] text-[10px] tracking-[0.4em] font-bold uppercase">PRIVACY_PROTOCOL_ACTIVE</span>
               </div>
               <p className="text-white/40 text-[10px] tracking-[0.2em] leading-loose uppercase italic">
                 "MYSHAPE MAINTAINS A STRICT PRIVACY-FIRST COMMUNICATION POLICY."
@@ -81,11 +81,11 @@ export default function ContactClient() {
               onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
               <div className="group">
                 <span className="block text-white/20 text-[8px] tracking-[0.4em] uppercase mb-2">Core_Inquiries</span>
-                <a href="mailto:hello@myshape.com" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)} className="text-white text-lg tracking-[0.2em] font-light hover:text-cyan-400 transition-colors">HELLO@MYSHAPE.COM</a>
+                <a href="mailto:hello@myshape.com" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)} className="text-white text-lg tracking-[0.2em] font-light hover:text-[#90c8ff] transition-colors">HELLO@MYSHAPE.COM</a>
               </div>
               <div className="group">
                 <span className="block text-white/20 text-[8px] tracking-[0.4em] uppercase mb-2">Technical_Uplink</span>
-                <a href="mailto:protocol@myshape.com" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)} className="text-white text-lg tracking-[0.2em] font-light hover:text-cyan-400 transition-colors">PROTOCOL@MYSHAPE.COM</a>
+                <a href="mailto:protocol@myshape.com" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)} className="text-white text-lg tracking-[0.2em] font-light hover:text-[#90c8ff] transition-colors">PROTOCOL@MYSHAPE.COM</a>
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@ export default function ContactClient() {
         <section id="nodes" className="space-y-12 pt-16 border-t" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
           <div className="flex items-center justify-between">
             <h3 className="text-white/20 text-[9px] tracking-[0.6em] uppercase">// CONNECT_NODES_DETECTION</h3>
-            <span className="text-[8px] text-cyan-500/50 font-mono animate-pulse uppercase">Scanning_External_Links...</span>
+            <span className="text-[8px] text-[#90c8ff]/50 font-mono animate-pulse uppercase">Scanning_External_Links...</span>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -111,14 +111,14 @@ export default function ContactClient() {
                   className="border p-10 group transition-all duration-500 relative overflow-hidden block"
                   style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
                 >
-                  <div className="text-cyan-400 text-[9px] font-mono mb-8 font-bold tracking-widest animate-pulse uppercase">● Uplink_Live</div>
-                  <h4 className="text-white text-[13px] tracking-[0.3em] font-bold uppercase mb-6 group-hover:text-cyan-400 transition-colors">{node.name}</h4>
+                  <div className="text-[#90c8ff] text-[9px] font-mono mb-8 font-bold tracking-widest animate-pulse uppercase">● Uplink_Live</div>
+                  <h4 className="text-white text-[13px] tracking-[0.3em] font-bold uppercase mb-6 group-hover:text-[#90c8ff] transition-colors">{node.name}</h4>
                   <p className="text-white/30 text-[9px] tracking-[0.2em] leading-relaxed uppercase mb-12 h-16">{node.desc}</p>
                   <div className="flex justify-between items-center border-t border-white/10 pt-6">
-                    <span className="text-[8px] text-cyan-400 tracking-widest font-bold uppercase">{node.status}</span>
-                    <span className="text-white/20 group-hover:text-cyan-400 transition-all transform group-hover:translate-x-1">↗</span>
+                    <span className="text-[8px] text-[#90c8ff] tracking-widest font-bold uppercase">{node.status}</span>
+                    <span className="text-white/20 group-hover:text-[#90c8ff] transition-all transform group-hover:translate-x-1">↗</span>
                   </div>
-                  <div className="absolute -bottom-4 -right-2 text-[60px] font-bold text-white/[0.02] select-none pointer-events-none group-hover:text-cyan-500/[0.05]">{node.id}</div>
+                  <div className="absolute -bottom-4 -right-2 text-[60px] font-bold text-white/[0.02] select-none pointer-events-none group-hover:text-[#90c8ff]/[0.05]">{node.id}</div>
                 </a>
               ) : (
                 // 锁定节点 (Discord & GitHub): 彻底灰掉，鼠标过去不亮

@@ -27,15 +27,15 @@ export default function ProtocolLayout({
   transparentBg = false,
 }: ProtocolLayoutProps) {
   return (
-    <div className={`min-h-screen text-white font-mono selection:bg-cyan-500/30 overflow-x-hidden flex flex-col ${transparentBg ? 'bg-transparent' : 'bg-[#02040a]'}`}>
+    <div className={`min-h-screen text-white font-mono selection:bg-[#90c8ff]/30 overflow-x-hidden flex flex-col ${transparentBg ? 'bg-transparent' : 'bg-[#02040a]'}`}>
       {/* 1. 桌面端：背景動畫裝飾 */}
       <div className="hidden md:block fixed inset-0 pointer-events-none opacity-10"
            style={{
-             backgroundImage: 'radial-gradient(circle, #22d3ee 1px, transparent 1px)',
+             backgroundImage: 'radial-gradient(circle, #90c8ff 1px, transparent 1px)',
              backgroundSize: '60px 60px'
            }} />
 
-      <div className="hidden md:block fixed top-0 left-0 w-full h-[2px] bg-cyan-500/5 shadow-[0_0_15px_rgba(34,211,238,0.2)] animate-scan-slow pointer-events-none z-50" />
+      <div className="hidden md:block fixed top-0 left-0 w-full h-[2px] bg-[#90c8ff]/5 shadow-[0_0_15px_rgba(144,200,255,0.2)] animate-scan-slow pointer-events-none z-50" />
 
       <ProtocolHeader />
 
@@ -48,7 +48,7 @@ export default function ProtocolLayout({
               {renderSigil ? (
                 <IdentitySigil />
               ) : (
-                <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] mb-4 uppercase">
+                <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] mb-4 uppercase">
                   {category} // REF_{refId}
                 </div>
               )}
@@ -80,10 +80,10 @@ export default function ProtocolLayout({
           <div className="flex items-center gap-6">
             <div className="flex gap-1">
                {[...Array(4)].map((_, i) => (
-                 <div key={i} className="w-1 h-1 bg-cyan-500/50" />
+                 <div key={i} className="w-1 h-1 bg-[#90c8ff]/50" />
                ))}
             </div>
-            <div className="text-[8px] tracking-[0.2em] uppercase font-bold text-cyan-500/60">
+            <div className="text-[8px] tracking-[0.2em] uppercase font-bold text-[#90c8ff]/60">
               MYS_GENESIS_CORE_SYNCED
             </div>
           </div>

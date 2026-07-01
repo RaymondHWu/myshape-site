@@ -112,7 +112,7 @@ function ApplyForm() {
 
         {/* Header */}
         <div className="space-y-4 mb-10">
-          <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">Continuity Research Program</div>
+          <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">Continuity Research Program</div>
           <h1 className="text-2xl md:text-3xl font-light tracking-[0.12em] text-white uppercase">
             Genesis <span style={{ color: "rgba(144,200,255,0.7)" }}>100</span>
           </h1>
@@ -132,7 +132,7 @@ function ApplyForm() {
 
         {/* ── Research Question ── */}
         <div className="border p-6 mb-8 space-y-3" style={{ borderColor: "rgba(144,200,255,0.15)", borderRadius: 4, background: "rgba(144,200,255,0.02)" }}>
-          <div className="text-cyan-400/40 text-[9px] tracking-[0.3em] uppercase">Research Question</div>
+          <div className="text-[#90c8ff]/40 text-[9px] tracking-[0.3em] uppercase">Research Question</div>
           <p className="text-white/60 text-[14px] font-light leading-relaxed">
             We are studying a fundamental question:
           </p>
@@ -146,7 +146,7 @@ function ApplyForm() {
           <div className="text-white/25 text-[9px] tracking-[0.3em] uppercase">Privacy Protocol</div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px]">
             <div className="space-y-2">
-              <div className="text-cyan-400/60 text-[9px] tracking-[0.15em] uppercase">What We Collect</div>
+              <div className="text-[#90c8ff]/60 text-[9px] tracking-[0.15em] uppercase">What We Collect</div>
               <ul className="text-white/40 space-y-1">
                 <li>✓ Motion signal (joint positions)</li>
                 <li>✓ Presence receipt (entropy proof)</li>
@@ -171,17 +171,17 @@ function ApplyForm() {
           <div className="text-white/25 text-[9px] tracking-[0.3em] uppercase">Research Roadmap</div>
           <div className="space-y-4">
             <div className="flex gap-4">
-              <div className="w-10 h-10 flex items-center justify-center border shrink-0" style={{ borderColor: "rgba(34,211,238,0.4)", borderRadius: 2, background: "rgba(34,211,238,0.06)" }}>
-                <span className="text-cyan-400 text-[11px] font-mono">I</span>
+              <div className="w-10 h-10 flex items-center justify-center border shrink-0" style={{ borderColor: "rgba(144,200,255,0.4)", borderRadius: 2, background: "rgba(144,200,255,0.06)" }}>
+                <span className="text-[#90c8ff] text-[11px] font-mono">I</span>
               </div>
               <div>
-                <div className="text-white/60 text-[12px] font-light">Founding Cohort <span className="text-cyan-400/60 text-[10px]">— 100 participants</span></div>
+                <div className="text-white/60 text-[12px] font-light">Founding Cohort <span className="text-[#90c8ff]/60 text-[10px]">— 100 participants</span></div>
                 <p className="text-white/25 text-[10px] leading-relaxed mt-1">Validate multi-device, multi-session, longitudinal presence stability. You come back. Your data proves continuity.</p>
               </div>
             </div>
             <div className="flex gap-4">
               <div className="w-10 h-10 flex items-center justify-center border shrink-0" style={{ borderColor: "rgba(144,200,255,0.2)", borderRadius: 2, background: "rgba(144,200,255,0.03)" }}>
-                <span className="text-cyan-400/50 text-[11px] font-mono">II</span>
+                <span className="text-[#90c8ff]/50 text-[11px] font-mono">II</span>
               </div>
               <div>
                 <div className="text-white/40 text-[12px] font-light">Research Network <span className="text-white/20 text-[10px]">— 1,000 participants</span></div>
@@ -202,7 +202,7 @@ function ApplyForm() {
 
         {/* Status: done */}
         {status === "done" && (
-          <div className="border p-6 space-y-5 mb-8" style={{ borderColor: isGenesis ? "rgba(34,211,238,0.3)" : "rgba(144,200,255,0.15)", borderRadius: 4, background: isGenesis ? "rgba(34,211,238,0.03)" : "transparent" }}>
+          <div className="border p-6 space-y-5 mb-8" style={{ borderColor: isGenesis ? "rgba(144,200,255,0.3)" : "rgba(144,200,255,0.15)", borderRadius: 4, background: isGenesis ? "rgba(144,200,255,0.03)" : "transparent" }}>
             <div className="text-center space-y-4">
 
               {/* ── 勋章 ── */}
@@ -271,7 +271,7 @@ function ApplyForm() {
               )}
 
               <p>
-                <span className="text-cyan-300/90 text-[16px] font-light tracking-[0.05em]" style={{ textShadow: "0 0 18px rgba(34,211,238,0.5)", animation: "genesisBadgePulse 0.8s ease-in-out infinite" }}>
+                <span className="text-[#90c8ff]/90 text-[16px] font-light tracking-[0.05em]" style={{ textShadow: "0 0 18px rgba(144,200,255,0.5)", animation: "genesisBadgePulse 0.8s ease-in-out infinite" }}>
                   Redirecting in {countdown}s...
                 </span>
                 <br /><span className="text-white/40 text-[11px]">Complete a 30s motion capture to contribute your first presence receipt</span>
@@ -299,7 +299,7 @@ function ApplyForm() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-black/40 border border-white/10 px-4 py-3 text-white/70 text-[13px] outline-none focus:border-cyan-400/30 transition-colors placeholder:text-white/10"
+                className="w-full bg-black/40 border border-white/10 px-4 py-3 text-white/70 text-[13px] outline-none focus:border-[#90c8ff]/30 transition-colors placeholder:text-white/10"
                 style={{ borderRadius: 3 }}
                 disabled={status === "submitting"}
               />
@@ -311,7 +311,7 @@ function ApplyForm() {
               <select
                 value={technicalBg}
                 onChange={(e) => setTechnicalBg(e.target.value)}
-                className="w-full bg-black/40 border border-white/10 px-4 py-3 text-white/50 text-[13px] outline-none focus:border-cyan-400/30 transition-colors"
+                className="w-full bg-black/40 border border-white/10 px-4 py-3 text-white/50 text-[13px] outline-none focus:border-[#90c8ff]/30 transition-colors"
                 style={{ borderRadius: 3, appearance: "none" }}
                 disabled={status === "submitting"}
               >
@@ -333,7 +333,7 @@ function ApplyForm() {
                 placeholder="X / Discord / HN / Friend / Other"
                 value={handle}
                 onChange={(e) => setHandle(e.target.value)}
-                className="w-full bg-black/40 border border-white/10 px-4 py-3 text-white/70 text-[13px] outline-none focus:border-cyan-400/30 transition-colors placeholder:text-white/10"
+                className="w-full bg-black/40 border border-white/10 px-4 py-3 text-white/70 text-[13px] outline-none focus:border-[#90c8ff]/30 transition-colors placeholder:text-white/10"
                 style={{ borderRadius: 3 }}
                 disabled={status === "submitting"}
               />
@@ -347,27 +347,27 @@ function ApplyForm() {
               className="w-full py-3.5 border text-[11px] tracking-[0.3em] uppercase transition-all disabled:opacity-20 disabled:cursor-not-allowed"
               style={{
                 borderRadius: 3,
-                borderColor: "rgba(34,211,238,0.6)",
-                color: "rgba(34,211,238,0.9)",
-                background: "rgba(34,211,238,0.06)",
-                boxShadow: "0 0 16px rgba(34,211,238,0.1)",
+                borderColor: "rgba(144,200,255,0.6)",
+                color: "rgba(144,200,255,0.9)",
+                background: "rgba(144,200,255,0.06)",
+                boxShadow: "0 0 16px rgba(144,200,255,0.1)",
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.background = "rgba(34,211,238,0.15)";
+                e.currentTarget.style.background = "rgba(144,200,255,0.15)";
                 e.currentTarget.style.color = "#fff";
-                e.currentTarget.style.boxShadow = "0 0 28px rgba(34,211,238,0.25)";
+                e.currentTarget.style.boxShadow = "0 0 28px rgba(144,200,255,0.25)";
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.background = "rgba(34,211,238,0.06)";
-                e.currentTarget.style.color = "rgba(34,211,238,0.9)";
-                e.currentTarget.style.boxShadow = "0 0 16px rgba(34,211,238,0.1)";
+                e.currentTarget.style.background = "rgba(144,200,255,0.06)";
+                e.currentTarget.style.color = "rgba(144,200,255,0.9)";
+                e.currentTarget.style.boxShadow = "0 0 16px rgba(144,200,255,0.1)";
               }}
             >
               {status === "submitting" ? "Submitting..." : "Become an Early Presence Pioneer"}
             </button>
 
             <div className="text-center">
-              <a href="/genesis-100.html" target="_blank" className="text-cyan-400/25 text-[8px] tracking-[0.15em] uppercase hover:text-cyan-400/50 transition-colors">
+              <a href="/genesis-100.html" target="_blank" className="text-[#90c8ff]/25 text-[8px] tracking-[0.15em] uppercase hover:text-[#90c8ff]/50 transition-colors">
                 Read the full Genesis 100 Manifesto ↗
               </a>
             </div>
@@ -389,7 +389,7 @@ export default function ApplyClient() {
   return (
     <Suspense fallback={
       <div className="bg-[#02040a] min-h-screen flex items-center justify-center">
-        <div className="text-cyan-400/30 text-[11px] tracking-[0.3em] uppercase animate-pulse">Loading...</div>
+        <div className="text-[#90c8ff]/30 text-[11px] tracking-[0.3em] uppercase animate-pulse">Loading...</div>
       </div>
     }>
       <ApplyForm />

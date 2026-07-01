@@ -290,7 +290,7 @@ const ProtocolHeader = () => {
         >
           {walletStatus === "connecting" || walletStatus === "signing" || walletStatus === "verifying" ? (
             <span className="flex items-center gap-1.5">
-              <span className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="w-1 h-1 rounded-full bg-[#90c8ff] animate-pulse" />
               {walletStatus === "connecting" ? "CONNECTING" : walletStatus === "signing" ? "SIGNING" : "VERIFYING"}
             </span>
           ) : walletAddress ? (
@@ -371,12 +371,12 @@ const ProtocolHeader = () => {
                     onClick={handleConnectWallet}
                     onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
                     className="panel-link w-full text-center"
-                    style={{ border: "1px solid rgba(34,211,238,0.25)", padding: "6px 0", justifyContent: "center" }}>
+                    style={{ border: "1px solid rgba(144,200,255,0.25)", padding: "6px 0", justifyContent: "center" }}>
                     <span className="link-icon">◈</span> CONNECT_WALLET
                   </button>
                 )}
                 {walletStatus !== "idle" && walletStatus !== "done" && (
-                  <div className="text-cyan-400/50 text-[9px] tracking-[0.2em] uppercase text-center py-2">
+                  <div className="text-[#90c8ff]/50 text-[9px] tracking-[0.2em] uppercase text-center py-2">
                     {walletStatus === "connecting" ? "CONNECTING..." : walletStatus === "signing" ? "SIGNING..." : "VERIFYING..."}
                   </div>
                 )}
@@ -458,19 +458,19 @@ const ProtocolHeader = () => {
             onMouseEnter={e => {
               playTick(600, "sine", 0.08, 0.02);
               e.currentTarget.style.color = "rgb(34, 211, 238)";
-              e.currentTarget.style.textShadow = "0 0 8px rgba(34,211,238,0.3)";
+              e.currentTarget.style.textShadow = "0 0 8px rgba(144,200,255,0.3)";
             }}
             onMouseLeave={e => {
               const active = pathname === link.href || pathname.startsWith(link.href + "/");
               e.currentTarget.style.color = active ? "rgb(34, 211, 238)" : "rgba(255,255,255,0.45)";
-              e.currentTarget.style.textShadow = active ? "0 0 8px rgba(34,211,238,0.2)" : "none";
+              e.currentTarget.style.textShadow = active ? "0 0 8px rgba(144,200,255,0.2)" : "none";
             }}
             style={{
               fontSize: "10px", letterSpacing: "0.15em", padding: "6px 4px",
               color: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "rgb(34, 211, 238)" : "rgba(255,255,255,0.45)",
-              textShadow: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "0 0 10px rgba(34,211,238,0.5)" : "none",
+              textShadow: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "0 0 10px rgba(144,200,255,0.5)" : "none",
               textDecoration: "none", textTransform: "uppercase", transition: "all 0.3s ease",
-              borderBottom: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "1px solid rgba(34,211,238,0.5)" : "1px solid transparent",
+              borderBottom: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "1px solid rgba(144,200,255,0.5)" : "1px solid transparent",
               paddingBottom: "2px",
             }}>
             {link.label}

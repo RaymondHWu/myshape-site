@@ -45,7 +45,7 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
       </div>
 
       {/* 3. 背景加料：動態數據流 */}
-      <div className="absolute top-10 left-10 text-[8px] text-cyan-500/20 space-y-1 hidden md:block">
+      <div className="absolute top-10 left-10 text-[8px] text-[#90c8ff]/20 space-y-1 hidden md:block">
         {[...Array(10)].map((_, i) => (
           <div key={i}>FETCHING_DATA_STREAM_0x{Math.random().toString(16).slice(2, 8).toUpperCase()}... OK</div>
         ))}
@@ -62,13 +62,13 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
             className="absolute flex items-center justify-center"
           >
             {stage === 2 ? (
-              <div className="w-24 h-24 border-2 border-cyan-400 rotate-45 animate-pulse shadow-[0_0_20px_rgba(6,182,212,0.5)]" />
+              <div className="w-24 h-24 border-2 border-[#90c8ff] rotate-45 animate-pulse shadow-[0_0_20px_rgba(6,182,212,0.5)]" />
             ) : stage === 4 ? (
               <div className="w-20 h-20 border-2 border-white rounded-full flex items-center justify-center">
-                <div className="w-10 h-10 bg-cyan-400 animate-ping rounded-full" />
+                <div className="w-10 h-10 bg-[#90c8ff] animate-ping rounded-full" />
               </div>
             ) : (
-              <div className="w-16 h-[2px] bg-cyan-500/50 animate-bounce" />
+              <div className="w-16 h-[2px] bg-[#90c8ff]/50 animate-bounce" />
             )}
           </motion.div>
         </AnimatePresence>
@@ -77,12 +77,12 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
         <motion.div 
           animate={{ rotate: 360 }}
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 border-[1px] border-dashed border-cyan-500/30 rounded-full"
+          className="absolute inset-0 border-[1px] border-dashed border-[#90c8ff]/30 rounded-full"
         />
         <motion.div 
           animate={{ rotate: -360 }}
           transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-4 border-[1px] border-cyan-400/10 rounded-full"
+          className="absolute inset-4 border-[1px] border-[#90c8ff]/10 rounded-full"
         />
         
         {/* 文字與狀態 */}
@@ -93,7 +93,7 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             className="space-y-2"
           >
-            <div className="text-cyan-400 text-[16px] font-bold tracking-[0.6em] uppercase">
+            <div className="text-[#90c8ff] text-[16px] font-bold tracking-[0.6em] uppercase">
               {protocolStages[stage].text}
             </div>
             <div className="text-white/30 text-[9px] tracking-[0.4em] uppercase">
@@ -105,7 +105,7 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
 
       {/* 底部進度條 */}
       <div className="absolute bottom-20 flex flex-col items-center gap-4 z-10">
-        <div className="flex gap-2 text-[8px] text-cyan-500/40 tracking-[0.4em]">
+        <div className="flex gap-2 text-[8px] text-[#90c8ff]/40 tracking-[0.4em]">
            <span>PRTCL_ID: MS_V1.0</span>
            <span className="text-white/10">|</span>
            <span>MODE: ENCRYPTED_INIT</span>
@@ -114,10 +114,10 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
           <motion.div 
             initial={{ width: 0 }}
             animate={{ width: `${((stage + 1) / protocolStages.length) * 100}%` }}
-            className="h-full bg-cyan-500 shadow-[0_0_20px_rgba(6,182,212,1)]"
+            className="h-full bg-[#90c8ff] shadow-[0_0_20px_rgba(6,182,212,1)]"
           />
         </div>
-        <div className="text-cyan-400/60 text-[10px] font-mono mt-2">
+        <div className="text-[#90c8ff]/60 text-[10px] font-mono mt-2">
            {Math.round(((stage + 1) / protocolStages.length) * 100)}%
         </div>
       </div>

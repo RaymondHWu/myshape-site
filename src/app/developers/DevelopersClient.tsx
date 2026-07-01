@@ -49,13 +49,13 @@ const isValid = MyShape.verifyReceipt(receipt);
 
 export default function DevelopersClient() {
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
       <BackgroundParticles />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 pt-28 pb-16">
         <div className="space-y-4 mb-12">
-          <div className="text-cyan-400/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase"
+          <div className="text-[#90c8ff]/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase"
             onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>DEVELOPER_HUB // V1.0</div>
           <h1 className="text-3xl md:text-5xl font-light tracking-[0.08em] md:tracking-[0.12em] text-white uppercase">Build with Presence</h1>
           <p className="text-white/45 md:text-white/50 text-[11px] md:text-[14px] leading-relaxed max-w-xl font-light">
@@ -64,12 +64,12 @@ export default function DevelopersClient() {
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <a href="/motion-demo" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-              className="inline-flex items-center gap-2 px-6 py-2.5 border border-cyan-400/30 text-cyan-300/70 text-[10px] tracking-[0.25em] uppercase hover:bg-cyan-400/[0.04] hover:text-white transition-all">
+              className="inline-flex items-center gap-2 px-6 py-2.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.25em] uppercase hover:bg-[#90c8ff]/[0.04] hover:text-white transition-all">
               ◈ Try Live Demo →
             </a>
             <a href="https://github.com/myshapeprotocol" target="_blank" rel="noopener noreferrer"
               onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-              className="inline-flex items-center gap-2 px-6 py-2.5 border border-cyan-400/20 text-cyan-300/50 text-[10px] tracking-[0.25em] uppercase hover:border-cyan-400/40 hover:text-cyan-200/80 hover:bg-cyan-400/[0.03] transition-all">
+              className="inline-flex items-center gap-2 px-6 py-2.5 border border-[#90c8ff]/20 text-[#90c8ff]/50 text-[10px] tracking-[0.25em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/80 hover:bg-[#90c8ff]/[0.03] transition-all">
               GitHub →
             </a>
           </div>
@@ -118,9 +118,9 @@ pose.onResults((results) => {
               },
             ].map((s) => (
               <div key={s.step}
-                className="border border-white/5 bg-white/[0.01] hover:border-cyan-400/20 transition-all duration-500 overflow-hidden">
+                className="border border-white/5 bg-white/[0.01] hover:border-[#90c8ff]/20 transition-all duration-500 overflow-hidden">
                 <div className="flex items-center gap-4 px-5 py-3 border-b border-white/5">
-                  <span className="text-cyan-400/40 text-[18px] font-light tracking-[0.1em]">{s.step}</span>
+                  <span className="text-[#90c8ff]/40 text-[18px] font-light tracking-[0.1em]">{s.step}</span>
                   <div className="flex-1">
                     <span className="text-white/50 text-[11px] tracking-[0.2em] uppercase">{s.title}</span>
                   </div>
@@ -128,11 +128,11 @@ pose.onResults((results) => {
                 </div>
                 {!s.isAction && (
                   <div className="p-5 bg-black/30 relative group">
-                    <pre className="text-cyan-200/60 text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
+                    <pre className="text-[#90c8ff]/60 text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
                       {s.code}
                     </pre>
                     <button onClick={() => { navigator.clipboard.writeText(s.code.trim()); playTick(600, "sine", 0.06, 0.015); }}
-                      className="absolute top-3 right-3 text-white/10 hover:text-cyan-400/60 text-[8px] tracking-[0.15em] uppercase transition-colors opacity-0 group-hover:opacity-100">
+                      className="absolute top-3 right-3 text-white/10 hover:text-[#90c8ff]/60 text-[8px] tracking-[0.15em] uppercase transition-colors opacity-0 group-hover:opacity-100">
                       Copy
                     </button>
                   </div>
@@ -141,12 +141,12 @@ pose.onResults((results) => {
                   <div className="p-5 flex gap-3">
                     <a href="/motion-demo"
                       onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                      className="px-5 py-2 border border-cyan-400/30 text-cyan-300/70 text-[10px] tracking-[0.2em] uppercase hover:bg-cyan-400/[0.06] hover:text-white transition-all">
+                      className="px-5 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.2em] uppercase hover:bg-[#90c8ff]/[0.06] hover:text-white transition-all">
                       ◈ Try Live Demo →
                     </a>
                     <a href="#playground"
                       onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                      className="px-5 py-2 border border-white/10 text-white/30 text-[10px] tracking-[0.2em] uppercase hover:border-cyan-400/30 hover:text-cyan-300/60 transition-all">
+                      className="px-5 py-2 border border-white/10 text-white/30 text-[10px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all">
                       ▼ Skip to Playground
                     </a>
                   </div>
@@ -177,9 +177,9 @@ pose.onResults((results) => {
                   <tr key={i} className="border-b border-white/5 transition-all duration-300"
                     onMouseEnter={ev => { playTick(700, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.background = "rgba(144,200,255,0.04)"; }}
                     onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.background = "transparent"; }}>
-                    <td className="p-3 text-[10px] tracking-[0.15em]" style={{ color: "rgba(34,211,238,0.5)", fontSize: "10px" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.9)" data-default-size="10px" data-hover-size="12px">{m.module}</td>
+                    <td className="p-3 text-[10px] tracking-[0.15em]" style={{ color: "rgba(144,200,255,0.5)", fontSize: "10px" }} data-default="rgba(144,200,255,0.5)" data-hover="rgba(144,200,255,0.9)" data-default-size="10px" data-hover-size="12px">{m.module}</td>
                     <td className="p-3 font-mono" style={{ color: "rgba(255,255,255,0.45)", fontSize: "10px" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)" data-default-size="10px" data-hover-size="12px">{m.method}</td>
-                    <td className="p-3 font-mono" style={{ color: "rgba(34,211,238,0.4)", fontSize: "9px" }} data-default="rgba(34,211,238,0.4)" data-hover="rgba(34,211,238,0.8)" data-default-size="9px" data-hover-size="11px">{m.returns}</td>
+                    <td className="p-3 font-mono" style={{ color: "rgba(144,200,255,0.4)", fontSize: "9px" }} data-default="rgba(144,200,255,0.4)" data-hover="rgba(144,200,255,0.8)" data-default-size="9px" data-hover-size="11px">{m.returns}</td>
                     <td className="p-3 leading-relaxed" style={{ color: "rgba(255,255,255,0.25)", fontSize: "10px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="10px" data-hover-size="12px">{m.desc}</td>
                   </tr>
                 ))}
@@ -207,7 +207,7 @@ pose.onResults((results) => {
                 onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "scale(1)"; }}
                 style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
                 <div className="text-[11px] tracking-[0.15em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.55)", fontSize: "11px" }} data-default="rgba(255,255,255,0.55)" data-hover="rgba(255,255,255,0.9)" data-default-size="11px" data-hover-size="13px">{e.name}</div>
-                <div className="font-mono text-[9px] mb-1.5" style={{ color: "rgba(34,211,238,0.3)", fontSize: "9px" }} data-default="rgba(34,211,238,0.3)" data-hover="rgba(34,211,238,0.7)" data-default-size="9px" data-hover-size="11px">{e.path}</div>
+                <div className="font-mono text-[9px] mb-1.5" style={{ color: "rgba(144,200,255,0.3)", fontSize: "9px" }} data-default="rgba(144,200,255,0.3)" data-hover="rgba(144,200,255,0.7)" data-default-size="9px" data-hover-size="11px">{e.path}</div>
                 <div className="text-[10px]" style={{ color: "rgba(255,255,255,0.25)", fontSize: "10px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="10px" data-hover-size="12px">{e.desc}</div>
               </div>
             ))}
@@ -255,7 +255,7 @@ if (threat.overallVerdict === "human") {
                 onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "scale(1)"; }}
                 style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
                 <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02]">
-                  <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(34,211,238,0.6)", fontSize: "10px" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)" data-default-size="10px" data-hover-size="13px">{ex.title}</span>
+                  <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(144,200,255,0.6)", fontSize: "10px" }} data-default="rgba(144,200,255,0.6)" data-hover="rgba(144,200,255,0.95)" data-default-size="10px" data-hover-size="13px">{ex.title}</span>
                 </div>
                 <div className="p-5">
                   <pre className="text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto" style={{ color: "rgba(255,255,255,0.3)", fontSize: "10px" }} data-default="rgba(255,255,255,0.3)" data-hover="rgba(255,255,255,0.6)" data-default-size="10px" data-hover-size="12px">
@@ -306,7 +306,7 @@ if (threat.overallVerdict === "human") {
                 </a>
                 <a href="/genesis"
                   onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                  className="px-6 py-3 border border-cyan-400/25 text-cyan-300/60 text-[10px] tracking-[0.2em] uppercase text-center hover:bg-cyan-400/[0.06] hover:text-cyan-200 transition-all">
+                  className="px-6 py-3 border border-[#90c8ff]/25 text-[#90c8ff]/60 text-[10px] tracking-[0.2em] uppercase text-center hover:bg-[#90c8ff]/[0.06] hover:text-[#90c8ff] transition-all">
                   Join Genesis Cohort →
                 </a>
               </div>
@@ -327,19 +327,19 @@ if (threat.overallVerdict === "human") {
               onMouseEnter={ev => { playTick(600, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "scale(1.02)"; }}
               onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "scale(1)"; }}
               style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
-              <span className="text-[10px] tracking-[0.2em] font-bold w-10" style={{ color: "rgba(34,211,238,0.6)", fontSize: "10px" }} data-default="rgba(34,211,238,0.6)" data-hover="rgba(34,211,238,0.95)" data-default-size="10px" data-hover-size="13px">{ep.method}</span>
+              <span className="text-[10px] tracking-[0.2em] font-bold w-10" style={{ color: "rgba(144,200,255,0.6)", fontSize: "10px" }} data-default="rgba(144,200,255,0.6)" data-hover="rgba(144,200,255,0.95)" data-default-size="10px" data-hover-size="13px">{ep.method}</span>
               <span className="font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)" data-default-size="11px" data-hover-size="13px">{ep.path}</span>
               <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.25)", fontSize: "10px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="10px" data-hover-size="12px">{ep.desc}</span>
             </div>
           ))}
 
           {/* Live API Response Examples */}
-          <div className="mt-6 border border-cyan-400/10 bg-cyan-400/[0.02] p-5">
-            <div className="text-cyan-400/40 text-[8px] tracking-[0.3em] uppercase mb-4">// RESPONSE_FORMAT</div>
+          <div className="mt-6 border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02] p-5">
+            <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.3em] uppercase mb-4">// RESPONSE_FORMAT</div>
             <div className="space-y-4">
               <div>
                 <div className="text-white/25 text-[9px] tracking-[0.1em] mb-1">GET /api/identity?email=hello@myshape.com</div>
-                <pre className="bg-black/60 p-3 text-cyan-400/50 text-[9px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
+                <pre className="bg-black/60 p-3 text-[#90c8ff]/50 text-[9px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
 {`{
   "found": true,
   "email": "hello@myshape.com",
@@ -350,7 +350,7 @@ if (threat.overallVerdict === "human") {
               </div>
               <div>
                 <div className="text-white/25 text-[9px] tracking-[0.1em] mb-1">GET /api/nodes/count</div>
-                <pre className="bg-black/60 p-3 text-cyan-400/50 text-[9px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
+                <pre className="bg-black/60 p-3 text-[#90c8ff]/50 text-[9px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
 {`{
   "total": 17,
   "humans": 8,

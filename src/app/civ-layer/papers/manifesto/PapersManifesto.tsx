@@ -81,7 +81,7 @@ export default function PapersManifesto() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30 antialiased">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30 antialiased">
       {/* Background Grid */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.04]"
            style={{ backgroundImage: `linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px)`, backgroundSize: '45px 45px' }} />
@@ -89,22 +89,22 @@ export default function PapersManifesto() {
 
       {/* Top Navigation */}
       <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/80 backdrop-blur-md px-6 md:px-10 py-5 flex justify-between items-center text-[10px] tracking-[0.4em]">
-        <Link href="/civ-layer/papers" className="text-cyan-400/70 hover:text-cyan-300 transition-colors uppercase">← EXIT_RESEARCH</Link>
+        <Link href="/civ-layer/papers" className="text-[#90c8ff]/70 hover:text-[#90c8ff] transition-colors uppercase">← EXIT_RESEARCH</Link>
         <div className="text-white/20 uppercase font-bold tracking-[0.5em] hidden sm:block">RESEARCH_WHITEPAPER // CONSTITUTIONAL_CORE</div>
       </nav>
 
       <main className="relative z-10 pt-56 px-6 md:px-10 max-w-7xl mx-auto flex flex-col md:flex-row gap-24">
         {/* Sticky Sidebar */}
         <aside className="md:w-64 shrink-0 h-fit md:sticky md:top-56 hidden md:block">
-          <div className="text-[9px] text-cyan-500/40 mb-12 tracking-[0.5em] uppercase font-bold">RESEARCH_INDEX</div>
+          <div className="text-[9px] text-[#90c8ff]/40 mb-12 tracking-[0.5em] uppercase font-bold">RESEARCH_INDEX</div>
           <ul className="space-y-10 border-l border-white/5 pl-6">
             {sections.map(s => {
               const isActive = s.id === activeIndex;
               return (
               <li key={s.id} className="group cursor-pointer">
                 <a href={`#${s.id}`} className="block">
-                  <div className={`text-[10px] font-bold mb-1 transition-colors duration-300 ${isActive ? 'text-cyan-400' : 'text-white/10 group-hover:text-cyan-400'}`}>{s.id}</div>
-                  <div className={`text-[11px] uppercase tracking-[0.2em] transition-all duration-300 ${isActive ? 'text-cyan-300' : 'text-white/20 group-hover:text-cyan-400'}`}>
+                  <div className={`text-[10px] font-bold mb-1 transition-colors duration-300 ${isActive ? 'text-[#90c8ff]' : 'text-white/10 group-hover:text-[#90c8ff]'}`}>{s.id}</div>
+                  <div className={`text-[11px] uppercase tracking-[0.2em] transition-all duration-300 ${isActive ? 'text-[#90c8ff]' : 'text-white/20 group-hover:text-[#90c8ff]'}`}>
                     {s.title}
                   </div>
                 </a>
@@ -118,8 +118,8 @@ export default function PapersManifesto() {
           {sections.map((s) => (
             <section key={s.id} id={s.id} className="group max-w-[750px] scroll-mt-56">
               <div className="flex items-center gap-6 mb-12">
-                <span className="text-cyan-500/50 text-[10px] tracking-[0.6em] font-bold">{s.subtitle}</span>
-                <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-cyan-500/30 transition-colors duration-700" />
+                <span className="text-[#90c8ff]/50 text-[10px] tracking-[0.6em] font-bold">{s.subtitle}</span>
+                <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-[#90c8ff]/30 transition-colors duration-700" />
               </div>
               <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white mb-16 uppercase transition-all duration-700 group-hover:text-[#4fd1ed] group-hover:drop-shadow-[0_0_25px_rgba(79,209,237,0.8)]">
                 {s.title}

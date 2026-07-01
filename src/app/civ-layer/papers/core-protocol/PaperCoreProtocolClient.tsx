@@ -176,20 +176,20 @@ export default function PaperCoreProtocolClient() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <BackgroundParticles />
       <div
         className="fixed inset-0 pointer-events-none opacity-[0.03]"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(34,211,238,0.4) 1px, transparent 1px)",
+            "radial-gradient(circle, rgba(144,200,255,0.4) 1px, transparent 1px)",
           backgroundSize: "50px 50px",
         }}
       />
 
       {/* ── 顶栏 ── */}
       <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/80 backdrop-blur-md px-6 md:px-10 py-5 flex justify-between items-center text-[10px] tracking-[0.4em]">
-        <Link href="/papers" className="text-cyan-400/40 hover:text-cyan-400 transition-colors uppercase" onMouseEnter={() => playTick(500, "sine", 0.06, 0.015)}>
+        <Link href="/papers" className="text-[#90c8ff]/40 hover:text-[#90c8ff] transition-colors uppercase" onMouseEnter={() => playTick(500, "sine", 0.06, 0.015)}>
           ← EXIT_PAPER
         </Link>
         <div className="text-white/20 uppercase font-bold tracking-[0.5em] hidden sm:block">
@@ -201,7 +201,7 @@ export default function PaperCoreProtocolClient() {
       <main className="relative z-10 pt-48 md:pt-56 px-6 md:px-10 max-w-7xl mx-auto flex flex-col md:flex-row gap-24">
         {/* ── 侧边栏目录 ── */}
         <aside className="md:w-64 shrink-0 h-fit md:sticky md:top-32 hidden md:block">
-          <div className="text-cyan-400/30 text-[9px] tracking-[0.5em] uppercase mb-10 font-mono italic">
+          <div className="text-[#90c8ff]/30 text-[9px] tracking-[0.5em] uppercase mb-10 font-mono italic">
             // PAPER_INDEX
           </div>
           <ul className="space-y-5" style={{ borderLeft: "1px solid rgba(144,200,255,0.12)" }}>
@@ -211,21 +211,21 @@ export default function PaperCoreProtocolClient() {
                 <li key={s.id} className="group cursor-pointer"
                   onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
                   style={{
-                    borderLeft: isActive ? "2px solid rgba(34,211,238,0.6)" : "2px solid transparent",
+                    borderLeft: isActive ? "2px solid rgba(144,200,255,0.6)" : "2px solid transparent",
                     marginLeft: "-1px",
                     paddingLeft: "20px",
                   }}>
                   <a href={`#${s.anchor}`} className="block">
                     <div className="text-[10px] tracking-[0.3em] mb-1 transition-colors duration-300"
-                      style={{ color: isActive ? "rgba(34,211,238,0.8)" : "rgba(255,255,255,0.12)" }}>
+                      style={{ color: isActive ? "rgba(144,200,255,0.8)" : "rgba(255,255,255,0.12)" }}>
                       {s.id}
                     </div>
                     <div className="text-[11px] uppercase tracking-[0.15em] transition-all duration-300"
-                      style={{ color: isActive ? "rgba(34,211,238,0.9)" : "rgba(255,255,255,0.22)" }}>
+                      style={{ color: isActive ? "rgba(144,200,255,0.9)" : "rgba(255,255,255,0.22)" }}>
                       {s.title}
                     </div>
                     {isActive && (
-                      <div className="text-[8px] tracking-[0.3em] text-cyan-400/60 mt-1.5 animate-pulse font-mono">
+                      <div className="text-[8px] tracking-[0.3em] text-[#90c8ff]/60 mt-1.5 animate-pulse font-mono">
                         [ ACTIVE ]
                       </div>
                     )}
@@ -240,7 +240,7 @@ export default function PaperCoreProtocolClient() {
         <div className="flex-1 space-y-32 pb-48">
           {/* 标题 */}
           <div className="space-y-6 mb-8">
-            <div className="text-cyan-500/50 text-[10px] tracking-[0.6em] font-bold uppercase">
+            <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.6em] font-bold uppercase">
               PAPER_01 — CORE_PROTOCOL
             </div>
             <h1 className="text-5xl font-bold tracking-tighter text-white uppercase cursor-default transition-all duration-700 ease-out hover:text-[#4fd1ed] hover:drop-shadow-[0_0_25px_rgba(79,209,237,0.8)]" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>
@@ -258,7 +258,7 @@ export default function PaperCoreProtocolClient() {
             style={{ borderColor: "rgba(144,200,255,0.1)", background: "transparent" }}
             onMouseEnter={e => { playTick(500, "sine", 0.04, 0.01); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-            <div className="text-cyan-500/50 text-[10px] tracking-[0.6em] font-bold uppercase mb-6">
+            <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.6em] font-bold uppercase mb-6">
               ABSTRACT
             </div>
             <p className="text-white/50 text-[18px] leading-[1.85] font-light text-justify tracking-normal">
@@ -284,16 +284,16 @@ export default function PaperCoreProtocolClient() {
                 if (isMajorHeader) {
                   return (
                     <div key={i} className="flex items-center gap-6 mb-12 mt-4">
-                      <span className="text-cyan-500/50 text-[10px] tracking-[0.6em] font-bold group-hover:text-cyan-400 transition-colors duration-700">
+                      <span className="text-[#90c8ff]/50 text-[10px] tracking-[0.6em] font-bold group-hover:text-[#90c8ff] transition-colors duration-700">
                         {para}
                       </span>
-                      <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-cyan-500/30 transition-colors duration-700" />
+                      <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-[#90c8ff]/30 transition-colors duration-700" />
                     </div>
                   );
                 }
                 if (isSubHeader) {
                   return (
-                    <h3 key={i} className="text-cyan-300/60 text-[11px] tracking-[0.3em] font-bold uppercase mt-8 mb-3 transition-colors duration-500 hover:text-cyan-200">
+                    <h3 key={i} className="text-[#90c8ff]/60 text-[11px] tracking-[0.3em] font-bold uppercase mt-8 mb-3 transition-colors duration-500 hover:text-[#90c8ff]">
                       {para}
                     </h3>
                   );

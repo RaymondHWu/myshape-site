@@ -1,6 +1,6 @@
 /* ── Genesis 邮箱输入终端动画 ── */
 .genesis-scan-line {
-  background: linear-gradient(90deg, transparent 0%, rgba(34,211,238,0.06) 45%, rgba(34,211,238,0.12) 50%, rgba(34,211,238,0.06) 55%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(144,200,255,0.06) 45%, rgba(144,200,255,0.12) 50%, rgba(144,200,255,0.06) 55%, transparent 100%);
   animation: genesisScan 3s ease-in-out infinite;
 }
 
@@ -10,15 +10,15 @@
 .genesis-corner-br { animation: cornerPulse 2s ease-in-out 1.5s infinite; }
 @keyframes cornerPulse {
   0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; border-color: rgba(34,211,238,0.9); }
+  50% { opacity: 1; border-color: rgba(144,200,255,0.9); }
 }
 
 .genesis-data-stream-l {
-  background: linear-gradient(to bottom, transparent, rgba(34,211,238,0.2), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(144,200,255,0.2), transparent);
   animation: dataFlow 2.5s ease-in-out infinite;
 }
 .genesis-data-stream-r {
-  background: linear-gradient(to bottom, transparent, rgba(34,211,238,0.15), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(144,200,255,0.15), transparent);
   animation: dataFlow 2.5s ease-in-out 0.8s infinite;
 }
 @keyframes dataFlow {
@@ -27,7 +27,7 @@
 }
 
 .genesis-btn-scan {
-  background: linear-gradient(90deg, transparent, rgba(34,211,238,0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(144,200,255,0.5), transparent);
   animation: btnScan 2s ease-in-out infinite;
 }
 @keyframes btnScan {
@@ -54,8 +54,8 @@
   animation: terminalGlow 3s ease-in-out infinite;
 }
 @keyframes terminalGlow {
-  0%, 100% { box-shadow: 0 0 15px rgba(34,211,238,0.03); }
-  50% { box-shadow: 0 0 35px rgba(34,211,238,0.08), 0 0 60px rgba(34,211,238,0.03); }
+  0%, 100% { box-shadow: 0 0 15px rgba(144,200,255,0.03); }
+  50% { box-shadow: 0 0 35px rgba(144,200,255,0.08), 0 0 60px rgba(144,200,255,0.03); }
 }
 
 /* ── 邀请码终端 — 紫色主题扫描线 ── */
@@ -148,7 +148,7 @@
 }
 
 /* ── 进度条（@keyframes progressSlide 定义在 animations.css） ── */
-.genesis-progress { width: 40%; height: 100%; background: linear-gradient(90deg, transparent, rgba(34,211,238,0.6), transparent); animation: progressSlide 2s ease-in-out infinite; }
+.genesis-progress { width: 40%; height: 100%; background: linear-gradient(90deg, transparent, rgba(144,200,255,0.6), transparent); animation: progressSlide 2s ease-in-out infinite; }
 
 /* ── Cohort 标签滚动 ── */
 .cohort-marquee {
@@ -171,14 +171,14 @@
 /* ── 扫描阶段背景 — 纯 CSS，不依赖摄像头 ── */
 .genesis-scan-bg {
   background:
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(34,211,238,0.015) 2px, rgba(34,211,238,0.015) 4px);
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(144,200,255,0.015) 2px, rgba(144,200,255,0.015) 4px);
   animation: scanBgDrift 4s linear infinite;
 }
 .genesis-scan-bg::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(34,211,238,0.04) 45%, rgba(34,211,238,0.08) 50%, rgba(34,211,238,0.04) 55%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(144,200,255,0.04) 45%, rgba(144,200,255,0.08) 50%, rgba(144,200,255,0.04) 55%, transparent 100%);
   animation: scanBeamSweep 3s ease-in-out infinite;
 }
 @keyframes scanBgDrift {

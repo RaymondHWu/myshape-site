@@ -64,7 +64,7 @@ export default function LiveCapture({ activeStage }: { activeStage: number }) {
           const ctx = canvas.getContext('2d');
           if (ctx) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#22d3ee'; // 保持你喜歡的青色
+            ctx.strokeStyle = '#90c8ff'; // 保持你喜歡的青色
             ctx.lineWidth = 2;
             ctx.beginPath();
             // 繪製核心骨架
@@ -121,7 +121,7 @@ export default function LiveCapture({ activeStage }: { activeStage: number }) {
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-20">
       {/* 狀態提示：保持極簡與半透明 */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#22d3ee] font-mono text-[10px] opacity-40 tracking-[0.5em] uppercase">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#90c8ff] font-mono text-[10px] opacity-40 tracking-[0.5em] uppercase">
         {status === "GENESIS_ACTIVE" ? "" : status}
       </div>
       

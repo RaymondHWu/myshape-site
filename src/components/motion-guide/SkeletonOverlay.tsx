@@ -128,10 +128,10 @@ export default function SkeletonOverlay({ landmarks, width, height, active }: Sk
         if (isAnchor) {
           // Anchor ring
           const ringColor = anchorValid
-            ? "rgba(34,211,238,0.6)"
+            ? "rgba(144,200,255,0.6)"
             : "rgba(239,68,68,0.5)";
           const ringGlow = anchorValid
-            ? "0 0 8px rgba(34,211,238,0.4)"
+            ? "0 0 8px rgba(144,200,255,0.4)"
             : "0 0 6px rgba(239,68,68,0.3)";
 
           ctx.beginPath();
@@ -144,7 +144,7 @@ export default function SkeletonOverlay({ landmarks, width, height, active }: Sk
           ctx.beginPath();
           ctx.arc(jx, jy, 1.8, 0, Math.PI * 2);
           ctx.fillStyle = anchorValid
-            ? "rgba(34,211,238,0.9)"
+            ? "rgba(144,200,255,0.9)"
             : "rgba(239,68,68,0.7)";
           ctx.fill();
         } else {
@@ -159,11 +159,11 @@ export default function SkeletonOverlay({ landmarks, width, height, active }: Sk
 
       // ── Scanning band visual ──
       const bandGrad = ctx.createLinearGradient(0, bandY - 14, 0, bandY + 14);
-      bandGrad.addColorStop(0, "rgba(34,211,238,0)");
-      bandGrad.addColorStop(0.4, "rgba(34,211,238,0.04)");
-      bandGrad.addColorStop(0.5, "rgba(34,211,238,0.1)");
-      bandGrad.addColorStop(0.6, "rgba(34,211,238,0.04)");
-      bandGrad.addColorStop(1, "rgba(34,211,238,0)");
+      bandGrad.addColorStop(0, "rgba(144,200,255,0)");
+      bandGrad.addColorStop(0.4, "rgba(144,200,255,0.04)");
+      bandGrad.addColorStop(0.5, "rgba(144,200,255,0.1)");
+      bandGrad.addColorStop(0.6, "rgba(144,200,255,0.04)");
+      bandGrad.addColorStop(1, "rgba(144,200,255,0)");
       ctx.fillStyle = bandGrad;
       ctx.fillRect(0, bandY - 14, width, 28);
 

@@ -370,7 +370,7 @@
   position: absolute;
   inset: -1px;
   border-radius: 2px;
-  background: linear-gradient(90deg, transparent 40%, rgba(34,211,238,0.3) 50%, transparent 60%);
+  background: linear-gradient(90deg, transparent 40%, rgba(144,200,255,0.3) 50%, transparent 60%);
   background-size: 200% 100%;
   animation: walletShimmer 3s ease-in-out infinite;
   pointer-events: none;
@@ -389,15 +389,15 @@
   inset: -4px;
   border-radius: 4px;
   background: transparent;
-  box-shadow: 0 0 12px rgba(34,211,238,0.15), 0 0 24px rgba(34,211,238,0.06);
+  box-shadow: 0 0 12px rgba(144,200,255,0.15), 0 0 24px rgba(144,200,255,0.06);
   animation: walletGlow 3s ease-in-out infinite;
   pointer-events: none;
   z-index: -1;
 }
 
 @keyframes walletGlow {
-  0%, 100% { box-shadow: 0 0 8px rgba(34,211,238,0.12), 0 0 16px rgba(34,211,238,0.04); }
-  50%      { box-shadow: 0 0 16px rgba(34,211,238,0.25), 0 0 32px rgba(34,211,238,0.10); }
+  0%, 100% { box-shadow: 0 0 8px rgba(144,200,255,0.12), 0 0 16px rgba(144,200,255,0.04); }
+  50%      { box-shadow: 0 0 16px rgba(144,200,255,0.25), 0 0 32px rgba(144,200,255,0.10); }
 }
 
 .wallet-btn-optimized:hover {
@@ -418,7 +418,7 @@
 }
 
 .wallet-btn-optimized.is-active::after {
-  box-shadow: 0 0 20px rgba(34,211,238,0.3), 0 0 40px rgba(34,211,238,0.15);
+  box-shadow: 0 0 20px rgba(144,200,255,0.3), 0 0 40px rgba(144,200,255,0.15);
 }
 
 /* ── 二级导航条 ── */

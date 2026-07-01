@@ -29,17 +29,17 @@ interface Epoch {
 
 const statusConfig: Record<Status, { dot: string; badge: string; border: string; glow: string; label: string }> = {
   COMPLETED: {
-    dot: "bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.8)]",
-    badge: "border-cyan-400/40 text-cyan-300 bg-cyan-400/5",
-    border: "border-cyan-400/15",
-    glow: "shadow-[0_0_30px_rgba(34,211,238,0.06)]",
+    dot: "bg-[#90c8ff] shadow-[0_0_10px_rgba(144,200,255,0.8)]",
+    badge: "border-[#90c8ff]/40 text-[#90c8ff] bg-[#90c8ff]/5",
+    border: "border-[#90c8ff]/15",
+    glow: "shadow-[0_0_30px_rgba(144,200,255,0.06)]",
     label: "● COMPLETED",
   },
   CURRENT: {
-    dot: "bg-cyan-400 animate-pulse shadow-[0_0_12px_rgba(34,211,238,0.6)]",
-    badge: "border-cyan-400/60 text-cyan-300 bg-cyan-400/8 animate-pulse",
-    border: "border-cyan-400/25",
-    glow: "shadow-[0_0_40px_rgba(34,211,238,0.1)]",
+    dot: "bg-[#90c8ff] animate-pulse shadow-[0_0_12px_rgba(144,200,255,0.6)]",
+    badge: "border-[#90c8ff]/60 text-[#90c8ff] bg-[#90c8ff]/8 animate-pulse",
+    border: "border-[#90c8ff]/25",
+    glow: "shadow-[0_0_40px_rgba(144,200,255,0.1)]",
     label: "◉ IN_PROGRESS",
   },
   PENDING: {
@@ -133,22 +133,22 @@ export default function RoadmapClient() {
           <h2 className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-4">// FOUR_EPOCH_ROADMAP</h2>
           <p className="text-xl md:text-2xl font-light tracking-widest text-white leading-relaxed">
             From{" "}
-            <span className="text-cyan-300">geometry</span> → to{" "}
-            <span className="text-cyan-300">protocol</span> → to{" "}
-            <span className="text-cyan-300">substrate</span> → to{" "}
-            <span className="text-cyan-300">civilization</span>.
+            <span className="text-[#90c8ff]">geometry</span> → to{" "}
+            <span className="text-[#90c8ff]">protocol</span> → to{" "}
+            <span className="text-[#90c8ff]">substrate</span> → to{" "}
+            <span className="text-[#90c8ff]">civilization</span>.
           </p>
           <p className="mt-6 text-white/40 text-sm tracking-[0.2em] leading-loose font-light">
             Four epochs spanning 20+ years. Each epoch establishes a new layer of identity infrastructure.
             This is not a product roadmap — it is a civilizational blueprint.
           </p>
-          <p className="mt-4 text-cyan-400/20 text-[9px] tracking-[0.3em] uppercase font-mono italic">
+          <p className="mt-4 text-[#90c8ff]/20 text-[9px] tracking-[0.3em] uppercase font-mono italic">
             // ROADMAP_UPDATING_VIA_GENESIS_ENTROPY
           </p>
         </section>
 
         <section className="relative">
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-[1px] bg-gradient-to-b from-cyan-400/20 via-cyan-400/10 to-transparent" />
+          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#90c8ff]/20 via-[#90c8ff]/10 to-transparent" />
 
           <div className="space-y-20">
             {epochs.map((epoch) => {
@@ -158,7 +158,7 @@ export default function RoadmapClient() {
                   <div className="absolute left-[22px] md:left-[30px] top-2 z-10">
                     <div className={`w-3 h-3 rounded-full ${cfg.dot}`} />
                     {epoch.status === "CURRENT" && (
-                      <div className="absolute -inset-1 rounded-full border border-cyan-400/30 animate-ping" />
+                      <div className="absolute -inset-1 rounded-full border border-[#90c8ff]/30 animate-ping" />
                     )}
                   </div>
 
@@ -168,20 +168,20 @@ export default function RoadmapClient() {
                     onMouseLeave={e => hoverOff(e)}>
                     <div className="p-6 md:p-10">
                       <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 mb-2">
-                        <span className="text-[10px] tracking-[0.4em] font-mono shrink-0" style={{ color: "rgba(34,211,238,0.5)" }}>{epoch.epoch}</span>
+                        <span className="text-[10px] tracking-[0.4em] font-mono shrink-0" style={{ color: "rgba(144,200,255,0.5)" }}>{epoch.epoch}</span>
                         <h3 className="text-lg md:text-xl tracking-[0.3em] font-light uppercase" style={{ color: "rgba(255,255,255,0.85)" }} data-default="rgba(255,255,255,0.85)" data-hover="rgba(255,255,255,1)">{epoch.title}</h3>
                         <span className="text-[10px] tracking-[0.2em]" style={{ color: "rgba(255,255,255,0.2)" }} data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.4)">{epoch.timeframe}</span>
                       </div>
 
-                      <p className="text-[11px] tracking-[0.3em] uppercase mb-6" style={{ color: "rgba(34,211,238,0.5)" }} data-default="rgba(34,211,238,0.5)" data-hover="rgba(34,211,238,0.85)">{epoch.thesis}</p>
+                      <p className="text-[11px] tracking-[0.3em] uppercase mb-6" style={{ color: "rgba(144,200,255,0.5)" }} data-default="rgba(144,200,255,0.5)" data-hover="rgba(144,200,255,0.85)">{epoch.thesis}</p>
 
                       <div className="space-y-2 mb-6">
                         {epoch.milestones.map((m, idx) => (
                           <div key={idx} className="flex gap-3 items-start">
                             <span className="text-[9px] mt-0.5 shrink-0"
-                              style={{ color: m.status === "COMPLETED" ? "rgba(34,211,238,0.6)" : m.status === "CURRENT" ? "rgba(34,211,238,0.4)" : "rgba(255,255,255,0.1)" }}
-                              data-default={m.status === "COMPLETED" ? "rgba(34,211,238,0.6)" : m.status === "CURRENT" ? "rgba(34,211,238,0.4)" : "rgba(255,255,255,0.1)"}
-                              data-hover={m.status === "COMPLETED" ? "rgba(34,211,238,0.9)" : m.status === "CURRENT" ? "rgba(34,211,238,0.75)" : "rgba(255,255,255,0.3)"}>
+                              style={{ color: m.status === "COMPLETED" ? "rgba(144,200,255,0.6)" : m.status === "CURRENT" ? "rgba(144,200,255,0.4)" : "rgba(255,255,255,0.1)" }}
+                              data-default={m.status === "COMPLETED" ? "rgba(144,200,255,0.6)" : m.status === "CURRENT" ? "rgba(144,200,255,0.4)" : "rgba(255,255,255,0.1)"}
+                              data-hover={m.status === "COMPLETED" ? "rgba(144,200,255,0.9)" : m.status === "CURRENT" ? "rgba(144,200,255,0.75)" : "rgba(255,255,255,0.3)"}>
                               {m.status === "COMPLETED" ? "✓" : m.status === "CURRENT" ? "▶" : "○"}
                             </span>
                             <span className="text-[10px] tracking-[0.15em] leading-relaxed uppercase"
@@ -196,8 +196,8 @@ export default function RoadmapClient() {
 
                       <div className="flex items-center justify-between pt-4 border-t border-white/5">
                         <div className="flex items-center gap-2">
-                          <div className={`h-[1px] w-8 ${epoch.status === "COMPLETED" ? "bg-gradient-to-r from-cyan-400/60 to-transparent" : epoch.status === "CURRENT" ? "bg-gradient-to-r from-cyan-400/40 to-transparent" : "bg-white/5"}`} />
-                          <span className={`text-[8px] tracking-[0.3em] uppercase font-mono ${epoch.status === "COMPLETED" ? "text-cyan-300/70" : epoch.status === "CURRENT" ? "text-cyan-400/60" : "text-white/15"}`}>
+                          <div className={`h-[1px] w-8 ${epoch.status === "COMPLETED" ? "bg-gradient-to-r from-[#90c8ff]/60 to-transparent" : epoch.status === "CURRENT" ? "bg-gradient-to-r from-[#90c8ff]/40 to-transparent" : "bg-white/5"}`} />
+                          <span className={`text-[8px] tracking-[0.3em] uppercase font-mono ${epoch.status === "COMPLETED" ? "text-[#90c8ff]/70" : epoch.status === "CURRENT" ? "text-[#90c8ff]/60" : "text-white/15"}`}>
                             {epoch.status === "COMPLETED" ? "DELIVERED" : epoch.status === "CURRENT" ? `${epoch.timeframe} — ACTIVE` : `EST. ${epoch.timeframe}`}
                           </span>
                         </div>
@@ -219,7 +219,7 @@ export default function RoadmapClient() {
             &ldquo;The roadmap is a living protocol. Each completed milestone is a verifiable proof of work.
             The direction is fixed — the timeline adapts.&rdquo;
           </p>
-          <div className="mt-10 h-px w-24 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+          <div className="mt-10 h-px w-24 bg-gradient-to-r from-transparent via-[#90c8ff]/40 to-transparent" />
         </section>
       </div>
     </ProtocolLayout>

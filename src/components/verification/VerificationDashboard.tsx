@@ -26,9 +26,9 @@ const VERIFICATION_RESULTS = [
     passed: true,
     factors: { motion: 0.97, device: 1.0, context: 1.0 },
     verdict: "PRESENCE CONFIRMED",
-    verdictClass: "text-cyan-400",
-    glowClass: "shadow-[0_0_20px_rgba(34,211,238,0.15)]",
-    rowClass: "border-cyan-500/20",
+    verdictClass: "text-[#90c8ff]",
+    glowClass: "shadow-[0_0_20px_rgba(144,200,255,0.15)]",
+    rowClass: "border-[#90c8ff]/20",
   },
   {
     id: "ai-forgery",
@@ -127,7 +127,7 @@ function FactorBar({ label, value }: { label: string; value: number }) {
   const pct = Math.round(value * 100);
   const color =
     value > 0.7
-      ? "bg-gradient-to-r from-cyan-500/80 to-cyan-400/60"
+      ? "bg-gradient-to-r from-[#90c8ff]/80 to-[#90c8ff]/60"
       : value > 0.4
         ? "bg-gradient-to-r from-amber-500/60 to-amber-400/40"
         : "bg-gradient-to-r from-red-500/60 to-red-400/40";
@@ -173,14 +173,14 @@ export default function VerificationDashboard() {
     >
       {/* ── Section Header ── */}
       <div className="space-y-4 mb-10">
-        <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">
+        <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">
           LIVE_VERIFICATION // v0.1
         </div>
         <h2 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">
           Presence Verification Dashboard
         </h2>
         <p className="text-white/40 text-[12px] leading-relaxed max-w-2xl">
-          Runtime engine output from <code className="text-cyan-400/60">myshape-demo</code> CLI.
+          Runtime engine output from <code className="text-[#90c8ff]/60">myshape-demo</code> CLI.
           Motion Signature Engine (128-dim, 4 feature groups) + Multi-Factor Scorer.
           All scores computed by the Rust core engine compiled to native binary.
         </p>
@@ -190,12 +190,12 @@ export default function VerificationDashboard() {
       <div className="mb-10 p-6 transition-all duration-500" style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}
         onMouseEnter={e => { playTick(600, "sine", 0.08, 0.02); hoverOn(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; }}
         onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
-        <div className="text-cyan-400/40 text-[8px] tracking-[0.4em] uppercase mb-3 font-mono"
-          data-default="rgba(34,211,238,0.4)" data-hover="rgba(34,211,238,0.7)">
+        <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.4em] uppercase mb-3 font-mono"
+          data-default="rgba(144,200,255,0.4)" data-hover="rgba(144,200,255,0.7)">
           HUMAN—AI DIVERGENCE
         </div>
         <div className="flex items-baseline gap-4 flex-wrap">
-          <span className="text-5xl md:text-6xl font-light font-mono tracking-tight text-cyan-300/80">
+          <span className="text-5xl md:text-6xl font-light font-mono tracking-tight text-[#90c8ff]/80">
             <AnimatedScore target={gap} durationMs={1800} />
           </span>
           <div className="space-y-1">
@@ -231,7 +231,7 @@ export default function VerificationDashboard() {
               </span>
               <span
                 className={`w-2 h-2 rounded-full ${
-                  r.passed ? "bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]" : "bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.8)]"
+                  r.passed ? "bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.8)]" : "bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.8)]"
                 }`}
               />
             </div>
@@ -240,7 +240,7 @@ export default function VerificationDashboard() {
             <div className="mb-2">
               <span
                 className={`text-3xl font-light font-mono tracking-tight ${
-                  r.passed ? "text-cyan-300" : "text-red-300"
+                  r.passed ? "text-[#90c8ff]" : "text-red-300"
                 }`}
               >
                 <AnimatedScore target={r.score} durationMs={1500} />
@@ -250,8 +250,8 @@ export default function VerificationDashboard() {
             {/* Verdict */}
             <div
               className={`text-[10px] tracking-[0.3em] uppercase mb-3 font-bold ${r.verdictClass}`}
-              data-default={r.passed ? "rgba(34,211,238,0.8)" : "rgba(248,113,113,0.8)"}
-              data-hover={r.passed ? "rgba(34,211,238,1)" : "rgba(248,113,113,1)"}
+              data-default={r.passed ? "rgba(144,200,255,0.8)" : "rgba(248,113,113,0.8)"}
+              data-hover={r.passed ? "rgba(144,200,255,1)" : "rgba(248,113,113,1)"}
             >
               {r.verdict}
             </div>
@@ -345,46 +345,46 @@ export default function VerificationDashboard() {
         onMouseLeave={e => { hoverOff(e); e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; }}>
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)]" />
             <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase"
               data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">
               Engine
             </span>
-            <span className="text-cyan-400/70 font-mono text-[9px]"
-              data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,0.95)">
+            <span className="text-[#90c8ff]/70 font-mono text-[9px]"
+              data-default="rgba(144,200,255,0.7)" data-hover="rgba(144,200,255,0.95)">
               v0.1.0 · 25/25 tests pass
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)]" />
             <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase"
               data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">
               Features
             </span>
-            <span className="text-cyan-400/70 font-mono text-[9px]"
-              data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,0.95)">
+            <span className="text-[#90c8ff]/70 font-mono text-[9px]"
+              data-default="rgba(144,200,255,0.7)" data-hover="rgba(144,200,255,0.95)">
               K · A · J · J_spec (4/7 active)
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)]" />
             <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase"
               data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">
               Factors
             </span>
-            <span className="text-cyan-400/70 font-mono text-[9px]"
-              data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,0.95)">
+            <span className="text-[#90c8ff]/70 font-mono text-[9px]"
+              data-default="rgba(144,200,255,0.7)" data-hover="rgba(144,200,255,0.95)">
               M(0.60) · D(0.25) · C(0.15)
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)]" />
             <span className="text-white/20 text-[8px] tracking-[0.3em] uppercase"
               data-default="rgba(255,255,255,0.2)" data-hover="rgba(255,255,255,0.5)">
               Risk API
             </span>
-            <span className="text-cyan-400/70 font-mono text-[9px]"
-              data-default="rgba(34,211,238,0.7)" data-hover="rgba(34,211,238,0.95)">
+            <span className="text-[#90c8ff]/70 font-mono text-[9px]"
+              data-default="rgba(144,200,255,0.7)" data-hover="rgba(144,200,255,0.95)">
               LOW · MEDIUM · HIGH
             </span>
           </div>

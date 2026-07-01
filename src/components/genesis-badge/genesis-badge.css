@@ -8,7 +8,7 @@
 .badge-spark {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(180, 220, 255, 0.9), rgba(34, 211, 238, 0.4));
+  background: radial-gradient(circle, rgba(180, 220, 255, 0.9), rgba(144, 200, 255, 0.4));
   box-shadow: 0 0 4px rgba(144, 200, 255, 0.6);
   pointer-events: none;
   z-index: 5;
@@ -37,7 +37,7 @@
   letter-spacing: 0.4em;
   text-transform: uppercase;
   color: rgba(200,235,255,0.9);
-  text-shadow: 0 0 12px rgba(144,200,255,0.5), 0 0 24px rgba(34,211,238,0.3);
+  text-shadow: 0 0 12px rgba(144,200,255,0.5), 0 0 24px rgba(144,200,255,0.3);
 }
 
 /* Genesis 层级：金色文字 + 呼吸脉冲 */
@@ -64,15 +64,15 @@
   position: absolute;
   inset: -3px;
   border-radius: 2px;
-  border: 1px solid rgba(34,211,238,0.3);
+  border: 1px solid rgba(144,200,255,0.3);
   animation: badgeBreath 2.5s ease-in-out infinite;
   pointer-events: none;
   z-index: -1;
 }
 
 @keyframes badgeBreath {
-  0%, 100% { border-color: rgba(34,211,238,0.2); box-shadow: 0 0 6px rgba(34,211,238,0.1); }
-  50%      { border-color: rgba(34,211,238,0.5); box-shadow: 0 0 16px rgba(34,211,238,0.25); }
+  0%, 100% { border-color: rgba(144,200,255,0.2); box-shadow: 0 0 6px rgba(144,200,255,0.1); }
+  50%      { border-color: rgba(144,200,255,0.5); box-shadow: 0 0 16px rgba(144,200,255,0.25); }
 }
 
 .genesis-badge {
@@ -132,7 +132,7 @@
 .badge-bg-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(34, 211, 238, 0.08), transparent 55%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(144, 200, 255, 0.08), transparent 55%);
   pointer-events: none;
   animation: glowPulse 3s ease-in-out infinite;
 }
@@ -233,8 +233,8 @@
   width: 2.5px;
   height: 2.5px;
   border-radius: 50%;
-  background: #22d3ee;
-  box-shadow: 0 0 4px rgba(34, 211, 238, 0.7);
+  background: #90c8ff;
+  box-shadow: 0 0 4px rgba(144, 200, 255, 0.7);
   animation: dotFlash 2s ease-in-out infinite;
 }
 
@@ -248,8 +248,8 @@
 .tier-genesis .badge-dot:last-child { animation-delay: 0.6s; }
 
 @keyframes dotFlash {
-  0%, 100% { opacity: 0.3; box-shadow: 0 0 3px rgba(34,211,238,0.3); }
-  50% { opacity: 1; box-shadow: 0 0 8px rgba(34,211,238,0.9); }
+  0%, 100% { opacity: 0.3; box-shadow: 0 0 3px rgba(144,200,255,0.3); }
+  50% { opacity: 1; box-shadow: 0 0 8px rgba(144,200,255,0.9); }
 }
 
 @keyframes dotFlashGold {
@@ -292,8 +292,8 @@
   top: 0;
   width: 100%;
   height: 100%;
-  color: rgba(34, 211, 238, 0.3);
-  text-shadow: 0 0 6px rgba(34, 211, 238, 0.5);
+  color: rgba(144, 200, 255, 0.3);
+  text-shadow: 0 0 6px rgba(144, 200, 255, 0.5);
   animation: glitchSlice 6s steps(1) infinite;
   clip-path: inset(0 0 0 0);
   pointer-events: none;

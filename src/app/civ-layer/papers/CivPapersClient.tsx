@@ -61,11 +61,11 @@ export default function CivPapers() {
         {/* --- 1. TOP HEADER --- */}
         <section className="max-w-3xl pt-20">
           <h2 className="text-white/30 text-[10px] tracking-[0.6em] uppercase mb-8 flex items-center gap-4">
-            <span className="w-8 h-[1px] bg-cyan-500/50" />
+            <span className="w-8 h-[1px] bg-[#90c8ff]/50" />
             Research_Repository
           </h2>
           <p className="text-xl md:text-3xl font-light tracking-[0.15em] text-white leading-relaxed">
-            The MyShape protocol is built upon <span className="text-cyan-400">peer-reviewed foundations</span>.
+            The MyShape protocol is built upon <span className="text-[#90c8ff]">peer-reviewed foundations</span>.
           </p>
           <p className="mt-8 text-white/50 text-sm tracking-widest leading-loose font-light">
             Our research spans computer vision, zero-knowledge cryptography, and digital sociology. 
@@ -77,15 +77,15 @@ export default function CivPapers() {
           <h3 className="text-white/20 text-[9px] tracking-[0.5em] uppercase mb-10 italic">// ARCHIVE_INDEX_RECON</h3>
           <div className="space-y-6">
             {academicPapers.map((paper) => (
-              <div key={paper.id} className="group relative border border-white/5 bg-white/[0.02] p-8 hover:border-cyan-500/20 transition-all duration-500">
-                <div className="absolute top-0 right-0 w-12 h-12 bg-cyan-500/5 clip-path-slant group-hover:bg-cyan-500/10 transition-all" />
+              <div key={paper.id} className="group relative border border-white/5 bg-white/[0.02] p-8 hover:border-[#90c8ff]/20 transition-all duration-500">
+                <div className="absolute top-0 right-0 w-12 h-12 bg-[#90c8ff]/5 clip-path-slant group-hover:bg-[#90c8ff]/10 transition-all" />
                 <div className="flex flex-col md:flex-row justify-between items-start gap-6 relative z-10">
                   <div className="space-y-4 flex-1">
                     <div className="flex items-center gap-4">
-                      <span className="text-cyan-500 text-[10px] tracking-[0.2em] font-bold">[{paper.id}]</span>
+                      <span className="text-[#90c8ff] text-[10px] tracking-[0.2em] font-bold">[{paper.id}]</span>
                       <span className="text-white/20 text-[9px] tracking-[0.3em] font-mono">#{paper.tag}</span>
                     </div>
-                    <h4 className="text-white text-base md:text-lg tracking-[0.2em] font-light group-hover:text-cyan-400 transition-colors uppercase">
+                    <h4 className="text-white text-base md:text-lg tracking-[0.2em] font-light group-hover:text-[#90c8ff] transition-colors uppercase">
                       {paper.title}
                     </h4>
                     <p className="text-white/30 text-[11px] tracking-widest leading-relaxed uppercase max-w-2xl">
@@ -99,7 +99,7 @@ export default function CivPapers() {
                     {paper.locked ? (
                       <div className="text-[8px] text-white/10 tracking-[0.3em] font-bold uppercase">Encrypted_Access</div>
                     ) : (
-                      <a href={paper.id === "PAPER_01" ? "/civ-layer/papers/core-protocol" : paper.id === "PAPER_06" ? "/civ-layer/papers/protocol-architecture" : paper.id === "PAPER_10" ? "/civ-layer/papers/civilization-roadmap" : "/papers"} className="text-cyan-500 hover:text-white text-[10px] tracking-[0.4em] uppercase font-bold transition-all flex items-center gap-2 group/btn">
+                      <a href={paper.id === "PAPER_01" ? "/civ-layer/papers/core-protocol" : paper.id === "PAPER_06" ? "/civ-layer/papers/protocol-architecture" : paper.id === "PAPER_10" ? "/civ-layer/papers/civilization-roadmap" : "/papers"} className="text-[#90c8ff] hover:text-white text-[10px] tracking-[0.4em] uppercase font-bold transition-all flex items-center gap-2 group/btn">
                         <span>READ_PAPER</span>
                         <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                       </a>
@@ -119,14 +119,14 @@ export default function CivPapers() {
             
             {/* 這裡就是你說的大按鈕框 */}
             <Link href="/civ-layer/papers/manifesto" className="inline-block group">
-               <div className="px-16 py-6 border border-cyan-500/30 bg-cyan-500/5 group-hover:bg-cyan-400 group-hover:text-black transition-all duration-500 text-cyan-400 text-[11px] tracking-[0.6em] uppercase font-bold">
+               <div className="px-16 py-6 border border-[#90c8ff]/30 bg-[#90c8ff]/5 group-hover:bg-[#90c8ff] group-hover:text-black transition-all duration-500 text-[#90c8ff] text-[11px] tracking-[0.6em] uppercase font-bold">
                  Access Full Research Manifesto →
                </div>
             </Link>
         </section>
 
         {/* --- 4. CONTRIBUTION SECTION --- */}
-        <section className="bg-cyan-500/[0.03] border-l-2 border-cyan-500 p-10">
+        <section className="bg-[#90c8ff]/[0.03] border-l-2 border-[#90c8ff] p-10">
           <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
             <p className="text-white/60 text-[10px] tracking-[0.3em] uppercase leading-relaxed max-w-xl">
               Are you an academic researcher? We provide grants for independent verification 
@@ -134,7 +134,7 @@ export default function CivPapers() {
             </p>
             <div className="text-right shrink-0">
               <span className="block text-white text-[10px] tracking-[0.4em] font-bold mb-2 uppercase">Research_Network</span>
-              <span className="block text-cyan-500/40 text-[9px] tracking-[0.2em]">CONTACT@MYSHAPE.COM</span>
+              <span className="block text-[#90c8ff]/40 text-[9px] tracking-[0.2em]">CONTACT@MYSHAPE.COM</span>
             </div>
           </div>
         </section>

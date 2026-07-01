@@ -21,9 +21,9 @@ export default function CivGenesis() {
       <div className="space-y-32">
         {/* --- 1. 创世引言：大格局叙事 --- */}
         <section className="max-w-4xl relative">
-          <div className="absolute -left-10 top-0 w-1 h-full bg-gradient-to-b from-cyan-500 to-transparent opacity-30" />
+          <div className="absolute -left-10 top-0 w-1 h-full bg-gradient-to-b from-[#90c8ff] to-transparent opacity-30" />
           <h2 className="text-2xl md:text-3xl font-extralight tracking-[0.4em] text-white leading-tight uppercase mb-8">
-            The era of <span className="text-cyan-400">Carbon-Silicon</span> convergence requires a new anchor of existence.
+            The era of <span className="text-[#90c8ff]">Carbon-Silicon</span> convergence requires a new anchor of existence.
           </h2>
           <p className="text-white/50 text-base tracking-[0.2em] leading-relaxed font-light">
             Genesis is not a starting date; it is the fundamental realization that identity 
@@ -34,7 +34,7 @@ export default function CivGenesis() {
         {/* --- 2. 核心宣言：为什么是现在 --- */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           <div className="space-y-6">
-            <h3 className="text-cyan-500/80 text-[10px] tracking-[0.6em] font-bold uppercase">// THE_NECESSITY</h3>
+            <h3 className="text-[#90c8ff]/80 text-[10px] tracking-[0.6em] font-bold uppercase">// THE_NECESSITY</h3>
             <p className="text-white/40 text-xs tracking-widest leading-loose uppercase">
               As AI models begin to perfectly simulate human behavior, the "Account" model of identity fails. 
               MyShape was conceived to prove human presence through the irreducible geometry of motion.
@@ -53,8 +53,8 @@ export default function CivGenesis() {
           <h3 className="text-white/20 text-[9px] tracking-[0.6em] uppercase text-center">// EVOLUTIONARY_PHASES</h3>
           <div className="space-y-px bg-white/5 border border-white/5">
             {genesisMilestones.map((item) => (
-              <div key={item.year} className="grid grid-cols-1 md:grid-cols-12 bg-[#02040a] p-8 group hover:bg-cyan-500/[0.03] transition-all">
-                <div className="md:col-span-3 text-cyan-500 text-[10px] tracking-[0.4em] font-bold mb-4 md:mb-0">
+              <div key={item.year} className="grid grid-cols-1 md:grid-cols-12 bg-[#02040a] p-8 group hover:bg-[#90c8ff]/[0.03] transition-all">
+                <div className="md:col-span-3 text-[#90c8ff] text-[10px] tracking-[0.4em] font-bold mb-4 md:mb-0">
                   {item.year}
                 </div>
                 <div className="md:col-span-9 text-white/60 text-[11px] tracking-[0.2em] uppercase group-hover:text-white transition-colors">
@@ -67,9 +67,9 @@ export default function CivGenesis() {
 
         {/* --- 4. 新增：跳轉深度文章按鈕 (Manifesto Link) --- */}
         <section className="flex justify-center pt-10">
-           <Link href="/civ-layer/genesis/manifesto" className="group relative px-12 py-6 border border-cyan-500/30 bg-black text-cyan-400 text-[10px] tracking-[0.6em] uppercase hover:bg-cyan-500/10 hover:text-white hover:border-cyan-500 transition-all duration-500">
+           <Link href="/civ-layer/genesis/manifesto" className="group relative px-12 py-6 border border-[#90c8ff]/30 bg-black text-[#90c8ff] text-[10px] tracking-[0.6em] uppercase hover:bg-[#90c8ff]/10 hover:text-white hover:border-[#90c8ff] transition-all duration-500">
               Read_Full_Genesis_Manifesto →
-              <div className="absolute -inset-1 border border-cyan-500/10 group-hover:border-cyan-500/30 transition-all pointer-events-none" />
+              <div className="absolute -inset-1 border border-[#90c8ff]/10 group-hover:border-[#90c8ff]/30 transition-all pointer-events-none" />
            </Link>
         </section>
 

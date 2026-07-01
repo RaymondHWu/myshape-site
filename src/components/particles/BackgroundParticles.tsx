@@ -43,7 +43,7 @@ const BackgroundParticles = memo(function BackgroundParticles() {
           p.x = Math.random() * canvas.width;
         }
         const flicker = Math.random() > 0.96 ? p.opacity * 6 : p.opacity;
-        ctx.fillStyle = `rgba(34, 211, 238, ${flicker})`;
+        ctx.fillStyle = `rgba(144, 200, 255, ${flicker})`;
         const size = Math.random() > 0.92 ? 2 : 1;
         ctx.fillRect(p.x, p.y, size, size);
       }

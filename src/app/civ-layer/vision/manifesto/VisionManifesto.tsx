@@ -84,7 +84,7 @@ export default function VisionManifesto() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       
       {/* 統一背景網格 - 調淡透明度至 0.05 */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.05]" 
@@ -96,7 +96,7 @@ export default function VisionManifesto() {
 
       {/* 頂部導航 */}
       <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-black/80 backdrop-blur-md px-10 py-5 flex justify-between items-center text-[10px] tracking-[0.3em]">
-        <Link href="/civ-layer/vision" className="text-cyan-400/60 hover:text-cyan-400 transition-colors uppercase">← EXIT_STRATEGY</Link>
+        <Link href="/civ-layer/vision" className="text-[#90c8ff]/60 hover:text-[#90c8ff] transition-colors uppercase">← EXIT_STRATEGY</Link>
         <div className="text-white/20 uppercase tracking-[0.5em] font-bold">Vision_Deep_Archive</div>
       </nav>
 
@@ -104,15 +104,15 @@ export default function VisionManifesto() {
         
         {/* 左側側邊索引：鼠標懸停變色 */}
         <aside className="md:w-64 shrink-0 h-fit md:sticky md:top-48 hidden md:block border-l border-white/5 pl-6">
-          <div className="text-[9px] text-cyan-500/40 mb-10 tracking-[0.4em] uppercase font-bold">Vision_Sequence</div>
+          <div className="text-[9px] text-[#90c8ff]/40 mb-10 tracking-[0.4em] uppercase font-bold">Vision_Sequence</div>
           <ul className="space-y-8">
             {sections.map(s => {
               const isActive = s.id === activeIndex;
               return (
               <li key={s.id} className="group cursor-pointer">
                 <a href={`#${s.id}`} className="block">
-                  <div className={`text-[10px] mb-1 transition-colors duration-300 ${isActive ? 'text-cyan-400' : 'text-white/10 group-hover:text-cyan-400'}`}>{s.id}</div>
-                  <div className={`text-[11px] uppercase tracking-[0.2em] transition-all ${isActive ? 'text-cyan-300' : 'text-white/20 group-hover:text-cyan-400'}`}>
+                  <div className={`text-[10px] mb-1 transition-colors duration-300 ${isActive ? 'text-[#90c8ff]' : 'text-white/10 group-hover:text-[#90c8ff]'}`}>{s.id}</div>
+                  <div className={`text-[11px] uppercase tracking-[0.2em] transition-all ${isActive ? 'text-[#90c8ff]' : 'text-white/20 group-hover:text-[#90c8ff]'}`}>
                     {s.title}
                   </div>
                 </a>
@@ -128,10 +128,10 @@ export default function VisionManifesto() {
               
               {/* 副標題裝飾線 */}
               <div className="flex items-center gap-4 mb-10">
-                <span className="text-cyan-500/50 text-[10px] tracking-[0.5em] font-bold uppercase transition-colors group-hover:text-cyan-400">
+                <span className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] font-bold uppercase transition-colors group-hover:text-[#90c8ff]">
                   {s.subtitle}
                 </span>
-                <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent group-hover:from-cyan-500/30 transition-all duration-700" />
+                <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent group-hover:from-[#90c8ff]/30 transition-all duration-700" />
               </div>
 
               {/* 主標題：核心交互 - 鼠標掃過變淡藍發光 */}
@@ -144,7 +144,7 @@ export default function VisionManifesto() {
               {/* 正文排版：保持左側邊框，兩端對齊文字磚 */}
               <div className="space-y-10 text-white/50 text-lg leading-[1.8] font-light 
                             text-justify font-mono border-l border-white/5 pl-8 
-                            opacity-80 group-hover:opacity-100 group-hover:border-cyan-500/20 transition-all duration-700">
+                            opacity-80 group-hover:opacity-100 group-hover:border-[#90c8ff]/20 transition-all duration-700">
                 {s.content.map((para, i) => (
                   <p key={i}>{para}</p>
                 ))}

@@ -22,20 +22,20 @@ export default function ZKFlow() {
           <div key={item.step} className="group flex flex-col items-center text-center"
             onMouseEnter={() => playTick(800, "sine", 0.08, 0.02)}>
             {/* 圆形节点 */}
-            <div className="w-16 h-16 rounded-full border border-white/10 bg-[#02040a] flex items-center justify-center mb-8 group-hover:border-cyan-500 transition-all duration-700 relative">
-              <span className="text-[11px] text-white/30 group-hover:text-cyan-400 font-bold tracking-widest transition-colors">
+            <div className="w-16 h-16 rounded-full border border-white/10 bg-[#02040a] flex items-center justify-center mb-8 group-hover:border-[#90c8ff] transition-all duration-700 relative">
+              <span className="text-[11px] text-white/30 group-hover:text-[#90c8ff] font-bold tracking-widest transition-colors">
                 {item.step}
               </span>
-              <div className="absolute inset-[-4px] border-[1px] border-cyan-500/0 border-t-cyan-500/40 rounded-full opacity-0 group-hover:opacity-100"
+              <div className="absolute inset-[-4px] border-[1px] border-[#90c8ff]/0 border-t-[#90c8ff]/40 rounded-full opacity-0 group-hover:opacity-100"
                 style={{ animation: "spin 1.5s linear infinite" }} />
             </div>
 
             {/* 文字区 */}
             <div className="space-y-4">
-              <h4 className="text-white text-[13px] tracking-[0.4em] font-bold uppercase group-hover:text-cyan-400 transition-colors">
+              <h4 className="text-white text-[13px] tracking-[0.4em] font-bold uppercase group-hover:text-[#90c8ff] transition-colors">
                 {item.title}
               </h4>
-              <div className="text-cyan-500/40 text-[9px] tracking-[0.3em] font-mono">
+              <div className="text-[#90c8ff]/40 text-[9px] tracking-[0.3em] font-mono">
                 [{item.label}]
               </div>
               <p className="text-white/30 text-[10px] tracking-[0.2em] leading-relaxed uppercase max-w-[180px] mx-auto group-hover:text-white/60 transition-colors">
@@ -48,7 +48,7 @@ export default function ZKFlow() {
 
       <div className="text-center mt-10"
         onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
-        <span className="text-white/30 hover:text-cyan-300/60 text-[9px] tracking-[0.3em] uppercase transition-colors cursor-default">
+        <span className="text-white/30 hover:text-[#90c8ff]/60 text-[9px] tracking-[0.3em] uppercase transition-colors cursor-default">
           From Geometry → Proof. Zero raw data leaves the device.
         </span>
       </div>

@@ -186,8 +186,8 @@ export default function GenesisClient() {
             style={{ textShadow: "0 0 40px rgba(144,200,255,0.3), 0 0 80px rgba(144,200,255,0.1)" }}>
             {stage === "success" ? "Genesis Confirmed." : stage === "error" ? "Uplink Interrupted." : "Initialize Genesis."}
           </h2>
-          <p className="text-cyan-400/60 font-mono text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.6em] uppercase mb-4 md:mb-8"
-            style={{ textShadow: "0 0 16px rgba(34,211,238,0.3)" }}>
+          <p className="text-[#90c8ff]/60 font-mono text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.6em] uppercase mb-4 md:mb-8"
+            style={{ textShadow: "0 0 16px rgba(144,200,255,0.3)" }}>
             ESTABLISHING_IDENTITY_LAYER_PROTOCOL
           </p>
         </div>
@@ -199,48 +199,48 @@ export default function GenesisClient() {
               exit={{ opacity: 0, y: -6, filter: "blur(2px)" }}
               transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}>
               <div className="mb-4 md:mb-8 flex items-center gap-3 justify-center">
-                <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-cyan-400/30" />
-                <span className="text-cyan-400/20 font-mono text-[7px] tracking-[0.5em] uppercase">Genesis_Protocol</span>
-                <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-cyan-400/30" />
+                <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#90c8ff]/30" />
+                <span className="text-[#90c8ff]/20 font-mono text-[7px] tracking-[0.5em] uppercase">Genesis_Protocol</span>
+                <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#90c8ff]/30" />
               </div>
               <form onSubmit={handleCommence} className="flex flex-col items-center space-y-3 md:space-y-5">
                 {/* Genesis Cohort 标签 — 滚动数据流 */}
                 <div className="flex items-center justify-center gap-2">
-                  <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-cyan-400/30" />
+                  <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#90c8ff]/30" />
                   <div className="cohort-marquee">
-                    <span className="cohort-marquee-inner text-cyan-400/70 font-mono text-[8px] tracking-[0.25em] uppercase">
+                    <span className="cohort-marquee-inner text-[#90c8ff]/70 font-mono text-[8px] tracking-[0.25em] uppercase">
                       ◈ Genesis_Cohort — First 100 only&nbsp;&nbsp;&nbsp;◈ Genesis_Cohort — First 100 only&nbsp;&nbsp;&nbsp;
                     </span>
                   </div>
-                  <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-cyan-400/30" />
+                  <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#90c8ff]/30" />
                 </div>
 
                 {/* ── 主路径：Wallet-First ── */}
                 <div className="flex flex-col items-center space-y-2 relative">
                   {headerWallet ? (
                     <div className="flex flex-col items-center gap-3">
-                      <div className="flex items-center gap-2 px-4 py-2 border border-cyan-400/40 bg-cyan-400/[0.06]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
-                        <span className="text-cyan-300/80 font-mono text-[10px] tracking-[0.2em] uppercase">Wallet Connected</span>
+                      <div className="flex items-center gap-2 px-4 py-2 border border-[#90c8ff]/40 bg-[#90c8ff]/[0.06]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.8)]" />
+                        <span className="text-[#90c8ff]/80 font-mono text-[10px] tracking-[0.2em] uppercase">Wallet Connected</span>
                       </div>
-                      <span className="text-cyan-400/30 text-[8px] tracking-[0.15em] uppercase font-mono">
+                      <span className="text-[#90c8ff]/30 text-[8px] tracking-[0.15em] uppercase font-mono">
                         {headerWallet.slice(0, 8)}...{headerWallet.slice(-6)}
                       </span>
                       <button
                         type="button"
                         onClick={() => handleCommence()}
                         onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                        className="relative group px-6 py-2.5 transition-all duration-500 overflow-hidden font-mono text-[9px] tracking-[0.3em] uppercase border border-cyan-400/30 text-cyan-300/70 hover:text-white hover:border-cyan-300"
-                        style={{ background: "rgba(34,211,238,0.04)" }}>
+                        className="relative group px-6 py-2.5 transition-all duration-500 overflow-hidden font-mono text-[9px] tracking-[0.3em] uppercase border border-[#90c8ff]/30 text-[#90c8ff]/70 hover:text-white hover:border-[#90c8ff]"
+                        style={{ background: "rgba(144,200,255,0.04)" }}>
                         Begin Genesis →
                       </button>
                     </div>
                   ) : (
                     <>
                       {/* 浮动粒子（桌面端专属） */}
-                      <div className="absolute -top-3 -right-2 w-1 h-1 rounded-full bg-cyan-400/40 genesis-float-dot hidden md:block" />
-                      <div className="absolute top-0 -left-3 w-1 h-1 rounded-full bg-cyan-400/30 genesis-float-dot hidden md:block" />
-                      <div className="absolute -bottom-1 right-0 w-1 h-1 rounded-full bg-cyan-400/35 genesis-float-dot hidden md:block" />
+                      <div className="absolute -top-3 -right-2 w-1 h-1 rounded-full bg-[#90c8ff]/40 genesis-float-dot hidden md:block" />
+                      <div className="absolute top-0 -left-3 w-1 h-1 rounded-full bg-[#90c8ff]/30 genesis-float-dot hidden md:block" />
+                      <div className="absolute -bottom-1 right-0 w-1 h-1 rounded-full bg-[#90c8ff]/35 genesis-float-dot hidden md:block" />
                       <ConnectWallet
                         email={email}
                         onSuccess={(walletData) => {
@@ -256,7 +256,7 @@ export default function GenesisClient() {
                           }
                         }}
                       />
-                      <span className="text-cyan-400/40 text-[8px] md:text-[9px] tracking-[0.12em] md:tracking-[0.18em] uppercase font-light">Recommended: Trustless on-chain binding</span>
+                      <span className="text-[#90c8ff]/40 text-[8px] md:text-[9px] tracking-[0.12em] md:tracking-[0.18em] uppercase font-light">Recommended: Trustless on-chain binding</span>
                     </>
                   )}
                 </div>
@@ -317,13 +317,13 @@ export default function GenesisClient() {
                     <div className="relative group genesis-terminal-glow flex-1"
                       onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
                       <div className="absolute -inset-[1px] rounded-sm opacity-35 group-focus-within:opacity-70 transition-opacity duration-700"
-                        style={{ background: "linear-gradient(135deg, rgba(34,211,238,0.2), transparent 40%, transparent 60%, rgba(34,211,238,0.2))", filter: "blur(5px)" }} />
+                        style={{ background: "linear-gradient(135deg, rgba(144,200,255,0.2), transparent 40%, transparent 60%, rgba(144,200,255,0.2))", filter: "blur(5px)" }} />
                       <div className="relative pl-5 pr-12 py-0.5 overflow-hidden"
-                        style={{ border: "1px solid rgba(34,211,238,0.18)", background: "rgba(2,10,20,0.85)" }}>
-                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-400/60 genesis-corner-tl" />
-                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-400/60 genesis-corner-tr" />
-                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-400/60 genesis-corner-bl" />
-                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-400/60 genesis-corner-br" />
+                        style={{ border: "1px solid rgba(144,200,255,0.18)", background: "rgba(2,10,20,0.85)" }}>
+                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#90c8ff]/60 genesis-corner-tl" />
+                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#90c8ff]/60 genesis-corner-tr" />
+                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#90c8ff]/60 genesis-corner-bl" />
+                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#90c8ff]/60 genesis-corner-br" />
                         <div className="absolute inset-0 pointer-events-none genesis-scan-line" />
                         <div className="absolute left-0 top-[15%] bottom-[15%] w-[1px] genesis-data-stream-l" />
                         <div className="absolute right-0 top-[15%] bottom-[15%] w-[1px] genesis-data-stream-r" />
@@ -335,7 +335,7 @@ export default function GenesisClient() {
                         <button type="button" onClick={() => handleCommence()}
                           onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
                           className="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-8 h-8 transition-all duration-300 group/arrow"
-                          style={{ color: "rgba(34,211,238,0.4)" }}>
+                          style={{ color: "rgba(144,200,255,0.4)" }}>
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-hover/arrow:translate-x-0.5 transition-transform">
                             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
@@ -357,8 +357,8 @@ export default function GenesisClient() {
               transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
               className="flex flex-col items-center space-y-8">
               <VortexScan />
-              <span className="text-cyan-400 font-mono text-[10px] tracking-[1em] uppercase">Extracting_Kinetic_Hash...</span>
-              <div className="w-48 h-[1px] bg-cyan-500/10 relative overflow-hidden">
+              <span className="text-[#90c8ff] font-mono text-[10px] tracking-[1em] uppercase">Extracting_Kinetic_Hash...</span>
+              <div className="w-48 h-[1px] bg-[#90c8ff]/10 relative overflow-hidden">
                 <div className="absolute inset-0 genesis-progress" />
               </div>
             </motion.div>
@@ -371,9 +371,9 @@ export default function GenesisClient() {
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
               className="flex flex-col items-center space-y-6">
               <div className="relative w-10 h-10">
-                <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-spin" style={{ borderTopColor: "rgba(34,211,238,0.8)" }} />
+                <div className="absolute inset-0 rounded-full border border-[#90c8ff]/30 animate-spin" style={{ borderTopColor: "rgba(144,200,255,0.8)" }} />
               </div>
-              <span className="text-cyan-400/60 font-mono text-[9px] tracking-[0.5em] uppercase">Transmitting_Challenge...</span>
+              <span className="text-[#90c8ff]/60 font-mono text-[9px] tracking-[0.5em] uppercase">Transmitting_Challenge...</span>
             </motion.div>
           )}
 
@@ -384,12 +384,12 @@ export default function GenesisClient() {
               transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
               className="max-w-md w-full">
               <div className="relative"
-                style={{ border: "1px solid rgba(34,211,238,0.18)", background: "rgba(2,10,20,0.8)", boxShadow: "0 0 50px rgba(34,211,238,0.04)" }}>
+                style={{ border: "1px solid rgba(144,200,255,0.18)", background: "rgba(2,10,20,0.8)", boxShadow: "0 0 50px rgba(144,200,255,0.04)" }}>
                 {/* 顶部状态条 */}
-                <div className="flex items-center justify-between px-5 py-2 border-b border-cyan-400/10">
+                <div className="flex items-center justify-between px-5 py-2 border-b border-[#90c8ff]/10">
                   <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
-                    <span className="text-cyan-400/50 font-mono text-[7px] tracking-[0.4em] uppercase">IDENTITY_CHALLENGE</span>
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] animate-pulse shadow-[0_0_6px_rgba(144,200,255,0.8)]" />
+                    <span className="text-[#90c8ff]/50 font-mono text-[7px] tracking-[0.4em] uppercase">IDENTITY_CHALLENGE</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-white/15 font-mono text-[7px] tracking-[0.2em]">SIG_006</span>
@@ -419,9 +419,9 @@ export default function GenesisClient() {
                           }}
                           className="w-10 h-14 md:w-11 md:h-16 bg-transparent text-center text-white font-mono text-xl md:text-2xl outline-none transition-all"
                           style={{
-                            borderBottom: otp[i] ? "2px solid rgba(34,211,238,0.8)" : "1px solid rgba(255,255,255,0.1)",
-                            textShadow: otp[i] ? "0 0 8px rgba(34,211,238,0.5)" : "none",
-                            boxShadow: otp[i] ? "0 4px 12px -4px rgba(34,211,238,0.2)" : "none",
+                            borderBottom: otp[i] ? "2px solid rgba(144,200,255,0.8)" : "1px solid rgba(255,255,255,0.1)",
+                            textShadow: otp[i] ? "0 0 8px rgba(144,200,255,0.5)" : "none",
+                            boxShadow: otp[i] ? "0 4px 12px -4px rgba(144,200,255,0.2)" : "none",
                           }} />
                       ))}
                     </div>
@@ -429,11 +429,11 @@ export default function GenesisClient() {
                       onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
                       className="w-full py-3 border text-[9px] tracking-[0.4em] uppercase font-mono transition-all duration-500"
                       style={{
-                        borderColor: otp.length === 6 ? "rgba(34,211,238,0.5)" : "rgba(255,255,255,0.08)",
-                        color: otp.length === 6 ? "rgba(34,211,238,0.8)" : "rgba(255,255,255,0.15)",
-                        background: otp.length === 6 ? "rgba(34,211,238,0.05)" : "transparent",
-                        textShadow: otp.length === 6 ? "0 0 8px rgba(34,211,238,0.4)" : "none",
-                        boxShadow: otp.length === 6 ? "0 0 20px rgba(34,211,238,0.1)" : "none",
+                        borderColor: otp.length === 6 ? "rgba(144,200,255,0.5)" : "rgba(255,255,255,0.08)",
+                        color: otp.length === 6 ? "rgba(144,200,255,0.8)" : "rgba(255,255,255,0.15)",
+                        background: otp.length === 6 ? "rgba(144,200,255,0.05)" : "transparent",
+                        textShadow: otp.length === 6 ? "0 0 8px rgba(144,200,255,0.4)" : "none",
+                        boxShadow: otp.length === 6 ? "0 0 20px rgba(144,200,255,0.1)" : "none",
                         cursor: otp.length === 6 ? "pointer" : "not-allowed",
                       }}>
                       Verify_Signature
@@ -499,7 +499,7 @@ export default function GenesisClient() {
                 transition={{ delay: 1.8, duration: 0.5 }}
                 href="/motion-demo"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                className="hidden md:block text-cyan-400/25 hover:text-cyan-300/60 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
+                className="hidden md:block text-[#90c8ff]/25 hover:text-[#90c8ff]/60 text-[8px] tracking-[0.25em] uppercase font-mono transition-colors">
                 See_How_It_Works → Motion_Demo
               </motion.a>
             </motion.div>

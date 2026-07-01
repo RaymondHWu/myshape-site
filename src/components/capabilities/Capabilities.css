@@ -6,7 +6,7 @@
   height: 380px;
   background: transparent;
   border: 1px solid rgba(144, 200, 255, 0.1);
-  border-radius: 12px;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
   padding: 2.2rem;
   transition: all 0.7s cubic-bezier(0.2, 1, 0.3, 1);
   overflow: hidden;
@@ -138,8 +138,8 @@
   border-top: 1px solid rgba(144, 200, 255, 0.08);
 }
 .param-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
-.param-key { font-size: 0.7rem; opacity: 0.3; font-weight: 300; text-transform: uppercase; }
-.param-val { font-size: 0.7rem; opacity: 0.6; color: rgba(144, 200, 255, 0.8); font-family: monospace; }
+.param-key { font-size: 0.7rem; opacity: 0.4; font-weight: 300; text-transform: uppercase; }
+.param-val { font-size: 0.7rem; opacity: 0.7; color: rgba(144, 200, 255, 0.8); font-family: monospace; }
 
 .cap-scan-line {
   position: absolute; inset: 0;

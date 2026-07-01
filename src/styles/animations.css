@@ -243,7 +243,7 @@
 }
 
 /* ── Misc ── */
-@keyframes coreBreath { 0%, 100% { box-shadow: 0 0 8px rgba(34,211,238,0.6); } 50% { box-shadow: 0 0 20px rgba(34,211,238,1); } }
+@keyframes coreBreath { 0%, 100% { box-shadow: 0 0 8px rgba(144,200,255,0.6); } 50% { box-shadow: 0 0 20px rgba(144,200,255,1); } }
 @keyframes badgePulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 @keyframes sigilBreathe { 0%, 100% { filter: drop-shadow(0 0 4px rgba(144,200,255,0.3)); } 50% { filter: drop-shadow(0 0 12px rgba(144,200,255,0.7)); } }
 
@@ -266,8 +266,8 @@
   50%      { opacity: 0.8; }
 }
 @keyframes genesisWitnessGlow {
-  0%, 100% { box-shadow: 0 0 8px rgba(34,211,238,0.3), inset 0 0 8px rgba(34,211,238,0.05); }
-  50% { box-shadow: 0 0 24px rgba(34,211,238,0.6), inset 0 0 16px rgba(34,211,238,0.1); }
+  0%, 100% { box-shadow: 0 0 8px rgba(144,200,255,0.3), inset 0 0 8px rgba(144,200,255,0.05); }
+  50% { box-shadow: 0 0 24px rgba(144,200,255,0.6), inset 0 0 16px rgba(144,200,255,0.1); }
 }
 @keyframes genesisBadgePulse {
   0%, 100% { opacity: 0.7; transform: scale(1); }

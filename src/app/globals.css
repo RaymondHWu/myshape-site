@@ -251,9 +251,9 @@ a, button, [role="button"], input, textarea, select {
 
 /* ── Scrollbar — dark, minimal ── */
 /* Firefox */
-html { scrollbar-width: thin; scrollbar-color: rgba(34,211,238,0.18) transparent; }
+html { scrollbar-width: thin; scrollbar-color: rgba(144,200,255,0.18) transparent; }
 /* Chrome / Edge / Safari */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.15); border-radius: 3px; transition: background 0.3s; }
-::-webkit-scrollbar-thumb:hover { background: rgba(34,211,238,0.40); }
+::-webkit-scrollbar-thumb { background: rgba(144,200,255,0.15); border-radius: 3px; transition: background 0.3s; }
+::-webkit-scrollbar-thumb:hover { background: rgba(144,200,255,0.40); }

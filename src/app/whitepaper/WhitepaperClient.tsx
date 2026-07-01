@@ -253,20 +253,20 @@ export default function WhitepaperClient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
 
       {/* Glitch 封存特效 */}
       {glitchActive && (
         <div className="fixed inset-0 z-50 pointer-events-none" style={{ animation: "glitchShift 0.15s steps(1) infinite" }}>
-          <div className="absolute inset-0 border-[3px] border-cyan-400/30" style={{ animation: "glitchBorder 2.5s ease-out forwards", boxShadow: "inset 0 0 120px rgba(34,211,238,0.15), 0 0 80px rgba(34,211,238,0.1)" }} />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.04] to-transparent" />
+          <div className="absolute inset-0 border-[3px] border-[#90c8ff]/30" style={{ animation: "glitchBorder 2.5s ease-out forwards", boxShadow: "inset 0 0 120px rgba(144,200,255,0.15), 0 0 80px rgba(144,200,255,0.1)" }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#90c8ff]/[0.04] to-transparent" />
         </div>
       )}
       <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 flex flex-col md:flex-row gap-12 md:gap-24">
         {/* ── Sidebar Nav ── */}
         <aside className="md:w-56 shrink-0 h-fit md:sticky md:top-32 hidden md:block">
-          <div className="text-cyan-400/30 text-[9px] tracking-[0.5em] uppercase mb-10 font-mono italic">
+          <div className="text-[#90c8ff]/30 text-[9px] tracking-[0.5em] uppercase mb-10 font-mono italic">
             // ON_THIS_PAGE
           </div>
           <ul className="space-y-8 border-l" style={{ borderColor: "rgba(144,200,255,0.08)" }}>
@@ -279,17 +279,17 @@ export default function WhitepaperClient() {
                     onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
                     className="block text-left w-full pl-5 transition-all duration-300"
                     style={{
-                      borderLeft: isActive ? "2px solid rgba(34,211,238,0.6)" : "2px solid transparent",
+                      borderLeft: isActive ? "2px solid rgba(144,200,255,0.6)" : "2px solid transparent",
                       marginLeft: "-1px",
                       paddingLeft: isActive ? "20px" : "20px",
                     }}
                   >
                     <div className="text-[10px] tracking-[0.3em] mb-1 transition-colors duration-300"
-                      style={{ color: isActive ? "rgba(34,211,238,0.7)" : "rgba(255,255,255,0.1)" }}>
+                      style={{ color: isActive ? "rgba(144,200,255,0.7)" : "rgba(255,255,255,0.1)" }}>
                       {s.num}
                     </div>
                     <div className="text-[11px] tracking-[0.15em] uppercase transition-colors duration-300"
-                      style={{ color: isActive ? "rgba(34,211,238,0.9)" : "rgba(255,255,255,0.2)" }}>
+                      style={{ color: isActive ? "rgba(144,200,255,0.9)" : "rgba(255,255,255,0.2)" }}>
                       {s.heading}
                     </div>
                   </button>
@@ -303,12 +303,12 @@ export default function WhitepaperClient() {
         <div className="flex-1 min-w-0">
           {/* Header */}
           <div className="mb-28">
-            <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase mb-6">
+            <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase mb-6">
               TECHNICAL_WHITEPAPER // V2.0_CONTINUITY
             </div>
             <h1 className="text-3xl md:text-4xl font-bold tracking-tighter text-white leading-tight mb-6">
               Why DeepSeek and GPT-5<br />
-              <span className="text-cyan-300/80">Cannot Forge</span> the Human Kinetic Signature
+              <span className="text-[#90c8ff]/80">Cannot Forge</span> the Human Kinetic Signature
             </h1>
             <div className="flex items-center gap-3 text-[11px]">
               <span className="text-white/30">MyShape Protocol</span>
@@ -318,8 +318,8 @@ export default function WhitepaperClient() {
               <span className="text-white/30">v0.1</span>
             </div>
             <div className="flex items-center gap-3 mt-4">
-              <span className="flex items-center gap-1.5 text-cyan-400/60 text-[9px] tracking-[0.2em] uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)] animate-pulse" />
+              <span className="flex items-center gap-1.5 text-[#90c8ff]/60 text-[9px] tracking-[0.2em] uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)] animate-pulse" />
                 Engine v0.1.0
               </span>
               <span className="text-white/10">|</span>
@@ -334,8 +334,8 @@ export default function WhitepaperClient() {
             {SECTIONS.map((section) => (
               <section key={section.id} id={section.id} className="scroll-mt-40 pt-16 first:pt-0 group"
                 onMouseEnter={() => playTick(600, "sine", 0.04, 0.01)}>
-                <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-white mb-8 uppercase transition-colors duration-500 group-hover:text-cyan-300/80">
-                  <span className="text-cyan-400/60 mr-3">{section.num}.</span>
+                <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-white mb-8 uppercase transition-colors duration-500 group-hover:text-[#90c8ff]/80">
+                  <span className="text-[#90c8ff]/60 mr-3">{section.num}.</span>
                   {section.heading}
                 </h2>
                 <div className="space-y-6 text-white/50 text-[15px] leading-[1.8] font-light">
@@ -363,46 +363,46 @@ export default function WhitepaperClient() {
                     {/* Genesis Cohort 实时状态 */}
                     <div className="border p-6" style={{ borderColor: "rgba(144,200,255,0.15)", background: "rgba(4,14,28,0.5)" }}>
                       <div className="flex items-center gap-3 mb-4">
-                        <span className={`w-2 h-2 rounded-full ${isSealed ? "bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.9)]" : "bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)] animate-pulse"}`} />
-                        <span className="text-cyan-400/60 text-[9px] tracking-[0.4em] uppercase">
+                        <span className={`w-2 h-2 rounded-full ${isSealed ? "bg-[#90c8ff] shadow-[0_0_12px_rgba(144,200,255,0.9)]" : "bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.8)] animate-pulse"}`} />
+                        <span className="text-[#90c8ff]/60 text-[9px] tracking-[0.4em] uppercase">
                           {isSealed ? "Genesis Cohort — Sealed & Immutable" : "Genesis Cohort — Live Registry"}
                         </span>
                         {isSealed && (
-                          <span className="text-cyan-400/40 text-[8px] tracking-[0.2em] border border-cyan-400/20 px-2 py-0.5">FINAL</span>
+                          <span className="text-[#90c8ff]/40 text-[8px] tracking-[0.2em] border border-[#90c8ff]/20 px-2 py-0.5">FINAL</span>
                         )}
                       </div>
 
                       <div className="flex items-baseline gap-4 mb-4">
-                        <span className="text-5xl font-light font-mono text-cyan-300/80">{genesisNodes.total}</span>
+                        <span className="text-5xl font-light font-mono text-[#90c8ff]/80">{genesisNodes.total}</span>
                         <span className="text-white/20 text-[11px] tracking-[0.2em] uppercase">of 100 slots claimed</span>
-                        <span className="text-cyan-400/40 text-[10px]">— {genesisNodes.remaining} remaining</span>
+                        <span className="text-[#90c8ff]/40 text-[10px]">— {genesisNodes.remaining} remaining</span>
                       </div>
 
                       {/* 协议同步进度条 */}
                       <div className="mb-6">
                         {isSealed ? (
-                          <div className="text-center py-3 border border-cyan-400/20 bg-cyan-400/[0.03]">
-                            <div className="text-cyan-400/80 text-[10px] tracking-[0.4em] uppercase font-mono mb-1">◈ COHORT_SEALED ◈</div>
+                          <div className="text-center py-3 border border-[#90c8ff]/20 bg-[#90c8ff]/[0.03]">
+                            <div className="text-[#90c8ff]/80 text-[10px] tracking-[0.4em] uppercase font-mono mb-1">◈ COHORT_SEALED ◈</div>
                             <div className="text-white/25 text-[8px] tracking-[0.2em] uppercase">Identity Layer Anchored — Registry Immutable</div>
                           </div>
                         ) : (
                           <>
                             <div className="flex items-center justify-between mb-1.5">
                               <span className="text-white/10 text-[8px] tracking-[0.3em] uppercase">Protocol Sync</span>
-                              <span className="text-cyan-400/30 font-mono text-[8px]">{(genesisNodes.total / 100 * 100).toFixed(1)}%</span>
+                              <span className="text-[#90c8ff]/30 font-mono text-[8px]">{(genesisNodes.total / 100 * 100).toFixed(1)}%</span>
                             </div>
                             <div className="relative h-1 bg-white/[0.04] overflow-hidden">
                               <div
-                                className={`absolute inset-y-0 left-0 bg-gradient-to-r from-cyan-500/40 via-cyan-400/60 to-cyan-300/40 transition-all duration-1000 ease-out ${nodePulse ? "animate-pulse" : ""}`}
+                                className={`absolute inset-y-0 left-0 bg-gradient-to-r from-[#90c8ff]/40 via-[#90c8ff]/60 to-[#90c8ff]/40 transition-all duration-1000 ease-out ${nodePulse ? "animate-pulse" : ""}`}
                                 style={{
                                   width: `${Math.max(genesisNodes.total / 100 * 100, 1)}%`,
-                                  boxShadow: nodePulse ? "0 0 12px rgba(34,211,238,0.6)" : "0 0 4px rgba(34,211,238,0.2)",
+                                  boxShadow: nodePulse ? "0 0 12px rgba(144,200,255,0.6)" : "0 0 4px rgba(144,200,255,0.2)",
                                 }}
                               />
                               <div className="absolute inset-y-0 w-full pointer-events-none" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%)", backgroundSize: "200% 100%", animation: "shimmer 3s ease-in-out infinite" }} />
                             </div>
                             <div className="flex items-center gap-1.5 mt-1">
-                              <span className={`w-1 h-1 rounded-full transition-all duration-500 ${nodePulse ? "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]" : "bg-cyan-400/30"}`} />
+                              <span className={`w-1 h-1 rounded-full transition-all duration-500 ${nodePulse ? "bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.8)]" : "bg-[#90c8ff]/30"}`} />
                               <span className="text-white/10 text-[8px] tracking-[0.2em] uppercase">
                                 {genesisNodes.total === 0 ? "Awaiting genesis initialization" :
                                  genesisNodes.total < 100 ? "Network bootstrapping in progress" :
@@ -433,8 +433,8 @@ export default function WhitepaperClient() {
                         </div>
                       )}
                       {isSealed && (
-                        <div className="text-center mt-4 pt-3 border-t border-cyan-400/10">
-                          <span className="text-cyan-400/30 text-[8px] tracking-[0.3em] uppercase font-mono">
+                        <div className="text-center mt-4 pt-3 border-t border-[#90c8ff]/10">
+                          <span className="text-[#90c8ff]/30 text-[8px] tracking-[0.3em] uppercase font-mono">
                             ◈ Genesis Registry — Permanently Anchored to Protocol Root Index
                           </span>
                         </div>
@@ -445,9 +445,9 @@ export default function WhitepaperClient() {
                     <div className="text-center pt-4">
                       <a href="/genesis"
                         onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                        className="inline-flex items-center gap-2 px-8 py-3 border text-cyan-300/70 text-[10px] tracking-[0.3em] uppercase font-mono hover:bg-cyan-400/[0.04] transition-all"
+                        className="inline-flex items-center gap-2 px-8 py-3 border text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] transition-all"
                         style={{ borderColor: "rgba(144,200,255,0.3)" }}>
-                        Initialize Genesis <span className="text-cyan-400/50">→</span>
+                        Initialize Genesis <span className="text-[#90c8ff]/50">→</span>
                       </a>
                     </div>
                   </div>
@@ -456,8 +456,8 @@ export default function WhitepaperClient() {
                 {section.id === "integration" && (
                   <div className="space-y-3 my-8">
                     <div className="border p-5" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
-                      <div className="text-cyan-400/40 text-[8px] tracking-[0.3em] uppercase mb-3 font-mono">TypeScript SDK</div>
-                      <pre className="text-cyan-200/60 text-[11px] leading-relaxed font-mono whitespace-pre-wrap">
+                      <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.3em] uppercase mb-3 font-mono">TypeScript SDK</div>
+                      <pre className="text-[#90c8ff]/60 text-[11px] leading-relaxed font-mono whitespace-pre-wrap">
 {`import { MyShapeSDK } from "myshape-sdk";
 
 const myshape = await MyShapeSDK.init();
@@ -471,7 +471,7 @@ if (result.verified) { executeTransaction(); }`}
                     </div>
                     <div className="border p-5" style={{ borderColor: "rgba(144,200,255,0.1)", background: "rgba(2,4,10,0.6)" }}>
                       <div className="text-white/20 text-[8px] tracking-[0.3em] uppercase mb-3 font-mono">Native CLI</div>
-                      <pre className="text-cyan-400/35 text-[11px] leading-relaxed font-mono whitespace-pre-wrap">
+                      <pre className="text-[#90c8ff]/35 text-[11px] leading-relaxed font-mono whitespace-pre-wrap">
 {`cargo run --release --bin myshape-verify -- \\
   --enrollment alice.enroll.json \\
   --challenge session.challenge.json \\
@@ -493,10 +493,10 @@ if (result.verified) { executeTransaction(); }`}
                 <p className="text-white/30 text-[11px]">Five lines of code. Zero data stored. Real human presence.</p>
               </div>
               <a href="/developers"
-                className="inline-flex items-center gap-2 px-5 py-2.5 border text-cyan-300/70 text-[10px] tracking-[0.2em] uppercase font-mono hover:bg-cyan-400/[0.04] transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border text-[#90c8ff]/70 text-[10px] tracking-[0.2em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] transition-all"
                 style={{ borderColor: "rgba(144,200,255,0.25)" }}
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>
-                View SDK Reference <span className="text-cyan-400/40">→</span>
+                View SDK Reference <span className="text-[#90c8ff]/40">→</span>
               </a>
             </div>
           </div>

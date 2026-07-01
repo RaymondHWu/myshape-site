@@ -204,17 +204,17 @@ export default function ConnectWallet({ onSuccess, email, className = "" }: Prop
         <div className="flex flex-col items-center gap-2">
           {showConfirmed ? (
             <div className="flex flex-col items-center gap-1 animate-[fadeIn_0.4s_ease-out]">
-              <div className="flex items-center gap-2 px-4 py-2 border border-cyan-400/40 bg-cyan-400/[0.06]">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
-                <span className="text-cyan-300/80 font-mono text-[10px] tracking-[0.2em] uppercase">Identity Linked</span>
+              <div className="flex items-center gap-2 px-4 py-2 border border-[#90c8ff]/40 bg-[#90c8ff]/[0.06]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.8)]" />
+                <span className="text-[#90c8ff]/80 font-mono text-[10px] tracking-[0.2em] uppercase">Identity Linked</span>
               </div>
               <span className="text-white/25 text-[8px] tracking-[0.15em] uppercase font-light italic">Geometry is now verified.</span>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 border border-cyan-400/25 bg-cyan-400/[0.03]">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/60 shadow-[0_0_4px_rgba(34,211,238,0.4)]" />
-                <span className="text-cyan-300/50 font-mono text-[10px] tracking-[0.1em]">
+              <div className="flex items-center gap-2 px-3 py-1.5 border border-[#90c8ff]/25 bg-[#90c8ff]/[0.03]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff]/60 shadow-[0_0_4px_rgba(144,200,255,0.4)]" />
+                <span className="text-[#90c8ff]/50 font-mono text-[10px] tracking-[0.1em]">
                   {address.slice(0, 6)}...{address.slice(-4)}
                 </span>
               </div>
@@ -245,7 +245,7 @@ export default function ConnectWallet({ onSuccess, email, className = "" }: Prop
             style={{ boxShadow: "0 0 30px rgba(144,200,255,0.2), inset 0 1px 0 rgba(168,200,240,0.08)" }} />
           {status === "connecting" || status === "signing" || status === "verifying" ? (
             <span className="relative z-10 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)] animate-pulse" />
               {status === "connecting" ? "CONNECTING..." : status === "signing" ? "SIGNING..." : "VERIFYING..."}
             </span>
           ) : (

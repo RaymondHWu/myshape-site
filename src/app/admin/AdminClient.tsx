@@ -109,7 +109,7 @@ export default function AdminClient() {
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6" style={{ paddingTop: "7rem", paddingBottom: "4rem" }}>
         <div className="space-y-4 mb-10">
-          <div className="text-cyan-500/50 text-[10px] tracking-[0.5em] uppercase">Engine_Calibration // Admin_Console</div>
+          <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">Engine_Calibration // Admin_Console</div>
           <h1 className="text-2xl md:text-3xl font-light tracking-[0.12em] text-white uppercase">
             Calibration <span style={{ color: "rgba(144,200,255,0.6)" }}>Control</span>
           </h1>
@@ -126,14 +126,14 @@ export default function AdminClient() {
             <div className="space-y-1.5">
               <div className="flex justify-between text-[8px]">
                 <span className="text-white/15">Toward 300</span>
-                <span className="text-cyan-400/40">{progressPct}%</span>
+                <span className="text-[#90c8ff]/40">{progressPct}%</span>
               </div>
               <div className="h-1 bg-white/5 rounded-full overflow-hidden">
                 <div className="h-full rounded-full transition-all duration-700"
                   style={{
                     width: `${progressPct}%`,
                     background: meetsMin
-                      ? "rgba(34,211,238,0.6)"
+                      ? "rgba(144,200,255,0.6)"
                       : "linear-gradient(90deg, rgba(144,200,255,0.2), rgba(144,200,255,0.5))",
                   }} />
               </div>
@@ -149,8 +149,8 @@ export default function AdminClient() {
           <div className="border border-white/10 bg-black/40 p-5 space-y-3" style={{ borderRadius: 4 }}>
             <div className="text-white/25 text-[8px] tracking-[0.2em] uppercase">Calibration</div>
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${status?.calibrated ? "bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.6)]" : "bg-white/20"}`} />
-              <span className={`text-lg font-light ${status?.calibrated ? "text-cyan-300/80" : "text-white/30"}`}>
+              <div className={`w-2 h-2 rounded-full ${status?.calibrated ? "bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.6)]" : "bg-white/20"}`} />
+              <span className={`text-lg font-light ${status?.calibrated ? "text-[#90c8ff]/80" : "text-white/30"}`}>
                 {status?.calibrated ? "ACTIVE" : "VACUUM"}
               </span>
             </div>
@@ -172,7 +172,7 @@ export default function AdminClient() {
               {(["high", "medium", "low"] as const).map((level) => (
                 <div key={level} className="flex justify-between items-center">
                   <span className="text-white/20 text-[9px] uppercase tracking-[0.15em]">{level}</span>
-                  <span className="text-cyan-300/60 text-[14px] tabular-nums font-mono">
+                  <span className="text-[#90c8ff]/60 text-[14px] tabular-nums font-mono">
                     {status?.thresholds[level]?.toFixed(3) ?? "—"}
                   </span>
                 </div>
@@ -198,7 +198,7 @@ export default function AdminClient() {
                   type="checkbox"
                   checked={use120Dim}
                   onChange={(e) => setUse120Dim(e.target.checked)}
-                  className="accent-cyan-400"
+                  className="accent-[#90c8ff]"
                 />
                 120-dim Rust
               </label>
@@ -207,7 +207,7 @@ export default function AdminClient() {
                 placeholder="ADMIN_SECRET"
                 value={adminSecret}
                 onChange={(e) => setAdminSecret(e.target.value)}
-                className="bg-black/60 border border-white/10 px-3 py-1.5 text-[9px] text-white/50 tracking-[0.1em] outline-none focus:border-cyan-400/30 w-36"
+                className="bg-black/60 border border-white/10 px-3 py-1.5 text-[9px] text-white/50 tracking-[0.1em] outline-none focus:border-[#90c8ff]/30 w-36"
                 style={{ borderRadius: 2 }}
               />
               <button
@@ -215,8 +215,8 @@ export default function AdminClient() {
                 disabled={runState === "running" || !meetsMin}
                 className="px-6 py-2 border text-[9px] tracking-[0.2em] uppercase transition-all disabled:opacity-20 disabled:cursor-not-allowed"
                 style={{
-                  borderColor: meetsMin ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.05)",
-                  color: meetsMin ? "rgba(34,211,238,0.7)" : "rgba(255,255,255,0.15)",
+                  borderColor: meetsMin ? "rgba(144,200,255,0.3)" : "rgba(255,255,255,0.05)",
+                  color: meetsMin ? "rgba(144,200,255,0.7)" : "rgba(255,255,255,0.15)",
                   borderRadius: 2,
                 }}
               >
@@ -228,7 +228,7 @@ export default function AdminClient() {
           {/* Result */}
           {runResult && (
             <div className={`p-3 border text-[9px] tracking-[0.06em] font-mono ${
-              runState === "success" ? "border-cyan-400/20 bg-cyan-400/[0.03] text-cyan-300/60" :
+              runState === "success" ? "border-[#90c8ff]/20 bg-[#90c8ff]/[0.03] text-[#90c8ff]/60" :
               runState === "error" ? "border-red-400/20 bg-red-400/[0.03] text-red-300/60" :
               "border-white/10 bg-white/[0.02] text-white/40"
             }`} style={{ borderRadius: 3 }}>
@@ -239,9 +239,9 @@ export default function AdminClient() {
 
         {/* ── Quick Links ── */}
         <div className="mt-8 flex gap-4 text-[8px] tracking-[0.15em] uppercase">
-          <a href="/motion-demo" className="text-cyan-400/30 hover:text-cyan-400/60 transition-colors">Motion Demo →</a>
-          <a href="/api/research/stats" className="text-cyan-400/30 hover:text-cyan-400/60 transition-colors">Stats API →</a>
-          <a href="/api/admin/calibration/status" className="text-cyan-400/30 hover:text-cyan-400/60 transition-colors">Status API →</a>
+          <a href="/motion-demo" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Motion Demo →</a>
+          <a href="/api/research/stats" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Stats API →</a>
+          <a href="/api/admin/calibration/status" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Status API →</a>
         </div>
       </div>
 
