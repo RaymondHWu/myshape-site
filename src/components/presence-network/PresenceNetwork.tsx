@@ -76,11 +76,11 @@ function ConsoleRow({
       onMouseEnter={() => playTick(freq, "sine", 0.06, 0.015)}>
       {pulse && <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot} animate-pulse`} />}
       {!pulse && <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot}`} />}
-      <span className="text-cyan-400/25 text-[13px] tracking-[0.1em] font-mono shrink-0 w-4 text-right">{">"}</span>
-      <span className="text-white/30 text-[13px] tracking-[0.12em] uppercase font-mono shrink-0 w-[80px]">{label}</span>
-      <span className={`text-[15px] tracking-[0.02em] font-mono font-light ${c.val}`}>{value}</span>
+      <span className="text-cyan-400/25 group-hover/row:text-cyan-400/60 text-[13px] tracking-[0.1em] font-mono shrink-0 w-4 text-right transition-colors duration-300">{">"}</span>
+      <span className="text-white/30 group-hover/row:text-white/55 text-[13px] tracking-[0.12em] uppercase font-mono shrink-0 w-[80px] transition-colors duration-300">{label}</span>
+      <span className={`text-[15px] tracking-[0.02em] font-mono font-light ${c.val} group-hover/row:brightness-125 transition-all duration-300`}>{value}</span>
       {children}
-      {sub && <span className={`text-[11px] tracking-[0.1em] font-mono ${c.sub}`}>{sub}</span>}
+      {sub && <span className={`text-[11px] tracking-[0.1em] font-mono ${c.sub} group-hover/row:brightness-150 transition-all duration-300`}>{sub}</span>}
     </div>
   );
 }
@@ -372,15 +372,15 @@ export default function PresenceNetwork() {
       </div>
 
       {/* ── Genesis progress ── */}
-      <div className="px-5 py-2 border-b border-white/[0.02]"
+      <div className="px-5 py-2 border-b border-white/[0.02] group/progress cursor-default transition-colors duration-300 hover:bg-white/[0.015]"
         onMouseEnter={() => playTick(550, "triangle", 0.05, 0.012)}>
         <div className="flex items-center gap-3">
-          <span className="text-white/30 text-[11px] tracking-[0.15em] uppercase font-mono shrink-0">GENESIS_PROGRESS</span>
+          <span className="text-white/30 group-hover/progress:text-white/55 text-[11px] tracking-[0.15em] uppercase font-mono shrink-0 transition-colors duration-300">GENESIS_PROGRESS</span>
           <div className="flex-1 h-[2px] bg-white/[0.04] overflow-hidden">
             <div className="h-full bg-gradient-to-r from-cyan-500/50 via-cyan-400/30 to-cyan-300/10 transition-all duration-1000"
               style={{ width: `${genesisPct}%` }} />
           </div>
-          <span className="text-cyan-400/70 text-[11px] tracking-[0.1em] font-mono shrink-0">{genesisPct}%</span>
+          <span className="text-cyan-400/70 group-hover/progress:text-cyan-400/90 text-[11px] tracking-[0.1em] font-mono shrink-0 transition-colors duration-300">{genesisPct}%</span>
         </div>
       </div>
 
