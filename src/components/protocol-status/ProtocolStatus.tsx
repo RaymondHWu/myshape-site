@@ -13,20 +13,26 @@ interface Status {
   status: string;
 }
 
-function StatGroup({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}
-      className="flex items-center gap-2 px-2 py-1 transition-all duration-300 hover:bg-white/[0.02] rounded cursor-default group/stat"
-    >
-      {children}
-    </div>
-  );
+function Dot({ color = "cyan", pulse = false }: { color?: "cyan" | "green" | "amber" | "muted"; pulse?: boolean }) {
+  const map = {
+    cyan:  "bg-cyan-400 shadow-[0_0_5px_rgba(34,211,238,0.5)]",
+    green: "bg-green-400 shadow-[0_0_5px_rgba(74,222,128,0.5)]",
+    amber: "bg-amber-400 shadow-[0_0_5px_rgba(251,191,36,0.4)]",
+    muted: "bg-white/15",
+  };
+  return <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${map[color]} ${pulse ? "animate-pulse" : ""}`} />;
 }
 
 export default function ProtocolStatus() {
   const [status, setStatus] = useState<Status | null>(null);
   const [pulse, setPulse] = useState(false);
+  const [scanPos, setScanPos] = useState(0);
+
+  // Scan line animation
+  useEffect(() => {
+    const t = setInterval(() => setScanPos(p => (p + 1) % 100), 100);
+    return () => clearInterval(t);
+  }, []);
 
   useEffect(() => {
     const fetch = () => {
@@ -52,51 +58,105 @@ export default function ProtocolStatus() {
 
   if (!status) return null;
 
+  const hasNodes = status.total_nodes > 0;
+
   return (
-    <div className="w-full border-t border-white/[0.04] bg-transparent py-3">
-      <div className="max-w-6xl mx-auto px-4 md:px-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[9px] tracking-[0.2em] uppercase font-mono">
-        <StatGroup>
-          <span className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${pulse ? "bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.8)]" : "bg-cyan-400/60 shadow-[0_0_4px_rgba(34,211,238,0.4)]"}`} />
-          <span className="text-white/20 group-hover/stat:text-white/40 transition-colors">Protocol</span>
-          <span className="text-cyan-400/60 group-hover/stat:text-cyan-300/90 transition-colors">{status.status}</span>
-        </StatGroup>
+    <div className="relative w-full border-t border-white/[0.03] bg-gradient-to-b from-white/[0.01] to-transparent">
+      {/* Scan line */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute w-full h-[1px]"
+          style={{
+            top: `${scanPos}%`,
+            background: "linear-gradient(90deg, transparent, rgba(34,211,238,0.04) 50%, transparent)",
+          }} />
+      </div>
 
-        <span className="text-white/[0.06] hidden md:block">|</span>
+      <div className="max-w-6xl mx-auto px-4 md:px-10 py-4">
+        <div className="flex flex-wrap items-center justify-center md:justify-between gap-x-6 gap-y-2">
+          {/* Left: protocol identity */}
+          <div className="flex items-center gap-4">
+            <div
+              className="flex items-center gap-2 cursor-default group/status"
+              onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}
+            >
+              <Dot color={hasNodes ? "green" : "cyan"} pulse={hasNodes} />
+              <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
+                PROTOCOL
+              </span>
+              <span className="text-cyan-400/50 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/70 transition-colors">
+                {status.status}
+              </span>
+            </div>
 
-        <StatGroup>
-          <span className="text-white/15 group-hover/stat:text-white/35 transition-colors">Genesis</span>
-          <span className="text-cyan-400/50 group-hover/stat:text-cyan-300/80 transition-colors">{status.genesis_nodes}</span>
-          <span className="text-white/10 group-hover/stat:text-white/25 transition-colors">/100</span>
-          {!status.cohort_sealed && (
-            <span className="text-white/[0.08] group-hover/stat:text-white/20 transition-colors">
-              — {status.genesis_remaining} open
-            </span>
-          )}
-          {status.cohort_sealed && (
-            <span className="text-cyan-400/30 text-[7px] tracking-[0.3em] group-hover/stat:text-cyan-300/60 transition-colors">SEALED</span>
-          )}
-        </StatGroup>
+            <span className="text-white/[0.05] select-none">·</span>
 
-        <span className="text-white/[0.06] hidden md:block">|</span>
+            <div
+              className="flex items-center gap-2 cursor-default group/status"
+              onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
+            >
+              <Dot color={status.cohort_sealed ? "green" : "amber"} pulse={!status.cohort_sealed && status.genesis_nodes > 0} />
+              <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
+                GENESIS
+              </span>
+              <span className="text-amber-400/50 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-amber-300/70 transition-colors">
+                {status.genesis_nodes}<span className="text-white/10">/100</span>
+              </span>
+              {status.cohort_sealed && (
+                <span className="text-green-400/40 text-[7px] tracking-[0.2em] uppercase font-mono">SEALED</span>
+              )}
+              {!status.cohort_sealed && status.genesis_nodes > 0 && (
+                <span className="text-white/10 text-[7px] tracking-[0.1em] uppercase font-mono">{status.genesis_remaining} open</span>
+              )}
+            </div>
 
-        <StatGroup>
-          <span className="text-white/15 group-hover/stat:text-white/35 transition-colors">Nodes</span>
-          <span className="text-cyan-400/50 group-hover/stat:text-cyan-300/80 transition-colors">{status.active_humans}</span>
-          <span className="text-white/10 group-hover/stat:text-white/25 transition-colors">human</span>
-          <span className="text-white/[0.06] group-hover/stat:text-white/15 transition-colors">+</span>
-          <span className="text-cyan-400/30 group-hover/stat:text-cyan-300/60 transition-colors">{status.agents}</span>
-          <span className="text-white/10 group-hover/stat:text-white/25 transition-colors">agent</span>
-        </StatGroup>
+            <span className="text-white/[0.05] select-none">·</span>
 
-        {status.last_scan && (
-          <>
-            <span className="text-white/[0.06] hidden md:block">|</span>
-            <StatGroup>
-              <span className="text-white/15 group-hover/stat:text-white/35 transition-colors">Last Scan</span>
-              <span className="text-white/20 group-hover/stat:text-white/45 transition-colors">{status.last_scan}</span>
-            </StatGroup>
-          </>
-        )}
+            <div
+              className="flex items-center gap-2 cursor-default group/status"
+              onMouseEnter={() => playTick(550, "sine", 0.04, 0.01)}
+            >
+              <Dot color={hasNodes ? "cyan" : "muted"} pulse={hasNodes} />
+              <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
+                NODES
+              </span>
+              <span className="text-cyan-400/45 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/60 transition-colors">
+                {status.active_humans}h
+              </span>
+              <span className="text-white/[0.06]">+</span>
+              <span className="text-cyan-400/25 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/40 transition-colors">
+                {status.agents}a
+              </span>
+            </div>
+          </div>
+
+          {/* Right: meta */}
+          <div className="flex items-center gap-4">
+            {status.last_scan && (
+              <div
+                className="flex items-center gap-2 cursor-default group/status"
+                onMouseEnter={() => playTick(400, "sine", 0.03, 0.008)}
+              >
+                <span className="text-white/15 text-[8px] tracking-[0.12em] uppercase font-mono group-hover/status:text-white/30 transition-colors">
+                  LAST_SCAN
+                </span>
+                <span className="text-white/20 text-[8px] tracking-[0.06em] font-mono group-hover/status:text-white/40 transition-colors">
+                  {status.last_scan}
+                </span>
+              </div>
+            )}
+
+            <span className="text-white/[0.04] select-none">|</span>
+
+            <div className="flex items-center gap-2">
+              <span className="text-white/[0.06] text-[7px] tracking-[0.15em] uppercase font-mono">
+                T+{(status.total_nodes * 7) || 0}d
+              </span>
+              <span className="text-white/[0.04] text-[7px] tracking-[0.1em] uppercase font-mono">
+                {status.total_nodes > 0 ? "MESH_ACTIVE" : "AWAITING"}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
