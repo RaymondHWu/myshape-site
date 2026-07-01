@@ -51,7 +51,7 @@ export default function GenesisNodeInit({ onClose }: { onClose: () => void }) {
       const r = await fetch("/api/nodes/handshake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim(), origin: window.location.origin }),
+        body: JSON.stringify({ email: email.trim(), origin_domain: window.location.origin }),
       });
       const d: HandshakeResponse = await r.json();
       setResult(d);

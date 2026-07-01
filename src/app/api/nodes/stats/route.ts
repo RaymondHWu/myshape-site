@@ -28,7 +28,7 @@ export async function GET() {
 
     // Recent nodes for the activity feed
     const { data: recent } = await supabase
-      .from("developer_keys")
+      .from("developer_nodes")
       .select("origin_domain, sdk_version, created_at, last_used_at, request_count, email")
       .order("created_at", { ascending: false })
       .limit(10);

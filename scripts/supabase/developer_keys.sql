@@ -5,7 +5,7 @@
 -- ============================================================
 
 -- 1. Main table: one row per developer/institution node
-CREATE TABLE IF NOT EXISTS developer_keys (
+CREATE TABLE IF NOT EXISTS developer_nodes (
   email          TEXT NOT NULL,
   api_key        TEXT PRIMARY KEY,
   status         TEXT NOT NULL DEFAULT 'ACTIVE',
@@ -16,12 +16,12 @@ CREATE TABLE IF NOT EXISTS developer_keys (
   last_used_at   TIMESTAMPTZ
 );
 
-CREATE INDEX IF NOT EXISTS idx_dev_keys_email   ON developer_keys(email);
-CREATE INDEX IF NOT EXISTS idx_dev_keys_status  ON developer_keys(status);
-CREATE INDEX IF NOT EXISTS idx_dev_keys_created ON developer_keys(created_at);
-CREATE INDEX IF NOT EXISTS idx_dev_keys_domain  ON developer_keys(origin_domain);
+CREATE INDEX IF NOT EXISTS idx_dev_keys_email   ON developer_nodes(email);
+CREATE INDEX IF NOT EXISTS idx_dev_keys_status  ON developer_nodes(status);
+CREATE INDEX IF NOT EXISTS idx_dev_keys_created ON developer_nodes(created_at);
+CREATE INDEX IF NOT EXISTS idx_dev_keys_domain  ON developer_nodes(origin_domain);
 
-ALTER TABLE developer_keys ENABLE ROW LEVEL SECURITY;
+ALTER TABLE developer_nodes ENABLE ROW LEVEL SECURITY;
 
 
 -- 2. Summary table: auto-updated by trigger, millisecond queries
@@ -53,17 +53,17 @@ BEGIN
   week_ago  := NOW() - INTERVAL '7 days';
 
   UPDATE node_statistics SET
-    total_nodes    = (SELECT COUNT(*) FROM developer_keys WHERE status = 'ACTIVE'),
-    today_nodes    = (SELECT COUNT(*) FROM developer_keys WHERE status = 'ACTIVE' AND created_at::date = today_str::date),
-    active_last_7d = (SELECT COUNT(*) FROM developer_keys WHERE status = 'ACTIVE' AND last_used_at >= week_ago),
-    total_requests = COALESCE((SELECT SUM(request_count) FROM developer_keys), 0),
+    total_nodes    = (SELECT COUNT(*) FROM developer_nodes WHERE status = 'ACTIVE'),
+    today_nodes    = (SELECT COUNT(*) FROM developer_nodes WHERE status = 'ACTIVE' AND created_at::date = today_str::date),
+    active_last_7d = (SELECT COUNT(*) FROM developer_nodes WHERE status = 'ACTIVE' AND last_used_at >= week_ago),
+    total_requests = COALESCE((SELECT SUM(request_count) FROM developer_nodes), 0),
     domain_counts  = (
       SELECT COALESCE(jsonb_object_agg(origin_domain, cnt), '{}')
-      FROM (SELECT origin_domain, COUNT(*) AS cnt FROM developer_keys GROUP BY origin_domain) sub
+      FROM (SELECT origin_domain, COUNT(*) AS cnt FROM developer_nodes GROUP BY origin_domain) sub
     ),
     sdk_counts     = (
       SELECT COALESCE(jsonb_object_agg(sdk_version, cnt), '{}')
-      FROM (SELECT sdk_version, COUNT(*) AS cnt FROM developer_keys GROUP BY sdk_version) sub
+      FROM (SELECT sdk_version, COUNT(*) AS cnt FROM developer_nodes GROUP BY sdk_version) sub
     ),
     updated_at     = NOW()
   WHERE id = 1;
@@ -74,8 +74,8 @@ $$ LANGUAGE plpgsql;
 
 
 -- 4. Attach trigger
-DROP TRIGGER IF EXISTS trg_node_statistics ON developer_keys;
+DROP TRIGGER IF EXISTS trg_node_statistics ON developer_nodes;
 CREATE TRIGGER trg_node_statistics
-  AFTER INSERT OR UPDATE OR DELETE ON developer_keys
+  AFTER INSERT OR UPDATE OR DELETE ON developer_nodes
   FOR EACH STATEMENT
   EXECUTE FUNCTION refresh_node_statistics();
