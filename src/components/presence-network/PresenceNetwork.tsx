@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { playTick } from "@/utils/useAudioTick";
 
 interface NetworkNode {
   handle: string;
@@ -48,6 +49,7 @@ function ConsoleRow({
   accent = "cyan",
   pulse = false,
   flash = false,
+  freq = 600,
 }: {
   label: string;
   value: string | number;
@@ -55,6 +57,7 @@ function ConsoleRow({
   accent?: "cyan" | "amber" | "green" | "muted" | "red";
   pulse?: boolean;
   flash?: boolean;
+  freq?: number;
 }) {
   const accentColor = {
     cyan:  { dot: "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.5)]", val: "text-cyan-400/70", sub: "text-cyan-400/30" },
@@ -66,7 +69,9 @@ function ConsoleRow({
   const c = accentColor[accent];
 
   return (
-    <div className={`flex items-center gap-3 group/row hover:bg-white/[0.015] px-3 py-2 -mx-3 transition-all duration-300 ${flash ? "bg-cyan-400/[0.04]" : ""}`}>
+    <div
+      className={`flex items-center gap-3 group/row hover:bg-white/[0.015] px-3 py-2 -mx-3 transition-all duration-300 ${flash ? "bg-cyan-400/[0.04]" : ""}`}
+      onMouseEnter={() => playTick(freq, "sine", 0.06, 0.015)}>
       {pulse && <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot} animate-pulse`} />}
       {!pulse && <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot}`} />}
       <span className="text-cyan-400/25 text-[13px] tracking-[0.1em] font-mono shrink-0 w-4 text-right">{">"}</span>
@@ -320,7 +325,8 @@ export default function PresenceNetwork() {
       <div className="absolute bottom-0 right-0 w-[1px] h-3 bg-cyan-400/20" />
 
       {/* ── Header bar ── */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.03]">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.03]"
+        onMouseEnter={() => playTick(300, "sine", 0.04, 0.01)}>
         <div className="flex items-center gap-2.5">
           <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${hasNodes ? "bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.5)] animate-pulse" : "bg-cyan-400/40 shadow-[0_0_4px_rgba(34,211,238,0.2)]"}`} />
           <span className="text-white/35 text-[11px] tracking-[0.15em] uppercase font-mono">
@@ -353,17 +359,18 @@ export default function PresenceNetwork() {
 
       {/* ── Console readout ── */}
       <div className="px-5 py-4 border-b border-white/[0.02] space-y-0.5">
-        <ConsoleRow label="ENCLAVE" value={hasNodes ? "OPERATIONAL" : "STANDBY"} accent={hasNodes ? "green" : "muted"} pulse={hasNodes} flash={flashRows.has("ENCLAVE")} />
-        <ConsoleRow label="NODES" value={data.totalNodes} sub={data.totalNodes === 0 ? "(awaiting first uplink)" : `human:${data.activeHumans}  agent:${data.agents}`} accent={data.totalNodes > 0 ? "cyan" : "muted"} pulse={data.totalNodes > 0} flash={flashRows.has("NODES")} />
-        <ConsoleRow label="GENESIS" value={`${data.genesisNodes}/100`} sub={genesisPct > 0 ? `${genesisPct}% complete` : "(cohort forming)"} accent={data.genesisNodes > 0 ? "amber" : "muted"} pulse={data.genesisNodes > 0} flash={flashRows.has("GENESIS")} />
-        <ConsoleRow label="TODAY" value={data.activeToday} sub={data.activeToday > 0 ? "scans recorded" : "(no activity)"} accent={data.activeToday > 0 ? "green" : "muted"} flash={flashRows.has("TODAY")} />
-        <ConsoleRow label="ENGINES" value={data.engines} sub="operational" accent="cyan" />
-        <ConsoleRow label="ATK_SIGS" value={data.attackSigs} sub="indexed · monitoring" accent={data.attackSigs > 0 ? "amber" : "muted"} />
-        <ConsoleRow label="CORE" value={data.coreTests} sub="all tests passing" accent="green" pulse />
+        <ConsoleRow label="ENCLAVE" value={hasNodes ? "OPERATIONAL" : "STANDBY"} accent={hasNodes ? "green" : "muted"} pulse={hasNodes} flash={flashRows.has("ENCLAVE")} freq={400} />
+        <ConsoleRow label="NODES" value={data.totalNodes} sub={data.totalNodes === 0 ? "(awaiting first uplink)" : `human:${data.activeHumans}  agent:${data.agents}`} accent={data.totalNodes > 0 ? "cyan" : "muted"} pulse={data.totalNodes > 0} flash={flashRows.has("NODES")} freq={500} />
+        <ConsoleRow label="GENESIS" value={`${data.genesisNodes}/100`} sub={genesisPct > 0 ? `${genesisPct}% complete` : "(cohort forming)"} accent={data.genesisNodes > 0 ? "amber" : "muted"} pulse={data.genesisNodes > 0} flash={flashRows.has("GENESIS")} freq={600} />
+        <ConsoleRow label="TODAY" value={data.activeToday} sub={data.activeToday > 0 ? "scans recorded" : "(no activity)"} accent={data.activeToday > 0 ? "green" : "muted"} flash={flashRows.has("TODAY")} freq={700} />
+        <ConsoleRow label="ENGINES" value={data.engines} sub="operational" accent="cyan" freq={800} />
+        <ConsoleRow label="ATK_SIGS" value={data.attackSigs} sub="indexed · monitoring" accent={data.attackSigs > 0 ? "amber" : "muted"} freq={900} />
+        <ConsoleRow label="CORE" value={data.coreTests} sub="all tests passing" accent="green" pulse freq={1000} />
       </div>
 
       {/* ── Genesis progress bar ── */}
-      <div className="px-5 py-2 border-b border-white/[0.02]">
+      <div className="px-5 py-2 border-b border-white/[0.02]"
+        onMouseEnter={() => playTick(550, "triangle", 0.05, 0.012)}>
         <div className="flex items-center gap-3">
           <span className="text-white/30 text-[11px] tracking-[0.15em] uppercase font-mono shrink-0">GENESIS_PROGRESS</span>
           <div className="flex-1 h-[2px] bg-white/[0.04] overflow-hidden">
