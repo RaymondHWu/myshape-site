@@ -116,23 +116,25 @@ pose.onResults((results) => {
                 desc: "",
                 isAction: true,
               },
-            ].map((s) => (
+            ].map((s, i) => (
               <div key={s.step}
-                className="border border-white/5 bg-white/[0.01] hover:border-[#90c8ff]/20 transition-all duration-500 overflow-hidden">
+                onMouseEnter={e => { playTick(500 + i * 100, "sine", 0.08, 0.02); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; e.currentTarget.style.boxShadow = "0 8px 32px -8px rgba(144,200,255,0.10)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "translateY(0)"; }}
+                className="border border-white/5 bg-white/[0.01] transition-all duration-500 overflow-hidden cursor-default">
                 <div className="flex items-center gap-4 px-5 py-3 border-b border-white/5">
                   <span className="text-[#90c8ff]/40 text-[18px] font-light tracking-[0.1em]">{s.step}</span>
                   <div className="flex-1">
-                    <span className="text-white/50 text-[11px] tracking-[0.2em] uppercase">{s.title}</span>
+                    <span className="text-white/55 text-[11px] tracking-[0.2em] uppercase">{s.title}</span>
                   </div>
-                  <span className="text-white/15 text-[9px] tracking-[0.1em]">{s.time}</span>
+                  <span className="text-white/22 text-[9px] tracking-[0.1em]">{s.time}</span>
                 </div>
                 {!s.isAction && (
-                  <div className="p-5 bg-black/30 relative group">
+                  <div className="p-5 bg-black/30 relative group/code">
                     <pre className="text-[#90c8ff]/60 text-[10px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
                       {s.code}
                     </pre>
                     <button onClick={() => { navigator.clipboard.writeText(s.code.trim()); playTick(600, "sine", 0.06, 0.015); }}
-                      className="absolute top-3 right-3 text-white/10 hover:text-[#90c8ff]/60 text-[8px] tracking-[0.15em] uppercase transition-colors opacity-0 group-hover:opacity-100">
+                      className="absolute top-3 right-3 text-white/10 hover:text-[#90c8ff]/60 text-[8px] tracking-[0.15em] uppercase transition-colors opacity-0 group-hover/code:opacity-100">
                       Copy
                     </button>
                   </div>
@@ -152,7 +154,7 @@ pose.onResults((results) => {
                   </div>
                 )}
                 {s.desc && (
-                  <div className="px-5 pb-3 text-white/20 text-[9px] tracking-[0.08em]">{s.desc}</div>
+                  <div className="px-5 pb-3 text-white/30 text-[9px] tracking-[0.08em]">{s.desc}</div>
                 )}
               </div>
             ))}
@@ -203,8 +205,8 @@ pose.onResults((results) => {
               { name: "Unforgeability", path: "engine/unforgeability.ts", desc: "Entropy gap theorem, security horizon" },
             ].map((e) => (
               <div key={e.name} className="p-4 transition-all duration-300"
-                onMouseEnter={ev => { playTick(700, "sine", 0.08, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "scale(1.02)"; }}
-                onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "scale(1)"; }}
+                onMouseEnter={ev => { playTick(700, "sine", 0.08, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "translateY(-2px)"; ev.currentTarget.style.boxShadow = "0 8px 32px -8px rgba(144,200,255,0.10)"; }}
+                onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "translateY(0)"; ev.currentTarget.style.boxShadow = "none"; }}
                 style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
                 <div className="text-[11px] tracking-[0.15em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.55)", fontSize: "11px" }} data-default="rgba(255,255,255,0.55)" data-hover="rgba(255,255,255,0.9)" data-default-size="11px" data-hover-size="13px">{e.name}</div>
                 <div className="font-mono text-[9px] mb-1.5" style={{ color: "rgba(144,200,255,0.3)", fontSize: "9px" }} data-default="rgba(144,200,255,0.3)" data-hover="rgba(144,200,255,0.7)" data-default-size="9px" data-hover-size="11px">{e.path}</div>
@@ -251,8 +253,8 @@ if (threat.overallVerdict === "human") {
               },
             ].map((ex, i) => (
               <div key={i} className="overflow-hidden transition-all duration-300"
-                onMouseEnter={ev => { playTick(600, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "scale(1.01)"; }}
-                onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "scale(1)"; }}
+                onMouseEnter={ev => { playTick(600, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "translateY(-2px)"; ev.currentTarget.style.boxShadow = "0 8px 32px -8px rgba(144,200,255,0.10)"; }}
+                onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "translateY(0)"; ev.currentTarget.style.boxShadow = "none"; }}
                 style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
                 <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02]">
                   <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(144,200,255,0.6)", fontSize: "10px" }} data-default="rgba(144,200,255,0.6)" data-hover="rgba(144,200,255,0.95)" data-default-size="10px" data-hover-size="13px">{ex.title}</span>
@@ -324,8 +326,8 @@ if (threat.overallVerdict === "human") {
           <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4">// REST_API</h2>
           {API_ENDPOINTS.map((ep) => (
             <div key={ep.path} className="p-4 mb-2 flex items-center gap-4 transition-all duration-300"
-              onMouseEnter={ev => { playTick(600, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "scale(1.02)"; }}
-              onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "scale(1)"; }}
+              onMouseEnter={ev => { playTick(600, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "translateY(-2px)"; ev.currentTarget.style.boxShadow = "0 8px 32px -8px rgba(144,200,255,0.10)"; }}
+              onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "translateY(0)"; ev.currentTarget.style.boxShadow = "none"; }}
               style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
               <span className="text-[10px] tracking-[0.2em] font-bold w-10" style={{ color: "rgba(144,200,255,0.6)", fontSize: "10px" }} data-default="rgba(144,200,255,0.6)" data-hover="rgba(144,200,255,0.95)" data-default-size="10px" data-hover-size="13px">{ep.method}</span>
               <span className="font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)" data-default-size="11px" data-hover-size="13px">{ep.path}</span>
