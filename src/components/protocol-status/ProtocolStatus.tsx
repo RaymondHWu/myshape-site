@@ -5,8 +5,8 @@ import { playTick } from "@/utils/useAudioTick";
 interface Status { total_nodes: number; genesis_nodes: number; genesis_remaining: number; active_humans: number; agents: number; last_scan: string | null; cohort_sealed: boolean; status: string; }
 
 const ICE = "rgba(144,200,255,";
-const BORDER = `${ICE}0.10)`;
-const BORDER_HOVER = `${ICE}0.35)`;
+const BORDER = `${ICE}0.16)`;
+const BORDER_HOVER = `${ICE}0.45)`;
 
 function Dot({ color = "cyan", pulse }: { color?: "cyan" | "green" | "amber" | "muted"; pulse?: boolean }) {
   const m = { cyan: "bg-[#90c8ff] shadow-[0_0_5px_rgba(144,200,255,0.5)]", green: "bg-green-400 shadow-[0_0_5px_rgba(74,222,128,0.5)]", amber: "bg-amber-400 shadow-[0_0_5px_rgba(251,191,36,0.4)]", muted: "bg-white/15" };
