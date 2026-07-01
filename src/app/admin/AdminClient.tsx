@@ -12,6 +12,93 @@
 import { useState, useEffect, useCallback } from "react";
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
+import { playTick } from "@/utils/useAudioTick";
+
+interface NodeStats {
+  total_nodes: number;
+  today_nodes: number;
+  active_last_7d: number;
+  total_requests: number;
+  top_domains: { domain: string; count: number }[];
+  sdk_versions: { version: string; count: number }[];
+  recent_nodes: { origin: string; sdk: string; created: string; last_used: string; requests: number }[];
+}
+
+function NodeTelemetry() {
+  const [stats, setStats] = useState<NodeStats | null>(null);
+
+  useEffect(() => {
+    fetch("/api/nodes/stats")
+      .then(r => r.json())
+      .then(setStats)
+      .catch(() => {});
+  }, []);
+
+  if (!stats) return null;
+
+  return (
+    <section className="mb-10">
+      <h2 className="text-white/30 text-[10px] tracking-[0.5em] uppercase mb-4"
+        onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>// DEVELOPER_NODES</h2>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+        {[
+          { label: "Total Nodes", value: stats.total_nodes },
+          { label: "Today", value: stats.today_nodes },
+          { label: "Active (7d)", value: stats.active_last_7d },
+          { label: "Total Requests", value: stats.total_requests },
+        ].map(m => (
+          <div key={m.label} className="border border-white/5 bg-white/[0.01] p-3 text-center">
+            <div className="text-white/20 text-[8px] tracking-[0.15em] uppercase mb-1">{m.label}</div>
+            <div className="text-[#90c8ff]/70 text-[16px] font-light font-mono">{m.value}</div>
+          </div>
+        ))}
+      </div>
+
+      {stats.top_domains.length > 0 && (
+        <div className="border border-white/5 bg-white/[0.01] p-4 mb-2">
+          <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-3">Top Origin Domains</div>
+          <div className="space-y-1">
+            {stats.top_domains.map(d => (
+              <div key={d.domain} className="flex justify-between text-[10px] font-mono">
+                <span className="text-white/35">{d.domain}</span>
+                <span className="text-[#90c8ff]/50">{d.count}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {stats.recent_nodes.length > 0 && (
+        <div className="border border-white/5 bg-white/[0.01] p-4">
+          <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-3">Recent Nodes</div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-[9px] font-mono">
+              <thead>
+                <tr className="text-white/20">
+                  <th className="pb-2 font-normal">Origin</th>
+                  <th className="pb-2 font-normal">SDK</th>
+                  <th className="pb-2 font-normal">Created</th>
+                  <th className="pb-2 font-normal">Req</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stats.recent_nodes.map((n, i) => (
+                  <tr key={i} className="border-t border-white/[0.02] text-white/30">
+                    <td className="py-1.5">{n.origin}</td>
+                    <td className="py-1.5 text-[#90c8ff]/40">{n.sdk}</td>
+                    <td className="py-1.5">{n.created?.slice(0, 10)}</td>
+                    <td className="py-1.5">{n.requests}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
 
 interface CalibrationStatus {
   calibrated: boolean;
@@ -237,11 +324,15 @@ export default function AdminClient() {
           )}
         </div>
 
+        {/* ── Developer Nodes ── */}
+        <NodeTelemetry />
+
         {/* ── Quick Links ── */}
         <div className="mt-8 flex gap-4 text-[8px] tracking-[0.15em] uppercase">
           <a href="/motion-demo" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Motion Demo →</a>
           <a href="/api/research/stats" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Stats API →</a>
           <a href="/api/admin/calibration/status" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Status API →</a>
+          <a href="/api/nodes/stats" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Nodes API →</a>
         </div>
       </div>
 
