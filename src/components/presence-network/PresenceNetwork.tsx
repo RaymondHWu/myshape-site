@@ -138,7 +138,7 @@ export default function PresenceNetwork() {
 
   // Canvas animation loop
   useEffect(() => {
-    if (!data || !canvasRef.current || data.nodes.length === 0) return;
+    if (!data || !canvasRef.current || (data.nodes?.length ?? 0) === 0) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d")!;
     let animId: number;
@@ -259,7 +259,7 @@ export default function PresenceNetwork() {
     );
   }
 
-  const hasNodes = data.nodes.length > 0;
+  const hasNodes = (data.nodes?.length ?? 0) > 0;
 
   return (
     <div className="border border-cyan-400/10 bg-cyan-400/[0.015] overflow-hidden"
