@@ -50,6 +50,7 @@ function ConsoleRow({
   pulse = false,
   flash = false,
   freq = 600,
+  children,
 }: {
   label: string;
   value: string | number;
@@ -58,6 +59,7 @@ function ConsoleRow({
   pulse?: boolean;
   flash?: boolean;
   freq?: number;
+  children?: React.ReactNode;
 }) {
   const accentColor = {
     cyan:  { dot: "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.5)]", val: "text-cyan-400/70", sub: "text-cyan-400/30" },
@@ -77,6 +79,7 @@ function ConsoleRow({
       <span className="text-cyan-400/25 text-[13px] tracking-[0.1em] font-mono shrink-0 w-4 text-right">{">"}</span>
       <span className="text-white/30 text-[13px] tracking-[0.12em] uppercase font-mono shrink-0 w-[80px]">{label}</span>
       <span className={`text-[15px] tracking-[0.02em] font-mono font-light ${c.val}`}>{value}</span>
+      {children}
       {sub && <span className={`text-[11px] tracking-[0.1em] font-mono ${c.sub}`}>{sub}</span>}
     </div>
   );
@@ -368,16 +371,16 @@ export default function PresenceNetwork() {
         <ConsoleRow label="CORE" value={data.coreTests} sub="all tests passing" accent="green" pulse freq={1000} />
       </div>
 
-      {/* ── Genesis progress bar ── */}
+      {/* ── Genesis progress ── */}
       <div className="px-5 py-2 border-b border-white/[0.02]"
         onMouseEnter={() => playTick(550, "triangle", 0.05, 0.012)}>
         <div className="flex items-center gap-3">
           <span className="text-white/30 text-[11px] tracking-[0.15em] uppercase font-mono shrink-0">GENESIS_PROGRESS</span>
           <div className="flex-1 h-[2px] bg-white/[0.04] overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-amber-500/60 via-amber-400/40 to-amber-300/30 transition-all duration-1000"
+            <div className="h-full bg-gradient-to-r from-cyan-500/50 via-cyan-400/30 to-cyan-300/10 transition-all duration-1000"
               style={{ width: `${genesisPct}%` }} />
           </div>
-          <span className="text-amber-400/70 text-[11px] tracking-[0.1em] font-mono shrink-0">{genesisPct}%</span>
+          <span className="text-cyan-400/70 text-[11px] tracking-[0.1em] font-mono shrink-0">{genesisPct}%</span>
         </div>
       </div>
 
