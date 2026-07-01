@@ -24,11 +24,11 @@ interface NodePosition {
 
 /* ── Accent color map ── */
 const accentMap = {
-  cyan:  { dot: "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.5)]", val: "text-cyan-400/70 group-hover/r:text-cyan-300/90", sub: "text-cyan-400/30 group-hover/r:text-cyan-400/60" },
-  amber: { dot: "bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.4)]", val: "text-amber-400/70 group-hover/r:text-amber-300/90", sub: "text-amber-400/30 group-hover/r:text-amber-400/60" },
-  green: { dot: "bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.4)]", val: "text-green-400/70 group-hover/r:text-green-300/90", sub: "text-green-400/30 group-hover/r:text-green-400/60" },
+  cyan:  { dot: "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.5)]", val: "text-white/80 group-hover/r:text-white",           sub: "text-white/22 group-hover/r:text-white/45" },
+  amber: { dot: "bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.4)]", val: "text-white/80 group-hover/r:text-white",           sub: "text-white/22 group-hover/r:text-white/45" },
+  green: { dot: "bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.4)]", val: "text-white/80 group-hover/r:text-white",           sub: "text-white/22 group-hover/r:text-white/45" },
   muted: { dot: "bg-white/10",                        val: "text-white/30 group-hover/r:text-white/55",     sub: "text-white/22 group-hover/r:text-white/40" },
-  red:   { dot: "bg-red-400 shadow-[0_0_6px_rgba(248,113,113,0.4)]",  val: "text-red-400/70 group-hover/r:text-red-300/90",   sub: "text-red-400/30 group-hover/r:text-red-400/60" },
+  red:   { dot: "bg-red-400 shadow-[0_0_6px_rgba(248,113,113,0.4)]",  val: "text-white/80 group-hover/r:text-white",           sub: "text-white/22 group-hover/r:text-white/45" },
 };
 
 type Accent = keyof typeof accentMap;
@@ -47,10 +47,10 @@ function ConsoleRow({
       onMouseEnter={() => playTick(freq, "sine", 0.06, 0.015)}
     >
       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot} ${pulse ? "animate-pulse" : ""}`} />
-      <span className="text-cyan-400/25 group-hover/r:text-cyan-400/50 text-[13px] tracking-[0.1em] font-mono shrink-0 w-[14px] text-right transition-colors duration-300">{">"}</span>
-      <span className="text-white/30 group-hover/r:text-white/55 text-[13px] tracking-[0.12em] uppercase font-mono shrink-0 w-[90px] transition-colors duration-300">{label}</span>
-      <span className={`text-[15px] tracking-[0.02em] font-mono font-light transition-colors duration-300 ${c.val}`}>{value}</span>
-      {sub && <span className={`text-[11px] tracking-[0.1em] font-mono transition-colors duration-300 ml-1 ${c.sub}`}>{sub}</span>}
+      <span className="text-cyan-400/25 group-hover/r:text-cyan-400/50 text-[14px] tracking-[0.1em] font-mono shrink-0 w-[14px] text-right transition-colors duration-300">{">"}</span>
+      <span className="text-white/55 group-hover/r:text-white/85 text-[14px] tracking-[0.12em] uppercase font-mono shrink-0 w-[96px] transition-colors duration-300">{label}</span>
+      <span className={`text-[18px] tracking-[0.02em] font-mono font-light transition-colors duration-300 ${c.val}`}>{value}</span>
+      {sub && <span className={`text-[14px] tracking-[0.1em] font-mono transition-colors duration-300 ml-1 ${c.sub}`}>{sub}</span>}
     </div>
   );
 }

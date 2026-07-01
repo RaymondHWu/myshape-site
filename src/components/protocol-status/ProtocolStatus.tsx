@@ -27,17 +27,17 @@ function StatBadge({ label, value, color = "cyan", pulse = false, freq = 500 }: 
   label: string; value: React.ReactNode; color?: "cyan" | "green" | "amber" | "muted"; pulse?: boolean; freq?: number;
 }) {
   const accentVal = {
-    cyan:  "text-cyan-400/70 group-hover/b:text-cyan-400/90",
-    green: "text-green-400/70 group-hover/b:text-green-400/90",
-    amber: "text-amber-400/70 group-hover/b:text-amber-400/90",
+    cyan:  "text-white/80 group-hover/b:text-white",
+    green: "text-white/80 group-hover/b:text-white",
+    amber: "text-white/80 group-hover/b:text-white",
     muted: "text-white/30 group-hover/b:text-white/55",
   };
   return (
     <div className="flex items-center gap-2 cursor-default group/b"
       onMouseEnter={() => playTick(freq, "sine", 0.04, 0.01)}>
       <Dot color={color} pulse={pulse} />
-      <span className="text-white/30 group-hover/b:text-white/55 text-[11px] tracking-[0.15em] uppercase font-mono transition-colors duration-300">{label}</span>
-      <span className={`text-[11px] tracking-[0.12em] uppercase font-mono transition-colors duration-300 ${accentVal[color]}`}>{value}</span>
+      <span className="text-white/55 group-hover/b:text-white/85 text-[12px] tracking-[0.15em] uppercase font-mono transition-colors duration-300">{label}</span>
+      <span className={`text-[12px] tracking-[0.12em] uppercase font-mono transition-colors duration-300 ${accentVal[color]}`}>{value}</span>
     </div>
   );
 }
@@ -152,8 +152,8 @@ export default function ProtocolStatus() {
               <>
                 <div className="flex items-center gap-2 cursor-default group/b"
                   onMouseEnter={() => playTick(400, "sine", 0.03, 0.008)}>
-                  <span className="text-white/22 text-[10px] tracking-[0.12em] uppercase font-mono group-hover/b:text-white/40 transition-colors duration-300">LAST_SCAN</span>
-                  <span className="text-white/30 text-[10px] tracking-[0.06em] font-mono group-hover/b:text-white/55 transition-colors duration-300">{status.last_scan}</span>
+                  <span className="text-white/22 text-[10px] tracking-[0.12em] uppercase font-mono group-hover/b:text-white/45 transition-colors duration-300">LAST_SCAN</span>
+                  <span className="text-white/55 text-[10px] tracking-[0.06em] font-mono group-hover/b:text-white/85 transition-colors duration-300">{status.last_scan}</span>
                 </div>
                 <span className="text-white/[0.05] select-none">|</span>
               </>
