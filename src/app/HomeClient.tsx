@@ -285,28 +285,8 @@ export default function HomeClient() {
             </div>
             </div>
 
-            {/* Protocol Artifacts */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-10">
-              {[
-                { label: "Read", title: "Technical Spec v1", desc: "Motion Vector · PES · Proof System · SST Topology", href: "/papers/technical-spec", freq: 800 as const },
-                { label: "Review", title: "Threat Model", desc: "8 Attack Signatures · Entropy Gap Theorem · Cost Model", href: "/papers/threat-model", freq: 900 as const },
-                { label: "Build", title: "Developer SDK", desc: "5 Lines · TypeScript · Zero Dependencies · MIT License", href: "/developers", freq: 1000 as const },
-              ].map(card => (
-                <a key={card.href} href={card.href}
-                  onMouseEnter={e => { playTick(card.freq, "sine", 0.10, 0.025); e.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.background = "radial-gradient(circle at top left, rgba(144,200,255,0.06) 0%, transparent 70%)"; e.currentTarget.style.boxShadow = "0 12px 32px -8px rgba(144,200,255,0.12)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.boxShadow = "none"; }}
-                  className="group block p-6 overflow-hidden transition-all duration-500"
-                  style={{ border: "1px solid rgba(144,200,255,0.1)", borderRadius: "12px", background: "transparent" }}>
-                  <div className="text-cyan-400/40 text-[11px] tracking-[0.2em] uppercase mb-3 font-mono group-hover:text-cyan-400/70 transition-colors duration-500">{card.label}</div>
-                  <div className="text-white text-[19px] font-light tracking-[0.02em] mb-2 group-hover:text-white transition-colors duration-500">{card.title}</div>
-                  <div className="text-white/35 text-[14px] font-light leading-relaxed group-hover:text-white/55 transition-colors duration-500">{card.desc}</div>
-                  <div className="mt-4 text-cyan-400/25 group-hover:text-cyan-400/60 group-hover:translate-x-1 transition-all duration-500 inline-block text-[10px]">→</div>
-                </a>
-              ))}
-            </div>
-
             {/* ── Presence Network — live node mesh ── */}
-            <div className="mt-10 max-w-4xl mx-auto">
+            <div className="mt-6 max-w-4xl mx-auto">
               <PresenceNetwork />
             </div>
           </div>
