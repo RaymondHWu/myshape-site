@@ -47,12 +47,14 @@ function ConsoleRow({
   sub,
   accent = "cyan",
   pulse = false,
+  flash = false,
 }: {
   label: string;
   value: string | number;
   sub?: string;
   accent?: "cyan" | "amber" | "green" | "muted" | "red";
   pulse?: boolean;
+  flash?: boolean;
 }) {
   const accentColor = {
     cyan:  { dot: "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.5)]", val: "text-cyan-400/70", sub: "text-cyan-400/30" },
@@ -64,7 +66,7 @@ function ConsoleRow({
   const c = accentColor[accent];
 
   return (
-    <div className="flex items-center gap-3 group/row hover:bg-white/[0.015] px-3 py-2 -mx-3 transition-colors duration-500">
+    <div className={`flex items-center gap-3 group/row hover:bg-white/[0.015] px-3 py-2 -mx-3 transition-all duration-300 ${flash ? "bg-cyan-400/[0.04]" : ""}`}>
       {pulse && <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot} animate-pulse`} />}
       {!pulse && <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot}`} />}
       <span className="text-cyan-400/25 text-[13px] tracking-[0.1em] font-mono shrink-0 w-4 text-right">{">"}</span>
@@ -120,22 +122,55 @@ export default function PresenceNetwork() {
   const [data, setData] = useState<NetworkData | null>(null);
   const [loading, setLoading] = useState(true);
   const [scanPos, setScanPos] = useState(0);
+  const [breathPhase, setBreathPhase] = useState(0);
+  const [activityDots, setActivityDots] = useState([false, false, false]);
+  const [prevCounts, setPrevCounts] = useState({ nodes: 0, genesis: 0, today: 0 });
+  const [flashRows, setFlashRows] = useState<Set<string>>(new Set());
   const positionsRef = useRef<NodePosition[]>([]);
 
-  // Scan line animation
+  // Breathing border + scan line
   useEffect(() => {
     const timer = setInterval(() => {
       setScanPos(p => (p + 1) % 100);
+      setBreathPhase(p => Math.sin(p / 15) * 0.5 + 0.5);
     }, 80);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Random activity dots flicker
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActivityDots(Array.from({ length: 3 }, () => Math.random() > 0.55));
+    }, 1200 + Math.random() * 800);
     return () => clearInterval(timer);
   }, []);
 
   // Fetch network data
   useEffect(() => {
-    fetch("/api/presence/network")
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
+    const tick = () => {
+      fetch("/api/presence/network")
+        .then((r) => r.json())
+        .then((d) => {
+          setData(prev => {
+            if (prev) {
+              const changed = new Set<string>();
+              if (d.totalNodes !== prev.totalNodes) changed.add("NODES");
+              if (d.genesisNodes !== prev.genesisNodes) changed.add("GENESIS");
+              if (d.activeToday !== prev.activeToday) changed.add("TODAY");
+              if (changed.size > 0) {
+                setFlashRows(changed);
+                setTimeout(() => setFlashRows(new Set()), 800);
+              }
+            }
+            return d;
+          });
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    };
+    tick();
+    const interval = setInterval(tick, 15000);
+    return () => clearInterval(interval);
   }, []);
 
   // Canvas animation loop
@@ -263,8 +298,11 @@ export default function PresenceNetwork() {
   const genesisPct = Math.min(100, Math.round((data.genesisNodes / 100) * 100));
 
   return (
-    <div className="relative border border-cyan-400/[0.08] bg-gradient-to-b from-cyan-400/[0.015] to-transparent overflow-hidden"
-      style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)" }}>
+    <div className="relative border border-cyan-400/[0.08] bg-gradient-to-b from-cyan-400/[0.015] to-transparent overflow-hidden transition-shadow duration-[2000ms]"
+      style={{
+        clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+        boxShadow: `0 0 ${20 + breathPhase * 15}px rgba(34,211,238,${0.04 + breathPhase * 0.06})`,
+      }}>
 
       {/* ── Scan line ── */}
       <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden">
@@ -293,20 +331,32 @@ export default function PresenceNetwork() {
             {hasNodes ? "MESH_ACTIVE" : "PRE_GENESIS"}
           </span>
         </div>
-        {data.lastInbound && (
-          <div className="flex items-center gap-1.5">
-            <span className="text-white/15 text-[9px] tracking-[0.1em] uppercase font-mono">LAST_INBOUND</span>
-            <span className="text-white/30 text-[10px] tracking-[0.08em] font-mono">{data.lastInbound.mask}</span>
+        <div className="flex items-center gap-4">
+          {/* Activity indicators */}
+          <div className="hidden md:flex items-center gap-1.5">
+            {activityDots.map((on, i) => (
+              <span key={i}
+                className={`w-1 h-1 rounded-full transition-all duration-300 ${
+                  on ? "bg-cyan-400/90 shadow-[0_0_4px_rgba(34,211,238,0.6)]" : "bg-white/10"
+                }`}
+              />
+            ))}
           </div>
-        )}
+          {data.lastInbound && (
+            <div className="flex items-center gap-1.5">
+              <span className="text-white/15 text-[9px] tracking-[0.1em] uppercase font-mono">LAST_INBOUND</span>
+              <span className="text-white/30 text-[10px] tracking-[0.08em] font-mono">{data.lastInbound.mask}</span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ── Console readout ── */}
       <div className="px-5 py-4 border-b border-white/[0.02] space-y-0.5">
-        <ConsoleRow label="ENCLAVE" value={hasNodes ? "OPERATIONAL" : "STANDBY"} accent={hasNodes ? "green" : "muted"} pulse={hasNodes} />
-        <ConsoleRow label="NODES" value={data.totalNodes} sub={data.totalNodes === 0 ? "(awaiting first uplink)" : `human:${data.activeHumans}  agent:${data.agents}`} accent={data.totalNodes > 0 ? "cyan" : "muted"} pulse={data.totalNodes > 0} />
-        <ConsoleRow label="GENESIS" value={`${data.genesisNodes}/100`} sub={genesisPct > 0 ? `${genesisPct}% complete` : "(cohort forming)"} accent={data.genesisNodes > 0 ? "amber" : "muted"} pulse={data.genesisNodes > 0} />
-        <ConsoleRow label="TODAY" value={data.activeToday} sub={data.activeToday > 0 ? "scans recorded" : "(no activity)"} accent={data.activeToday > 0 ? "green" : "muted"} />
+        <ConsoleRow label="ENCLAVE" value={hasNodes ? "OPERATIONAL" : "STANDBY"} accent={hasNodes ? "green" : "muted"} pulse={hasNodes} flash={flashRows.has("ENCLAVE")} />
+        <ConsoleRow label="NODES" value={data.totalNodes} sub={data.totalNodes === 0 ? "(awaiting first uplink)" : `human:${data.activeHumans}  agent:${data.agents}`} accent={data.totalNodes > 0 ? "cyan" : "muted"} pulse={data.totalNodes > 0} flash={flashRows.has("NODES")} />
+        <ConsoleRow label="GENESIS" value={`${data.genesisNodes}/100`} sub={genesisPct > 0 ? `${genesisPct}% complete` : "(cohort forming)"} accent={data.genesisNodes > 0 ? "amber" : "muted"} pulse={data.genesisNodes > 0} flash={flashRows.has("GENESIS")} />
+        <ConsoleRow label="TODAY" value={data.activeToday} sub={data.activeToday > 0 ? "scans recorded" : "(no activity)"} accent={data.activeToday > 0 ? "green" : "muted"} flash={flashRows.has("TODAY")} />
         <ConsoleRow label="ENGINES" value={data.engines} sub="operational" accent="cyan" />
         <ConsoleRow label="ATK_SIGS" value={data.attackSigs} sub="indexed · monitoring" accent={data.attackSigs > 0 ? "amber" : "muted"} />
         <ConsoleRow label="CORE" value={data.coreTests} sub="all tests passing" accent="green" pulse />
