@@ -72,6 +72,21 @@ export default function DevelopersClient() {
               className="inline-flex items-center gap-2 px-6 py-2.5 border border-[#90c8ff]/20 text-[#90c8ff]/50 text-[10px] tracking-[0.25em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/80 hover:bg-[#90c8ff]/[0.03] transition-all">
               GitHub →
             </a>
+            <button onClick={async () => {
+              const email = prompt("Enter your developer email to receive an API key:");
+              if (!email) return;
+              playTick(600, "sine", 0.06, 0.015);
+              try {
+                const r = await fetch("/api/register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+                const d = await r.json();
+                if (d.api_key) alert(`Your API Key:\n\n${d.api_key}\n\nUse in Authorization: Bearer header.`);
+                else alert(d.error || "Registration failed");
+              } catch { alert("Network error. Try again."); }
+            }}
+              onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
+              className="inline-flex items-center gap-2 px-6 py-2.5 border border-[#d4af37]/30 text-[#d4af37]/70 text-[10px] tracking-[0.25em] uppercase hover:bg-[#d4af37]/[0.06] hover:text-[#d4af37] transition-all">
+              ◈ Get API Key →
+            </button>
           </div>
         </div>
 
