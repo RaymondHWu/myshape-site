@@ -54,6 +54,7 @@ const PHASE_BOUNDARIES_MS = [6000, 12000, 19000, 25000, 30000];
 export default function MotionDemoClient() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isChromium, setIsChromium] = useState(false);
   const [phase, setPhase] = useState<Phase>("idle");
   const [features, setFeatures] = useState<FeatureFrame | null>(null);
   const [pesData, setPesData] = useState<PESData | null>(null);
@@ -427,6 +428,7 @@ export default function MotionDemoClient() {
   }, []);
 
   // ── Sync phaseRef with phase state (keeps feed loop + onResults in sync) ──
+  useEffect(() => { setIsChromium(/Chrome|Edg\//.test(window.navigator.userAgent) && !/Firefox/i.test(window.navigator.userAgent)); }, []);
   useEffect(() => { phaseRef.current = phase; }, [phase]);
 
   // ── Countdown (30s protocol) ──
@@ -638,7 +640,7 @@ export default function MotionDemoClient() {
             {phase === "idle" && (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/30 z-10 overflow-y-auto py-4">
                 {/* Chromium green screen warning */}
-                {typeof window !== "undefined" && /Chrome|Edg\//.test(window.navigator.userAgent) && !/Firefox/i.test(window.navigator.userAgent) && (
+                {isChromium && (
                   <div className="px-4 py-3 border border-amber-400/30 bg-amber-400/[0.06] text-center max-w-sm" style={{ borderRadius: 4 }}>
                     <p className="text-amber-300/80 text-[11px] leading-relaxed">
                       Green screen or no camera? Chromium browsers (Chrome/Edge) often have WebGL webcam issues.
