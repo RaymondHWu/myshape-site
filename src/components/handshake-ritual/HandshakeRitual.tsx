@@ -351,6 +351,10 @@ const HandshakeRitual: React.FC = () => {
                     <span className="relative z-10">Initiate_Handshake →</span>
                   </button>
                 </form>
+                <a href="/genesis"
+                  className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 text-[9px] tracking-[0.12em] uppercase transition-colors no-underline mt-3">
+                  Genesis Cohort? Initialize_Genesis →
+                </a>
               </motion.div>
             )}
 

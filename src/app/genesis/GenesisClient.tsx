@@ -344,6 +344,11 @@ export default function GenesisClient() {
                     </div>
                   </div>
                   <span className="text-white/30 text-[9px] tracking-[0.1em]">For restricted environments only</span>
+                  <a href="/handshake"
+                    onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
+                    className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 text-[9px] tracking-[0.12em] uppercase transition-colors mt-1 no-underline inline-block">
+                    Developer? Node_Handshake →
+                  </a>
                 </div>
 
                 </form>
