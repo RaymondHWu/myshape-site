@@ -127,7 +127,7 @@ export default function PostClient() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 flex flex-col md:flex-row gap-12 md:gap-24">
         {/* TOC sidebar */}
-        <aside className="md:w-56 shrink-0 h-fit md:sticky md:top-32 hidden md:block">
+        <aside className="md:w-56 shrink-0 md:sticky md:top-28 hidden md:block" style={{ alignSelf: "flex-start" }}>
           <div className="text-[#90c8ff]/30 text-[9px] tracking-[0.5em] uppercase mb-8 font-mono italic">// ON_THIS_PAGE</div>
           <ul className="space-y-6 border-l" style={{ borderColor: "rgba(144,200,255,0.08)" }}>
             {TOC_ITEMS.map(s => {
@@ -149,7 +149,7 @@ export default function PostClient() {
           </ul>
         </aside>
 
-        <article className="flex-1 min-w-0">
+        <article className="flex-1 min-w-0" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
         <div className="mb-16">
           <div className="text-[#90c8ff]/40 text-[9px] tracking-[0.4em] uppercase mb-4">PROTOCOL_ESSAY // 001</div>
           <h1 className="text-2xl md:text-4xl font-light tracking-[0.04em] text-white leading-tight mb-6"
