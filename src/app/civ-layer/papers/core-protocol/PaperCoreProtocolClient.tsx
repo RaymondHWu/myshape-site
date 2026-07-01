@@ -160,6 +160,7 @@ const content: Record<string, string[]> = {
 
 export default function PaperCoreProtocolClient() {
   const [activeId, setActiveId] = useState("sec-intro");
+  const [tocShow, setTocShow] = useState(true);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
@@ -173,6 +174,12 @@ export default function PaperCoreProtocolClient() {
     );
     document.querySelectorAll("section[id]").forEach((el) => observerRef.current?.observe(el));
     return () => observerRef.current?.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const check = () => { const f = document.querySelector("footer"); if (f) setTocShow(f.getBoundingClientRect().top > window.innerHeight * 0.5); };
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
   }, []);
 
   return (
@@ -200,7 +207,13 @@ export default function PaperCoreProtocolClient() {
       {/* ── 主体 ── */}
       <main className="relative z-10 pt-48 md:pt-56 px-6 md:px-10 max-w-7xl mx-auto flex flex-col md:flex-row gap-24">
         {/* ── 侧边栏目录 ── */}
-        <aside className="md:w-64 shrink-0 h-fit md:sticky md:top-32 hidden md:block">
+        <div className="md:w-64 shrink-0 hidden md:block" />
+        <aside className="hidden md:block" style={{
+          position: "fixed", top: "128px", width: "256px",
+          left: "calc((100vw - 1280px) / 2 + 40px)",
+          opacity: tocShow ? 1 : 0, pointerEvents: tocShow ? "auto" : "none",
+          transition: "opacity 0.3s", zIndex: 10,
+        }}>
           <div className="text-[#90c8ff]/30 text-[9px] tracking-[0.5em] uppercase mb-10 font-mono italic">
             // PAPER_INDEX
           </div>

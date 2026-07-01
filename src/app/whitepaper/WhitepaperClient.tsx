@@ -283,7 +283,7 @@ export default function WhitepaperClient() {
           opacity: tocShow ? 1 : 0, pointerEvents: tocShow ? "auto" : "none",
           transition: "opacity 0.3s", zIndex: 10,
         }}>
-          <div className="text-[#90c8ff]/30 text-[9px] tracking-[0.5em] uppercase mb-10 font-mono italic">
+          <div className="text-[#90c8ff]/40 text-[10px] tracking-[0.5em] uppercase mb-10 font-mono font-bold">
             // ON_THIS_PAGE
           </div>
           <ul className="space-y-8 border-l" style={{ borderColor: "rgba(144,200,255,0.08)" }}>
@@ -312,7 +312,7 @@ export default function WhitepaperClient() {
                         {s.num}
                       </span>
                     </div>
-                    <div className="text-[11px] tracking-[0.15em] uppercase transition-all duration-300"
+                    <div className="text-[12px] tracking-[0.2em] uppercase transition-all duration-300"
                       style={{
                         color: isActive ? "rgba(144,200,255,0.95)" : "rgba(255,255,255,0.2)",
                         textShadow: isActive ? "0 0 12px rgba(144,200,255,0.4)" : "none",
@@ -365,7 +365,7 @@ export default function WhitepaperClient() {
                   <span className="text-[#90c8ff]/60 mr-3">{section.num}.</span>
                   {section.heading}
                 </h2>
-                <div className="space-y-6 text-white/50 text-[15px] leading-[1.8] font-light">
+                <div className="space-y-6 text-white/50 text-[18px] leading-[1.85] font-light">
                   {section.content.split("\n\n").map((para, i) => (
                     <p key={i}>{para.trim()}</p>
                   ))}
