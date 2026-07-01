@@ -74,8 +74,8 @@ function TopologyPlaceholder() {
           </div>
         </div>
         <div className="text-center space-y-2">
-          <p className="text-white/30 text-[11px] tracking-[0.2em] uppercase font-mono">NETWORK_TOPOLOGY</p>
-          <p className="text-white/15 text-[10px] tracking-[0.12em] uppercase font-mono max-w-[280px] leading-relaxed">MESH_INITIALIZES_WHEN_FIRST_NODE_COMPLETES_GENESIS_RITUAL</p>
+          <p className="text-white/40 text-[11px] tracking-[0.2em] uppercase font-mono">NETWORK_TOPOLOGY</p>
+          <p className="text-white/25 text-[10px] tracking-[0.12em] uppercase font-mono max-w-[280px] leading-relaxed">MESH_INITIALIZES_WHEN_FIRST_NODE_COMPLETES_GENESIS_RITUAL</p>
         </div>
       </div>
     </div>
