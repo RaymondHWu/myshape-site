@@ -58,7 +58,7 @@ function ConsoleRow({
     cyan:  { dot: "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.5)]", val: "text-cyan-300/80", sub: "text-cyan-400/25" },
     amber: { dot: "bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.4)]", val: "text-amber-300/80", sub: "text-amber-400/25" },
     green: { dot: "bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.4)]", val: "text-green-300/80", sub: "text-green-400/25" },
-    muted: { dot: "bg-white/10", val: "text-white/30", sub: "text-white/10" },
+    muted: { dot: "bg-white/10", val: "text-white/20", sub: "text-white/10" },
     red:   { dot: "bg-red-400 shadow-[0_0_6px_rgba(248,113,113,0.4)]", val: "text-red-300/80", sub: "text-red-400/25" },
   };
   const c = accentColor[accent];
@@ -67,7 +67,7 @@ function ConsoleRow({
     <div className="flex items-center gap-2 group/row hover:bg-white/[0.015] px-3 py-1.5 -mx-3 transition-colors duration-500">
       {pulse && <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot} animate-pulse`} />}
       {!pulse && <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot}`} />}
-      <span className="text-cyan-400/20 text-[8px] tracking-[0.1em] font-mono shrink-0 w-4 text-right">{">"}</span>
+      <span className="text-cyan-400/25 text-[8px] tracking-[0.1em] font-mono shrink-0 w-4 text-right">{">"}</span>
       <span className="text-white/25 text-[9px] tracking-[0.12em] uppercase font-mono shrink-0 w-[72px]">{label}</span>
       <span className={`text-[11px] tracking-[0.04em] font-mono font-light ${c.val}`}>{value}</span>
       {sub && <span className={`text-[8px] tracking-[0.1em] font-mono ${c.sub}`}>{sub}</span>}
@@ -97,10 +97,10 @@ function EmptyTopology() {
         </div>
 
         <div className="text-center space-y-1">
-          <p className="text-white/12 text-[9px] tracking-[0.2em] uppercase font-mono">
+          <p className="text-white/10 text-[9px] tracking-[0.2em] uppercase font-mono">
             TOPOLOGY_AWAITING_GENESIS
           </p>
-          <p className="text-white/[0.06] text-[7px] tracking-[0.15em] uppercase font-mono max-w-[240px] leading-relaxed">
+          <p className="text-white/10 text-[7px] tracking-[0.15em] uppercase font-mono max-w-[240px] leading-relaxed">
             mesh initializes when first node completes genesis ritual
           </p>
         </div>
@@ -289,14 +289,14 @@ export default function PresenceNetwork() {
             PROTOCOL_ENCLAVE
           </span>
           <span className="text-white/[0.08]">|</span>
-          <span className={`text-[8px] tracking-[0.12em] uppercase font-mono ${hasNodes ? "text-green-400/50" : "text-white/15"}`}>
+          <span className={`text-[8px] tracking-[0.12em] uppercase font-mono ${hasNodes ? "text-green-300/80" : "text-white/15"}`}>
             {hasNodes ? "MESH_ACTIVE" : "PRE_GENESIS"}
           </span>
         </div>
         {data.lastInbound && (
           <div className="flex items-center gap-1.5">
-            <span className="text-white/[0.06] text-[7px] tracking-[0.1em] uppercase font-mono">LAST_INBOUND</span>
-            <span className="text-white/20 text-[8px] tracking-[0.08em] font-mono">{data.lastInbound.mask}</span>
+            <span className="text-white/10 text-[7px] tracking-[0.1em] uppercase font-mono">LAST_INBOUND</span>
+            <span className="text-white/25 text-[8px] tracking-[0.08em] font-mono">{data.lastInbound.mask}</span>
           </div>
         )}
       </div>
@@ -315,12 +315,12 @@ export default function PresenceNetwork() {
       {/* ── Genesis progress bar ── */}
       <div className="px-5 py-2 border-b border-white/[0.02]">
         <div className="flex items-center gap-3">
-          <span className="text-white/15 text-[7px] tracking-[0.15em] uppercase font-mono shrink-0">GENESIS_PROGRESS</span>
+          <span className="text-white/25 text-[7px] tracking-[0.15em] uppercase font-mono shrink-0">GENESIS_PROGRESS</span>
           <div className="flex-1 h-[2px] bg-white/[0.04] overflow-hidden">
             <div className="h-full bg-gradient-to-r from-amber-500/60 via-amber-400/40 to-amber-300/30 transition-all duration-1000"
               style={{ width: `${genesisPct}%` }} />
           </div>
-          <span className="text-amber-400/30 text-[7px] tracking-[0.1em] font-mono shrink-0">{genesisPct}%</span>
+          <span className="text-amber-300/80 text-[7px] tracking-[0.1em] font-mono shrink-0">{genesisPct}%</span>
         </div>
       </div>
 
@@ -329,8 +329,8 @@ export default function PresenceNetwork() {
         <div className="relative" style={{ height: "240px" }}>
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
           <div className="absolute top-4 right-4 text-right pointer-events-none">
-            <div className="text-[7px] tracking-[0.25em] text-white/15 uppercase font-light">SCANS</div>
-            <div className="text-[13px] font-mono text-cyan-400/35 tracking-[0.06em]">{data.totalScans}</div>
+            <div className="text-[7px] tracking-[0.25em] text-white/25 uppercase font-light">SCANS</div>
+            <div className="text-[13px] font-mono text-cyan-300/80 tracking-[0.06em]">{data.totalScans}</div>
           </div>
           <div className="absolute bottom-4 left-4 flex items-center gap-3 text-[7px] tracking-[0.12em] pointer-events-none">
             <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-white/80 shadow-[0_0_3px_rgba(255,255,255,0.4)]" /><span className="text-white/25">GENESIS</span></div>

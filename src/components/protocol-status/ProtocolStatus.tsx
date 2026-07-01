@@ -83,7 +83,7 @@ export default function ProtocolStatus() {
               <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
                 PROTOCOL
               </span>
-              <span className="text-cyan-400/50 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/70 transition-colors">
+              <span className="text-cyan-300/80 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/90 transition-colors">
                 {status.status}
               </span>
             </div>
@@ -98,11 +98,11 @@ export default function ProtocolStatus() {
               <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
                 GENESIS
               </span>
-              <span className="text-amber-400/50 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-amber-300/70 transition-colors">
+              <span className="text-amber-300/80 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-amber-300/90 transition-colors">
                 {status.genesis_nodes}<span className="text-white/10">/100</span>
               </span>
               {status.cohort_sealed && (
-                <span className="text-green-400/40 text-[7px] tracking-[0.2em] uppercase font-mono">SEALED</span>
+                <span className="text-green-300/80 text-[7px] tracking-[0.2em] uppercase font-mono">SEALED</span>
               )}
               {!status.cohort_sealed && status.genesis_nodes > 0 && (
                 <span className="text-white/10 text-[7px] tracking-[0.1em] uppercase font-mono">{status.genesis_remaining} open</span>
@@ -119,11 +119,11 @@ export default function ProtocolStatus() {
               <span className="text-white/25 text-[9px] tracking-[0.15em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
                 NODES
               </span>
-              <span className="text-cyan-400/45 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/60 transition-colors">
+              <span className="text-cyan-300/80 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/90 transition-colors">
                 {status.active_humans}h
               </span>
               <span className="text-white/[0.06]">+</span>
-              <span className="text-cyan-400/25 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/40 transition-colors">
+              <span className="text-cyan-300/80 text-[9px] tracking-[0.12em] uppercase font-mono group-hover/status:text-cyan-300/90 transition-colors">
                 {status.agents}a
               </span>
             </div>
@@ -136,10 +136,10 @@ export default function ProtocolStatus() {
                 className="flex items-center gap-2 cursor-default group/status"
                 onMouseEnter={() => playTick(400, "sine", 0.03, 0.008)}
               >
-                <span className="text-white/15 text-[8px] tracking-[0.12em] uppercase font-mono group-hover/status:text-white/30 transition-colors">
+                <span className="text-white/25 text-[8px] tracking-[0.12em] uppercase font-mono group-hover/status:text-white/40 transition-colors">
                   LAST_SCAN
                 </span>
-                <span className="text-white/20 text-[8px] tracking-[0.06em] font-mono group-hover/status:text-white/40 transition-colors">
+                <span className="text-white/25 text-[8px] tracking-[0.06em] font-mono group-hover/status:text-white/40 transition-colors">
                   {status.last_scan}
                 </span>
               </div>
@@ -148,10 +148,10 @@ export default function ProtocolStatus() {
             <span className="text-white/[0.04] select-none">|</span>
 
             <div className="flex items-center gap-2">
-              <span className="text-white/[0.06] text-[7px] tracking-[0.15em] uppercase font-mono">
+              <span className="text-white/10 text-[7px] tracking-[0.15em] uppercase font-mono">
                 T+{(status.total_nodes * 7) || 0}d
               </span>
-              <span className="text-white/[0.04] text-[7px] tracking-[0.1em] uppercase font-mono">
+              <span className="text-white/10 text-[7px] tracking-[0.1em] uppercase font-mono">
                 {status.total_nodes > 0 ? "MESH_ACTIVE" : "AWAITING"}
               </span>
             </div>
