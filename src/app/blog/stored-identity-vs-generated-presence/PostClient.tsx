@@ -138,7 +138,7 @@ export default function PostClient() {
           opacity: tocShow ? 1 : 0, pointerEvents: tocShow ? "auto" : "none",
           transition: "opacity 0.3s", zIndex: 10,
         }}>
-          <div className="text-[#90c8ff]/30 text-[9px] tracking-[0.5em] uppercase mb-8 font-mono italic">// ON_THIS_PAGE</div>
+          <div className="text-[#90c8ff]/40 text-[10px] tracking-[0.5em] uppercase mb-8 font-mono font-bold">ARCHIVE_INDEX</div>
           <ul className="space-y-6 border-l" style={{ borderColor: "rgba(144,200,255,0.08)" }}>
             {TOC_ITEMS.map(s => {
               const isActive = s.id === active;
@@ -155,7 +155,7 @@ export default function PostClient() {
                     }}>
                     <span className="flex items-center gap-2">
                       <span className={`w-1 h-1 rounded-full shrink-0 transition-all duration-300 ${isActive ? "bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)] scale-100" : "bg-transparent scale-0"}`} />
-                      <span className="text-[11px] tracking-[0.15em] uppercase transition-all duration-300"
+                      <span className="text-[12px] tracking-[0.2em] uppercase transition-all duration-300"
                         style={{
                           color: isActive ? "rgba(144,200,255,0.95)" : "rgba(255,255,255,0.2)",
                           textShadow: isActive ? "0 0 12px rgba(144,200,255,0.4)" : "none",
