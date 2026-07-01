@@ -229,11 +229,13 @@ export default function PresenceNetwork() {
   // ── Main render ──
   return (
     <div
-      className="relative border border-cyan-400/[0.06] bg-gradient-to-b from-cyan-400/[0.012] to-transparent overflow-hidden"
+      className="relative border border-cyan-400/[0.06] bg-gradient-to-b from-cyan-400/[0.012] to-transparent overflow-hidden transition-all duration-700"
       style={{
         clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
         boxShadow: `0 0 ${18 + breath * 12}px rgba(34,211,238,${0.03 + breath * 0.05})`,
       }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(34,211,238,0.20)"; e.currentTarget.style.boxShadow = `0 8px 32px -8px rgba(34,211,238,0.08), 0 0 ${18 + breath * 12}px rgba(34,211,238,${0.03 + breath * 0.05})`; }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(34,211,238,0.06)"; e.currentTarget.style.boxShadow = `0 0 ${18 + breath * 12}px rgba(34,211,238,${0.03 + breath * 0.05})`; }}
     >
       {/* Scan line */}
       <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden">

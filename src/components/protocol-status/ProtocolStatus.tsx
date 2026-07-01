@@ -112,11 +112,13 @@ export default function ProtocolStatus() {
   const daysUp = Math.max(1, Math.floor((Date.now() - new Date("2026-06-01").getTime()) / 86400000));
 
   return (
-    <div className="relative w-full border border-cyan-400/[0.10] bg-gradient-to-b from-white/[0.008] to-transparent"
+    <div className="relative w-full border border-cyan-400/[0.10] bg-gradient-to-b from-white/[0.008] to-transparent transition-all duration-700"
       style={{
         clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
         boxShadow: `inset 0 1px 0 rgba(34,211,238,${hasNodes ? 0.08 : 0.03})`,
-      }}>
+      }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(34,211,238,0.25)"; e.currentTarget.style.boxShadow = `0 4px 24px -6px rgba(34,211,238,0.06), inset 0 1px 0 rgba(34,211,238,${hasNodes ? 0.08 : 0.03})`; }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(34,211,238,0.10)"; e.currentTarget.style.boxShadow = `inset 0 1px 0 rgba(34,211,238,${hasNodes ? 0.08 : 0.03})`; }}>
       {/* CSS-driven scan line */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div ref={scanRef} className="absolute w-full h-px"
