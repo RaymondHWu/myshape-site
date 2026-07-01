@@ -48,11 +48,42 @@ export default function DashboardClient() {
   const [scanPulse, setScanPulse] = useState(false);
   const prevScanRef = { current: 0 };
 
+  /* ── 双向兼容：Genesis 流程 (genesis_*) 和 Handshake 流程 (node_*) ── */
+  const nodeHandle = typeof window !== "undefined"
+    ? (sessionStorage.getItem("node_handle") || sessionStorage.getItem("genesis_node_handle") || null)
+    : null;
+  const isHandshakeNode = typeof window !== "undefined"
+    ? !!sessionStorage.getItem("node_token")
+    : false;
+
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const email = sessionStorage.getItem("genesis_email");
+    const email = sessionStorage.getItem("node_email") || sessionStorage.getItem("genesis_email");
     const completed = sessionStorage.getItem("genesis_completed") === "1";
-    setIsGenesis(completed);
+    const hasNode = !!sessionStorage.getItem("node_token");
+    setIsGenesis(completed || hasNode);
+
+    // Handshake 节点：直接用 sessionStorage 数据，不调 API
+    if (hasNode && !completed) {
+      setStats({
+        email: email || "",
+        status: sessionStorage.getItem("genesis_status") || "GENESIS_CONNECTED",
+        is_genesis: false,
+        is_active: true,
+        scan_count: 0,
+        data_contribution: 0,
+        tier: "Awakened",
+        early_access: false,
+        registered_at: new Date().toISOString(),
+        entropy_score: undefined,
+        particle_level: 0,
+        streak_days: 0,
+        position_number: undefined,
+      });
+      setLoading(false);
+      return;
+    }
+
     if (!email) { setLoading(false); return; }
 
     const fetchStats = () => {
@@ -104,14 +135,22 @@ export default function DashboardClient() {
             onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
             <div className="text-[#90c8ff]/35 text-[10px] tracking-[0.4em] uppercase">Identity Not Initialized</div>
             <p className="text-white/30 text-[12px] leading-relaxed max-w-md mx-auto">
-              Complete the Genesis Ritual to unlock your sovereign identity dashboard — scan tracking, orbital particle tier, and protocol contribution metrics.
+              Complete the Genesis Ritual or Node Handshake to unlock your sovereign identity dashboard — scan tracking, orbital particle tier, and protocol contribution metrics.
             </p>
-            <Link href="/genesis"
-              onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-              className="inline-block px-10 py-3.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase hover:bg-[#90c8ff]/[0.04] hover:text-white transition-all"
-              style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)", background: "rgba(144,200,255,0.03)" }}>
-              Initialize Genesis →
-            </Link>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link href="/genesis"
+                onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
+                className="inline-block px-10 py-3.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase hover:bg-[#90c8ff]/[0.04] hover:text-white transition-all"
+                style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)", background: "rgba(144,200,255,0.03)" }}>
+                Genesis →
+              </Link>
+              <Link href="/handshake"
+                onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
+                className="inline-block px-10 py-3.5 border border-[#90c8ff]/20 text-[#90c8ff]/45 text-[10px] tracking-[0.3em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all"
+                style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)", background: "rgba(144,200,255,0.015)" }}>
+                Node Handshake →
+              </Link>
+            </div>
           </div>
         ) : loading ? (
           <div className="text-center py-16 space-y-3">
@@ -122,6 +161,42 @@ export default function DashboardClient() {
           </div>
         ) : stats ? (
           <>
+            {/* ── Node Identity Card (Handshake 用户专属) ── */}
+            {isHandshakeNode && nodeHandle && (
+              <section className="border border-[#90c8ff]/15 bg-[#90c8ff]/[0.02] p-5"
+                onMouseEnter={() => playTick(550, "sine", 0.05, 0.012)}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#d0f0ff] shadow-[0_0_8px_rgba(180,220,255,0.8)] animate-pulse" />
+                  <span className="text-[#a0d0ff]/50 text-[8px] tracking-[0.3em] uppercase">Sovereign Node Active</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <div className="text-white/25 text-[7px] tracking-[0.2em] uppercase mb-1">Node_Handle</div>
+                    <div className="text-[#b0dcff] font-mono text-lg tracking-[0.1em]" style={{ textShadow: "0 0 12px rgba(160,210,255,0.3)" }}>
+                      {nodeHandle}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-white/25 text-[7px] tracking-[0.2em] uppercase mb-1">Protocol_Status</div>
+                    <div className="text-[#90c8ff]/60 font-mono text-sm tracking-[0.15em]">
+                      {stats.status || "GENESIS_CONNECTED"}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 pt-3 border-t border-[#90c8ff]/8 flex items-center justify-between text-[8px]">
+                  <div className="flex items-center gap-4">
+                    <span className="text-white/20">Registered: {stats.registered_at ? new Date(stats.registered_at).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—"}</span>
+                    {stats.is_active && <span className="text-green-400/50 tracking-[0.15em] uppercase">● Active</span>}
+                  </div>
+                  <a href="/handshake"
+                    onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
+                    className="text-[#90c8ff]/35 hover:text-[#90c8ff]/70 text-[9px] tracking-[0.15em] uppercase no-underline transition-colors">
+                    ← Sphere
+                  </a>
+                </div>
+              </section>
+            )}
+
             {/* Identity Card */}
             <section itemScope itemType="https://schema.org/Person"
               onMouseEnter={() => playTick(550, "sine", 0.05, 0.012)}>
@@ -178,6 +253,13 @@ export default function DashboardClient() {
                 className="px-6 py-3 border border-[#90c8ff]/25 text-[#90c8ff]/55 text-[10px] tracking-[0.25em] uppercase hover:border-[#90c8ff]/45 hover:text-[#90c8ff] hover:bg-[#90c8ff]/[0.03] transition-all">
                 ◈ Scan Now →
               </Link>
+              {isHandshakeNode && (
+                <Link href="/handshake"
+                  onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
+                  className="px-6 py-3 border border-[#d0f0ff]/25 text-[#b0d8ff]/55 text-[10px] tracking-[0.25em] uppercase hover:border-[#d0f0ff]/45 hover:text-[#d0f0ff] hover:bg-[#d0f0ff]/[0.03] transition-all">
+                  ◇ Node Manager →
+                </Link>
+              )}
               <Link href="/whitepaper"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
                 className="px-6 py-3 border border-[#90c8ff]/18 text-white/25 text-[10px] tracking-[0.25em] uppercase hover:border-[#90c8ff]/35 hover:text-white/45 transition-all">
@@ -196,8 +278,12 @@ export default function DashboardClient() {
             </section>
           </>
         ) : (
-          <div className="text-center py-16 text-white/20 text-[10px] tracking-[0.3em] uppercase">
-            Unable to load identity data. Please re-initialize Genesis.
+          <div className="text-center py-16 text-white/20 text-[10px] tracking-[0.3em] uppercase space-y-4">
+            <div>Unable to load identity data.</div>
+            <div className="flex gap-4 justify-center">
+              <Link href="/genesis" className="text-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-colors">Genesis →</Link>
+              <Link href="/handshake" className="text-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-colors">Handshake →</Link>
+            </div>
           </div>
         )}
       </div>

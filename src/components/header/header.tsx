@@ -398,6 +398,11 @@ const ProtocolHeader = () => {
                 <a href="/roadmap" className="panel-link" onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}>
                   <span className="link-icon">›</span> DEVELOPMENT_ROADMAP
                 </a>
+                <div className="panel-divider" style={{ opacity: 0.3 }} />
+                <a href="/handshake" className="panel-link" onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}
+                  style={{ opacity: 0.55, filter: "grayscale(0.3)" }}>
+                  <span className="link-icon" style={{ opacity: 0.5 }}>◇</span> DEV: NODE_HANDSHAKE
+                </a>
                 <button
                   onClick={handleDisconnect}
                   className={`panel-btn-disconnect ${

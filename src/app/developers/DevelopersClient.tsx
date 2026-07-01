@@ -37,6 +37,7 @@ const SDK_METHODS = [
 const API_ENDPOINTS = [
   { method: "GET", path: "/api/identity?email=...", desc: "Look up a node by email" },
   { method: "GET", path: "/api/nodes/count", desc: "Total protocol node counts" },
+  { method: "POST", path: "/api/nodes/handshake", desc: "Register a new protocol node → returns node_token + node_handle", cta: "/handshake" },
 ];
 
 const QUICK_START = `// 5 lines to integrate Presence
@@ -346,9 +347,14 @@ if (threat.overallVerdict === "human") {
               onMouseEnter={ev => { playTick(600, "sine", 0.06, 0.015); hoverOn(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.35)"; ev.currentTarget.style.transform = "translateY(-2px)"; ev.currentTarget.style.boxShadow = "0 8px 32px -8px rgba(144,200,255,0.10)"; }}
               onMouseLeave={ev => { hoverOff(ev); ev.currentTarget.style.borderColor = "rgba(144,200,255,0.1)"; ev.currentTarget.style.transform = "translateY(0)"; ev.currentTarget.style.boxShadow = "none"; }}
               style={{ border: "1px solid rgba(144,200,255,0.1)", background: "transparent" }}>
-              <span className="text-[10px] tracking-[0.2em] font-bold w-10" style={{ color: "rgba(144,200,255,0.6)", fontSize: "10px" }} data-default="rgba(144,200,255,0.6)" data-hover="rgba(144,200,255,0.95)" data-default-size="10px" data-hover-size="13px">{ep.method}</span>
-              <span className="font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)" data-default-size="11px" data-hover-size="13px">{ep.path}</span>
-              <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.25)", fontSize: "10px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="10px" data-hover-size="12px">{ep.desc}</span>
+              <span className="text-[10px] tracking-[0.2em] font-bold w-10 shrink-0" style={{ color: "rgba(144,200,255,0.6)", fontSize: "10px" }} data-default="rgba(144,200,255,0.6)" data-hover="rgba(144,200,255,0.95)" data-default-size="10px" data-hover-size="13px">{ep.method}</span>
+              <span className="font-mono text-[11px] shrink-0" style={{ color: "rgba(255,255,255,0.45)", fontSize: "11px" }} data-default="rgba(255,255,255,0.45)" data-hover="rgba(255,255,255,0.85)" data-default-size="11px" data-hover-size="13px">{ep.path}</span>
+              <span className="text-[10px] flex-1" style={{ color: "rgba(255,255,255,0.25)", fontSize: "10px" }} data-default="rgba(255,255,255,0.25)" data-hover="rgba(255,255,255,0.5)" data-default-size="10px" data-hover-size="12px">{ep.desc}</span>
+              {"cta" in ep && (
+                <a href={ep.cta} className="shrink-0 px-3 py-1 border border-[#90c8ff]/20 text-[#90c8ff]/50 text-[9px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/50 hover:text-[#90c8ff]/90 transition-all no-underline">
+                  Try it →
+                </a>
+              )}
             </div>
           ))}
 
@@ -375,6 +381,22 @@ if (threat.overallVerdict === "human") {
   "humans": 8,
   "agents": 3,
   "genesis_nodes": 4
+}`}</pre>
+              </div>
+              <div>
+                <div className="text-white/25 text-[9px] tracking-[0.1em] mb-1 flex items-center gap-2">
+                  POST /api/nodes/handshake
+                  <a href="/handshake" className="text-[#90c8ff]/40 hover:text-[#90c8ff]/80 text-[8px] tracking-[0.15em] uppercase no-underline transition-colors">→ Live Demo</a>
+                </div>
+                <pre className="bg-black/60 p-3 text-[#90c8ff]/50 text-[9px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">
+{`// Request
+{ "email": "entity@protocol.io", "origin_domain": "myshape.com" }
+
+// Response (201)
+{
+  "node_token": "ms_a1b2c3d4e5f6...",
+  "node_handle": "SIG_4F7A2C1B",
+  "stage": "GENESIS_NODE_INITIALIZED"
 }`}</pre>
               </div>
             </div>

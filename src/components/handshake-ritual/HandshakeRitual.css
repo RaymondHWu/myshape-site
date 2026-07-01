@@ -1,0 +1,65 @@
+/* ============================================================
+   HandshakeRitual — 组件级样式
+   所有 @keyframes 定义在 animations.css（项目唯一源）
+   此处仅放组件专属的非关键帧样式
+   ============================================================ */
+
+/* ── 输入框四角装饰 ── */
+.handshake-corner {
+  animation: genesisWitnessGlow 3s ease-in-out infinite;
+}
+
+/* ── 输入框扫描线覆盖 ── */
+.handshake-scan-overlay {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(144, 200, 255, 0.04) 50%,
+    transparent 100%
+  );
+  animation: scan-slow 4s ease-in-out infinite;
+}
+
+/* ── 按钮悬停背景 ── */
+.handshake-btn-bg {
+  background: rgba(144, 200, 255, 0.06);
+  box-shadow: inset 0 0 30px rgba(144, 200, 255, 0.08);
+}
+
+/* ── 进度条 ── */
+.handshake-progress-bar {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(144, 200, 255, 0.7),
+    transparent
+  );
+  animation: progressSlide 1.8s ease-in-out infinite;
+}
+
+/* ── 成功光环 ── */
+.handshake-success-outer {
+  border: 1px solid rgba(144, 200, 255, 0.5);
+  box-shadow: 0 0 30px rgba(144, 200, 255, 0.18);
+  animation: haloExpand 3s ease-out infinite;
+}
+
+.handshake-success-mid {
+  border: 0.6px solid rgba(144, 200, 255, 0.35);
+  animation: haloPulse 2.5s ease-in-out infinite;
+}
+
+.handshake-success-inner {
+  border: 0.4px solid rgba(180, 220, 255, 0.45);
+  animation: haloPulse 1.8s ease-in-out 0.3s infinite;
+}
+
+/* ── Token 揭示动画 ── */
+.handshake-token-reveal {
+  animation: nodeTokenReveal 1.2s ease-out both;
+}
+
+/* ── 连接节点卡片光晕 ── */
+.handshake-card-glow {
+  animation: nodeConnectedGlow 3s ease-in-out infinite;
+}
