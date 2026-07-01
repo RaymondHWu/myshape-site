@@ -158,7 +158,7 @@ export default function HomeClient() {
             </div>
 
             {/* ── Cryptographic Sovereign Spine ── */}
-            <div className="relative max-w-3xl mx-auto">
+            <div className="relative max-w-4xl mx-auto">
               {/* Mobile: simplified stack */}
               <div className="md:hidden space-y-2">
                 {[
