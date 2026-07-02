@@ -14,6 +14,7 @@ import GenesisProgress from "@/components/genesis-progress/GenesisProgress";
 import ParadigmShift from "@/components/paradigm-shift/ParadigmShift";
 import GenesisBadge from "@/components/genesis-badge/GenesisBadge";
 import ProtocolStatus from "@/components/protocol-status/ProtocolStatus";
+import GenesisCohortBadge from "@/components/genesis-cohort-badge/GenesisCohortBadge";
 import ResearchContributionCTA from "@/components/research-cta/ResearchContributionCTA";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -97,6 +98,9 @@ export default function HomeClient() {
           <div className="flex items-center gap-2">
              <div className="w-1 h-1 bg-[#90c8ff] rounded-full animate-pulse shadow-[0_0_8px_#90c8ff]" />
              <span className="font-mono text-[9px] tracking-[0.3em] text-white/60 uppercase">LIVE_FEED</span>
+          </div>
+          <div className="mt-3">
+            <GenesisCohortBadge />
           </div>
         </div>
 

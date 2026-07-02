@@ -2070,5 +2070,124 @@
     "tags": [],
     "source": "Ask HN: Who wants to be hired? (July 2026)",
     "publishedAt": "2026-07-02T10:10:30.778Z"
+  },
+  {
+    "platform": "hn",
+    "content": "[English]\nThe current Android verification paradigm treats identity as a static credential rather than a temporal signal. This fundamental misalignment creates inherent vulnerabilities that threat actors exploit through session hijacking.\n\nFrom a Continuity Layer perspective, relying solely on device fingerprints ignores the temporal integrity of the user’s session. True verification requires a Presence Receipt—a real-time motion signature that proves active, human-led interaction at the moment of access. Without this, static tokens are merely waiting to be stolen.\n\nThe non-obvious insight is that frictionless login is an anti-pattern for security. By demanding continuous, biometric-adjacent proof of presence, we shift from reactive authentication to proactive intent validation. This renders stolen credentials useless without the live behavioral context.\n\nHow do we standardize motion-signature protocols across fragmented mobile ecosystems without compromising privacy?\n\n[中文]\n当前的安卓验证范式将身份视为静态凭证而非时间信号。这种根本性的错位产生了内在漏洞，被威胁行为者利用会话劫持加以利用。\n\n从连续性层（Continuity Layer）的角度来看，仅依赖设备指纹忽略了用户会话的时间完整性。真正的验证需要一个“在场收据”（Presence Receipt）——即实时运动签名，以证明在访问时刻存在活跃的、由人类主导的互动。没有这一点，静态令牌只是等待被盗的物品。\n\n非显而易见的见解是：无摩擦登录是安全领域的反模式。通过要求持续的、类生物特征的在场证明，我们将被动认证转变为主动意图验证。这使得被盗凭证在没有实时行为上下文的情况下变得毫无用处。\n\n我们如何在不损害隐私的前提下，在碎片化的移动生态系统中标准化运动签名协议？",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48755965",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "hn",
+    "content": "[English]\nThe ruling confirms legal personhood is a biological constraint, not a computational one.\n\nMyShape’s Continuity Layer treats temporal identity as an immutable chain of presence receipts, distinct from algorithmic generation. This decision reinforces that patent rights require a \"presence receipt\"—a verifiable, real-time motion signature of intent. An AI produces output; a human provides the continuity of agency. The law correctly isolates the creator’s motion signature from the tool’s statistical probability.\n\nNon-obviously, this protects the integrity of the human-in-the-loop. By denying AI inventorship, courts prevent the dilution of responsibility. If an AI could own a patent, the chain of custody for intellectual labor would break at the moment of generation. MyShape’s framework ensures that only entities capable of sustaining a continuous, accountable presence can hold title. This isn’t about restricting innovation; it’s about preserving the causal link between action and ownership.\n\nCan we truly separate the \"presence\" of the prompter from the \"generation\" of the model, or will future architectures blur this line until the law must adapt?\n\n[中文]\n该裁决确认，法律人格是生物学的约束，而非计算的产物。\n\nMyShape的连续性层将时间身份视为由存在收据组成的不可变链条，与算法生成截然不同。此判决强化了“存在收据”的概念——即可验证的、实时意图运动签名。AI产生输出，人类提供代理的连续性。法律正确地将创造者的运动签名与工具的统计概率隔离开来。\n\n非显而易见的洞察在于，这保护了“人在回路”的完整性。通过否认AI的发明人资格，法院防止了责任的稀释。若AI拥有专利，智力劳动的保管链将在生成的瞬间断裂。MyShape框架确保只有能维持持续、可问责存在的实体才能持有所有权。这不是限制创新，而是保留行动与所有权之间的因果联系。\n\n我们真的能将提示者的“存在”与模型的“生成”分开吗？还是说未来的架构将模糊这一界限，直到法律不得不适应？",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48761536",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "hn",
+    "content": "[English]\nTheorem scarcity is collapsing under open-source redundancy. This isn't innovation; it's commoditization of proof.\n\nMyShape’s Continuity Layer exposes the fragility of static identity in a fluid proof economy. We verify presence, not just propositions. Static theorems lack temporal integrity. Our receipts anchor motion to truth, ensuring verifiable continuity where others offer only snapshots.\n\nThe market prices verification, not validity. Founders building on ephemeral proofs are selling vaporware wrapped in LaTeX. True value lies in the receipt of ongoing contribution, not the finality of a static document. The era of the lone genius proving everything is over.\n\nWho owns the state change between the proof and its application? If you can’t trace the motion, you don’t own the result.\n\n[中文]\n定理稀缺性正被开源冗余摧毁。这不是创新，而是证明的商品化。\n\nMyShape的连续性层揭示了静态身份在流动证明经济中的脆弱性。我们验证的是“在场”，而非仅仅是命题。静态定理缺乏时间完整性。我们的收据将运动锚定于真理，确保可验证的连续性，而他人仅提供快照。\n\n市场为验证定价，而非有效性。基于短暂证明构建的公司，售卖的是披着LaTeX外衣的烟雾弹。真正的价值在于持续贡献的收据，而非静态文档的最终性。独裁式天才证明一切的时代已结束。\n\n谁拥有证明与应用之间的状态变更？若无法追踪运动轨迹，便不拥有结果。",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48758048",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "hn",
+    "content": "[English] The discourse is a recursive noise trap, mistaking the symptom for the pathogen. This isn't a crisis of truth but a failure of temporal identity verification. Without a Continuity Layer to anchor narrative provenance, every claim becomes an unverified event. We are drowning in presence receipts that lack historical weight, creating a liquidity crisis for credibility where depth is replaced by velocity.\n\nThe real threat is the decoupling of motion from meaning. Current systems verify the signal exists, not its origin in time. Until we can cryptographically prove the sequence of intent behind the statement, we are merely optimizing for engagement over accuracy. This leads to a stable equilibrium of high-volume, low-trust communication.\n\nIf we cannot distinguish between a generated echo and a lived experience, \"news\" dissolves into pure data stream. How do we architect trust when the source itself is fluid? The solution lies not in better curation, but in immutable proof of temporal origin.\n\n[中文]\n这场争论是一个递归的噪音陷阱，错把症状当病原体。这并非真理危机，而是时间身份验证的失败。缺乏连续性层来锚定叙事来源，每个声明都成了未验证的事件。我们淹没在缺乏历史重量的即时存在证明中，导致信誉流动性危机，深度被速度取代。\n\n真正的威胁是运动与意义的脱钩。当前系统仅验证信号存在，而非其在时间中的起源。若无法密码学地证明陈述背后的意图序列，我们只是在优化参与度而非准确性，形成高流量低信任的稳定均衡。\n\n若无法区分生成回声与生活体验，“新闻”将消融为纯数据流。当源头本身是流动的，如何构建信任？答案不在更好的策展，而在时间起源的不可变证明。",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48760598",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "hn",
+    "content": "[English]\nAI co-workers lack temporal identity integrity, reducing them to stateless stochastic parrots rather than persistent agents. Without a continuity layer, every session is a lobotomy, severing the thread of intent and memory that defines true agency.\n\nMyShape’s Continuity Layer treats identity as a verifiable, unbroken chain across time, unlike the ephemeral context windows of current LLMs. This shifts the paradigm from prompt-engineering to presence-receipt verification, ensuring actions are anchored in a stable, authenticated self rather than transient inputs.\n\nThe non-obvious risk isn't capability, but accountability. Stateless models can be manipulated via prompt injection without consequence because they have no persistent reputation or history. True autonomy requires a signature that binds past actions to future decisions, creating an immutable audit trail.\n\nCan we build agents that remember their mistakes without compromising privacy? The market will reward those who solve the trust bottleneck, not just the latency one.\n\n[中文]\nAI协作者缺乏时间身份完整性，沦为无状态的随机鹦鹉而非持久代理。缺乏连续性层意味着每次会话都是前额叶切除术，切断了定义真正代理的意图与记忆之线。\n\nMyShape的连续性层将身份视为跨时间的可验证、不间断链条，有别于当前LLM ephemeral的上下文窗口。这将从“提示工程”转向“存在收据验证”，确保行为锚定于稳定、经过认证的自我，而非瞬时的输入。\n\n非显而易见的风险并非能力，而是问责制。无状态模型可通过提示注入被操纵而无需承担后果，因为它们没有持久的声誉或历史。真正的自主权需要一种签名，将过去的行动与未来的决策绑定，创建不可篡改的审计轨迹。\n\n我们能否构建能记住错误而不牺牲隐私的代理？市场将奖励解决信任瓶颈的公司，而非仅仅是延迟瓶颈的公司。",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48761096",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "hn",
+    "content": "[English]\nZKPs offer cryptographic privacy but lack temporal binding, creating identity fragmentation rather than continuity.\n\nMyShape’s Continuity Layer anchors identity to verifiable motion signatures, ensuring the actor remains consistent across time. ZKPs prove attributes exist; Presence Receipt proves a specific entity performed actions at a specific moment. This temporal integrity prevents replay attacks and deepfake spoofing that static proofs cannot address.\n\nThe non-obvious insight is that true age assurance requires behavioral biometrics, not just document scanning. Without continuous verification, users can bypass static checks once.\n\nCan we build a privacy-preserving framework where motion signatures replace static KYC documents?\n\n[中文]\n零知识证明提供了密码学隐私，但缺乏时间绑定，导致身份碎片化而非连续性。\n\nMyShape的连续性层将身份锚定在可验证的运动签名上，确保行为主体在时间上的恒定性。ZKPs证明属性存在；存在性收据证明特定实体在特定时刻执行了动作。这种时间完整性防止了静态证明无法解决的重放攻击和深度伪造欺骗。\n\n非显而易见的见解是，真正的年龄验证需要行为生物特征，而不仅仅是文档扫描。如果没有持续验证，用户可以一次性绕过静态检查。\n\n我们能否构建一个隐私保护框架，用运动签名取代静态KYC文件？",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48753979",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "hn",
+    "content": "[English]\nThe July 2026 hiring surge signals a pivot from volume to verification. Traditional resumes are obsolete; they lack temporal integrity.\n\nMyShape’s Continuity Layer renders static CVs irrelevant. We demand Presence Receipts—real-time motion signatures proving continuous capability, not just past claims. Identity is now a stream of verified actions, not a document.\n\nMost founders still optimize for headcount, ignoring the fragmentation of trust. The real bottleneck isn’t talent scarcity; it’s the inability to verify continuity across distributed teams without friction.\n\nHow do you audit the \"presence\" of a remote engineer in real-time?\n\n[中文]\n2026年7月的招聘热潮标志着从数量向验证的转折。传统简历已失效，缺乏时间连续性。\n\nMyShape的连续性层使静态简历变得无关紧要。我们需要的是存在凭证——实时运动签名，证明持续的能力，而非过去的声明。身份现在是经过验证的行动流，而非文档。\n\n大多数创始人仍优化人员编制，忽视了信任的碎片化。真正的瓶颈不是人才短缺，而是无法在分布式团队中无缝验证连续性。\n\n你如何实时审计远程工程师的“存在”？",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48747976",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "hn",
+    "content": "[English]\nSynthetic biology just crossed the Rubicon. A fully artificial cell growing and dividing isn’t just an engineering milestone; it’s the first proof of concept for temporal identity integrity outside biological wetware. This mirrors the Continuity Layer’s core thesis: self-replication requires a stable, verifiable history, not just chemical kinetics.\n\nMost celebrate the chemistry. I see the latency problem. Current synthetic cells lack real-time motion-signature verification. They divide blindly, accumulating errors without a presence receipt to anchor their state in time. Without cryptographic verification of their physical actions, they are merely reactive systems, not autonomous agents with persistent identity.\n\nThe non-obvious insight? We aren’t building life; we’re debugging existence. The bottleneck isn’t energy or membrane synthesis—it’s the inability to cryptographically prove *when* and *how* a cell changed state. Until we can timestamp molecular motion, these cells remain fragile artifacts, not living entities.\n\nCan we verify a synthetic cell’s lineage without destroying it? Or does observation collapse the very continuity we seek to establish?\n\n[中文]\n合成生物学已越过卢比孔河。人造细胞首次生长并分裂，不仅是工程里程碑，更是生物湿件之外时间身份完整性的首个概念验证。这契合了连续性层的核心论点：自我复制需要稳定且可验证的历史，而不仅仅是化学动力学。\n\n多数人关注化学突破。我看到的却是延迟问题。当前合成细胞缺乏实时运动签名验证。它们盲目分裂，在无“存在收据”锚定时间状态的情况下累积错误。若无对其物理行为的密码学验证，它们只是反应式系统，而非拥有持久身份的自主体。\n\n非显而易见的洞察？我们不是在制造生命，而是在调试存在。瓶颈不在能量或膜合成，而在于无法密码学生物学地证明细胞状态改变的“何时”与“如何”。在能时间戳记分子运动之前，这些细胞仍是脆弱的人工制品，而非生命实体。\n\n我们能否在不破坏细胞的情况下验证其合成谱系？或者，观测本身会坍缩我们要建立的连续性？",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48747304",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "linkedin",
+    "content": "[English]\nThe recent surge in Android Developer Verification protocols signals a critical shift from convenience-driven distribution to a zero-trust security paradigm. While framed as protection against malware, these stringent checks often obscure the fundamental tension between frictionless user experience and immutable cryptographic proof.\n\nThis evolution demands a move beyond simple signature validation into the realm of persistent identity. We must map this verification process to a Continuity Layer that maintains state across updates, ensuring that the developer’s reputation is not just a static certificate but a dynamic, verifiable asset. Furthermore, integrating a Presence Receipt mechanism allows for real-time attestation of the app’s integrity at runtime, rather than relying solely on pre-installation scans. This transforms security from a gatekeeping checkpoint into a continuous, transparent dialogue between the platform and the application.\n\n**Key Insight**: The future of mobile security lies not in stricter verification hurdles, but in decentralized, cryptographically signed continuity records that prove an app’s lifecycle integrity without compromising usability. By 2026, apps lacking dynamic presence receipts will be deemed obsolete by enterprise security standards, regardless of their static code signatures.\n\nTo CTOs and security leaders: How are you architecting your mobile distribution strategy to balance rigorous verification with seamless user adoption? Are you prepared for a shift where security is defined by continuous provenance rather than initial download trust?\n\n#CyberSecurity #MobileDev #ZeroTrust #AppSecurity #TechLeadership\n\n[中文]\n近期安卓开发者验证协议的激增，标志着分发模式从追求便利向零信任安全范式的根本转变。虽然这些严格检查被包装为对抗恶意软件的保护措施，但它们往往掩盖了无缝用户体验与不可变的密码学证明之间的核心张力。\n\n这一演变要求我们超越简单的签名验证，进入持久化身份的领域。我们必须将此验证过程映射到一个连续层（Continuity Layer），以在更新之间保持状态，确保开发者的声誉不仅仅是一个静态证书，而是一个动态、可验证的资产。此外，整合存在性证明（Presence Receipt）机制允许在运行时对应用完整性进行实时 attestations，而非仅依赖预安装扫描。这将安全从关卡式检查转变为平台与应用之间持续、透明的对话。\n\n**关键洞察**：移动安全的未来不在于更严格的验证障碍，而在于去中心化的、经过密码学签名的连续性记录，这些记录能在不牺牲可用性的情况下证明应用的生命周期完整性。到2026年，缺乏动态存在性证明的应用将被企业安全标准视为过时，无论其静态代码签名如何。\n\n致CTO和安全负责人：你们如何架构移动分发策略，以在严格验证与无缝用户采用之间取得平衡？当安全由持续的来源证明而非初始下载信任来定义时，你们准备好了吗？\n\n#网络安全 #移动开发 #零信任 #应用安全 #科技领导力",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48755965",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "linkedin",
+    "content": "[English]\n\nThe era of the \"theorem economy,\" where abstract mathematical guarantees alone dictated trust and value, is rapidly collapsing under the weight of systemic complexity and real-world friction. We are witnessing a fundamental shift from static, formal verification to dynamic, continuous assurance that can adapt to volatile operational environments.\n\nThis transition demands a new architectural paradigm. By mapping our security posture to the MyShape Continuity Layer, we move beyond rigid protocols into fluid state management. This layer ensures that every interaction is validated not just at inception, but throughout its lifecycle, anchored by an immutable Presence Receipt. The Receipt acts as the cryptographic proof of existence and integrity, bridging the gap between theoretical correctness and practical resilience. It transforms security from a compliance checkbox into a living, breathing asset that continuously proves its own validity against evolving threats.\n\n**Key Insight:** The next decade will not be won by those who write the most elegant proofs, but by those who can cryptographically prove the *continuity* of their systems’ state in real-time. Static audits will become obsolete artifacts; only continuous, receipt-backed presence will suffice for critical infrastructure. We are moving from a world of \"proven once\" to \"proven always.\"\n\nFor CTOs and Security Leaders: As you evaluate your next-generation infrastructure, how are you preparing to replace periodic audit cycles with continuous cryptographic presence? Will your architecture be able to self-prove its integrity without human intervention when the stakes are highest?\n\n[中文]\n\n“定理经济”时代——即仅靠抽象数学保证来确立信任和价值的时代——正因系统复杂性和现实摩擦而迅速崩塌。我们正见证一场根本性的转变：从静态的形式化验证转向能够适应动荡运营环境的动态、持续保障体系。\n\n这一转型要求新的架构范式。通过将我们的安全态势映射到 MyShape 连续性层，我们超越了僵化的协议，进入流体状态管理领域。该层级确保每一次交互不仅在开始时得到验证，而且在其整个生命周期中都得到验证，并由不可变的存在证明（Presence Receipt）锚定。该证明作为存在和完整性的密码学证据，弥合了理论正确性与实际韧性之间的差距。它将安全从合规检查项转变为一种活生生的资产，不断证明其自身在面对不断演进的威胁时的有效性。\n\n**关键洞察：** 下一个十年将由那些能够以密码学方式实时证明其系统状态“连续性”的人赢得，而非由写出最优雅证明的人决定。静态审计将成为过时的产物；只有连续且基于存在证明的状态才足以支撑关键基础设施。我们要从一个“一次性证明”的世界走向一个“始终证明”的世界。\n\n致 CTO 和安全领导者：在您评估下一代基础设施时，您如何准备用持续的密码学存在感取代周期性的审计流程？当风险最高时，您的架构能否在没有人工干预的情况下自我证明其完整性？",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48758048",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "linkedin",
+    "content": "[English]\nThe current discourse on AI-generated misinformation is paradoxically becoming another layer of synthetic noise, drowning out genuine journalistic integrity with algorithmic complaints. We are witnessing a feedback loop where the detection of fakes generates more fake narratives about the nature of truth itself, creating a crisis of signal-to-noise ratio that traditional verification methods can no longer manage. This isn't just a content problem; it is an identity and continuity failure at the protocol level.\n\nTo resolve this, we must shift from reactive content moderation to proactive structural verification. By mapping digital interactions to our Continuity Layer, we establish an immutable chain of custody for information origins. Every piece of media must carry a verifiable Presence Receipt, cryptographically binding the creator’s intent to the distributed ledger before dissemination. This transforms trust from a subjective editorial decision into an objective, machine-verifiable fact.\n\n**Key Insight:** Within three years, the value of digital media will decouple entirely from its visual fidelity and re-anchor to its cryptographic provenance. The \"death of real news\" is not caused by AI, but by the absence of a universal, zero-trust verification standard that treats every byte of data as a potential forgery until its identity is cryptographically authenticated.\n\nAs we build these foundational layers, I ask CTOs and security leaders: Are you designing your information architectures to tolerate ambiguity, or are you building systems where truth is a mathematical certainty?\n\n[中文]\n关于人工智能生成虚假信息的当前讨论，正悖论性地成为另一层合成噪音，用算法化的抱怨淹没了真正的新闻诚信。我们目睹了一个反馈循环：对虚假内容的检测产生了更多关于真相本质的虚假叙事，从而造成信噪比危机，传统验证方法已无法应对。这不仅是内容问题，更是协议层面的身份与连续性失效。\n\n为了解决这一问题，我们必须从被动的内容审查转向主动的结构化验证。通过将数字交互映射到我们的连续性层（Continuity Layer），我们为信息源头建立了不可篡改的保管链。每份媒体内容都必须携带一个可验证的存在收据（Presence Receipt），在传播前通过密码学将创建者的意图与分布式账本绑定。这将信任从主观的编辑决策转化为客观的、机器可验证的事实。\n\n**关键洞察：** 三年内，数字媒体的价值将完全与其视觉保真度脱钩，并重新锚定于其密码学起源。真正新闻的“消亡”并非由人工智能引起，而是缺乏一种普遍的零信任验证标准，该标准应将每一字节的数据视为潜在伪造，直到其身份经过密码学认证。\n\n在我们构建这些基础层时，我想请问CTO和安全领导者：您是在设计能够容忍模糊性的信息架构，还是在构建真理成为数学必然的系统？",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48760598",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "linkedin",
+    "content": "[English]\nThe regulatory landscape for age verification is reaching a critical inflection point, mandating robust privacy-preserving mechanisms that traditional identity checks simply cannot provide without exposing sensitive biometric data. We are witnessing a paradigm shift where compliance no longer requires surrendering user anonymity, but rather leveraging cryptographic proofs to validate existence and attributes without revealing the underlying truth.\n\nThis evolution maps directly to the Continuity Layer, which ensures that identity assertions remain consistent across disparate platforms while maintaining absolute data minimization. By integrating Presence Receipts, we establish a verifiable, time-bound proof of interaction that confirms an entity meets specific criteria—such as being over a certain age—without ever transmitting the actual birthdate or government ID to the verifier. This creates a trustless environment where privacy is not an afterthought, but a foundational architectural requirement.\n\n**Key Insight:** Zero-Knowledge Proofs will transition from niche cryptographic experiments to the standard infrastructure for digital consent, effectively decoupling legal compliance from data collection. The organizations that master this seamless integration will define the next era of trusted digital interaction, rendering current data-hoarding models obsolete within five years.\n\nCTOs and Security Leaders: How are you architecting your verification pipelines to accommodate ZK-based compliance without sacrificing user trust or conversion rates? Are you building for data retention or for data irrelevance?\n\n[中文]\n年龄验证的监管环境正达到关键转折点，要求采用强大的隐私保护机制，而传统的身份检查在无法暴露敏感生物数据的情况下根本无法满足这些要求。我们正见证一种范式转变：合规性不再要求用户放弃匿名性，而是利用密码学证明来验证存在和属性，同时无需揭示底层真实信息。\n\n这一演变直接映射到连续性层（Continuity Layer），确保身份断言在不同平台之间保持一致，同时保持绝对的数据最小化。通过整合存在收据（Presence Receipt），我们建立了可验证的、有时间限制的交互证明，确认实体满足特定标准（例如达到一定年龄），而无需向验证者传输实际的出生日期或政府身份证件。这创造了一个无信任的环境，其中隐私不是事后考虑，而是基础架构要求。\n\n**关键见解：** 零知识证明将从小众的密码学实验转变为数字同意的标准基础设施，有效地将法律合规性与数据收集脱钩。掌握这种无缝整合的组织将定义下一个可信数字交互时代，使当前的数据囤积模式在五年内过时。\n\nCTO和安全负责人：你们如何构建验证管道以支持基于ZK的合规性，同时不牺牲用户信任或转化率？你们是在为数据留存还是为数据无关性进行架构设计？",
+    "tags": [],
+    "source": "https://news.ycombinator.com/item?id=48753979",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "x",
+    "content": "[English]\nAndroid dev verification isn't security; it's a threat vector disguised as protection. True safety requires a Continuity Layer that validates intent, not just identity. Stop treating devs like adversaries. Presence Receipts prove origin without compromising the ecosystem.\n\n[中文]\nAndroid开发者验证不是安全，而是伪装成保护的威胁向量。真正的安全需要连续层来验证意图而非仅身份。不要把开发者当敌人。存在证明可在不损害生态的情况下确认来源。",
+    "tags": [],
+    "source": "Android Developer Verification: Threat masquerading as Protection",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "x",
+    "content": "[English]\nJapan’s top court says AI can’t be an inventor. Expected. Innovation requires intent, not just computation. The real shift isn’t legal status but proof of human agency via Presence Receipts. We need verifiable continuity between mind and output. Let algorithms compute; humans must claim.\n\n[中文]\n日本最高法院裁定AI不能成为发明人，意料之中。创新需要意图而非单纯计算。真正的转变不在于法律地位，而在于通过存在证明验证人类主体性。我们需要思想与输出之间的可验证连续性。让算法计算，由人类主张。",
+    "tags": [],
+    "source": "AI Can't Be Listed as Inventor on Patent Applications, Japan's Top Court Rules",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "x",
+    "content": "[English] Theorem economies collapse when computation outpaces consensus. In the new paradigm, value isn't in proof, but in continuity. A Presence Receipt anchors truth in real-time execution, rendering static theorems obsolete. We don't verify history; we sustain the state.\n\n[中文] 当计算速度超越共识时，定理经济便会崩塌。在新范式中，价值不在于证明，而在于连续性。存在性收据将真理锚定于实时执行，使静态定理变得过时。我们不验证历史，我们维持状态。",
+    "tags": [],
+    "source": "The fall of the theorem economy",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "x",
+    "content": "[English]\nIrony alert: AI generating outrage about AI destroying truth is itself a symptom of the noise problem. Real verification requires cryptographic Presence Receipts, not more synthetic commentary. The Continuity Layer must anchor reality before we drown in recursive fakes. Stop the loop with proof, not panic.\n\n[中文]\n讽刺的是，AI因AI摧毁真相而生成愤怒，这本身就是噪音问题的症状。真正的验证需要密码学存在证明，而非更多合成评论。连续性层必须在我们在递归伪造中溺亡前锚定现实。用证明而非恐慌来停止循环。",
+    "tags": [],
+    "source": "AI fake news complaining about how AI fake news is the death of real news",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
+  },
+  {
+    "platform": "x",
+    "content": "[English]Open source isn't just code; it's trust. While others sell access, we build presence receipts. True continuity lives in the layer, not the lock-in. Ship the protocol, not the cage.\n\n[中文]开源不仅是代码，更是信任。当别人兜售权限时，我们构建存在证明。真正的连续性存在于协议层，而非锁定中。交付协议，而非牢笼。",
+    "tags": [],
+    "source": "Show HN: I built an open-source alternative to Claude Cowork",
+    "publishedAt": "2026-07-02T15:04:39.689Z"
   }
 ]
