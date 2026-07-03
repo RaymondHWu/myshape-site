@@ -132,6 +132,16 @@ export default function HomeClient() {
 
       <main className="relative z-0 w-full overflow-x-clip">
         <HeroDemo />
+
+        {/* Mobile: minimal — counter + CTA only */}
+        <div className="relative z-10 -mt-6 pb-8 md:hidden">
+          <div className="flex justify-center">
+            <GenesisCohortBadge />
+          </div>
+        </div>
+
+        {/* Desktop: full experience below */}
+        <div className="hidden md:block">
         <div className="relative z-10 -mt-6 pb-8 space-y-3">
           <div className="flex justify-center">
             <GenesisCohortBadge />
@@ -297,6 +307,9 @@ export default function HomeClient() {
         </section>
 
         <Vision />
+        </div>{/* end desktop-only */}
+
+        {/* CTA — both mobile and desktop */}
         <JoinWaitlist id="genesis" />
       </main>
 
