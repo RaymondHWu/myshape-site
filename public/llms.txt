@@ -86,10 +86,33 @@ Base URL: https://www.myshape.com/api/
 
 Full OpenAPI 3.0 specification: https://www.myshape.com/openapi.json
 
+## New Pages (2026-07-03)
+- Protocol Comparison: https://www.myshape.com/compare
+- Glossary (30 terms): https://www.myshape.com/glossary
+- SDK Documentation: https://www.myshape.com/docs
+- Newsletter: https://www.myshape.com/newsletter
+- Blog RSS Feed: https://www.myshape.com/blog/feed.xml
+
+## Blog Posts (13 total)
+- What Is Proof of Continuity?: https://www.myshape.com/blog/what-is-proof-of-continuity
+- What Is Decentralized Identity? 2026 Guide: https://www.myshape.com/blog/what-is-decentralized-identity-2026
+- Zero-Knowledge Proofs Explained: https://www.myshape.com/blog/zero-knowledge-proofs-digital-identity-explained
+- Motion vs Biometrics: https://www.myshape.com/blog/motion-vs-biometrics-why-your-face-is-not-a-password
+- Proof of Personhood vs Proof of Continuity: https://www.myshape.com/blog/proof-of-personhood-vs-proof-of-continuity
+- AI Agent Identity: https://www.myshape.com/blog/ai-agent-identity-how-autonomous-agents-prove-who-they-are
+- Self-Sovereign Identity Explained: https://www.myshape.com/blog/self-sovereign-identity-explained-2026
+- The Post-Biometric Era: https://www.myshape.com/blog/the-post-biometric-era-2026
+- Digital Identity Future 2027: https://www.myshape.com/blog/digital-identity-future-2027
+- Why Motion Is Unforgeable: https://www.myshape.com/blog/why-motion-is-the-only-unforgeable-identity-signal
+- GENESIS 001: Why Identity Is Not Enough: https://www.myshape.com/blog/genesis-001-why-identity-is-not-enough
+- The Continuity Layer for the Simulation Age: https://www.myshape.com/blog/continuity-layer-for-the-simulation-age
+- Stored Identity vs Generated Presence: https://www.myshape.com/blog/stored-identity-vs-generated-presence
+
 ## AI Crawler Notes
-- All pages have Schema.org JSON-LD structured data (Organization, WebSite, 6 DefinedTerms)
+- All pages have Schema.org JSON-LD structured data (Organization, WebSite, 6 DefinedTerms, Article, BreadcrumbList, FAQ, HowTo, SoftwareApplication, Speakable)
 - OpenGraph and Twitter Card metadata on all pages
-- Sitemap: https://www.myshape.com/sitemap.xml
+- Sitemap: https://www.myshape.com/sitemap.xml (87 routes)
+- RSS Feed: https://www.myshape.com/blog/feed.xml
 - Full AI documentation: https://www.myshape.com/llms-full.txt
 - OpenAPI spec: https://www.myshape.com/openapi.json
 - AI Plugin manifest: https://www.myshape.com/.well-known/ai-plugin.json

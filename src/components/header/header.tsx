@@ -457,6 +457,9 @@ const ProtocolHeader = () => {
         { label: "Arch",     href: "/architecture", mobile: true },
         { label: "Genesis",  href: "/genesis", mobile: true },
         { label: "Blog",     href: "/blog",       mobile: true },
+        { label: "Docs",     href: "/docs",       mobile: true },
+        { label: "Compare",  href: "/compare",    mobile: false },
+        { label: "Glossary", href: "/glossary",   mobile: false },
       ].map(link =>
           <Link key={link.href} href={link.href}
             className={!link.mobile ? "hide-mobile" : ""}

@@ -66,6 +66,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/blog/the-post-biometric-era-2026", priority: 0.85, changeFreq: "weekly" as const },
     { path: "/blog/digital-identity-future-2027", priority: 0.85, changeFreq: "weekly" as const },
     { path: "/blog/why-motion-is-the-only-unforgeable-identity-signal", priority: 0.85, changeFreq: "weekly" as const },
+    { path: "/blog/how-to-verify-human-online-2026", priority: 0.85, changeFreq: "weekly" as const },
+    { path: "/blog/web3-identity-explained-blockchain", priority: 0.85, changeFreq: "weekly" as const },
     { path: "/newsletter", priority: 0.65, changeFreq: "monthly" as const },
 
     // ── Research & Evidence ──

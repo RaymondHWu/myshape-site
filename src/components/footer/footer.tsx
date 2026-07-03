@@ -73,7 +73,8 @@ export default function ProtocolFooter() {
         { name: "ABOUT_MYSHAPE", href: "/about-myshape" },
         { name: "VISION", href: "/vision" },
         { name: "ROADMAP_PLAN", href: "/roadmap" },
-        { name: "CONTACT_SYSTEM", href: "/contact" }
+        { name: "CONTACT_SYSTEM", href: "/contact" },
+        { name: "NEWSLETTER", href: "/newsletter" }
       ]
     },
     { 
