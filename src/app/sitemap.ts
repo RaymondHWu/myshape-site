@@ -61,6 +61,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/blog/zero-knowledge-proofs-digital-identity-explained", priority: 0.85, changeFreq: "weekly" as const },
     { path: "/blog/proof-of-personhood-vs-proof-of-continuity", priority: 0.85, changeFreq: "weekly" as const },
     { path: "/blog/ai-agent-identity-how-autonomous-agents-prove-who-they-are", priority: 0.85, changeFreq: "weekly" as const },
+    { path: "/blog/self-sovereign-identity-explained-2026", priority: 0.85, changeFreq: "weekly" as const },
+    { path: "/blog/the-post-biometric-era-2026", priority: 0.85, changeFreq: "weekly" as const },
 
     // ── Research & Evidence ──
     { path: "/evidence", priority: 0.7, changeFreq: "weekly" as const },
