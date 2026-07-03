@@ -45,6 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/glossary", priority: 0.8, changeFreq: "weekly" as const },
 
     // ── Build ──
+    { path: "/docs", priority: 0.85, changeFreq: "weekly" as const },
     { path: "/developers", priority: 0.8, changeFreq: "weekly" as const },
     { path: "/identity", priority: 0.75, changeFreq: "monthly" as const },
     { path: "/agent", priority: 0.7, changeFreq: "weekly" as const },

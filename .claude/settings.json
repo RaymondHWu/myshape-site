@@ -1,0 +1,54 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Edit(**)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(pnpm:*)",
+      "Bash(yarn:*)",
+      "Bash(node:*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/vendor/superpowers/hooks/session-start",
+            "async": false
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/contract.sh",
+            "async": false
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/task-guard.mjs",
+            "async": false
+          }
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "projectName": "myshape_protocol",
+    "generatedBy": "ai-dev-setup"
+  }
+}

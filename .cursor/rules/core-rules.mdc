@@ -1,0 +1,14 @@
+---
+description: Core coding constraints for myshape_protocol
+globs: "**/*"
+alwaysApply: true
+---
+
+# Core rules
+
+- Operating contract: `.ai/CONTRACT.md`
+- Coding standards: `.ai/rules.md`
+- Workflow guide: `.ai/workflow.md`
+- Specialist map: `.ai/agents.md`
+- Plan tasks must include: `path`, `intent`, `verify`, `agency`, `docs`
+- Never dispatch implementation work without `@agency-*.mdc`

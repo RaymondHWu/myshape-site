@@ -1,0 +1,13 @@
+---
+description: Default routing — Superpowers (workflow) + Agency (execution) for myshape_protocol
+globs: "**/*"
+alwaysApply: false
+---
+
+# Routing
+
+- Operating contract: `.ai/CONTRACT.md` (primary source).
+- Default flow: Superpowers skill for phase + Agency specialist for implementation.
+- Plan output is invalid if any task misses `agency` or `docs`.
+- Implementation tasks must start with a matching `@agency-*.mdc` rule.
+- Do not override Superpowers reviewer gates with Agency roles.

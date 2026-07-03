@@ -1,0 +1,16 @@
+---
+description: Default operating contract — Superpowers + Agency; applies to every code/file change request
+globs: "**/*"
+alwaysApply: false
+---
+
+# Agents
+
+Operating contract: see `.ai/CONTRACT.md` (loaded by hooks/rules).
+
+Use this file when mapping task focus to specialist rules:
+- API/server: `@agency-backend-architect.mdc`
+- UI/components: `@agency-frontend-developer.mdc`
+- Tests: `@agency-api-tester.mdc`
+- Infra: `@agency-devops-automator.mdc`
+- Review: `@agency-code-reviewer.mdc`
