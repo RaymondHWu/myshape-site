@@ -8,6 +8,18 @@
       "Bash(pnpm:*)",
       "Bash(yarn:*)",
       "Bash(node:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~/)",
+      "Bash(rm -rf .)",
+      "Bash(:(){ :|:& };:)",
+      "Bash(curl * | sh)",
+      "Bash(wget * | sh)",
+      "Bash(git push --force origin main)",
+      "Bash(git push --force origin master)",
+      "Bash(echo *) > /dev/sda",
+      "Bash(dd if=*)"
     ]
   },
   "hooks": {
