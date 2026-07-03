@@ -62,13 +62,12 @@ export async function GET() {
           }
         : null,
       nodes: sanitized,
-      // Protocol infrastructure stats
-      engines: 15,
+      // Protocol engine metrics (source: src/engine/)
+      engines: 3,
+      // Attack signatures indexed (source: unforgeability.ts §threat matrix)
       attackSigs: 8,
-      specSections: 40,
-      integrationLines: "5",
-      coreTests: "37/37_PASS",
-      protocolEnclave: true,
+      // Core test suite (source: vitest — 14 suites)
+      coreTests: "172/172",
     });
   } catch (err) {
     console.error("Presence network error:", err);

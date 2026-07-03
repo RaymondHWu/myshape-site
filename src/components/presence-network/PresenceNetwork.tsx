@@ -4,7 +4,7 @@ import { playTick } from "@/utils/useAudioTick";
 
 /* ── Types ── */
 interface NetworkNode { handle: string; mask: string; status: string; particleLevel: number; entropy: number; lastSeen: string; scans: number; isGenesis: boolean; }
-interface NetworkData { totalNodes: number; activeHumans: number; genesisNodes: number; agents: number; activeToday: number; totalScans: number; lastInbound: { handle: string; mask: string; timestamp: string } | null; nodes: NetworkNode[]; engines: number; attackSigs: number; specSections: number; integrationLines: string; coreTests: string; protocolEnclave: boolean; }
+interface NetworkData { totalNodes: number; activeHumans: number; genesisNodes: number; agents: number; activeToday: number; totalScans: number; lastInbound: { handle: string; mask: string; timestamp: string } | null; nodes: NetworkNode[]; engines: number; attackSigs: number; coreTests: string; }
 interface NodePosition { x: number; y: number; vx: number; vy: number; node: NetworkNode; radius: number; glow: number; phase: number; }
 
 /* ── Design tokens — aligned with Vision cards ── */
@@ -176,8 +176,8 @@ export default function PresenceNetwork() {
         <Row label="NODES"    value={data.totalNodes} sub={data.totalNodes === 0 ? "(awaiting first uplink)" : `human:${data.activeHumans}  agent:${data.agents}`} accent={data.totalNodes > 0 ? "cyan" : "muted"} pulse={data.totalNodes > 0} flash={flashRows.has("NODES")} freq={500} stripe />
         <Row label="GENESIS"  value={`${data.genesisNodes}/100`} sub={genesisPct > 0 ? `${genesisPct}%` : "(cohort forming)"} accent={data.genesisNodes > 0 ? "amber" : "muted"} pulse={data.genesisNodes > 0} flash={flashRows.has("GENESIS")} freq={600} />
         <Row label="TODAY"    value={data.activeToday} sub={data.activeToday > 0 ? "scans recorded" : "(no activity)"} accent={data.activeToday > 0 ? "green" : "muted"} flash={flashRows.has("TODAY")} freq={700} stripe />
-        <Row label="ENGINES"  value={data.engines} sub="operational" accent="cyan" freq={800} />
-        <Row label="ATK_SIGS" value={data.attackSigs} sub="indexed" accent={data.attackSigs > 0 ? "amber" : "muted"} freq={900} stripe />
+        <Row label="ENGINES"  value={data.engines} sub="WASM + ZK + PES" accent="cyan" freq={800} />
+        <Row label="SPEC"     value={data.attackSigs} sub="threat sigs indexed" accent={data.attackSigs > 0 ? "amber" : "muted"} freq={900} stripe />
         <Row label="CORE"     value={data.coreTests} accent="green" pulse freq={1000} />
       </div>
 
