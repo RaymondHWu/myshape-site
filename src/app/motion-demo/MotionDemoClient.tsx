@@ -750,10 +750,13 @@ export default function MotionDemoClient() {
                   }
                   active={true}
                 />
-                {/* Mini status badge — frame counter */}
-                <div className="absolute top-3 right-3 z-30 flex items-center gap-2 px-2.5 py-1 bg-black/70 border border-[#90c8ff]/20 rounded-sm pointer-events-none">
-                  <span className="text-[#90c8ff]/60 text-[8px] tracking-[0.15em] font-mono">
-                    {validFrameCount} valid
+                {/* Status badge — countdown + frame counter */}
+                <div className="absolute top-3 right-3 z-30 flex items-center gap-3 px-3 py-1.5 bg-black/70 border border-[#90c8ff]/20 rounded-sm pointer-events-none">
+                  <span className="text-white/80 font-mono text-[18px] tabular-nums" style={{ textShadow: "0 0 12px rgba(144,200,255,0.5)" }}>
+                    {countdown}s
+                  </span>
+                  <span className="text-[#90c8ff]/40 text-[8px] tracking-[0.15em] font-mono">
+                    {validFrameCount} frames
                   </span>
                 </div>
               </>
