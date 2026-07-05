@@ -794,7 +794,8 @@ export default function MotionDemoClient() {
       }
     });
 
-    // Start processing
+    // Ensure video is visible on top of canvas during import
+    videoEl.style.zIndex = "50";
     videoEl.srcObject = null;
     videoEl.src = url;
     videoEl.playsInline = true;
@@ -840,8 +841,8 @@ export default function MotionDemoClient() {
         frameIndex++;
         setCountdown(totalFrames - frameIndex);
         setCaptureElapsedMs((frameIndex / videoFps) * 1000);
-        // Schedule next — 50ms gives 20fps max throughput, stable on most machines
-        setTimeout(seekAndProcess, 50);
+        // Schedule next — 30ms between frames for smoother processing
+        setTimeout(seekAndProcess, 30);
       };
 
       videoEl.addEventListener("seeked", onSeeked);
