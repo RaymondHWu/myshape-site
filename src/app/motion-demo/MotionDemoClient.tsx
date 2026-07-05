@@ -628,6 +628,16 @@ export default function MotionDemoClient() {
           }).catch((e) => { console.warn("[motion-demo] API call failed:", e); });
         }
       }, 1500);
+    } else {
+      // Not enough frames — still clean up and show results
+      setTimeout(() => {
+        if (animRef.current) cancelAnimationFrame(animRef.current);
+        if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop());
+        if (videoRef.current) { videoRef.current.srcObject = null; videoRef.current.pause(); }
+        const t = (window as unknown as Record<string, unknown>).__motionTimer as ReturnType<typeof setInterval>;
+        if (t) { clearInterval(t); (window as unknown as Record<string, unknown>).__motionTimer = undefined; }
+        setPhase("complete");
+      }, 500);
     }
   }, [phase]);
 
