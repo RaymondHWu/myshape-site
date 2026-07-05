@@ -76,7 +76,6 @@ export default function MotionDemoClient() {
   const { engine, loading: wasmLoading, load: loadWasm } = useMyShapeEngine();
   const [copied, setCopied] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const isVideoImportRef = useRef(false); // Flag: video import uses uniform timestamps
   const [countdown, setCountdown] = useState(30);
   const [landmarkVisibility, setLandmarkVisibility] = useState<(number | undefined)[]>([]);
   const [captureElapsedMs, setCaptureElapsedMs] = useState(0);
@@ -763,7 +762,8 @@ export default function MotionDemoClient() {
     const pose = new window.Pose({ locateFile: (f: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${f}` });
     pose.setOptions({ modelComplexity: 0, smoothLandmarks: true, minDetectionConfidence: 0.5 });
 
-    // Store current frame index for timestamp calculation
+    // Store frame index + FPS for synthetic uniform timestamps
+    const videoFps = 12;
     const frameIndexRef = { current: 0 };
 
     pose.onResults((results: PoseResult) => {
@@ -777,9 +777,9 @@ export default function MotionDemoClient() {
         const anchorIndices = [0, 11, 12, 13, 14, 15, 16, 23, 24];
         const allAnchorsVisible = anchorIndices.every(i => (rawLm[i]?.visibility ?? 0) > 0.5);
         if (allAnchorsVisible) setValidFrameCount(c => c + 1);
-        // ── SST collection — use uniform timestamps for video import (avoid seek-jitter as bio signal) ──
+        // ── SST collection — synthetic uniform timestamps (avoid seek-jitter as bio signal) ──
         const sstFrame = normalizeSSTFrame(mediaPipeToSST(lm));
-        const uniformTs = frameIndexRef.current * (1000 / fps); // synthetic uniform timing
+        const uniformTs = frameIndexRef.current * (1000 / videoFps);
         sstFramesRef.current.push({ frame: sstFrame, timestamp: uniformTs });
         prevLandmarksRef.current = rawLm;
         prevTimestampRef.current = uniformTs;
@@ -807,9 +807,8 @@ export default function MotionDemoClient() {
       const offCtx = document.createElement("canvas").getContext("2d");
       if (!offCtx) { setPhase("idle"); URL.revokeObjectURL(url); return; }
 
-      const fps = 12;
       const duration = videoEl.duration || 5;
-      const totalFrames = Math.floor(duration * fps);
+      const totalFrames = Math.floor(duration * videoFps);
       let frameIndex = 0;
       setCountdown(totalFrames);
 
@@ -820,7 +819,7 @@ export default function MotionDemoClient() {
           return;
         }
         // Seek to exact timestamp — uniform intervals for clean timing
-        videoEl.currentTime = frameIndex / fps;
+        videoEl.currentTime = frameIndex / videoFps;
       };
 
       const onSeeked = () => {
@@ -833,7 +832,7 @@ export default function MotionDemoClient() {
         if (pose) pose.send({ image: offCtx.canvas as unknown as HTMLVideoElement });
         frameIndex++;
         setCountdown(totalFrames - frameIndex);
-        setCaptureElapsedMs((frameIndex / fps) * 1000);
+        setCaptureElapsedMs((frameIndex / videoFps) * 1000);
         // Schedule next — 50ms gives 20fps max throughput, stable on most machines
         setTimeout(seekAndProcess, 50);
       };
