@@ -10,6 +10,8 @@
 [![Genesis Cohort](https://img.shields.io/badge/Genesis_Cohort-0/100-58a6ff?style=flat)](https://www.myshape.com/genesis)
 [![Build](https://img.shields.io/badge/build-81_pages_|_172_tests-22d3ee?style=flat)](https://github.com/RaymondHWu/myshape-site)
 [![SEO](https://img.shields.io/badge/SEO-7_schema_types_|_9_blog_posts-8957e5?style=flat)](https://www.myshape.com)
+[![Substack](https://img.shields.io/badge/Substack-The_Entropy_Gap-ff6600?style=flat)](https://open.substack.com/pub/myshape/p/the-entropy-gap-why-ai-cannot-forge)
+[![Paragraph](https://img.shields.io/badge/Paragraph-On--Chain_Post-8b5cf6?style=flat)](https://paragraph.com/@myshape/the-entropy-gap-%E2%80%94-why-ai-cannot-forge-human-motion)
 
 ---
 

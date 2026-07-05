@@ -130,8 +130,21 @@ export async function POST(request: Request) {
       }
 
       try {
+        // Auto-detect proxy (LinkedIn API is geo-restricted)
+        let proxyUri = "http://127.0.0.1:15236";
+        const { execSync } = await import("child_process");
+        try {
+          execSync('netstat -ano | findstr "127.0.0.1:7890.*LISTENING"', { timeout: 1000, stdio: "ignore" });
+          proxyUri = "http://127.0.0.1:7890";
+        } catch { /* VEE default */ }
+
+        const { ProxyAgent, fetch: undiciFetch } = await import("undici");
+        const dispatcher = new ProxyAgent({ uri: proxyUri, requestTls: { rejectUnauthorized: false } });
+        const lfetch = (url: string, init?: RequestInit) =>
+          undiciFetch(url, { ...init, dispatcher } as Parameters<typeof undiciFetch>[1]);
+
         // Get user info to find the member URN
-        const meRes = await fetch("https://api.linkedin.com/v2/userinfo", {
+        const meRes = await lfetch("https://api.linkedin.com/v2/userinfo", {
           headers: { Authorization: "Bearer " + userToken },
         });
         if (!meRes.ok) throw new Error("LinkedIn userinfo failed: " + meRes.status);
@@ -148,7 +161,7 @@ export async function POST(request: Request) {
           isReshareDisabledByAuthor: false,
         };
 
-        const postRes = await fetch("https://api.linkedin.com/v2/posts", {
+        const postRes = await lfetch("https://api.linkedin.com/v2/posts", {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + userToken,
