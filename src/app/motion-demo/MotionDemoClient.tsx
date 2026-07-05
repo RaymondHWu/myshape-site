@@ -146,7 +146,12 @@ export default function MotionDemoClient() {
     setCaptureElapsedMs(0);
     // Drive countdown independently of MediaPipe — ensures timer always ticks
     const timerInterval = setInterval(() => {
-      setCaptureElapsedMs(performance.now() - captureStartRef.current);
+      const elapsed = performance.now() - captureStartRef.current;
+      setCaptureElapsedMs(elapsed);
+      // Auto-stop after 30s even if no landmarks detected
+      if (elapsed >= TOTAL_DURATION_MS) {
+        setAllPhasesComplete(true);
+      }
     }, 250);
     // Store for cleanup
     (window as unknown as Record<string, unknown>).__motionTimer = timerInterval;
