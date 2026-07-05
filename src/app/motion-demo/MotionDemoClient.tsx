@@ -882,13 +882,21 @@ export default function MotionDemoClient() {
                   active={true}
                 />
                 {/* Status badge — countdown + frame counter */}
-                <div className="absolute top-3 right-3 z-30 flex items-center gap-3 px-3 py-1.5 bg-black/70 border border-[#90c8ff]/20 rounded-sm pointer-events-none">
+                <div className="absolute top-3 right-3 z-30 flex items-center gap-3 px-3 py-1.5 bg-black/70 border border-[#90c8ff]/20 rounded-sm">
                   <span className="text-white/80 font-mono text-[18px] tabular-nums" style={{ textShadow: "0 0 12px rgba(144,200,255,0.5)" }}>
                     {countdown}s
                   </span>
                   <span className="text-[#90c8ff]/40 text-[8px] tracking-[0.15em] font-mono">
                     {validFrameCount} frames
                   </span>
+                  {/* Manual stop — ends capture early, computes PES from accumulated frames */}
+                  <button
+                    onClick={() => setAllPhasesComplete(true)}
+                    onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
+                    className="ml-2 px-2 py-0.5 border border-red-400/30 text-red-400/50 hover:bg-red-400/10 hover:text-red-400/80 text-[8px] tracking-[0.1em] uppercase transition-all"
+                    title="Stop early and compute PES from current frames">
+                    ⏹ Stop
+                  </button>
                 </div>
               </>
             )}
