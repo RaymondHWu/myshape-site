@@ -35,7 +35,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { platform, content, title, url } = await request.json();
+    const { platform, content, title, url, imagePath } = await request.json();
 
     if (!platform || !content) {
       return NextResponse.json(
@@ -143,23 +143,63 @@ export async function POST(request: Request) {
         const lfetch = (url: string, init?: RequestInit) =>
           undiciFetch(url, { ...init, dispatcher } as Parameters<typeof undiciFetch>[1]);
 
-        // Get user info to find the member URN
-        const meRes = await lfetch("https://api.linkedin.com/v2/userinfo", {
-          headers: { Authorization: "Bearer " + userToken },
-        });
-        if (!meRes.ok) throw new Error("LinkedIn userinfo failed: " + meRes.status);
-        const me = await meRes.json() as { sub: string };
-        const memberUrn = `urn:li:person:${me.sub}`;
+        // Post to MyShape Protocol organization page (not personal profile)
+        const orgUrn = "urn:li:organization:111557251";
 
-        // Post using /v2/posts (LinkedIn Community Management API)
-        const postBody = {
-          author: memberUrn,
+        // Build post body — optionally with image
+        const postBody: Record<string, unknown> = {
+          author: orgUrn,
           commentary: content,
           visibility: "PUBLIC",
           distribution: { feedDistribution: "MAIN_FEED", targetEntities: [], thirdPartyDistributionChannels: [] },
           lifecycleState: "PUBLISHED",
           isReshareDisabledByAuthor: false,
         };
+
+        // Upload image if provided (LinkedIn image → media URN)
+        if (imagePath) {
+          const { readFileSync: rfs } = await import("node:fs");
+          const { resolve: r } = await import("node:path");
+          const imgData = rfs(r(process.cwd(), imagePath));
+
+          // ① Register upload
+          const initRes = await lfetch("https://api.linkedin.com/v2/images?action=initializeUpload", {
+            method: "POST",
+            headers: {
+              "Authorization": "Bearer " + userToken,
+              "Content-Type": "application/json",
+              "X-Restli-Protocol-Version": "2.0.0",
+              "LinkedIn-Version": "202406",
+            },
+            body: JSON.stringify({ initializeUploadRequest: { owner: orgUrn } }),
+          });
+          if (!initRes.ok) {
+            const e = await initRes.text();
+            throw new Error("LinkedIn image init failed: " + initRes.status + " " + e.slice(0, 200));
+          }
+          const initData = await initRes.json() as {
+            value?: { uploadUrl?: string; image?: string };
+          };
+          const uploadUrl = initData.value?.uploadUrl;
+          const imageUrn = initData.value?.image;
+          if (!uploadUrl || !imageUrn) {
+            throw new Error("LinkedIn image init: missing uploadUrl or image URN");
+          }
+
+          // ② PUT binary image
+          const putRes = await lfetch(uploadUrl, {
+            method: "PUT",
+            headers: { "Content-Type": "application/octet-stream" },
+            body: imgData,
+          });
+          if (!putRes.ok) {
+            throw new Error("LinkedIn image upload failed: " + putRes.status);
+          }
+
+          // ③ Attach image to post payload
+          postBody.content = { media: { id: imageUrn } };
+          console.log("[matrix/publish] LinkedIn image uploaded:", imageUrn);
+        }
 
         const postRes = await lfetch("https://api.linkedin.com/v2/posts", {
           method: "POST",

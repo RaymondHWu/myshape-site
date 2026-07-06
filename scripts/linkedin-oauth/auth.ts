@@ -84,7 +84,7 @@ async function main() {
   // The redirect will likely fail (server is remote), but LinkedIn requires it.
   // We just need the `code` from the browser URL bar after authorization.
   const redirectUri = "http://localhost:3000/api/matrix/auth/linkedin/callback";
-  const scope = "openid profile w_member_social email";
+  const scope = "openid profile w_member_social w_organization_social email";
 
   const authUrl =
     `https://www.linkedin.com/oauth/v2/authorization` +

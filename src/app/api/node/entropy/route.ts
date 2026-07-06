@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { randomUUID } from "crypto";
 import {
   computeEntropyGain,
   getLevelProgress,
@@ -47,7 +48,7 @@ export async function POST(request: Request) {
     // Read current entropy state + scan_count
     const { data: node, error: readErr } = await getSupabase()
       .from("protocol_nodes")
-      .select("entropy_score, particle_level, streak_days, streak_multiplier, best_pes, last_entropy_date, scan_count, status")
+      .select("entropy_score, particle_level, streak_days, streak_multiplier, best_pes, last_entropy_date, scan_count, status, genesis_key")
       .eq("email", email)
       .single();
 
@@ -74,10 +75,20 @@ export async function POST(request: Request) {
 
     const { entropyGain, newState, leveledUp, decayApplied, spikeTriggered } = computeEntropyGain(clampedPes, pesComponents, currentState);
 
-    // ── Genesis Badge Minting: first PES scan that passes threshold unlocks identity tier ──
+    // ── Genesis Badge Minting ──────────────────────────────────────────
+    // Upgrades qualifying nodes to GENESIS_NODE (first 100 with PES > 0.5).
+    //
+    // Eligible statuses: anything EXCEPT already-minted (GENESIS_NODE),
+    // AI agents (AGENT_ACTIVE), and sandbox test accounts (TEST_ACCOUNT).
+    //
+    // OTP-verified users (ACTIVE) ARE eligible — they reach this route
+    // before doing a motion scan, and the scan is what proves sovereignty.
     const currentStatus = node.status ?? "PENDING_VERIFICATION";
-    const isFirstVerification = !["GENESIS_NODE", "ACTIVE", "AGENT_ACTIVE"].includes(currentStatus);
+    const isFirstVerification = !["GENESIS_NODE", "AGENT_ACTIVE", "TEST_ACCOUNT"].includes(currentStatus);
     let badgeMinted: string | null = null;
+    let genesisKey: string | null = node.genesis_key ?? null;
+    let cohortFull = false;
+    let slotsRemaining = 0;
 
     if (isFirstVerification && clampedPes > 0.5) {
       // Count existing verified nodes to determine tier
@@ -86,22 +97,38 @@ export async function POST(request: Request) {
         .select("*", { count: "exact", head: true })
         .in("status", ["GENESIS_NODE", "ACTIVE", "AGENT_ACTIVE"]);
 
-      const newNodeStatus = (verifiedCount ?? 0) < 100 ? "GENESIS_NODE" : "ACTIVE";
+      const currentVerified = verifiedCount ?? 0;
+      const newNodeStatus = currentVerified < 100 ? "GENESIS_NODE" : "ACTIVE";
+      slotsRemaining = Math.max(0, 100 - currentVerified);
+      cohortFull = currentVerified >= 100;
       badgeMinted = newNodeStatus;
 
-      // Update status along with entropy
+      const updates: Record<string, unknown> = {
+        entropy_score: newState.entropyScore,
+        particle_level: newState.particleLevel,
+        streak_days: newState.streakDays,
+        streak_multiplier: newState.streakMultiplier,
+        best_pes: newState.bestPes,
+        last_entropy_date: newState.lastEntropyDate,
+        scan_count: (node.scan_count ?? 0) + 1,
+        status: newNodeStatus,
+      };
+
+      if (newNodeStatus === "GENESIS_NODE") {
+        genesisKey = `GK_${randomUUID()}`;
+        updates.genesis_key = genesisKey;
+      }
+
+      // Preserve genesis_key if already minted (GENESIS_NODE → GENESIS_NODE is impossible here,
+      // but belt-and-suspenders: if somehow reached, don't overwrite the key)
+      if (node.genesis_key && newNodeStatus === "GENESIS_NODE") {
+        updates.genesis_key = node.genesis_key;
+        genesisKey = node.genesis_key;
+      }
+
       const { error: writeErr } = await getSupabase()
         .from("protocol_nodes")
-        .update({
-          entropy_score: newState.entropyScore,
-          particle_level: newState.particleLevel,
-          streak_days: newState.streakDays,
-          streak_multiplier: newState.streakMultiplier,
-          best_pes: newState.bestPes,
-          last_entropy_date: newState.lastEntropyDate,
-          scan_count: (node.scan_count ?? 0) + 1,
-          status: newNodeStatus,
-        })
+        .update(updates)
         .eq("email", email);
 
       if (writeErr) {
@@ -138,6 +165,9 @@ export async function POST(request: Request) {
       decayApplied,
       spikeTriggered,
       badge_minted: badgeMinted,
+      genesis_key: genesisKey,
+      cohort_full: cohortFull,
+      slots_remaining: slotsRemaining,
       status: badgeMinted ?? currentStatus,
     });
   } catch (err) {
@@ -169,7 +199,7 @@ export async function GET(request: Request) {
   try {
     const { data, error } = await getSupabase()
       .from("protocol_nodes")
-      .select("entropy_score, particle_level, streak_days, streak_multiplier, best_pes, last_entropy_date, scan_count, status")
+      .select("entropy_score, particle_level, streak_days, streak_multiplier, best_pes, last_entropy_date, scan_count, status, genesis_key")
       .eq("email", email)
       .single();
 
@@ -195,6 +225,8 @@ export async function GET(request: Request) {
       lastEntropyDate: data.last_entropy_date ?? "",
       scanCount: data.scan_count ?? 0,
       progress,
+      genesisKey: data.genesis_key ?? null,
+      status: data.status ?? null,
     });
   } catch (err) {
     console.error("Entropy read failed:", err);

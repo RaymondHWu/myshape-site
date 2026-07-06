@@ -37,9 +37,9 @@ export async function POST(request: Request) {
   }
 
   try {
-    const body = await request.json().catch(() => ({}));
-    const handle = (body.handle || "").trim().slice(0, 20) || `DEV_${randomHex(3).toUpperCase()}`;
-    const email = body.email?.trim().toLowerCase() || `${handle.toLowerCase()}@sandbox.myshape.dev`;
+    const payload = await request.json().catch(() => ({}));
+    const handle = (payload.handle || "").trim().slice(0, 20) || `DEV_${randomHex(3).toUpperCase()}`;
+    const email = payload.email?.trim().toLowerCase() || `${handle.toLowerCase()}@sandbox.myshape.dev`;
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     const { error: insertError } = await supabase.from("protocol_nodes").insert({
       email,
       node_handle: nodeHandle,
-      status: "ACTIVE",
+      status: "TEST_ACCOUNT",
     });
 
     if (insertError) throw insertError;

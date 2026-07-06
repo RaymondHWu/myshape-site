@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{width:1200px;height:675px;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}
+.card{width:100%;height:100%;background:linear-gradient(135deg,#02040a 0%,#0a1628 50%,#02040a 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:50px 60px;position:relative}
+.card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(144,200,255,0.05) 0%,transparent 70%)}
+.top-line{color:#90c8ff;font-size:11px;letter-spacing:.4em;text-transform:uppercase;opacity:.6;position:relative;z-index:1;margin-bottom:20px}
+.title{color:#f8feff;font-size:30px;font-weight:300;letter-spacing:.06em;position:relative;z-index:1;margin-bottom:36px}
+.pipeline{display:flex;align-items:center;gap:0;position:relative;z-index:1;width:100%;max-width:1050px}
+.stage{flex:1;background:rgba(144,200,255,0.05);border:1px solid rgba(144,200,255,0.15);padding:16px 12px;text-align:center;min-height:100px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.stage .icon{color:#90c8ff;font-size:18px;margin-bottom:6px;opacity:.8}
+.stage .name{color:#f8feff;font-size:13px;font-weight:500;letter-spacing:.04em}
+.stage .detail{color:rgba(144,200,255,0.5);font-size:9px;margin-top:4px;line-height:1.4;letter-spacing:.04em}
+.arrow{color:rgba(144,200,255,0.3);font-size:18px;flex-shrink:0;padding:0 2px}
+.footer-text{color:rgba(144,200,255,0.5);font-size:11px;letter-spacing:.08em;position:relative;z-index:1;margin-top:28px;text-align:center;line-height:1.6}
+</style></head><body>
+<div class="card">
+  <div class="top-line">Processing Pipeline · On-Device · Zero Data Leakage</div>
+  <div class="title">Motion-Signature Verification Architecture</div>
+  <div class="pipeline">
+    <div class="stage"><div class="icon">📷</div><div class="name">Camera / Video</div><div class="detail">Webcam or MP4 import<br>30fps capture</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="icon">🧬</div><div class="name">MediaPipe Pose</div><div class="detail">33-pt landmarks<br>Real-time tracking</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="icon">🦴</div><div class="name">SST Topology</div><div class="detail">18-pt skeleton<br>Head→Ankles</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="icon">⚡</div><div class="name">4D PES Engine</div><div class="detail">Kinematics<br>Acceleration<br>Jerk Spectrum<br>Entropy Score</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="icon">🔐</div><div class="name">ZK-SNARK</div><div class="detail">~250 byte proof<br>6-rule verification</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="icon">⛓️</div><div class="name">Continuity Proof</div><div class="detail">On-chain anchor<br>Genesis enrollment</div></div>
+  </div>
+  <div class="footer-text">All processing on-device. Zero raw data leaves the device.<br>128-dim motion vector extracted and verified without surveillance.</div>
+</div>
+</body></html>

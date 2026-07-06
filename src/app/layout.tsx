@@ -7,6 +7,7 @@ import PageTransition from "@/components/transition/PageTransition";
 import ScrollTop from "@/components/ui/ScrollTop";
 import HeroVisualLoader from "@/components/hero/HeroVisualLoader";
 import AnnouncementBar from "@/components/announcement-bar/AnnouncementBar";
+import ProtocolStatusBar from "@/components/protocol-status/ProtocolStatusBar";
 
 /* -------------------------------
    全站 SEO metadata（首页）
@@ -190,6 +191,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Announcement bar — site-wide dismissible notification */}
         <AnnouncementBar />
+
+        {/* Protocol status — live network state, bottom-left corner */}
+        <ProtocolStatusBar />
 
         {/* Page content */}
         <div style={{ position: "relative", zIndex: 1, width: "100%", flex: 1 }}>

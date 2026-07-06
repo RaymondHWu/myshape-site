@@ -36,9 +36,12 @@ export async function GET(req: Request) {
       uniqueRows.push(r);
     }
 
-    // Exclude smoke-test entries
+    // Exclude smoke-test and sandbox test entries
     const real = uniqueRows.filter(
-      (r) => !r.email?.toLowerCase().includes("smoke-test")
+      (r) => {
+        const email = r.email?.toLowerCase() ?? "";
+        return !email.includes("smoke-test") && !email.includes("@sandbox.myshape.dev");
+      }
     );
 
     const total = real.length;

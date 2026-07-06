@@ -9,18 +9,30 @@
 // Watches PM2 logs for [dev/register] and [dev/activate] errors.
 // Deduplicates by error message within a 10-minute window.
 // Pushes alerts to Discord via DISCORD_WEBHOOK_URL.
+// Archives 409/429 signals to signals-archive.json for developer-path analysis.
 
 import { execSync } from "node:child_process";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 
 const STATE_FILE = `${__dirname}/seen.json`;
+const SIGNALS_ARCHIVE = `${__dirname}/signals-archive.json`;
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 const DEDUP_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 
 interface SeenEntry {
   key: string;
   lastSeen: number;
+}
+
+interface SignalEntry {
+  timestamp: string;
+  type: "409_HANDLE_TAKEN" | "429_COOLDOWN";
+  email?: string;
+  handle?: string;
+  ip?: string;
+  retryAfterSec?: number;
+  rawLine: string;
 }
 
 function loadSeen(): Map<string, number> {
@@ -42,6 +54,51 @@ function saveSeen(map: Map<string, number>): void {
   const entries: SeenEntry[] = [];
   for (const [key, lastSeen] of map) entries.push({ key, lastSeen });
   writeFileSync(STATE_FILE, JSON.stringify(entries, null, 2));
+}
+
+function appendSignalArchive(entry: SignalEntry): void {
+  const dir = dirname(SIGNALS_ARCHIVE);
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  let records: SignalEntry[] = [];
+  try {
+    if (existsSync(SIGNALS_ARCHIVE)) {
+      records = JSON.parse(readFileSync(SIGNALS_ARCHIVE, "utf-8"));
+    }
+  } catch { /* corrupt — start fresh */ }
+  records.push(entry);
+  writeFileSync(SIGNALS_ARCHIVE, JSON.stringify(records, null, 2));
+  console.log(`[api-monitor] Archived signal: ${entry.type} | email=${entry.email ?? "—"} ip=${entry.ip ?? "—"}`);
+}
+
+function parseSignal(line: string): SignalEntry | null {
+  const ts = new Date().toISOString();
+
+  // 409 HANDLE_TAKEN: [dev/register] 409 HANDLE_TAKEN — email=xxx ip=xxx
+  const handleTaken = line.match(/\[dev\/register\]\s+409\s+HANDLE_TAKEN.*email=(\S+).*ip=(\S+)/i);
+  if (handleTaken) {
+    // Try to extract handle from surrounding context — appears as node_handle in activation curl examples
+    return {
+      timestamp: ts,
+      type: "409_HANDLE_TAKEN",
+      email: handleTaken[1],
+      ip: handleTaken[2],
+      rawLine: line.trim(),
+    };
+  }
+
+  // 429 COOLDOWN: [dev/register] 429 COOLDOWN — ip=xxx retryAfter=Xs
+  const cooldown = line.match(/\[dev\/register\]\s+429\s+COOLDOWN.*ip=(\S+).*retryAfter=(\d+)/i);
+  if (cooldown) {
+    return {
+      timestamp: ts,
+      type: "429_COOLDOWN",
+      ip: cooldown[1],
+      retryAfterSec: parseInt(cooldown[2], 10),
+      rawLine: line.trim(),
+    };
+  }
+
+  return null;
 }
 
 async function sendDiscordAlert(
@@ -149,6 +206,9 @@ async function scan(): Promise<void> {
             lines: extractContext(logs, trimmed),
             color: 0x3b82f6,
           });
+          // Archive for later developer-path analysis
+          const signal = parseSignal(trimmed);
+          if (signal) appendSignalArchive(signal);
         }
         matched = true;
         break;

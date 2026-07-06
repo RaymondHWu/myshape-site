@@ -22,9 +22,13 @@ MyShape Protocol defines a system for creating, storing, and verifying a **Data-
 
 ### 1.2 Non-Goals
 
-- MyShape is NOT a biometric identification system.
+- MyShape is NOT a bio-identification system. No fingerprints, face scans, iris patterns, or DNA.
 - MyShape does NOT store or process images of humans.
 - MyShape is NOT a blockchain — it may use chains for anchoring but is chain-agnostic.
+
+### 1.3 Governance
+
+Genesis cohort admission is algorithmic, not discretionary. See **[Genesis Governance — Protocol Admission Rules](../genesis-governance.md)** for the complete state machine, eligibility matrix, and decision algorithm enforced by `POST /api/node/entropy`.
 
 ---
 

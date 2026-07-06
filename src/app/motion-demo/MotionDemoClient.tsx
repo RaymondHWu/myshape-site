@@ -66,6 +66,8 @@ export default function MotionDemoClient() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isChromium, setIsChromium] = useState(false);
   const [genesisDone, setGenesisDone] = useState(false);
+  const [genesisKey, setGenesisKey] = useState<string | null>(null);
+  const [cohortFull, setCohortFull] = useState(false);
   const [phase, setPhase] = useState<Phase>("idle");
   const [features, setFeatures] = useState<FeatureFrame | null>(null);
   const [pesData, setPesData] = useState<PESData | null>(null);
@@ -788,6 +790,8 @@ export default function MotionDemoClient() {
               <CompletionCeremony
                 researchConsented={researchConsented}
                 uploadState={uploadState}
+                genesisKey={genesisKey}
+                cohortFull={cohortFull}
               />
             )}
           </div>
@@ -985,6 +989,13 @@ export default function MotionDemoClient() {
                               sessionStorage.setItem("genesis_completed", "1");
                               sessionStorage.setItem("genesis_email", identityKey);
                               sessionStorage.setItem("genesis_status", data.status);
+                              if (data.genesis_key) {
+                                sessionStorage.setItem("genesis_key", data.genesis_key);
+                                setGenesisKey(data.genesis_key);
+                              }
+                              if (data.cohort_full) {
+                                setCohortFull(true);
+                              }
                               window.dispatchEvent(new CustomEvent("genesis:updated"));
                               setGenesisDone(true);
                               playTick(1200, "sine", 0.12, 0.03);
