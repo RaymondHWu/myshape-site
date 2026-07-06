@@ -44,7 +44,11 @@ function saveSeen(map: Map<string, number>): void {
   writeFileSync(STATE_FILE, JSON.stringify(entries, null, 2));
 }
 
-async function sendDiscordAlert(title: string, lines: string[]): Promise<void> {
+async function sendDiscordAlert(
+  title: string,
+  lines: string[],
+  color: number = 0xef4444,
+): Promise<void> {
   if (!WEBHOOK_URL) {
     console.error("[api-monitor] DISCORD_WEBHOOK_URL not set — cannot send alert");
     return;
@@ -54,7 +58,7 @@ async function sendDiscordAlert(title: string, lines: string[]): Promise<void> {
     embeds: [
       {
         title,
-        color: 0xef4444, // red
+        color,
         description: lines.map((l) => `\`\`\`\n${l.slice(0, 500)}\n\`\`\``).join("\n"),
         footer: { text: `MyShape API Monitor · ${new Date().toISOString()}` },
       },
@@ -88,7 +92,7 @@ function fetchLogs(): string {
   }
 }
 
-const ERROR_PATTERNS = [
+const CRASH_PATTERNS = [
   /\[dev\/register\]\s+Crash:/i,
   /\[dev\/activate\]\s+Crash:/i,
   /REGISTRATION_FAILED/i,
@@ -96,29 +100,57 @@ const ERROR_PATTERNS = [
   /SERVER_CONFIG_ERROR/i,
 ];
 
+// Operational signals — not errors, but worth tracking
+const SIGNAL_PATTERNS = [
+  /\[dev\/register\]\s+409\s+HANDLE_TAKEN/i,
+  /\[dev\/register\]\s+429\s+COOLDOWN/i,
+];
+
 async function scan(): Promise<void> {
   const logs = fetchLogs();
   if (!logs) return;
 
   const seen = loadSeen();
-  const alerts: Array<{ title: string; lines: string[] }> = [];
+  const alerts: Array<{ title: string; lines: string[]; color: number }> = [];
 
   for (const line of logs.split("\n")) {
     const trimmed = line.trim();
     if (!trimmed) continue;
 
-    for (const pattern of ERROR_PATTERNS) {
+    let matched = false;
+
+    // Crash patterns → red alert
+    for (const pattern of CRASH_PATTERNS) {
       if (pattern.test(trimmed)) {
-        const key = trimmed.slice(0, 80); // dedup by first 80 chars
+        const key = trimmed.slice(0, 80);
         if (!seen.has(key)) {
           seen.set(key, Date.now());
-
-          const context = extractContext(logs, trimmed);
           alerts.push({
-            title: "🚨 Dev API Error Detected",
-            lines: context,
+            title: "🚨 Dev API Error",
+            lines: extractContext(logs, trimmed),
+            color: 0xef4444,
           });
         }
+        matched = true;
+        break;
+      }
+    }
+    if (matched) continue;
+
+    // Signal patterns → blue info (only every 5min to avoid spam)
+    for (const pattern of SIGNAL_PATTERNS) {
+      if (pattern.test(trimmed)) {
+        const key = `signal:${trimmed.slice(0, 60)}`;
+        const last = seen.get(key);
+        if (!last || Date.now() - last > 5 * 60_000) {
+          seen.set(key, Date.now());
+          alerts.push({
+            title: "📊 Dev API Signal",
+            lines: extractContext(logs, trimmed),
+            color: 0x3b82f6,
+          });
+        }
+        matched = true;
         break;
       }
     }
@@ -127,8 +159,9 @@ async function scan(): Promise<void> {
   saveSeen(seen);
 
   for (const alert of alerts) {
-    console.error(`[api-monitor] ALERT: ${alert.lines[0]}`);
-    await sendDiscordAlert(alert.title, alert.lines);
+    const prefix = alert.color === 0xef4444 ? "ALERT" : "SIGNAL";
+    console.log(`[api-monitor] ${prefix}: ${alert.lines[0]}`);
+    await sendDiscordAlert(alert.title, alert.lines, alert.color);
   }
 
   if (alerts.length === 0) {

@@ -19,8 +19,10 @@ export async function POST(request: Request) {
   const last = cooldowns.get(ip);
   const now = Date.now();
   if (last && now - last < 30_000) {
+    const retryAfter = Math.ceil((last + 30_000 - now) / 1000);
+    console.log(`[dev/register] 429 COOLDOWN — ip=${ip} retryAfter=${retryAfter}s`);
     return NextResponse.json(
-      { error: "COOLDOWN", retryAfterSec: Math.ceil((last + 30_000 - now) / 1000) },
+      { error: "COOLDOWN", retryAfterSec: retryAfter },
       { status: 429 },
     );
   }
@@ -50,6 +52,7 @@ export async function POST(request: Request) {
 
     if (queryError) throw queryError;
     if (existing) {
+      console.log(`[dev/register] 409 HANDLE_TAKEN — email=${email} ip=${ip}`);
       return NextResponse.json(
         { error: "HANDLE_TAKEN", hint: "That handle is already deployed. Try a different one." },
         { status: 409 },
