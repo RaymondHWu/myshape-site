@@ -1,15 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 import { apiLookupLimiter, getClientIP } from "@/lib/rate-limiter";
+import { computeProtocolProgressFromDb } from "@/lib/protocol-progress";
 
 /**
- * GET /api/node/privileges?email=... — 查询节点的权限标记
+ * GET /api/node/privileges?email=... — 查询节点的权限标记 + 协议进度
  *
  * 返回：
  * - is_genesis: 是否为 Genesis Founding Entity
  * - scan_count: 累计扫描次数
  * - tier: 当前层级
  * - early_access: 是否有新功能优先访问权
+ * - protocol_progress: 统一的协议晋升路径 DTO (Genesis → Formation → Sovereign)
  */
 
 function validateEnv() {
@@ -66,6 +68,16 @@ export async function GET(req: Request) {
     const isGenesis = node.status === 'GENESIS_NODE';
     const isActive = node.status === 'ACTIVE' || isGenesis;
 
+    const protocolProgress = computeProtocolProgressFromDb({
+      status: node.status,
+      scanCount: node.scan_count || 0,
+      entropyScore: node.entropy_score ?? 0,
+      particleLevel: node.particle_level ?? 1,
+      streakDays: node.streak_days ?? 0,
+      streakMultiplier: node.streak_multiplier ?? 1.0,
+      bestPes: node.best_pes ?? 0,
+    });
+
     return NextResponse.json({
       email: node.email,
       status: node.status,
@@ -81,6 +93,7 @@ export async function GET(req: Request) {
       streak_multiplier: node.streak_multiplier ?? 1.0,
       best_pes: node.best_pes ?? 0,
       registered_at: node.created_at,
+      protocol_progress: protocolProgress,
     });
   } catch (error: unknown) {
     console.error('NODE_PRIVILEGES_ERROR:', error);
