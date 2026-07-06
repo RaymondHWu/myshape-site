@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MyShape Protocol — OG Image</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { width:1200px; height:630px; overflow:hidden; font-family:system-ui,-apple-system,sans-serif; }
+
+  .og {
+    width:1200px; height:630px;
+    background:#02040a;
+    display:flex; align-items:center;
+    padding:0 80px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* Deep ambient layers */
+  .og::before {
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse at 25% 50%, rgba(144,200,255,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 40%, rgba(34,211,238,0.04) 0%, transparent 45%),
+      radial-gradient(circle at 30% 60%, rgba(144,200,255,0.05) 0%, transparent 35%);
+  }
+
+  /* Protocol mesh — grid lines */
+  .mesh {
+    position:absolute; left:0; top:0; width:100%; height:100%;
+    z-index:0; opacity:0.06;
+    background-image:
+      linear-gradient(rgba(144,200,255,0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(144,200,255,0.3) 1px, transparent 1px);
+    background-size:60px 60px;
+    mask-image: radial-gradient(ellipse at 30% 50%, black 30%, transparent 70%);
+  }
+
+  /* Left: Geometric data structure */
+  .geo {
+    position:relative; z-index:1;
+    width:420px; height:420px;
+    flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* Outer shell — wireframe icosahedron-style hex rings */
+  .shell {
+    position:absolute;
+    border-radius:50%;
+    border:1px solid rgba(144,200,255,0.08);
+    transform:rotateX(60deg);
+  }
+  .shell.s1 { width:360px; height:360px; border-color:rgba(144,200,255,0.1); }
+  .shell.s2 { width:300px; height:300px; transform:rotateX(60deg) rotateY(30deg); border-color:rgba(144,200,255,0.14); }
+  .shell.s3 { width:240px; height:240px; transform:rotateX(60deg) rotateY(-30deg); border-color:rgba(144,200,255,0.12); }
+
+  /* Latitudinal rings */
+  .lat {
+    position:absolute;
+    border-radius:50%;
+    border:1px solid;
+    border-color:transparent;
+    border-top-color:rgba(144,200,255,0.15);
+    border-bottom-color:rgba(144,200,255,0.06);
+  }
+  .lat.l1 { width:360px; height:360px; }
+  .lat.l2 { width:300px; height:300px; transform:rotate(30deg); border-top-color:rgba(144,200,255,0.1); }
+  .lat.l3 { width:240px; height:240px; transform:rotate(-30deg); border-top-color:rgba(144,200,255,0.12); }
+  .lat.l4 { width:180px; height:180px; transform:rotate(15deg); border-top-color:rgba(144,200,255,0.18); }
+
+  /* Vertical meridians */
+  .mer {
+    position:absolute;
+    border-radius:50%;
+    border:1px solid;
+    border-color:transparent;
+    border-left-color:rgba(144,200,255,0.1);
+    border-right-color:rgba(144,200,255,0.04);
+  }
+  .mer.m1 { width:360px; height:360px; }
+  .mer.m2 { width:240px; height:240px; border-left-color:rgba(144,200,255,0.14); }
+  .mer.m3 { width:120px; height:120px; border-left-color:rgba(144,200,255,0.2); }
+
+  /* Core crystal */
+  .crystal {
+    position:absolute; z-index:2;
+    width:50px; height:50px;
+    background:
+      radial-gradient(circle at 40% 40%, rgba(144,200,255,0.4) 0%, rgba(144,200,255,0.1) 40%, transparent 70%);
+    box-shadow:
+      0 0 30px rgba(144,200,255,0.2),
+      0 0 60px rgba(144,200,255,0.08),
+      0 0 100px rgba(144,200,255,0.04);
+  }
+
+  .crystal-inner {
+    position:absolute; inset:15%;
+    border:1px solid rgba(144,200,255,0.3);
+    transform:rotate(45deg);
+  }
+
+  /* Data stream lines — flowing from crystal outward */
+  .stream {
+    position:absolute;
+    height:1px;
+    background:linear-gradient(to right, rgba(144,200,255,0.25), transparent);
+    transform-origin:left center;
+  }
+  .stream:nth-child(1) { width:140px; top:50%; left:50%; transform:rotate(0deg); }
+  .stream:nth-child(2) { width:100px; top:50%; left:50%; transform:rotate(45deg); background:linear-gradient(to right, rgba(144,200,255,0.15), transparent); }
+  .stream:nth-child(3) { width:120px; top:50%; left:50%; transform:rotate(-45deg); }
+  .stream:nth-child(4) { width:80px; top:50%; left:50%; transform:rotate(90deg); background:linear-gradient(to right, rgba(144,200,255,0.18), transparent); }
+  .stream:nth-child(5) { width:110px; top:50%; left:50%; transform:rotate(-90deg); }
+  .stream:nth-child(6) { width:60px; top:50%; left:50%; transform:rotate(135deg); background:linear-gradient(to right, rgba(144,200,255,0.12), transparent); }
+  .stream:nth-child(7) { width:90px; top:50%; left:50%; transform:rotate(-135deg); }
+  .stream:nth-child(8) { width:70px; top:50%; left:50%; transform:rotate(22deg); background:linear-gradient(to right, rgba(144,200,255,0.1), transparent); }
+
+  /* Node dots on ring intersections */
+  .node {
+    position:absolute;
+    width:4px; height:4px;
+    border-radius:50%;
+    background:rgba(144,200,255,0.7);
+    box-shadow:0 0 10px rgba(144,200,255,0.4);
+  }
+
+  .node:nth-child(9)  { top:calc(50% - 150px); left:50%; }
+  .node:nth-child(10) { top:calc(50% + 150px); left:50%; opacity:0.5; }
+  .node:nth-child(11) { top:50%; left:calc(50% - 150px); background:rgba(34,211,238,0.6); }
+  .node:nth-child(12) { top:50%; left:calc(50% + 150px); }
+
+  .node:nth-child(13) { top:calc(50% - 105px); left:calc(50% + 105px); opacity:0.6; width:3px; height:3px; }
+  .node:nth-child(14) { top:calc(50% + 105px); left:calc(50% - 105px); opacity:0.6; width:3px; height:3px; background:rgba(34,211,238,0.5); }
+
+  .node:nth-child(15) { top:calc(50% - 60px); left:calc(50% - 75px); width:5px; height:5px; background:rgba(34,211,238,0.7); }
+  .node:nth-child(16) { top:calc(50% + 60px); left:calc(50% + 75px); width:3px; height:3px; opacity:0.5; }
+
+  /* Right: Text */
+  .text-block {
+    position:relative; z-index:2;
+    flex:1; max-width:520px;
+    display:flex; flex-direction:column; gap:24px;
+  }
+
+  .brand-line {
+    color:rgba(144,200,255,0.5);
+    font-size:11px;
+    letter-spacing:0.4em;
+    text-transform:uppercase;
+    font-family:ui-monospace,SFMono-Regular,monospace;
+  }
+
+  .title {
+    color:#f8feff;
+    font-size:52px;
+    font-weight:250;
+    letter-spacing:0.03em;
+    line-height:1.15;
+  }
+
+  .subtitle {
+    color:rgba(144,200,255,0.4);
+    font-size:17px;
+    font-weight:300;
+    letter-spacing:0.06em;
+    line-height:1.6;
+    max-width:440px;
+  }
+
+  .tag-row {
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+
+  .tag {
+    padding:4px 10px;
+    border:1px solid rgba(144,200,255,0.12);
+    border-radius:3px;
+    color:rgba(144,200,255,0.38);
+    font-size:9px;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    font-family:ui-monospace,SFMono-Regular,monospace;
+  }
+
+  .bottom {
+    color:rgba(144,200,255,0.15);
+    font-size:10px;
+    letter-spacing:0.4em;
+    text-transform:uppercase;
+    font-family:ui-monospace,SFMono-Regular,monospace;
+  }
+
+  /* Corner anchors */
+  .cn {
+    position:absolute; z-index:10;
+    width:24px; height:24px;
+    border-color:rgba(144,200,255,0.1);
+  }
+  .cn.tl { top:35px; left:35px; border-top:1px solid; border-left:1px solid; }
+  .cn.tr { top:35px; right:35px; border-top:1px solid; border-right:1px solid; }
+  .cn.bl { bottom:35px; left:35px; border-bottom:1px solid; border-left:1px solid; }
+  .cn.br { bottom:35px; right:35px; border-bottom:1px solid; border-right:1px solid; }
+
+  /* Subtle scan line */
+  .scan {
+    position:absolute;
+    left:0; width:100%; height:1px;
+    background:linear-gradient(to right, transparent, rgba(144,200,255,0.08), rgba(144,200,255,0.15), rgba(144,200,255,0.08), transparent);
+    z-index:1;
+    top:50%;
+  }
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
+  <div class="scan"></div>
+  <div class="mesh"></div>
+
+  <!-- Left: Protocol data structure -->
+  <div class="geo">
+    <div class="shell s1"></div>
+    <div class="shell s2"></div>
+    <div class="shell s3"></div>
+    <div class="lat l1"></div>
+    <div class="lat l2"></div>
+    <div class="lat l3"></div>
+    <div class="lat l4"></div>
+    <div class="mer m1"></div>
+    <div class="mer m2"></div>
+    <div class="mer m3"></div>
+    <div class="crystal"><div class="crystal-inner"></div></div>
+    <div class="stream"></div><div class="stream"></div><div class="stream"></div><div class="stream"></div>
+    <div class="stream"></div><div class="stream"></div><div class="stream"></div><div class="stream"></div>
+    <div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div>
+    <div class="node"></div><div class="node"></div><div class="node"></div><div class="node"></div>
+  </div>
+
+  <!-- Right: Text -->
+  <div class="text-block">
+    <div class="brand-line">MyShape Protocol</div>
+    <h1 class="title">The Sovereign<br>3D Identity Layer</h1>
+    <p class="subtitle">
+      Motion-signature verification. Zero-knowledge presence.<br>
+      AI-native identity for the decentralized human.
+    </p>
+    <div class="tag-row">
+      <span class="tag">Sovereign Data-Body</span>
+      <span class="tag">ZK-Presence</span>
+      <span class="tag">Genesis Cohort</span>
+      <span class="tag">4D PES Engine</span>
+    </div>
+    <div class="bottom">myshape.com</div>
+  </div>
+</div>
+</body>
+</html>
