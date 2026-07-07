@@ -75,3 +75,12 @@ scripts/reddit-monitor/logs/
 
 # Test coverage
 coverage/
+
+# AI agent memory — internal session records, never commit
+/memory/
+
+# Claude project memory — internal session state, never commit
+.claude/projects/
+
+# Public directory — only allow static assets, no markdown
+public/*.md
