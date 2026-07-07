@@ -71,23 +71,6 @@ export default function ProtocolLayout({
         <div className="flex flex-col min-h-0 md:min-h-[30vh] protocol-main-inner" style={{ flex: 1 }}>
           {children}
         </div>
-
-        {/* 狀態裝飾條 — 桌面端 */}
-        <div className="hidden md:flex mt-20 pt-12 border-t border-white/5 flex-col md:flex-row justify-between items-center gap-8 opacity-30 group transition-opacity hover:opacity-100">
-          <div className="text-[9px] tracking-[0.5em] uppercase font-light">
-            {category} // {systemStatus} // AUTH_VERIFIED
-          </div>
-          <div className="flex items-center gap-6">
-            <div className="flex gap-1">
-               {[...Array(4)].map((_, i) => (
-                 <div key={i} className="w-1 h-1 bg-[#90c8ff]/50" />
-               ))}
-            </div>
-            <div className="text-[8px] tracking-[0.2em] uppercase font-bold text-[#90c8ff]/60">
-              MYS_GENESIS_CORE_SYNCED
-            </div>
-          </div>
-        </div>
       </main>
 
       {/* 3. 全局唯一 Footer */}
