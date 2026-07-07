@@ -910,15 +910,6 @@ export default function GenesisClient() {
         </AnimatePresence>
       </div>
 
-      {/* 桌面端专属：协议参考信息 */}
-      <div className={`fixed bottom-6 left-4 md:bottom-12 md:left-12 transition-opacity duration-1000 hidden md:block ${stage !== "input" ? "opacity-0" : "opacity-20"}`}>
-        <div className="text-[9px] font-mono text-white/30 tracking-[0.6em] leading-relaxed uppercase text-left">
-          Protocol_Ref: 005_GEN <br />
-          Node: Origin_Verified <br />
-          Status: {stage === "input" ? "STANDBY" : stage.toUpperCase()}
-        </div>
-      </div>
-
       {/* genesis.css provides component-level animations; shared @keyframes genesisScan / progressSlide live in animations.css */}
     </ProtocolLayout>
   );
