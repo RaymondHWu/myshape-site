@@ -5,6 +5,36 @@
 
 ---
 
+## 0.0 核心知识产权保护（最高优先级 · 不可协商）
+
+> **MyShape Protocol 是 pre-traction 项目，零网络效应。核心 IP 泄露 = 项目死亡。**
+
+### 绝对禁止提交到 Git 的目录和文件
+
+| 禁止路径 | 内容 | 后果 |
+|:---|:---|:---|
+| `docs/.core/` | 安全参数、攻击成本、实验设计、MVP 架构、路线图 | 已被 copycat 超越 |
+| `memory/` | AI 会话记录、战略讨论、内部笔记 | 泄露决策链路 |
+| `.claude/projects/` | Claude 项目记忆、IP 保护规则 | 泄露防御策略 |
+| `public/*.md` | 任何 Markdown 文档 | 直接通过 URL 访问 |
+
+### 每次 git commit 之前的强制检查清单
+
+```
+□ git status — 确认没有上述路径被 staged
+□ public/ 目录下只有图片/字体/静态资源，没有任何 .md 文件
+□ 所有密钥来自 process.env，源代码中无硬编码凭据
+□ 新增文件不包含内部战略信息
+```
+
+### 部署规则
+
+- **Vercel 连接的 remote 是 `org`**（`myshapeprotocol/myshape-protocol`），不是 `origin`
+- Push 到 `org` 才会触发部署：`git push org master`
+- `origin`（`RaymondHWu/myshape-site`）是个人 fork，push 到 origin 不会部署
+
+---
+
 ## Wiki 知识库（claude-obsidian · LLM Wiki 模式）
 
 > 持久化知识库位于 `~/claude-obsidian/`（Karpathy LLM Wiki 模式）。
