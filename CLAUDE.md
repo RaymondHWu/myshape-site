@@ -9,22 +9,60 @@
 
 > **MyShape Protocol 是 pre-traction 项目，零网络效应。核心 IP 泄露 = 项目死亡。**
 
-### 绝对禁止提交到 Git 的目录和文件
+### 绝对禁止提交到 Git 的目录
 
-| 禁止路径 | 内容 | 后果 |
-|:---|:---|:---|
-| `docs/.core/` | 安全参数、攻击成本、实验设计、MVP 架构、路线图 | 已被 copycat 超越 |
-| `memory/` | AI 会话记录、战略讨论、内部笔记 | 泄露决策链路 |
-| `.claude/projects/` | Claude 项目记忆、IP 保护规则 | 泄露防御策略 |
-| `public/*.md` | 任何 Markdown 文档 | 直接通过 URL 访问 |
+| 禁止路径 | 内容 |
+|:---|:---|
+| `docs/.core/` | 安全参数、攻击成本、实验设计、MVP 架构、路线图 |
+| `memory/` | AI 会话记录、战略讨论 |
+| `.claude/projects/` | Claude 项目记忆 |
+| `MyShape_Documentation/` | 核心战略、品牌蓝图、技术规范、融资方案 |
+| `myshape-context/` | Pitch Deck、战略计划、投资文档 |
+| `.ai/` | AI Agent 合同 |
+| `docs/testing/` | 测试指南 |
+| `docs/docs/` | 文档副本 |
 
-### 每次 git commit 之前的强制检查清单
+### 绝对禁止提交到 Git 的单个文件
+
+| 禁止文件 | 内容 |
+|:---|:---|
+| `docs/Threat-Model.md` | 威胁模型 — 给攻击者的礼物 |
+| `docs/e1-e2-uniqueness-stability-experiment-v0.1.md` | 实验设计 |
+| `docs/key-management-enrollment-v0.1.md` | 密钥管理方案 |
+| `docs/PHASE_E_ARCHITECTURE.md` | 数据采集架构 |
+| `docs/reddit-*.md` `docs/substack-*.md` `docs/x-post-*.md` | 社交媒体发帖稿 |
+| `docs/DEMO_GUIDE.md` | 演示指南 |
+| `GENESIS_001_DISCUSSION.md` | 内部讨论 |
+| `PES-Benchmark-v0.2.md` | 基准测试数据 |
+| `PROTOCOL_CORE_SNAPSHOT.md` | 协议核心快照 |
+| `DESIGN.md` | 设计文档 |
+| `public/*.md` `public/cmd.html` `public/genesis-100.html` `public/matrix-dashboard.html` | 公开直接可访问 |
+| `supabase/MIGRATION_GUIDE.md` | 迁移指南 |
+| `gen-papers.mjs` `scripts/verify-*.mjs` | 内部脚本 |
+
+### 绝对禁止的文件类型
+
+- `.docx` `.pptx` `.xlsx` `.pdf` — 任何二进制文档
+- `.png` `.jpg` 内部图表（除非在 `public/` 中用于网站显示）
+
+### 每次 git 操作之前的强制检查
 
 ```
-□ git status — 确认没有上述路径被 staged
-□ public/ 目录下只有图片/字体/静态资源，没有任何 .md 文件
+□ git status                        — 确认没有禁止路径被 staged
+□ git ls-files "*.docx"             — 必须为空
+□ git ls-files MyShape_Documentation/  — 必须为空
+□ git ls-files myshape-context/        — 必须为空
+□ public/ 下只有图片/字体/网站静态资源，没有任何内部文件
 □ 所有密钥来自 process.env，源代码中无硬编码凭据
-□ 新增文件不包含内部战略信息
+□ 新增文件不包含内部战略/技术/商业信息
+```
+
+### 首次接触项目的强制检查（每次新会话开始时）
+
+```
+□ git ls-files | grep -v "\.tsx\|\.ts\|\.js\|\.css\|\.json\|\.svg\|public/" | 审查所有非代码文件
+□ 确认 .gitignore 覆盖所有内部路径
+□ 确认 docs/ 中没有泄漏到 docs/public/ 之外
 ```
 
 ### 部署规则
