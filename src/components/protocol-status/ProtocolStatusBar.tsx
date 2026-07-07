@@ -3,13 +3,16 @@ import { useState, useEffect } from "react";
 import { useGenesisSlots } from "@/hooks/useGenesisSlots";
 
 interface NetworkStats {
-  total: number;
-  humans: number;
+  total_nodes: number;
   genesis_nodes: number;
-  slots_remaining: number;
+  active_humans: number;
+  agents: number;
+  total_scans: number;
+  genesis_remaining: number;
+  cohort_sealed: boolean;
 }
 
-/** Minimalist live protocol status indicator with latency ping. Mobile: collapses to ◈ icon. */
+/** Live protocol status indicator — fixed bottom-left, rich network telemetry. */
 export default function ProtocolStatusBar() {
   const [stats, setStats] = useState<NetworkStats | null>(null);
   const [live, setLive] = useState(true);
@@ -23,7 +26,7 @@ export default function ProtocolStatusBar() {
     async function poll() {
       const start = performance.now();
       try {
-        const res = await fetch("/api/nodes/count");
+        const res = await fetch("/api/nodes/status");
         const elapsed = Math.round(performance.now() - start);
         if (cancelled) return;
 
@@ -32,10 +35,13 @@ export default function ProtocolStatusBar() {
 
         const data = await res.json();
         setStats({
-          total: data.total ?? 0,
-          humans: data.humans ?? 0,
+          total_nodes: data.total_nodes ?? 0,
           genesis_nodes: data.genesis_nodes ?? 0,
-          slots_remaining: Math.max(0, 100 - (data.genesis_nodes ?? 0)),
+          active_humans: data.active_humans ?? 0,
+          agents: data.agents ?? 0,
+          total_scans: data.total_scans ?? 0,
+          genesis_remaining: data.genesis_remaining ?? 100,
+          cohort_sealed: data.cohort_sealed ?? false,
         });
         setLive(true);
       } catch {
@@ -76,7 +82,7 @@ export default function ProtocolStatusBar() {
         </span>
         {!expanded && stats && (
           <span style={{ color: "rgba(144,200,255,0.6)", marginLeft: 6, fontSize: 9 }}>
-            {stats.total}
+            {stats.total_nodes}
           </span>
         )}
       </button>
@@ -107,50 +113,75 @@ export default function ProtocolStatusBar() {
 
           {stats && (
             <>
-              <span style={{ color: "rgba(144,200,255,0.2)" }}>|</span>
+              <span style={{ color: "rgba(144,200,255,0.15)" }}>|</span>
 
               <span>
                 Nodes:{" "}
-                <span style={{ color: "rgba(144,200,255,0.8)" }}>{stats.total}</span>
+                <span style={{ color: "rgba(144,200,255,0.75)" }}>{stats.total_nodes}</span>
               </span>
 
-              <span style={{ color: "rgba(144,200,255,0.2)" }}>|</span>
+              <span style={{ color: "rgba(144,200,255,0.15)" }}>|</span>
+
+              <span>
+                Humans:{" "}
+                <span style={{ color: stats.active_humans > 0 ? "rgba(74,222,128,0.65)" : "rgba(255,255,255,0.25)" }}>
+                  {stats.active_humans}
+                </span>
+              </span>
+
+              <span style={{ color: "rgba(144,200,255,0.15)" }}>|</span>
+
+              <span>
+                Agents:{" "}
+                <span style={{ color: stats.agents > 0 ? "rgba(167,139,250,0.65)" : "rgba(255,255,255,0.25)" }}>
+                  {stats.agents}
+                </span>
+              </span>
+
+              <span style={{ color: "rgba(144,200,255,0.15)" }}>|</span>
+
+              <span>
+                Scans:{" "}
+                <span style={{ color: stats.total_scans > 0 ? "rgba(251,191,36,0.65)" : "rgba(255,255,255,0.25)" }}>
+                  {stats.total_scans}
+                </span>
+              </span>
+
+              <span style={{ color: "rgba(144,200,255,0.15)" }}>|</span>
 
               <span>
                 Genesis:{" "}
                 <span
                   style={{
-                    color: isFull
+                    color: isFull || stats.genesis_remaining <= 10
                       ? "rgba(210,153,29,0.8)"
-                      : stats.slots_remaining <= 10
-                        ? "rgba(210,153,29,0.8)"
-                        : "rgba(144,200,255,0.8)",
+                      : "rgba(144,200,255,0.75)",
                   }}
                 >
                   {stats.genesis_nodes}/100
                 </span>
                 {isFull ? (
                   <span style={{ color: "rgba(210,153,29,0.5)", marginLeft: 4 }}>SEALED</span>
-                ) : stats.slots_remaining > 0 && stats.slots_remaining <= 10 && (
+                ) : stats.genesis_remaining > 0 && stats.genesis_remaining <= 10 && (
                   <span style={{ color: "rgba(210,153,29,0.6)", marginLeft: 4 }}>
-                    ({stats.slots_remaining})
+                    ({stats.genesis_remaining})
                   </span>
                 )}
               </span>
 
               {latency !== null && (
                 <>
-                  <span style={{ color: "rgba(144,200,255,0.2)" }}>|</span>
+                  <span style={{ color: "rgba(144,200,255,0.15)" }}>|</span>
                   <span>
-                    Latency:{" "}
+                    Ping:{" "}
                     <span
                       style={{
                         color:
                           latency < 150
-                            ? "rgba(63,185,80,0.7)"
+                            ? "rgba(74,222,128,0.65)"
                             : latency < 400
-                              ? "rgba(210,153,29,0.7)"
-                              : "rgba(248,81,73,0.7)",
+                              ? "rgba(251,191,36,0.65)"
+                              : "rgba(248,81,73,0.65)",
                       }}
                     >
                       {latency}ms
