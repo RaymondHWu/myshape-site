@@ -1,0 +1,366 @@
+/* ============================================================
+   MyShape Protocol — Developers Page
+   Replaces data-hover JS anti-pattern with CSS :hover.
+   ============================================================ */
+
+.dev-ease { transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* ── Header CTA buttons ── */
+
+.dev-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(144, 200, 255, 0.3);
+  color: rgba(144, 200, 255, 0.7);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-cta:hover { background: rgba(144,200,255,0.04); color: #fff; }
+
+.dev-cta-dim {
+  border-color: rgba(144, 200, 255, 0.2);
+  color: rgba(144, 200, 255, 0.5);
+}
+.dev-cta-dim:hover { border-color: rgba(144,200,255,0.4); color: rgba(144,200,255,0.8); background: rgba(144,200,255,0.03); }
+
+.dev-cta-gold {
+  border-color: rgba(212, 175, 55, 0.3);
+  color: rgba(212, 175, 55, 0.7);
+}
+.dev-cta-gold:hover { background: rgba(212,175,55,0.06); color: #d4af37; }
+
+/* ── Section headings ── */
+
+.dev-section-title {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+  .dev-section-title { font-size: 11px; letter-spacing: 0.6em; }
+}
+
+/* ── Quick Start cards ── */
+
+.dev-qs-card {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.01);
+  transition:
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  cursor: default;
+}
+.dev-qs-card:hover {
+  border-color: rgba(144, 200, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px -8px rgba(144, 200, 255, 0.1);
+}
+
+.dev-qs-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dev-qs-step {
+  color: rgba(144, 200, 255, 0.4);
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-qs-card:hover .dev-qs-step { color: rgba(144, 200, 255, 0.8); }
+
+.dev-qs-title {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  flex: 1;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-qs-card:hover .dev-qs-title { color: rgba(255, 255, 255, 0.9); }
+
+.dev-qs-time {
+  color: rgba(255, 255, 255, 0.22);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-qs-card:hover .dev-qs-time { color: rgba(255, 255, 255, 0.5); }
+
+.dev-qs-code {
+  color: rgba(144, 200, 255, 0.55);
+  font-size: 10px;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-qs-card:hover .dev-qs-code { color: rgba(144, 200, 255, 0.9); font-size: 11px; }
+
+.dev-qs-desc {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 9px;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-qs-card:hover .dev-qs-desc { color: rgba(255, 255, 255, 0.6); font-size: 10px; }
+
+.dev-qs-code-block {
+  padding: 1.25rem;
+  background: rgba(0,0,0,0.3);
+  position: relative;
+}
+.dev-qs-code-block pre {
+  color: rgba(144, 200, 255, 0.55);
+  font-size: 10px;
+  line-height: 1.6;
+  font-family: monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  margin: 0;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-qs-card:hover .dev-qs-code-block pre { color: rgba(144, 200, 255, 0.85); font-size: 11px; }
+
+.dev-qs-copy-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  color: rgba(255, 255, 255, 0.1);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s, color 0.35s;
+}
+.dev-qs-code-block:hover .dev-qs-copy-btn { opacity: 1; }
+.dev-qs-copy-btn:hover { color: rgba(144, 200, 255, 0.6); }
+
+.dev-qs-desc-row {
+  padding: 0 1.25rem 0.75rem;
+}
+
+.dev-qs-actions {
+  padding: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* ── API Cards ── */
+
+.dev-api-card {
+  border: 1px solid rgba(144, 200, 255, 0.1);
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-api-card:hover { border-color: rgba(144, 200, 255, 0.3); }
+
+.dev-api-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(144, 200, 255, 0.05);
+  background: rgba(144, 200, 255, 0.02);
+}
+
+.dev-api-content {
+  padding: 1rem;
+}
+
+.dev-api-curl {
+  color: rgba(144, 200, 255, 0.5);
+  font-size: 10px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  margin: 0 0 0.5rem;
+}
+
+.dev-api-resp-label {
+  color: rgba(255, 255, 255, 0.12);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.dev-api-resp {
+  color: rgba(255, 255, 255, 0.28);
+  font-size: 9px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  margin: 0;
+  background: #02040a;
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.dev-api-copy {
+  color: rgba(255, 255, 255, 0.1);
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.dev-api-copy:hover { color: rgba(144, 200, 255, 0.6); }
+
+/* ── Generic hover lift card ── */
+
+.dev-card {
+  border: 1px solid rgba(144, 200, 255, 0.1);
+  background: transparent;
+  transition:
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-card:hover {
+  border-color: rgba(144, 200, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px -8px rgba(144, 200, 255, 0.1);
+}
+
+/* ── Engine cards ── */
+
+.dev-engine-name {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-card:hover .dev-engine-name { color: rgba(255,255,255,0.9); font-size: 13px; }
+
+.dev-engine-path {
+  color: rgba(144, 200, 255, 0.3);
+  font-size: 9px;
+  font-family: monospace;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-card:hover .dev-engine-path { color: rgba(144,200,255,0.7); font-size: 11px; }
+
+.dev-engine-desc {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 10px;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-card:hover .dev-engine-desc { color: rgba(255,255,255,0.5); font-size: 12px; }
+
+/* ── SDK Row / API Row ── */
+
+.dev-sdk-row {
+  transition: background 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-sdk-row:hover { background: rgba(144, 200, 255, 0.04); }
+
+.dev-sdk-module {
+  color: rgba(144, 200, 255, 0.5);
+  font-size: 10px;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-sdk-row:hover .dev-sdk-module { color: rgba(144,200,255,0.9); font-size: 12px; }
+
+.dev-sdk-method {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 10px;
+  font-family: monospace;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-sdk-row:hover .dev-sdk-method { color: rgba(255,255,255,0.85); font-size: 12px; }
+
+.dev-sdk-returns {
+  color: rgba(144, 200, 255, 0.4);
+  font-size: 9px;
+  font-family: monospace;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-sdk-row:hover .dev-sdk-returns { color: rgba(144,200,255,0.8); font-size: 11px; }
+
+.dev-sdk-desc {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 10px;
+  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-sdk-row:hover .dev-sdk-desc { color: rgba(255,255,255,0.5); font-size: 12px; }
+
+/* ── API Row (simpler variant) ── */
+
+.dev-api-row {
+  border: 1px solid rgba(144, 200, 255, 0.1);
+  background: transparent;
+  cursor: default;
+  transition:
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-api-row:hover {
+  border-color: rgba(144, 200, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px -8px rgba(144, 200, 255, 0.1);
+}
+
+.dev-api-row-method {
+  color: rgba(144, 200, 255, 0.6);
+  font-size: 10px;
+  transition: color 0.35s, font-size 0.35s;
+}
+.dev-api-row:hover .dev-api-row-method { color: rgba(144,200,255,0.95); font-size: 13px; }
+
+.dev-api-row-path {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+  transition: color 0.35s, font-size 0.35s;
+}
+.dev-api-row:hover .dev-api-row-path { color: rgba(255,255,255,0.85); font-size: 13px; }
+
+.dev-api-row-desc {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 10px;
+  transition: color 0.35s, font-size 0.35s;
+}
+.dev-api-row:hover .dev-api-row-desc { color: rgba(255,255,255,0.5); font-size: 12px; }
+
+/* ── Code example card ── */
+
+.dev-code-title {
+  color: rgba(144, 200, 255, 0.6);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.35s, font-size 0.35s;
+}
+.dev-card:hover .dev-code-title { color: rgba(144,200,255,0.95); font-size: 13px; }
+
+.dev-code-pre {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 10px;
+  transition: color 0.35s, font-size 0.35s;
+}
+.dev-card:hover .dev-code-pre { color: rgba(255,255,255,0.6); font-size: 12px; }
+
+/* ── Dev / Genesis Path ── */
+
+.dev-path-panel {
+  transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dev-path-panel-dev:hover { background: rgba(144, 200, 255, 0.04); }
+.dev-path-panel-genesis:hover { background: rgba(212, 175, 55, 0.04); }

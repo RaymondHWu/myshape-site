@@ -466,3 +466,241 @@
   background: color-mix(in oklch, var(--accent-gold) 3%, transparent) !important;
   cursor: default;
 }
+
+/* ============================================================
+   Dashboard Hero — enhanced hover
+   ============================================================ */
+
+.dashboard-hero {
+  transition:
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-hero:hover {
+  border-color: color-mix(in oklch, var(--accent-ice) 25%, transparent);
+  box-shadow: 0 0 30px rgba(144, 200, 255, 0.04);
+  transform: translateY(-1px);
+}
+
+.dashboard-hero:hover .hero-stage-label {
+  color: color-mix(in oklch, var(--accent-ice) 75%, transparent);
+  letter-spacing: 0.4em;
+}
+
+.dashboard-hero:hover .hero-particle-glow {
+  transform: scale(1.04);
+}
+
+.hero-particle-glow {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-stage-label {
+  transition:
+    color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    letter-spacing 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-hero:hover .hero-next-hint {
+  color: color-mix(in oklch, white 45%, transparent);
+}
+
+.dashboard-hero:hover .hero-streak-days {
+  color: color-mix(in oklch, white 50%, transparent);
+}
+
+/* ============================================================
+   Capability Matrix — enhanced hover
+   ============================================================ */
+
+.eligibility-card:hover .card-desc {
+  font-size: 10.5px;
+}
+
+.eligibility-card:hover .card-title {
+  letter-spacing: 0.15em;
+}
+
+.eligibility-card:hover .card-requirement .req-detail {
+  font-size: 7.5px;
+}
+
+/* ============================================================
+   Action Call — enhanced
+   ============================================================ */
+
+.action-call {
+  transition:
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action-call:hover {
+  border-color: color-mix(in oklch, var(--accent-ice) 22%, transparent);
+  box-shadow: 0 0 24px rgba(144, 200, 255, 0.03);
+}
+
+.action-call:hover .action-summary {
+  color: color-mix(in oklch, white 75%, transparent);
+}
+
+.action-call:hover .action-next-feature {
+  text-shadow: 0 0 10px rgba(144, 200, 255, 0.3);
+}
+
+.action-cta {
+  transition:
+    all 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(144, 200, 255, 0.15);
+}
+
+/* ============================================================
+   Dashboard Skeleton — CSS classes (replaces inline styles)
+   ============================================================ */
+
+.dash-skel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: dashSkelFadeIn 0.6s ease-out;
+}
+
+@keyframes dashSkelFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dash-skel-layer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(144, 200, 255, 0.08);
+  background: rgba(144, 200, 255, 0.015);
+}
+
+.dash-skel-bar {
+  background: rgba(144, 200, 255, 0.06);
+  border-radius: 2px;
+  animation: dashSkelPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes dashSkelPulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.85; }
+}
+
+.dash-skel-bar-sm  { height: 10px; }
+.dash-skel-bar-md  { height: 14px; }
+.dash-skel-bar-lg  { height: 36px; }
+
+.dash-skel-progress {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+
+.dash-skel-progress-fill {
+  height: 100%;
+  width: 40%;
+  background: rgba(144, 200, 255, 0.12);
+  animation: dashSkelPulse 2s ease-in-out infinite;
+}
+
+.dash-skel-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.dash-skel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid rgba(144, 200, 255, 0.06);
+  background: rgba(144, 200, 255, 0.008);
+}
+
+/* ============================================================
+   Error Boundary — CSS classes (replaces inline styles)
+   ============================================================ */
+
+.dash-error {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.dash-error-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+}
+
+.dash-error-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #90c8ff;
+  box-shadow: 0 0 12px rgba(144, 200, 255, 0.6);
+  animation: dashSkelPulse 2s ease-in-out infinite;
+}
+
+.dash-error-label {
+  color: rgba(144, 200, 255, 0.5);
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+}
+
+.dash-error-text {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  max-width: 24rem;
+  margin: 0 auto 1.25rem;
+}
+
+.dash-error-detail {
+  color: rgba(255, 255, 255, 0.1);
+  font-size: 8px;
+  font-family: monospace;
+  letter-spacing: 0.05em;
+  word-break: break-all;
+  max-width: 28rem;
+  margin: 0 auto 1.25rem;
+}
+
+.dash-error-retry {
+  padding: 0.5rem 2rem;
+  border: 1px solid rgba(144, 200, 255, 0.25);
+  color: rgba(144, 200, 255, 0.5);
+  font-family: monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  background: rgba(144, 200, 255, 0.03);
+  cursor: pointer;
+  transition:
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dash-error-retry:hover {
+  border-color: rgba(144, 200, 255, 0.5);
+  color: rgba(144, 200, 255, 0.8);
+  background: rgba(144, 200, 255, 0.06);
+  box-shadow: 0 0 16px rgba(144, 200, 255, 0.08);
+}
