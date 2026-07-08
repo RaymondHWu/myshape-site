@@ -64,20 +64,21 @@ export default function NoteClient() {
 
           {/* ── Article ── */}
           <article className="note-article">
-          <div className="note-meta">
+          <div className="note-meta note-print-stage note-print-delay-1">
             <span>Research Note #001</span>
             <span className="note-meta-sep" />
             <span>2026.07.09</span>
+            <span className="note-print-cursor" />
           </div>
 
-          <h1 className="note-title">The Continuity Problem</h1>
-          <p className="note-subtitle">
+          <h1 className="note-title note-print-stage note-print-delay-2">The Continuity Problem</h1>
+          <p className="note-subtitle note-print-stage note-print-delay-3">
             Why proving &ldquo;I am still me&rdquo; may become the missing
             cryptographic primitive of the AI era.
           </p>
 
           {/* ── Part 1 ── */}
-          <section id="part-1" className="note-section">
+          <section id="part-1" className="note-section note-print-stage note-print-delay-4">
             <h2>Part 1 — The World Has Solved Identity</h2>
 
             <p>
@@ -117,7 +118,7 @@ export default function NoteClient() {
           </section>
 
           {/* ── Part 2 ── */}
-          <section id="part-2" className="note-section">
+          <section id="part-2" className="note-section note-print-stage note-print-delay-5">
             <h2>Part 2 — The AI Era Creates a New Problem</h2>
 
             <p>
@@ -189,7 +190,7 @@ export default function NoteClient() {
           </section>
 
           {/* ── Part 3 ── */}
-          <section id="part-3" className="note-section">
+          <section id="part-3" className="note-section note-print-stage note-print-delay-6">
             <h2>Part 3 — A Hypothesis</h2>
 
             <p>
@@ -219,7 +220,7 @@ export default function NoteClient() {
           </section>
 
           {/* ── Part 4 ── */}
-          <section id="part-4" className="note-section">
+          <section id="part-4" className="note-section note-print-stage note-print-delay-7">
             <h2>Part 4 — Research Roadmap</h2>
 
             <p>
@@ -265,7 +266,7 @@ export default function NoteClient() {
             </div>
           </section>
 
-          <div className="note-footer">
+          <div className="note-footer note-print-stage note-print-delay-8">
             <p className="note-footer-text">
               The Continuity Lab · July 2026{" · "}
               <Link href="/research">← Research Hub</Link>

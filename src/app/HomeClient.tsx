@@ -11,7 +11,6 @@ import JoinWaitlist from "@/components/joinwaitlist/JoinWaitlist";
 import GenesisProgress from "@/components/genesis-progress/GenesisProgress";
 import GenesisCohortBadge from "@/components/genesis-cohort-badge/GenesisCohortBadge";
 import MotionPreview from "@/components/motion-preview/MotionPreview";
-import "@/app/research/research.css";
 
 export default function HomeClient() {
   return (
@@ -198,17 +197,74 @@ export default function HomeClient() {
 
         <Vision />
 
-        {/* Latest Research — The Continuity Lab signal */}
-        <section className="relative z-10 max-w-3xl mx-auto px-6 mb-12">
-          <div className="text-white/15 text-[8px] tracking-[0.4em] uppercase mb-4">Latest Research</div>
-          <Link href="/research/notes/001-the-continuity-problem" className="research-signal block">
-            <div className="research-signal-label">Research Note #001 · 2026.07.09</div>
-            <div className="research-signal-title">The Continuity Problem</div>
-            <div className="research-signal-desc">Why proving &ldquo;I am still me&rdquo; may become the missing cryptographic primitive of the AI era.</div>
-            <span className="research-signal-link">Read Research Note →</span>
-          </Link>
-          <div className="mt-3 text-center">
-            <Link href="/research" className="text-white/10 text-[8px] tracking-[0.2em] uppercase hover:text-white/25 transition-colors">The Continuity Lab →</Link>
+        {/* ── Latest Research ── */}
+        <section className="relative pt-16 md:pt-32 pb-12 md:pb-20">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="text-white/35 text-[9px] tracking-[0.6em] uppercase mb-4">Latest Research</div>
+              <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 200, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#fff", margin: 0 }}>
+                The <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>Continuity</span> Problem
+              </h2>
+              <p style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", fontWeight: 300, color: "rgba(255,255,255,0.7)", marginTop: "1.8rem", maxWidth: "550px", lineHeight: 1.7, marginLeft: "auto", marginRight: "auto" }}>
+                Why proving &ldquo;I am still me&rdquo; may become the missing cryptographic primitive of the AI era.
+              </p>
+            </div>
+
+            <div className="relative max-w-2xl mx-auto">
+              <Link href="/research/notes/001-the-continuity-problem" className="group block" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>
+                {/* ── Specimen Card ── */}
+                <div className="relative overflow-hidden transition-all duration-700"
+                  style={{ border: "1px solid rgba(144,200,255,0.12)", background: "rgba(2,6,14,0.85)", backdropFilter: "blur(12px)" }}>
+                  {/* Signal trace — animated oscilloscope line */}
+                  <div className="absolute top-0 left-4 right-4 h-px opacity-30 group-hover:opacity-60 transition-opacity duration-700"
+                    style={{ background: "linear-gradient(90deg, transparent, rgba(144,200,255,0.5) 20%, rgba(144,200,255,0.15) 50%, rgba(144,200,255,0.5) 80%, transparent)" }} />
+
+                  {/* Measurement grid — subtle graph paper */}
+                  <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-700"
+                    style={{ backgroundImage: "linear-gradient(rgba(144,200,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(144,200,255,0.3) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+
+                  {/* Content */}
+                  <div className="relative p-6 md:p-10">
+                    {/* Specimen metadata bar */}
+                    <div className="flex items-center gap-3 mb-8 pb-4 border-b border-[#90c8ff]/8">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#3fb950] shadow-[0_0_6px_rgba(63,185,80,0.6)] animate-pulse" />
+                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-[#3fb950]/70">SIGNAL_ACTIVE</span>
+                      <span className="text-white/10">·</span>
+                      <span className="font-mono text-[9px] tracking-[0.15em] text-white/25">SPECIMEN RN_001</span>
+                      <span className="text-white/10">·</span>
+                      <span className="font-mono text-[9px] tracking-[0.15em] text-white/25">2026.07.09</span>
+                    </div>
+
+                    {/* The question — stark, centered, large */}
+                    <p className="text-center text-[17px] md:text-[20px] font-light tracking-[0.04em] text-white/85 leading-relaxed mb-6 group-hover:text-white transition-colors duration-500"
+                      style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+                      Can <span style={{ color: "rgba(144,200,255,0.8)" }}>continuity</span> be made a verifiable property of digital existence?
+                    </p>
+
+                    {/* Sub-line */}
+                    <p className="text-center text-white/25 text-[11px] tracking-[0.1em] leading-relaxed mb-8 group-hover:text-white/40 transition-colors duration-500">
+                      Four attack scenarios where identity succeeds and continuity fails.
+                    </p>
+
+                    {/* Bottom status bar */}
+                    <div className="flex items-center justify-between pt-4 border-t border-[#90c8ff]/6">
+                      <span className="font-mono text-[8px] tracking-[0.2em] uppercase text-[#90c8ff]/35 group-hover:text-[#90c8ff]/60 transition-colors duration-500">
+                        The Continuity Lab — Research Note Series
+                      </span>
+                      <span className="font-mono text-[8px] tracking-[0.15em] text-white/20 group-hover:text-white/45 transition-all duration-500 group-hover:translate-x-1 inline-block">
+                        Open →
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              <div className="mt-6 text-center">
+                <Link href="/research" className="inline-block font-mono text-[9px] tracking-[0.3em] uppercase text-white/25 hover:text-white/50 transition-colors">
+                  All Research Notes →
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
         </div>{/* end desktop-only */}

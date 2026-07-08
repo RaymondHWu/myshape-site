@@ -1,4 +1,9 @@
-/* MyShape Research — The Continuity Lab */
+/* ============================================================
+   The Continuity Lab — Research Hub + Notes
+   Note article typography aligned with Protocol Manifesto
+   ============================================================ */
+
+/* ── Research Hub cards ── */
 
 .research-hero { max-width: 48rem; margin-bottom: 4rem; }
 .research-label { color: rgba(144,200,255,0.45); font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase; margin-bottom: 1rem; }
@@ -6,18 +11,15 @@
 .research-tagline span { color: rgba(144,200,255,0.8); }
 .research-subtitle { color: rgba(255,255,255,0.35); font-size: 13px; line-height: 1.7; max-width: 36rem; }
 
-/* Three-column grid */
 .research-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
 @media (min-width: 768px) { .research-grid { grid-template-columns: repeat(3, 1fr); } }
 
 .research-column { display: flex; flex-direction: column; gap: 1rem; }
 .research-column-title {
   color: rgba(144,200,255,0.5); font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase;
-  padding-bottom: 0.75rem; border-bottom: 1px solid rgba(144,200,255,0.1);
-  margin-bottom: 0.25rem;
+  padding-bottom: 0.75rem; border-bottom: 1px solid rgba(144,200,255,0.1); margin-bottom: 0.25rem;
 }
 
-/* Research Note card */
 .rn-card {
   display: block; padding: 1.25rem;
   border: 1px solid rgba(144,200,255,0.08); background: rgba(144,200,255,0.01);
@@ -32,7 +34,6 @@
 .rn-card:hover .rn-card-subtitle { color: rgba(255,255,255,0.5); }
 .rn-card-date { color: rgba(255,255,255,0.12); font-size: 8px; letter-spacing: 0.15em; margin-top: 0.5rem; }
 
-/* Benchmark card */
 .bm-card {
   padding: 1rem; border: 1px solid rgba(144,200,255,0.06); background: transparent;
   transition: border-color 0.35s, background 0.35s;
@@ -42,7 +43,6 @@
 .bm-card-status { color: rgba(144,200,255,0.4); font-family: monospace; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; }
 .bm-card-meta { color: rgba(255,255,255,0.15); font-size: 8px; margin-top: 0.375rem; }
 
-/* Open Question card */
 .oq-card {
   padding: 1rem; border: 1px solid rgba(212,175,55,0.1); background: rgba(212,175,55,0.01);
   transition: border-color 0.35s, background 0.35s;
@@ -52,85 +52,153 @@
 .oq-card-q { color: rgba(255,255,255,0.55); font-size: 11px; letter-spacing: 0.04em; line-height: 1.5; margin-bottom: 0.375rem; }
 .oq-card-status { color: rgba(144,200,255,0.4); font-family: monospace; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; }
 
-/* Note article page */
-.note-article { max-width: 40rem; }
-.note-meta { color: rgba(144,200,255,0.4); font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
-.note-meta-sep { width: 1.5rem; height: 1px; background: rgba(144,200,255,0.2); }
-.note-title { font-size: clamp(1.5rem,3vw,2.2rem); font-weight: 300; letter-spacing: 0.04em; color: #fff; line-height: 1.25; margin-bottom: 1rem; }
-.note-subtitle { color: rgba(255,255,255,0.4); font-size: 14px; line-height: 1.6; max-width: 34rem; margin-bottom: 2rem; font-style: italic; }
+/* ============================================================
+   Note Article — aligned with Protocol Manifesto
+   ============================================================ */
 
-.note-section { margin-bottom: 2.5rem; }
-.note-section h2 { color: rgba(144,200,255,0.65); font-size: 12px; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; font-weight: 500; }
-.note-section p { color: rgba(255,255,255,0.45); font-size: 13px; line-height: 1.85; margin-bottom: 1rem; }
-.note-section p strong { color: rgba(255,255,255,0.7); }
+.note-article { max-width: 48rem; }
 
-.note-blockquote {
-  border-left: 2px solid rgba(144,200,255,0.2); padding: 0.5rem 0 0.5rem 1.25rem;
-  margin: 1.5rem 0; color: rgba(255,255,255,0.35); font-size: 13px; line-height: 1.7; font-style: italic;
+/* Meta bar — manifesto subtitle style: bold, uppercase, accent line */
+.note-meta {
+  color: rgba(144,200,255,0.5); font-size: 10px; letter-spacing: 0.6em;
+  text-transform: uppercase; margin-bottom: 2rem; font-weight: 700;
+  display: flex; align-items: center; gap: 1rem;
+}
+.note-meta::after {
+  content: ""; flex: 1; height: 1px;
+  background: rgba(255,255,255,0.1);
 }
 
-.note-roadmap-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.5rem 0; }
-.note-roadmap-num { color: rgba(144,200,255,0.4); font-family: monospace; font-size: 10px; letter-spacing: 0.15em; width: 4rem; flex-shrink: 0; }
-.note-roadmap-label { color: rgba(255,255,255,0.55); font-size: 12px; letter-spacing: 0.06em; }
-.note-roadmap-arrow { color: rgba(144,200,255,0.15); font-size: 14px; text-align: center; padding: 0.125rem 0; }
+/* Title — manifesto: text-5xl font-bold tracking-tighter uppercase */
+.note-title {
+  font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em;
+  color: #fff; line-height: 1.1; margin-bottom: 1rem; text-transform: uppercase;
+}
+@media (min-width: 768px) { .note-title { font-size: 3.5rem; } }
 
-.note-footer { border-top: 1px solid rgba(144,200,255,0.08); padding-top: 2rem; margin-top: 3rem; }
-.note-footer-text { color: rgba(255,255,255,0.2); font-size: 9px; letter-spacing: 0.15em; }
-.note-footer-text a { color: rgba(144,200,255,0.4); text-decoration: none; transition: color 0.3s; }
-.note-footer-text a:hover { color: rgba(144,200,255,0.7); }
+/* Subtitle */
+.note-subtitle {
+  color: rgba(255,255,255,0.35); font-size: 14px; letter-spacing: 0.06em;
+  line-height: 1.6; max-width: 36rem; margin-bottom: 6rem; font-weight: 300;
+}
 
-/* Homepage signal — compact */
-.research-signal {
-  border: 1px solid rgba(144,200,255,0.1); background: rgba(144,200,255,0.015);
-  padding: 1.25rem 1.5rem; max-width: 36rem;
+/* Section — manifesto: space-y-56 */
+.note-section { margin-bottom: 8rem; }
+
+/* Section heading — manifesto subtitle bar: small label + accent line */
+.note-section h2 {
+  color: rgba(144,200,255,0.5); font-size: 10px; letter-spacing: 0.6em;
+  text-transform: uppercase; margin-bottom: 2.5rem; font-weight: 700;
+  display: flex; align-items: center; gap: 1rem;
+}
+.note-section h2::after {
+  content: ""; flex: 1; height: 1px;
+  background: rgba(255,255,255,0.08);
+  transition: background 0.5s;
+}
+.note-section h2:hover::after { background: rgba(144,200,255,0.2); }
+
+/* Body — manifesto: text-[18px] leading-[1.85] font-light text-white/50 */
+.note-section p {
+  color: rgba(255,255,255,0.5); font-size: 18px; line-height: 1.85;
+  font-weight: 300; margin-bottom: 1.5rem;
+}
+.note-section p strong { color: rgba(255,255,255,0.7); font-weight: 500; }
+
+/* Blockquote */
+.note-blockquote {
+  border-left: 2px solid rgba(144,200,255,0.25);
+  padding: 1rem 0 1rem 1.5rem;
+  margin: 2.5rem 0;
+  color: rgba(255,255,255,0.4); font-size: 17px; line-height: 1.8; font-style: italic;
+  background: rgba(144,200,255,0.015);
+}
+
+/* Roadmap */
+.note-roadmap-item {
+  display: flex; align-items: flex-start; gap: 1rem; padding: 0.75rem;
+  border: 1px solid transparent;
   transition: border-color 0.35s, background 0.35s;
 }
-.research-signal:hover { border-color: rgba(144,200,255,0.25); background: rgba(144,200,255,0.03); }
-.research-signal-label { color: rgba(144,200,255,0.4); font-family: monospace; font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.5rem; }
-.research-signal-title { color: rgba(255,255,255,0.7); font-size: 13px; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-.research-signal-desc { color: rgba(255,255,255,0.3); font-size: 10px; line-height: 1.5; }
-.research-signal-link { color: rgba(144,200,255,0.5); text-decoration: none; font-size: 9px; letter-spacing: 0.15em; margin-top: 0.5rem; display: inline-block; transition: color 0.3s; }
-.research-signal-link:hover { color: rgba(144,200,255,0.8); }
+.note-roadmap-item:hover { border-color: rgba(144,200,255,0.12); background: rgba(144,200,255,0.02); }
+.note-roadmap-num { color: rgba(144,200,255,0.5); font-family: monospace; font-size: 12px; letter-spacing: 0.15em; width: 4rem; flex-shrink: 0; }
+.note-roadmap-label { color: rgba(255,255,255,0.55); font-size: 14px; letter-spacing: 0.04em; transition: color 0.35s; }
+.note-roadmap-item:hover .note-roadmap-label { color: rgba(255,255,255,0.8); }
+.note-roadmap-arrow { color: rgba(144,200,255,0.1); font-size: 16px; text-align: center; padding: 0.125rem 0; }
 
-/* ── TOC Sidebar ── */
+/* Footer */
+.note-footer { border-top: 1px solid rgba(144,200,255,0.08); padding-top: 3rem; margin-top: 8rem; }
+.note-footer-text { color: rgba(255,255,255,0.2); font-size: 10px; letter-spacing: 0.15em; }
+.note-footer-text a { color: rgba(144,200,255,0.45); text-decoration: none; transition: color 0.3s; }
+.note-footer-text a:hover { color: rgba(144,200,255,0.75); }
+
+/* ============================================================
+   TOC Sidebar — manifesto sidebar style
+   ============================================================ */
 
 .note-layout {
   display: grid;
   grid-template-columns: 1fr;
 }
 @media (min-width: 1024px) {
-  .note-layout {
-    grid-template-columns: 200px 1fr;
-    gap: 3rem;
-  }
+  .note-layout { grid-template-columns: 220px 1fr; gap: 4rem; }
 }
 
-.note-toc {
-  display: none;
-}
+.note-toc { display: none; }
 @media (min-width: 1024px) {
   .note-toc {
-    display: block;
-    position: sticky;
-    top: 7rem;
-    align-self: start;
-    max-height: calc(100vh - 10rem);
-    overflow-y: auto;
+    display: block; position: sticky; top: 7rem;
+    align-self: start; max-height: calc(100vh - 10rem); overflow-y: auto;
   }
 }
 
 .note-toc-title {
-  color: rgba(255,255,255,0.12);
-  font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
-  margin-bottom: 1rem; padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(144,200,255,0.06);
+  color: rgba(144,200,255,0.4); font-size: 10px; letter-spacing: 0.5em;
+  text-transform: uppercase; font-weight: 700;
+  margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
 .note-toc-item {
-  display: block; padding: 0.35rem 0; color: rgba(255,255,255,0.2);
-  font-size: 10px; letter-spacing: 0.06em; text-decoration: none;
-  transition: color 0.3s; cursor: pointer;
-  border-left: 1px solid transparent; padding-left: 0.75rem;
+  display: block; padding: 0.6rem 0;
+  color: rgba(255,255,255,0.25); font-size: 12px; letter-spacing: 0.04em;
+  text-decoration: none; transition: color 0.3s; cursor: pointer;
+  border-left: 1px solid transparent; padding-left: 1rem;
 }
 .note-toc-item:hover { color: rgba(144,200,255,0.6); }
-.note-toc-item.active { color: rgba(144,200,255,0.8); border-left-color: rgba(144,200,255,0.4); }
+.note-toc-item.active {
+  color: #90c8ff; font-weight: 700;
+  border-left-color: #90c8ff;
+  text-shadow: 0 0 12px rgba(144,200,255,0.5);
+}
+
+/* ============================================================
+   Print Entry Animation
+   ============================================================ */
+
+.note-print-stage {
+  opacity: 0;
+  animation: specimenReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes specimenReveal {
+  from { opacity: 0; transform: translateY(10px); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
+}
+
+.note-print-cursor {
+  display: inline-block; width: 8px; height: 16px;
+  background: rgba(144,200,255,0.8);
+  animation: printCursorBlink 0.6s step-end 3 forwards;
+  vertical-align: middle; margin-left: 2px;
+}
+@keyframes printCursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.note-print-delay-1  { animation-delay: 0.15s; }
+.note-print-delay-2  { animation-delay: 0.25s; }
+.note-print-delay-3  { animation-delay: 0.35s; }
+.note-print-delay-4  { animation-delay: 0.45s; }
+.note-print-delay-5  { animation-delay: 0.55s; }
+.note-print-delay-6  { animation-delay: 0.65s; }
+.note-print-delay-7  { animation-delay: 0.75s; }
+.note-print-delay-8  { animation-delay: 0.85s; }
