@@ -32,6 +32,7 @@ export function getRepoStats(owner: string, repo: string): GitHubStats | null {
     const raw = execSync(`gh api repos/${owner}/${repo}`, {
       encoding: "utf8",
       timeout: 10000,
+      stdio: ["ignore", "pipe", "pipe"],
     });
     const data = JSON.parse(raw) as {
       stargazers_count: number;
@@ -45,7 +46,8 @@ export function getRepoStats(owner: string, repo: string): GitHubStats | null {
       openIssues: data.open_issues_count,
     };
   } catch (err) {
-    console.error(`[github] ${owner}/${repo}:`, err instanceof Error ? err.message : err);
+    const msg = err instanceof Error ? err.message.split("\n")[0] : String(err);
+    console.warn(`[github] ⚠ ${owner}/${repo} unreachable — ${msg.slice(0, 80)}`);
     return null;
   }
 }
@@ -58,7 +60,7 @@ interface GhEvent {
     action?: string;
     issue?: { title: string; html_url: string };
     pull_request?: { title: string; html_url: string };
-    comment?: { html_url: string; body?: string };
+    comment?: { html_url: string; text?: string };
   };
 }
 
@@ -67,10 +69,9 @@ export function getRecentEvents(owner: string, repo: string): GitHubEvent[] {
   try {
     const raw = execSync(
       `gh api repos/${owner}/${repo}/events --paginate`,
-      { encoding: "utf8", timeout: 15000, maxBuffer: 2 * 1024 * 1024 },
+      { encoding: "utf8", timeout: 15000, maxBuffer: 2 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] },
     );
 
-    // Parse full JSON array (much simpler than jq on Windows)
     const allEvents = JSON.parse(raw) as GhEvent[];
     const relevant = allEvents.filter((e) =>
       ["IssuesEvent", "IssueCommentEvent", "WatchEvent", "ForkEvent", "PullRequestEvent"].includes(e.type)
@@ -90,7 +91,8 @@ export function getRecentEvents(owner: string, repo: string): GitHubEvent[] {
       };
     });
   } catch (err) {
-    console.error(`[github] events ${owner}/${repo}:`, err instanceof Error ? err.message : err);
+    const msg = err instanceof Error ? err.message.split("\n")[0] : String(err);
+    console.warn(`[github] ⚠ events ${owner}/${repo} unreachable — ${msg.slice(0, 80)}`);
     return [];
   }
 }
