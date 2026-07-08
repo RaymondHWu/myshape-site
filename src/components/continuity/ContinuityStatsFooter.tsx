@@ -1,3 +1,6 @@
+"use client";
+
+import { playTick } from "@/utils/useAudioTick";
 import type { NetworkData } from "./types";
 
 interface Props {
@@ -15,9 +18,16 @@ export default function ContinuityStatsFooter({ data }: Props) {
   ];
 
   return (
-    <footer className="continuity-stats-footer" aria-label="Protocol statistics">
+    <footer
+      className="continuity-stats-footer"
+      aria-label="Protocol statistics"
+    >
       {stats.map((s) => (
-        <div key={s.label} className="continuity-stat-item">
+        <div
+          key={s.label}
+          className="continuity-stat-item"
+          onMouseEnter={() => playTick(300, "sine", 0.02, 0.004)}
+        >
           <div className="continuity-stat-label">{s.label}</div>
           <div className="continuity-stat-value">{s.value}</div>
         </div>

@@ -1,8 +1,18 @@
 /* ============================================================
    MyShape Protocol — Continuity Network Page
+   High-polish: every interactive element has hover glow,
+   text enlargement, lift, border shift, and box-shadow.
    ============================================================ */
 
-/* ── KPI Grid ── */
+/* ── Shared transition token ── */
+:root {
+  --continuity-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --continuity-duration: 0.35s;
+}
+
+/* ============================================================
+   KPI Grid
+   ============================================================ */
 
 .continuity-kpi-grid {
   display: grid;
@@ -17,14 +27,25 @@
 }
 
 .continuity-kpi-card {
-  padding: 1rem;
+  position: relative;
+  padding: 1.25rem 1rem;
   border: 1px solid rgba(144, 200, 255, 0.1);
-  background: rgba(144, 200, 255, 0.01);
-  transition: border-color 0.3s ease;
+  background: rgba(144, 200, 255, 0.015);
+  cursor: default;
+  transition:
+    border-color var(--continuity-duration) var(--continuity-ease),
+    background var(--continuity-duration) var(--continuity-ease),
+    transform var(--continuity-duration) var(--continuity-ease),
+    box-shadow var(--continuity-duration) var(--continuity-ease);
 }
 
 .continuity-kpi-card:hover {
-  border-color: rgba(144, 200, 255, 0.3);
+  border-color: rgba(144, 200, 255, 0.45);
+  background: rgba(144, 200, 255, 0.06);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 24px -4px rgba(144, 200, 255, 0.12),
+    0 0 0 1px rgba(144, 200, 255, 0.06);
 }
 
 .continuity-kpi-label {
@@ -33,27 +54,67 @@
   letter-spacing: 0.25em;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    letter-spacing var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-kpi-card:hover .continuity-kpi-label {
+  color: rgba(144, 200, 255, 0.6);
+  letter-spacing: 0.35em;
 }
 
 .continuity-kpi-value {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 28px;
   font-weight: 300;
   font-family: monospace;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    text-shadow var(--continuity-duration) var(--continuity-ease),
+    transform var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-kpi-card:hover .continuity-kpi-value {
+  color: #fff;
+  text-shadow:
+    0 0 20px rgba(144, 200, 255, 0.5),
+    0 0 40px rgba(144, 200, 255, 0.2);
+  transform: scale(1.06);
+  transform-origin: left center;
 }
 
 .continuity-kpi-extra {
-  color: rgba(144, 200, 255, 0.25);
+  color: rgba(144, 200, 255, 0.2);
   font-size: 8px;
   margin-top: 0.25rem;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    font-size var(--continuity-duration) var(--continuity-ease);
 }
 
-/* ── Genesis Nodes Section ── */
+.continuity-kpi-card:hover .continuity-kpi-extra {
+  color: rgba(144, 200, 255, 0.5);
+  font-size: 9px;
+}
+
+/* ============================================================
+   Genesis Nodes Section
+   ============================================================ */
 
 .continuity-genesis {
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  background: rgba(212, 175, 55, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  background: rgba(212, 175, 55, 0.015);
   padding: 1.5rem;
+  transition:
+    border-color var(--continuity-duration) var(--continuity-ease),
+    background var(--continuity-duration) var(--continuity-ease),
+    box-shadow var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-genesis:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.04);
 }
 
 .continuity-genesis-header {
@@ -64,15 +125,28 @@
 }
 
 .continuity-genesis-label {
-  color: rgba(212, 175, 55, 0.5);
+  color: rgba(212, 175, 55, 0.45);
   font-size: 9px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    letter-spacing var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-genesis:hover .continuity-genesis-label {
+  color: rgba(212, 175, 55, 0.75);
+  letter-spacing: 0.4em;
 }
 
 .continuity-genesis-count {
-  color: rgba(212, 175, 55, 0.3);
+  color: rgba(212, 175, 55, 0.25);
   font-size: 9px;
+  transition: color var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-genesis:hover .continuity-genesis-count {
+  color: rgba(212, 175, 55, 0.5);
 }
 
 .continuity-genesis-tags {
@@ -83,21 +157,47 @@
 
 .continuity-genesis-tag {
   padding: 0.375rem 0.75rem;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  background: rgba(212, 175, 55, 0.04);
-  color: rgba(212, 175, 55, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  background: rgba(212, 175, 55, 0.03);
+  color: rgba(212, 175, 55, 0.55);
   font-size: 9px;
   letter-spacing: 0.1em;
+  cursor: default;
+  transition:
+    border-color var(--continuity-duration) var(--continuity-ease),
+    background var(--continuity-duration) var(--continuity-ease),
+    color var(--continuity-duration) var(--continuity-ease),
+    transform var(--continuity-duration) var(--continuity-ease),
+    box-shadow var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-genesis-tag:hover {
+  border-color: rgba(212, 175, 55, 0.55);
+  background: rgba(212, 175, 55, 0.1);
+  color: rgba(255, 220, 120, 0.9);
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
 }
 
 .continuity-genesis-more {
   padding: 0.375rem 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.18);
   font-size: 9px;
+  cursor: default;
+  transition:
+    border-color var(--continuity-duration) var(--continuity-ease),
+    color var(--continuity-duration) var(--continuity-ease);
 }
 
-/* ── Node List ── */
+.continuity-genesis-more:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================================
+   Node List
+   ============================================================ */
 
 .continuity-node-list-header {
   display: flex;
@@ -107,7 +207,7 @@
 }
 
 .continuity-node-list-label {
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.18);
   font-size: 9px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -134,37 +234,63 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem;
-  border: 1px solid rgba(144, 200, 255, 0.08);
-  background: rgba(144, 200, 255, 0.01);
-  transition: border-color 0.3s ease;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(144, 200, 255, 0.07);
+  background: rgba(144, 200, 255, 0.008);
+  cursor: default;
+  transition:
+    border-color var(--continuity-duration) var(--continuity-ease),
+    background var(--continuity-duration) var(--continuity-ease),
+    transform var(--continuity-duration) var(--continuity-ease),
+    box-shadow var(--continuity-duration) var(--continuity-ease);
 }
 
 .continuity-node-card:hover {
-  border-color: rgba(144, 200, 255, 0.2);
+  border-color: rgba(144, 200, 255, 0.35);
+  background: rgba(144, 200, 255, 0.04);
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 16px -2px rgba(144, 200, 255, 0.08),
+    inset 0 0 0 1px rgba(144, 200, 255, 0.03);
 }
 
 .continuity-node-left {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  min-width: 0;
 }
+
+/* ── Node dot ── */
 
 .continuity-node-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   flex-shrink: 0;
+  transition:
+    transform var(--continuity-duration) var(--continuity-ease),
+    box-shadow var(--continuity-duration) var(--continuity-ease);
 }
 
 .continuity-node-dot-genesis {
   background: #d4af37;
-  box-shadow: 0 0 6px rgba(212, 175, 55, 0.6);
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.5);
+}
+
+.continuity-node-card:hover .continuity-node-dot-genesis {
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+  transform: scale(1.3);
 }
 
 .continuity-node-dot-active {
   background: #90c8ff;
-  box-shadow: 0 0 6px rgba(144, 200, 255, 0.4);
+  box-shadow: 0 0 6px rgba(144, 200, 255, 0.35);
+}
+
+.continuity-node-card:hover .continuity-node-dot-active {
+  box-shadow: 0 0 10px rgba(144, 200, 255, 0.7);
+  transform: scale(1.3);
 }
 
 .continuity-node-dot-idle {
@@ -172,59 +298,85 @@
   box-shadow: none;
 }
 
+.continuity-node-card:hover .continuity-node-dot-idle {
+  background: #555;
+}
+
+/* ── Node name & meta ── */
+
 .continuity-node-name {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.35);
   font-size: 10px;
   letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    font-size var(--continuity-duration) var(--continuity-ease),
+    text-shadow var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-node-card:hover .continuity-node-name {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 11px;
+  text-shadow: 0 0 8px rgba(144, 200, 255, 0.3);
 }
 
 .continuity-node-meta {
-  color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.12);
   font-size: 7px;
   letter-spacing: 0.1em;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    font-size var(--continuity-duration) var(--continuity-ease);
 }
+
+.continuity-node-card:hover .continuity-node-meta {
+  color: rgba(144, 200, 255, 0.45);
+  font-size: 8px;
+}
+
+/* ── Node entropy ── */
 
 .continuity-node-right {
   text-align: right;
+  flex-shrink: 0;
+  margin-left: 1rem;
 }
 
 .continuity-node-entropy {
-  color: rgba(144, 200, 255, 0.4);
+  color: rgba(144, 200, 255, 0.35);
   font-size: 8px;
   font-family: monospace;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    font-size var(--continuity-duration) var(--continuity-ease),
+    text-shadow var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-node-card:hover .continuity-node-entropy {
+  color: rgba(144, 200, 255, 0.8);
+  font-size: 10px;
+  text-shadow: 0 0 8px rgba(144, 200, 255, 0.4);
 }
 
 .continuity-node-entropy-label {
-  color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.08);
   font-size: 7px;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    font-size var(--continuity-duration) var(--continuity-ease);
 }
 
-/* ── Empty State ── */
-
-.continuity-empty {
-  text-align: center;
-  padding: 5rem 0;
-  border: 1px solid rgba(144, 200, 255, 0.12);
-  background: rgba(144, 200, 255, 0.01);
-}
-
-.continuity-empty-label {
-  color: rgba(144, 200, 255, 0.3);
-  font-size: 10px;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-.continuity-empty-text {
+.continuity-node-card:hover .continuity-node-entropy-label {
   color: rgba(255, 255, 255, 0.25);
-  font-size: 12px;
-  max-width: 28rem;
-  margin: 0 auto 1.5rem;
-  line-height: 1.6;
+  font-size: 8px;
 }
 
-/* ── Stats Footer ── */
+/* ============================================================
+   Stats Footer
+   ============================================================ */
 
 .continuity-stats-footer {
   border-top: 1px solid rgba(144, 200, 255, 0.06);
@@ -237,22 +389,162 @@
 
 .continuity-stat-item {
   text-align: center;
+  cursor: default;
+  padding: 0.25rem 0.75rem;
+  transition:
+    background var(--continuity-duration) var(--continuity-ease),
+    border-color var(--continuity-duration) var(--continuity-ease);
+  border: 1px solid transparent;
+}
+
+.continuity-stat-item:hover {
+  background: rgba(144, 200, 255, 0.03);
+  border-color: rgba(144, 200, 255, 0.1);
 }
 
 .continuity-stat-label {
-  color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.08);
   font-size: 7px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    letter-spacing var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-stat-item:hover .continuity-stat-label {
+  color: rgba(144, 200, 255, 0.4);
+  letter-spacing: 0.2em;
 }
 
 .continuity-stat-value {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.2);
   font-size: 10px;
   font-family: monospace;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    font-size var(--continuity-duration) var(--continuity-ease),
+    text-shadow var(--continuity-duration) var(--continuity-ease);
 }
 
-/* ── Skeleton ── */
+.continuity-stat-item:hover .continuity-stat-value {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  text-shadow: 0 0 6px rgba(144, 200, 255, 0.2);
+}
+
+/* ============================================================
+   Empty State
+   ============================================================ */
+
+.continuity-empty {
+  text-align: center;
+  padding: 5rem 2rem;
+  border: 1px solid rgba(144, 200, 255, 0.1);
+  background: rgba(144, 200, 255, 0.01);
+}
+
+.continuity-empty-label {
+  color: rgba(144, 200, 255, 0.25);
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.continuity-empty-text {
+  color: rgba(255, 255, 255, 0.22);
+  font-size: 12px;
+  max-width: 28rem;
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
+}
+
+.continuity-empty-cta {
+  display: inline-block;
+  padding: 0.85rem 2.5rem;
+  border: 1px solid rgba(144, 200, 255, 0.25);
+  color: rgba(144, 200, 255, 0.65);
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: rgba(144, 200, 255, 0.02);
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    border-color var(--continuity-duration) var(--continuity-ease),
+    background var(--continuity-duration) var(--continuity-ease),
+    box-shadow var(--continuity-duration) var(--continuity-ease),
+    transform var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-empty-cta:hover {
+  color: #fff;
+  border-color: rgba(144, 200, 255, 0.55);
+  background: rgba(144, 200, 255, 0.07);
+  box-shadow: 0 0 30px rgba(144, 200, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   Error State
+   ============================================================ */
+
+.continuity-error {
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 1px solid rgba(255, 100, 100, 0.1);
+  background: rgba(255, 100, 100, 0.015);
+}
+
+.continuity-error-label {
+  color: rgba(255, 130, 130, 0.45);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.continuity-error-text {
+  color: rgba(255, 255, 255, 0.22);
+  font-size: 12px;
+  max-width: 28rem;
+  margin: 0 auto 1.5rem;
+  line-height: 1.5;
+}
+
+.continuity-error-retry {
+  display: inline-block;
+  padding: 0.6rem 2rem;
+  border: 1px solid rgba(144, 200, 255, 0.18);
+  color: rgba(144, 200, 255, 0.45);
+  font-family: monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color var(--continuity-duration) var(--continuity-ease),
+    border-color var(--continuity-duration) var(--continuity-ease),
+    background var(--continuity-duration) var(--continuity-ease),
+    box-shadow var(--continuity-duration) var(--continuity-ease),
+    transform var(--continuity-duration) var(--continuity-ease);
+}
+
+.continuity-error-retry:hover {
+  border-color: rgba(144, 200, 255, 0.5);
+  color: #fff;
+  background: rgba(144, 200, 255, 0.05);
+  box-shadow: 0 0 20px rgba(144, 200, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   Skeleton
+   ============================================================ */
 
 .continuity-skeleton {
   display: flex;
@@ -274,9 +566,23 @@
 
 .continuity-skeleton-card {
   height: 96px;
-  border: 1px solid rgba(144, 200, 255, 0.06);
-  background: rgba(144, 200, 255, 0.02);
+  border: 1px solid rgba(144, 200, 255, 0.05);
+  background: rgba(144, 200, 255, 0.015);
   animation: continuity-shimmer 1.8s ease-in-out infinite;
+}
+
+.continuity-skeleton-genesis {
+  border: 1px solid rgba(212, 175, 55, 0.06);
+  background: rgba(212, 175, 55, 0.008);
+  padding: 1.5rem;
+}
+
+.continuity-skeleton-genesis-bar {
+  height: 12px;
+  width: 120px;
+  background: rgba(212, 175, 55, 0.06);
+  animation: continuity-shimmer 1.8s ease-in-out infinite;
+  animation-delay: 0.3s;
 }
 
 .continuity-skeleton-rows {
@@ -288,7 +594,7 @@
 .continuity-skeleton-row {
   height: 52px;
   border: 1px solid rgba(144, 200, 255, 0.04);
-  background: rgba(144, 200, 255, 0.01);
+  background: rgba(144, 200, 255, 0.008);
   animation: continuity-shimmer 1.8s ease-in-out infinite;
 }
 
@@ -296,51 +602,11 @@
   animation-delay: 0.2s;
 }
 
+.continuity-skeleton-row:nth-child(3n) {
+  animation-delay: 0.4s;
+}
+
 @keyframes continuity-shimmer {
-  0%, 100% { opacity: 0.4; }
-  50%      { opacity: 0.8; }
-}
-
-/* ── Error State ── */
-
-.continuity-error {
-  text-align: center;
-  padding: 4rem 0;
-  border: 1px solid rgba(255, 100, 100, 0.12);
-  background: rgba(255, 100, 100, 0.02);
-}
-
-.continuity-error-label {
-  color: rgba(255, 130, 130, 0.5);
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-.continuity-error-text {
-  color: rgba(255, 255, 255, 0.25);
-  font-size: 12px;
-  max-width: 28rem;
-  margin: 0 auto 1.5rem;
-  line-height: 1.5;
-}
-
-.continuity-error-retry {
-  display: inline-block;
-  padding: 0.5rem 2rem;
-  border: 1px solid rgba(144, 200, 255, 0.2);
-  color: rgba(144, 200, 255, 0.5);
-  font-family: monospace;
-  font-size: 9px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.continuity-error-retry:hover {
-  border-color: rgba(144, 200, 255, 0.4);
-  color: rgba(144, 200, 255, 0.8);
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.75; }
 }

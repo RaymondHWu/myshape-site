@@ -1,5 +1,6 @@
 "use client";
 
+import { playTick } from "@/utils/useAudioTick";
 import type { NetworkData } from "./types";
 
 interface Props {
@@ -27,7 +28,11 @@ export default function ContinuityNodeList({ data }: Props) {
       </div>
       <div className="continuity-node-grid">
         {data.nodes.slice(0, 20).map((node) => (
-          <div key={node.handle || node.mask} className="continuity-node-card">
+          <div
+            key={node.handle || node.mask}
+            className="continuity-node-card"
+            onMouseEnter={() => playTick(450, "sine", 0.04, 0.008)}
+          >
             <div className="continuity-node-left">
               <div className={nodeDotClass(node)} />
               <div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { playTick } from "@/utils/useAudioTick";
 import type { NetworkData } from "./types";
 
 interface Props {
@@ -13,6 +14,7 @@ export default function ContinuityGenesisNodes({ data }: Props) {
     <section
       className="continuity-genesis"
       aria-labelledby="genesis-nodes-heading"
+      onMouseEnter={() => playTick(400, "sine", 0.03, 0.008)}
     >
       <div className="continuity-genesis-header">
         <span id="genesis-nodes-heading" className="continuity-genesis-label">
@@ -27,7 +29,11 @@ export default function ContinuityGenesisNodes({ data }: Props) {
           .filter((n) => n.isGenesis)
           .slice(0, 20)
           .map((n, i) => (
-            <div key={n.handle || i} className="continuity-genesis-tag">
+            <div
+              key={n.handle || i}
+              className="continuity-genesis-tag"
+              onMouseEnter={() => playTick(350, "sine", 0.03, 0.006)}
+            >
               {n.handle || `GNS_${i + 1}`}
             </div>
           ))}
