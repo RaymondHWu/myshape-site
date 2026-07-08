@@ -186,30 +186,18 @@ const ProtocolHeader = () => {
           {utcTime}
         </span>
 
-        {[
-          { label: "Protocol", href: "/protocol" },
-          { label: "Blog",     href: "/blog" },
-          { label: "Genesis",  href: "/genesis" },
-        ].map(link =>
-          <Link key={link.href} href={link.href}
-            className="hide-mobile"
-            style={{
-              fontSize: "9px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.45)",
-              textDecoration: "none", textTransform: "uppercase", padding: "4px 6px",
-              transition: "color 0.3s",
-            }}
-            onMouseEnter={e => {
-              playTick(500, "sine", 0.04, 0.01);
-              e.currentTarget.style.color = "rgba(144,200,255,0.8)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.color = pathname === link.href || pathname.startsWith(link.href + "/")
-                ? "rgba(144,200,255,0.7)" : "rgba(255,255,255,0.45)";
-            }}
-          >
-            {link.label}
-          </Link>
-        )}
+        <Link href="/protocol" style={{ textDecoration: "none" }} className="hide-mobile">
+          <div style={styles.nodeBadge} className="node-link-hover">
+            KFK_SPC_DC{new Date().getDate()}
+          </div>
+        </Link>
+
+        {/* GitHub DEV 入口 */}
+        <a href="https://github.com/myshapeprotocol" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }} className="hide-mobile">
+          <div style={styles.nodeBadge} className="node-link-hover">
+            DEV_HUB
+          </div>
+        </a>
 
         {/* 钱包按钮 — 全局身份入口 */}
         <button
@@ -365,6 +353,48 @@ const ProtocolHeader = () => {
       {isShimmering && <div className="shimmer-overlay" />}
     </nav>
 
+    {/* ── 二级导航条 ──
+         桌面：居中 6 项完整协议导航
+         移动：左对齐 3 项 + 横向滚动 */}
+    <div className="sub-nav-bar" style={{
+      position: "fixed", top: "60px", left: 0, width: "100%", height: "32px",
+      display: "flex", alignItems: "center", gap: "32px",
+      background: "rgba(2,4,10,0.85)", backdropFilter: "blur(4px)",
+      borderBottom: "1px solid rgba(255,255,255,0.05)", zIndex: 9998,
+      fontFamily: "monospace",
+      overflowX: "auto", overflowY: "hidden", whiteSpace: "nowrap",
+      paddingLeft: "12px", paddingRight: "12px",
+      WebkitOverflowScrolling: "touch",
+      scrollbarWidth: "none",
+    }}>
+      {[
+        { label: "Protocol", href: "/protocol" },
+        { label: "Blog",     href: "/blog" },
+        { label: "Genesis",  href: "/genesis" },
+      ].map(link =>
+          <Link key={link.href} href={link.href}
+            onMouseEnter={e => {
+              playTick(600, "sine", 0.08, 0.02);
+              e.currentTarget.style.color = "rgb(34, 211, 238)";
+              e.currentTarget.style.textShadow = "0 0 8px rgba(144,200,255,0.3)";
+            }}
+            onMouseLeave={e => {
+              const active = pathname === link.href || pathname.startsWith(link.href + "/");
+              e.currentTarget.style.color = active ? "rgb(34, 211, 238)" : "rgba(255,255,255,0.45)";
+              e.currentTarget.style.textShadow = active ? "0 0 8px rgba(144,200,255,0.2)" : "none";
+            }}
+            style={{
+              fontSize: "10px", letterSpacing: "0.15em", padding: "6px 4px",
+              color: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "rgb(34, 211, 238)" : "rgba(255,255,255,0.45)",
+              textShadow: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "0 0 10px rgba(144,200,255,0.5)" : "none",
+              textDecoration: "none", textTransform: "uppercase", transition: "all 0.3s ease",
+              borderBottom: (pathname === link.href || pathname.startsWith(link.href + "/")) ? "1px solid rgba(144,200,255,0.5)" : "1px solid transparent",
+              paddingBottom: "2px",
+            }}>
+            {link.label}
+          </Link>
+      )}
+    </div>
   </>
 );
 };

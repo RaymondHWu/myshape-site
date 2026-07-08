@@ -6,7 +6,6 @@ import { GeistSans, GeistMono } from "geist/font";
 import PageTransition from "@/components/transition/PageTransition";
 import ScrollTop from "@/components/ui/ScrollTop";
 import HeroVisualLoader from "@/components/hero/HeroVisualLoader";
-import AnnouncementBar from "@/components/announcement-bar/AnnouncementBar";
 import ProtocolStatusBar from "@/components/protocol-status/ProtocolStatusBar";
 
 /* -------------------------------
@@ -188,9 +187,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}>
           <HeroVisualLoader showCore={false} />
         </div>
-
-        {/* Announcement bar — site-wide dismissible notification */}
-        <AnnouncementBar />
 
         {/* Protocol status — live network state, bottom-left corner */}
         <ProtocolStatusBar />

@@ -95,7 +95,14 @@ export default function DevelopersClient() {
       <ProtocolHeader />
       <BackgroundParticles />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 pt-28 pb-16">
+      {/* Compact CTA banner — replaces the old global AnnouncementBar */}
+      <div className="relative z-10 flex items-center justify-center gap-3 px-4 py-2.5 border-b border-[#90c8ff]/10 bg-[#90c8ff]/[0.03] font-mono text-[10px] tracking-[0.08em] text-white/45">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.5)] animate-pulse flex-shrink-0" />
+        Dev Nodes are live. Deploy a protocol anchor in 60 seconds. No wallet. No invite.
+        <a href="#quickstart" className="text-[#90c8ff]/70 hover:text-[#90c8ff] transition-colors whitespace-nowrap ml-1">Get Started ↓</a>
+      </div>
+
+      <div className="relative z-10 max-w-4xl mx-auto px-6 pt-16 pb-16">
         <div className="space-y-4 mb-12">
           <div className="text-[#90c8ff]/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase"
             onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>DEVELOPER_HUB // V1.0</div>
@@ -113,7 +120,7 @@ export default function DevelopersClient() {
         </div>
 
         {/* Quick Start */}
-        <section className="mb-14">
+        <section className="mb-14" id="quickstart">
           <h2 className="dev-section-title">// QUICK_START (5 MIN)</h2>
           <div className="space-y-4">
             {QUICK_STEPS.map((s, i) => (
