@@ -33,6 +33,20 @@ const ProtocolHeader = () => {
   const confirmTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [genesisDone, setGenesisDone] = useState(false);
   const [maskedEmail, setMaskedEmail] = useState("");
+  const [genesisCount, setGenesisCount] = useState<number | null>(null);
+
+  /* ── 创世节点计数器 — 30s 轮询 ── */
+  useEffect(() => {
+    const poll = () => {
+      fetch("/api/nodes/status")
+        .then((r) => r.json())
+        .then((d) => { if (typeof d.genesis_nodes === "number") setGenesisCount(d.genesis_nodes); })
+        .catch(() => {});
+    };
+    poll();
+    const id = setInterval(poll, 30_000);
+    return () => clearInterval(id);
+  }, []);
 
   /* ── 钱包连接状态 — shared hook ── */
   const { address: walletAddress, status: walletStatus, error: walletError, connect: connectWallet, disconnect: disconnectWallet } = useWalletAuth();
@@ -198,6 +212,14 @@ const ProtocolHeader = () => {
             DEV_HUB
           </div>
         </a>
+
+        {/* 创世节点计数器 */}
+        {genesisCount !== null && (
+          <span className="hide-mobile" style={{ fontSize: "9px", letterSpacing: "0.1em", color: "rgba(212,175,55,0.6)", fontFamily: "monospace", display: "flex", alignItems: "center", gap: "3px" }}>
+            <span style={{ fontSize: "7px" }}>◈</span>
+            {genesisCount}/100
+          </span>
+        )}
 
         {/* 钱包按钮 — 全局身份入口 */}
         <button
