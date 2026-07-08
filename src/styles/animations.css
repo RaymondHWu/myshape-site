@@ -382,6 +382,11 @@
   50% { box-shadow: 0 0 35px rgba(144,200,255,0.35), 0 0 90px rgba(144,200,255,0.12); }
 }
 
+@keyframes statusBarPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
 /* ═══════════════════════════════════════════════
    prefers-reduced-motion — 全局动画禁用
    覆盖所有 @keyframes、transition、animation

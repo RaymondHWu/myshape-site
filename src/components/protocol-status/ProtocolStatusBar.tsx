@@ -64,11 +64,14 @@ export default function ProtocolStatusBar() {
           whiteSpace: "nowrap",
         }}
       >
-        {/* Live dot */}
+        {/* Live dot — pulsing when connected */}
         <span
           style={{
             color: live ? "#3fb950" : "#f85149",
             marginRight: 3,
+            display: "inline-block",
+            animation: live ? "statusBarPulse 2s ease-in-out infinite" : "none",
+            textShadow: live ? "0 0 6px rgba(63,185,80,0.6)" : "none",
           }}
         >
           ◉

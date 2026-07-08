@@ -1,10 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function ScrollTop() {
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
 
+  // Auto-scroll to top on every route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  // Show scroll-to-top button after scrolling down
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 500);
     window.addEventListener("scroll", onScroll, { passive: true });
