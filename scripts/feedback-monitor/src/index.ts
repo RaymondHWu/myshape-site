@@ -15,7 +15,7 @@ import { dirname } from "node:path";
 import cron from "node-cron";
 import { ProxyAgent, setGlobalDispatcher } from "undici";
 
-import { POLL_INTERVAL_MINUTES, STATE_FILE } from "./config";
+import { POLL_INTERVAL_MINUTES, STATE_FILE, getDevLogsWebhookUrl } from "./config";
 import { searchAllHN, type HnMatch } from "./hn";
 import { getAllEvents, type GitHubEvent, type GitHubStats } from "./github";
 import { searchReddit, type RedditMention } from "./reddit";
@@ -114,17 +114,22 @@ async function runOnce(dryRun = false): Promise<void> {
     return;
   }
 
-  // Push to Discord — group by platform for clean embeds
+  // GitHub → #dev-logs (merged stats + events, single call)
+  try {
+    const ghEmbeds: any[] = [];
+    if (result.githubStats.length > 0) ghEmbeds.push(formatGitHubStats(result.githubStats));
+    if (result.githubEvents.length > 0) ghEmbeds.push(...formatGitHubEvents(result.githubEvents));
+    if (ghEmbeds.length > 0) {
+      const devLogsUrl = getDevLogsWebhookUrl();
+      await sendToDiscord(ghEmbeds, "GitHub", devLogsUrl);
+    }
+  } catch (err) {
+    console.error("[monitor] GitHub→#dev-logs failed:", (err as Error).message);
+  }
+
+  // HN + Reddit → #vision
   if (result.hn.length > 0) {
     await sendToDiscord(formatHnMatches(result.hn), "HN");
-  }
-
-  if (result.githubStats.length > 0) {
-    await sendToDiscord([formatGitHubStats(result.githubStats)], "GitHub Stats");
-  }
-
-  if (result.githubEvents.length > 0) {
-    await sendToDiscord(formatGitHubEvents(result.githubEvents), "GitHub Events");
   }
 
   if (result.reddit.length > 0) {

@@ -115,10 +115,10 @@ export function formatRedditMentions(items: RedditMention[]): Embed[] {
 
 const MAX_EMBEDS_PER_CALL = 10;
 
-export async function sendToDiscord(embeds: Embed[], label: string): Promise<void> {
+export async function sendToDiscord(embeds: Embed[], label: string, webhookUrlOverride?: string): Promise<void> {
   if (embeds.length === 0) return;
 
-  const webhookUrl = getDiscordWebhookUrl();
+  const webhookUrl = webhookUrlOverride || getDiscordWebhookUrl();
   let sent = 0;
 
   for (let i = 0; i < embeds.length; i += MAX_EMBEDS_PER_CALL) {
@@ -136,8 +136,8 @@ export async function sendToDiscord(embeds: Embed[], label: string): Promise<voi
       });
 
       if (!res.ok) {
-        const body = await res.text();
-        console.error(`[discord] ${label}: ${res.status} ${body.slice(0, 200)}`);
+        const text = await res.text();
+        console.error(`[discord] ${label}: ${res.status} ${text.slice(0, 200)}`);
         continue;
       }
 

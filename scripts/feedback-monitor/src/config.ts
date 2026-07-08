@@ -47,11 +47,30 @@ export const STATE_FILE = resolve(
   "seen.json",
 );
 
-/** Discord webhook URL */
+/** Read a value from process.env, falling back to .env.local in project root */
+function getEnv(key: string): string {
+  if (process.env[key]) return process.env[key]!;
+  try {
+    const fs = require("node:fs");
+    const path = require("node:path");
+    const envPath = path.resolve(__dirname, "..", "..", "..", ".env.local");
+    const content = fs.readFileSync(envPath, "utf-8");
+    for (const line of content.split("\n")) {
+      const t = line.trim();
+      if (t.startsWith(`${key}=`)) return t.slice(key.length + 1);
+    }
+  } catch {}
+  throw new Error(`${key} not set`);
+}
+
+/** Discord webhook URL — #vision (HN, Reddit, API alerts) */
 export function getDiscordWebhookUrl(): string {
-  const url = process.env.DISCORD_WEBHOOK_URL;
-  if (!url) throw new Error("DISCORD_WEBHOOK_URL not set");
-  return url;
+  return getEnv("DISCORD_WEBHOOK_URL");
+}
+
+/** Discord webhook URL — #dev-logs (GitHub only) */
+export function getDevLogsWebhookUrl(): string {
+  return getEnv("DISCORD_WEBHOOK_DEVLOGS");
 }
 
 /** Proxy URI for restricted networks */
