@@ -79,7 +79,7 @@ These 100 identities define the root entropy source of the protocol. Like Bitcoi
 
 **What we never capture:**
 - Raw camera images or video
-- Facial data or biometric templates
+- Visual appearance data or traditional identity templates
 - Personal identity documents
 - IP address or location
 - Any data that could reconstruct your appearance or identity
