@@ -62,7 +62,7 @@ const LAYERS = [
     bg: "rgba(144,200,255,0.05)",
     border: "rgba(144,200,255,0.25)",
     items: [
-      { label: "◈ Genesis Cohort", desc: "First 100 nodes · Permanent" },
+      { label: "◈ Genesis Cohort", desc: "Phase Alpha · Founding Tier" },
       { label: "protocol_nodes", desc: "PostgreSQL · Supabase" },
       { label: "Sentry + Analytics", desc: "Monitoring · Vercel" },
     ],
