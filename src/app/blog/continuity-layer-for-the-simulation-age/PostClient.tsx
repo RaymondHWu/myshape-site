@@ -239,11 +239,11 @@ export default function PostClient() {
             Identity tells us who you claim to be. Continuity tells us that you are still you. Why the Simulation Age needs a new primitive.
           </p>
           <div className="flex items-center gap-3 mt-4 text-[10px]">
-            <span className="text-white/20">MyShape Protocol</span>
-            <span className="text-white/10">·</span>
-            <span className="text-white/20">June 29, 2026</span>
-            <span className="text-white/10">·</span>
-            <span className="text-white/20">10 min read</span>
+            <span className="text-white/40">The Continuity Lab</span>
+            <span className="text-white/20">·</span>
+            <span className="text-white/40">June 29, 2026</span>
+            <span className="text-white/20">·</span>
+            <span className="text-white/40">10 min read</span>
           </div>
         </div>
 

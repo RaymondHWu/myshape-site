@@ -183,11 +183,11 @@ export default function PostClient() {
             Why your &ldquo;identity&rdquo; is just a copyable database record — and what comes next.
           </p>
           <div className="flex items-center gap-3 mt-4 text-[10px]">
-            <span className="text-white/20">MyShape Protocol</span>
-            <span className="text-white/10">·</span>
-            <span className="text-white/20">June 27, 2026</span>
-            <span className="text-white/10">·</span>
-            <span className="text-white/20">8 min read</span>
+            <span className="text-white/40">The Continuity Lab</span>
+            <span className="text-white/20">·</span>
+            <span className="text-white/40">June 27, 2026</span>
+            <span className="text-white/20">·</span>
+            <span className="text-white/40">8 min read</span>
           </div>
         </div>
 
