@@ -60,7 +60,7 @@ export default function GenesisProgress() {
   const current = count ?? 0;
   const pct = Math.min((current / MAX_SLOTS) * 100, 100);
   const remaining = MAX_SLOTS - current;
-  const showCount = current > 3; // 人数太少时不显示数字
+  const showCount = false; // Phase-based — counter replaced by Genesis Alpha status
 
   return (
     <div className="genesis-progress-root">
