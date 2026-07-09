@@ -33,7 +33,7 @@ export default function PostClient() {
             <p className="text-white/50 text-[14px] tracking-[0.06em] leading-[1.7] max-w-xl">What SSI actually means in 2026 — the promise, the reality, the gaps, and why proof of continuity is the next evolution.</p>
           </div>
           <div className="space-y-20">
-            {SECTIONS.map(s => (<section key={s.id} id={s.id}><h2 className="text-white/65 text-[12px] tracking-[0.2em] uppercase mb-6 flex items-center gap-3"><span className="w-6 h-[1px] bg-[#90c8ff]/30" />{s.heading}</h2><div className="text-white/55 text-[17px] leading-[1.85] tracking-[0.03em] space-y-5 whitespace-pre-line">{s.content}</div></section>))}
+            {SECTIONS.map(s => (<section key={s.id} id={s.id}><h2 className="text-white/65 text-[12px] tracking-[0.2em] uppercase mb-6 flex items-center gap-3"><span className="w-6 h-[1px] bg-[#90c8ff]/30" />{s.heading}</h2><div className="text-white/55 text-[15px] sm:text-[17px] leading-[1.85] tracking-[0.03em] space-y-5 whitespace-pre-line">{s.content}</div></section>))}
           </div>
           <PostNavigation slug="/blog/self-sovereign-identity-explained-2026" />
 

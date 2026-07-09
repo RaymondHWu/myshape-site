@@ -126,7 +126,7 @@ export default function PostClient() {
                   <span className="w-6 h-[1px] bg-[#90c8ff]/30" />
                   {section.heading}
                 </h2>
-                <div className="text-white/55 text-[17px] leading-[1.85] tracking-[0.03em] space-y-5 whitespace-pre-line">
+                <div className="text-white/55 text-[15px] sm:text-[17px] leading-[1.85] tracking-[0.03em] space-y-5 whitespace-pre-line">
                   {section.content}
                 </div>
               </section>
