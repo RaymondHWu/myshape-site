@@ -28,7 +28,7 @@ export default function PostClient() {
           <div className="space-y-4 mb-16">
             <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase"><span>GENESIS 011</span><span className="w-8 h-[1px] bg-[#90c8ff]/20" /><span>2026.07.03</span>
               <span className="w-8 h-[1px] bg-[#90c8ff]/20" />
-              <span className="text-white/25">The Continuity Lab</span></div>
+              <span className="text-white/40">The Continuity Lab</span></div>
             <h1 className="text-2xl md:text-3xl font-light tracking-[0.08em] text-white leading-tight" onMouseEnter={() => playTick(520, "sine", 0.04, 0.015)}>The<br /><span className="text-[#90c8ff]">Post-Biometric Era</span></h1>
             <p className="text-white/50 text-[14px] tracking-[0.06em] leading-[1.7] max-w-xl">Why 2026 is the year we stop scanning faces. Biometrics created the largest unchangeable password database in history. The post-biometric era begins now.</p>
           </div>

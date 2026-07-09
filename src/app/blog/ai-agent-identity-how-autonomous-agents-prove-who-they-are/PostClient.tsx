@@ -87,7 +87,7 @@ export default function PostClient() {
               <span className="w-8 h-[1px] bg-[#90c8ff]/20" />
               <span>2026.07.03</span>
               <span className="w-8 h-[1px] bg-[#90c8ff]/20" />
-              <span className="text-white/25">The Continuity Lab</span>
+              <span className="text-white/40">The Continuity Lab</span>
             </div>
             <h1 className="text-2xl md:text-3xl font-light tracking-[0.08em] text-white leading-tight" onMouseEnter={() => playTick(520, "sine", 0.04, 0.015)}>
               AI Agent<br />
