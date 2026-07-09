@@ -66,7 +66,7 @@ export default function GenesisIdentityCard({
               {String(positionNumber).padStart(3, "0")}
             </span>
             <div className="text-white/20 font-mono text-[10px] tracking-[0.3em] uppercase mt-0.5">
-              of 100
+              Genesis Node
             </div>
           </motion.div>
         )}

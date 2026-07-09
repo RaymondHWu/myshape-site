@@ -101,7 +101,7 @@ export default function ProtocolStatusBar() {
 
             <span style={{ color: dim }}>genesis </span>
             <span style={{ color: stats.genesis_remaining <= 10 ? "rgba(210,153,29,0.7)" : "rgba(144,200,255,0.55)" }}>
-              {stats.genesis_nodes}/100
+              Alpha
             </span>
             {stats.genesis_remaining <= 10 && stats.genesis_remaining > 0 && (
               <span style={{ color: "rgba(210,153,29,0.4)" }}> ‑{stats.genesis_remaining}</span>

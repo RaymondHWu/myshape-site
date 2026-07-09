@@ -96,7 +96,7 @@ export default function ProtocolFooter() {
       {/* 导航链接组 */}
       <div className="max-w-6xl mx-auto px-4 md:px-10 grid grid-cols-2 md:grid-cols-5 gap-y-8 md:gap-y-16 gap-x-2 md:gap-x-6">
         {navGroups.map((group) => (
-          <div key={group.title} className={`flex justify-start md:justify-center ${(group.title === "BUILD" || group.title === "RESEARCH") ? "hidden md:flex" : ""}`}>
+          <div key={group.title} className={`flex justify-start md:justify-center ${group.title !== "CONNECT_NODES" ? "hidden md:flex" : ""}`}>
             <div className="flex flex-col items-start min-w-[160px]">
               <div className="mb-8 group cursor-default">
                 <h4 className="text-white text-[11px] font-bold tracking-[0.4em] mb-2 opacity-90 uppercase group-hover:text-[#90c8ff] transition-colors">

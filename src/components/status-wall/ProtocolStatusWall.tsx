@@ -194,7 +194,7 @@ export default function ProtocolStatusWall() {
           </span>
           <span className="tsw-indicator-sep">|</span>
           <span className="tsw-indicator tsw-indicator-cyan">
-            {genesisRemaining > 0 ? `COHORT:${genesis}/100` : "COHORT:SEALED"}
+            GENESIS:ALPHA
           </span>
         </div>
       </div>
@@ -240,10 +240,10 @@ export default function ProtocolStatusWall() {
             />
             <Row
               label="GENESIS_COHORT"
-              value={`${genesis}/100`}
-              sub={genesisRemaining > 0 ? `${genesisRemaining} SLOTS_REMAIN` : "SEALED"}
-              accent={genesisRemaining > 0 ? "amber" : "cyan"}
-              pulse={genesisRemaining > 0}
+              value="Alpha"
+              sub="Phase — Restricted Access"
+              accent="amber"
+              pulse
               flash={flashRows.has("GENESIS")}
             />
             <Row

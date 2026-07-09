@@ -8,8 +8,6 @@ interface Props {
 }
 
 export default function ContinuityGenesisNodes({ data }: Props) {
-  if (data.genesisNodes === 0) return null;
-
   return (
     <section
       className="continuity-genesis"
@@ -18,10 +16,10 @@ export default function ContinuityGenesisNodes({ data }: Props) {
     >
       <div className="continuity-genesis-header">
         <span id="genesis-nodes-heading" className="continuity-genesis-label">
-          Founding Cohort
+          Phase: Genesis Alpha
         </span>
         <span className="continuity-genesis-count">
-          {data.genesisNodes} / 100
+          Access Restricted
         </span>
       </div>
       <div className="continuity-genesis-tags">

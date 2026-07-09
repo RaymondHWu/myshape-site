@@ -213,13 +213,11 @@ const ProtocolHeader = () => {
           </div>
         </a>
 
-        {/* 创世节点计数器 */}
-        {genesisCount !== null && (
-          <span className="hide-mobile" style={{ fontSize: "9px", letterSpacing: "0.1em", color: "rgba(212,175,55,0.6)", fontFamily: "monospace", display: "flex", alignItems: "center", gap: "3px" }}>
-            <span style={{ fontSize: "7px" }}>◈</span>
-            {genesisCount}/100
-          </span>
-        )}
+        {/* Genesis Phase Indicator */}
+        <span className="hide-mobile" style={{ fontSize: "9px", letterSpacing: "0.1em", color: "rgba(212,175,55,0.55)", fontFamily: "monospace", display: "flex", alignItems: "center", gap: "3px" }}>
+          <span style={{ fontSize: "7px" }}>◈</span>
+          Genesis Alpha
+        </span>
 
         {/* 钱包按钮 — 全局身份入口 */}
         <button

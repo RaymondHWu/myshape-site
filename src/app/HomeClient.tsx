@@ -22,13 +22,13 @@ export default function HomeClient() {
         <HeroDemo />
 
         {/* ── Hero Value Proposition ── */}
-        <div className="relative z-10 pt-8 md:pt-12 pb-4 px-6 text-center">
-          <p className="text-white/70 text-[clamp(0.9rem,2.5vw,1.3rem)] font-light tracking-[0.06em] leading-relaxed max-w-2xl mx-auto">
+        <div className="relative z-10 pt-16 md:pt-24 pb-12 md:pb-16 px-6 text-center">
+          <p className="text-white/60 text-[clamp(1rem,2.5vw,1.4rem)] font-light tracking-[0.05em] leading-relaxed max-w-2xl mx-auto">
             <span className="text-[#90c8ff]/80">MyShape Protocol</span>
-            <span className="text-white/20"> — </span>
+            <span className="text-white/15"> — </span>
             The Sovereign 3D Identity Layer.
           </p>
-          <p className="text-white/35 text-[clamp(0.7rem,1.5vw,0.85rem)] font-light tracking-[0.04em] mt-3 max-w-xl mx-auto">
+          <p className="text-white/30 text-[clamp(0.7rem,1.5vw,0.85rem)] font-light tracking-[0.05em] mt-4 max-w-xl mx-auto">
             Verifiable digital existence for the AI-Agent Era.
           </p>
         </div>

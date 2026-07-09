@@ -401,8 +401,8 @@ export default function WhitepaperClient() {
 
                       <div className="flex items-baseline gap-4 mb-4">
                         <span className="text-5xl font-light font-mono text-[#90c8ff]/80">{genesisNodes.total}</span>
-                        <span className="text-white/30 text-[12px] tracking-[0.2em] uppercase">of 100 slots claimed</span>
-                        <span className="text-[#90c8ff]/40 text-[10px]">— {genesisNodes.remaining} remaining</span>
+                        <span className="text-white/30 text-[12px] tracking-[0.2em] uppercase">Genesis Node{genesisNodes.total !== 1 ? "s" : ""} Active</span>
+                        <span className="text-[#90c8ff]/40 text-[10px]">— Phase: Alpha</span>
                       </div>
 
                       {/* 协议同步进度条 */}
