@@ -186,7 +186,7 @@ const ProtocolHeader = () => {
         <span style={styles.divider} className="hide-mobile">
           //
         </span>
-        <span style={styles.statusText}>E&C: ACTIVE</span>
+        <span style={styles.statusText} className="hide-mobile">E&C: ACTIVE</span>
       </div>
 
       {/* ── 中间：Logo ── */}
@@ -213,7 +213,7 @@ const ProtocolHeader = () => {
           </div>
         </a>
 
-        {/* Genesis Phase Indicator */}
+        {/* Genesis Phase Indicator — desktop only */}
         <span className="hide-mobile" style={{ fontSize: "9px", letterSpacing: "0.1em", color: "rgba(212,175,55,0.55)", fontFamily: "monospace", display: "flex", alignItems: "center", gap: "3px" }}>
           <span style={{ fontSize: "7px" }}>◈</span>
           Genesis Alpha
