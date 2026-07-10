@@ -79,8 +79,8 @@ export default function AgendaClient() {
             className="agenda-number-card"
             onMouseEnter={() => playTick(660, "sine", 0.05, 0.025)}
           >
-            <div className="agenda-number">1</div>
-            <div className="agenda-number-label">Research Note</div>
+            <div className="agenda-number">2</div>
+            <div className="agenda-number-label">Research Notes</div>
           </div>
           <div className="agenda-number-divider" />
           <div
@@ -183,7 +183,7 @@ export default function AgendaClient() {
                   { done: true, text: "RN #001 — The Continuity Problem published" },
                   { done: true, text: "The Continuity Lab launched with Research Hub" },
                   { done: false, text: "Expand benchmark dataset to 300+ human samples" },
-                  { done: false, text: "Publish RN #002 — PES Benchmark (dataset, threats to validity)" },
+                  { done: true, text: "Publish RN #002 — PES Benchmark (dataset, threats to validity)" },
                 ],
               },
               {
@@ -256,7 +256,7 @@ export default function AgendaClient() {
         {/* ── Footer ── */}
         <div className="agenda-footer">
           <p className="agenda-footer-text">
-            Last updated: 2026-07-08 ·{" "}
+            Last updated: 2026-07-10 ·{" "}
             <Link href="/research">← Research Hub</Link>
             {" · "}
             <Link href="/">Home</Link>

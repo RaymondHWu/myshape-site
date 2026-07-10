@@ -15,6 +15,14 @@ const PUBLISHED_NOTES = [
     date: "2026.07.09",
     slug: "/research/notes/001-the-continuity-problem",
   },
+  {
+    num: "002",
+    title: "PES Benchmark v0.2",
+    subtitle:
+      "Dataset, Cohen's d, precision/recall, and threats to validity for the Presence Entropy Score.",
+    date: "2026.07.10",
+    slug: "/research/notes/002-pes-benchmark",
+  },
 ];
 
 const OPEN_QUESTIONS = [
@@ -51,7 +59,6 @@ const ACTIVE_BENCHMARKS = [
 ];
 
 const PIPELINE_RN = [
-  { num: "002", title: "PES Benchmark", subtitle: "Dataset, Cohen's d, precision/recall, and threats to validity for the Presence Entropy Score." },
   { num: "003", title: "Replay Attack Analysis", subtitle: "Under what conditions can continuity proofs be replayed? Experimental evaluation." },
   { num: "004", title: "Challenge-Response", subtitle: "Interactive continuity verification without storing motion data." },
   { num: "005", title: "The Continuity Receipt", subtitle: "A proposed format for portable, verifiable continuity proofs." },
@@ -140,6 +147,10 @@ export default function ResearchClient() {
 
           <div className="space-y-0">
             {[
+              {
+                date: "2026.07.10",
+                entry: "Published <a href='/research/notes/002-pes-benchmark' class='underline decoration-[#90c8ff]/20 hover:decoration-[#90c8ff]/50 transition-colors'>RN #002 — PES Benchmark v0.2</a>. 281 samples, Cohen's d: 2.1, AUC: 0.94. Five threats to validity documented. The PES signal is real and measurable across four independent dimensions.",
+              },
               {
                 date: "2026.07.10",
                 entry: "PES v0.2 recalibration complete. 309 tests across 100 suites — 100% passing. Published <a href='/research/benchmarks' class='underline decoration-[#90c8ff]/20 hover:decoration-[#90c8ff]/50 transition-colors'>Benchmarks</a> dashboard.",
