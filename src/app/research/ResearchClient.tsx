@@ -37,6 +37,15 @@ const OPEN_QUESTIONS = [
   },
 ];
 
+const DATASET = {
+  id: "DS-001",
+  name: "Human Continuity Dataset",
+  status: "281 samples · 54 subjects · Growing",
+  meta: "Foundation of all continuity benchmarks",
+  slug: "/research/dataset",
+  date: "2026.07.10",
+};
+
 const ACTIVE_BENCHMARKS = [
   {
     name: "PES Benchmark",
@@ -301,6 +310,20 @@ export default function ResearchClient() {
                 <div className="bm-card-meta">{bm.meta}</div>
               </Link>
             ))}
+
+            <div className="pipeline-section-label" style={{ color: "rgba(163,113,247,0.4)" }}>Dataset</div>
+            <Link
+              href={DATASET.slug}
+              className="bm-card block"
+              onMouseEnter={() => playTick(440, "triangle", 0.045, 0.025)}
+            >
+              <div className="bm-card-name">
+                <span style={{ color: "rgba(163,113,247,0.6)", fontFamily: "monospace", fontSize: "10px", letterSpacing: "0.15em" }}>{DATASET.id}</span>
+                {" "}{DATASET.name}
+              </div>
+              <div className="bm-card-status">{DATASET.status}</div>
+              <div className="bm-card-meta">{DATASET.meta}</div>
+            </Link>
 
             <div className="pipeline-section-label" style={{ color: "rgba(212,175,55,0.4)" }}>Open Questions</div>
             {OPEN_QUESTIONS.map((oq) => (

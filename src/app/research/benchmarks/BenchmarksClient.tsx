@@ -338,6 +338,22 @@ export default function BenchmarksClient() {
           </div>
         </section>
 
+        {/* ── Challenge ── */}
+        <div className="mt-12 mb-8 p-6 text-center"
+          style={{ border: "1px solid rgba(248,81,73,0.1)", background: "rgba(248,81,73,0.015)" }}>
+          <p className="text-white/30 text-[12px] leading-relaxed mb-3"
+            style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+            Think PES fails under a specific condition?
+          </p>
+          <Link
+            href="/research/challenge"
+            className="font-mono text-[10px] tracking-[0.15em] uppercase text-[#f85149]/50 hover:text-[#f85149]/70 transition-colors"
+            onMouseEnter={() => playTick(520, "sine", 0.04, 0.02)}
+          >
+            Challenge BM-001 →
+          </Link>
+        </div>
+
         {/* ── Related Research ── */}
         <RelatedResearch
           relatedNotes={[

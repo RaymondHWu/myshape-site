@@ -29,7 +29,7 @@ import React from "react";
 
 type ResearchMetaProps = {
   artifactId?: string;
-  type: "Research Note" | "Benchmark" | "Technical Paper" | "Decision Log" | "Open Question";
+  type: "Research Note" | "Benchmark" | "Technical Paper" | "Decision Log" | "Open Question" | "Dataset";
   number?: string;
   status: "Draft" | "Under Review" | "Published" | "Active" | "Deprecated" | "Superseded";
   published: string;
