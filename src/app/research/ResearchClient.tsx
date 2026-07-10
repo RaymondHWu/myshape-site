@@ -109,6 +109,15 @@ export default function ResearchClient() {
           </Link>
         </section>
 
+        {/* ── Mission ── */}
+        <section className="mb-14 mt-10 max-w-2xl mx-auto text-center">
+          <p className="text-white/50 text-[clamp(0.9rem,2vw,1.15rem)] font-light tracking-[0.03em] leading-relaxed"
+            style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+            The Continuity Lab exists to transform <span style={{ color: "rgba(144,200,255,0.7)" }}>continuity</span> from a
+            philosophical intuition into a <span style={{ color: "rgba(212,175,55,0.6)" }}>scientifically testable property</span> of the digital world.
+          </p>
+        </section>
+
         {/* ── Research Philosophy ── */}
         <section className="mb-16 mt-12 max-w-2xl mx-auto">
           <div className="p-6 md:p-8" style={{ border: "1px solid rgba(212,175,55,0.1)", background: "rgba(212,175,55,0.015)" }}>
