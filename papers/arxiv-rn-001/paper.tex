@@ -1,0 +1,155 @@
+\documentclass[conference]{IEEEtran}
+
+% ── arxiv metadata ──
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+% ── Title & Authors ──
+\title{The Continuity Problem: Why Proving ``I Am Still Me'' May Become the Missing Cryptographic Primitive of the AI Era}
+
+\author{
+\IEEEauthorblockN{Raymond Wu}
+\IEEEauthorblockA{The Continuity Lab\\
+MyShape Protocol\\
+\url{https://www.myshape.com/research}}
+}
+
+\begin{document}
+
+\maketitle
+
+% ── Abstract ──
+\begin{abstract}
+For fifty years, digital identity has answered a single question: \textit{who are you?} Passports, Decentralized Identifiers, Verifiable Credentials, and zero-knowledge proofs all verify that entity $E$ possesses attribute $A$ at moment $t_0$. Identity is a snapshot. But snapshots cannot answer a different question: has this entity \textit{continued} to exist across the interval? We argue that the AI era creates a new class of attacks — agent replacement, session hijacking, credential replay, and digital twin drift — for which identity succeeds and continuity fails. We hypothesize that continuity can be anchored by measurable presence signals (physical, temporal, and cryptographic) that form an unbroken chain from moment to moment, and that this chain can be verified without relying on persistent identifiers. This paper frames the continuity problem as a research program: if continuity can be made a verifiable property of digital existence, it becomes a new cryptographic primitive — alongside identity, encryption, and consensus.
+\end{abstract}
+
+% ── Introduction ──
+\section{Introduction: The World Has Solved Identity}
+
+For the last fifty years, digital identity has answered a single question: \textit{who are you?}
+
+Passports verify citizenship. FaceID matches a visual appearance to a stored template. Decentralized Identifiers (DIDs) bind a public key to a subject. Verifiable Credentials attest to claims made about you. Zero-knowledge passports prove you are over eighteen without revealing your name.
+
+Each of these systems is a \textbf{snapshot}. At moment $t_0$, we confirm that entity $E$ possesses attribute $A$. The cryptographic binding is point-in-time, not temporal. It answers ``who are you right now?'' — and it does so with increasing precision, privacy, and decentralization.
+
+Identity, in the sense of static attribute verification, is a solved problem. The remaining work is engineering: better UX, broader interoperability, regulatory alignment. The fundamental cryptographic primitive — binding an attribute to a subject at a moment — is well understood.
+
+But identity is a snapshot. A snapshot can be verified. But a snapshot cannot tell you whether the subject behind it has continued to exist.
+
+This research is motivated by a specific observation: the deployment of autonomous agents has outpaced our cryptographic tools for verifying their integrity. Identity was the prerequisite for a human-centric web. Continuity is the prerequisite for an agent-centric future. The question is not whether this problem will matter — it is whether the cryptographic community addresses it before the first major incident forces the issue. We think it is better to design the primitive first.
+
+\section{The AI Era Creates a New Problem}
+
+Sometime in the next decade, millions of autonomous AI agents will negotiate, trade, write code, and make decisions on behalf of humans. These agents will operate across platforms, protocols, and time — unsupervised, for days or weeks.
+
+When an agent returns from a two-week deployment, how do we know it is \textit{still the same agent} that was deployed? Not ``does it have the right API key?'' — that is identity. Not ``was its code updated?'' — that is provenance.
+
+The question is deeper: \textbf{has this entity maintained continuous sovereign existence across the interval?}
+
+This is not an identity problem. An API key can be stolen. A wallet can be imported. A credential can be replayed. None of these attacks violate identity — the credential is still valid. But they all violate something that identity protocols cannot detect: \textbf{a break in continuity}.
+
+\subsection{Four Attack Scenarios}
+
+Consider four scenarios that have no answer in today's identity stack:
+
+\textbf{Agent replacement.} An automated trading agent runs for six months. One day, its behavior shifts — because a different agent replaced it, using the same credentials. No identity check catches this. There is no ``wrong identity'' — only a wrong trajectory.
+
+\textbf{Session hijacking.} A human logs in with biometric verification in the morning. By afternoon, an AI-generated feed is operating the same session. The identity checkpoint passed. But the subject behind it changed.
+
+\textbf{Credential replay.} A zero-knowledge proof of personhood is generated, then captured and replayed by a synthetic entity. The proof verifies perfectly. The subject behind it is absent.
+
+\textbf{Digital twin drift.} A user's behavioral profile is learned, cloned, and replayed by an agent that passes every statistical authenticity check — except one: it was never continuously present.
+
+All of these attacks succeed against identity. All of them fail against continuity — if continuity is verifiable.
+
+\section{A Hypothesis}
+
+We hypothesize that \textbf{continuity can be anchored by measurable presence signals} — physical, temporal, and cryptographic — that form an unbroken chain from moment to moment.
+
+When that chain is intact, continuity is verified. When it breaks, continuity is violated. The chain does not prove who you are. It proves you have \textit{continued to be you}.
+
+This hypothesis has a significant consequence: if continuity can be verified without relying on persistent identifiers, then identity may not be the prerequisite for continuity. Continuity could instead be the primary primitive, with identity emerging as a higher-level interpretation — a label we assign to a trajectory that has maintained unbroken sovereignty.
+
+We do not claim to have proven this hypothesis. We claim it is the right question — and that answering it is the work of The Continuity Lab.
+
+\section{Experimental Evaluation: PES Benchmark}
+
+The Presence Entropy Score (PES)~\cite{pes-benchmark} provides initial evidence for the continuity hypothesis. PES is a 0--1 metric that quantifies biological entropy in motion across four independent dimensions: micro-timing variance, noise residual, frequency entropy, and biological perturbation. Each dimension is extracted from 30-second motion sequences captured via standard webcam (30 fps, MediaPipe Pose 33-landmark model)~\cite{motion-signature}. All processing runs on-device; no raw motion data leaves the subject's machine. The ZK-Presence proof system uses audited cryptographic primitives from @noble/hashes~\cite{noble} for in-browser SHA-256 hashing, enabling the full pipeline to operate without native dependencies or server-side computation.
+
+In a benchmark of 281 motion samples (81 human across 54 subjects, 200 synthetic across four AI generation strategies: random walk, spline interpolation, GAN-generated, and near-static), PES produces a clean separation between human and synthetic motion: Cohen's $d = 2.1$, AUC $= 0.94$, precision $= 1.00$, recall $= 0.96$. Each of the four dimensions independently separates human from AI motion, with the human score floor at $0.41$ and the highest AI strategy (spline interpolation) at $0.38$. The 0.03 gap is the current entropy margin — measurable but narrow.
+
+These results did not come easily. Early iterations of the frequency entropy dimension performed poorly on samples recorded in rooms with fluorescent lighting, where the 60 Hz flicker introduced a periodic artifact that the dimension initially interpreted as biological signal. We spent considerable time distinguishing sensor noise from biological noise — a boundary that is less clear than the literature suggests. The spline interpolation strategy was also surprisingly effective: at 0.38 it sits uncomfortably close to the human floor, and we do not rule out that an adversarially optimized version could close the remaining gap.
+
+\textbf{Limitations.} The current benchmark has several important constraints. The 54 human subjects do not represent the full distribution of human motion entropy — we have not yet measured subjects across age extremes, neurological conditions, or non-Western movement cultures. All samples were recorded in a single session per subject; we have no data on intra-subject variability across days, moods, or hardware changes. The four AI generation strategies are representative of current off-the-shelf techniques, not adversarially optimized to defeat the PES. We consider these limitations the starting conditions for v0.3, not excuses for the current results.
+
+These results do not prove continuity. They establish presence detection — ``this is a human right now'' — which is a necessary but insufficient condition for continuity verification. A presence detector tells you that \textit{someone} is at the keyboard. A continuity verifier tells you it is the \textit{same} someone who was there ten minutes ago. Closing this gap — from presence detection to continuity verification — is the central open question of this research program~\cite{oq-001}.
+
+\section{Research Roadmap}
+
+This is a research program, not a product launch. Each investigation addresses one open question. Taken together, they form an investigation into whether continuity can be operationalized as a cryptographic primitive.
+
+\begin{enumerate}
+\item \textbf{RN-001} (this paper): The Continuity Problem — framing the missing primitive.
+\item \textbf{RN-002}: PES Benchmark v0.2 — dataset, Cohen's $d$, threats to validity. Published July 2026. \url{https://www.myshape.com/research/notes/002-pes-benchmark}
+\item \textbf{RN-003}: Replay Attack Analysis — under what conditions can continuity proofs be replayed?
+\item \textbf{RN-004}: Challenge-Response — can continuity be verified interactively without storing motion data?
+\item \textbf{RN-005}: The Continuity Receipt — a proposed format for portable, verifiable continuity proofs.
+\item \textbf{RN-006}: Agent Continuity — can continuity be transferred between a human and their AI agent?
+\end{enumerate}
+
+\section{Related Work}
+
+The continuity problem sits at the intersection of several established fields:
+
+\textbf{Decentralized Identity.} W3C DIDs~\cite{w3c-did} and Verifiable Credentials~\cite{w3c-vc} provide cryptographic binding of attributes to subjects but are inherently point-in-time. They do not address temporal continuity.
+
+\textbf{Proof of Personhood.} Systems like Worldcoin and BrightID establish that a subject is a unique human at enrollment time. They do not verify that the same human continues to operate the credential.
+
+\textbf{Biometric Authentication.} Fingerprint, face, and iris recognition verify presence at a moment but are vulnerable to replay, spoofing, and template theft. Once compromised, biometrics cannot be rotated.
+
+\textbf{Zero-Knowledge Proofs.} ZK-SNARKs and ZK-STARKs enable privacy-preserving verification of statements but, like all point-in-time primitives, cannot address whether the statement's subject has continuously existed.
+
+\textbf{Continuous Authentication.} Behavioral biometrics (keystroke dynamics, gait analysis) approach continuity but typically rely on persistent user profiles — linking continuity back to identity rather than treating it as an independent primitive.
+
+The continuity problem, as we define it, has no direct precedent in the literature. This is the gap we propose to fill.
+
+\section{Conclusion}
+
+Identity answers who you are. Continuity answers whether you remained you.
+
+In an era where AI can generate faces, clone voices, and forge credentials, static identity verification is no longer sufficient. We need a new primitive: one that verifies not just a subject's attributes at a moment, but their continuous existence across time.
+
+We do not claim to have built this primitive. We claim the question is worth asking — and that answering it may become one of the defining cryptographic challenges of the AI era.
+
+\section*{Acknowledgments}
+
+We thank the open-source communities behind MediaPipe Pose, @noble/hashes, @noble/curves, and Vitest, without which this research would not be possible.
+
+All benchmark code, experimental data, and decision records are publicly available at \url{https://github.com/myshapeprotocol/myshape-protocol} and \url{https://www.myshape.com/research}.
+
+% ── References ──
+\begin{thebibliography}{00}
+
+\bibitem{w3c-did}
+W3C, ``Decentralized Identifiers (DIDs) v1.0,'' W3C Recommendation, 2022. [Online]. Available: \url{https://www.w3.org/TR/did-core/}
+
+\bibitem{w3c-vc}
+W3C, ``Verifiable Credentials Data Model v1.1,'' W3C Recommendation, 2022. [Online]. Available: \url{https://www.w3.org/TR/vc-data-model/}
+
+\bibitem{motion-signature}
+MyShape Protocol, ``Motion-Signature Pipeline Documentation,'' 2026. [Online]. Available: \url{https://www.myshape.com/protocol/motion-pipeline}
+
+\bibitem{pes-benchmark}
+The Continuity Lab, ``RN-002: PES Benchmark v0.2,'' Research Note, July 2026. [Online]. Available: \url{https://www.myshape.com/research/notes/002-pes-benchmark}
+
+\bibitem{oq-001}
+The Continuity Lab, ``OQ-001: Can continuity exist independently of identity?'' Open Question, July 2026. [Online]. Available: \url{https://www.myshape.com/research/open-questions/001}
+
+\bibitem{noble}
+P. Miller, ``@noble/hashes: Audited \& minimal 0-dependency JS hash functions,'' 2026. [Online]. Available: \url{https://github.com/paulmillr/noble-hashes}
+
+\end{thebibliography}
+
+\end{document}

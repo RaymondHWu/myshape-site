@@ -71,6 +71,7 @@ const PIPELINE_RN = [
   { num: "003", title: "Replay Attack Analysis", subtitle: "Under what conditions can continuity proofs be replayed? Experimental evaluation." },
   { num: "004", title: "Challenge-Response", subtitle: "Interactive continuity verification without storing motion data." },
   { num: "005", title: "The Continuity Receipt", subtitle: "A proposed format for portable, verifiable continuity proofs." },
+  { num: "006", title: "Agent Continuity", subtitle: "Can continuity be transferred between a human and their AI agent?" },
 ];
 
 const PIPELINE_BENCHMARKS = [
