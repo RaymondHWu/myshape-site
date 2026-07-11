@@ -265,6 +265,25 @@ export default function MotionGuide({
 
   // ── Voice Guidance ──
   const prevPhaseRef = useRef(-1);
+  const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
+
+  // Pre-load US English voice (voices load asynchronously)
+  useEffect(() => {
+    const loadVoice = () => {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length === 0) return;
+      voiceRef.current =
+        voices.find(v => v.name === "Samantha" && v.lang === "en-US") ||
+        voices.find(v => v.name.includes("Google US English")) ||
+        voices.find(v => v.lang === "en-US" && v.name.includes("English")) ||
+        voices.find(v => v.lang === "en-US") ||
+        null;
+    };
+    loadVoice();
+    window.speechSynthesis.onvoiceschanged = loadVoice;
+    return () => { window.speechSynthesis.onvoiceschanged = null; };
+  }, []);
+
   useEffect(() => {
     if (!active) return;
     if (prevPhaseRef.current === phaseIndex) return;
@@ -274,13 +293,7 @@ export default function MotionGuide({
     utterance.rate = 0.9;
     utterance.pitch = 1.0;
     utterance.volume = 0.7;
-    const voices = window.speechSynthesis.getVoices();
-    const usVoice =
-      voices.find(v => v.name === "Samantha" && v.lang === "en-US") ||
-      voices.find(v => v.name.includes("Google US English")) ||
-      voices.find(v => v.lang === "en-US" && v.name.includes("English")) ||
-      voices.find(v => v.lang === "en-US");
-    if (usVoice) utterance.voice = usVoice;
+    if (voiceRef.current) utterance.voice = voiceRef.current;
 
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
