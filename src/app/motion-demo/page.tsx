@@ -75,6 +75,9 @@ export default function MotionDemoPage() {
         ]}
       />
       <MotionDemoClient />
+      <div style={{textAlign:"center",padding:8,color:"rgba(255,255,255,0.15)",fontSize:10,fontFamily:"monospace"}}>
+        deploy: 2026-07-12 · commit 9b05ecf
+      </div>
     </>
   );
 }
