@@ -274,6 +274,14 @@ export default function MotionGuide({
     utterance.rate = 0.9;
     utterance.pitch = 1.0;
     utterance.volume = 0.7;
+    const voices = window.speechSynthesis.getVoices();
+    const usVoice =
+      voices.find(v => v.name === "Samantha" && v.lang === "en-US") ||
+      voices.find(v => v.name.includes("Google US English")) ||
+      voices.find(v => v.lang === "en-US" && v.name.includes("English")) ||
+      voices.find(v => v.lang === "en-US");
+    if (usVoice) utterance.voice = usVoice;
+
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
   }, [phaseIndex, phase.instruction, active]);

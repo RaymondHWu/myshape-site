@@ -798,7 +798,7 @@ export default function MotionDemoClient() {
 
           {/* Feature Panel */}
           {phase === "complete" && pesData ? (
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 border border-white/10 bg-black/40 p-4 flex flex-col space-y-3.5">
                 {/* Box 1: PES + Telemetry + ZK Proof */}
                 <div>
