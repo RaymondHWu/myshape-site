@@ -1,20 +1,22 @@
-/**
- * Sentry server-side configuration.
- * Captures errors from API routes, Server Components, and server actions.
- * Gracefully skips initialization when DSN is not configured (CI, local dev).
- */
+// This file configures the initialization of Sentry on the server.
+// The config you add here will be used whenever the server handles a request.
+// https://docs.sentry.io/platforms/javascript/guides/nextjs/
+
 import * as Sentry from "@sentry/nextjs";
 
-const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
+Sentry.init({
+  dsn: "https://9fa80f8132d9744a74fe937d4cc0192c@o4511575148003328.ingest.us.sentry.io/4511575162290176",
 
-if (dsn) {
-  Sentry.init({
-    dsn,
-    tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
-    includeLocalVariables: true,
-    ignoreErrors: [
-      "PGRST116",
-      "ResendRateLimit",
-    ],
-  });
-}
+  // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
+  tracesSampleRate: 1,
+
+  // Enable logs to be sent to Sentry
+  enableLogs: true,
+
+  dataCollection: {
+    // To disable sending user data and HTTP bodies, uncomment the lines below. For more info visit:
+    // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#dataCollection
+    // userInfo: false,
+    // httpBodies: [],
+  },
+});

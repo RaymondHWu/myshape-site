@@ -120,3 +120,21 @@ coverage/
 
 # Supabase — only migrations are public
 /supabase/MIGRATION_GUIDE.md
+
+# Sentry Config File
+.env.sentry-build-plugin
+
+# LaTeX build artifacts (papers/)
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# Sentry auto-generated examples
+/src/app/api/sentry-example-api/
+/src/app/sentry-example-page/
+/src/instrumentation-client.ts
+/src/instrumentation.ts

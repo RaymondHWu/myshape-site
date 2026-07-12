@@ -23,6 +23,12 @@ export const metadata = {
   title: "MyShape Protocol — Presence is the New Identity",
   description:
     "The identity layer for the simulation age. MyShape transforms human motion into verifiable presence — sovereign, zero-knowledge, cross-platform. Human and AI identities coexist in one protocol.",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
+    ],
+  },
   openGraph: {
     title: "MyShape Protocol — Presence is the New Identity",
     description:

@@ -119,17 +119,24 @@ export default function ActionPasswordClient() {
   const duration = 5; // seconds
 
   // ── iOS permission ──
+  // CRITICAL: iOS requires requestPermission() to be called synchronously
+  // from the user-gesture handler. Using await breaks this chain.
 
-  const requestIMU = useCallback(async () => {
+  const requestIMU = useCallback((): Promise<boolean> => {
+    const isSecure = typeof window !== "undefined" && (window.isSecureContext || window.location.hostname === "localhost");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const DME = DeviceMotionEvent as any;
-    if (typeof DME !== "undefined" && typeof DME.requestPermission === "function") {
-      try {
-        const p = await DME.requestPermission();
-        return p === "granted";
-      } catch { return false; }
+    if (DME && typeof DME.requestPermission === "function") {
+      if (!isSecure) {
+        alert("iOS requires HTTPS for motion sensors.\n\nUse a desktop browser (localhost) or set up HTTPS for this device.");
+        return Promise.resolve(false);
+      }
+      return DME.requestPermission().then(
+        (p: string) => p === "granted",
+        () => false
+      );
     }
-    return true;
+    return Promise.resolve(true);
   }, []);
 
   // ── IMU handler ──
@@ -153,73 +160,85 @@ export default function ActionPasswordClient() {
 
   // ── Start enrollment ──
 
-  const startEnroll = useCallback(async () => {
-    const ok = await requestIMU();
-    if (!ok) return;
-    samplesRef.current = [];
-    setPhase("enroll-countdown");
-    setCountdown(3);
-    for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); }
-    startTimeRef.current = performance.now();
-    lastEventRef.current = 0;
-    window.addEventListener("devicemotion", handleMotion);
-    setPhase("enrolling");
-    setElapsed(0);
-    const start = performance.now();
-    const timer = setInterval(() => {
-      const e = (performance.now() - start) / 1000;
-      setElapsed(e);
-      if (e >= duration) {
-        clearInterval(timer);
-        window.removeEventListener("devicemotion", handleMotion);
-        const features = computeFeatures(samplesRef.current);
-        const tpl: StoredTemplate = {
-          id: crypto.randomUUID(),
-          enrolledAt: new Date().toISOString(),
-          features,
-          label: "My Secret Motion",
-        };
-        setTemplate(tpl);
-        localStorage.setItem("myshape-action-template", JSON.stringify(tpl));
-        setPhase("idle");
-      }
-    }, 100);
+  const startEnroll = useCallback(() => {
+    const ok = requestIMU();
+    ok.then(async (granted) => {
+      if (!granted) return;
+      samplesRef.current = [];
+      setPhase("enroll-countdown");
+      setCountdown(3);
+      for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); }
+      startTimeRef.current = performance.now();
+      lastEventRef.current = 0;
+      window.addEventListener("devicemotion", handleMotion);
+      setPhase("enrolling");
+      setElapsed(0);
+      const start = performance.now();
+      const timer = setInterval(() => {
+        const e = (performance.now() - start) / 1000;
+        setElapsed(e);
+        if (e >= duration) {
+          clearInterval(timer);
+          window.removeEventListener("devicemotion", handleMotion);
+          const features = computeFeatures(samplesRef.current);
+          const tpl: StoredTemplate = {
+            id: crypto.randomUUID(),
+            enrolledAt: new Date().toISOString(),
+            features,
+            label: "My Secret Motion",
+          };
+          setTemplate(tpl);
+          localStorage.setItem("myshape-action-template", JSON.stringify(tpl));
+          setPhase("idle");
+        }
+      }, 100);
+    }).catch((err) => {
+      console.error("Enroll failed:", err);
+      window.removeEventListener("devicemotion", handleMotion);
+      setPhase("idle");
+    });
   }, [requestIMU, handleMotion]);
 
   // ── Start verification ──
 
-  const startVerify = useCallback(async () => {
+  const startVerify = useCallback(() => {
     if (!template) return;
-    const ok = await requestIMU();
-    if (!ok) return;
-    samplesRef.current = [];
-    setPhase("verify-countdown");
-    setCountdown(3);
-    for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); }
-    startTimeRef.current = performance.now();
-    lastEventRef.current = 0;
-    window.addEventListener("devicemotion", handleMotion);
-    setPhase("verifying");
-    setElapsed(0);
-    const start = performance.now();
-    const timer = setInterval(() => {
-      const e = (performance.now() - start) / 1000;
-      setElapsed(e);
-      if (e >= duration) {
-        clearInterval(timer);
-        window.removeEventListener("devicemotion", handleMotion);
-        const features = computeFeatures(samplesRef.current);
-        const sim = similarity(template.features, features);
-        const pesOk = features.pesScore >= 0.20;
-        const simOk = sim >= 0.55;
-        setResult({
-          passed: pesOk && simOk,
-          similarity: sim,
-          pesScore: features.pesScore,
-        });
-        setPhase("result");
-      }
-    }, 100);
+    const ok = requestIMU();
+    ok.then(async (granted) => {
+      if (!granted) return;
+      samplesRef.current = [];
+      setPhase("verify-countdown");
+      setCountdown(3);
+      for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); }
+      startTimeRef.current = performance.now();
+      lastEventRef.current = 0;
+      window.addEventListener("devicemotion", handleMotion);
+      setPhase("verifying");
+      setElapsed(0);
+      const start = performance.now();
+      const timer = setInterval(() => {
+        const e = (performance.now() - start) / 1000;
+        setElapsed(e);
+        if (e >= duration) {
+          clearInterval(timer);
+          window.removeEventListener("devicemotion", handleMotion);
+          const features = computeFeatures(samplesRef.current);
+          const sim = similarity(template.features, features);
+          const pesOk = features.pesScore >= 0.20;
+          const simOk = sim >= 0.55;
+          setResult({
+            passed: pesOk && simOk,
+            similarity: sim,
+            pesScore: features.pesScore,
+          });
+          setPhase("result");
+        }
+      }, 100);
+    }).catch((err) => {
+      console.error("Verify failed:", err);
+      window.removeEventListener("devicemotion", handleMotion);
+      setPhase("idle");
+    });
   }, [template, requestIMU, handleMotion]);
 
   // ── Load saved template ──
@@ -302,11 +321,10 @@ export default function ActionPasswordClient() {
             <div className="text-white/20 text-[12px] tracking-[0.3em] uppercase">
               {phase === "enroll-countdown" ? "Get Ready to Enroll" : "Get Ready to Verify"}
             </div>
-            <div className="text-[120px] font-light text-[#90c8ff] leading-none" style={{ textShadow: "0 0 60px rgba(144,200,255,0.4)", animation: "pulse 1s ease-in-out infinite" }}>
+            <div className="text-[120px] font-light text-[#90c8ff] leading-none" style={{ textShadow: "0 0 60px rgba(144,200,255,0.4)", animation: "countdownPulse 1s ease-in-out infinite" }}>
               {countdown}
             </div>
             <div className="text-white/15 text-[11px]">Perform your secret motion</div>
-            <style>{`@keyframes pulse{0%,100%{opacity:0.4;transform:scale(0.9)}50%{opacity:1;transform:scale(1.1)}}`}</style>
           </div>
         )}
 

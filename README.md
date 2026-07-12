@@ -159,13 +159,24 @@ Full OpenAPI 3.0 spec: [myshape.com/openapi.json](https://www.myshape.com/openap
 
 ---
 
+## Quickstart — Run the Benchmark
+
+```bash
+git clone https://github.com/myshapeprotocol/myshape-protocol.git
+cd myshape-protocol
+npm install
+npm run benchmark    # 2 benchmark suites, 11 tests, ~30 seconds
+```
+
+Full guide: [BENCHMARK.md](BENCHMARK.md)
+
 ## Development
 
 ```bash
 npm install
-npm run dev        # → http://localhost:3000
-npm run build      # production build (81 pages)
-npm test           # Vitest (309 tests, 100 suites)
+npm run dev          # → http://localhost:3000
+npm run build        # production build (109 pages)
+npm test             # Vitest (309 tests, 100 suites)
 ```
 
 ### Required Environment Variables

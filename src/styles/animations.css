@@ -400,6 +400,12 @@
   50%      { opacity: 0.35; }
 }
 
+/* ── Action Password / Mobile IMU: countdown pulse ── */
+@keyframes countdownPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
 /* ═══════════════════════════════════════════════
    prefers-reduced-motion — 全局动画禁用
    覆盖所有 @keyframes、transition、animation
