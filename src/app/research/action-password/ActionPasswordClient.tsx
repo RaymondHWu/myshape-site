@@ -136,10 +136,10 @@ export default function ActionPasswordClient() {
 
   // ── Simulation ──
 
-  const startSimulation = useCallback(() => {
+  const startSimulation = useCallback((seed: number) => {
     if (simTimerRef.current) return;
     let t = 0;
-    const action = Math.floor(Math.random() * 3);
+    const action = seed % 3; // deterministic: seed 0=circle, 1=nod, 2=wave
     simTimerRef.current = setInterval(() => {
       samplesRef.current.push({
         t, ax: Math.sin(t * 0.02 + action) * 2.5 + (Math.random() - 0.5) * 0.8,
@@ -161,7 +161,7 @@ export default function ActionPasswordClient() {
 
   // ── Capture Runner ──
 
-  const runCapture = useCallback((simulated: boolean, captPhase: Mode) => {
+  const runCapture = useCallback((simulated: boolean, captPhase: Mode, seed: number) => {
     (async () => {
       try {
         samplesRef.current = [];
@@ -172,10 +172,10 @@ export default function ActionPasswordClient() {
         window.addEventListener("devicemotion", handleMotion);
         setPhase(captPhase === "enroll" ? "enrolling" : "verifying");
         setElapsed(0);
-        if (simulated) { setNoSensors(true); startSimulation(); }
+        if (simulated) { setNoSensors(true); startSimulation(seed); }
         else {
           const sc = setTimeout(() => {
-            if (!hasRealSensorRef.current && !simTimerRef.current) { setNoSensors(true); setIsSimulated(true); startSimulation(); }
+            if (!hasRealSensorRef.current && !simTimerRef.current) { setNoSensors(true); setIsSimulated(true); startSimulation(0); }
           }, 1000);
           (runCapture as any).__sc = sc;
         }
@@ -205,10 +205,10 @@ export default function ActionPasswordClient() {
   const startEnroll = useCallback(() => {
     modeRef.current = "enroll";
     if (isSimulated) {
-      (async () => { setPhase("enroll-countdown"); setCountdown(3); for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); } runCapture(true, "enroll"); })();
+      (async () => { setPhase("enroll-countdown"); setCountdown(3); for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); } runCapture(true, "enroll", 0); })();
       return;
     }
-    requestIMU().then(granted => { if (!granted) return; (async () => { setPhase("enroll-countdown"); setCountdown(3); for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); } runCapture(false, "enroll"); })(); });
+    requestIMU().then(granted => { if (!granted) return; (async () => { setPhase("enroll-countdown"); setCountdown(3); for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); } runCapture(false, "enroll", 0); })(); });
   }, [isSimulated, requestIMU, runCapture]);
 
   // ── Verify ──
@@ -217,10 +217,10 @@ export default function ActionPasswordClient() {
     if (!template) return;
     modeRef.current = "verify";
     if (isSimulated) {
-      (async () => { setPhase("verify-countdown"); setCountdown(3); for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); } runCapture(true, "verify"); })();
+      (async () => { setPhase("verify-countdown"); setCountdown(3); for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); } runCapture(true, "verify", 1); })();
       return;
     }
-    requestIMU().then(granted => { if (!granted) return; (async () => { setPhase("verify-countdown"); setCountdown(3); for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); } runCapture(false, "verify"); })(); });
+    requestIMU().then(granted => { if (!granted) return; (async () => { setPhase("verify-countdown"); setCountdown(3); for (let i = 2; i >= 0; i--) { await sleep(1000); setCountdown(i); } runCapture(false, "verify", 1); })(); });
   }, [template, isSimulated, requestIMU, runCapture]);
 
   // ── Save template on enroll complete ──
