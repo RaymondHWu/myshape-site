@@ -51,7 +51,7 @@ export default function LiveCapture({ activeStage }: { activeStage: number }) {
 
         if (!window.Pose) return;
         const poseObj = new window.Pose({
-          locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${file}`,
+          locateFile: (f: string) => { const url = `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${f}`; if (!f || f.includes("undefined")) throw new Error("Invalid MP file"); return url; },
         });
 
         poseObj.setOptions({ 

@@ -178,7 +178,8 @@ export default function MotionDemoClient() {
         });
       }
       if (!window.Pose) { setPhase("idle"); return; }
-      const pose = new window.Pose({ locateFile: (f: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${f}` });
+      const MP_BASE = "https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404";
+      const pose = new window.Pose({ locateFile: (f: string) => { const url = `${MP_BASE}/${f}`; if (!f || f.includes("undefined")) throw new Error("Invalid MP file"); return url; } });
       pose.setOptions({ modelComplexity: 0, smoothLandmarks: true, minDetectionConfidence: 0.5 });
       // ── onResults: extract features + update energy ref for particle engine ──
       pose.onResults((results: PoseResult) => {
