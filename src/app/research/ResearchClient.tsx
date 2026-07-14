@@ -23,6 +23,14 @@ const PUBLISHED_NOTES = [
     date: "2026.07.10",
     slug: "/research/notes/002-pes-benchmark",
   },
+  {
+    num: "003",
+    title: "Cross-Modal Binding",
+    subtitle:
+      "Proving that independent sensor streams originate from the same physical event — a new verification primitive.",
+    date: "2026.07.13",
+    slug: "/research/notes/003-cross-modal-binding",
+  },
 ];
 
 const OPEN_QUESTIONS = [
@@ -68,10 +76,10 @@ const ACTIVE_BENCHMARKS = [
 ];
 
 const PIPELINE_RN = [
-  { num: "003", title: "Replay Attack Analysis", subtitle: "Under what conditions can continuity proofs be replayed? Experimental evaluation." },
-  { num: "004", title: "Challenge-Response", subtitle: "Interactive continuity verification without storing motion data." },
-  { num: "005", title: "The Continuity Receipt", subtitle: "A proposed format for portable, verifiable continuity proofs." },
-  { num: "006", title: "Agent Continuity", subtitle: "Can continuity be transferred between a human and their AI agent?" },
+  { num: "004", title: "Replay Attack Analysis", subtitle: "Under what conditions can continuity proofs be replayed? Experimental evaluation." },
+  { num: "005", title: "Challenge-Response", subtitle: "Interactive continuity verification without storing motion data." },
+  { num: "006", title: "The Continuity Receipt", subtitle: "A proposed format for portable, verifiable continuity proofs." },
+  { num: "007", title: "Agent Continuity", subtitle: "Can continuity be transferred between a human and their AI agent?" },
 ];
 
 const PIPELINE_BENCHMARKS = [
@@ -166,6 +174,10 @@ export default function ResearchClient() {
 
           <div className="space-y-0">
             {[
+              {
+                date: "2026.07.13",
+                entry: "Published <a href='/research/notes/003-cross-modal-binding' class='underline decoration-[#90c8ff]/20 hover:decoration-[#90c8ff]/50 transition-colors'>RN #003 — Cross-Modal Binding</a>. Formalized the binding problem: proving two independent sensor streams originate from the same physical event. Introduced Event-Level Causal Coupling (EE-002), CFC-005 Causal Inversion, and the Evidence Object v1 data model.",
+              },
               {
                 date: "2026.07.10",
                 entry: "Published <a href='/research/notes/002-pes-benchmark' class='underline decoration-[#90c8ff]/20 hover:decoration-[#90c8ff]/50 transition-colors'>RN #002 — PES Benchmark v0.2</a>. 281 samples, Cohen's d: 2.1, AUC: 0.94. Five threats to validity documented. The PES signal is real and measurable across four independent dimensions.",
@@ -363,6 +375,26 @@ export default function ResearchClient() {
               </div>
             ))}
 
+            <div className="pipeline-section-label" style={{ color: "rgba(144,200,255,0.4)" }}>Active Prototypes</div>
+            <Link
+              href="/research/protocol-verify"
+              className="pipeline-item"
+              onMouseEnter={() => playTick(530, "sine", 0.04, 0.022)}
+            >
+              <span className="pipeline-item-num" style={{ color: "rgba(212,153,34,0.6)" }}>VS-001</span>
+              <span className="pipeline-item-title">Verification Session <span style={{color:"rgba(212,153,34,0.5)",fontSize:"9px",border:"1px solid rgba(212,153,34,0.3)",padding:"1px 6px",borderRadius:"3px",marginLeft:"6px"}}>Alpha</span></span>
+              <span className="pipeline-item-subtitle">Dual-engine: Passive Evidence → Confidence Decision → Additional Evidence → Receipt</span>
+            </Link>
+            <Link
+              href="/research/causal-coupling"
+              className="pipeline-item"
+              onMouseEnter={() => playTick(520, "sine", 0.04, 0.022)}
+            >
+              <span className="pipeline-item-num" style={{ color: "rgba(144,200,255,0.6)" }}>PE-001</span>
+              <span className="pipeline-item-title">Event-Level Causal Coupling</span>
+              <span className="pipeline-item-subtitle">Cross-modal causal verification — do IMU and Camera describe the same physical event?</span>
+            </Link>
+
             <div className="pipeline-section-label">Benchmarks</div>
             {PIPELINE_BENCHMARKS.map((bm, i) => (
               <div
@@ -374,6 +406,19 @@ export default function ResearchClient() {
                 <span className="pipeline-item-meta">{bm.meta}</span>
               </div>
             ))}
+
+            <div className="pipeline-section-label" style={{ color: "rgba(212,153,34,0.4)" }}>Publications</div>
+            <a
+              href="https://myshape.substack.com/p/your-face-doesnt-matter"
+              target="_blank"
+              rel="noopener"
+              className="pipeline-item"
+              onMouseEnter={() => playTick(540, "sine", 0.04, 0.022)}
+            >
+              <span className="pipeline-item-num" style={{ color: "rgba(212,153,34,0.4)" }}>2026.07.14</span>
+              <span className="pipeline-item-title">Your Face Doesn't Matter ↗</span>
+              <span className="pipeline-item-subtitle">How biological entropy replaces identity verification — RN-002 on Substack</span>
+            </a>
           </div>
         </div>
 

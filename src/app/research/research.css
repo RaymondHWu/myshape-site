@@ -400,3 +400,93 @@
 .note-print-delay-6  { animation-delay: 0.65s; }
 .note-print-delay-7  { animation-delay: 0.75s; }
 .note-print-delay-8  { animation-delay: 0.85s; }
+
+/* ── Shared table style for research notes ── */
+.note-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.8rem;
+}
+.note-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: rgba(144,200,255,0.5);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.65rem;
+}
+.note-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+
+/* ── Callout box for definitions / failure conditions ── */
+.note-callout {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(144,200,255,0.12);
+  background: rgba(144,200,255,0.03);
+  border-radius: 2px;
+}
+.note-callout p {
+  margin: 0.4rem 0;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+}
+.note-callout strong {
+  color: rgba(144,200,255,0.65);
+}
+
+/* ── Gyro Direction Preview (challenge countdown) ── */
+
+.gyro-preview-ring {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(212,153,34,0.2);
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.gyro-preview-dot {
+  position: absolute;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(212,153,34,0.7);
+  box-shadow: 0 0 8px rgba(212,153,34,0.4);
+}
+.gyro-preview-ccw { animation: gyroOrbitCCW 1.4s linear infinite; }
+.gyro-preview-cw  { animation: gyroOrbitCW  1.4s linear infinite; }
+
+@keyframes gyroOrbitCCW {
+  from { transform: rotate(0deg) translateX(18px) rotate(0deg); }
+  to   { transform: rotate(-360deg) translateX(18px) rotate(360deg); }
+}
+@keyframes gyroOrbitCW {
+  from { transform: rotate(0deg) translateX(18px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(18px) rotate(-360deg); }
+}
+
+/* pitch up/down: vertical bounce */
+.gyro-preview-up { animation: gyroBounceUp  1.0s ease-in-out infinite; }
+.gyro-preview-dn { animation: gyroBounceDown 1.0s ease-in-out infinite; }
+
+@keyframes gyroBounceUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes gyroBounceDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.gyro-preview-label {
+  color: rgba(212,153,34,0.35);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}

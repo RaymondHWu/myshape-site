@@ -2,6 +2,8 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
+import { useDebug } from "@/hooks/useDebug";
+import ResearchStatus from "@/components/ResearchStatus";
 import {
   type ComponentEvidence,
   type EngineEvidence,
@@ -9,8 +11,30 @@ import {
   computeStatus,
   computeHint,
   hashEvidence,
-  defaultPolicy,
+  evaluatePolicy,
 } from "@/lib/evidence/types";
+import {
+  type IMUSample,
+  type CameraSample,
+  type JerkEvent,
+  type DirChangeEvent,
+  type MatchedEvent,
+  median,
+  detectJerkPeaks,
+  detectDirectionChanges,
+  matchEvents,
+  buildEvidence,
+  DIRECTION_TOLERANCE_DEG,
+  MATCH_WINDOW_MS,
+  JERK_MIN_THRESHOLD,
+  DIR_CHANGE_MIN_ANGLE_DEG,
+  MIN_SPEED,
+  CAMERA_PIPELINE_LATENCY_MS,
+  TEMPORAL_ALIGNMENT_THRESHOLD,
+  DIRECTION_AGREEMENT_THRESHOLD,
+  EVENT_DENSITY_THRESHOLD,
+  CAUSAL_EVIDENCE_THRESHOLD,
+} from "@/lib/evidence/causal-coupling";
 
 // ═══════════════════════════════════════════════════════════════
 // EE-002 · Event-Level Causal Coupling
@@ -19,214 +43,13 @@ import {
 // Outputs EngineEvidence — unified shape with EE-001.
 // ═══════════════════════════════════════════════════════════════
 
-// ── Internal types ──
-
-interface IMUSample { t: number; ax: number; ay: number; az: number; rx: number; ry: number; rz: number; interval: number; }
-interface CameraSample { t: number; x: number; y: number; z: number; }
-interface JerkEvent { t: number; magnitude: number; ax: number; ay: number; }
-interface DirChangeEvent { t: number; angleDeg: number; fromDx: number; fromDy: number; toDx: number; toDy: number; }
-interface MatchedEvent { imu: JerkEvent; cam: DirChangeEvent; dtMs: number; directionAligned: boolean; }
-
-// ── Candidate Parameters v0.2 (calibrated from real phone data 2026-07-14) ──
-
-const DIRECTION_TOLERANCE_DEG = 90;  // empirical — evaluate 45°/60°/120°
-const MATCH_WINDOW_MS = 500;         // widened: real sensor events are looser than simulation
-const JERK_MIN_THRESHOLD = 0.2;      // lowered from 0.5 — natural hand motion produces subtler jerk than ideal sine waves
-const DIR_CHANGE_MIN_ANGLE_DEG = 45;
-const MIN_SPEED = 0.2;               // lowered from 0.3
-const CAMERA_PIPELINE_LATENCY_MS = 80; // MediaPipe pose.onResults fires ~80ms after frame capture
-
-// Thresholds for ComponentEvidence status
-const TEMPORAL_ALIGNMENT_THRESHOLD = 0.25;  // lowered from 0.40 — real-world rates are lower than ideal
-const DIRECTION_AGREEMENT_THRESHOLD = 0.50;
-const EVENT_DENSITY_THRESHOLD = 0.2;        // lowered from 0.3
-const CAUSAL_EVIDENCE_THRESHOLD = 0.30;      // lowered from 0.40
+// v0.2 parameters imported from @/lib/evidence/causal-coupling
 
 type Phase = "idle" | "countdown" | "capturing" | "complete";
 
-// ── Signal processing ──
-
-function median(arr: number[]): number { const s = [...arr].sort((a, b) => a - b); const m = Math.floor(s.length / 2); return s.length % 2 === 0 ? (s[m - 1] + s[m]) / 2 : s[m]; }
+// ── Utilities ──
 function round(v: number | null | undefined): number { if (v === null || v === undefined) return 0; return Math.round(v * 1000) / 1000; }
 function sleep(ms: number) { return new Promise((r) => setTimeout(r, ms)); }
-
-// ── Jerk peak detection ──
-
-function detectJerkPeaks(samples: IMUSample[]): JerkEvent[] {
-  if (samples.length < 10) return [];
-  const jerkMag: number[] = [];
-  const jerkVec: { ax: number; ay: number; t: number }[] = [];
-  for (let i = 1; i < samples.length; i++) {
-    const dt = (samples[i].t - samples[i - 1].t) / 1000;
-    if (dt <= 0 || dt > 0.5) continue;
-    const jx = (samples[i].ax - samples[i - 1].ax) / dt;
-    const jy = (samples[i].ay - samples[i - 1].ay) / dt;
-    const jz = (samples[i].az - samples[i - 1].az) / dt;
-    jerkMag.push(Math.sqrt(jx * jx + jy * jy + jz * jz));
-    jerkVec.push({ ax: jx, ay: jy, t: samples[i].t });
-  }
-  if (jerkMag.length < 5) return [];
-  const med = median(jerkMag);
-  const absDevs = jerkMag.map((v) => Math.abs(v - med));
-  const mad = median(absDevs);
-  const threshold = Math.max(med + 3 * mad, JERK_MIN_THRESHOLD);
-  const peaks: JerkEvent[] = [];
-  let lastPeakT = -Infinity;
-  for (let i = 1; i < jerkMag.length - 1; i++) {
-    if (jerkMag[i] > threshold && jerkMag[i] > jerkMag[i - 1] && jerkMag[i] > jerkMag[i + 1]) {
-      if (jerkVec[i].t - lastPeakT >= 200) { peaks.push({ t: jerkVec[i].t, magnitude: jerkMag[i], ax: jerkVec[i].ax, ay: jerkVec[i].ay }); lastPeakT = jerkVec[i].t; }
-    }
-  }
-  return peaks;
-}
-
-// ── Direction change detection ──
-
-function detectDirectionChanges(samples: CameraSample[]): DirChangeEvent[] {
-  if (samples.length < 6) return [];
-  const smoothed: CameraSample[] = [];
-  for (let i = 0; i < samples.length; i++) {
-    let sx = samples[i].x, sy = samples[i].y, sz = samples[i].z, c = 1;
-    if (i > 0) { sx += samples[i - 1].x; sy += samples[i - 1].y; sz += samples[i - 1].z; c++; }
-    if (i < samples.length - 1) { sx += samples[i + 1].x; sy += samples[i + 1].y; sz += samples[i + 1].z; c++; }
-    smoothed.push({ t: samples[i].t, x: sx / c, y: sy / c, z: sz / c });
-  }
-  const velocities: { t: number; dx: number; dy: number; speed: number }[] = [];
-  for (let i = 2; i < smoothed.length; i++) {
-    const dt = (smoothed[i].t - smoothed[i - 2].t) / 1000;
-    if (dt <= 0 || dt > 0.5) continue;
-    const dx = (smoothed[i].x - smoothed[i - 2].x) / dt;
-    const dy = (smoothed[i].y - smoothed[i - 2].y) / dt;
-    velocities.push({ t: smoothed[i].t, dx, dy, speed: Math.sqrt(dx * dx + dy * dy) });
-  }
-  if (velocities.length < 4) return [];
-  const events: DirChangeEvent[] = [];
-  let lastEventT = -Infinity;
-  for (let i = 2; i < velocities.length; i++) {
-    const prev = velocities[i - 2]; const curr = velocities[i];
-    if (prev.speed < MIN_SPEED || curr.speed < MIN_SPEED) continue;
-    const dot = prev.dx * curr.dx + prev.dy * curr.dy;
-    const cross = prev.dx * curr.dy - prev.dy * curr.dx;
-    const angleDeg = (Math.atan2(Math.abs(cross), dot) * 180) / Math.PI;
-    if (angleDeg > DIR_CHANGE_MIN_ANGLE_DEG && curr.t - lastEventT >= 300) {
-      events.push({ t: curr.t, angleDeg: Math.round(angleDeg), fromDx: prev.dx, fromDy: prev.dy, toDx: curr.dx, toDy: curr.dy });
-      lastEventT = curr.t;
-    }
-  }
-  return events;
-}
-
-// ── Cross-modal matching ──
-
-function matchEvents(imuEvents: JerkEvent[], camEvents: DirChangeEvent[]) {
-  const usedCam = new Set<number>(); const matches: MatchedEvent[] = [];
-  for (const imu of imuEvents) {
-    let bestIdx = -1, bestDt = Infinity;
-    for (let j = 0; j < camEvents.length; j++) {
-      if (usedCam.has(j)) continue;
-      const dt = Math.abs(imu.t - camEvents[j].t);
-      if (dt < MATCH_WINDOW_MS && dt < bestDt) { bestDt = dt; bestIdx = j; }
-    }
-    if (bestIdx >= 0) {
-      usedCam.add(bestIdx);
-      const cam = camEvents[bestIdx];
-      const imuDir = Math.atan2(imu.ay, imu.ax);
-      const camDir = Math.atan2(cam.toDy, cam.toDx);
-      const dirDiff = Math.abs(imuDir - camDir);
-      const directionAligned = Math.min(dirDiff, 2 * Math.PI - dirDiff) < (DIRECTION_TOLERANCE_DEG * Math.PI / 180);
-      matches.push({ imu, cam, dtMs: Math.round(bestDt), directionAligned });
-    }
-  }
-  return { matches, unmatchedIMU: imuEvents.filter((_, i) => !matches.some((m) => m.imu === imuEvents[i])), unmatchedCam: camEvents.filter((_, j) => !usedCam.has(j)) };
-}
-
-// ── Evidence Builder (outputs standard EngineEvidence) ──
-
-/** Experimental prototype aggregation v0.1. Linear weights are provisional. */
-function buildEvidence(
-  imuEvents: JerkEvent[], camEvents: DirChangeEvent[],
-  matches: MatchedEvent[], unmatchedIMU: JerkEvent[], unmatchedCam: DirChangeEvent[],
-  totalDuration: number,
-): EngineEvidence {
-  const components: ComponentEvidence[] = [];
-  const diagnostics: string[] = [];
-
-  // ── Event Density ──
-  const imuDensity = totalDuration > 0 ? imuEvents.length / (totalDuration / 1000) : 0;
-  const camDensity = totalDuration > 0 ? camEvents.length / (totalDuration / 1000) : 0;
-  const minDensity = Math.min(imuDensity, camDensity);
-  const densityValue = Math.min(1, minDensity / 1.5);
-
-  if (imuEvents.length === 0 && camEvents.length === 0) {
-    diagnostics.push("✗ no events detected in either channel — insufficient motion or sensor failure");
-  } else if (imuEvents.length === 0) {
-    diagnostics.push("✗ no IMU jerk peaks detected — sensor may be inactive or motion too subtle");
-  } else if (camEvents.length === 0) {
-    diagnostics.push("✗ no camera direction changes detected — insufficient landmark data");
-  }
-
-  components.push({
-    engine: "EE-002", metric: "EventDensity", value: densityValue, threshold: EVENT_DENSITY_THRESHOLD,
-    status: computeStatus(densityValue, EVENT_DENSITY_THRESHOLD),
-    explanation: `IMU:${imuDensity.toFixed(1)}/s Cam:${camDensity.toFixed(1)}/s (need ≥${EVENT_DENSITY_THRESHOLD}/s)`,
-    hint: computeHint("EventDensity", computeStatus(densityValue, EVENT_DENSITY_THRESHOLD)),
-  });
-  if (minDensity >= EVENT_DENSITY_THRESHOLD) diagnostics.push("✓ event density sufficient");
-  else if (imuEvents.length > 0 || camEvents.length > 0) diagnostics.push(`✗ insufficient event density (IMU:${imuDensity.toFixed(1)}/s Cam:${camDensity.toFixed(1)}/s)`);
-
-  // ── Temporal Alignment ──
-  const matchRate = Math.max(imuEvents.length, camEvents.length) > 0
-    ? matches.length / Math.max(imuEvents.length, camEvents.length) : 0;
-
-  components.push({
-    engine: "EE-002", metric: "TemporalAlignment", value: matchRate, threshold: TEMPORAL_ALIGNMENT_THRESHOLD,
-    status: computeStatus(matchRate, TEMPORAL_ALIGNMENT_THRESHOLD),
-    explanation: `${matches.length}/${Math.max(imuEvents.length, camEvents.length)} events matched within ±${MATCH_WINDOW_MS}ms`,
-    hint: computeHint("TemporalAlignment", computeStatus(matchRate, TEMPORAL_ALIGNMENT_THRESHOLD)),
-  });
-  if (matchRate >= TEMPORAL_ALIGNMENT_THRESHOLD) diagnostics.push("✓ temporal alignment — events coupled across modalities");
-  else if (matches.length === 0) diagnostics.push("✗ no matching event pairs — streams may describe different physical events");
-  else diagnostics.push(`✗ weak temporal alignment (${matches.length}/${Math.max(imuEvents.length, camEvents.length)} matched)`);
-
-  // Temporal precision check
-  if (matches.length > 0) {
-    const avgDt = matches.reduce((s, m) => s + Math.abs(m.dtMs), 0) / matches.length;
-    if (avgDt > 150) diagnostics.push(`⚠ high temporal jitter (avg Δ${avgDt.toFixed(0)}ms) — timing is loose`);
-  }
-
-  // ── Direction Agreement ──
-  const directionRate = matches.length > 0 ? matches.filter((m) => m.directionAligned).length / matches.length : 0;
-  const dirStatus = matches.length === 0 ? "INSUFFICIENT" as const : computeStatus(directionRate, DIRECTION_AGREEMENT_THRESHOLD);
-
-  components.push({
-    engine: "EE-002", metric: "DirectionAgreement", value: directionRate, threshold: DIRECTION_AGREEMENT_THRESHOLD,
-    status: dirStatus,
-    explanation: matches.length === 0 ? "no matched pairs" : `${matches.filter((m) => m.directionAligned).length}/${matches.length} aligned within ${DIRECTION_TOLERANCE_DEG}°`,
-    hint: computeHint("DirectionAgreement", dirStatus),
-  });
-  if (matches.length === 0) diagnostics.push("— direction agreement: no matched pairs to evaluate");
-  else if (dirStatus === "PASS") diagnostics.push("✓ direction agreement — force and motion aligned");
-  else diagnostics.push("✗ direction disagreement — streams may point to different motions");
-
-  // ── Causal Evidence (experimental aggregation) ──
-  const causalValue = matchRate * 0.45 + directionRate * 0.30 + densityValue * 0.25;
-  components.push({
-    engine: "EE-002", metric: "CausalEvidence", value: causalValue, threshold: CAUSAL_EVIDENCE_THRESHOLD,
-    status: computeStatus(causalValue, CAUSAL_EVIDENCE_THRESHOLD),
-    explanation: "experimental prototype aggregation v0.1: matchRate×0.45 + directionAgreement×0.30 + eventDensity×0.25",
-    hint: computeHint("CausalEvidence", computeStatus(causalValue, CAUSAL_EVIDENCE_THRESHOLD)),
-  });
-
-  // ── CFC-005 check (threshold = 250ms — camera naturally leads by ~160ms) ──
-  for (const m of matches) {
-    if (m.cam.t < m.imu.t - 250) {
-      diagnostics.push(`⚠ CFC-005 · Causal Inversion: camera direction change @${m.cam.t}ms precedes IMU jerk @${m.imu.t}ms by ${m.imu.t - m.cam.t}ms`);
-      break;
-    }
-  }
-
-  return { engineId: "EE-002", timestamp: new Date().toISOString(), components, diagnostics };
-}
 
 // ── Component ──
 
@@ -248,6 +71,7 @@ export default function CausalCouplingClient() {
   } | null>(null);
 
   const [copyStatus, setCopyStatus] = useState("");
+  const debug = useDebug();
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const imuSamplesRef = useRef<IMUSample[]>([]);
@@ -303,7 +127,8 @@ export default function CausalCouplingClient() {
       const pose = new (window as any).Pose({ locateFile: (f: string) => { const url = `${MP_BASE}/${f}`; if (!f || f.includes("undefined")) throw new Error(`Invalid MediaPipe file: ${f}`); return url; } });
       pose.setOptions({ modelComplexity: 0, smoothLandmarks: false, enableSegmentation: false });
       pose.onResults((results: any) => { if (results.poseLandmarks) { const lw = results.poseLandmarks[15]; if (lw) { const now = performance.now() - startTimeRef.current; camSamplesRef.current.push({ t: Math.round(now), x: round(lw.x * 100), y: round(lw.y * 100), z: round(lw.z * 100) }); if (camSamplesRef.current.length > 600) camSamplesRef.current.shift(); setCamCount(camSamplesRef.current.length); } } });
-      poseIntervalRef.current = setInterval(async () => { if (videoRef.current) { try { await pose.send({ image: videoRef.current }); } catch { /* */ } } }, 100);
+      // 200ms interval reduces iOS Safari memory pressure (was 100ms)
+      poseIntervalRef.current = setInterval(async () => { if (videoRef.current) { try { await pose.send({ image: videoRef.current }); } catch { /* MediaPipe frame dropped — non-fatal */ } } }, 200);
       setCameraStatus("Active");
     } catch { setCameraStatus("Unavailable"); }
   }
@@ -337,7 +162,7 @@ export default function CausalCouplingClient() {
       const ev = buildEvidence(imuEvents, camEvents, matches, unmatchedIMU, unmatchedCam, totalDuration);
       setEvidence(ev);
       hashEvidence(ev).then((d) => { if (d) setEvidence((prev) => prev ? { ...prev, evidenceDigest: d } : prev); });
-      setDisplayVerdict(defaultPolicy([ev]));
+      setDisplayVerdict(evaluatePolicy({ policyId: "EE-002", acceptThreshold: 0.70, rejectThreshold: 0.35 }, ev.confidence ?? 0));
       setInternalData({ matches, unmatchedIMU, unmatchedCam });
       setPhase("complete");
     }
@@ -364,6 +189,8 @@ export default function CausalCouplingClient() {
           <p className="text-white/30 text-[13px] leading-relaxed max-w-sm mx-auto">
             Evidence Engine that derives causal evidence from the temporal consistency of independent physical observations.
           </p>
+
+        <ResearchStatus engineId="EE-002" title="Cross-modal causal coupling — IMU + camera temporal alignment verification" />
         </div>
 
         <video ref={videoRef} className="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none" playsInline muted />
@@ -379,6 +206,9 @@ export default function CausalCouplingClient() {
         {phase === "idle" && (
           <div className="space-y-4">
             {noSensors && <div className="p-3 border border-yellow-400/20 bg-yellow-400/[0.04] text-yellow-400/60 text-[11px] text-center">No physical sensors — simulation active. Use HTTPS on a mobile device for real testing.</div>}
+            <div className="p-3 border border-red-400/20 bg-red-400/[0.04] text-red-400/50 text-[10px] text-center leading-relaxed">
+              ⚠ iOS Safari: camera + IMU together may crash. If page goes white, use Sim mode or refresh and try with shorter motion.
+            </div>
             <button onClick={() => setIsSimulated(!isSimulated)} className={`w-full py-2 border text-[11px] tracking-[0.12em] uppercase ${isSimulated ? "border-[#90c8ff]/30 text-[#90c8ff]/50 bg-[#90c8ff]/5" : "border-white/5 text-white/15 hover:border-white/15 hover:text-white/30"}`}>{isSimulated ? "⚡ Simulation ON" : "💻 Simulate (if no sensors)"}</button>
             <button onClick={run} className="w-full py-5 bg-gradient-to-r from-[#90c8ff]/20 to-[#a371f7]/20 border-2 border-[#90c8ff]/40 text-[#90c8ff] text-[16px] tracking-[0.15em] uppercase font-bold hover:border-[#90c8ff] transition-all active:scale-[0.98]">▶ Run Causal Analysis</button>
           </div>
@@ -408,21 +238,24 @@ export default function CausalCouplingClient() {
         {/* ── Results ── */}
         {phase === "complete" && evidence && displayVerdict && (
           <div className="space-y-6">
-            {/* ── Copy All ── */}
-            <button onClick={() => {
-              const lines = [
-                `Verdict: ${displayVerdict}`,
-                `IMU: ${imuCount} samples, Cam: ${camCount} frames`,
-                ...evidence.diagnostics,
-              ];
-              const text = lines.join("\n");
-              navigator.clipboard.writeText(text).then(() => { setCopyStatus("✓ Copied!"); setTimeout(() => setCopyStatus(""), 2000); }).catch(() => setCopyStatus("Failed"));
-            }} className="w-full py-3 border border-[#d29922]/40 text-[#d29922]/70 text-[11px] tracking-[0.1em] uppercase hover:border-[#d29922] transition-all">{copyStatus || "📋 Copy All Results"}</button>
+            {debug && (
+              <button onClick={() => {
+                const lines = [
+                  `Verdict: ${displayVerdict}`,
+                  `IMU: ${imuCount} samples, Cam: ${camCount} frames`,
+                  ...evidence.diagnostics,
+                ];
+                const text = lines.join("\n");
+                navigator.clipboard.writeText(text).then(() => { setCopyStatus("✓ Copied!"); setTimeout(() => setCopyStatus(""), 2000); }).catch(() => setCopyStatus("Failed"));
+              }} className="w-full py-3 border border-[#d29922]/40 text-[#d29922]/70 text-[11px] tracking-[0.1em] uppercase hover:border-[#d29922] transition-all">{copyStatus || "📋 Copy All Results"}</button>
+            )}
 
-            {/* Verdict — computed by Policy */}
+            {/* Verdict */}
             <div className="text-center p-6 border-2 border-[#a371f7]/40 bg-[#a371f7]/[0.04] space-y-3">
-              <div className="text-white/20 text-[9px] tracking-[0.2em] uppercase">Policy Decision</div>
-              <div className="text-[20px] font-light" style={{ color: statusColor(displayVerdict) }}>{displayVerdict.replace(/_/g, " ")}</div>
+              <div className="text-white/20 text-[9px] tracking-[0.2em] uppercase">Verification Confidence</div>
+              <div className="text-[36px] font-light" style={{ color: statusColor(displayVerdict) }}>
+                {debug ? displayVerdict.replace(/_/g, " ") : evidence.confidence ? `${(evidence.confidence * 100).toFixed(0)}%` : "—"}
+              </div>
               <div className="text-white/25 text-[11px]">
                 {displayVerdict === "PASS" ? "Strong causal coupling — both streams consistent with a single physical event."
                   : displayVerdict === "FAIL" ? "Weak coupling — streams may describe different physical events."
@@ -430,17 +263,17 @@ export default function CausalCouplingClient() {
               </div>
             </div>
 
-            {/* ── Evidence Components (shared shape with EE-001) ── */}
+            {/* ── Evidence Components ── */}
             <div className="p-4 border border-white/10 bg-white/[0.02] space-y-3">
               <div className="flex items-center justify-between">
                 <div className="text-[10px] uppercase text-white/20">Evidence Components</div>
-                <span className="text-[8px] text-white/10 font-mono">{evidence.engineId}</span>
+                {debug && <span className="text-[8px] text-white/10 font-mono">{evidence.engineId}</span>}
               </div>
               {evidence.components.map((comp) => (
                 <div key={comp.metric} className="flex items-center justify-between p-2 border border-white/5">
                   <div className="space-y-0.5">
                     <div className="text-[11px] text-white/50">{comp.metric}</div>
-                    <div className="text-[9px] text-white/20">{comp.value.toFixed(3)} vs {comp.threshold} — {comp.explanation}</div>
+                    {debug && <div className="text-[9px] text-white/20">{comp.value.toFixed(3)} vs {comp.threshold} — {comp.explanation}</div>}
                   </div>
                   <span style={{ color: statusColor(comp.status), fontSize: "13px" }}>{statusIcon(comp.status)}</span>
                 </div>
@@ -479,7 +312,7 @@ export default function CausalCouplingClient() {
 
             {/* Policy note */}
             <div className="p-3 border border-white/5 bg-white/[0.01] text-[9px] font-mono text-white/15 space-y-1">
-              <div className="text-white/20 text-[8px] uppercase mb-1">Policy · defaultPolicy v0.1</div>
+              <div className="text-white/20 text-[8px] uppercase mb-1">Policy · evaluatePolicy</div>
               <div>All components must PASS. Verdict computed by VerificationPolicy — not stored in Evidence.</div>
               <div className="text-white/10">Candidate Parameters: DirectionTolerance={DIRECTION_TOLERANCE_DEG}° MatchWindow=±{MATCH_WINDOW_MS}ms</div>
             </div>
@@ -488,6 +321,15 @@ export default function CausalCouplingClient() {
               className="w-full py-4 border border-white/10 text-white/25 text-[11px] tracking-[0.2em] uppercase hover:border-white/30 transition-all">↻ Run Again</button>
           </div>
         )}
+        <div className="mt-10 pt-5 border-t border-white/[0.04] text-center">
+          <p className="text-white/15 text-[9px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
+          <p className="text-white/10 text-[8px] mt-1">
+            Parameters intentionally omitted &middot;{" "}
+            <a href={`?debug=${debug ? "0" : "1"}`} className="underline hover:text-white/20">
+              {debug ? "Public view" : "Developer mode"}
+            </a>
+          </p>
+        </div>
       </main>
     </div>
   );
