@@ -10,6 +10,15 @@ const yaml = require("js-yaml");
 const axios = require("axios");
 const os = require("os");
 
+// ── Proxy auto-detect: VEE (15236) ──
+const { execSync } = require("child_process");
+try {
+  execSync('netstat -ano | findstr "127.0.0.1:15236.*LISTENING"', { timeout: 2000, stdio: "ignore" });
+  process.env.HTTP_PROXY = "http://127.0.0.1:15236";
+  process.env.HTTPS_PROXY = "http://127.0.0.1:15236";
+  console.log("Proxy: VEE detected (127.0.0.1:15236)");
+} catch { /* VEE not running */ }
+
 // ═══ CONFIG ═══
 const INBOX_PATH = path.join(__dirname, "inbox.json");
 const DRAFTS_PATH = path.join(__dirname, "drafts.json");

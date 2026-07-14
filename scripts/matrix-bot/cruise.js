@@ -22,12 +22,28 @@ const { patchDashboard } = require("./dashboard-patcher.js");
 //  CONFIG
 // ═══════════════════════════════════════════════════════════════════
 
-// ── 代理策略：国内API直连，仅Bluesky走Clash ──
-// 不再设置全局代理——避免干扰东方财富/网易财经等国内数据源
-const CLASH_PROXY = { protocol: "http", host: "127.0.0.1", port: 7890 };
-const CLASH_PROXY_URL = "http://127.0.0.1:7890";
+// ── 代理策略：自动检测 VEE (15236)，fallback Clash (7890) ──
+const { execSync } = require("child_process");
+let ACTIVE_PROXY = null;
+try {
+  execSync('netstat -ano | findstr "127.0.0.1:15236.*LISTENING"', { timeout: 2000, stdio: "ignore" });
+  process.env.HTTP_PROXY = "http://127.0.0.1:15236";
+  process.env.HTTPS_PROXY = "http://127.0.0.1:15236";
+  ACTIVE_PROXY = { protocol: "http", host: "127.0.0.1", port: 15236 };
+  console.log("Proxy: VEE detected (127.0.0.1:15236)");
+} catch {
+  try {
+    execSync('netstat -ano | findstr "127.0.0.1:7890.*LISTENING"', { timeout: 2000, stdio: "ignore" });
+    process.env.HTTP_PROXY = "http://127.0.0.1:7890";
+    process.env.HTTPS_PROXY = "http://127.0.0.1:7890";
+    ACTIVE_PROXY = { protocol: "http", host: "127.0.0.1", port: 7890 };
+    console.log("Proxy: Clash detected (127.0.0.1:7890)");
+  } catch { /* no proxy */ }
+}
+const CLASH_PROXY = ACTIVE_PROXY || { protocol: "http", host: "127.0.0.1", port: 7890 };
+const CLASH_PROXY_URL = ACTIVE_PROXY ? `http://127.0.0.1:${ACTIVE_PROXY.port}` : "http://127.0.0.1:7890";
 
-const AGNES_URL = "https://apihub.agnes-ai.com/v1/chat/completions";
+// Chat URL now derived from ~/.hermes/config.yaml base_url
 const HN_TOP = "https://hacker-news.firebaseio.com/v0/topstories.json";
 const HN_ITEM = (id) => `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
 const HN_THREAD = (id) => `https://news.ycombinator.com/item?id=${id}`;
@@ -48,7 +64,7 @@ function loadConfig() {
   const p = path.join(os.homedir(), ".hermes", "config.yaml");
   if (!fs.existsSync(p)) { console.error("Config not found"); process.exit(1); }
   const c = yaml.load(fs.readFileSync(p, "utf8"));
-  return { apiKey: c.model.api_key, model: c.model.default };
+  return { baseUrl: c.model.base_url || "https://integrate.api.nvidia.com/v1", apiKey: c.model.api_key, model: c.model.default };
 }
 const CFG = loadConfig();
 
@@ -59,13 +75,12 @@ const DELAY = (ms) => new Promise((r) => setTimeout(r, ms));
 //  AGNES AI — Multi-modal API calls
 // ═══════════════════════════════════════════════════════════════════
 
-const AGNES_IMAGE_URL = "https://apihub.agnes-ai.com/v1/images/generations";
-const AGNES_VIDEO_URL = "https://apihub.agnes-ai.com/v1/video/generations";
+// Image/video generation not supported by NVIDIA API — stubs return null
 const AGNES_HEADERS = () => ({ "Content-Type": "application/json", "Authorization": "Bearer " + CFG.apiKey });
 
 async function callAgnes(systemPrompt, userPrompt) {
   try {
-    const res = await axios.post(AGNES_URL, {
+    const res = await axios.post(`${CFG.baseUrl}/chat/completions`, {
       model: CFG.model,
       messages: [
         { role: "system", content: systemPrompt },
@@ -86,42 +101,12 @@ async function callAgnes(systemPrompt, userPrompt) {
 }
 
 async function generateImage(prompt) {
-  try {
-    const res = await axios.post(AGNES_IMAGE_URL, {
-      model: "agnes-image-2.1-flash",
-      prompt: prompt,
-      n: 1,
-      size: "1024x1024",
-    }, {
-      headers: AGNES_HEADERS(),
-      timeout: 60000,
-    });
-    const url = res.data.data?.[0]?.url;
-    if (url) { console.log("    Look! Image generated"); return url; }
-    console.log("    Image API: unexpected response format");
-  } catch (e) {
-    console.log("    Image API: " + (e.response?.status || e.code));
-  }
+  console.log("    Image gen: skipped (NVIDIA API does not support image generation)");
   return null;
 }
 
 async function generateVideo(prompt) {
-  try {
-    const res = await axios.post(AGNES_VIDEO_URL, {
-      model: "agnes-video-v2.0",
-      prompt: prompt,
-      num_frames: 9,
-      fps: 16,
-    }, {
-      headers: AGNES_HEADERS(),
-      timeout: 120000,
-    });
-    const url = res.data.data?.[0]?.url || res.data.url;
-    if (url) { console.log("    🎬 Video generated"); return url; }
-    console.log("    Video API: unexpected response format");
-  } catch (e) {
-    console.log("    Video API: " + (e.response?.status || e.code));
-  }
+  console.log("    Video gen: skipped (NVIDIA API does not support video generation)");
   return null;
 }
 

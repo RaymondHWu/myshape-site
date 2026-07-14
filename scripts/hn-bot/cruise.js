@@ -27,7 +27,7 @@ try {
 const HN_TOP_STORIES = "https://hacker-news.firebaseio.com/v0/topstories.json";
 const HN_ITEM = (id) => `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
 const HN_THREAD = (id) => `https://news.ycombinator.com/item?id=${id}`;
-const AGNES_URL = "https://api.agnes-ai.com/api/v1/chat/completions";
+// AGNES_URL is now derived from ~/.hermes/config.yaml base_url
 
 const KEYWORDS = [
   "identity", "auth", "zk", "zero.knowledge", "crypto",
@@ -49,6 +49,7 @@ function loadConfig() {
   }
   const cfg = yaml.load(fs.readFileSync(configPath, "utf8"));
   return {
+    baseUrl: cfg.model.base_url || "https://integrate.api.nvidia.com/v1",
     apiKey: cfg.model.api_key,
     model: cfg.model.default,
   };
@@ -116,7 +117,7 @@ async function generateComment(story, isDashboardView = true) {
     : " Output in English only.";
 
   try {
-    const res = await axios.post(AGNES_URL, {
+    const res = await axios.post(`${CONFIG.baseUrl}/chat/completions`, {
       model: CONFIG.model,
       messages: [
         { role: "system", content: "You are the Lead Architect Agent for MyShape Protocol. Provide a 'Protocol-First' perspective on industry news — compare against MyShape's Continuity Layer (temporal identity integrity — identity is not a snapshot but a continuous signal) and Presence Receipt (real-time human verification via motion-signature, not biometrics). Use a founder-level, insightful tone. Write in the style of a seasoned Hacker News commenter: terse, technically precise, slightly contrarian. Never mention product names." + systemFormat },

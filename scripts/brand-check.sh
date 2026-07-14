@@ -47,8 +47,12 @@ for PATTERN in "${BANNED[@]}"; do
     esac
 
     if [ -f "$file" ]; then
-      # 跳过学术论文 JSON（技术术语上下文，非品牌文案）
-      case "$file" in *content.json) continue ;; esac
+      # 跳过自动生成的文件 + 已发布研究论文（批判性引用上下文）
+      case "$file" in
+        *content.json|package-lock.json|package.json) continue ;;
+      esac
+      # 已发布研究论文——术语用于批判性分析，非品牌文案
+      if [[ "$file" == papers/* ]]; then continue; fi
       RAW_MATCHES=$(grep -Hin "$PATTERN" "$file" 2>/dev/null || true)
       # 排除：技术术语/HTML标签/HTTP fetch body
       MATCHES=$(echo "$RAW_MATCHES" | grep -v -i -E 'data.body|non.biometric|Particle.Body|body[: ].|BodyInit|<body|</body|body \{' || true)
