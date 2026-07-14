@@ -127,7 +127,7 @@ coverage/
 # Sentry Config File
 .env.sentry-build-plugin
 
-# LaTeX build artifacts (papers/)
+# LaTeX build artifacts + binary docs (papers/)
 *.aux
 *.log
 *.out
@@ -135,8 +135,18 @@ coverage/
 *.synctex.gz
 *.fdb_latexmk
 *.fls
+*.pdf
 
-# Sentry auto-generated examples
+# Research CLI v0.1 — superseded by src/lib/evidence/, samples are reference data
+/myshape-cli/
+
+# Internal screenshots / binary docs
+/docs/*.png
+/docs/*.jpg
+
+# Internal research notes — detailed parameters (public version = Substack article)
+/papers/rn-002/rn-002.md
+/papers/rn-002/paper.tex
 /src/app/api/sentry-example-api/
 /src/app/sentry-example-page/
 /src/instrumentation-client.ts

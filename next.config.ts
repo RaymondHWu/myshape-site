@@ -39,11 +39,15 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(self), microphone=()" },
   { key: "X-DNS-Prefetch-Control", value: "on" },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-  { key: "Cross-Origin-Embedder-Policy", value: "require-corp" },
+  // COEP disabled in dev — blocks MediaPipe CDN and dev HMR
+  ...(IS_PROD ? [{ key: "Cross-Origin-Embedder-Policy" as const, value: "require-corp" as const }] : []),
   { key: "X-Permitted-Cross-Domain-Policies", value: "none" },
 ];
 
 const nextConfig: NextConfig = {
+  // Allow phone testing in dev
+  allowedDevOrigins: IS_PROD ? undefined : ["192.168.0.105", "192.168.0.100"],
+
   // ── Security headers applied to all routes ──
   async headers() {
     return [

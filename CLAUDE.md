@@ -141,16 +141,7 @@ AI-native identity | zero-knowledge presence | motion-signature verification
 
 ## 2. 技术栈
 
-| 层 | 技术 | 版本 |
-|:---|:---|:---|
-| Framework | Next.js App Router | 16.x |
-| UI | React | 19.x |
-| Styling | Tailwind CSS | 4.x |
-| 3D | Three.js + @react-three/fiber | 0.182 / 9.x |
-| Motion | MediaPipe Pose + Framer Motion | - |
-| Backend | Supabase | 2.x |
-| Email | Resend | 6.x |
-| TypeScript | strict mode | 5.x |
+> 完整依赖列表见 `package.json`。核心技术：Next.js 16, React 19, Tailwind 4, Three.js, MediaPipe, Supabase, TypeScript strict。
 
 ---
 
@@ -204,69 +195,14 @@ AI-native identity | zero-knowledge presence | motion-signature verification
 
 ## 5. 路由规范
 
-| 规范 URL | 镜像 URL（禁止索引） | 说明 |
-|:---|:---|:---|
-| `/` | - | 首页 |
-| `/genesis` | `/civ-layer/genesis` | Genesis 仪式 |
-| `/vision` | `/civ-layer/vision` | 愿景 |
-| `/papers` | `/civ-layer/papers` | 论文 |
-| `/protocol` | `/civ-layer/publication` | 协议架构 |
-| `/identity` | - | 身份层 |
-| `/protocol/motion-pipeline` | - | 运动管道 |
-
-**规则**：新增内容放在主路由，禁止在 `/civ-layer/` 下创建新的实质内容路由。
+> 路由结构见 `ls src/app/`。规则：新增内容放主路由，禁止在 `/civ-layer/` 下创建新的实质内容路由。
 
 ---
 
-## 6. Supabase 数据模型
-
-### `protocol_nodes` 表
-| 字段 | 类型 | 说明 |
-|:---|:---|:---|
-| `email` | text (PK) | 节点邮箱 |
-| `node_handle` | text | genesis 标识 |
-| `otp_code` | text | 6 位验证码 |
-| `status` | text | PENDING_VERIFICATION / ACTIVE |
-| `created_at` | timestamptz | 创建时间 |
-
----
-
-## 7. 提交规范
+## 6. 提交规范
 
 ```
 <type>: <description>
-# 例：
-feat: add identity verification pipeline
-fix: resolve AudioContext memory leak in JoinWaitlist
-refactor: extract animation keyframes to shared CSS
-chore: upgrade Next.js to 16.1.6
 ```
 
----
-
-## 8. 已知技术债务（供优先级参考）
-
-1. ✅ ~~`any` 类型未完全消除~~ — 已清零（2026-06-27）
-2. ✅ ~~内联 `<style>` 标签残留~~ — 已全部提取至 `animations.css`（2026-06-28）
-3. ✅ ~~CIV layer `"use client"`~~ — 已拆分：`page.tsx`（Server + metadata）+ `*Client.tsx`（交互）
-4. ✅ ~~`useSound.ts` hook~~ — 已移除
-5. ✅ ~~`public/protocol-b-o-d-y.glb`~~ — 已移除
-6. ✅ ~~`src/components/joinwaitlist/index.tsx`~~ — 已移除
-7. ✅ ~~Architecture 页面大量内联 `style={{}}`~~ — 14→5，剩余全为动态值（2026-07-02）
-8. ✅ ~~主路由纯客户端页面~~ — 全部已拆分：`page.tsx`（Server + metadata）+ `*Client.tsx`（交互）
-9. ✅ ~~SHA-256 哈希为 stub~~ — 已替换为 `@noble/hashes`（2026-07-02）
-10. ✅ ~~ZK 模幂纯 JS 实现~~ — 已替换为 `@noble/curves`（2026-07-02）
-11. ✅ ~~4 个死引擎文件~~ — 已移至 `docs/engine-concepts/`（2026-07-02）
-12. ✅ ~~API rate limiting 碎片化~~ — 已提取共享 `RateLimiter` 类（2026-07-02）
-13. ✅ ~~PGRST116 错误被静默吞掉~~ — 已修复 3 个路由（2026-07-02）
-14. ✅ ~~无自动化测试~~ — 已搭建 Vitest + 145 tests / 11 suites（2026-07-02）
-15. ✅ ~~MotionDemo 1229 行~~ — 已拆分为 11 子组件 → 1066 行（2026-07-02）
-16. ✅ ~~HeroDemo 779 行~~ — 已提取 2 模块 → 680 行（2026-07-02）
-17. ✅ ~~无生产 Error Boundary~~ — 已添加 3 层（global/root/page）（2026-07-02）
-18. ✅ ~~加载页全内联样式~~ — 已 Tailwind 化（2026-07-02）
-19. ✅ ~~安全头缺失~~ — 已添加 CSP/HSTS（2026-07-02）
-20. ✅ ~~8 个 API 路由缺 rate limit~~ — 已加固 OTP/verify/subscribe 等（2026-07-02）
-21. ✅ ~~LinkedIn 数据丢失 bug~~ — `data.linkedin` 从未赋值 → 已修复（2026-07-02）
-22. ✅ ~~设计令牌缺失~~ — 已添加 19 CSS 变量（2026-07-02）
-23. ✅ Supabase 执行 `010_entropy_growth.sql` — 迁移已应用，所有字段已存在（2026-07-03 验证）
-24. ✅ ~~Architecture 页面内联样式~~ — 14→5，原 7 条技术债已全部解决（2026-07-02）
+Types: feat, fix, refactor, docs, test, chore, perf, ci
