@@ -4,6 +4,8 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useDebug } from "@/hooks/useDebug";
 import ResearchStatus from "@/components/ResearchStatus";
+import ExperimentExport from "@/components/experiment/ExperimentExport";
+import { saveRun } from "@/lib/experiment-logger";
 import { type EngineEvidence, type Verdict, hashEvidence, evaluatePolicy } from "@/lib/evidence/types";
 import { type IMUSample, detectJerkPeaks } from "@/lib/evidence/causal-coupling";
 import {
@@ -152,8 +154,42 @@ export default function ProtocolVerifyClient() {
     setPassive(passiveEvidence); setScore(cappedScore); setDecision(dec);
     setStage("s1-result"); await sleep(3000);
 
-    if (dec === "reject") { setFinalV(evaluatePolicy({ policyId: "default", acceptThreshold: 0.70, rejectThreshold: 0.35 }, cappedScore)); setStage("complete"); return; }
-    if (dec === "accept") { setFinalV(evaluatePolicy({ policyId: "default", acceptThreshold: 0.70, rejectThreshold: 0.35 }, cappedScore)); setStage("complete"); return; }
+    if (dec === "reject") {
+      const v = evaluatePolicy({ policyId: "default", acceptThreshold: 0.70, rejectThreshold: 0.35 }, cappedScore);
+      setFinalV(v);
+      saveRun({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        engineId: "VS-001",
+        timestamp: new Date().toISOString(),
+        isSimulated: isSim,
+        verdict: v,
+        confidence: cappedScore,
+        components: ee001.components.map((c) => ({ metric: c.metric, value: c.value, threshold: c.threshold, status: c.status })),
+        diagnostics: ee001.diagnostics,
+        passiveScore: cappedScore,
+        decision: dec,
+        imuCount: imuRef.current.length,
+      });
+      setStage("complete"); return;
+    }
+    if (dec === "accept") {
+      const v = evaluatePolicy({ policyId: "default", acceptThreshold: 0.70, rejectThreshold: 0.35 }, cappedScore);
+      setFinalV(v);
+      saveRun({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        engineId: "VS-001",
+        timestamp: new Date().toISOString(),
+        isSimulated: isSim,
+        verdict: v,
+        confidence: cappedScore,
+        components: ee001.components.map((c) => ({ metric: c.metric, value: c.value, threshold: c.threshold, status: c.status })),
+        diagnostics: ee001.diagnostics,
+        passiveScore: cappedScore,
+        decision: dec,
+        imuCount: imuRef.current.length,
+      });
+      setStage("complete"); return;
+    }
 
     // ── Additional · Active Evidence ──
     const results: RoundResult[] = [];
@@ -185,7 +221,22 @@ export default function ProtocolVerifyClient() {
     setActive(act);
     // Aggregate confidence from all evidence
     const aggConf = [...passiveEvidence, act].reduce((sum, e) => sum + (e.confidence || 0), 0) / 2;
-    setFinalV(evaluatePolicy({ policyId: "default", acceptThreshold: 0.70, rejectThreshold: 0.35 }, aggConf));
+    const v = evaluatePolicy({ policyId: "default", acceptThreshold: 0.70, rejectThreshold: 0.35 }, aggConf);
+    setFinalV(v);
+    saveRun({
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      engineId: "VS-001",
+      timestamp: new Date().toISOString(),
+      isSimulated: isSim,
+      verdict: v,
+      confidence: aggConf,
+      components: [...ee001.components, ...act.components].map((c) => ({ metric: c.metric, value: c.value, threshold: c.threshold, status: c.status })),
+      diagnostics: [...ee001.diagnostics, ...act.diagnostics],
+      roundResults: results.map((r) => ({ round: r.round, direction: r.direction, directionMatch: r.directionMatch, magnitudeStatus: r.magnitudeStatus, angleDeg: r.angleDeg, peakG: r.peakG, sampleCount: r.sampleCount })),
+      passiveScore: cappedScore,
+      decision: "escalate",
+      imuCount: imuRef.current.length,
+    });
     setStage("complete");
   }, [isSim, handleIMU, startSim]);
 
@@ -347,6 +398,7 @@ export default function ProtocolVerifyClient() {
             <button onClick={() => { setStage("idle"); setIsSim(false); setNoSensors(false); }} className="w-full py-4 border border-white/10 text-white/25 text-[11px] tracking-[0.2em] uppercase hover:border-white/30 transition-all">↻ New Session</button>
           </div>
         )}
+        <ExperimentExport engineId="VS-001" />
         <div className="mt-10 pt-5 border-t border-white/[0.04] text-center">
           <p className="text-white/25 text-[9px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
           <p className="text-white/20 text-[8px] mt-1">
