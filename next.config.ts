@@ -7,7 +7,7 @@ const CSP_DIRECTIVES = [
   "default-src 'self'",
   // Scripts: self + eval for dev (Next.js Fast Refresh), MediaPipe CDN (scoped)
   IS_PROD
-    ? "script-src 'self' https://cdn.jsdelivr.net/npm/@mediapipe/ https://va.vercel-scripts.com"
+    ? "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/@mediapipe/ https://va.vercel-scripts.com"
     : "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net/npm/@mediapipe/ https://va.vercel-scripts.com",
   // Styles: Tailwind needs 'unsafe-inline'
   "style-src 'self' 'unsafe-inline'",
@@ -90,10 +90,13 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
-  silent: true,
-  org: "myshape",
-  project: "myshape-protocol",
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-  widenClientFileUpload: true,
-});
+// Sentry only in production — its client SDK can interfere with dev HMR
+export default IS_PROD
+  ? withSentryConfig(nextConfig, {
+      silent: true,
+      org: "myshape",
+      project: "myshape-protocol",
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      widenClientFileUpload: true,
+    })
+  : nextConfig;
