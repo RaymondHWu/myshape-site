@@ -204,31 +204,49 @@ export default function ProtocolVerifyClient() {
         <div className="w-16" />
       </header>
 
-      <main className="max-w-lg mx-auto px-4 py-8 space-y-6">
-        <div className="text-center space-y-3">
-          <div className="text-5xl">🛡️</div>
-          <h1 className="text-white/80 text-[20px] font-light">Verification Session</h1>
-          <p className="text-white/30 text-[12px]">Passive → Escalate → Receipt</p>
+      <main className="max-w-lg mx-auto px-4 py-12 space-y-8">
+        <div className="text-center space-y-4">
+          <h1 className="text-white/85 text-[clamp(1.5rem,4vw,2rem)] font-light tracking-[0.02em]">
+            Verification Confidence
+          </h1>
+          <p className="text-white/35 text-[14px] leading-relaxed max-w-sm mx-auto"
+            style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+            How sure are we that a human is physically present — not an AI, not a replay, not a script?
+          </p>
         </div>
 
-        <ResearchStatus engineId="EE-001 + EE-003" title="Dual-engine verification — passive IMU presence check with gyroscope challenge escalation" />
-
-        <div className="p-2 border border-white/5 text-[9px] font-mono text-white/20 flex justify-between">
-          <span>IMU: {imuN} | {isSim ? "SIM" : "LIVE"}</span>
-          <span>{stage === "idle" ? "○ Idle" : stage.includes("s1") ? "Stage 1" : stage.includes("s2") ? "Additional" : "● Complete"}</span>
-        </div>
+        <ResearchStatus engineId="EE-001 + EE-003" />
 
         {/* ── Idle ── */}
         {stage === "idle" && (
-          <div className="space-y-4">
-            {noSensors && <div className="p-3 border border-yellow-400/20 bg-yellow-400/[0.04] text-yellow-400/60 text-[11px] text-center">No sensors — simulation active.</div>}
-            <div className="p-4 border border-white/5 bg-white/[0.02] space-y-2 text-[11px] text-white/40 leading-relaxed">
-              <p><b>Stage 1 · Passive:</b> 8s free motion. IMU presence check.</p>
-              <p><b>Additional Evidence:</b> If confidence is mid-range — collect more evidence via gyroscope.</p>
-              <p className="text-white/20">Passive collection first. Escalate only when needed.</p>
+          <div className="space-y-5">
+            <button onClick={run} className="w-full py-5 bg-white/[0.04] border border-white/10 text-white/70 text-[15px] tracking-[0.05em] hover:bg-white/[0.08] hover:border-white/20 hover:text-white/90 transition-all">
+              Collect Evidence
+            </button>
+
+            <details className="group">
+              <summary className="text-white/20 text-[9px] tracking-[0.15em] text-center cursor-pointer hover:text-white/35 transition-colors list-none">How this works</summary>
+              <div className="mt-3 p-4 border border-white/[0.04] bg-white/[0.01] text-[11px] text-white/35 leading-relaxed space-y-2"
+                style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+                <p><span className="text-white/50">Stage 1</span> — 8 seconds of free motion. Your phone's IMU passively checks for the presence of a physically embodied entity.</p>
+                <p><span className="text-white/50">Additional</span> — If confidence is uncertain, the system requests more evidence through a randomized gyroscope challenge.</p>
+                <p className="text-white/20">Escalation is the default. Acceptance requires multiple independent signals.</p>
+              </div>
+            </details>
+
+            <div className="text-center">
+              <button onClick={() => setIsSim(!isSim)} className={`text-[9px] tracking-[0.1em] ${isSim ? "text-[#90c8ff]/40" : "text-white/12 hover:text-white/25"} transition-colors`}>
+                {isSim ? "⚡ Simulating sensors" : "No sensors? Use simulation"}
+              </button>
             </div>
-            <button onClick={() => setIsSim(!isSim)} className={`w-full py-2 border text-[11px] tracking-[0.12em] uppercase ${isSim ? "border-[#90c8ff]/30 text-[#90c8ff]/50 bg-[#90c8ff]/5" : "border-white/5 text-white/15 hover:border-white/15 hover:text-white/30"}`}>{isSim ? "⚡ Sim ON" : "💻 Sim"}</button>
-            <button onClick={run} className="w-full py-5 bg-gradient-to-r from-[#90c8ff]/20 to-[#a371f7]/20 border-2 border-[#90c8ff]/40 text-[#90c8ff] text-[16px] tracking-[0.15em] uppercase font-bold hover:border-[#90c8ff] transition-all active:scale-[0.98]">▶ Begin Session</button>
+          </div>
+        )}
+
+        {/* Active status bar — only visible when running */}
+        {stage !== "idle" && stage !== "complete" && (
+          <div className="p-2 border border-white/5 text-[9px] font-mono text-white/20 flex justify-between">
+            <span>IMU: {imuN} | {isSim ? "SIM" : "LIVE"}</span>
+            <span>{stage.includes("s1") ? "Stage 1" : stage.includes("s2") ? "Additional" : "● Complete"}</span>
           </div>
         )}
 
@@ -330,10 +348,10 @@ export default function ProtocolVerifyClient() {
           </div>
         )}
         <div className="mt-10 pt-5 border-t border-white/[0.04] text-center">
-          <p className="text-white/15 text-[9px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
-          <p className="text-white/10 text-[8px] mt-1">
+          <p className="text-white/25 text-[9px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
+          <p className="text-white/20 text-[8px] mt-1">
             Parameters intentionally omitted &middot;{" "}
-            <a href={`?debug=${debug ? "0" : "1"}`} className="underline hover:text-white/20">
+            <a href={`?debug=${debug ? "0" : "1"}`} className="underline hover:text-white/35">
               {debug ? "Public view" : "Developer mode"}
             </a>
           </p>

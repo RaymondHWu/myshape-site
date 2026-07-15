@@ -224,16 +224,18 @@ export default function ChallengeClient() {
         <div className="w-16" />
       </header>
 
-      <main className="max-w-lg mx-auto px-4 py-8 space-y-6">
-        <div className="text-center space-y-3">
-          <div className="text-5xl">🎯</div>
-          <h1 className="text-white/80 text-[22px] font-light">Additional Evidence</h1>
-          <p className="text-white/30 text-[13px] leading-relaxed max-w-sm mx-auto">
-            Additional Evidence Collection. Rotate in the direction shown. 3 random checks with jittered timing.
+      <main className="max-w-lg mx-auto px-4 py-12 space-y-8">
+        <div className="text-center space-y-4">
+          <h1 className="text-white/85 text-[clamp(1.5rem,4vw,2rem)] font-light tracking-[0.02em]">
+            Motion Challenge
+          </h1>
+          <p className="text-white/35 text-[14px] leading-relaxed max-w-sm mx-auto"
+            style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+            Can your phone's gyroscope tell the difference between a human responding to a random challenge and a replay attack?
           </p>
-
-        <ResearchStatus engineId="EE-003" title="Gyroscope-based challenge-response — directional motion verification" />
         </div>
+
+        <ResearchStatus engineId="EE-003" />
 
         {/* Progress indicator */}
         {phase !== "idle" && phase !== "complete" && (
@@ -255,25 +257,28 @@ export default function ChallengeClient() {
 
         {/* ── Idle ── */}
         {phase === "idle" && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             {errorMsg && (
               <div className="p-3 border border-red-400/20 bg-red-400/[0.04] text-red-400/60 text-[11px] text-center">
                 {errorMsg}
               </div>
             )}
-            <div className="p-4 border border-white/5 bg-white/[0.02] space-y-2 text-[11px] text-white/40 leading-relaxed">
-              <p>3 rounds. Each round shows a direction — <b>rotate your wrist</b> that way when the countdown ends.</p>
-              <p>← → = twist wrist left/right &nbsp;|&nbsp; ↑ ↓ = tilt phone up/down</p>
-              <p className="text-white/20">
-                Gyroscope-based detection. Timing is randomized (2–3s) to prevent replay attacks.
-              </p>
-            </div>
             <button
               onClick={runFull}
-              className="w-full py-5 bg-gradient-to-r from-[#d29922]/20 to-[#f85149]/20 border-2 border-[#d29922]/40 text-[#d29922] text-[16px] tracking-[0.15em] uppercase font-bold hover:border-[#d29922] transition-all active:scale-[0.98]"
+              className="w-full py-5 bg-white/[0.04] border border-white/10 text-white/70 text-[15px] tracking-[0.05em] hover:bg-white/[0.08] hover:border-white/20 hover:text-white/90 transition-all"
             >
-              ▶ Collect Additional Evidence (3 Rounds)
+              Run Challenge
             </button>
+
+            <details className="group">
+              <summary className="text-white/20 text-[9px] tracking-[0.15em] text-center cursor-pointer hover:text-white/35 transition-colors list-none">How this works</summary>
+              <div className="mt-3 p-4 border border-white/[0.04] bg-white/[0.01] text-[11px] text-white/35 leading-relaxed space-y-2"
+                style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+                <p>3 randomized rounds. Each round shows a direction — rotate your phone that way when the timer hits zero.</p>
+                <p>← → = yaw (twist wrist left/right) &nbsp;|&nbsp; ↑ ↓ = pitch (tilt phone toward/away)</p>
+                <p className="text-white/20">Timing is jittered (±1000ms) to prevent replay attacks. Need 2/3 rounds for sufficient evidence.</p>
+              </div>
+            </details>
           </div>
         )}
 
@@ -462,10 +467,10 @@ export default function ChallengeClient() {
           </div>
         )}
         <div className="mt-10 pt-5 border-t border-white/[0.04] text-center">
-          <p className="text-white/15 text-[9px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
-          <p className="text-white/10 text-[8px] mt-1">
+          <p className="text-white/25 text-[9px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
+          <p className="text-white/20 text-[8px] mt-1">
             Parameters intentionally omitted &middot;{" "}
-            <a href={`?debug=${debug ? "0" : "1"}`} className="underline hover:text-white/20">
+            <a href={`?debug=${debug ? "0" : "1"}`} className="underline hover:text-white/35">
               {debug ? "Public view" : "Developer mode"}
             </a>
           </p>
