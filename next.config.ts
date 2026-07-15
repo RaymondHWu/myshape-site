@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const IS_PROD = process.env.NODE_ENV === "production";
 
@@ -78,6 +79,21 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
+  // WASM support for MyShape engine
+  webpack: (config: any, { isServer }: { isServer: boolean }) => {
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true,
+    };
+    return config;
+  },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  silent: true,
+  org: "myshape",
+  project: "myshape-protocol",
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  widenClientFileUpload: true,
+});
