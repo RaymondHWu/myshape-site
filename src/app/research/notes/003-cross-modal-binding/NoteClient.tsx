@@ -17,7 +17,7 @@ const TOC_ITEMS = [
   { id: "part-5", label: "Part 5 — What This Does Not Prove" },
   { id: "part-6", label: "Part 6 — Open Questions" },
   { id: "part-7", label: "Part 7 — Role in Verification Session" },
-  { id: "part-8", label: "Part 8 — Experimental Validation (N=381)" },
+  { id: "part-8", label: "Part 8 — Experimental Validation (N=477)" },
 ];
 
 export default function NoteClient() {
@@ -388,7 +388,7 @@ export default function NoteClient() {
               <h3>8.1 Overview</h3>
               <p>
                 All evidence engines were validated on an iPhone with v0.3 calibrated parameters
-                across 381 live runs (2026-07-15–07-17). Each run was recorded with structured evidence output.
+                across 477 live runs (2026-07-15–07-17). Each run was recorded with structured evidence output.
               </p>
 
               <table className="note-table">
@@ -396,7 +396,7 @@ export default function NoteClient() {
                   <tr><th>Engine</th><th>N</th><th>Pass Rate</th><th>Role</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>EE-003</td><td>55</td><td>65%</td><td>Active — gyroscope challenge (3-round)</td></tr>
+                  <tr><td>EE-003</td><td>101</td><td>58%</td><td>Active — gyroscope challenge (3-round)</td></tr>
                   <tr><td>PE-001 single-device</td><td>50</td><td>93%</td><td>Passive — MediaPipe pose, same phone</td></tr>
                   <tr><td>PE-001 independent (pixel)</td><td>66</td><td>27%</td><td>Passive — frame differencing tracker</td></tr>
                   <tr><td>PE-001 independent (blob)</td><td>100</td><td>80%</td><td>Passive — color-blob centroid tracker</td></tr>
@@ -458,7 +458,7 @@ export default function NoteClient() {
               <ul>
                 <li><strong>Frame differencing (N=66):</strong> 27% pass rate, 38 fps. All-pixel motion — noisy but proved the architecture.</li>
                 <li><strong>Color-blob centroid (N=100):</strong> 80% pass rate, 49 fps. Color-blob filter cuts background noise 3×.</li>
-                <li><strong>Moving-blob (N=60):</strong> 87% pass rate, 49 fps. Only tracks blob pixels in motion — isolates hand from face. Direction agreement reached 65%.</li>
+                <li><strong>Moving-blob (N=101):</strong> 87% pass rate, 49 fps. Only tracks blob pixels in motion — isolates hand from face. Direction agreement reached 65%.</li>
               </ul>
               <p>
                 <strong>CFC-005 activation: 13 detections (5.8%).</strong> Causal Inversion only fires
