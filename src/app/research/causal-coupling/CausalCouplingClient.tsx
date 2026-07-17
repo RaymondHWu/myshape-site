@@ -73,6 +73,8 @@ export default function CausalCouplingClient() {
   } | null>(null);
 
   const [copyStatus, setCopyStatus] = useState("");
+  const [usePhoneIMU, setUsePhoneIMU] = useState(false);
+  const [phoneStatus, setPhoneStatus] = useState("");
   const debug = useDebug();
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -142,16 +144,47 @@ export default function CausalCouplingClient() {
     for (let i = 3; i >= 1; i--) { setCountdown(i); await sleep(1000); }
     imuSamplesRef.current = []; camSamplesRef.current = []; setImuCount(0); setCamCount(0); hasRealSensorRef.current = false;
     await startCamera();
-    window.addEventListener("devicemotion", handleIMU);
+    if (usePhoneIMU) {
+      setPhoneStatus("waiting for phone...");
+    } else {
+      window.addEventListener("devicemotion", handleIMU);
+    }
     startTimeRef.current = performance.now(); lastIMUEventRef.current = 0;
-    if (isSimulated) { setNoSensors(true); startSim(); } else { setTimeout(() => { if (!hasRealSensorRef.current && !simTimerRef.current) { setNoSensors(true); setIsSimulated(true); startSim(); } }, 1500); }
+    if (!usePhoneIMU && isSimulated) { setNoSensors(true); startSim(); } else if (!usePhoneIMU) { setTimeout(() => { if (!hasRealSensorRef.current && !simTimerRef.current) { setNoSensors(true); setIsSimulated(true); startSim(); } }, 1500); }
     setPhase("capturing"); setElapsed(0);
     const captureStart = performance.now();
     const timer = setInterval(() => { const e = (performance.now() - captureStart) / 1000; setElapsed(e); if (e >= DURATION) { clearInterval(timer); finish(); } }, 100);
 
-    function finish() {
+    async function finish() {
       window.removeEventListener("devicemotion", handleIMU); stopSim(); stopCamera();
-      const imuEvents = detectJerkPeaks(imuSamplesRef.current);
+
+      // If using phone IMU, fetch it from API
+      let imuSamples = imuSamplesRef.current;
+      if (usePhoneIMU) {
+        setPhoneStatus("fetching phone data...");
+        const startPoll = Date.now();
+        let fetched = false;
+        while (!fetched && Date.now() - startPoll < 30000) {
+          try {
+            const res = await fetch("/api/pe001/session");
+            const data = await res.json();
+            if (data.ready) {
+              imuSamples = data.imuSamples;
+              setImuCount(imuSamples.length);
+              setPhoneStatus(`received ${imuSamples.length} samples`);
+              fetched = true;
+            }
+          } catch { /* retry */ }
+          if (!fetched) await new Promise((r) => setTimeout(r, 1000));
+        }
+        if (!fetched) {
+          setPhoneStatus("timeout — no phone data");
+          setPhase("idle");
+          return;
+        }
+      }
+
+      const imuEvents = detectJerkPeaks(imuSamples);
       // Camera events naturally precede IMU events by ~160ms (visual trajectory change
       // is detectable before the corresponding force builds up). No compensation needed —
       // we rely on the widened match window (±500ms) to absorb this physical lag.
@@ -225,7 +258,16 @@ export default function CausalCouplingClient() {
           <div className="space-y-5">
             {noSensors && <div className="p-3 border border-yellow-400/20 bg-yellow-400/[0.04] text-yellow-400/60 text-[11px] text-center">No physical sensors — simulation active. Use HTTPS on a mobile device for real testing.</div>}
             <div className="p-3 border border-red-400/20 bg-red-400/[0.04] text-red-400/50 text-[10px] text-center leading-relaxed">
-              ⚠ iOS Safari: camera + IMU together may crash. Use Sim mode instead.
+              ⚠ iOS Safari: camera + IMU together may crash. Use <strong>Phone IMU</strong> below.
+            </div>
+            <div className="flex items-center justify-between p-3 border border-[#a371f7]/20 bg-[#a371f7]/[0.03]">
+              <div>
+                <div className="text-[11px] text-[#a371f7]/70" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>📱 Use Phone IMU</div>
+                <div className="text-[9px] text-white/20 mt-0.5">Camera on desktop, motion from phone</div>
+              </div>
+              <button onClick={() => setUsePhoneIMU(!usePhoneIMU)} className={`px-3 py-1.5 border text-[9px] tracking-[0.1em] uppercase transition-all ${usePhoneIMU ? "border-[#a371f7]/50 text-[#a371f7] bg-[#a371f7]/[0.08]" : "border-white/10 text-white/20"}`}>
+                {usePhoneIMU ? "ON" : "OFF"}
+              </button>
             </div>
             <button onClick={run} className="w-full py-5 bg-white/[0.04] border border-white/10 text-white/70 text-[15px] tracking-[0.05em] hover:bg-white/[0.08] hover:border-white/20 hover:text-white/90 transition-all">
               Collect Evidence

@@ -18,6 +18,8 @@ import {
 } from "@/lib/evidence/causal-coupling";
 
 const DURATION = 8;
+const CANVAS_W = 320;
+const CANVAS_H = 240;
 
 function round(v: number | null | undefined): number {
   if (v === null || v === undefined) return 0;
@@ -25,102 +27,121 @@ function round(v: number | null | undefined): number {
 }
 function sleep(ms: number) { return new Promise((r) => setTimeout(r, ms)); }
 
-function genCode(): string {
-  return Math.random().toString(36).slice(2, 8).toUpperCase();
+// Simple frame-differencing motion tracker (no MediaPipe needed)
+function trackMotion(
+  prevCtx: CanvasRenderingContext2D | null,
+  canvas: HTMLCanvasElement,
+  video: HTMLVideoElement,
+  camSamples: CameraSample[],
+  startTime: number,
+) {
+  try {
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    if (!ctx) return null;
+    if (video.readyState < 2) return prevCtx; // video not playing yet
+    ctx.drawImage(video, 0, 0, CANVAS_W, CANVAS_H);
+
+    if (prevCtx) {
+      const curData = ctx.getImageData(0, 0, CANVAS_W, CANVAS_H);
+      const prevData = prevCtx.getImageData(0, 0, CANVAS_W, CANVAS_H);
+      let totalDx = 0, totalDy = 0, changedPixels = 0;
+
+      for (let y = 0; y < CANVAS_H; y += 4) {
+        for (let x = 0; x < CANVAS_W; x += 4) {
+          const i = (y * CANVAS_W + x) * 4;
+          const dr = curData.data[i] - prevData.data[i];
+          const dg = curData.data[i + 1] - prevData.data[i + 1];
+          const db = curData.data[i + 2] - prevData.data[i + 2];
+          const diff = Math.abs(dr) + Math.abs(dg) + Math.abs(db);
+          if (diff > 15) {
+            changedPixels++;
+            if (x > 4) {
+              const li = (y * CANVAS_W + (x - 4)) * 4;
+              const ldiff = Math.abs(curData.data[li] - prevData.data[li]);
+              if (ldiff < diff) totalDx -= 1;
+            }
+            if (x < CANVAS_W - 8) {
+              const ri = (y * CANVAS_W + (x + 4)) * 4;
+              const rdiff = Math.abs(curData.data[ri] - prevData.data[ri]);
+              if (rdiff < diff) totalDx += 1;
+            }
+            if (y > 4) {
+              const ui = ((y - 4) * CANVAS_W + x) * 4;
+              const udiff = Math.abs(curData.data[ui] - prevData.data[ui]);
+              if (udiff < diff) totalDy -= 1;
+            }
+            if (y < CANVAS_H - 8) {
+              const di = ((y + 4) * CANVAS_W + x) * 4;
+              const ddiff = Math.abs(curData.data[di] - prevData.data[di]);
+              if (ddiff < diff) totalDy += 1;
+            }
+          }
+        }
+      }
+
+      if (changedPixels > 20) {
+        const now = performance.now() - startTime;
+        camSamples.push({
+          t: Math.round(now),
+          x: round(totalDx / Math.max(changedPixels, 1) * 10),
+          y: round(totalDy / Math.max(changedPixels, 1) * 10),
+          z: 0,
+        });
+        if (camSamples.length > 600) camSamples.shift();
+      }
+    }
+
+    const prevCanvas = document.createElement("canvas");
+    prevCanvas.width = CANVAS_W;
+    prevCanvas.height = CANVAS_H;
+    const pctx = prevCanvas.getContext("2d");
+    if (pctx) pctx.drawImage(canvas, 0, 0);
+    return pctx;
+  } catch {
+    return prevCtx;
+  }
 }
 
 export default function PE001Page() {
   const [phase, setPhase] = useState<"idle" | "countdown" | "capturing" | "waiting" | "complete">("idle");
-  const [sessionCode] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = sessionStorage.getItem("pe001-code");
-      if (saved) return saved;
-      const code = genCode();
-      sessionStorage.setItem("pe001-code", code);
-      return code;
-    }
-    return genCode();
-  });
   const [countdown, setCountdown] = useState(3);
   const [elapsed, setElapsed] = useState(0);
   const [camCount, setCamCount] = useState(0);
+  const [trackCalls, setTrackCalls] = useState(0);
   const [imuCount, setImuCount] = useState(0);
-  const [mpCalls, setMpCalls] = useState(0); // debug: MediaPipe callback count
-  const [cameraStatus, setCameraStatus] = useState("");
-  const [phoneStatus, setPhoneStatus] = useState("waiting");
+  const [phoneStatus, setPhoneStatus] = useState("");
   const [evidence, setEvidence] = useState<EngineEvidence | null>(null);
   const [displayVerdict, setDisplayVerdict] = useState<Verdict | null>(null);
   const [copyStatus, setCopyStatus] = useState("");
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const poseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const trackRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const camSamplesRef = useRef<CameraSample[]>([]);
   const startTimeRef = useRef(0);
 
   useEffect(() => {
     return () => {
-      stopCamera();
+      if (streamRef.current) streamRef.current.getTracks().forEach((t) => t.stop());
+      if (trackRef.current) clearInterval(trackRef.current);
       if (pollRef.current) clearInterval(pollRef.current);
     };
   }, []);
 
-  function stopCamera() {
-    if (streamRef.current) { streamRef.current.getTracks().forEach((t) => t.stop()); streamRef.current = null; }
-    if (poseIntervalRef.current) { clearInterval(poseIntervalRef.current); poseIntervalRef.current = null; }
-    if (videoRef.current) videoRef.current.srcObject = null;
+  async function startCamera() {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { width: CANVAS_W, height: CANVAS_H, frameRate: 15 } });
+    if (!videoRef.current) return;
+    streamRef.current = stream;
+    videoRef.current.srcObject = stream;
+    await videoRef.current.play();
   }
 
-  async function startCamera() {
-    try {
-      setCameraStatus("Starting...");
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240, frameRate: 15 } });
-      if (!videoRef.current) return;
-      streamRef.current = stream;
-      videoRef.current.srcObject = stream;
-      await videoRef.current.play();
-
-      if (!(window as any).Pose) {
-        setCameraStatus("Loading MediaPipe...");
-        await new Promise<void>((r) => {
-          const s = document.createElement("script");
-          s.src = "https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/pose.js";
-          s.crossOrigin = "anonymous";
-          s.onload = () => r();
-          s.onerror = () => r();
-          document.head.appendChild(s);
-        });
-      }
-      if (!(window as any).Pose) { setCameraStatus("MediaPipe unavailable"); return; }
-
-      const MP = "https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404";
-      const pose = new (window as any).Pose({
-        locateFile: (f: string) => {
-          if (!f || f.includes("undefined")) throw new Error(`Invalid MediaPipe file: ${f}`);
-          return `${MP}/${f}`;
-        },
-      });
-      pose.setOptions({ modelComplexity: 0, smoothLandmarks: false, enableSegmentation: false });
-      pose.onResults((results: any) => {
-        setMpCalls((c) => c + 1);
-        if (results.poseLandmarks && startTimeRef.current > 0) {
-          const nose = results.poseLandmarks[0];
-          const wrist = results.poseLandmarks[15];
-          const pt = wrist || nose || results.poseLandmarks[11]; // wrist > nose > shoulder
-          if (pt) {
-            const now = performance.now() - startTimeRef.current;
-            camSamplesRef.current.push({ t: Math.round(now), x: round(pt.x * 100), y: round(pt.y * 100), z: round(pt.z * 100) });
-            if (camSamplesRef.current.length > 600) camSamplesRef.current.shift();
-            setCamCount(camSamplesRef.current.length);
-          }
-        }
-      });
-      poseIntervalRef.current = setInterval(async () => {
-        if (videoRef.current) { try { await pose.send({ image: videoRef.current }); } catch { /* drop */ } }
-      }, 200);
-      setCameraStatus("Active");
-    } catch { setCameraStatus("Unavailable"); }
+  function stopCamera() {
+    if (streamRef.current) { streamRef.current.getTracks().forEach((t) => t.stop()); streamRef.current = null; }
+    if (trackRef.current) { clearInterval(trackRef.current); trackRef.current = null; }
+    if (videoRef.current) videoRef.current.srcObject = null;
   }
 
   async function run() {
@@ -129,7 +150,7 @@ export default function PE001Page() {
 
     camSamplesRef.current = [];
     setCamCount(0);
-    setMpCalls(0);
+    setTrackCalls(0);
     setImuCount(0);
     setEvidence(null);
     setDisplayVerdict(null);
@@ -139,6 +160,19 @@ export default function PE001Page() {
 
     setPhase("capturing");
     setElapsed(0);
+
+    // Motion tracking at 8fps
+    let prevCtx: CanvasRenderingContext2D | null = null;
+    let callCount = 0;
+    trackRef.current = setInterval(() => {
+      callCount++;
+      if (videoRef.current && canvasRef.current) {
+        prevCtx = trackMotion(prevCtx, canvasRef.current, videoRef.current, camSamplesRef.current, startTimeRef.current) || prevCtx;
+        setCamCount(camSamplesRef.current.length);
+      }
+      setTrackCalls(callCount);
+    }, 125);
+
     const t0 = performance.now();
     await new Promise<void>((resolve) => {
       const t = setInterval(() => {
@@ -148,15 +182,16 @@ export default function PE001Page() {
       }, 100);
     });
 
+    if (trackRef.current) clearInterval(trackRef.current);
     stopCamera();
     setPhase("waiting");
     setPhoneStatus("polling...");
 
-    // Poll API for phone IMU data
+    // Fetch phone IMU from API
     const pollStart = Date.now();
     pollRef.current = setInterval(async () => {
       try {
-        const res = await fetch(`/api/pe001/session`);
+        const res = await fetch("/api/pe001/session");
         const data = await res.json();
         if (data.ready) {
           clearInterval(pollRef.current!);
@@ -167,7 +202,7 @@ export default function PE001Page() {
         } else if (Date.now() - pollStart > 120_000) {
           clearInterval(pollRef.current!);
           pollRef.current = null;
-          setPhoneStatus("timeout — no phone data received");
+          setPhoneStatus("timeout");
           setPhase("idle");
         }
       } catch { /* retry */ }
@@ -203,40 +238,31 @@ export default function PE001Page() {
 
       <main className="max-w-lg mx-auto px-4 py-12 space-y-6">
         <div className="text-center space-y-3">
-          <h1 className="text-white/85 text-2xl font-light">PE-001 Offline Sync</h1>
-          <p className="text-white/35 text-[14px]"
-            style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
-            Desktop camera + phone IMU, synced by session code.
+          <h1 className="text-white/85 text-2xl font-light">PE-001 Bridge</h1>
+          <p className="text-white/35 text-[14px]" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+            Desktop camera (motion pixels) + phone IMU. No MediaPipe needed.
           </p>
         </div>
 
-        {/* Recording hint */}
-        <div className="text-center p-4 border border-[#90c8ff]/20 bg-[#90c8ff]/[0.03]">
-          <div className="text-white/30 text-[11px]">1. Click Start Recording below</div>
-          <div className="text-white/30 text-[11px]">2. On phone: open PE-001 Phone page and record</div>
-          <div className="text-white/30 text-[11px]">3. Move both devices together for 8 seconds</div>
-        </div>
-
-        {/* Camera preview — show what the camera sees */}
+        {/* Camera preview + motion tracking */}
         <div className="flex justify-center">
           <video ref={videoRef} className="w-64 h-48 object-cover border border-white/10 rounded" playsInline muted />
         </div>
-
-        {/* Status */}
-        <div className="p-2 border border-white/5 text-[9px] font-mono text-white/20 flex justify-between">
-          <span>Camera: {cameraStatus || "off"}</span>
-          <span>Phone: {phoneStatus}</span>
-        </div>
+        <canvas ref={canvasRef} width={CANVAS_W} height={CANVAS_H} style={{ position: "absolute", left: -9999 }} />
 
         {phase === "idle" && (
-          <button onClick={run} className="w-full py-5 bg-white/[0.04] border border-white/10 text-white/70 text-[15px] tracking-[0.05em] hover:bg-white/[0.08] transition-all">
-            Start Recording
-          </button>
+          <div className="space-y-4">
+            <p className="text-white/25 text-[11px] text-center" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+              1. Click Start Recording<br />2. On phone: open PE-001 Phone, click Record IMU<br />3. Move both together for 8s
+            </p>
+            <button onClick={run} className="w-full py-5 bg-white/[0.04] border border-white/10 text-white/70 text-[15px] tracking-[0.05em] hover:bg-white/[0.08] transition-all">
+              Start Recording
+            </button>
+          </div>
         )}
 
         {phase === "countdown" && (
           <div className="flex flex-col items-center py-24 gap-6">
-            <div className="text-white/20 text-[12px] tracking-[0.3em] uppercase">Starting</div>
             <div className="text-[100px] font-light text-[#90c8ff] leading-none">{countdown}</div>
           </div>
         )}
@@ -249,8 +275,9 @@ export default function PE001Page() {
             <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
               <div className="h-full bg-gradient-to-r from-[#90c8ff]/60 to-[#a371f7]/60 rounded-full" style={{ width: `${(elapsed / DURATION) * 100}%` }} />
             </div>
-            <div className="text-center p-8 border border-dashed border-white/10 text-white/30 text-[14px]">
-              Camera: {camCount} landmarks · MP: {mpCalls} calls
+            <div className="text-center p-6 border-2 border-[#d29922]/40 bg-[#d29922]/[0.06]">
+              <div className="text-[#d29922] text-[20px] font-bold">{trackCalls} scans</div>
+              <div className="text-white/50 text-[14px] mt-1">{camCount} motion events</div>
             </div>
           </div>
         )}
@@ -258,21 +285,20 @@ export default function PE001Page() {
         {phase === "waiting" && (
           <div className="text-center p-8 border border-[#d29922]/20 bg-[#d29922]/[0.03]">
             <div className="text-[#d29922]/60 text-[12px] animate-pulse">Waiting for phone data...</div>
-            <div className="text-white/20 text-[10px] mt-3">Record IMU on your phone (same session code)</div>
           </div>
         )}
 
         {phase === "complete" && evidence && displayVerdict && (
           <div className="space-y-4">
             <button onClick={() => {
-              const lines = [`Verdict: ${displayVerdict}`, `Camera: ${camCount} frames, IMU: ${imuCount} samples`, ...evidence.diagnostics];
+              const lines = [`Verdict: ${displayVerdict}`, `Camera: ${camCount} events, IMU: ${imuCount} samples`, ...evidence.diagnostics];
               navigator.clipboard.writeText(lines.join("\n")).then(() => { setCopyStatus("✓ Copied!"); setTimeout(() => setCopyStatus(""), 2000); }).catch(() => {});
             }} className="w-full py-3 border border-[#d29922]/40 text-[#d29922]/70 text-[11px] tracking-[0.1em] uppercase hover:border-[#d29922] transition-all">
               {copyStatus || "📋 Copy Results"}
             </button>
 
             <div className={`text-center p-6 border-2 ${displayVerdict === "PASS" ? "border-[#3fb950]/40 bg-[#3fb950]/[0.04]" : "border-[#f85149]/40 bg-[#f85149]/[0.04]"} space-y-3`}>
-              <div className="text-white/20 text-[9px] tracking-[0.2em] uppercase">Cross-Modal Confidence</div>
+              <div className="text-white/20 text-[9px] tracking-[0.2em] uppercase">Confidence</div>
               <div className="text-[36px] font-light" style={{ color: sc(displayVerdict) }}>
                 {evidence.confidence ? `${(evidence.confidence * 100).toFixed(0)}%` : "—"}
               </div>
