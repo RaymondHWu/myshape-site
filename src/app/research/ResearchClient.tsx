@@ -31,6 +31,33 @@ const PUBLISHED_NOTES = [
     date: "2026.07.13",
     slug: "/research/notes/003-cross-modal-binding",
   },
+  {
+    num: "004",
+    title: "RFC-0001 — Motion Signature Format",
+    subtitle:
+      "A formal, implementable specification. Any team should be able to build a compatible verifier from this document alone.",
+    date: "2026.07.18",
+    slug: "/research/notes/004-motion-signature-rfc",
+    isRFC: true,
+  },
+  {
+    num: "005",
+    title: "FD-001 — Frame Rate Hypothesis",
+    subtitle:
+      "We tested whether higher sampling improves cross-modal verification. It made things worse. Here's why.",
+    date: "2026.07.18",
+    slug: "/research/notes/005-failure-report-10fps",
+    isFD: true,
+  },
+  {
+    num: "006",
+    title: "RFC-0002 — Continuity Proof Format",
+    subtitle:
+      "How to prove that two temporally separated observations describe the same entity. Evidence receipts, hash chains, and CFC detection.",
+    date: "2026.07.18",
+    slug: "/research/notes/006-continuity-proof-rfc",
+    isRFC: true,
+  },
 ];
 
 const OPEN_QUESTIONS = [
@@ -302,8 +329,8 @@ export default function ResearchClient() {
                 onMouseEnter={() => playTick(520, "sine", 0.05, 0.02)}
               >
                 <div className="rn-card-num">
-                  <span className="rn-card-dot" />
-                  RN #{rn.num}
+                  <span className="rn-card-dot" style={(rn as any).isFD ? { background: "#f85149", boxShadow: "0 0 6px rgba(248,81,73,0.6)" } : (rn as any).isRFC ? { background: "#d29922", boxShadow: "0 0 6px rgba(210,153,34,0.4)" } : undefined} />
+                  {(rn as any).isRFC ? `RFC-${rn.num}` : (rn as any).isFD ? `FD-${rn.num}` : `RN #${rn.num}`}
                 </div>
                 <div className="rn-card-title">{rn.title}</div>
                 <div className="rn-card-subtitle">{rn.subtitle}</div>

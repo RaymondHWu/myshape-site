@@ -10,15 +10,13 @@
  *
  * const result = await verifyContinuity({
  *   imuSamples: [...],
- *   cameraSamples: [...], // optional
+ *   cameraSamples: [...],
  * });
  * // → { verdict, confidence, evidence }
  * ```
- *
- * @packageDocumentation
  */
 
-// Re-export public types
+// ── Public types ──
 export type {
   IMUSample,
   CameraSample,
@@ -27,26 +25,26 @@ export type {
   Verdict,
   EvidenceReceipt,
   VerificationPolicy,
-} from "../../../src/lib/evidence/types";
+} from "./types";
 
 export type {
   JerkEvent,
   DirChangeEvent,
   MatchedEvent,
-} from "../../../src/lib/evidence/causal-coupling";
+} from "./causal-coupling";
 
 export type {
   Direction,
   RoundResult,
-} from "../../../src/lib/evidence/gyro-challenge";
+} from "./gyro-challenge";
 
-// Re-export core functions
+// ── Core functions ──
 export {
   computeStatus,
   computeHint,
   hashEvidence,
   evaluatePolicy,
-} from "../../../src/lib/evidence/types";
+} from "./types";
 
 export {
   median,
@@ -59,7 +57,7 @@ export {
   TEMPORAL_ALIGNMENT_THRESHOLD,
   DIRECTION_AGREEMENT_THRESHOLD,
   EVENT_DENSITY_THRESHOLD,
-} from "../../../src/lib/evidence/causal-coupling";
+} from "./causal-coupling";
 
 export {
   analyzeRound,
@@ -69,22 +67,18 @@ export {
   DIRECTION_ARROW,
   BASE_COUNTDOWN_MS,
   CAPTURE_DURATION_MS,
-} from "../../../src/lib/evidence/gyro-challenge";
+} from "./gyro-challenge";
 
 // ── High-level API ──
 
-import type { IMUSample, CameraSample, EngineEvidence, Verdict, VerificationPolicy } from "../../../src/lib/evidence/types";
-import { evaluatePolicy } from "../../../src/lib/evidence/types";
-import { detectJerkPeaks, detectDirectionChanges, matchEvents, buildEvidence } from "../../../src/lib/evidence/causal-coupling";
+import type { IMUSample, CameraSample, EngineEvidence, Verdict, VerificationPolicy } from "./types";
+import { evaluatePolicy } from "./types";
+import { detectJerkPeaks, detectDirectionChanges, matchEvents, buildEvidence } from "./causal-coupling";
 
 export interface VerifyContinuityInput {
-  /** IMU samples from accelerometer + gyroscope */
   imuSamples: IMUSample[];
-  /** Optional camera samples from motion tracker */
   cameraSamples?: CameraSample[];
-  /** Policy configuration */
   policy?: VerificationPolicy;
-  /** Total duration in ms (default: 8000) */
   duration?: number;
 }
 
@@ -94,28 +88,6 @@ export interface VerifyContinuityOutput {
   evidence: EngineEvidence;
 }
 
-/**
- * Verify continuity of presence from IMU and optional camera data.
- *
- * This is the primary entry point for MyShape Protocol verification.
- * Pass IMU samples (required) and camera samples (optional) to receive
- * a structured verdict with per-component evidence.
- *
- * @param input — IMU samples, optional camera samples, and policy config
- * @returns verdict, confidence score, and structured evidence
- *
- * @example
- * ```ts
- * const result = await verifyContinuity({
- *   imuSamples: deviceMotionEvents,
- *   cameraSamples: videoMotionFrames,
- * });
- *
- * if (result.verdict === "PASS") {
- *   console.log(`Verified: ${result.confidence * 100}% confidence`);
- * }
- * ```
- */
 export async function verifyContinuity(input: VerifyContinuityInput): Promise<VerifyContinuityOutput> {
   const { imuSamples, cameraSamples, policy, duration = 8000 } = input;
 
@@ -136,7 +108,9 @@ export async function verifyContinuity(input: VerifyContinuityInput): Promise<Ve
     ...policy,
   };
 
-  const verdict = evaluatePolicy(defaultPolicy, evidence.confidence ?? 0);
-
-  return { verdict, confidence: evidence.confidence ?? 0, evidence };
+  return {
+    verdict: evaluatePolicy(defaultPolicy, evidence.confidence ?? 0),
+    confidence: evidence.confidence ?? 0,
+    evidence,
+  };
 }
