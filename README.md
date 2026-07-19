@@ -99,6 +99,14 @@ npm run benchmark    # → 2 benchmark suites
 
 ---
 
+## Transparency
+
+The Continuity Lab is committed to radical transparency in research and protocol development. All technical specifications (RFCs), research notes (RN), experimental data, and reference implementations are published openly on GitHub under MIT license.
+
+Operational, institutional, and strategic planning remains strictly internal.
+
+---
+
 ## The Continuity Lab
 
 We are a research group studying continuity as a verifiable property.
