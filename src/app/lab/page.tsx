@@ -47,21 +47,24 @@ export default function LabPage() {
         <div style={{ fontSize: 10, color: "rgba(144,200,255,0.4)", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 16 }}>Published Research</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 1, marginBottom: 40 }}>
           {[
-            { id: "RFC-0001", title: "Motion Signature Format", type: "Specification" },
-            { id: "RFC-0002", title: "Continuity Proof Format", type: "Specification" },
-            { id: "RN-003", title: "Cross-Modal Binding — 576-run validation", type: "Research Note" },
-            { id: "RN-002", title: "PES Benchmark v0.2", type: "Research Note" },
-            { id: "RN-001", title: "The Continuity Problem", type: "Research Note" },
-            { id: "FD-001", title: "Frame Rate Hypothesis (failed experiment)", type: "Failure Report" },
-            { id: "DL-001", title: "Direction Asymmetry in EE-003", type: "Decision Log" },
+            { id: "RFC-0001", title: "Motion Signature Format", type: "Specification", href: "https://www.myshape.com/research/notes/004-motion-signature-rfc" },
+            { id: "RFC-0002", title: "Continuity Proof Format", type: "Specification", href: "https://www.myshape.com/research/notes/006-continuity-proof-rfc" },
+            { id: "RN-003", title: "Cross-Modal Binding — 576-run validation", type: "Research Note", href: "https://www.myshape.com/research/notes/003-cross-modal-binding" },
+            { id: "RN-002", title: "PES Benchmark v0.2", type: "Research Note", href: "https://www.myshape.com/research/notes/002-pes-benchmark" },
+            { id: "RN-001", title: "The Continuity Problem", type: "Research Note", href: "https://www.myshape.com/research/notes/001-the-continuity-problem" },
+            { id: "FD-001", title: "Frame Rate Hypothesis (failed experiment)", type: "Failure Report", href: "https://www.myshape.com/research/notes/005-failure-report-10fps" },
+            { id: "DL-001", title: "Direction Asymmetry in EE-003", type: "Decision Log", href: "https://www.myshape.com/research/notes/007-ee003-direction-asymmetry" },
           ].map((p) => (
-            <div key={p.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.04)", fontSize: 12 }}>
+            <a key={p.id} href={p.href} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.04)", fontSize: 12, textDecoration: "none", transition: "background 0.2s" }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(144,200,255,0.03)"}
+              onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
+            >
               <div>
                 <span style={{ color: "rgba(144,200,255,0.55)", fontWeight: 500, marginRight: 12 }}>{p.id}</span>
                 <span style={{ color: "rgba(255,255,255,0.5)" }}>{p.title}</span>
               </div>
               <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 10 }}>{p.type}</span>
-            </div>
+            </a>
           ))}
         </div>
 
