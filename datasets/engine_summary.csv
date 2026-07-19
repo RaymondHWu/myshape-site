@@ -1,0 +1,7 @@
+engine,description,type,n_runs,pass_count,pass_rate,temporal_alignment,direction_agreement,cfc_005_count,cfc_007_count
+EE-003,"Gyroscope Challenge-Response",Active,200,118,0.59,N/A,N/A,0,47
+PE-001-single,"Cross-Modal Coupling (same phone)",Passive,50,46,0.93,1.00,0.45,0,N/A
+PE-001-pixel,"Cross-Modal Coupling (frame differencing)",Passive,66,18,0.27,1.00,0.46,5,N/A
+PE-001-blob,"Cross-Modal Coupling (color-blob centroid)",Passive,100,80,0.80,1.00,0.50,4,N/A
+PE-001-moving,"Cross-Modal Coupling (moving-blob filter)",Passive,100,62,0.62,1.00,0.63,4,N/A
+VS-001,"Dual-Engine Pipeline",Pipeline,60,56,0.93,1.00,N/A,N/A,N/A

@@ -1,0 +1,4 @@
+tracker,generation,n_runs,pass_count,pass_rate,avg_camera_fps,direction_agreement,temporal_alignment,cfc_005_count,notes
+"Pixel Frame Differencing",1,66,18,0.27,38,0.46,1.00,5,"All-pixel motion — noisy but proved the architecture"
+"Color-Blob Centroid",2,100,80,0.80,49,0.50,1.00,4,"Skin-color filter cuts background noise 3×"
+"Moving-Blob Filter",3,100,62,0.62,49,0.63,1.00,4,"Only tracks colored pixels in motion — isolates hand from face"
