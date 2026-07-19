@@ -23,7 +23,7 @@ export default function LabPage() {
           <a href="https://github.com/myshapeprotocol" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>GitHub</a>
           <a href="https://huggingface.co/TheContinuityLab" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>HuggingFace</a>
           <a href="https://www.npmjs.com/package/myshape" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>npm</a>
-          <a href="/research" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>Research Hub</a>
+          <a href="https://www.myshape.com/research" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>Research Hub</a>
         </div>
       </div>
 
