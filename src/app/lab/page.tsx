@@ -72,16 +72,19 @@ export default function LabPage() {
         <div style={{ fontSize: 10, color: "rgba(144,200,255,0.4)", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 16 }}>Evidence Engines</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 1, marginBottom: 56 }}>
           {[
-            { engine: "EE-001", name: "Presence Detection", rate: "100% floor" },
-            { engine: "EE-002", name: "Causal Coupling", rate: "58% · N=316" },
-            { engine: "EE-003", name: "Gyroscope Challenge", rate: "59% · N=200" },
-            { engine: "VS-001", name: "Dual-Engine Pipeline", rate: "93% · N=60" },
+            { engine: "EE-001", name: "Presence Detection", rate: "100% floor", href: "https://www.myshape.com/research/fusion" },
+            { engine: "EE-002", name: "Causal Coupling", rate: "58% · N=316", href: "https://www.myshape.com/research/causal-coupling" },
+            { engine: "EE-003", name: "Gyroscope Challenge", rate: "59% · N=200", href: "https://www.myshape.com/research/challenge-response" },
+            { engine: "VS-001", name: "Dual-Engine Pipeline", rate: "93% · N=60", href: "https://www.myshape.com/research/protocol-verify" },
           ].map((e) => (
-            <div key={e.engine} style={{ padding: "12px 14px", border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.01)", fontSize: 11 }}>
+            <a key={e.engine} href={e.href} style={{ display: "block", padding: "12px 14px", border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.01)", fontSize: 11, textDecoration: "none", transition: "border-color 0.2s, background 0.2s" }}
+              onMouseEnter={(ev) => { ev.currentTarget.style.borderColor = "rgba(144,200,255,0.3)"; ev.currentTarget.style.background = "rgba(144,200,255,0.03)"; }}
+              onMouseLeave={(ev) => { ev.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; ev.currentTarget.style.background = "rgba(255,255,255,0.01)"; }}
+            >
               <div style={{ color: "rgba(144,200,255,0.5)", fontWeight: 500, marginBottom: 4 }}>{e.engine}</div>
               <div style={{ color: "rgba(255,255,255,0.5)", marginBottom: 2 }}>{e.name}</div>
               <div style={{ color: "rgba(63,185,80,0.6)", fontSize: 10 }}>{e.rate}</div>
-            </div>
+            </a>
           ))}
         </div>
 
