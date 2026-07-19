@@ -77,7 +77,7 @@ const result = await verifyContinuity({
 |-----------|--------|-------|
 | TypeScript Reference Implementation | **Stable** | npm package · 84 tests |
 | Rust Port | **In Development** | Core logic written, not yet in public repo |
-| Benchmark Dataset (576 runs) | **Pending** | Preparing for HuggingFace upload |
+| Benchmark Dataset (576 runs) | **Stable** | HuggingFace: `ContinuityLab-Org/myshape-576` |
 | CI Benchmark Pipeline | **Pending** | GitHub Actions — funded by active grant application |
 | RFC-0003 (Verification API) | **Pending** | Specification — funded by active grant application |
 
