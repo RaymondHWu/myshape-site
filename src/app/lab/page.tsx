@@ -8,12 +8,14 @@ export default function LabPage() {
   });
 
   return (
+    <>
+    <style>{`@keyframes breathe{0%,100%{opacity:0.6;transform:scale(1);box-shadow:0 0 8px #90c8ff}50%{opacity:1;transform:scale(1.8);box-shadow:0 0 20px #90c8ff,0 0 40px rgba(144,200,255,0.6)}}`}</style>
     <div style={{ minHeight: "100vh", background: "#02040a", color: "#f8feff", fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
       {/* Hero */}
       <div style={{ textAlign: "center", padding: "80px 24px 48px", maxWidth: 640, margin: "0 auto" }}>
         <div style={{ width: 40, height: 40, borderRadius: "50%", background: "radial-gradient(circle, rgba(144,200,255,0.3) 0%, rgba(144,200,255,0.05) 70%, transparent 100%)", margin: "0 auto 40px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#90c8ff", boxShadow: "0 0 12px #90c8ff" }} />
+          <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#90c8ff", boxShadow: "0 0 12px #90c8ff", animation: "breathe 3s ease-in-out infinite" }} />
         </div>
         <h1 style={{ fontSize: "clamp(1.6rem, 3.5vw, 2rem)", fontWeight: 300, letterSpacing: "0.03em", color: "#fff", margin: "0 0 12px" }}>The Continuity Lab</h1>
         <p style={{ fontSize: "clamp(0.95rem, 1.5vw, 1.15rem)", color: "rgba(255,255,255,0.4)", lineHeight: 1.6, margin: "0 0 32px" }}>
@@ -121,5 +123,6 @@ export default function LabPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
