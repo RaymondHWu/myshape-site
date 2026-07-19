@@ -71,6 +71,18 @@ const result = await verifyContinuity({
 
 ---
 
+## Roadmap & Status
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| TypeScript Reference Implementation | **Stable** | npm package · 84 tests |
+| Rust Port | **In Development** | Core logic written, not yet in public repo |
+| Benchmark Dataset (576 runs) | **Uploading** | HuggingFace · ETA July 21 |
+| CI Benchmark Pipeline | **Planned** | GitHub Actions artifact — this grant funds it |
+| RFC-0003 (Verification API) | **Drafting** | Specification — this grant funds it |
+
+---
+
 ## Repository Structure
 
 ```
