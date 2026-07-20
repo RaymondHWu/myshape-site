@@ -7,8 +7,9 @@ import { playTick } from "@/utils/useAudioTick";
 import "./research.css";
 
 const SPECS = [
+  { id: "CPS-0001", title: "Continuity Protocol Core", desc: "Protocol object, semantics, trust model, verification contract. Engine-independent.", slug: "/research/notes/008-continuity-protocol-core", status: "Draft" },
   { id: "RFC-0001", title: "Motion Signature Format", desc: "PES, jerk detection, cross-modal matching, challenge-response.", slug: "/research/notes/004-motion-signature-rfc", status: "Draft" },
-  { id: "RFC-0002", title: "Continuity Proof Format", desc: "Evidence receipts, CFC catalog, hash chaining.", slug: "/research/notes/006-continuity-proof-rfc", status: "Draft" },
+  { id: "RFC-0002", title: "Continuity Proof Format", desc: "Evidence receipts, CFC catalog, predecessor chaining.", slug: "/research/notes/006-continuity-proof-rfc", status: "Draft" },
 ];
 
 const NOTES = [
