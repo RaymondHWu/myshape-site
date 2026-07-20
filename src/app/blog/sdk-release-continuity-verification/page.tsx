@@ -33,9 +33,9 @@ export default function Page() {
     <>
       <BreadcrumbList
         items={[
-          { name: "Home", url: "https://www.myshape.com" },
-          { name: "Blog", url: "https://www.myshape.com/blog" },
-          { name: "Continuity Verification Becomes Programmable", url: "https://www.myshape.com/blog/sdk-release-continuity-verification" },
+          { name: "Home", href: "/" },
+          { name: "Blog", href: "/blog" },
+          { name: "Continuity Verification Becomes Programmable" },
         ]}
       />
       <ArticleJsonLd
