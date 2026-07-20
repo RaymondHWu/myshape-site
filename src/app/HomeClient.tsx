@@ -32,10 +32,21 @@ export default function HomeClient() {
           </p>
         </div>
 
+        {/* ── SDK Release Banner ── */}
+        <div className="relative z-10 pb-6 px-6 text-center">
+          <div className="inline-flex items-center gap-3 px-5 py-2.5"
+            style={{ border: "1px solid rgba(96,165,250,0.15)", background: "rgba(96,165,250,0.04)", borderRadius: "6px" }}>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#60A5FA] shadow-[0_0_6px_rgba(96,165,250,0.6)] animate-pulse" />
+            <span className="font-mono text-[10px] tracking-[0.12em] uppercase" style={{ color: "rgba(96,165,250,0.7)" }}>SDK Released</span>
+            <code className="font-mono text-[10px] tracking-[0.05em]" style={{ color: "rgba(255,255,255,0.45)" }}>npm install @thecontinuitylab/myshape</code>
+            <a href="/blog/sdk-release-continuity-verification" className="font-mono text-[9px] tracking-[0.1em]" style={{ color: "rgba(96,165,250,0.45)", textDecoration: "none" }}>→ Read</a>
+          </div>
+        </div>
+
         {/* ── Evidence Snapshot ── */}
         <div className="relative z-10 pb-10 md:pb-14 px-6 text-center">
           <Link
-            href="/research/benchmarks"
+            href="/research"
             className="inline-flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 font-mono text-[10px] tracking-[0.12em] uppercase transition-all duration-500"
             style={{ color: "rgba(255,255,255,0.3)" }}
             onMouseEnter={(e) => {
@@ -46,17 +57,17 @@ export default function HomeClient() {
               e.currentTarget.style.color = "rgba(255,255,255,0.3)";
             }}
           >
-            <span>281 benchmark samples</span>
+            <span>576 experimental runs</span>
             <span style={{ color: "rgba(255,255,255,0.1)" }}>·</span>
             <span>
-              Cohen&apos;s d: <span style={{ color: "rgba(144,200,255,0.65)" }}>2.1</span>
+              <span style={{ color: "rgba(144,200,255,0.65)" }}>2</span> RFCs
             </span>
             <span style={{ color: "rgba(255,255,255,0.1)" }}>·</span>
             <span>
-              AUC: <span style={{ color: "rgba(212,175,55,0.65)" }}>0.94</span>
+              <span style={{ color: "rgba(212,175,55,0.65)" }}>npm</span> install
             </span>
             <span style={{ color: "rgba(255,255,255,0.1)" }}>·</span>
-            <span>309 tests · 0 failures</span>
+            <span>121 tests</span>
             <span className="ml-1" style={{ color: "rgba(144,200,255,0.3)" }}>→</span>
           </Link>
         </div>
@@ -105,11 +116,11 @@ export default function HomeClient() {
               {/* Mobile: simplified stack */}
               <div className="md:hidden space-y-2">
                 {[
-                  { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", delay: "0s" },
-                  { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", delay: "0.3s" },
-                  { l: "L3", name: "IDENTITY VECTOR", desc: "Motion geometry distilled into a compact, non-replicable signature.", meta: "GEOMETRY: VECTOR_3D_DISTILLED // SIG_SECURE", delay: "0.6s" },
-                  { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK", delay: "0.9s" },
-                  { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F", delay: "1.2s" },
+                  { l: "EE-001", name: "PRESENCE DETECTION", desc: "4-dimensional entropy scoring from IMU data. Distinguishes embodied entities from synthetic motion.", meta: "PASS_RATE: 100%_FLOOR // N: ALL", delay: "0s" },
+                  { l: "EE-002", name: "CAUSAL COUPLING", desc: "Cross-modal event binding. Proves IMU and camera observe the same physical event.", meta: "TEMPORAL_ALIGNMENT: 100% // N: 316", delay: "0.3s" },
+                  { l: "EE-003", name: "CHALLENGE RESPONSE", desc: "Randomized gyroscope challenges with jittered timing. Defeats replay attacks.", meta: "PASS_RATE: 59% // N: 200", delay: "0.6s" },
+                  { l: "VS-001", name: "VERIFICATION SESSION", desc: "Dual-engine pipeline. Passive presence + active challenge escalation.", meta: "PASS_RATE: 93% // N: 60", delay: "0.9s" },
+                  { l: "RFC-0002", name: "CONTINUITY PROOF", desc: "Hash-chained evidence receipts. Verifiable proof of persistent entity continuity.", meta: "FORMAT: EVIDENCE_RECEIPT // SHA-256_CHAINED", delay: "1.2s" },
                 ].map(layer => (
                   <div key={layer.l} className="group p-6 transition-all duration-500"
                     style={{ border: "1px solid rgba(144,200,255,0.1)", borderRadius: "12px", background: "transparent" }}
@@ -151,11 +162,11 @@ export default function HomeClient() {
                 }} />
 
               {[
-                { l: "L1", name: "MOTION CAPTURE", desc: "Real-time local camera input. All processing on-device. Zero data upload.", meta: "HARDWARE: LOCAL_SANDBOX // ENCLAVE_SECURE", hue: 180, side: "right" as const, delay: "0s" },
-                { l: "L2", name: "BEHAVIOR ENCODING", desc: "4-dimensional entropy scoring detects and flags AI-generated synthetic motion.", meta: "ENTROPY: 4D_SCORING_VERIFIED // 0.992_REAL", hue: 195, side: "left" as const, delay: "0.3s" },
-                { l: "L3", name: "IDENTITY VECTOR", desc: "Motion geometry distilled into a compact, non-replicable signature.", meta: "GEOMETRY: VECTOR_3D_DISTILLED // SIG_SECURE", hue: 210, side: "right" as const, delay: "0.6s" },
-                { l: "L4", name: "PROOF LAYER", desc: "Zero-knowledge proofs. Verify presence without exposing raw motion data.", meta: "VERIFIER: ZK_SNARK_PASS // SIG_OK", hue: 230, side: "left" as const, delay: "0.9s" },
-                { l: "L5", name: "AGENT IDENTITY", desc: "Cross-species verification. Human and AI identities coexist in one protocol.", meta: "PROOF_STATE: ACTIVE_COEXISTENCE // 0x2A19F", hue: 270, side: "right" as const, delay: "1.2s" },
+                { l: "EE-001", name: "PRESENCE DETECTION", desc: "4-dimensional entropy scoring from IMU data. Distinguishes embodied entities from synthetic motion.", meta: "PASS_RATE: 100%_FLOOR // N: ALL", hue: 180, side: "right" as const, delay: "0s" },
+                { l: "EE-002", name: "CAUSAL COUPLING", desc: "Cross-modal event binding. Proves IMU and camera observe the same physical event.", meta: "TEMPORAL_ALIGNMENT: 100% // N: 316", hue: 195, side: "left" as const, delay: "0.3s" },
+                { l: "EE-003", name: "CHALLENGE RESPONSE", desc: "Randomized gyroscope challenges with jittered timing. Defeats replay attacks.", meta: "PASS_RATE: 59% // N: 200", hue: 210, side: "right" as const, delay: "0.6s" },
+                { l: "VS-001", name: "VERIFICATION SESSION", desc: "Dual-engine pipeline. Passive presence + active challenge escalation.", meta: "PASS_RATE: 93% // N: 60", hue: 230, side: "left" as const, delay: "0.9s" },
+                { l: "RFC-0002", name: "CONTINUITY PROOF", desc: "Hash-chained evidence receipts. Verifiable proof of persistent entity continuity.", meta: "FORMAT: EVIDENCE_RECEIPT // SHA-256_CHAINED", hue: 270, side: "right" as const, delay: "1.2s" },
               ].map((layer) => (
                 <div key={layer.l} className={`relative flex items-center mb-4 ${layer.side === "left" ? "flex-row" : "flex-row-reverse"}`}>
                   <div className="absolute top-1/2 z-10"
