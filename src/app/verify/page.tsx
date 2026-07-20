@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { buildReceipt, createReceiptId, computePayloadDigest } from "@/lib/evidence/cps0001";
+import type { ContinuityInterval } from "@/lib/evidence/cps0001";
 
 export default function Page() {
   const [phase, setPhase] = useState<"idle" | "go" | "done">("idle");
@@ -10,7 +12,7 @@ export default function Page() {
   const [confidence, setConfidence] = useState(0);
   const [details, setDetails] = useState<string[]>([]);
   const [error, setError] = useState("");
-  const [receipt, setReceipt] = useState("");
+  const [receiptJson, setReceiptJson] = useState("");
   const [receiptHash, setReceiptHash] = useState("");
   const ref = useRef<Array<{ t: number; ax: number; ay: number; az: number }>>([]);
   const capRef = useRef(false);
@@ -22,7 +24,7 @@ export default function Page() {
   }
 
   async function go() {
-    setError(""); setVerdict(""); setConfidence(0); setDetails([]); setReceipt(""); setReceiptHash("");
+    setError(""); setVerdict(""); setConfidence(0); setDetails([]); setReceiptJson(""); setReceiptHash("");
 
     if (typeof (DeviceMotionEvent as any).requestPermission === "function") {
       try {
@@ -38,6 +40,7 @@ export default function Page() {
     await new Promise(r => setTimeout(r, 1000)); setMsg("1");
     await new Promise(r => setTimeout(r, 1000));
 
+    const startTime = new Date();
     ref.current = [];
     capRef.current = true;
     const t0 = performance.now();
@@ -53,6 +56,7 @@ export default function Page() {
 
     capRef.current = false;
     window.removeEventListener("devicemotion", handler);
+    const endTime = new Date();
     setSamples(ref.current.length);
 
     const data = ref.current;
@@ -76,13 +80,50 @@ export default function Page() {
     setConfidence(Math.round(sc * 100));
     setDetails([cv > 0.08 ? "✓ Natural timing" : "✗ Too regular", mvv > 0.25 ? "✓ Good intensity" : "✗ Too weak"]);
 
-    // Build verifiable receipt
-    const prev = typeof window !== "undefined" ? localStorage.getItem("vfy-prev") || "0000000000000000000000000000000000000000000000000000000000000000" : "0".repeat(64);
-    const ts = new Date().toISOString();
-    const payload = JSON.stringify({ v: 1, ts, verdict: ok ? "PASS" : "UNCERTAIN", confidence: Math.round(sc * 100), samples: n, prev });
-    const hash = await sha256(payload);
+    // Build CPS-0001 ContinuityReceipt
+    const prev = typeof window !== "undefined" ? localStorage.getItem("vfy-prev") ?? null : null;
+
+    const payload = {
+      cv,
+      mvv,
+      n: data.length,
+      meanInterval: Math.round(mi * 100) / 100,
+    };
+    const payloadDigest = await computePayloadDigest(payload);
+
+    const interval: ContinuityInterval = {
+      start: startTime.toISOString(),
+      end: endTime.toISOString(),
+      coverageMs: endTime.getTime() - startTime.getTime(),
+    };
+
+    // Opaque subject ID — SHA-256 of localStorage-stable device secret
+    let devId = typeof window !== "undefined" ? localStorage.getItem("vfy-dev") : null;
+    if (!devId && typeof window !== "undefined") {
+      devId = createReceiptId();
+      localStorage.setItem("vfy-dev", devId);
+    }
+
+    const receipt = buildReceipt({
+      evidence: [{
+        engineId: "EE-001",
+        engineVersion: "1.2.0",
+        confidence: sc,
+        payload,
+        payloadDigest,
+      }],
+      interval,
+      subject: { id: devId ?? "unknown", type: "embodied" },
+      issuer: { id: "self", publicKey: "" },
+      previousReceiptHash: prev,
+      verdict: ok ? "PASS" : "FAIL",
+    });
+
+    // Hash the full receipt for chain link
+    const receiptStr = JSON.stringify(receipt);
+    const hash = await sha256(receiptStr);
     const shortHash = hash.slice(0, 16);
-    setReceipt(JSON.stringify(JSON.parse(payload), null, 2));
+    setReceiptJson(JSON.stringify(receipt, null, 2));
     setReceiptHash(shortHash);
     if (typeof window !== "undefined") localStorage.setItem("vfy-prev", hash);
 
@@ -130,21 +171,21 @@ export default function Page() {
               {details.map((d, i) => <div key={i} style={{ color: d.startsWith("✓") ? "#34D399" : "#f85149" }}>{d}</div>)}
             </div>
 
-            {/* Receipt */}
+            {/* CPS-0001 Receipt */}
             {receiptHash && (
               <div style={{ marginBottom: 20, padding: "12px 14px", background: "rgba(96,165,250,0.04)", border: "1px solid rgba(96,165,250,0.15)", borderRadius: 8, textAlign: "left", fontSize: 11 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                  <span style={{ color: "#60A5FA", fontWeight: 500 }}>Receipt</span>
-                  <button onClick={() => navigator.clipboard.writeText(receipt).then(() => { const b = document.activeElement as HTMLButtonElement; if (b) { b.textContent = "✓ Copied"; setTimeout(() => b.textContent = "Copy", 1500); } })} style={{ fontSize: 10, color: "#60A5FA", background: "none", border: "1px solid rgba(96,165,250,0.2)", borderRadius: 4, padding: "2px 8px", cursor: "pointer" }}>Copy</button>
+                  <span style={{ color: "#60A5FA", fontWeight: 500 }}>CPS-0001 Receipt</span>
+                  <button onClick={() => navigator.clipboard.writeText(receiptJson).then(() => { const b = document.activeElement as HTMLButtonElement; if (b) { b.textContent = "✓ Copied"; setTimeout(() => b.textContent = "Copy", 1500); } })} style={{ fontSize: 10, color: "#60A5FA", background: "none", border: "1px solid rgba(96,165,250,0.2)", borderRadius: 4, padding: "2px 8px", cursor: "pointer" }}>Copy</button>
                 </div>
                 <div style={{ color: "#64748B", fontSize: 10, fontFamily: "monospace", wordBreak: "break-all", lineHeight: 1.6, maxHeight: 80, overflow: "hidden" }}>
-                  {receipt.split("\n").slice(0, 4).join("\n")}
+                  {receiptJson.split("\n").slice(0, 6).join("\n")}
                 </div>
                 <div style={{ marginTop: 8, fontSize: 10, color: "rgba(96,165,250,0.5)", fontFamily: "monospace" }}>
-                  SHA-256: {receiptHash}...
+                  Chain: {receiptHash}...
                 </div>
                 <div style={{ marginTop: 8, fontSize: 9, color: "rgba(255,255,255,0.12)" }}>
-                  This receipt is hash-chained to your previous verification. It cannot be forged — anyone can recompute the SHA-256 and verify.
+                  Continuity Receipt · CPS-0001 v1.0 · hash-chained to previous verification
                 </div>
               </div>
             )}

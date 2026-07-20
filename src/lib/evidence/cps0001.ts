@@ -1,0 +1,329 @@
+// ═══════════════════════════════════════════════════════════════════
+// CPS-0001 — Continuity Protocol Core Types
+//
+// Protocol-level types implementing the CPS-0001 specification
+// (src/app/research/notes/008-continuity-protocol-core).
+//
+// These types are ENGINE-INDEPENDENT. They describe the protocol object
+// (ContinuityReceipt), not how evidence is produced.
+//
+// Engine-level types (ComponentEvidence, EngineEvidence, etc.)
+// remain in types.ts — they are internal to evidence engines.
+// ═══════════════════════════════════════════════════════════════════
+
+// ── Assertion (§1.1, §6.1) — what is claimed ──
+
+export interface AssertionEntry {
+  /** Whether this assertion holds */
+  value: boolean;
+  /** Confidence [0, 1] */
+  confidence: number;
+}
+
+export interface AssertionSet {
+  observationOccurred: AssertionEntry;
+  continuityMaintained: AssertionEntry;
+  receiptIntegrity: AssertionEntry;
+}
+
+export type Verdict = "PASS" | "FAIL" | "INSUFFICIENT_EVIDENCE" | "CONTRADICTORY" | "EXPIRED";
+
+// ── Evidence Block (§6.3) — why it is believed ──
+
+export interface EvidenceBlock {
+  /** Evidence engine identifier (e.g. "EE-001") */
+  engineId: string;
+  /** Semver of the engine */
+  engineVersion: string;
+  /** Engine-specific confidence [0, 1] */
+  confidence: number;
+  /** Engine-specific evidence payload — OPAQUE to the protocol */
+  payload: Record<string, unknown>;
+  /** SHA-256 of payload for integrity verification */
+  payloadDigest: string;
+}
+
+// ── Context (§6.1) — when / where / subject ──
+
+export interface ContinuityInterval {
+  start: string;   // ISO 8601
+  end: string;     // ISO 8601
+  coverageMs: number;
+}
+
+export interface SubjectRef {
+  /** Opaque pseudonym. RECOMMENDED: SHA-256 of device-stable secret + public key */
+  id: string;
+  /** Optional hint. Values not normative. */
+  type?: "embodied" | "device" | "agent" | string;
+}
+
+// ── Composability (§5, §6.1) — links to other receipts ──
+
+/** Cryptographic reference to predecessor receipt. null = genesis. */
+export type PredecessorRef = string | null;
+
+// ── Signature (§6.4) — who claims it ──
+
+export interface IssuerIdentity {
+  /** Opaque issuer identifier */
+  id: string;
+  /** Public key (base64url) */
+  publicKey: string;
+}
+
+export interface ReceiptSignature {
+  /** Signature algorithm. RECOMMENDED: "Ed25519" */
+  algorithm: string;
+  /** Signature value (base64url) */
+  value: string;
+  /** When the signature was produced (ISO 8601) */
+  signedAt: string;
+}
+
+// ── ContinuityReceipt (§6.1) — the protocol object ──
+
+export interface ContinuityReceipt {
+  // Assertion — what is claimed
+  protocolVersion: string;
+  assertions: AssertionSet;
+  verdict?: Verdict;
+
+  // Evidence — why it is believed
+  evidence: EvidenceBlock[];
+
+  // Context — when / where / subject
+  receiptId: string;
+  interval: ContinuityInterval;
+  subject: SubjectRef;
+  expiresAt?: string;
+
+  // Composability — links to other receipts
+  previousReceiptHash: PredecessorRef;
+  references: string[];
+
+  // Signature — who claims it
+  issuer: IssuerIdentity;
+  signature: ReceiptSignature;
+}
+
+// ── Verification Contract (§7) ──
+
+export type FailureCode =
+  | "INVALID_SCHEMA"
+  | "INVALID_SIGNATURE"
+  | "INCONSISTENT_ASSERTIONS"
+  | "TEMPORAL_INCONSISTENCY"
+  | "EVIDENCE_TAMPERED"
+  | "EXPIRED"
+  | "CHAIN_BROKEN";
+
+export type VerificationResult =
+  | { status: "VALID" }
+  | { status: "INVALID"; reason: FailureCode; detail: string };
+
+// ── Builder ──
+
+/** Generate a time-sortable receipt ID (UUIDv7-like: timestamp + random). */
+export function createReceiptId(): string {
+  const ts = Date.now().toString(16).padStart(12, "0");
+  const rand = Array.from({ length: 20 }, () =>
+    Math.floor(Math.random() * 16).toString(16),
+  ).join("");
+  // Format: 00000000-0000-7000-8000-000000000000 (UUIDv7 layout)
+  const hex = (ts + rand).slice(0, 32).padEnd(32, "0");
+  return [
+    hex.slice(0, 8),
+    hex.slice(8, 12),
+    "7" + hex.slice(13, 16),
+    "8" + hex.slice(16, 19),
+    hex.slice(19, 31),
+  ].join("-");
+}
+
+async function sha256(data: string): Promise<string> {
+  const buf = new TextEncoder().encode(data);
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/** Compute payloadDigest for an evidence payload. */
+export async function computePayloadDigest(payload: Record<string, unknown>): Promise<string> {
+  return sha256(JSON.stringify(payload));
+}
+
+/** Build the three normative assertions from engine confidence scores. */
+export function buildAssertions(engineConfidences: number[]): AssertionSet {
+  const avg = engineConfidences.length > 0
+    ? engineConfidences.reduce((a, b) => a + b, 0) / engineConfidences.length
+    : 0;
+  const hasEvidence = engineConfidences.length > 0;
+
+  return {
+    observationOccurred: {
+      value: hasEvidence,
+      confidence: hasEvidence ? 0.95 : 0,
+    },
+    continuityMaintained: {
+      value: avg >= 0.5,
+      confidence: avg,
+    },
+    receiptIntegrity: {
+      value: true,
+      confidence: 1.0,
+    },
+  };
+}
+
+/** Build a ContinuityReceipt from evidence blocks and context. */
+export function buildReceipt(params: {
+  evidence: EvidenceBlock[];
+  interval: ContinuityInterval;
+  subject: SubjectRef;
+  issuer: IssuerIdentity;
+  previousReceiptHash?: PredecessorRef;
+  verdict?: Verdict;
+}): Omit<ContinuityReceipt, "signature"> {
+  const confidences = params.evidence.map((e) => e.confidence);
+
+  return {
+    protocolVersion: "1.0",
+    receiptId: createReceiptId(),
+    interval: params.interval,
+    subject: params.subject,
+    evidence: params.evidence,
+    assertions: buildAssertions(confidences),
+    verdict: params.verdict,
+    previousReceiptHash: params.previousReceiptHash ?? null,
+    references: [],
+    issuer: params.issuer,
+    expiresAt: params.interval.end
+      ? new Date(new Date(params.interval.end).getTime() + 5 * 60 * 1000).toISOString()
+      : undefined,
+  };
+}
+
+// ── Verification (§7.1) ──
+
+/** V₁: Schema validity check. Returns null if valid, or a FailureCode. */
+export function verifySchema(receipt: ContinuityReceipt): FailureCode | null {
+  if (receipt.protocolVersion !== "1.0") return "INVALID_SCHEMA";
+  if (!receipt.receiptId || typeof receipt.receiptId !== "string") return "INVALID_SCHEMA";
+  if (!receipt.interval?.start || !receipt.interval?.end) return "INVALID_SCHEMA";
+  if (typeof receipt.interval.coverageMs !== "number" || receipt.interval.coverageMs <= 0) return "INVALID_SCHEMA";
+  if (!receipt.subject?.id || typeof receipt.subject.id !== "string") return "INVALID_SCHEMA";
+  if (!Array.isArray(receipt.evidence)) return "INVALID_SCHEMA";
+  if (!receipt.assertions) return "INVALID_SCHEMA";
+  if (!receipt.issuer?.id || !receipt.issuer?.publicKey) return "INVALID_SCHEMA";
+  return null;
+}
+
+/** V₃: Assertion consistency. */
+export function verifyAssertions(receipt: ContinuityReceipt): FailureCode | null {
+  const { assertions } = receipt;
+  // continuity → observation (continuity without observation is incoherent)
+  if (assertions.continuityMaintained.value && !assertions.observationOccurred.value) {
+    return "INCONSISTENT_ASSERTIONS";
+  }
+  return null;
+}
+
+/** V₄: Temporal consistency. */
+export function verifyTemporal(receipt: ContinuityReceipt): FailureCode | null {
+  const start = new Date(receipt.interval.start).getTime();
+  const end = new Date(receipt.interval.end).getTime();
+  if (start >= end) return "TEMPORAL_INCONSISTENCY";
+
+  // coverageMs must match
+  if (receipt.interval.coverageMs !== end - start) return "TEMPORAL_INCONSISTENCY";
+
+  // signedAt must be ≥ interval.end
+  if (receipt.signature?.signedAt) {
+    const signedAt = new Date(receipt.signature.signedAt).getTime();
+    if (signedAt < end) return "TEMPORAL_INCONSISTENCY";
+  }
+
+  // expiresAt must be after interval.end
+  if (receipt.expiresAt) {
+    const expiresAt = new Date(receipt.expiresAt).getTime();
+    if (expiresAt <= end) return "TEMPORAL_INCONSISTENCY";
+  }
+
+  return null;
+}
+
+/** V₅: Evidence reference integrity. */
+export async function verifyEvidenceIntegrity(receipt: ContinuityReceipt): Promise<FailureCode | null> {
+  for (const block of receipt.evidence) {
+    const expected = await computePayloadDigest(block.payload);
+    if (expected !== block.payloadDigest) return "EVIDENCE_TAMPERED";
+  }
+  return null;
+}
+
+/** V₆: Freshness. */
+export function verifyFreshness(receipt: ContinuityReceipt): FailureCode | null {
+  if (receipt.expiresAt) {
+    const now = Date.now();
+    const expiresAt = new Date(receipt.expiresAt).getTime();
+    if (now >= expiresAt) return "EXPIRED";
+  }
+  return null;
+}
+
+/** Run all verifiable checks (V₁, V₃, V₄, V₅, V₆). V₂ and V₇ need external context. */
+export async function verifyReceipt(receipt: ContinuityReceipt): Promise<VerificationResult> {
+  const schemaErr = verifySchema(receipt);
+  if (schemaErr) return { status: "INVALID", reason: schemaErr, detail: "Receipt does not conform to CPS-0001 schema." };
+
+  // V₂ (signature) skipped — requires crypto verify against issuer public key.
+  // Implementations MUST verify the signature before accepting.
+
+  const assertionErr = verifyAssertions(receipt);
+  if (assertionErr) return { status: "INVALID", reason: assertionErr, detail: "Assertion consistency violation — continuity claimed without observation." };
+
+  const temporalErr = verifyTemporal(receipt);
+  if (temporalErr) return { status: "INVALID", reason: temporalErr, detail: "Temporal model violated." };
+
+  const evidenceErr = await verifyEvidenceIntegrity(receipt);
+  if (evidenceErr) return { status: "INVALID", reason: evidenceErr, detail: "Evidence payloadDigest does not match payload." };
+
+  const freshnessErr = verifyFreshness(receipt);
+  if (freshnessErr) return { status: "INVALID", reason: freshnessErr, detail: "Receipt has expired." };
+
+  return { status: "VALID" };
+}
+
+// ── Conversion: EngineEvidence → EvidenceBlock ──
+
+import type { EngineEvidence } from "./types";
+
+/** Convert an internal EngineEvidence to a CPS-0001 EvidenceBlock. */
+export async function engineEvidenceToBlock(
+  engineEvidence: EngineEvidence,
+  engineVersion = "1.0.0",
+): Promise<EvidenceBlock> {
+  // Build opaque payload from engine evidence components + diagnostics
+  const payload: Record<string, unknown> = {
+    components: engineEvidence.components.map((c) => ({
+      metric: c.metric,
+      value: c.value,
+      threshold: c.threshold,
+      status: c.status,
+      explanation: c.explanation,
+    })),
+    diagnostics: engineEvidence.diagnostics,
+  };
+
+  const payloadDigest = await computePayloadDigest(payload);
+
+  return {
+    engineId: engineEvidence.engineId,
+    engineVersion,
+    confidence: engineEvidence.confidence ?? 0,
+    payload,
+    payloadDigest,
+  };
+}
