@@ -39,7 +39,7 @@ export default function Page() {
         ]}
       />
       <ArticleJsonLd
-        title="Continuity Verification Becomes Programmable"
+        headline="Continuity Verification Becomes Programmable"
         description="The Continuity Lab releases v0.1.2 — the first open SDK for programmable continuity verification."
         datePublished="2026-07-20"
         authorName="The Continuity Lab"
