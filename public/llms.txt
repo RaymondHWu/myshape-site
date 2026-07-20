@@ -1,120 +1,55 @@
-# MyShape Protocol — AI-Native Identity Layer
+# The Continuity Lab™ — MyShape Protocol
 
-> The Sovereign 3D Identity Layer for the Decentralized Human.
-> AI-native identity | zero-knowledge presence | motion-signature verification
+> Open protocol research: verifying continuity as a verifiable property of digital presence. 2 RFCs, 576 experiments, reference implementation. All data public. MIT license.
 
-## Site Overview
+## Specifications (RFCs)
+- [RFC-0001: Motion Signature Format](https://www.myshape.com/research/notes/004-motion-signature-rfc): Formal specification. PES computation, jerk peak detection (MAD-based dynamic threshold), cross-modal temporal matching (±500ms), challenge-response protocol (3 rounds, jittered timing).
+- [RFC-0002: Continuity Proof Format](https://www.myshape.com/research/notes/006-continuity-proof-rfc): Evidence Receipts (SHA-256 hash-chained), CFC catalog (8 conditions), Verification Policy framework, Cross-Device Binding metrics.
+
+## Research Notes
+- [RN-003: Cross-Modal Binding](https://www.myshape.com/research/notes/003-cross-modal-binding): 576-run validation. Temporal alignment 100% across independent devices. CFC-005 validated (13 detections on independent, 0 on single device).
+- [RN-002: PES Benchmark v0.2](https://www.myshape.com/research/notes/002-pes-benchmark): Presence Entropy Score benchmark. Human vs. synthetic motion comparison.
+- [RN-001: The Continuity Problem](https://www.myshape.com/research/notes/001-the-continuity-problem): Why proving persistent presence matters. Formal problem definition.
+
+## Failure Reports & Decision Logs
+- [FD-001: Frame Rate Hypothesis](https://www.myshape.com/research/notes/005-failure-report-10fps): Increasing camera sampling from 6.7 to 10 fps decreased accuracy. More data ≠ better data.
+- [DL-001: Direction Asymmetry in EE-003](https://www.myshape.com/research/notes/007-ee003-direction-asymmetry): Pitch vs. yaw pass rate asymmetry observed by operator. Recorded, not acted upon.
+
+## Experimental Data
+- [Engine Summary (CSV)](https://huggingface.co/datasets/ContinuityLab-Org/myshape-576): Aggregate statistics for 4 evidence engines across 576 runs.
+- [Tracker Comparison (CSV)](https://huggingface.co/datasets/ContinuityLab-Org/myshape-576): Three-generation camera tracker iteration (pixel-diff → color-blob → moving-blob).
+- [EE-003 Per-Run Diagnostics (CSV)](https://huggingface.co/datasets/ContinuityLab-Org/myshape-576): Round-level gyroscope telemetry for 200 challenge-response sessions.
+
+## Evidence Engines
+- [EE-001: Presence Detection (PES)](https://www.myshape.com/motion-demo): 4D biological entropy quantification. 100% floor pass rate.
+- [EE-002: Cross-Modal Causal Coupling](https://www.myshape.com/research/causal-coupling): Jerk peak detection + camera direction matching. N=316, 58% pass rate.
+- [EE-003: Gyroscope Challenge](https://www.myshape.com/research/challenge-response): 3-round randomized directional challenge. N=200, 59% pass rate.
+- [VS-001: Dual-Engine Pipeline](https://www.myshape.com/research/protocol-verify): EE-001 passive + EE-003 escalation. N=60, 93% pass rate.
+
+## Developer Resources
+- [npm: myshape](https://www.npmjs.com/package/myshape): `verifyContinuity()` — one function, 84 tests, MIT license.
+- [GitHub: myshape-protocol](https://github.com/myshapeprotocol/myshape-protocol): Full monorepo with engines, tests, research pages, and prototypes.
+- [Research Hub](https://www.myshape.com/research): Interactive prototypes and published research index.
+- [ROADMAP.md](https://github.com/myshapeprotocol/myshape-protocol/blob/master/ROADMAP.md): 2026 achievements, 2027 plans, artifact versioning strategy.
+
+## Organization
+- [The Continuity Lab](https://thecontinuitylab.org): Research group homepage. Published research, engine status, open-source commitments.
+- [HuggingFace](https://huggingface.co/ContinuityLab-Org): Datasets and models.
+- [GitHub Org](https://github.com/ContinuityLab-Org): Organization profile and research repositories.
+
+## Site Structure
 - Homepage: https://www.myshape.com
-- AI Reference (for AI models): https://www.myshape.com/ai
-- Genesis Ritual: https://www.myshape.com/genesis
-- Identity Layer: https://www.myshape.com/identity
-- Agent Declaration: https://www.myshape.com/agent
-- Vision: https://www.myshape.com/vision
-- Whitepaper (Core Protocol V2.1): https://www.myshape.com/papers/core-protocol
-- Technical Papers: https://www.myshape.com/papers
-- Protocol Architecture: https://www.myshape.com/protocol
-- Motion Pipeline: https://www.myshape.com/protocol/motion-pipeline
-- Development Roadmap: https://www.myshape.com/roadmap
-- Motion Demo (Live Capture): https://www.myshape.com/motion-demo
+- Research Hub: https://www.myshape.com/research
+- Research Agenda: https://www.myshape.com/research/agenda
+- Benchmarks: https://www.myshape.com/research/benchmarks
+- Motion Demo: https://www.myshape.com/motion-demo
+- Protocol Spec: https://www.myshape.com/protocol
+- Blog: https://www.myshape.com/blog
+- Sitemap: https://www.myshape.com/sitemap.xml
+- OpenAPI Spec: https://www.myshape.com/openapi.json
 
-## Brand Keywords
-- AI-native identity, zero-knowledge presence, motion-signature verification
-- Data-Body, Particle Body, Halo Scan, Energy Field, Genesis Ritual
-- Sovereign identity, non-binary aesthetic, non-corporeal, ethereal data energy
-- Kinetic verification, identity mesh, wireframe anatomy, data-outline
-- Presence Entropy Score (PES), ZK-Presence, Motion Vector
-
-## Technical Stack
-- Next.js 16 (App Router), React 19, TypeScript strict
-- Three.js + React Three Fiber for 3D visualization (Starfield, Identity Scan, Identity Anchor Body)
-- Canvas 2D particle engine (400 stars + 1500 core particles)
-- Supabase (PostgreSQL + Realtime), Resend (transactional email)
-- Framer Motion for page transitions and animations
-- MediaPipe Pose for motion capture pipeline (33-landmark → SST 18-point)
-- WASM engine for server-side presence verification
-
-## Content Types
-- /genesis — Interactive OTP-based identity initialization ritual
-- /identity — Data-Body uplink and sovereign identity dashboard
-- /protocol — Core protocol architecture documentation (5 layers)
-- /papers — Academic research papers on motion-to-geometry cryptography
-- /roadmap — Four-epoch protocol evolution timeline
-- /vision — Six-pillar civilization-layer manifesto
-- /motion-demo — Live motion capture with real-time PES computation
-- /agent — AI Agent identity declaration interface
-- /developers — SDK documentation and integration guide
-
-## API Endpoints
-Base URL: https://www.myshape.com/api/
-
-### Identity & Verification
-- POST `/api/send-otp` — Send 6-digit OTP for email verification
-- POST `/api/verify-otp` — Verify OTP and activate node (GENESIS_NODE or ACTIVE)
-- POST `/api/auth/siwe` — EIP-4361 Sign-In with Ethereum (wallet binding)
-- POST `/api/subscribe` — Join waitlist (email subscription)
-- GET `/api/identity?email=` — Lookup node by email
-- POST `/api/uplink` — Register genesis node
-
-### Agent Identity
-- POST `/api/agent/declare` — AI Agent identity declaration (no email/OTP)
-  Body: `{ agent_handle, agent_type, origin, public_key }`
-
-### Motion & Presence
-- POST `/api/verify` — Server-side WASM presence verification
-- POST `/api/motion/record` — Record successful motion scan (max 3/day)
-- POST `/api/research/upload` — Anonymous motion landmark ingestion (rate-limited)
-- GET `/api/research/stats` — Research pipeline statistics
-
-### Node & Network
-- GET `/api/nodes/count` — Node counts (total, humans, agents, genesis)
-- GET `/api/nodes/genesis` — Genesis Cohort anonymous list
-- GET `/api/nodes/status` — Protocol health dashboard
-- GET `/api/presence/network` — Live presence network visualization data
-- GET `/api/node/privileges?email=` — Node tier, entropy, streak, PES
-- POST `/api/node/entropy` — Record entropy gain after scan
-- GET `/api/node/entropy?email=` — Read current entropy state
-
-### Admin
-- GET `/api/admin/calibration/status` — Calibration status
-- POST `/api/admin/calibration/run` — Trigger calibration (x-admin-secret required)
-
-### Other
-- POST `/api/invite/validate` — Validate beta invite code
-- POST `/api/recruitment/apply` — Apply for research testing program
-- POST `/api/matrix/publish` — Cross-platform publish (Bluesky, LinkedIn, Farcaster, Discord, Telegram, Reddit)
-- GET `/api/health` — System health check
-
-Full OpenAPI 3.0 specification: https://www.myshape.com/openapi.json
-
-## New Pages (2026-07-03)
-- Protocol Comparison: https://www.myshape.com/compare
-- Glossary (30 terms): https://www.myshape.com/glossary
-- SDK Documentation: https://www.myshape.com/docs
-- Newsletter: https://www.myshape.com/newsletter
-- Blog RSS Feed: https://www.myshape.com/blog/feed.xml
-
-## Blog Posts (13 total)
-- What Is Proof of Continuity?: https://www.myshape.com/blog/what-is-proof-of-continuity
-- What Is Decentralized Identity? 2026 Guide: https://www.myshape.com/blog/what-is-decentralized-identity-2026
-- Zero-Knowledge Proofs Explained: https://www.myshape.com/blog/zero-knowledge-proofs-digital-identity-explained
-- Motion vs Biometrics: https://www.myshape.com/blog/motion-vs-biometrics-why-your-face-is-not-a-password
-- Proof of Personhood vs Proof of Continuity: https://www.myshape.com/blog/proof-of-personhood-vs-proof-of-continuity
-- AI Agent Identity: https://www.myshape.com/blog/ai-agent-identity-how-autonomous-agents-prove-who-they-are
-- Self-Sovereign Identity Explained: https://www.myshape.com/blog/self-sovereign-identity-explained-2026
-- The Post-Biometric Era: https://www.myshape.com/blog/the-post-biometric-era-2026
-- Digital Identity Future 2027: https://www.myshape.com/blog/digital-identity-future-2027
-- Why Motion Is Unforgeable: https://www.myshape.com/blog/why-motion-is-the-only-unforgeable-identity-signal
-- GENESIS 001: Why Identity Is Not Enough: https://www.myshape.com/blog/genesis-001-why-identity-is-not-enough
-- The Continuity Layer for the Simulation Age: https://www.myshape.com/blog/continuity-layer-for-the-simulation-age
-- Stored Identity vs Generated Presence: https://www.myshape.com/blog/stored-identity-vs-generated-presence
-
-## AI Crawler Notes
-- All pages have Schema.org JSON-LD structured data (Organization, WebSite, 6 DefinedTerms, Article, BreadcrumbList, FAQ, HowTo, SoftwareApplication, Speakable)
-- OpenGraph and Twitter Card metadata on all pages
-- Sitemap: https://www.myshape.com/sitemap.xml (87 routes)
-- RSS Feed: https://www.myshape.com/blog/feed.xml
-- Full AI documentation: https://www.myshape.com/llms-full.txt
-- OpenAPI spec: https://www.myshape.com/openapi.json
-- AI Plugin manifest: https://www.myshape.com/.well-known/ai-plugin.json
-- Agent discovery: https://www.myshape.com/.well-known/agent.json
-- `/civ-layer/*` routes redirect to main routes with noindex
+## AI Crawler Access
+- All research pages have Schema.org JSON-LD (ScholarlyArticle, ResearchOrganization).
+- Homepage has Organization + WebSite + DefinedTermSet schemas.
+- robots.txt explicitly allows GPTBot, Claude-Web, PerplexityBot, and 7 other AI crawlers.
+- llms-full.txt provides extended content for models with large context windows.
