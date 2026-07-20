@@ -4,15 +4,17 @@ import type { NextRequest } from "next/server";
 export function proxy(req: NextRequest) {
   const host = req.headers.get("host") || "";
 
-  // Route thecontinuitylab.org → /lab
+  // Route thecontinuitylab.org → /lab (only for page requests, not static files)
   if (host === "thecontinuitylab.org" || host === "www.thecontinuitylab.org") {
-    const url = req.nextUrl.clone();
-    if (url.pathname === "/") {
-      url.pathname = "/lab";
-      return NextResponse.rewrite(url);
+    const path = req.nextUrl.pathname;
+    // Don't rewrite static assets
+    if (/\.(png|jpg|jpeg|gif|svg|ico|webp|avif|woff2?|ttf|eot|css|js|json|xml|txt|map)$/i.test(path)) {
+      return NextResponse.next();
     }
-    // For all other paths on the lab domain, also map to /lab
-    return NextResponse.rewrite(new URL("/lab", req.url));
+    // Everything else → /lab
+    const url = req.nextUrl.clone();
+    url.pathname = "/lab";
+    return NextResponse.rewrite(url);
   }
 
   return NextResponse.next();
