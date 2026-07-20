@@ -1,22 +1,41 @@
 {
-  "name": "myshape",
-  "version": "0.1.0",
-  "description": "MyShape Protocol — verifiable continuity for the digital world. One function: verifyContinuity().",
+  "name": "@thecontinuitylab/myshape",
+  "version": "0.1.1",
+  "description": "MyShape Protocol — verifiable continuity. One function: verifyContinuity()",
   "license": "MIT",
   "author": "The Continuity Lab",
-  "repository": "github:myshapeprotocol/myshape-protocol",
-  "keywords": ["motion-signature", "continuity", "verification", "presence", "pes", "identity"],
-  "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": "./src/index.ts"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myshapeprotocol/myshape-protocol.git"
   },
-  "files": ["src/", "README.md"],
+  "keywords": [
+    "motion-signature",
+    "continuity",
+    "verification",
+    "presence",
+    "pes"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build && npm test",
     "test": "vitest run"
   },
-  "peerDependencies": {
-    "typescript": ">=5.0"
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.0"
   }
 }

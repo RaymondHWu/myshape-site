@@ -24,7 +24,7 @@ export default function LabPage() {
         <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
           <a href="https://github.com/myshapeprotocol" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>GitHub</a>
           <a href="https://huggingface.co/TheContinuityLab" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>HuggingFace</a>
-          <a href="https://www.npmjs.com/package/myshape" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>npm</a>
+          <a href="https://www.npmjs.com/package/@thecontinuitylab/myshape" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>npm</a>
           <a href="https://www.myshape.com/research" style={{ fontSize: 12, color: "rgba(144,200,255,0.5)", textDecoration: "none", letterSpacing: "0.06em" }}>Research Hub</a>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default function LabPage() {
         <div style={{ fontSize: 10, color: "rgba(144,200,255,0.4)", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 16 }}>Open Source</div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 56 }}>
           {[
-            { label: "npm install myshape", href: "https://www.npmjs.com/package/myshape" },
+            { label: "npm install @thecontinuitylab/myshape", href: "https://www.npmjs.com/package/@thecontinuitylab/myshape" },
             { label: "MIT License", href: "https://github.com/myshapeprotocol/myshape-protocol/blob/master/LICENSE" },
             { label: "121 tests", href: "https://github.com/myshapeprotocol/myshape-protocol/tree/master/src/lib/evidence" },
             { label: "Research-first", href: "https://www.myshape.com/research" },

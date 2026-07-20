@@ -24,7 +24,7 @@ The **MyShape Protocol** is our first publication: a motion-signature system tha
 ## Quick Start
 
 ```bash
-npm install myshape
+npm install @thecontinuitylab/myshape
 ```
 
 ```ts

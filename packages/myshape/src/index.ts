@@ -18,8 +18,6 @@
 
 // ── Public types ──
 export type {
-  IMUSample,
-  CameraSample,
   EngineEvidence,
   ComponentEvidence,
   Verdict,
@@ -28,6 +26,8 @@ export type {
 } from "./types";
 
 export type {
+  IMUSample,
+  CameraSample,
   JerkEvent,
   DirChangeEvent,
   MatchedEvent,
@@ -71,7 +71,8 @@ export {
 
 // ── High-level API ──
 
-import type { IMUSample, CameraSample, EngineEvidence, Verdict, VerificationPolicy } from "./types";
+import type { IMUSample, CameraSample } from "./causal-coupling";
+import type { EngineEvidence, Verdict, VerificationPolicy } from "./types";
 import { evaluatePolicy } from "./types";
 import { detectJerkPeaks, detectDirectionChanges, matchEvents, buildEvidence } from "./causal-coupling";
 
