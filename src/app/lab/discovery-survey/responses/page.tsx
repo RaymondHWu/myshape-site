@@ -1,12 +1,14 @@
 export const dynamic = "force-dynamic";
 
 async function getResponses() {
-  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) return [];
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!supabaseUrl || !supabaseKey) return [];
   try {
-    const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/discovery_survey?select=*&order=created_at.desc&limit=100`, {
+    const res = await fetch(`${supabaseUrl}/rest/v1/discovery_survey?select=*&order=created_at.desc&limit=100`, {
       headers: {
-        apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+        apikey: supabaseKey,
+        Authorization: `Bearer ${supabaseKey}`,
       },
       cache: "no-store",
     });
