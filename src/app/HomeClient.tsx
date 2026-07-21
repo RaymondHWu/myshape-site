@@ -6,7 +6,6 @@ import ProtocolFooter from "@/components/footer/footer";
 import { playTick } from "@/utils/useAudioTick";
 import HeroDemo from "@/components/hero-demo/HeroDemo";
 import Vision from "@/components/vision/Vision";
-import PresenceNetwork from "@/components/presence-network/PresenceNetwork";
 import MotionPreview from "@/components/motion-preview/MotionPreview";
 
 export default function HomeClient() {
@@ -198,10 +197,6 @@ export default function HomeClient() {
             </div>
             </div>
 
-            {/* ── Presence Network — live node mesh ── */}
-            <div className="mt-10 max-w-4xl mx-auto">
-              <PresenceNetwork />
-            </div>
           </div>
         </section>
 
