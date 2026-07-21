@@ -343,7 +343,7 @@ export default function HomeClient() {
         <div className="relative z-10 pb-12 text-center">
           <a href="https://thecontinuitylab.org" className="inline-flex items-center gap-2 px-6 py-3 border text-[11px] tracking-[0.1em] uppercase transition-all"
             style={{ borderColor: "rgba(96,165,250,0.15)", color: "rgba(96,165,250,0.5)", background: "rgba(96,165,250,0.03)" }}
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(96,165,250,0.4)"; e.currentTarget.style.color = "rgba(96,165,250,0.8)"; }}
+            onMouseEnter={(e) => { playTick(600, "sine", 0.06, 0.02); e.currentTarget.style.borderColor = "rgba(96,165,250,0.4)"; e.currentTarget.style.color = "rgba(96,165,250,0.8)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(96,165,250,0.15)"; e.currentTarget.style.color = "rgba(96,165,250,0.5)"; }}>
             Research by The Continuity Lab →
           </a>
