@@ -29,19 +29,6 @@ export default function HomeClient() {
           </p>
         </div>
 
-        {/* ── SDK Release Banner ── */}
-        <div className="relative z-10 pb-6 px-6 text-center">
-          <div className="inline-flex items-center gap-3 px-5 py-2.5"
-            style={{ border: "1px solid rgba(96,165,250,0.15)", background: "rgba(96,165,250,0.04)", borderRadius: "6px" }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#60A5FA] shadow-[0_0_6px_rgba(96,165,250,0.6)] animate-pulse" />
-            <span className="font-mono text-[10px] tracking-[0.12em] uppercase" style={{ color: "rgba(96,165,250,0.7)" }}>SDK Released</span>
-            <code className="font-mono text-[10px] tracking-[0.05em]" style={{ color: "rgba(255,255,255,0.45)" }}>npm install @thecontinuitylab/myshape</code>
-            <a href="/blog/sdk-release-continuity-verification" className="font-mono text-[9px] tracking-[0.1em]" style={{ color: "rgba(96,165,250,0.45)", textDecoration: "none" }}>→ Read</a>
-            <span style={{ color: "rgba(255,255,255,0.08)" }}>|</span>
-            <a href="https://thecontinuitylab.org/lab/playground" className="font-mono text-[9px] tracking-[0.1em]" style={{ color: "rgba(34,211,238,0.5)", textDecoration: "none" }}>▶ Playground</a>
-          </div>
-        </div>
-
         {/* ── Evidence Snapshot ── */}
         <div className="relative z-10 pb-10 md:pb-14 px-6 text-center">
           <Link
