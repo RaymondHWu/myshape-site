@@ -10,7 +10,7 @@ export default defineConfig({
   test: {
     pool: "threads",
     environment: "node",
-    include: ["src/**/*.test.ts"],
+    include: ["src/**/*.test.ts", "continuity-protocol/**/*.test.ts"],
     coverage: {
       provider: "v8",
       reporter: ["text", "html", "json-summary"],
