@@ -2,11 +2,20 @@
 
 **CPS-0001 v1.0-RC** · Apache 2.0 · [The Continuity Lab](https://thecontinuitylab.org)
 
+> CPS-0001 is NOT MyShape. MyShape is the first implementation. The protocol is the object model. Any engine, any sensor, any team can produce a valid receipt.
+
+## Implement CPS-0001 in 10 Minutes
+
+→ **[QUICKSTART.md](QUICKSTART.md)** — Create a receipt. Verify it. No MyShape required.
+
 ## Structure
 
 ```
 continuity-protocol/
-├── reference-verifier/       # Zero-dependency verifier (TypeScript)
+├── QUICKSTART.md              # 10-minute getting started
+├── schemas/                   # JSON Schema (don't need TypeScript)
+│   └── continuity-receipt.schema.json
+├── reference-verifier/        # Zero-dependency verifier (TypeScript)
 │   └── verifier.ts
 ├── test-vectors/             # JSON test vectors
 │   ├── valid-receipt-01.json
@@ -51,6 +60,39 @@ npx vitest run continuity-protocol/conformance/
 ```
 
 10 conformance scenarios, 23 assertions. Zero dependencies on MyShape engine code.
+
+## Architecture
+
+```
+              The Continuity Lab
+                     |
+                 CPS-0001
+              (Protocol Object)
+                     |
+        -------------------------
+        |                       |
+    MyShape Engine        Your Engine
+    (first impl)         (any sensor)
+                     |
+              Reference Verifier
+              (V₁–V₇ · engine-independent)
+                     |
+              Verifier Plugin
+              (HTTP middleware · allow/deny)
+                     |
+                Application
+```
+
+MyShape is the **first implementation**, not the protocol.
+
+## Compatibility Matrix
+
+| Producer | Verifier | Result |
+|:---|:---|:---|
+| Dummy Engine | Reference Verifier | ✅ PASS |
+| MyShape EE-001 | Reference Verifier | ✅ PASS |
+| Tampered | Reference Verifier | ❌ REJECT (V₅) |
+| Expired | Reference Verifier | ❌ REJECT (V₆) |
 
 ## Full Specification
 

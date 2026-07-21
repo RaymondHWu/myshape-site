@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://myshape.com/schemas/continuity-receipt.schema.json",
+  "title": "CPS-0001 Continuity Receipt",
+  "description": "A cryptographically verifiable statement that an observer collected sufficient evidence supporting the continuity of a subject over a bounded interval of time. v1.0-RC. Engine-independent.",
+  "type": "object",
+  "required": [
+    "protocolVersion",
+    "receiptId",
+    "interval",
+    "subject",
+    "evidence",
+    "assertions",
+    "issuer",
+    "signature",
+    "previousReceiptHash",
+    "references"
+  ],
+  "properties": {
+    "protocolVersion": {
+      "type": "string",
+      "const": "1.0",
+      "description": "CPS-0001 protocol version."
+    },
+    "receiptId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-8[0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "UUIDv7 receipt identifier."
+    },
+    "interval": {
+      "type": "object",
+      "required": ["start", "end", "coverageMs"],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 — evidence collection start."
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 — evidence collection end."
+        },
+        "coverageMs": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Coverage duration in milliseconds. MUST equal end − start."
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque pseudonym. RECOMMENDED: SHA-256 of device-stable secret + public key."
+        },
+        "type": {
+          "type": "string",
+          "description": "Optional subject category hint. Values not normative."
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["engineId", "engineVersion", "confidence", "payload", "payloadDigest"],
+        "properties": {
+          "engineId": {
+            "type": "string",
+            "description": "Evidence engine identifier (e.g. 'com.example.engine')."
+          },
+          "engineVersion": {
+            "type": "string",
+            "description": "Semver of the engine."
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Engine-specific confidence score."
+          },
+          "payload": {
+            "type": "object",
+            "description": "Engine-specific evidence payload — OPAQUE to the protocol."
+          },
+          "payloadDigest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "SHA-256 hex digest of JSON.stringify(payload)."
+          }
+        }
+      }
+    },
+    "assertions": {
+      "type": "object",
+      "required": ["observationOccurred", "continuityMaintained", "receiptIntegrity"],
+      "properties": {
+        "observationOccurred": {
+          "type": "object",
+          "required": ["value", "confidence"],
+          "properties": {
+            "value": { "type": "boolean" },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "continuityMaintained": {
+          "type": "object",
+          "required": ["value", "confidence"],
+          "properties": {
+            "value": { "type": "boolean" },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "receiptIntegrity": {
+          "type": "object",
+          "required": ["value", "confidence"],
+          "properties": {
+            "value": { "type": "boolean" },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        }
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INSUFFICIENT_EVIDENCE", "CONTRADICTORY", "EXPIRED"],
+      "description": "Issuer's policy decision. Verifiers MAY ignore and apply their own policy."
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When freshness expires. After this, V₆ rejects the receipt for live authorization."
+    },
+    "previousReceiptHash": {
+      "type": ["string", "null"],
+      "description": "Cryptographic reference to predecessor receipt. null = genesis. RECOMMENDED: SHA-256 of predecessor."
+    },
+    "references": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Cross-referenced receipt hashes (§5.3)."
+    },
+    "issuer": {
+      "type": "object",
+      "required": ["id", "publicKey"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque issuer identifier."
+        },
+        "publicKey": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Public key for signature verification (base64url)."
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "required": ["algorithm", "value", "signedAt"],
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "description": "Signature algorithm. RECOMMENDED: 'Ed25519'."
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Signature value (base64url). Covers all fields except signature itself."
+        },
+        "signedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the signature was produced. MUST be ≥ interval.end."
+        }
+      }
+    }
+  }
+}
