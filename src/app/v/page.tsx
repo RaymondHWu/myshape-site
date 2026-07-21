@@ -67,7 +67,7 @@ export default function Page() {
     const sc = Math.min(cv / 0.25, 1) * 0.5 + Math.min(mvv / 1.5, 1) * 0.5;
     const ok = sc > 0.25;
 
-    setVerdict(ok ? "It's you" : "Uncertain");
+    setVerdict(ok ? "Physical motion detected" : "Uncertain — weak signal");
     setConfidence(Math.round(sc * 100));
     setDetails([cv > 0.08 ? "✓ Natural timing" : "✗ Too regular", mvv > 0.25 ? "✓ Good intensity" : "✗ Too weak"]);
     setPhase("done");
@@ -84,8 +84,8 @@ export default function Page() {
             <div style={{ width: 40, height: 40, borderRadius: "50%", background: "radial-gradient(circle, rgba(96,165,250,0.2) 0%, transparent 70%)", margin: "0 auto 24px", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#60A5FA", boxShadow: "0 0 10px rgba(96,165,250,0.6)" }} />
             </div>
-            <h1 style={{ fontSize: 28, fontWeight: 300, margin: "0 0 8px" }}>Are you you?</h1>
-            <p style={{ fontSize: 14, color: "#94A3B8", margin: "0 0 32px", lineHeight: 1.6 }}>Move your phone naturally for 8 seconds.</p>
+            <h1 style={{ fontSize: 28, fontWeight: 300, margin: "0 0 8px" }}>Physical Motion Check</h1>
+            <p style={{ fontSize: 14, color: "#94A3B8", margin: "0 0 32px", lineHeight: 1.6 }}>This verifies sensor data comes from a physically moving device — not a script. It does not identify you.</p>
             {error && <div style={{ fontSize: 12, color: "#f85149", marginBottom: 16, padding: 10, background: "rgba(248,81,73,0.06)", border: "1px solid rgba(248,81,73,0.2)", borderRadius: 6 }}>{error}</div>}
             <button onClick={go} style={{ width: "100%", padding: "16px 0", fontSize: 17, color: "#060B14", background: "#60A5FA", border: "none", borderRadius: 8, cursor: "pointer" }}>
               Start
@@ -101,10 +101,10 @@ export default function Page() {
 
         {phase === "done" && (
           <>
-            <div style={{ fontSize: 48, width: 72, height: 72, borderRadius: "50%", background: verdict === "It's you" ? "rgba(52,211,153,0.1)" : "rgba(210,153,34,0.08)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", border: `2px solid ${verdict === "It's you" ? "rgba(52,211,153,0.3)" : "rgba(210,153,34,0.2)"}` }}>
-              {verdict === "It's you" ? "✓" : "?"}
+            <div style={{ fontSize: 48, width: 72, height: 72, borderRadius: "50%", background: verdict === "Physical motion detected" ? "rgba(52,211,153,0.1)" : "rgba(210,153,34,0.08)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", border: `2px solid ${verdict === "Physical motion detected" ? "rgba(52,211,153,0.3)" : "rgba(210,153,34,0.2)"}` }}>
+              {verdict === "Physical motion detected" ? "✓" : "?"}
             </div>
-            <div style={{ fontSize: 22, fontWeight: 300, color: verdict === "It's you" ? "#34D399" : "#d29922", marginBottom: 8 }}>{verdict}</div>
+            <div style={{ fontSize: 22, fontWeight: 300, color: verdict === "Physical motion detected" ? "#34D399" : "#d29922", marginBottom: 8 }}>{verdict}</div>
             <div style={{ fontSize: 13, color: "#94A3B8", marginBottom: 20 }}>{confidence}% confidence</div>
             <div style={{ fontSize: 11, color: "#64748B", lineHeight: 1.8, marginBottom: 24, padding: "12px 14px", background: "#0B1220", border: "1px solid #1E293B", borderRadius: 8, textAlign: "left" }}>
               {details.map((d, i) => <div key={i} style={{ color: d.startsWith("✓") ? "#34D399" : "#f85149" }}>{d}</div>)}

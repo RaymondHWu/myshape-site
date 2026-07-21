@@ -76,7 +76,7 @@ export default function Page() {
     const sc = Math.min(cv / 0.25, 1) * 0.5 + Math.min(mvv / 1.5, 1) * 0.5;
     const ok = sc > 0.25;
 
-    setVerdict(ok ? "It's you" : "Uncertain");
+    setVerdict(ok ? "Physical motion detected" : "Uncertain — weak signal");
     setConfidence(Math.round(sc * 100));
     setDetails([cv > 0.08 ? "✓ Natural timing" : "✗ Too regular", mvv > 0.25 ? "✓ Good intensity" : "✗ Too weak"]);
 
@@ -133,7 +133,7 @@ export default function Page() {
     try { await fetch("/api/pe001/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: "vfy-" + Date.now(), imuSamples: data }) }); } catch { /* ok */ }
   }
 
-  const isPass = verdict === "It's you";
+  const isPass = verdict === "Physical motion detected";
 
   return (
     <div style={{ minHeight: "100dvh", background: "#060B14", color: "#E6EDF7", fontFamily: "system-ui, sans-serif", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, textAlign: "center" }}>
@@ -144,8 +144,8 @@ export default function Page() {
             <div style={{ width: 40, height: 40, borderRadius: "50%", background: "radial-gradient(circle, rgba(96,165,250,0.2) 0%, transparent 70%)", margin: "0 auto 24px", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#60A5FA", boxShadow: "0 0 10px rgba(96,165,250,0.6)" }} />
             </div>
-            <h1 style={{ fontSize: 28, fontWeight: 300, margin: "0 0 8px" }}>Are you you?</h1>
-            <p style={{ fontSize: 14, color: "#94A3B8", margin: "0 0 32px", lineHeight: 1.6 }}>Move your phone naturally for 8 seconds.</p>
+            <h1 style={{ fontSize: 28, fontWeight: 300, margin: "0 0 8px" }}>Physical Motion Check</h1>
+            <p style={{ fontSize: 14, color: "#94A3B8", margin: "0 0 32px", lineHeight: 1.6 }}>This verifies sensor data comes from a physically moving device — not a script. It does not identify you.</p>
             {error && <div style={{ fontSize: 12, color: "#f85149", marginBottom: 16, padding: 10, background: "rgba(248,81,73,0.06)", border: "1px solid rgba(248,81,73,0.2)", borderRadius: 6 }}>{error}</div>}
             <button onClick={go} style={{ width: "100%", padding: "16px 0", fontSize: 17, color: "#060B14", background: "#60A5FA", border: "none", borderRadius: 8, cursor: "pointer" }}>
               Start
