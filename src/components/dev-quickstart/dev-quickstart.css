@@ -28,14 +28,14 @@
 
 .dqs-title {
   color: rgba(144, 200, 255, 0.55);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
 }
 
 .dqs-badge {
   color: rgba(255, 255, 255, 0.15);
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   margin-left: auto;
@@ -51,7 +51,7 @@
 /* Prompt */
 .dqs-prompt {
   color: rgba(255, 255, 255, 0.4);
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.6;
   text-align: center;
   margin: 0 0 16px;
@@ -59,7 +59,7 @@
 
 .dqs-hint {
   color: rgba(255, 255, 255, 0.18);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 /* Input */
@@ -104,7 +104,7 @@
   border: 1px solid rgba(144, 200, 255, 0.3);
   color: rgba(144, 200, 255, 0.8);
   font-family: inherit;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
@@ -143,7 +143,7 @@
 
 .dqs-loading-text {
   color: rgba(144, 200, 255, 0.5);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
@@ -182,7 +182,7 @@
 
 .dqs-field-label {
   color: rgba(144, 200, 255, 0.35);
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   margin-bottom: 6px;
@@ -216,7 +216,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.3);
   font-family: inherit;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
@@ -239,7 +239,7 @@
 
 .dqs-curl-block code {
   color: rgba(144, 200, 255, 0.55);
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.7;
   font-family: var(--font-geist-mono), monospace;
   white-space: pre-wrap;
@@ -256,7 +256,7 @@
   padding: 8px 16px;
   border-color: rgba(144, 200, 255, 0.25);
   color: rgba(144, 200, 255, 0.6);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* Reset */
@@ -265,7 +265,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.25);
   font-family: inherit;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   padding: 8px 20px;
@@ -297,7 +297,7 @@
 
 .dqs-error-text {
   color: rgba(239, 68, 68, 0.5);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -352,7 +352,7 @@
 .dqs-listen-hint {
   text-align: center;
   color: rgba(255, 255, 255, 0.35);
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.6;
   margin: 0 0 4px;
 }
@@ -403,14 +403,14 @@
 
 .dqs-timeout-title {
   color: rgba(251, 191, 36, 0.7);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 .dqs-timeout-sub {
   color: rgba(255, 255, 255, 0.25);
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1.5;
 }
 
@@ -421,7 +421,7 @@
   border: 1px solid rgba(251, 191, 36, 0.3);
   color: rgba(251, 191, 36, 0.7);
   font-family: inherit;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
@@ -464,7 +464,7 @@
 
 .dqs-active-sub {
   color: rgba(255, 255, 255, 0.3);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: none;
 }
@@ -492,7 +492,7 @@
   border: 1px solid rgba(52, 211, 153, 0.3);
   background: rgba(52, 211, 153, 0.06);
   color: rgba(52, 211, 153, 0.8);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
@@ -510,7 +510,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.2);
   font-family: inherit;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   padding: 1px 6px;
   cursor: pointer;
@@ -545,14 +545,14 @@
 
 .dqs-next-step-label {
   color: rgba(144, 200, 255, 0.35);
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 
 .dqs-next-step-text {
   color: rgba(255, 255, 255, 0.35);
-  font-size: 10px;
+  font-size: 11px;
   text-align: center;
   margin: 0;
   line-height: 1.5;
@@ -571,7 +571,7 @@
   background: transparent;
   color: rgba(144, 200, 255, 0.5);
   font-family: inherit;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   text-decoration: none;

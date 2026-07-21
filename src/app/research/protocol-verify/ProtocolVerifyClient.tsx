@@ -251,7 +251,7 @@ export default function ProtocolVerifyClient() {
     <div className="min-h-screen bg-black text-white">
       <header className="border-b border-white/5 px-4 py-3 flex items-center justify-between">
         <Link href="/research" className="text-white/30 text-[11px] tracking-[0.2em] uppercase hover:text-white/60">← Research</Link>
-        <span className="text-white/15 text-[9px] tracking-[0.3em] uppercase">Verification Session</span>
+        <span className="text-white/15 text-[11px] tracking-[0.3em] uppercase">Verification Session</span>
         <div className="w-16" />
       </header>
 
@@ -276,7 +276,7 @@ export default function ProtocolVerifyClient() {
             </button>
 
             <details className="group">
-              <summary className="text-white/20 text-[9px] tracking-[0.15em] text-center cursor-pointer hover:text-white/35 transition-colors list-none">How this works</summary>
+              <summary className="text-white/20 text-[11px] tracking-[0.15em] text-center cursor-pointer hover:text-white/35 transition-colors list-none">How this works</summary>
               <div className="mt-3 p-4 border border-white/[0.04] bg-white/[0.01] text-[11px] text-white/35 leading-relaxed space-y-2"
                 style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
                 <p><span className="text-white/50">Stage 1</span> — 8 seconds of free motion. Your phone's IMU passively checks for the presence of a physically embodied entity.</p>
@@ -286,7 +286,7 @@ export default function ProtocolVerifyClient() {
             </details>
 
             <div className="text-center">
-              <button onClick={() => setIsSim(!isSim)} className={`text-[9px] tracking-[0.1em] ${isSim ? "text-[#90c8ff]/40" : "text-white/12 hover:text-white/25"} transition-colors`}>
+              <button onClick={() => setIsSim(!isSim)} className={`text-[11px] tracking-[0.1em] ${isSim ? "text-[#90c8ff]/40" : "text-white/12 hover:text-white/25"} transition-colors`}>
                 {isSim ? "⚡ Simulating sensors" : "No sensors? Use simulation"}
               </button>
             </div>
@@ -295,7 +295,7 @@ export default function ProtocolVerifyClient() {
 
         {/* Active status bar — only visible when running */}
         {stage !== "idle" && stage !== "complete" && (
-          <div className="p-2 border border-white/5 text-[9px] font-mono text-white/20 flex justify-between">
+          <div className="p-2 border border-white/5 text-[11px] font-mono text-white/20 flex justify-between">
             <span>IMU: {imuN} | {isSim ? "SIM" : "LIVE"}</span>
             <span>{stage.includes("s1") ? "Stage 1" : stage.includes("s2") ? "Additional" : "● Complete"}</span>
           </div>
@@ -305,10 +305,10 @@ export default function ProtocolVerifyClient() {
         {stage === "s1-countdown" && <div className="flex flex-col items-center py-24 gap-6"><div className="text-white/20 text-[12px] tracking-[0.3em] uppercase">Stage 1 · Passive</div><div className="text-[100px] font-light text-[#90c8ff] leading-none">{cd}</div></div>}
         {stage === "s1-passive" && (
           <div className="space-y-4">
-            <div className="text-center text-[10px] text-white/20 uppercase">Stage 1 · Passive Evidence</div>
-            <div className="flex justify-between text-[10px]"><span className="text-[#90c8ff]/50">{elapsed.toFixed(1)}s / {DURATION}s</span></div>
+            <div className="text-center text-[11px] text-white/20 uppercase">Stage 1 · Passive Evidence</div>
+            <div className="flex justify-between text-[11px]"><span className="text-[#90c8ff]/50">{elapsed.toFixed(1)}s / {DURATION}s</span></div>
             <div className="h-1.5 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-[#90c8ff]/60 to-[#a371f7]/60 rounded-full" style={{ width: `${(elapsed / DURATION) * 100}%` }} /></div>
-            <div className="p-3 border border-[#90c8ff]/10 text-[10px]"><span className="text-[#90c8ff]/40 text-[8px] uppercase">IMU</span><div className="text-white/50 font-mono">{imuN} samples</div></div>
+            <div className="p-3 border border-[#90c8ff]/10 text-[11px]"><span className="text-[#90c8ff]/40 text-[11px] uppercase">IMU</span><div className="text-white/50 font-mono">{imuN} samples</div></div>
             <div className="text-center p-8 border border-dashed border-white/10 text-white/30 text-[14px]">Move naturally.</div>
           </div>
         )}
@@ -317,11 +317,11 @@ export default function ProtocolVerifyClient() {
         {stage === "s1-result" && decision && (
           <div className="space-y-4">
             <div className="p-4 border border-white/10 bg-white/[0.02] space-y-2">
-              <div className="flex justify-between text-[10px]"><span className="text-white/20">Passive Confidence</span><span className="text-white/50 font-mono">{(score * 100).toFixed(0)}%</span></div>
+              <div className="flex justify-between text-[11px]"><span className="text-white/20">Passive Confidence</span><span className="text-white/50 font-mono">{(score * 100).toFixed(0)}%</span></div>
               <div className="h-2 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-[#f85149] via-[#d29922] to-[#3fb950] rounded-full" style={{ width: `${score * 100}%` }} /></div>
             </div>
             <div className="text-center p-6 border-2 space-y-3" style={{ borderColor: dc(decision) + "66", backgroundColor: dc(decision) + "0a" }}>
-              <div className="text-white/20 text-[9px] tracking-[0.2em] uppercase">Decision</div>
+              <div className="text-white/20 text-[11px] tracking-[0.2em] uppercase">Decision</div>
               <div className="text-[18px] font-light" style={{ color: dc(decision) }}>{dl(decision)}</div>
             </div>
           </div>
@@ -335,7 +335,7 @@ export default function ProtocolVerifyClient() {
         )}
         {stage === "s2-countdown" && (
           <div className="flex flex-col items-center py-6 gap-3">
-            <div className="text-white/20 text-[10px]">Round {currRound}/3</div>
+            <div className="text-white/20 text-[11px]">Round {currRound}/3</div>
             <div className="text-[64px] leading-none" style={{ color: "#d29922" }}>{DIRECTION_ARROW[targetDir]}</div>
             <div className="gyro-preview-ring">
               <div className={`gyro-preview-dot ${targetDir === "←" ? "gyro-preview-ccw" : targetDir === "→" ? "gyro-preview-cw" : targetDir === "↑" ? "gyro-preview-up" : "gyro-preview-dn"}`} />
@@ -348,7 +348,7 @@ export default function ProtocolVerifyClient() {
         )}
         {stage === "s2-active" && (
           <div className="flex flex-col items-center py-8 gap-4">
-            <div className="text-white/20 text-[10px]">Round {currRound}/3</div>
+            <div className="text-white/20 text-[11px]">Round {currRound}/3</div>
             <div className="text-[64px] leading-none animate-pulse" style={{ color: "#3fb950" }}>{DIRECTION_ARROW[targetDir]}</div>
             <div className="text-[#3fb950] text-[20px] font-bold animate-pulse tracking-widest">ROTATE {targetDir}</div>
           </div>
@@ -365,15 +365,15 @@ export default function ProtocolVerifyClient() {
           <div className="space-y-6">
             <button onClick={() => { const lines = passive.concat(active || []).flatMap((e) => e.diagnostics); lines.unshift(`Verdict: ${finalV}`, `Passive: ${(score * 100).toFixed(0)}%`); navigator.clipboard.writeText(lines.join("\n")).then(() => { setCopySt("✓ Copied!"); setTimeout(() => setCopySt(""), 2000); }).catch(() => {}); }} className="w-full py-3 border border-[#d29922]/40 text-[#d29922]/70 text-[11px] tracking-[0.1em] uppercase hover:border-[#d29922] transition-all">{copySt || "📋 Copy All"}</button>
             <div className={`text-center p-6 border-2 ${finalV === 'PASS' ? "border-[#3fb950]/40 bg-[#3fb950]/[0.04]" : "border-[#f85149]/40 bg-[#f85149]/[0.04]"} space-y-3`}>
-              <div className="text-white/20 text-[9px] tracking-[0.2em] uppercase">Verification Confidence</div>
+              <div className="text-white/20 text-[11px] tracking-[0.2em] uppercase">Verification Confidence</div>
               <div className="text-[48px] font-light" style={{ color: finalV === "PASS" ? "#3fb950" : finalV === "FAIL" ? "#f85149" : "#d29922" }}>{debug ? `${(score * 100).toFixed(0)}%` : `${(100 * [...passive, ...(active ? [active] : [])].reduce((s, e) => s + (e.confidence || 0), 0) / [...passive, ...(active ? [active] : [])].length).toFixed(0)}%`}</div>
             </div>
             {debug ? (
               [...passive, ...(active ? [active] : [])].map((ev) => (
                 <div key={ev.engineId} className="p-4 border border-white/10 bg-white/[0.02] space-y-2">
-                  <div className="flex justify-between"><span className="text-[10px] uppercase text-white/20">{ev.engineId === "EE-001" ? "Passive Evidence" : "Additional Evidence"}</span><span className="text-[8px] text-white/10">{ev.engineId}</span></div>
-                  {ev.components.map((c) => <div key={c.metric} className="flex justify-between p-2 border border-white/5"><span className="text-[10px] text-white/40">{c.metric}: <span className="text-white/60">{c.value.toFixed(3)}</span></span><span style={{ color: sc(c.status) }}>{si(c.status)}</span></div>)}
-                  {ev.diagnostics.filter((d) => d.startsWith("✓") || d.startsWith("✗") || d.startsWith("⚠")).map((d, i) => <div key={i} className={`text-[10px] font-mono ${d.startsWith("✓") ? "text-[#3fb950]/70" : d.startsWith("✗") ? "text-[#f85149]/70" : "text-[#d29922]/70"}`}>{d}</div>)}
+                  <div className="flex justify-between"><span className="text-[11px] uppercase text-white/20">{ev.engineId === "EE-001" ? "Passive Evidence" : "Additional Evidence"}</span><span className="text-[11px] text-white/10">{ev.engineId}</span></div>
+                  {ev.components.map((c) => <div key={c.metric} className="flex justify-between p-2 border border-white/5"><span className="text-[11px] text-white/40">{c.metric}: <span className="text-white/60">{c.value.toFixed(3)}</span></span><span style={{ color: sc(c.status) }}>{si(c.status)}</span></div>)}
+                  {ev.diagnostics.filter((d) => d.startsWith("✓") || d.startsWith("✗") || d.startsWith("⚠")).map((d, i) => <div key={i} className={`text-[11px] font-mono ${d.startsWith("✓") ? "text-[#3fb950]/70" : d.startsWith("✗") ? "text-[#f85149]/70" : "text-[#d29922]/70"}`}>{d}</div>)}
                 </div>
               ))
             ) : (
@@ -385,9 +385,9 @@ export default function ProtocolVerifyClient() {
                     <div key={ev.engineId} className="p-4 border border-white/10 bg-white/[0.02] space-y-1">
                       <div className="flex justify-between items-center">
                         <span className="text-[11px] text-white/50">{ev.engineId === "EE-001" ? "Presence Check" : "Motion Challenge"}</span>
-                        <span className="text-[10px]" style={{ color: passed === total ? "#3fb950" : "#d29922" }}>{passed}/{total} checks passed</span>
+                        <span className="text-[11px]" style={{ color: passed === total ? "#3fb950" : "#d29922" }}>{passed}/{total} checks passed</span>
                       </div>
-                      {ev.diagnostics.filter((d) => d.startsWith("✓")).slice(0, 2).map((d, i) => <div key={i} className="text-[10px] text-[#3fb950]/60">✓ {d.replace(/^✓ /, "").replace(/\|.*$/, "").trim()}</div>)}
+                      {ev.diagnostics.filter((d) => d.startsWith("✓")).slice(0, 2).map((d, i) => <div key={i} className="text-[11px] text-[#3fb950]/60">✓ {d.replace(/^✓ /, "").replace(/\|.*$/, "").trim()}</div>)}
                     </div>
                   );
                 })}
@@ -397,8 +397,8 @@ export default function ProtocolVerifyClient() {
           </div>
         )}
         <div className="mt-10 pt-5 border-t border-white/[0.04] text-center">
-          <p className="text-white/25 text-[9px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
-          <p className="text-white/20 text-[8px] mt-1">
+          <p className="text-white/25 text-[11px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
+          <p className="text-white/20 text-[11px] mt-1">
             Parameters intentionally omitted &middot;{" "}
             <a href={`?debug=${debug ? "0" : "1"}`} className="underline hover:text-white/35">
               {debug ? "Public view" : "Developer mode"}

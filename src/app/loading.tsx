@@ -15,7 +15,7 @@ export default function RootLoading() {
           animation: "myshape-loading-pulse 1.2s ease-in-out infinite",
         }}
       />
-      <span className="font-mono text-[9px] tracking-[0.6em] text-[#90c8ff]/40 uppercase">
+      <span className="font-mono text-[11px] tracking-[0.6em] text-[#90c8ff]/40 uppercase">
         SYNCHRONIZING
       </span>
     </div>

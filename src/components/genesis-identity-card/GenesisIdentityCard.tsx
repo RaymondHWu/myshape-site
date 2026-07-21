@@ -65,7 +65,7 @@ export default function GenesisIdentityCard({
             >
               {String(positionNumber).padStart(3, "0")}
             </span>
-            <div className="text-white/20 font-mono text-[10px] tracking-[0.3em] uppercase mt-0.5">
+            <div className="text-white/20 font-mono text-[11px] tracking-[0.3em] uppercase mt-0.5">
               Genesis Node
             </div>
           </motion.div>
@@ -88,7 +88,7 @@ export default function GenesisIdentityCard({
         {/* ── Identity Stats — 2-column grid ── */}
         <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-left mb-3">
           <div>
-            <div className="text-white/25 text-[10px] tracking-[0.15em] uppercase mb-0.5">
+            <div className="text-white/25 text-[11px] tracking-[0.15em] uppercase mb-0.5">
               NODE
             </div>
             <div className="text-white/70 font-mono text-[12px] tracking-[0.05em]">
@@ -96,20 +96,20 @@ export default function GenesisIdentityCard({
             </div>
           </div>
           <div>
-            <div className="text-white/25 text-[10px] tracking-[0.15em] uppercase mb-0.5">
+            <div className="text-white/25 text-[11px] tracking-[0.15em] uppercase mb-0.5">
               PARTICLE
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-[#90c8ff]/70 text-[13px] tracking-[0.15em]">
                 {"●".repeat(Math.min(particleLevel, 8))}
               </span>
-              <span className="text-white/30 text-[10px] tracking-[0.1em]">
+              <span className="text-white/30 text-[11px] tracking-[0.1em]">
                 Lv.{particleLevel}
               </span>
             </div>
           </div>
           <div>
-            <div className="text-white/25 text-[10px] tracking-[0.15em] uppercase mb-0.5">
+            <div className="text-white/25 text-[11px] tracking-[0.15em] uppercase mb-0.5">
               ENTROPY
             </div>
             <div className="text-white/70 font-mono text-[12px]">
@@ -117,10 +117,10 @@ export default function GenesisIdentityCard({
             </div>
           </div>
           <div>
-            <div className="text-white/25 text-[10px] tracking-[0.15em] uppercase mb-0.5">
+            <div className="text-white/25 text-[11px] tracking-[0.15em] uppercase mb-0.5">
               SIG
             </div>
-            <div className="text-white/40 font-mono text-[10px] tracking-[0.05em]">
+            <div className="text-white/40 font-mono text-[11px] tracking-[0.05em]">
               {email ? email.slice(0, 3) + "···" + email.slice(-4) : "—"}
             </div>
           </div>
@@ -129,16 +129,16 @@ export default function GenesisIdentityCard({
         <div className="w-20 h-[1px] mx-auto mb-2 bg-gradient-to-r from-transparent via-[#90c8ff]/30 to-transparent" />
 
         {/* ── Status line ── */}
-        <div className="text-white/20 font-mono text-[10px] tracking-[0.15em] mb-0.5">
+        <div className="text-white/20 font-mono text-[11px] tracking-[0.15em] mb-0.5">
           {particleLabel}
         </div>
-        <div className="text-white/12 font-mono text-[9px] tracking-[0.1em]">
+        <div className="text-white/12 font-mono text-[11px] tracking-[0.1em]">
           {timeStr} UTC
         </div>
 
         {/* ── Declaration ── */}
         <div className="mt-2 pt-2 border-t border-white/[0.06]">
-          <p className="text-white/25 text-[10px] leading-relaxed max-w-xs mx-auto">
+          <p className="text-white/25 text-[11px] leading-relaxed max-w-xs mx-auto">
             Permanent founding entity. Cryptographically anchored.
             Never offered again.
           </p>

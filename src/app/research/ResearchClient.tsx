@@ -46,7 +46,7 @@ export default function ResearchClient() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3fb950]/20 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3fb950] shadow-[0_0_8px_rgba(63,185,80,0.5)]" />
             </span>
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#90c8ff]/55">&gt; research_hub <span className="text-white/20">--index</span></span>
+            <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-[#90c8ff]/55">&gt; research_hub <span className="text-white/20">--index</span></span>
           </div>
           <h1 className="research-tagline">Investigating whether <span>continuity</span> can become a verifiable property of digital existence.</h1>
           <p className="research-subtitle">We are not building a product. We are investigating a question.</p>
@@ -55,7 +55,7 @@ export default function ResearchClient() {
         {/* Quick Links */}
         <div className="flex flex-wrap gap-3 mb-16">
           {[{ label: "Playground", href: "https://thecontinuitylab.org/lab/playground" },{ label: "GitHub", href: "https://github.com/myshapeprotocol" },{ label: "npm", href: "https://www.npmjs.com/package/@thecontinuitylab/myshape" },{ label: "HuggingFace", href: "https://huggingface.co/ContinuityLab-Org" }].map((l) => (
-            <a key={l.label} href={l.href} className="px-4 py-2 border border-[#1E293B] text-[#60A5FA]/50 text-[10px] tracking-[0.12em] uppercase hover:border-[#60A5FA]/30 hover:text-[#60A5FA]/80 transition-all" onMouseEnter={() => playTick(520, "sine", 0.04, 0.015)}>{l.label}</a>
+            <a key={l.label} href={l.href} className="px-4 py-2 border border-[#1E293B] text-[#60A5FA]/50 text-[11px] tracking-[0.12em] uppercase hover:border-[#60A5FA]/30 hover:text-[#60A5FA]/80 transition-all" onMouseEnter={() => playTick(520, "sine", 0.04, 0.015)}>{l.label}</a>
           ))}
         </div>
 
@@ -63,7 +63,7 @@ export default function ResearchClient() {
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-5">
             <span className="w-1 h-1 rounded-full bg-[#d29922] shadow-[0_0_6px_rgba(210,153,34,0.5)]" />
-            <h2 className="text-[10px] tracking-[0.4em] uppercase text-[#d29922]/70">Specifications</h2>
+            <h2 className="text-[11px] tracking-[0.4em] uppercase text-[#d29922]/70">Specifications</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {SPECS.map((s) => (
@@ -81,7 +81,7 @@ export default function ResearchClient() {
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-5">
             <span className="w-1 h-1 rounded-full bg-[#60A5FA] shadow-[0_0_6px_rgba(96,165,250,0.5)]" />
-            <h2 className="text-[10px] tracking-[0.4em] uppercase text-[#60A5FA]/70">Research Notes</h2>
+            <h2 className="text-[11px] tracking-[0.4em] uppercase text-[#60A5FA]/70">Research Notes</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {NOTES.map((n) => (
@@ -98,7 +98,7 @@ export default function ResearchClient() {
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-5">
             <span className="w-1 h-1 rounded-full bg-[#64748B] shadow-[0_0_4px_rgba(100,116,139,0.3)]" />
-            <h2 className="text-[10px] tracking-[0.4em] uppercase text-[#64748B]/70">Research Records</h2>
+            <h2 className="text-[11px] tracking-[0.4em] uppercase text-[#64748B]/70">Research Records</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {RECORDS.map((r) => (
@@ -115,7 +115,7 @@ export default function ResearchClient() {
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-5">
             <span className="w-1 h-1 rounded-full bg-[#34D399] shadow-[0_0_6px_rgba(52,211,153,0.5)]" />
-            <h2 className="text-[10px] tracking-[0.4em] uppercase text-[#34D399]/70">Evidence Engines</h2>
+            <h2 className="text-[11px] tracking-[0.4em] uppercase text-[#34D399]/70">Evidence Engines</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {ENGINES.map((e) => (
@@ -132,7 +132,7 @@ export default function ResearchClient() {
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-5">
             <span className="w-1 h-1 rounded-full bg-[#a371f7] shadow-[0_0_6px_rgba(163,113,247,0.5)]" />
-            <h2 className="text-[10px] tracking-[0.4em] uppercase text-[#a371f7]/70">Dataset</h2>
+            <h2 className="text-[11px] tracking-[0.4em] uppercase text-[#a371f7]/70">Dataset</h2>
           </div>
           <a href={DATASET.slug} className="rn-card block max-w-md" target="_blank" rel="noopener noreferrer" onMouseEnter={() => playTick(520, "sine", 0.05, 0.02)}>
             <div className="rn-card-num"><span className="rn-card-dot" style={{background:"#a371f7",boxShadow:"0 0 6px rgba(163,113,247,0.5)"}} />{DATASET.id}</div>
@@ -145,7 +145,7 @@ export default function ResearchClient() {
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-5">
             <span className="w-1 h-1 rounded-full bg-[#d4af37] shadow-[0_0_6px_rgba(212,175,55,0.4)]" />
-            <h2 className="text-[10px] tracking-[0.4em] uppercase text-[#d4af37]/70">Open Questions</h2>
+            <h2 className="text-[11px] tracking-[0.4em] uppercase text-[#d4af37]/70">Open Questions</h2>
           </div>
           <Link href="/research/open-questions/001" className="research-agenda-card" onMouseEnter={() => playTick(720, "sine", 0.06, 0.025)}>
             <div className="research-agenda-card-label">OQ-001</div>
@@ -155,7 +155,7 @@ export default function ResearchClient() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/[0.04] text-center">
-          <Link href="/" className="text-white/35 text-[10px] tracking-[0.2em] uppercase hover:text-white/55 transition-colors">← Home</Link>
+          <Link href="/" className="text-white/35 text-[11px] tracking-[0.2em] uppercase hover:text-white/55 transition-colors">← Home</Link>
         </div>
       </div>
       <ProtocolFooter />

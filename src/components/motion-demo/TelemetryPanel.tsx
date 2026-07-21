@@ -18,7 +18,7 @@ export default function TelemetryPanel({
   showCollectingHint = false,
 }: TelemetryPanelProps) {
   return (
-    <div className="space-y-2.5 text-[10px] font-mono">
+    <div className="space-y-2.5 text-[11px] font-mono">
       <div className="flex justify-between">
         <span className="text-white/25">SST Frames</span>
         <span className="text-[#90c8ff]/60">{sstFrames}</span>
@@ -41,7 +41,7 @@ export default function TelemetryPanel({
         <span className="text-[#90c8ff]/50">{phase.toUpperCase()}</span>
       </div>
       {showCollectingHint && sstFrames < 30 && (
-        <div className="text-[#90c8ff]/30 text-[8px] italic">
+        <div className="text-[#90c8ff]/30 text-[11px] italic">
           Collecting frames... ({sstFrames}/30)
         </div>
       )}

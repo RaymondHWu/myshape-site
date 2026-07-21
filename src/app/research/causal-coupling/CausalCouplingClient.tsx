@@ -228,7 +228,7 @@ export default function CausalCouplingClient() {
     <div className="min-h-screen bg-black text-white">
       <header className="border-b border-white/5 px-4 py-3 flex items-center justify-between">
         <Link href="/research" className="text-white/30 text-[11px] tracking-[0.2em] uppercase hover:text-white/60">← Research</Link>
-        <span className="text-white/15 text-[9px] tracking-[0.3em] uppercase">EE-002</span>
+        <span className="text-white/15 text-[11px] tracking-[0.3em] uppercase">EE-002</span>
         <div className="w-16" />
       </header>
       <main className="max-w-lg mx-auto px-4 py-12 space-y-8">
@@ -248,7 +248,7 @@ export default function CausalCouplingClient() {
 
         {/* Active status — only visible when running */}
         {phase !== "idle" && phase !== "complete" && (
-          <div className="p-2 border border-white/5 text-[9px] font-mono text-white/20 flex justify-between">
+          <div className="p-2 border border-white/5 text-[11px] font-mono text-white/20 flex justify-between">
             <span>IMU: {imuCount} | Cam: {camCount} | {cameraStatus || "off"} | {isSimulated ? "SIM" : "LIVE"}</span>
             <span>{evidence ? "✓ Evidence" : "○ Idle"}</span>
           </div>
@@ -257,15 +257,15 @@ export default function CausalCouplingClient() {
         {phase === "idle" && (
           <div className="space-y-5">
             {noSensors && <div className="p-3 border border-yellow-400/20 bg-yellow-400/[0.04] text-yellow-400/60 text-[11px] text-center">No physical sensors — simulation active. Use HTTPS on a mobile device for real testing.</div>}
-            <div className="p-3 border border-red-400/20 bg-red-400/[0.04] text-red-400/50 text-[10px] text-center leading-relaxed">
+            <div className="p-3 border border-red-400/20 bg-red-400/[0.04] text-red-400/50 text-[11px] text-center leading-relaxed">
               ⚠ iOS Safari: camera + IMU together may crash. Use <strong>Phone IMU</strong> below.
             </div>
             <div className="flex items-center justify-between p-3 border border-[#a371f7]/20 bg-[#a371f7]/[0.03]">
               <div>
                 <div className="text-[11px] text-[#a371f7]/70" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>📱 Use Phone IMU</div>
-                <div className="text-[9px] text-white/20 mt-0.5">Camera on desktop, motion from phone</div>
+                <div className="text-[11px] text-white/20 mt-0.5">Camera on desktop, motion from phone</div>
               </div>
-              <button onClick={() => setUsePhoneIMU(!usePhoneIMU)} className={`px-3 py-1.5 border text-[9px] tracking-[0.1em] uppercase transition-all ${usePhoneIMU ? "border-[#a371f7]/50 text-[#a371f7] bg-[#a371f7]/[0.08]" : "border-white/10 text-white/20"}`}>
+              <button onClick={() => setUsePhoneIMU(!usePhoneIMU)} className={`px-3 py-1.5 border text-[11px] tracking-[0.1em] uppercase transition-all ${usePhoneIMU ? "border-[#a371f7]/50 text-[#a371f7] bg-[#a371f7]/[0.08]" : "border-white/10 text-white/20"}`}>
                 {usePhoneIMU ? "ON" : "OFF"}
               </button>
             </div>
@@ -274,7 +274,7 @@ export default function CausalCouplingClient() {
             </button>
 
             <details className="group">
-              <summary className="text-white/20 text-[9px] tracking-[0.15em] text-center cursor-pointer hover:text-white/35 transition-colors list-none">How this works</summary>
+              <summary className="text-white/20 text-[11px] tracking-[0.15em] text-center cursor-pointer hover:text-white/35 transition-colors list-none">How this works</summary>
               <div className="mt-3 p-4 border border-white/[0.04] bg-white/[0.01] text-[11px] text-white/35 leading-relaxed space-y-2"
                 style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
                 <p>Move your phone while keeping your other hand visible to the camera. The system checks if IMU and camera events are temporally and directionally aligned — evidence that both sensors describe the same physical event.</p>
@@ -283,7 +283,7 @@ export default function CausalCouplingClient() {
             </details>
 
             <div className="text-center">
-              <button onClick={() => setIsSimulated(!isSimulated)} className={`text-[9px] tracking-[0.1em] ${isSimulated ? "text-[#90c8ff]/40" : "text-white/12 hover:text-white/25"} transition-colors`}>
+              <button onClick={() => setIsSimulated(!isSimulated)} className={`text-[11px] tracking-[0.1em] ${isSimulated ? "text-[#90c8ff]/40" : "text-white/12 hover:text-white/25"} transition-colors`}>
                 {isSimulated ? "⚡ Simulating sensors" : "No sensors? Use simulation"}
               </button>
             </div>
@@ -300,12 +300,12 @@ export default function CausalCouplingClient() {
         {phase === "capturing" && (
           <div className="space-y-6">
             <div className="space-y-2">
-              <div className="flex justify-between text-[10px] uppercase"><span className="text-[#90c8ff]/50">Capturing</span><span className="text-[#90c8ff]/50 font-mono">{elapsed.toFixed(1)}s / {DURATION}s</span></div>
+              <div className="flex justify-between text-[11px] uppercase"><span className="text-[#90c8ff]/50">Capturing</span><span className="text-[#90c8ff]/50 font-mono">{elapsed.toFixed(1)}s / {DURATION}s</span></div>
               <div className="h-1.5 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-[#90c8ff]/60 to-[#a371f7]/60 rounded-full transition-all duration-100" style={{ width: `${(elapsed / DURATION) * 100}%` }} /></div>
             </div>
-            <div className="grid grid-cols-2 gap-3 text-[10px]">
-              <div className="p-3 border border-[#90c8ff]/10"><div className="text-[#90c8ff]/40 text-[8px] uppercase mb-1">IMU</div><div className="text-white/50 font-mono">{imuCount} samples</div></div>
-              <div className="p-3 border border-[#a371f7]/10"><div className="text-[#a371f7]/40 text-[8px] uppercase mb-1">Camera</div><div className="text-white/50 font-mono">{camCount} frames</div></div>
+            <div className="grid grid-cols-2 gap-3 text-[11px]">
+              <div className="p-3 border border-[#90c8ff]/10"><div className="text-[#90c8ff]/40 text-[11px] uppercase mb-1">IMU</div><div className="text-white/50 font-mono">{imuCount} samples</div></div>
+              <div className="p-3 border border-[#a371f7]/10"><div className="text-[#a371f7]/40 text-[11px] uppercase mb-1">Camera</div><div className="text-white/50 font-mono">{camCount} frames</div></div>
             </div>
             <div className="text-center p-8 border border-dashed border-white/10 text-white/30 text-[14px]">Move naturally — any motion works.</div>
           </div>
@@ -326,7 +326,7 @@ export default function CausalCouplingClient() {
 
             {/* Verdict */}
             <div className="text-center p-6 border-2 border-[#a371f7]/40 bg-[#a371f7]/[0.04] space-y-3">
-              <div className="text-white/20 text-[9px] tracking-[0.2em] uppercase">Verification Confidence</div>
+              <div className="text-white/20 text-[11px] tracking-[0.2em] uppercase">Verification Confidence</div>
               <div className="text-[36px] font-light" style={{ color: statusColor(displayVerdict) }}>
                 {debug ? displayVerdict.replace(/_/g, " ") : evidence.confidence ? `${(evidence.confidence * 100).toFixed(0)}%` : "—"}
               </div>
@@ -340,14 +340,14 @@ export default function CausalCouplingClient() {
             {/* ── Evidence Components ── */}
             <div className="p-4 border border-white/10 bg-white/[0.02] space-y-3">
               <div className="flex items-center justify-between">
-                <div className="text-[10px] uppercase text-white/20">Evidence Components</div>
-                {debug && <span className="text-[8px] text-white/10 font-mono">{evidence.engineId}</span>}
+                <div className="text-[11px] uppercase text-white/20">Evidence Components</div>
+                {debug && <span className="text-[11px] text-white/10 font-mono">{evidence.engineId}</span>}
               </div>
               {evidence.components.map((comp) => (
                 <div key={comp.metric} className="flex items-center justify-between p-2 border border-white/5">
                   <div className="space-y-0.5">
                     <div className="text-[11px] text-white/50">{comp.metric}</div>
-                    {debug && <div className="text-[9px] text-white/20">{comp.value.toFixed(3)} vs {comp.threshold} — {comp.explanation}</div>}
+                    {debug && <div className="text-[11px] text-white/20">{comp.value.toFixed(3)} vs {comp.threshold} — {comp.explanation}</div>}
                   </div>
                   <span style={{ color: statusColor(comp.status), fontSize: "13px" }}>{statusIcon(comp.status)}</span>
                 </div>
@@ -356,10 +356,10 @@ export default function CausalCouplingClient() {
 
             {/* ── Diagnostic Log ── */}
             <div className="p-4 border border-white/10 bg-white/[0.02] space-y-2">
-              <div className="text-[10px] uppercase text-white/20">Diagnostic Log</div>
+              <div className="text-[11px] uppercase text-white/20">Diagnostic Log</div>
               <div className="space-y-1">
                 {evidence.diagnostics.map((d, i) => (
-                  <div key={i} className={`text-[10px] font-mono leading-relaxed ${d.startsWith("✓") ? "text-[#3fb950]/70" : d.startsWith("✗") ? "text-[#f85149]/70" : d.startsWith("⚠") ? "text-[#d29922]/70" : "text-white/25"}`}>{d}</div>
+                  <div key={i} className={`text-[11px] font-mono leading-relaxed ${d.startsWith("✓") ? "text-[#3fb950]/70" : d.startsWith("✗") ? "text-[#f85149]/70" : d.startsWith("⚠") ? "text-[#d29922]/70" : "text-white/25"}`}>{d}</div>
                 ))}
               </div>
             </div>
@@ -367,7 +367,7 @@ export default function CausalCouplingClient() {
             {/* ── Timeline (internal data, not part of evidence) ── */}
             {internalData && (
               <div className="p-4 border border-white/10 bg-white/[0.02] space-y-3">
-                <div className="text-[10px] uppercase text-white/20">Event Timeline</div>
+                <div className="text-[11px] uppercase text-white/20">Event Timeline</div>
                 <div className="relative h-8 bg-white/[0.03] rounded overflow-hidden">
                   {internalData.matches.map((m, i) => (
                     <div key={i} className="absolute top-1 h-6 rounded" style={{ left: `${(m.imu.t / (DURATION * 1000)) * 100}%`, width: `${Math.max(1, (Math.abs(m.dtMs) / (DURATION * 1000)) * 100)}%`, backgroundColor: m.directionAligned ? "rgba(63,185,80,0.5)" : "rgba(248,81,73,0.5)" }} />
@@ -375,7 +375,7 @@ export default function CausalCouplingClient() {
                   {internalData.unmatchedIMU.map((e, i) => (<div key={`imu-${i}`} className="absolute top-1 w-1 h-6 rounded bg-[#90c8ff]/40" style={{ left: `${(e.t / (DURATION * 1000)) * 100}%` }} />))}
                   {internalData.unmatchedCam.map((e, i) => (<div key={`cam-${i}`} className="absolute top-1 w-1 h-6 rounded bg-[#a371f7]/40" style={{ left: `${(e.t / (DURATION * 1000)) * 100}%` }} />))}
                 </div>
-                <div className="flex gap-4 text-[8px] text-white/20 flex-wrap">
+                <div className="flex gap-4 text-[11px] text-white/20 flex-wrap">
                   <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-[#3fb950]/50" /> Aligned</span>
                   <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-[#f85149]/50" /> Misaligned</span>
                   <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-[#90c8ff]/40" /> Unmatched IMU</span>
@@ -385,8 +385,8 @@ export default function CausalCouplingClient() {
             )}
 
             {/* Policy note */}
-            <div className="p-3 border border-white/5 bg-white/[0.01] text-[9px] font-mono text-white/15 space-y-1">
-              <div className="text-white/20 text-[8px] uppercase mb-1">Policy · evaluatePolicy</div>
+            <div className="p-3 border border-white/5 bg-white/[0.01] text-[11px] font-mono text-white/15 space-y-1">
+              <div className="text-white/20 text-[11px] uppercase mb-1">Policy · evaluatePolicy</div>
               <div>All components must PASS. Verdict computed by VerificationPolicy — not stored in Evidence.</div>
               <div className="text-white/10">Candidate Parameters: DirectionTolerance={DIRECTION_TOLERANCE_DEG}° MatchWindow=±{MATCH_WINDOW_MS}ms</div>
             </div>
@@ -397,8 +397,8 @@ export default function CausalCouplingClient() {
         )}
         <ExperimentExport engineId="EE-002" />
         <div className="mt-10 pt-5 border-t border-white/[0.04] text-center">
-          <p className="text-white/25 text-[9px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
-          <p className="text-white/20 text-[8px] mt-1">
+          <p className="text-white/25 text-[11px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
+          <p className="text-white/20 text-[11px] mt-1">
             Parameters intentionally omitted &middot;{" "}
             <a href={`?debug=${debug ? "0" : "1"}`} className="underline hover:text-white/35">
               {debug ? "Public view" : "Developer mode"}

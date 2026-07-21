@@ -38,7 +38,7 @@ export default function Vision() {
       <div className="max-w-[1200px] w-full">
         <div className="flex justify-between items-end mb-32">
           <div className="max-w-[650px]">
-            <span className="text-[9px] tracking-[0.6em] text-white/20 block mb-4 uppercase">VISION</span>
+            <span className="text-[11px] tracking-[0.6em] text-white/20 block mb-4 uppercase">VISION</span>
             <h2 className="text-[3.2rem] font-light -tracking-[0.02em] leading-[1.1] text-white m-0">
               Identity as <span className="text-[#90c8ff]/80">Geometry.</span>
             </h2>

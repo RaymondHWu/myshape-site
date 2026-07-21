@@ -50,7 +50,7 @@ export default function ProtocolStatusBar() {
 
   return (
     <div
-      className="fixed bottom-3 left-3 z-[998] font-mono text-[9px] tracking-[0.04em] select-none"
+      className="fixed bottom-3 left-3 z-[998] font-mono text-[11px] tracking-[0.04em] select-none"
       style={{ lineHeight: 1 }}
     >
       <span

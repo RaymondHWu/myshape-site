@@ -167,7 +167,7 @@ export default function Page() {
           </button>
 
           <div style={{ textAlign: "center", padding: 20, border: `2px solid ${verdict === "PASS" ? "#3fb950" : "#f85149"}`, marginBottom: 16 }}>
-            <div style={{ fontSize: 9, color: "#555", textTransform: "uppercase", letterSpacing: 2, marginBottom: 8 }}>Cross-Modal Confidence</div>
+            <div style={{ fontSize: 11, color: "#555", textTransform: "uppercase", letterSpacing: 2, marginBottom: 8 }}>Cross-Modal Confidence</div>
             <div style={{ fontSize: 36, color: sc(verdict), fontWeight: 300 }}>{evidence.confidence ? `${(evidence.confidence * 100).toFixed(0)}%` : "—"}</div>
           </div>
 
@@ -180,7 +180,7 @@ export default function Page() {
 
           <div style={{ marginTop: 12 }}>
             {evidence.diagnostics.map((d, i) => (
-              <div key={i} style={{ fontSize: 10, marginBottom: 2, color: d.startsWith("✓") ? "#3fb950" : d.startsWith("✗") ? "#f85149" : "#666" }}>
+              <div key={i} style={{ fontSize: 11, marginBottom: 2, color: d.startsWith("✓") ? "#3fb950" : d.startsWith("✗") ? "#f85149" : "#666" }}>
                 {d}
               </div>
             ))}

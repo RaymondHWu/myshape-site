@@ -100,7 +100,7 @@ export default function PostClient() {
         >
           {/* Header */}
           <div className="space-y-4 mb-16">
-            <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase">
+            <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[11px] tracking-[0.3em] uppercase">
               <span>GENESIS 006</span>
               <span className="w-8 h-[1px] bg-[#90c8ff]/20" />
               <span>2026.07.03</span>
@@ -139,7 +139,7 @@ export default function PostClient() {
           <div className="my-16 h-px bg-gradient-to-r from-transparent via-[#90c8ff]/15 to-transparent" />
 
           <div className="space-y-4">
-            <p className="text-white/38 text-[10px] tracking-[0.2em] uppercase text-center">
+            <p className="text-white/38 text-[11px] tracking-[0.2em] uppercase text-center">
               Continue Reading
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -184,14 +184,14 @@ export default function PostClient() {
               <Link
                 href="/motion-demo"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)}
-                className="px-6 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/65 text-[10px] tracking-[0.18em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all"
+                className="px-6 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/65 text-[11px] tracking-[0.18em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all"
               >
                 Motion Demo →
               </Link>
               <Link
                 href="/genesis"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)}
-                className="px-6 py-2 border border-[#90c8ff]/15 text-[#90c8ff]/50 text-[10px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all"
+                className="px-6 py-2 border border-[#90c8ff]/15 text-[#90c8ff]/50 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all"
               >
                 Genesis →
               </Link>

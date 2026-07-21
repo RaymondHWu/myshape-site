@@ -294,7 +294,7 @@ export default function GlossaryClient() {
             <div className="flex-1 min-w-0">
               {/* Header */}
               <div className="space-y-4 mb-12">
-                <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase">
+                <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[11px] tracking-[0.3em] uppercase">
                   <span>PROTOCOL REFERENCE</span>
                   <span className="w-8 h-[1px] bg-[#90c8ff]/25" />
                   <span>{GLOSSARY.length} TERMS</span>
@@ -318,7 +318,7 @@ export default function GlossaryClient() {
                     key={letter}
                     href={`#letter-${letter}`}
                     onMouseEnter={() => playTick(440, "sine", 0.03, 0.02)}
-                    className="px-2.5 py-1 border border-[#90c8ff]/12 text-[#90c8ff]/45 text-[10px] tracking-[0.15em] hover:border-[#90c8ff]/30 hover:text-[#90c8ff] transition-all"
+                    className="px-2.5 py-1 border border-[#90c8ff]/12 text-[#90c8ff]/45 text-[11px] tracking-[0.15em] hover:border-[#90c8ff]/30 hover:text-[#90c8ff] transition-all"
                   >
                     {letter}
                   </a>
@@ -346,7 +346,7 @@ export default function GlossaryClient() {
                           </dd>
                           {entry.seeAlso && entry.seeAlso.length > 0 && (
                             <div className="mt-3 flex flex-wrap items-center gap-2">
-                              <span className="text-[#90c8ff]/25 text-[10px] tracking-[0.18em] uppercase">
+                              <span className="text-[#90c8ff]/25 text-[11px] tracking-[0.18em] uppercase">
                                 See also:
                               </span>
                               {entry.seeAlso.map((ref) => (
@@ -354,7 +354,7 @@ export default function GlossaryClient() {
                                   key={ref}
                                   href={`#${ref.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "")}`}
                                   onMouseEnter={() => playTick(400, "sine", 0.025, 0.016)}
-                                  className="text-[#90c8ff]/35 text-[10px] tracking-[0.08em] hover:text-[#90c8ff]/65 transition-colors"
+                                  className="text-[#90c8ff]/35 text-[11px] tracking-[0.08em] hover:text-[#90c8ff]/65 transition-colors"
                                 >
                                   {ref}
                                 </a>

@@ -41,7 +41,7 @@ export default function ProtocolFooter() {
       title: "PROTOCOL",
       links: [
         { name: "OVERVIEW", href: "/protocol" },
-        { name: "MOTION_PIPELINE", href: "/protocol/motion-pipeline" },
+        { name: "VERIFY", href: "/verify" },
         { name: "EVIDENCE", href: "/evidence" },
         { name: "PLAYGROUND", href: "https://thecontinuitylab.org/lab/playground" },
         { name: "NPM_SDK", href: "https://www.npmjs.com/package/@thecontinuitylab/myshape" }
@@ -60,10 +60,10 @@ export default function ProtocolFooter() {
       title: "RESEARCH",
       links: [
         { name: "RESEARCH_HUB", href: "/research" },
+        { name: "CPS-0001", href: "/research/notes/008-continuity-protocol-core" },
         { name: "RESEARCH_AGENDA", href: "/research/agenda" },
         { name: "WHITEPAPER", href: "/whitepaper" },
-        { name: "BLOG", href: "/blog" },
-        { name: "ROADMAP", href: "/roadmap" }
+        { name: "BLOG", href: "/blog" }
       ]
     },
     {
@@ -95,7 +95,7 @@ export default function ProtocolFooter() {
           <div key={group.title} className={`flex justify-start md:justify-center ${group.title !== "CONNECT_NODES" ? "hidden md:flex" : ""}`}>
             <div className="flex flex-col items-start min-w-[160px]">
               <div className="mb-8 group cursor-default">
-                <h4 className="text-white text-[11px] font-bold tracking-[0.4em] mb-2 opacity-90 uppercase group-hover:text-[#90c8ff] transition-colors">
+                <h4 className="text-white text-[12px] font-bold tracking-[0.2em] mb-2 uppercase group-hover:text-[#90c8ff] transition-colors">
                   {group.title}
                 </h4>
                 <div className="w-4 h-[1px] bg-[#90c8ff]/50 group-hover:w-10 transition-all duration-700 ease-in-out shadow-[0_0_8px_#90c8ff]" />
@@ -105,7 +105,7 @@ export default function ProtocolFooter() {
                 // 防禦性處理：如果 href 不存在，跳退到 "#" 避免報錯
                 const safeHref = link.href || "#";
                 const isExternal = safeHref.startsWith('http');
-                const linkClass = "text-white/30 text-[9px] mb-5 hover:text-[#90c8ff] hover:translate-x-1 transition-all duration-300 tracking-[0.25em] uppercase block";
+                const linkClass = "text-white/45 text-[11px] mb-4 hover:text-[#90c8ff] hover:translate-x-1 transition-all duration-300 tracking-[0.12em] uppercase block";
                 
                 return (
                   <span key={link.name} onMouseEnter={() => playTick(500, "sine", 0.10, 0.025)}>
@@ -128,30 +128,30 @@ export default function ProtocolFooter() {
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <div className="w-1.5 h-1.5 bg-[#90c8ff] rounded-full animate-pulse shadow-[0_0_10px_#90c8ff]" />
-              <span className="text-[#90c8ff]/70 text-[9px] tracking-[0.3em] uppercase font-mono font-bold">
-                PROTOCOL_CORE_V2.0
+              <span className="text-[#90c8ff]/70 text-[11px] tracking-[0.2em] uppercase font-mono font-bold">
+                CPS-0001 v1.0-RC
               </span>
               <span className="text-white/15">|</span>
-              <span className="text-white/30 text-[9px] tracking-[0.25em] uppercase font-mono">
-                RFC-DRIVEN
+              <span className="text-white/40 text-[11px] tracking-[0.15em] uppercase font-mono">
+                ENGINE-INDEPENDENT
               </span>
             </div>
             <div className="space-y-1.5">
-              <p className="text-[8px] text-white/35 tracking-[0.2em] leading-relaxed uppercase font-mono">
-                SOVEREIGN 3D IDENTITY LAYER
+              <p className="text-[11px] text-white/45 tracking-[0.15em] leading-relaxed uppercase font-mono">
+                CONTINUITY PROTOCOL LAYER
               </p>
-              <p className="text-[7px] text-white/35 tracking-[0.25em] leading-relaxed uppercase font-mono">
-                AI-NATIVE • ZERO-KNOWLEDGE • MOTION-VERIFIED
+              <p className="text-[11px] text-white/35 tracking-[0.15em] leading-relaxed uppercase font-mono">
+                ENGINE-INDEPENDENT • CONTINUITY-VERIFIED
               </p>
-              <p className="text-[8px] text-[#d4af37]/25 tracking-[0.25em] leading-relaxed uppercase font-mono mt-2">
-                Research by <span className="text-[#d4af37]/40">The Continuity Lab</span>
+              <p className="text-[11px] text-[#d4af37]/35 tracking-[0.15em] leading-relaxed uppercase font-mono mt-2">
+                Research by <span className="text-[#d4af37]/50">The Continuity Lab</span>
               </p>
             </div>
           </div>
 
           <div className="flex flex-col items-start md:items-end">
             <div className="flex items-center gap-2 mb-4">
-               <span className="text-[9px] text-white/40 tracking-[0.4em] uppercase font-bold">
+               <span className="text-[11px] text-white/50 tracking-[0.2em] uppercase font-bold">
                 {status === "SENDING" ? "⋯ TRANSMITTING" :
                  status === "SUCCESS" ? "✓ UPLINK_ESTABLISHED" :
                  status === "ERROR" ? "✗ TRANSMISSION_FAILED" :
@@ -165,12 +165,12 @@ export default function ProtocolFooter() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={status === "SENDING" ? "TRANSMITTING..." : `ENTER_EMAIL_ADDR${cursorVisible ? '█' : ' '}`}
                 disabled={status !== "IDLE"}
-                className="w-full bg-transparent border-b border-white/10 py-3 text-[10px] text-[#90c8ff]/60 placeholder:text-white/20 focus:outline-none focus:border-[#90c8ff]/50 transition-all tracking-[0.2em] uppercase font-mono"
+                className="w-full bg-transparent border-b border-white/10 py-3 text-[11px] text-[#90c8ff]/70 placeholder:text-white/30 focus:outline-none focus:border-[#90c8ff]/50 transition-all tracking-[0.15em] uppercase font-mono"
                 required
               />
               <button 
                 type="submit"
-                className="absolute right-0 bottom-3 text-[9px] font-normal text-[#90c8ff]/25 hover:text-[#90c8ff]/60 transition-all tracking-[0.2em]"
+                className="absolute right-0 bottom-3 text-[11px] font-normal text-[#90c8ff]/35 hover:text-[#90c8ff]/70 transition-all tracking-[0.15em]"
               >
                 {status === "IDLE" && "[ CONNECT ]"}
                 {status === "SENDING" && "[ ... ]"}
@@ -185,9 +185,9 @@ export default function ProtocolFooter() {
       <div className="max-w-6xl mx-auto px-4 md:px-10 mt-3 md:mt-16 pt-3 md:pt-6 border-t border-white/5 text-center space-y-1">
         <div className="hidden md:flex items-center justify-center gap-1.5">
           <span className="w-1 h-1 rounded-full bg-[#90c8ff]/60 shadow-[0_0_4px_rgba(144,200,255,0.5)]" />
-          <span className="text-[9px] text-white/25 tracking-[0.25em] uppercase font-mono">Core v0.1.2 — 4 Engines · 121 Tests · 576 Experiments</span>
+          <span className="text-[11px] text-white/35 tracking-[0.15em] uppercase font-mono">CPS-0001 v1.0-RC · 4 Engines · 192 Tests · 576 Runs</span>
         </div>
-        <span className="text-[10px] text-white/30 tracking-[0.25em] uppercase font-mono block">
+        <span className="text-[11px] text-white/40 tracking-[0.15em] uppercase font-mono block">
           &copy; {new Date().getFullYear()} MYSHAPE PROTOCOL
         </span>
       </div>

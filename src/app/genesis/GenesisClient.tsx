@@ -389,7 +389,7 @@ export default function GenesisClient() {
             transition={{ duration: 1.2 }}
             className="relative z-10 text-center max-w-lg"
           >
-            <div className="text-[#d2991d]/60 text-[10px] tracking-[0.4em] uppercase mb-4 font-mono">
+            <div className="text-[#d2991d]/60 text-[11px] tracking-[0.4em] uppercase mb-4 font-mono">
               GENESIS_COHORT // SEALED
             </div>
             <h1 className="text-3xl md:text-5xl font-light tracking-[0.08em] text-white mb-4">
@@ -406,17 +406,17 @@ export default function GenesisClient() {
               <div className="flex items-center justify-center gap-6 mb-8 font-mono">
                 <div className="border border-[#d2991d]/15 bg-[#d2991d]/[0.03] px-5 py-3">
                   <div className="text-[#d2991d]/70 text-[20px] font-light">{liveStats.totalNodes}</div>
-                  <div className="text-[#d2991d]/40 text-[8px] tracking-[0.2em] uppercase mt-1">Active Nodes</div>
+                  <div className="text-[#d2991d]/40 text-[11px] tracking-[0.2em] uppercase mt-1">Active Nodes</div>
                 </div>
                 <div className="border border-[#d2991d]/15 bg-[#d2991d]/[0.03] px-5 py-3">
                   <div className="text-[#d2991d]/70 text-[20px] font-light">{liveStats.totalScans.toLocaleString()}</div>
-                  <div className="text-[#d2991d]/40 text-[8px] tracking-[0.2em] uppercase mt-1">Total Scans</div>
+                  <div className="text-[#d2991d]/40 text-[11px] tracking-[0.2em] uppercase mt-1">Total Scans</div>
                 </div>
                 <div className="border border-[#d2991d]/15 bg-[#d2991d]/[0.03] px-5 py-3">
                   <div className="flex items-center gap-1.5 text-[#3fb950]/70 text-[20px] font-light">
                     <span className="w-2 h-2 rounded-full bg-[#3fb950]" style={{ boxShadow: "0 0 6px rgba(63,185,80,0.5)" }} />
                   </div>
-                  <div className="text-[#d2991d]/40 text-[8px] tracking-[0.2em] uppercase mt-1">Live</div>
+                  <div className="text-[#d2991d]/40 text-[11px] tracking-[0.2em] uppercase mt-1">Live</div>
                 </div>
               </div>
             )}
@@ -424,13 +424,13 @@ export default function GenesisClient() {
             <div className="flex flex-col items-center gap-3">
               <a
                 href="/specs"
-                className="px-8 py-3 border border-[#d2991d]/30 text-[#d2991d]/70 text-[10px] tracking-[0.2em] uppercase hover:bg-[#d2991d]/10 hover:border-[#d2991d]/60 transition-all font-mono"
+                className="px-8 py-3 border border-[#d2991d]/30 text-[#d2991d]/70 text-[11px] tracking-[0.2em] uppercase hover:bg-[#d2991d]/10 hover:border-[#d2991d]/60 transition-all font-mono"
               >
                 ◈ Read Protocol Specs
               </a>
               <a
                 href="/dashboard"
-                className="text-[#d2991d]/40 text-[9px] tracking-[0.15em] hover:text-[#d2991d]/70 transition-colors"
+                className="text-[#d2991d]/40 text-[11px] tracking-[0.15em] hover:text-[#d2991d]/70 transition-colors"
               >
                 View my Node →
               </a>
@@ -467,7 +467,7 @@ export default function GenesisClient() {
             style={{ textShadow: "0 0 40px rgba(144,200,255,0.3), 0 0 80px rgba(144,200,255,0.1)" }}>
             {stage === "success" ? "Genesis Confirmed." : stage === "error" ? "Uplink Interrupted." : "Initialize Genesis."}
           </h2>
-          <p className="text-[#90c8ff]/60 font-mono text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.6em] uppercase mb-2 md:mb-4"
+          <p className="text-[#90c8ff]/60 font-mono text-[11px] md:text-[11px] tracking-[0.3em] md:tracking-[0.6em] uppercase mb-2 md:mb-4"
             style={{ textShadow: "0 0 16px rgba(144,200,255,0.3)" }}>
             ESTABLISHING_IDENTITY_LAYER_PROTOCOL
           </p>
@@ -481,7 +481,7 @@ export default function GenesisClient() {
               transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}>
               <div className="mb-4 md:mb-8 flex items-center gap-3 justify-center">
                 <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#90c8ff]/30" />
-                <span className="text-[#90c8ff]/40 font-mono text-[9px] tracking-[0.5em] uppercase">Genesis_Protocol</span>
+                <span className="text-[#90c8ff]/40 font-mono text-[11px] tracking-[0.5em] uppercase">Genesis_Protocol</span>
                 <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#90c8ff]/30" />
               </div>
 
@@ -496,7 +496,7 @@ export default function GenesisClient() {
                   <div className="relative w-8 h-8">
                     <div className="absolute inset-0 rounded-full border border-[#90c8ff]/30 animate-spin" style={{ borderTopColor: "rgba(144,200,255,0.8)" }} />
                   </div>
-                  <span className="text-[#90c8ff]/50 font-mono text-[10px] tracking-[0.3em] uppercase">Detecting_Protocol_Identity...</span>
+                  <span className="text-[#90c8ff]/50 font-mono text-[11px] tracking-[0.3em] uppercase">Detecting_Protocol_Identity...</span>
                 </div>
               ) : returningNode ? (
                 /* ── 回头节点：Welcome Back 卡片 ── */
@@ -507,14 +507,14 @@ export default function GenesisClient() {
                     <div className="flex items-center justify-between px-5 py-2.5 border-b border-[#90c8ff]/10">
                       <div className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-[#3fb950] shadow-[0_0_6px_rgba(63,185,80,0.6)]" />
-                        <span className="text-[#90c8ff]/60 font-mono text-[9px] tracking-[0.4em] uppercase">PROTOCOL_IDENTITY_DETECTED</span>
+                        <span className="text-[#90c8ff]/60 font-mono text-[11px] tracking-[0.4em] uppercase">PROTOCOL_IDENTITY_DETECTED</span>
                       </div>
-                      <span className="text-white/25 font-mono text-[9px] tracking-[0.2em]">WALLET_BOUND</span>
+                      <span className="text-white/25 font-mono text-[11px] tracking-[0.2em]">WALLET_BOUND</span>
                     </div>
                     {/* 内容区 */}
                     <div className="px-6 md:px-10 py-5 md:py-7 flex flex-col items-center">
                       {returningNode.isGenesis && (
-                        <div className="text-[#d2991d]/70 font-mono text-[8px] tracking-[0.35em] uppercase mb-3 px-3 py-1 border border-[#d2991d]/20 bg-[#d2991d]/[0.04]">
+                        <div className="text-[#d2991d]/70 font-mono text-[11px] tracking-[0.35em] uppercase mb-3 px-3 py-1 border border-[#d2991d]/20 bg-[#d2991d]/[0.04]">
                           ◈ Genesis Cohort — Founding Entity
                         </div>
                       )}
@@ -522,7 +522,7 @@ export default function GenesisClient() {
                         style={{ textShadow: "0 0 20px rgba(144,200,255,0.3)" }}>
                         {returningNode.nodeHandle}
                       </div>
-                      <div className="text-[#90c8ff]/40 font-mono text-[10px] tracking-[0.15em] mb-4">
+                      <div className="text-[#90c8ff]/40 font-mono text-[11px] tracking-[0.15em] mb-4">
                         {returningNode.status === "GENESIS_NODE" ? "SOVEREIGN_IDENTITY_ANCHOR" : "ACTIVE_PROTOCOL_NODE"}
                         {returningNode.registeredAt && (
                           <> · Since {new Date(returningNode.registeredAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</>
@@ -533,12 +533,12 @@ export default function GenesisClient() {
                       <div className="flex items-center gap-4 mb-6 font-mono">
                         <div className="text-center">
                           <div className="text-[#90c8ff]/70 text-sm font-light">{returningNode.particleLevel}</div>
-                          <div className="text-[#90c8ff]/30 text-[7px] tracking-[0.2em] uppercase">Particle Lv.</div>
+                          <div className="text-[#90c8ff]/30 text-[11px] tracking-[0.2em] uppercase">Particle Lv.</div>
                         </div>
                         <div className="w-[1px] h-8 bg-[#90c8ff]/10" />
                         <div className="text-center">
                           <div className="text-[#90c8ff]/70 text-sm font-light">{returningNode.entropyScore.toLocaleString()}</div>
-                          <div className="text-[#90c8ff]/30 text-[7px] tracking-[0.2em] uppercase">Entropy</div>
+                          <div className="text-[#90c8ff]/30 text-[11px] tracking-[0.2em] uppercase">Entropy</div>
                         </div>
                       </div>
 
@@ -547,7 +547,7 @@ export default function GenesisClient() {
                         <a
                           href="/dashboard"
                           onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                          className="relative group px-10 py-3 font-mono text-[10px] tracking-[0.25em] uppercase transition-all duration-500 overflow-hidden"
+                          className="relative group px-10 py-3 font-mono text-[11px] tracking-[0.25em] uppercase transition-all duration-500 overflow-hidden"
                           style={{ border: "1px solid rgba(144,200,255,0.35)", color: "rgba(180,220,255,0.85)", textShadow: "0 0 8px rgba(144,200,255,0.3)" }}>
                           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                             style={{ background: "rgba(144,200,255,0.06)", boxShadow: "inset 0 0 30px rgba(144,200,255,0.1)" }} />
@@ -564,7 +564,7 @@ export default function GenesisClient() {
                             window.dispatchEvent(new CustomEvent("wallet:disconnected"));
                           }}
                           onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}
-                          className="text-white/15 hover:text-white/30 text-[8px] tracking-[0.2em] uppercase transition-colors font-mono">
+                          className="text-white/15 hover:text-white/30 text-[11px] tracking-[0.2em] uppercase transition-colors font-mono">
                           Not you? Disconnect &amp; start fresh
                         </button>
                       </div>
@@ -577,7 +577,7 @@ export default function GenesisClient() {
                 <div className="flex items-center justify-center gap-2">
                   <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#90c8ff]/30" />
                   <div className="cohort-marquee">
-                    <span className="cohort-marquee-inner text-[#90c8ff]/80 font-mono text-[10px] tracking-[0.25em] uppercase">
+                    <span className="cohort-marquee-inner text-[#90c8ff]/80 font-mono text-[11px] tracking-[0.25em] uppercase">
                       ◈ Genesis_Cohort — First 100 only&nbsp;&nbsp;&nbsp;◈ Genesis_Cohort — First 100 only&nbsp;&nbsp;&nbsp;
                     </span>
                   </div>
@@ -590,9 +590,9 @@ export default function GenesisClient() {
                     <div className="flex flex-col items-center gap-3">
                       <div className="flex items-center gap-2 px-4 py-2 border border-[#90c8ff]/40 bg-[#90c8ff]/[0.06]">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.8)]" />
-                        <span className="text-[#90c8ff]/80 font-mono text-[10px] tracking-[0.2em] uppercase">Wallet Connected</span>
+                        <span className="text-[#90c8ff]/80 font-mono text-[11px] tracking-[0.2em] uppercase">Wallet Connected</span>
                       </div>
-                      <span className="text-[#90c8ff]/50 text-[10px] tracking-[0.15em] uppercase font-mono">
+                      <span className="text-[#90c8ff]/50 text-[11px] tracking-[0.15em] uppercase font-mono">
                         {headerWallet.slice(0, 8)}...{headerWallet.slice(-6)}
                       </span>
                       <button
@@ -603,7 +603,7 @@ export default function GenesisClient() {
                         style={{ background: "rgba(144,200,255,0.06)" }}>
                         Begin Genesis →
                       </button>
-                      <span className="text-white/25 text-[9px] tracking-[0.1em] mt-1">
+                      <span className="text-white/25 text-[11px] tracking-[0.1em] mt-1">
                         No email required — wallet signature is your identity proof
                       </span>
                     </div>
@@ -629,7 +629,7 @@ export default function GenesisClient() {
                           }
                         }}
                       />
-                      <span className="text-[#90c8ff]/55 text-[10px] md:text-[11px] tracking-[0.12em] uppercase font-light">Recommended: Trustless on-chain binding</span>
+                      <span className="text-[#90c8ff]/55 text-[11px] md:text-[11px] tracking-[0.12em] uppercase font-light">Recommended: Trustless on-chain binding</span>
 
                       {/* ── 分隔（桌面端专属）── */}
                       <div className="hidden md:flex items-center gap-3 w-full max-w-[260px] mt-2">
@@ -642,7 +642,7 @@ export default function GenesisClient() {
 
                       {/* ── 回头用户引导：已有节点？用钱包免验证码 ── */}
                       <div className="hidden md:flex items-center gap-2">
-                        <span className="text-[#90c8ff]/25 text-[9px] tracking-[0.1em] uppercase font-light">
+                        <span className="text-[#90c8ff]/25 text-[11px] tracking-[0.1em] uppercase font-light">
                           ◈ Already a node? Connect wallet ↑ to skip OTP
                         </span>
                       </div>
@@ -680,10 +680,10 @@ export default function GenesisClient() {
                             </div>
                           </div>
                         </div>
-                        <span className="text-white/30 text-[9px] tracking-[0.1em]">For restricted environments only</span>
+                        <span className="text-white/30 text-[11px] tracking-[0.1em]">For restricted environments only</span>
                         <a href="/handshake"
                           onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
-                          className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 text-[9px] tracking-[0.12em] uppercase transition-colors mt-1 no-underline inline-block">
+                          className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 text-[11px] tracking-[0.12em] uppercase transition-colors mt-1 no-underline inline-block">
                           Developer? Node_Handshake →
                         </a>
                       </div>
@@ -740,15 +740,15 @@ export default function GenesisClient() {
                 <div className="flex items-center justify-between px-5 py-2 border-b border-[#90c8ff]/10">
                   <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] animate-pulse shadow-[0_0_6px_rgba(144,200,255,0.8)]" />
-                    <span className="text-[#90c8ff]/60 font-mono text-[9px] tracking-[0.4em] uppercase">IDENTITY_CHALLENGE</span>
+                    <span className="text-[#90c8ff]/60 font-mono text-[11px] tracking-[0.4em] uppercase">IDENTITY_CHALLENGE</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-white/30 font-mono text-[9px] tracking-[0.2em]">SIG_006</span>
+                    <span className="text-white/30 font-mono text-[11px] tracking-[0.2em]">SIG_006</span>
                   </div>
                 </div>
                 {/* 内容区 */}
                 <div className="px-5 md:px-8 py-6 md:py-8">
-                  <div className="text-white/40 font-mono text-[10px] tracking-[0.2em] mb-1 text-center uppercase">VERIFICATION CODE SENT TO</div>
+                  <div className="text-white/40 font-mono text-[11px] tracking-[0.2em] mb-1 text-center uppercase">VERIFICATION CODE SENT TO</div>
                   <div className="text-white/60 font-mono text-[11px] tracking-[0.15em] mb-8 text-center truncate">{email}</div>
                   <form onSubmit={handleVerifyOTP}>
                     <div className="flex justify-center gap-2 md:gap-3 mb-8">
@@ -778,7 +778,7 @@ export default function GenesisClient() {
                     </div>
                     <button type="submit" disabled={otp.length !== 6 || verifyingOtp}
                       onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                      className="w-full py-3 border text-[9px] tracking-[0.4em] uppercase font-mono transition-all duration-500"
+                      className="w-full py-3 border text-[11px] tracking-[0.4em] uppercase font-mono transition-all duration-500"
                       style={{
                         borderColor: otp.length === 6 ? "rgba(144,200,255,0.5)" : "rgba(255,255,255,0.08)",
                         color: otp.length === 6 ? "rgba(144,200,255,0.8)" : "rgba(255,255,255,0.15)",
@@ -841,7 +841,7 @@ export default function GenesisClient() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.5 }}
                   className="flex flex-col items-center gap-2 max-w-xs w-full">
-                  <span className="text-[#90c8ff]/40 text-[9px] tracking-[0.15em] uppercase font-light">
+                  <span className="text-[#90c8ff]/40 text-[11px] tracking-[0.15em] uppercase font-light">
                     Optionally bind a real email for protocol updates
                   </span>
                   <div className="flex items-center gap-2 w-full">
@@ -857,7 +857,7 @@ export default function GenesisClient() {
                       type="button"
                       onClick={handleBindEmail}
                       disabled={bindEmailSaving || !bindEmailInput.includes("@")}
-                      className="px-4 py-2 border border-[#90c8ff]/25 text-[#90c8ff]/50 font-mono text-[9px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/50 hover:text-[#90c8ff]/80 disabled:opacity-20 disabled:cursor-not-allowed transition-all whitespace-nowrap"
+                      className="px-4 py-2 border border-[#90c8ff]/25 text-[#90c8ff]/50 font-mono text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/50 hover:text-[#90c8ff]/80 disabled:opacity-20 disabled:cursor-not-allowed transition-all whitespace-nowrap"
                       style={{ background: "rgba(144,200,255,0.03)" }}>
                       {bindEmailSaving ? "Saving..." : "Bind"}
                     </button>
@@ -872,7 +872,7 @@ export default function GenesisClient() {
                 transition={{ delay: 1.0, duration: 0.5 }}
                 href="/identity"
                 onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                className="relative group px-12 py-3 font-mono text-[10px] tracking-[0.25em] uppercase transition-all duration-500 overflow-hidden"
+                className="relative group px-12 py-3 font-mono text-[11px] tracking-[0.25em] uppercase transition-all duration-500 overflow-hidden"
                 style={{ border: "1px solid rgba(144,200,255,0.3)", color: "rgba(180,220,255,0.8)", textShadow: "0 0 8px rgba(144,200,255,0.3)" }}>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{ background: "rgba(144,200,255,0.06)", boxShadow: "inset 0 0 30px rgba(144,200,255,0.1)" }} />
@@ -888,7 +888,7 @@ export default function GenesisClient() {
                 transition={{ delay: 1.4, duration: 0.5 }}
                 href="/dashboard"
                 onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                className="relative group px-12 py-3 font-mono text-[10px] tracking-[0.25em] uppercase transition-all duration-500 overflow-hidden"
+                className="relative group px-12 py-3 font-mono text-[11px] tracking-[0.25em] uppercase transition-all duration-500 overflow-hidden"
                 style={{ border: "1px solid rgba(144,200,255,0.15)", color: "rgba(144,200,255,0.5)", background: "rgba(144,200,255,0.015)" }}>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{ background: "rgba(144,200,255,0.04)", boxShadow: "inset 0 0 20px rgba(144,200,255,0.06)" }} />
@@ -905,10 +905,10 @@ export default function GenesisClient() {
               exit={{ opacity: 0, y: -6, filter: "blur(2px)" }}
               transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
               className="flex flex-col items-center space-y-6">
-              <div className="text-red-300/80 font-mono text-[10px] tracking-[0.3em] uppercase animate-pulse">{`> ${errorMsg}`}</div>
+              <div className="text-red-300/80 font-mono text-[11px] tracking-[0.3em] uppercase animate-pulse">{`> ${errorMsg}`}</div>
               <button onClick={() => { setStage("input"); setErrorMsg(""); setOtp(""); }}
                 onMouseEnter={() => playTick(600, "sine", 0.08, 0.02)}
-                className="px-8 py-3 border border-white/20 text-white/60 font-mono text-[9px] tracking-[0.3em] uppercase hover:border-white/50 hover:text-white transition-all">
+                className="px-8 py-3 border border-white/20 text-white/60 font-mono text-[11px] tracking-[0.3em] uppercase hover:border-white/50 hover:text-white transition-all">
                 Retry_Initialization
               </button>
             </motion.div>

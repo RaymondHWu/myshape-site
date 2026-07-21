@@ -118,7 +118,7 @@ a, button, [role="button"], input, textarea, select {
   display: inline-block;
   margin-top: 20px;
   font-family: monospace;
-  font-size: 10px;
+  font-size: 11px;
   color: rgba(144, 200, 255, 0.3);
   text-decoration: none;
   letter-spacing: 0.2em;
@@ -213,7 +213,7 @@ a, button, [role="button"], input, textarea, select {
   }
 
   .typing-text {
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.15em;
     max-width: 90vw;
   }

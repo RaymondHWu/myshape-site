@@ -80,7 +80,7 @@ export default function PlaygroundPage() {
         {/* Waveform Card */}
         <div style={{ padding: "16px 12px 8px", border: "1px solid #1E293B", background: "#0B1220", marginBottom: 0 }}>
           <canvas ref={canvasRef} width={W} height={H} style={{ width: "100%", height: "auto", display: "block" }} />
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: "#64748B", marginTop: 4 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#64748B", marginTop: 4 }}>
             <span>Acceleration magnitude</span>
             <span style={{ color: "#f85149" }}>● Jerk peaks</span>
             <span>{samples * 16}ms</span>
@@ -89,7 +89,7 @@ export default function PlaygroundPage() {
 
         {/* Verdict — pinned to waveform */}
         <div style={{ textAlign: "center", padding: "12px 0 24px", display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}>
-          <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.2em", color: "#64748B" }}>VERDICT</div>
+          <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.2em", color: "#64748B" }}>VERDICT</div>
           <div style={{ fontSize: 32, fontWeight: 200, color: vc }}>{result.verdict.replace("_", " ")}</div>
           <div style={{ fontSize: 14, color: "#94A3B8" }}>{(result.confidence * 100).toFixed(0)}%</div>
         </div>
@@ -102,7 +102,7 @@ export default function PlaygroundPage() {
               <span style={{ color: "#60A5FA" }}>{(humanness * 100).toFixed(0)}%</span>
             </div>
             <input type="range" min="0" max="100" value={humanness * 100} onChange={(e) => setHumanness(Number(e.target.value) / 100)} style={{ width: "100%", accentColor: "#60A5FA" }} />
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: "#64748B", marginTop: 2 }}><span>Mechanical</span><span>Human</span></div>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#64748B", marginTop: 2 }}><span>Mechanical</span><span>Human</span></div>
           </div>
           <div style={{ padding: "14px 16px", border: "1px solid #1E293B", background: "#0B1220" }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6, fontSize: 12 }}>
@@ -124,7 +124,7 @@ export default function PlaygroundPage() {
                     <span style={{ color: "#A7B4C6" }}>{c.metric}</span>
                     <span style={{ color: clr, fontSize: 14, fontWeight: 600 }}>{c.status === "PASS" ? "✓" : c.status === "FAIL" ? "✗" : "—"}</span>
                   </div>
-                  <div style={{ color: "#64748B", fontSize: 9, marginTop: 2 }}>{c.value.toFixed(3)} / {c.threshold}</div>
+                  <div style={{ color: "#64748B", fontSize: 11, marginTop: 2 }}>{c.value.toFixed(3)} / {c.threshold}</div>
                 </div>
               );
             })}
@@ -136,14 +136,14 @@ export default function PlaygroundPage() {
           {[{ label: "IMU Events", value: result.imuEvents }, { label: "Camera Events", value: result.camEvents }, { label: "Matched", value: result.matches }].map((s) => (
             <div key={s.label} style={{ textAlign: "center", padding: "12px 8px", border: "1px solid #1E293B", background: "#0B1220" }}>
               <div style={{ fontSize: 18, fontWeight: 300, color: "#60A5FA" }}>{s.value}</div>
-              <div style={{ fontSize: 9, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.label}</div>
+              <div style={{ fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.08em" }}>{s.label}</div>
             </div>
           ))}
         </div>
 
         {/* Diagnostics */}
         <details style={{ marginBottom: 32 }}>
-          <summary style={{ fontSize: 10, color: "#64748B", cursor: "pointer", letterSpacing: "0.1em", textTransform: "uppercase" }}>Diagnostics</summary>
+          <summary style={{ fontSize: 11, color: "#64748B", cursor: "pointer", letterSpacing: "0.1em", textTransform: "uppercase" }}>Diagnostics</summary>
           <div style={{ marginTop: 8, fontSize: 11, lineHeight: 1.8, padding: "12px 14px", border: "1px solid #1E293B", background: "#0B1220" }}>
             {result.diagnostics.map((d, i) => (
               <div key={i} style={{ color: d.startsWith("✓") ? "#34D399" : d.startsWith("✗") ? "#f85149" : "#64748B" }}>{d}</div>

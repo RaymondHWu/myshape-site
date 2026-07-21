@@ -56,7 +56,7 @@ export default function NoteClient() {
           </section>
 
           <div className="mt-16 pt-8 border-t border-white/[0.04] text-center">
-            <Link href="/research" className="text-white/35 text-[10px] tracking-[0.2em] uppercase hover:text-white/55 transition-colors">
+            <Link href="/research" className="text-white/35 text-[11px] tracking-[0.2em] uppercase hover:text-white/55 transition-colors">
               ← Research Hub
             </Link>
           </div>

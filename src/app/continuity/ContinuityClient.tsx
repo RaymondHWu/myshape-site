@@ -52,7 +52,7 @@ export default function ContinuityClient() {
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 space-y-10">
         {/* ── Header ── */}
         <header className="space-y-3">
-          <div className="text-[#90c8ff]/45 text-[10px] tracking-[0.5em] uppercase">
+          <div className="text-[#90c8ff]/45 text-[11px] tracking-[0.5em] uppercase">
             State Chain of Subject Evolution
           </div>
           <h1

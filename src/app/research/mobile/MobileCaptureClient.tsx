@@ -184,11 +184,11 @@ export default function MobileCaptureClient() {
     <div className="min-h-screen bg-black text-white font-sans selection:bg-[#3fb950]/30">
       <header className="border-b border-white/5 px-4 py-3 flex items-center justify-between">
         <Link href="/research" className="text-white/30 text-[11px] tracking-[0.2em] uppercase hover:text-white/60 transition-colors">← Research</Link>
-        <span className="text-white/15 text-[9px] tracking-[0.3em] uppercase">Mobile IMU Capture</span>
+        <span className="text-white/15 text-[11px] tracking-[0.3em] uppercase">Mobile IMU Capture</span>
         <div className="w-16" />
       </header>
       <main className="max-w-md mx-auto px-4 py-8 space-y-6">
-        <div className="p-1.5 border border-white/5 text-[9px] font-mono text-white/20">
+        <div className="p-1.5 border border-white/5 text-[11px] font-mono text-white/20">
           phase={phase} | cd={countdown} | sim={String(isSimulated)} | samples={sampleCount}
         </div>
 
@@ -204,7 +204,7 @@ export default function MobileCaptureClient() {
             {ACTIONS.map((action, i) => (
               <div key={action.id} className="flex items-center gap-4 p-3 border border-white/5 bg-white/[0.02]">
                 <span className="text-2xl">{action.icon}</span>
-                <div><div className="text-white/60 text-[14px]">{action.label} <span className="text-white/15 text-[10px] ml-2">{action.duration}s</span></div>
+                <div><div className="text-white/60 text-[14px]">{action.label} <span className="text-white/15 text-[11px] ml-2">{action.duration}s</span></div>
                 <div className="text-white/20 text-[11px]">{action.desc}</div></div>
                 <span className="ml-auto text-white/10 text-[11px] font-mono">{i + 1}/{ACTIONS.length}</span>
               </div>
@@ -244,7 +244,7 @@ export default function MobileCaptureClient() {
         {phase === "capturing" && (
           <div className="space-y-6">
             <div className="space-y-2">
-              <div className="flex justify-between text-[10px] tracking-[0.1em] uppercase">
+              <div className="flex justify-between text-[11px] tracking-[0.1em] uppercase">
                 <span className="text-white/30">{ACTIONS[currentAction]?.icon} {ACTIONS[currentAction]?.label}</span>
                 <span className="text-[#3fb950]/50 font-mono">{elapsed.toFixed(1)}s / {TOTAL_DURATION}s</span>
               </div>
@@ -270,7 +270,7 @@ export default function MobileCaptureClient() {
             </div>
             {samplesRef.current.length > 0 && (
               <div className="p-4 border border-white/10 bg-white/[0.02] space-y-2">
-                <div className="text-white/30 text-[9px] tracking-[0.2em] uppercase">Session Stats</div>
+                <div className="text-white/30 text-[11px] tracking-[0.2em] uppercase">Session Stats</div>
                 <div className="grid grid-cols-2 gap-2 text-[11px]">
                   <div className="text-white/15">Duration</div><div className="text-white/40 font-mono text-right">{(samplesRef.current[samplesRef.current.length - 1].t / 1000).toFixed(1)}s</div>
                   <div className="text-white/15">Sample Rate</div><div className="text-white/40 font-mono text-right">{Math.round(sampleCount / (samplesRef.current[samplesRef.current.length - 1].t / 1000))} Hz</div>

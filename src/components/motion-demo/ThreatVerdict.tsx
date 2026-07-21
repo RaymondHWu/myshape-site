@@ -23,7 +23,7 @@ export default function ThreatVerdict({ verdict }: ThreatVerdictProps) {
 
   return (
     <div
-      className={`text-center text-[10px] tracking-[0.08em] uppercase font-mono mt-2 ${textColor}`}
+      className={`text-center text-[11px] tracking-[0.08em] uppercase font-mono mt-2 ${textColor}`}
       style={{ textShadow }}
     >
       {verdict}

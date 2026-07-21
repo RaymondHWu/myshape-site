@@ -106,7 +106,7 @@ function ApplyForm() {
             <p className="text-amber-300/80 text-[11px] leading-relaxed">
               Edge does not support the motion capture demo.
             </p>
-            <p className="text-white/30 text-[9px] mt-1">
+            <p className="text-white/30 text-[11px] mt-1">
               Please open this page in <span className="text-white/50">Chrome</span> or <span className="text-white/50">Firefox</span> for the full experience.
             </p>
           </div>
@@ -114,7 +114,7 @@ function ApplyForm() {
 
         {/* Header */}
         <div className="space-y-4 mb-10">
-          <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">Continuity Research Program</div>
+          <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.5em] uppercase">Continuity Research Program</div>
           <h1 className="text-2xl md:text-3xl font-light tracking-[0.12em] text-white uppercase">
             Genesis <span style={{ color: "rgba(144,200,255,0.7)" }}>100</span>
           </h1>
@@ -134,7 +134,7 @@ function ApplyForm() {
 
         {/* ── Research Question ── */}
         <div className="border p-6 mb-8 space-y-3" style={{ borderColor: "rgba(144,200,255,0.15)", borderRadius: 4, background: "rgba(144,200,255,0.02)" }}>
-          <div className="text-[#90c8ff]/40 text-[9px] tracking-[0.3em] uppercase">Research Question</div>
+          <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.3em] uppercase">Research Question</div>
           <p className="text-white/60 text-[14px] font-light leading-relaxed">
             We are studying a fundamental question:
           </p>
@@ -145,10 +145,10 @@ function ApplyForm() {
 
         {/* ── What We Collect ── */}
         <div className="border p-6 mb-8 space-y-4" style={{ borderColor: "rgba(144,200,255,0.1)", borderRadius: 4, background: "transparent" }}>
-          <div className="text-white/25 text-[9px] tracking-[0.3em] uppercase">Privacy Protocol</div>
+          <div className="text-white/25 text-[11px] tracking-[0.3em] uppercase">Privacy Protocol</div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px]">
             <div className="space-y-2">
-              <div className="text-[#90c8ff]/60 text-[9px] tracking-[0.15em] uppercase">What We Collect</div>
+              <div className="text-[#90c8ff]/60 text-[11px] tracking-[0.15em] uppercase">What We Collect</div>
               <ul className="text-white/40 space-y-1">
                 <li>✓ Motion signal (joint positions)</li>
                 <li>✓ Presence receipt (entropy proof)</li>
@@ -157,7 +157,7 @@ function ApplyForm() {
               </ul>
             </div>
             <div className="space-y-2">
-              <div className="text-amber-400/50 text-[9px] tracking-[0.15em] uppercase">What We Never Collect</div>
+              <div className="text-amber-400/50 text-[11px] tracking-[0.15em] uppercase">What We Never Collect</div>
               <ul className="text-white/30 space-y-1">
                 <li>✗ Raw camera images or video</li>
                 <li>✗ Facial data or biometrics</li>
@@ -170,15 +170,15 @@ function ApplyForm() {
 
         {/* ── Three Phases ── */}
         <div className="border p-6 mb-8 space-y-5" style={{ borderColor: "rgba(144,200,255,0.1)", borderRadius: 4, background: "transparent" }}>
-          <div className="text-white/25 text-[9px] tracking-[0.3em] uppercase">Research Roadmap</div>
+          <div className="text-white/25 text-[11px] tracking-[0.3em] uppercase">Research Roadmap</div>
           <div className="space-y-4">
             <div className="flex gap-4">
               <div className="w-10 h-10 flex items-center justify-center border shrink-0" style={{ borderColor: "rgba(144,200,255,0.4)", borderRadius: 2, background: "rgba(144,200,255,0.06)" }}>
                 <span className="text-[#90c8ff] text-[11px] font-mono">I</span>
               </div>
               <div>
-                <div className="text-white/60 text-[12px] font-light">Founding Cohort <span className="text-[#90c8ff]/60 text-[10px]">— 100 participants</span></div>
-                <p className="text-white/25 text-[10px] leading-relaxed mt-1">Validate multi-device, multi-session, longitudinal presence stability. You come back. Your data proves continuity.</p>
+                <div className="text-white/60 text-[12px] font-light">Founding Cohort <span className="text-[#90c8ff]/60 text-[11px]">— 100 participants</span></div>
+                <p className="text-white/25 text-[11px] leading-relaxed mt-1">Validate multi-device, multi-session, longitudinal presence stability. You come back. Your data proves continuity.</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -186,8 +186,8 @@ function ApplyForm() {
                 <span className="text-[#90c8ff]/50 text-[11px] font-mono">II</span>
               </div>
               <div>
-                <div className="text-white/40 text-[12px] font-light">Research Network <span className="text-white/20 text-[10px]">— 1,000 participants</span></div>
-                <p className="text-white/20 text-[10px] leading-relaxed mt-1">Validate across age, geography, lighting, device, and behavior diversity.</p>
+                <div className="text-white/40 text-[12px] font-light">Research Network <span className="text-white/20 text-[11px]">— 1,000 participants</span></div>
+                <p className="text-white/20 text-[11px] leading-relaxed mt-1">Validate across age, geography, lighting, device, and behavior diversity.</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -195,8 +195,8 @@ function ApplyForm() {
                 <span className="text-white/25 text-[11px] font-mono">III</span>
               </div>
               <div>
-                <div className="text-white/30 text-[12px] font-light">Open Protocol <span className="text-white/15 text-[10px]">— 10,000+ participants</span></div>
-                <p className="text-white/15 text-[10px] leading-relaxed mt-1">Continuity at scale.</p>
+                <div className="text-white/30 text-[12px] font-light">Open Protocol <span className="text-white/15 text-[11px]">— 10,000+ participants</span></div>
+                <p className="text-white/15 text-[11px] leading-relaxed mt-1">Continuity at scale.</p>
               </div>
             </div>
           </div>
@@ -243,8 +243,8 @@ function ApplyForm() {
                   {/* 绶带 */}
                   {isGenesis && (
                     <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ bottom: 4 }}>
-                      <div className="text-amber-400/40 text-[8px] tracking-[0.25em] uppercase font-mono">Genesis</div>
-                      <div className="text-amber-300/30 text-[7px] tracking-[0.15em] font-mono">Founding Tester</div>
+                      <div className="text-amber-400/40 text-[11px] tracking-[0.25em] uppercase font-mono">Genesis</div>
+                      <div className="text-amber-300/30 text-[11px] tracking-[0.15em] font-mono">Founding Tester</div>
                     </div>
                   )}
                 </div>
@@ -263,10 +263,10 @@ function ApplyForm() {
 
               {isGenesis && (
                 <>
-                  <div className="inline-block px-3 py-1 border border-amber-400/20 bg-amber-400/[0.04] text-amber-300/60 text-[9px] tracking-[0.15em] uppercase rounded-sm">
+                  <div className="inline-block px-3 py-1 border border-amber-400/20 bg-amber-400/[0.04] text-amber-300/60 text-[11px] tracking-[0.15em] uppercase rounded-sm">
                     Genesis #{String(result.position_number).padStart(3, '0')}
                   </div>
-                  <div className="text-amber-400/25 text-[9px] mt-1">
+                  <div className="text-amber-400/25 text-[11px] mt-1">
                     {result.genesis_slots_remaining} genesis slots remaining
                   </div>
                 </>
@@ -294,7 +294,7 @@ function ApplyForm() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div>
-              <label className="block text-white/25 text-[9px] tracking-[0.15em] uppercase mb-2">Email</label>
+              <label className="block text-white/25 text-[11px] tracking-[0.15em] uppercase mb-2">Email</label>
               <input
                 type="email"
                 required
@@ -309,7 +309,7 @@ function ApplyForm() {
 
             {/* Technical Background */}
             <div>
-              <label className="block text-white/25 text-[9px] tracking-[0.15em] uppercase mb-2">Technical Background</label>
+              <label className="block text-white/25 text-[11px] tracking-[0.15em] uppercase mb-2">Technical Background</label>
               <select
                 value={technicalBg}
                 onChange={(e) => setTechnicalBg(e.target.value)}
@@ -327,7 +327,7 @@ function ApplyForm() {
 
             {/* Handle */}
             <div>
-              <label className="block text-white/25 text-[9px] tracking-[0.15em] uppercase mb-2">
+              <label className="block text-white/25 text-[11px] tracking-[0.15em] uppercase mb-2">
                 How did you find us? (optional)
               </label>
               <input
@@ -369,12 +369,12 @@ function ApplyForm() {
             </button>
 
             <div className="text-center">
-              <a href="/genesis-100.html" target="_blank" className="text-[#90c8ff]/25 text-[8px] tracking-[0.15em] uppercase hover:text-[#90c8ff]/50 transition-colors">
+              <a href="/genesis-100.html" target="_blank" className="text-[#90c8ff]/25 text-[11px] tracking-[0.15em] uppercase hover:text-[#90c8ff]/50 transition-colors">
                 Read the full Genesis 100 Manifesto ↗
               </a>
             </div>
 
-            <p className="text-white/15 text-[9px] text-center tracking-[0.05em]">
+            <p className="text-white/15 text-[11px] text-center tracking-[0.05em]">
               First 50 receive Genesis Cohort status — a permanent protocol-level identity anchor.
               After applying, complete a 30-second motion capture to contribute to the research.
             </p>

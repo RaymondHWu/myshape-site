@@ -72,54 +72,54 @@ export default function LabPage() {
           {[{ n: "576", label: "Experiments" },{ n: "2", label: "RFCs" },{ n: "7", label: "Research Notes" },{ n: "121", label: "Tests" }].map((s) => (
             <div key={s.label} style={{ textAlign: "center", padding: "20px 12px", border: "1px solid #1E293B", background: "#0B1220" }}>
               <div style={{ fontSize: 28, fontWeight: 300, color: "#60A5FA", marginBottom: 4 }}>{s.n}</div>
-              <div style={{ fontSize: 10, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.1em" }}>{s.label}</div>
+              <div style={{ fontSize: 11, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.1em" }}>{s.label}</div>
             </div>
           ))}
         </div>
-        <div style={{ textAlign: "right", fontSize: 10, color: "rgba(255,255,255,0.08)", marginBottom: 48 }}>Last updated 2026-07-20</div>
+        <div style={{ textAlign: "right", fontSize: 11, color: "rgba(255,255,255,0.08)", marginBottom: 48 }}>Last updated 2026-07-20</div>
 
-        <div style={{ fontSize: 10, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Specifications</div>
+        <div style={{ fontSize: 11, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Specifications</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 1, marginBottom: 36 }}>
           {[{ prefix: "RFC-0001", title: "Motion Signature Format", href: "https://www.myshape.com/research/notes/004-motion-signature-rfc" },{ prefix: "RFC-0002", title: "Continuity Proof Format", href: "https://www.myshape.com/research/notes/006-continuity-proof-rfc" }].map((p) => (
             <a key={p.prefix} href={p.href} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid #1E293B", fontSize: 12, textDecoration: "none", transition: "background 0.2s" }}
               onMouseEnter={(e) => e.currentTarget.style.background = "rgba(96,165,250,0.04)"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>
-              <div><span style={{ color: "#60A5FA", fontWeight: 500, marginRight: 12, fontSize: 10 }}>{p.prefix}</span><span style={{ color: "#A7B4C6" }}>{p.title}</span></div>
+              <div><span style={{ color: "#60A5FA", fontWeight: 500, marginRight: 12, fontSize: 11 }}>{p.prefix}</span><span style={{ color: "#A7B4C6" }}>{p.title}</span></div>
             </a>
           ))}
         </div>
 
-        <div style={{ fontSize: 10, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Research Notes</div>
+        <div style={{ fontSize: 11, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Research Notes</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 1, marginBottom: 36 }}>
           {[{ prefix: "RN-003", title: "Cross-Modal Binding — 576-run validation", href: "https://www.myshape.com/research/notes/003-cross-modal-binding" },{ prefix: "RN-002", title: "PES Benchmark v0.2", href: "https://www.myshape.com/research/notes/002-pes-benchmark" },{ prefix: "RN-001", title: "The Continuity Problem", href: "https://www.myshape.com/research/notes/001-the-continuity-problem" }].map((p) => (
             <a key={p.prefix} href={p.href} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid #1E293B", fontSize: 12, textDecoration: "none", transition: "background 0.2s" }}
               onMouseEnter={(e) => e.currentTarget.style.background = "rgba(96,165,250,0.04)"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>
-              <div><span style={{ color: "#60A5FA", fontWeight: 500, marginRight: 12, fontSize: 10 }}>{p.prefix}</span><span style={{ color: "#A7B4C6" }}>{p.title}</span></div>
+              <div><span style={{ color: "#60A5FA", fontWeight: 500, marginRight: 12, fontSize: 11 }}>{p.prefix}</span><span style={{ color: "#A7B4C6" }}>{p.title}</span></div>
             </a>
           ))}
         </div>
 
-        <div style={{ fontSize: 10, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Research Records</div>
+        <div style={{ fontSize: 11, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Research Records</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 1, marginBottom: 48 }}>
           {[{ prefix: "FD-001", title: "Frame Rate Hypothesis — failed experiment", href: "https://www.myshape.com/research/notes/005-failure-report-10fps" },{ prefix: "DL-001", title: "Direction Asymmetry in EE-003", href: "https://www.myshape.com/research/notes/007-ee003-direction-asymmetry" }].map((p) => (
             <a key={p.prefix} href={p.href} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid #1E293B", fontSize: 12, textDecoration: "none", transition: "background 0.2s" }}
               onMouseEnter={(e) => e.currentTarget.style.background = "rgba(96,165,250,0.04)"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>
-              <div><span style={{ color: "#60A5FA", fontWeight: 500, marginRight: 12, fontSize: 10 }}>{p.prefix}</span><span style={{ color: "#A7B4C6" }}>{p.title}</span></div>
+              <div><span style={{ color: "#60A5FA", fontWeight: 500, marginRight: 12, fontSize: 11 }}>{p.prefix}</span><span style={{ color: "#A7B4C6" }}>{p.title}</span></div>
             </a>
           ))}
         </div>
 
-        <div style={{ fontSize: 10, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Evidence Engines</div>
+        <div style={{ fontSize: 11, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Evidence Engines</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12, marginBottom: 48 }}>
           {[{ name: "Presence Detection", engine: "EE-001", rate: "100% floor", href: "https://www.myshape.com/research/fusion" },{ name: "Causal Coupling", engine: "EE-002", rate: "58% · N=316", href: "https://www.myshape.com/research/causal-coupling" },{ name: "Gyroscope Challenge", engine: "EE-003", rate: "59% · N=200", href: "https://www.myshape.com/research/challenge-response" },{ name: "Dual-Engine Pipeline", engine: "VS-001", rate: "93% · N=60", href: "https://www.myshape.com/research/protocol-verify" }].map((e) => (
             <a key={e.engine} href={e.href} style={{ display: "block", padding: "16px 14px", border: "1px solid #1E293B", background: "#0B1220", fontSize: 12, textDecoration: "none", transition: "border-color 0.2s, background 0.2s" }}
               onMouseEnter={(ev) => { ev.currentTarget.style.borderColor = "rgba(96,165,250,0.3)"; ev.currentTarget.style.background = "#0E1624"; }} onMouseLeave={(ev) => { ev.currentTarget.style.borderColor = "#1E293B"; ev.currentTarget.style.background = "#0B1220"; }}>
               <div style={{ color: "#A7B4C6", fontWeight: 400, marginBottom: 6 }}>{e.name}</div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}><span style={{ color: "#60A5FA", fontSize: 10, fontWeight: 500 }}>{e.engine}</span><span style={{ color: "rgba(96,165,250,0.7)", fontSize: 11 }}>{e.rate}</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}><span style={{ color: "#60A5FA", fontSize: 11, fontWeight: 500 }}>{e.engine}</span><span style={{ color: "rgba(96,165,250,0.7)", fontSize: 11 }}>{e.rate}</span></div>
             </a>
           ))}
         </div>
 
-        <div style={{ fontSize: 10, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Open Source</div>
+        <div style={{ fontSize: 11, color: "#60A5FA", textTransform: "uppercase", letterSpacing: "0.3em", marginBottom: 12 }}>Open Source</div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 48 }}>
           {[{ label: "npm install @thecontinuitylab/myshape", href: "https://www.npmjs.com/package/@thecontinuitylab/myshape" },{ label: "v0.1.1", href: "https://www.npmjs.com/package/@thecontinuitylab/myshape" },{ label: "MIT License", href: "https://github.com/myshapeprotocol/myshape-protocol" },{ label: "121 tests", href: "https://github.com/myshapeprotocol/myshape-protocol/tree/master/src/lib/evidence" },{ label: "RFC-driven", href: "https://www.myshape.com/research/notes/004-motion-signature-rfc" }].map((t) => (
             <a key={t.label} href={t.href} style={{ padding: "6px 14px", border: "1px solid #1E293B", fontSize: 11, color: "#64748B", borderRadius: 2, textDecoration: "none", transition: "border-color 0.2s, color 0.2s" }}
@@ -134,7 +134,7 @@ export default function LabPage() {
           <p style={{ margin: 0 }}>Evidence precedes belief.</p>
         </div>
 
-        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.08)", letterSpacing: "0.08em", textAlign: "center", paddingBottom: 48 }}>
+        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.08)", letterSpacing: "0.08em", textAlign: "center", paddingBottom: 48 }}>
           <a href="https://www.myshape.com" style={{ color: "rgba(96,165,250,0.3)", textDecoration: "none" }}>MyShape Protocol</a>
           <span style={{ margin: "0 10px" }}>·</span>
           <span>The Continuity Lab, 2026</span>

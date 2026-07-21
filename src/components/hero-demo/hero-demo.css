@@ -128,7 +128,7 @@
 
 .hero-demo-subtitle-label {
   font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.4em;
   color: rgba(144, 200, 255, 0.7);
   text-transform: uppercase;
@@ -138,7 +138,7 @@
 .hero-demo-subtitle-sep {
   color: rgba(255, 255, 255, 0.12);
   font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
+  font-size: 11px;
   flex-shrink: 0;
 }
 
@@ -210,7 +210,7 @@
   display: inline-block;
   padding: 10px 32px;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.4em;
   text-transform: uppercase;
   text-decoration: none;
@@ -333,12 +333,12 @@
   }
 
   .hero-demo-subtitle-text {
-    font-size: 9px;
+    font-size: 11px;
     color: rgba(255, 255, 255, 0.85);
   }
 
   .hero-demo-subtitle-label {
-    font-size: 7px;
+    font-size: 11px;
     letter-spacing: 0.15em;
     color: rgba(144, 200, 255, 0.9);
   }
@@ -366,7 +366,7 @@
     width: 72vw;
     max-width: 260px;
     padding: 13px 0;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.3em;
     text-align: center;
   }

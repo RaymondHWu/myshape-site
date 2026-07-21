@@ -80,16 +80,16 @@ export default function MotionPreview() {
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <div className="text-[#90c8ff]/50 text-[8px] tracking-[0.25em] uppercase mb-1">
+        <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.25em] uppercase mb-1">
           Motion Preview — Phase {phase}/5
         </div>
         <div className="flex items-baseline gap-2 mb-1">
           <span className="text-white/70 font-mono text-lg">
             {(score * 100).toFixed(0)}
           </span>
-          <span className="text-white/20 text-[10px]">PES</span>
+          <span className="text-white/20 text-[11px]">PES</span>
         </div>
-        <p className="text-white/20 text-[9px] leading-relaxed max-w-xs">
+        <p className="text-white/20 text-[11px] leading-relaxed max-w-xs">
           30-second scan. No face stored. Nothing uploaded.
           Your motion is the key.
         </p>
@@ -99,7 +99,7 @@ export default function MotionPreview() {
       <Link
         href="/motion-demo"
         onMouseEnter={() => playTick(800, "sine", 0.08, 0.02)}
-        className="shrink-0 px-4 py-2 border border-[#90c8ff]/25 text-[#90c8ff]/60 text-[9px] tracking-[0.15em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all whitespace-nowrap"
+        className="shrink-0 px-4 py-2 border border-[#90c8ff]/25 text-[#90c8ff]/60 text-[11px] tracking-[0.15em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all whitespace-nowrap"
       >
         Try It →
       </Link>

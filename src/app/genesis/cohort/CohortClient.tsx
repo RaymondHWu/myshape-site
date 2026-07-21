@@ -45,7 +45,7 @@ export default function CohortClient() {
 
         {/* Header */}
         <div className="text-center mb-20">
-          <div className="text-[#90c8ff]/45 text-[10px] tracking-[0.5em] uppercase mb-6">GENESIS_COHORT // THE_FIRST_100</div>
+          <div className="text-[#90c8ff]/45 text-[11px] tracking-[0.5em] uppercase mb-6">GENESIS_COHORT // THE_FIRST_100</div>
           <h1 className="text-3xl md:text-5xl font-light tracking-[0.08em] text-white mb-6"
             style={{ textShadow: "0 0 60px rgba(144,200,255,0.25)" }}>
             The Founding Entities
@@ -59,12 +59,12 @@ export default function CohortClient() {
             <div className="flex items-center justify-center gap-8 mt-10">
               <div className="text-center">
                 <div className="text-5xl font-light text-[#90c8ff]/80 font-mono">{status.total}</div>
-                <div className="text-white/20 text-[10px] tracking-[0.3em] uppercase mt-2">Claimed</div>
+                <div className="text-white/20 text-[11px] tracking-[0.3em] uppercase mt-2">Claimed</div>
               </div>
               <div className="w-px h-12 bg-gradient-to-b from-transparent via-[#90c8ff]/20 to-transparent" />
               <div className="text-center">
                 <div className="text-5xl font-light text-white/50 font-mono">{status.remaining}</div>
-                <div className="text-white/20 text-[10px] tracking-[0.3em] uppercase mt-2">Remaining</div>
+                <div className="text-white/20 text-[11px] tracking-[0.3em] uppercase mt-2">Remaining</div>
               </div>
             </div>
           )}
@@ -75,13 +75,13 @@ export default function CohortClient() {
                 <div key={n.index}
                   onMouseEnter={e => { playTick(450, "sine", 0.03, 0.008); e.currentTarget.style.borderColor = "rgba(144,200,255,0.3)"; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.08)"; }}
-                  className="p-2 border text-[9px] text-white/25 font-mono text-center transition-all cursor-default"
+                  className="p-2 border text-[11px] text-white/25 font-mono text-center transition-all cursor-default"
                   style={{ borderColor: "rgba(144,200,255,0.08)", background: "rgba(2,4,10,0.6)" }}>
                   #{n.index}
                 </div>
               ))}
               {status.total > 15 && (
-                <div className="p-2 border border-[#90c8ff]/[0.04] text-[9px] text-white/15 font-mono text-center flex items-center justify-center">
+                <div className="p-2 border border-[#90c8ff]/[0.04] text-[11px] text-white/15 font-mono text-center flex items-center justify-center">
                   +{status.total - 15}
                 </div>
               )}
@@ -115,14 +115,14 @@ export default function CohortClient() {
           <div className="max-w-xl mx-auto p-10 border border-[#90c8ff]/12 bg-[#90c8ff]/[0.02] group transition-all duration-500"
             onMouseEnter={e => { playTick(600, "sine", 0.06, 0.015); e.currentTarget.style.borderColor = "rgba(144,200,255,0.3)"; e.currentTarget.style.boxShadow = "0 0 40px rgba(144,200,255,0.06)"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.12)"; e.currentTarget.style.boxShadow = "none"; }}>
-            <div className="text-[#90c8ff]/35 text-[10px] tracking-[0.4em] uppercase mb-6">The 40-Second Ritual</div>
+            <div className="text-[#90c8ff]/35 text-[11px] tracking-[0.4em] uppercase mb-6">The 40-Second Ritual</div>
             <p className="text-white/45 text-[13px] leading-[1.9] font-light mb-6">
               Genesis initialization is not a sign-up form. It is a 40-second kinetic ceremony in which your
               motion-signature is extracted, encrypted, and permanently inscribed into the protocol&apos;s root
               index. The scan measures entropy, not identity. What it captures cannot be forged, replayed,
               or simulated by any AI.
             </p>
-            <div className="text-white/25 text-[10px] tracking-[0.2em] uppercase">
+            <div className="text-white/25 text-[11px] tracking-[0.2em] uppercase">
               Email → OTP → Verify → Genesis Node
             </div>
           </div>
@@ -145,8 +145,8 @@ export default function CohortClient() {
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.06)"; e.currentTarget.style.background = "transparent"; const els = e.currentTarget.querySelectorAll("div,p"); els.forEach(el => { (el as HTMLElement).style.color = el.tagName === "DIV" ? "rgba(144,200,255,0.5)" : "rgba(255,255,255,0.3)"; }); }}
                 className="p-5 border transition-all duration-300 group"
                 style={{ borderColor: "rgba(144,200,255,0.06)", background: "transparent" }}>
-                <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.25em] uppercase mb-2 font-bold transition-colors">{item.label}</div>
-                <p className="text-white/30 text-[10px] leading-relaxed transition-colors">{item.desc}</p>
+                <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.25em] uppercase mb-2 font-bold transition-colors">{item.label}</div>
+                <p className="text-white/30 text-[11px] leading-relaxed transition-colors">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -167,12 +167,12 @@ export default function CohortClient() {
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.06)"; e.currentTarget.style.background = item.active ? "rgba(144,200,255,0.03)" : "transparent"; }}
                 className="flex items-center gap-4 p-4 border transition-all duration-300 group"
                 style={{ borderColor: "rgba(144,200,255,0.06)", background: item.active ? "rgba(144,200,255,0.03)" : "transparent" }}>
-                <span className="text-[#90c8ff]/50 group-hover:text-[#90c8ff]/80 font-mono text-[10px] tracking-[0.2em] w-20 shrink-0 transition-colors">{item.phase}</span>
+                <span className="text-[#90c8ff]/50 group-hover:text-[#90c8ff]/80 font-mono text-[11px] tracking-[0.2em] w-20 shrink-0 transition-colors">{item.phase}</span>
                 <div>
-                  <div className="text-white/55 group-hover:text-white/80 text-[10px] tracking-[0.15em] uppercase mb-0.5 transition-colors">{item.label}</div>
-                  <div className="text-white/25 group-hover:text-white/45 text-[10px] leading-relaxed transition-colors">{item.desc}</div>
+                  <div className="text-white/55 group-hover:text-white/80 text-[11px] tracking-[0.15em] uppercase mb-0.5 transition-colors">{item.label}</div>
+                  <div className="text-white/25 group-hover:text-white/45 text-[11px] leading-relaxed transition-colors">{item.desc}</div>
                 </div>
-                {item.active && <span className="ml-auto text-[#90c8ff]/45 text-[9px] tracking-[0.2em]">◈ ACTIVE</span>}
+                {item.active && <span className="ml-auto text-[#90c8ff]/45 text-[11px] tracking-[0.2em]">◈ ACTIVE</span>}
               </div>
             ))}
           </div>

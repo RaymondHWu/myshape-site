@@ -35,10 +35,10 @@ export default function ZKFlow() {
               <h4 className="text-white text-[13px] tracking-[0.4em] font-bold uppercase group-hover:text-[#90c8ff] transition-colors">
                 {item.title}
               </h4>
-              <div className="text-[#90c8ff]/40 text-[9px] tracking-[0.3em] font-mono">
+              <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.3em] font-mono">
                 [{item.label}]
               </div>
-              <p className="text-white/30 text-[10px] tracking-[0.2em] leading-relaxed uppercase max-w-[180px] mx-auto group-hover:text-white/60 transition-colors">
+              <p className="text-white/30 text-[11px] tracking-[0.2em] leading-relaxed uppercase max-w-[180px] mx-auto group-hover:text-white/60 transition-colors">
                 {item.desc}
               </p>
             </div>
@@ -48,7 +48,7 @@ export default function ZKFlow() {
 
       <div className="text-center mt-10"
         onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
-        <span className="text-white/30 hover:text-[#90c8ff]/60 text-[9px] tracking-[0.3em] uppercase transition-colors cursor-default">
+        <span className="text-white/30 hover:text-[#90c8ff]/60 text-[11px] tracking-[0.3em] uppercase transition-colors cursor-default">
           From Geometry → Proof. Zero raw data leaves the device.
         </span>
       </div>

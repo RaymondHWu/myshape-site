@@ -32,7 +32,7 @@
 }
 
 .badge-tier-label-collapsed {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.4em;
   text-transform: uppercase;
@@ -205,7 +205,7 @@
 }
 
 .badge-code {
-  font-size: 6px;
+  font-size: 11px;
   letter-spacing: 0.25em;
   color: rgba(144, 200, 255, 0.4);
   text-transform: uppercase;
@@ -307,7 +307,7 @@
 
 /* ── 副标题 ── */
 .badge-title-sub {
-  font-size: 7px;
+  font-size: 11px;
   font-weight: 300;
   letter-spacing: 0.25em;
   text-transform: uppercase;
@@ -337,7 +337,7 @@
   justify-content: space-between;
   padding-top: 6px;
   border-top: 1px solid rgba(144, 200, 255, 0.1);
-  font-size: 6px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   color: rgba(255, 255, 255, 0.3);
 }

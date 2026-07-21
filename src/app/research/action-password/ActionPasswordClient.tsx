@@ -270,11 +270,11 @@ export default function ActionPasswordClient() {
     <div className="min-h-screen bg-black text-white">
       <header className="border-b border-white/5 px-4 py-3 flex items-center justify-between">
         <Link href="/research" className="text-white/30 text-[11px] tracking-[0.2em] uppercase hover:text-white/60">← Research</Link>
-        <span className="text-white/15 text-[9px] tracking-[0.3em] uppercase">Action Password</span>
+        <span className="text-white/15 text-[11px] tracking-[0.3em] uppercase">Action Password</span>
         <div className="w-16" />
       </header>
       <main className="max-w-md mx-auto px-4 py-8 space-y-6">
-        <div className="p-1.5 border border-white/5 text-[9px] font-mono text-white/20">
+        <div className="p-1.5 border border-white/5 text-[11px] font-mono text-white/20">
           phase={phase} | sim={String(isSimulated)} | samples={sampleCount} | {template ? "enrolled" : "no tpl"}
         </div>
 
@@ -289,7 +289,7 @@ export default function ActionPasswordClient() {
             </div>
             {template && (
               <div className="p-4 border border-[#3fb950]/10 bg-[#3fb950]/[0.02] space-y-2">
-                <div className="text-[#3fb950]/40 text-[9px] tracking-[0.2em] uppercase">Template Active</div>
+                <div className="text-[#3fb950]/40 text-[11px] tracking-[0.2em] uppercase">Template Active</div>
                 <div className="text-white/25 text-[11px]">Enrolled {new Date(template.enrolledAt).toLocaleDateString()} · PES {template.features.pesScore.toFixed(3)}</div>
               </div>
             )}
@@ -356,7 +356,7 @@ export default function ActionPasswordClient() {
         {(phase === "enrolling" || phase === "verifying") && (
           <div className="space-y-6">
             <div className="space-y-2">
-              <div className="flex justify-between text-[10px] tracking-[0.1em] uppercase">
+              <div className="flex justify-between text-[11px] tracking-[0.1em] uppercase">
                 <span className={phase === "enrolling" ? "text-[#90c8ff]/50" : "text-[#3fb950]/50"}>{phase === "enrolling" ? "Recording Enrollment" : "Recording Verification"}</span>
                 <span className="text-white/20 font-mono">{elapsed.toFixed(1)}s / {duration}s</span>
               </div>

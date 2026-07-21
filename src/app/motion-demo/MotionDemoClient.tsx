@@ -709,7 +709,7 @@ export default function MotionDemoClient() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 motion-demo__container">
         <div className="space-y-6 mb-12">
-          <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">Presence_Engine // Live_Demo</div>
+          <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.5em] uppercase">Presence_Engine // Live_Demo</div>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">
             Motion <span className="motion-demo__arrow">→</span> Geometry <span className="motion-demo__arrow">→</span> Signature
           </h1>
@@ -770,14 +770,14 @@ export default function MotionDemoClient() {
                   <span className="text-white/80 font-mono text-[18px] tabular-nums" style={{ textShadow: "0 0 12px rgba(144,200,255,0.5)" }}>
                     {countdown}s
                   </span>
-                  <span className="text-[#90c8ff]/40 text-[8px] tracking-[0.15em] font-mono">
+                  <span className="text-[#90c8ff]/40 text-[11px] tracking-[0.15em] font-mono">
                     {validFrameCount} frames
                   </span>
                   {/* Manual stop — ends capture early, computes PES from accumulated frames */}
                   <button
                     onClick={() => setAllPhasesComplete(true)}
                     onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}
-                    className="ml-2 px-2 py-0.5 border border-red-400/30 text-red-400/50 hover:bg-red-400/10 hover:text-red-400/80 text-[8px] tracking-[0.1em] uppercase transition-all"
+                    className="ml-2 px-2 py-0.5 border border-red-400/30 text-red-400/50 hover:bg-red-400/10 hover:text-red-400/80 text-[11px] tracking-[0.1em] uppercase transition-all"
                     title="Stop early and compute PES from current frames">
                     ⏹ Stop
                   </button>
@@ -803,7 +803,7 @@ export default function MotionDemoClient() {
               <div className="sm:w-[38%] border border-white/10 bg-black/40 p-3 flex flex-col space-y-2">
                 {/* Box 1: PES + Telemetry + ZK Proof */}
                 <div>
-                  <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.2em] uppercase mb-1.5">Presence Entropy Score</div>
+                  <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.2em] uppercase mb-1.5">Presence Entropy Score</div>
                   <div className="flex items-center justify-center">
                     <PESGauge score={pesData.score} />
                   </div>
@@ -812,7 +812,7 @@ export default function MotionDemoClient() {
                 <PESBars bars={buildPESBars(pesData)} />
                 <div className="h-px bg-white/5"/>
                 <div>
-                  <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.2em] uppercase mb-1.5">Telemetry</div>
+                  <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.2em] uppercase mb-1.5">Telemetry</div>
                   <TelemetryPanel
                     sstFrames={sstFramesRef.current.length}
                     validFrames={validFrameCount}
@@ -821,7 +821,7 @@ export default function MotionDemoClient() {
                   />
                 </div>
                 <button onClick={handleAICompare}
-                  className="w-full py-1.5 border border-[#90c8ff]/15 text-[#90c8ff]/35 text-[9px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all">
+                  className="w-full py-1.5 border border-[#90c8ff]/15 text-[#90c8ff]/35 text-[11px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all">
                   {wasmCompare?.loading ? "Loading WASM..." : wasmCompare?.similarity != null ? `AI: ${(wasmCompare.similarity*100).toFixed(0)}%` : "Compare with AI →"}
                 </button>
                 {proofHashes && (
@@ -835,12 +835,12 @@ export default function MotionDemoClient() {
                 <div>
                   {proofHashes&&(<PresenceSignature proof={{pesScore:pesData.score,timing:pesData.timing,noise:pesData.noise,freq:pesData.frequency,bio:pesData.biological,zkpHash:proofHashes.zkp,popHash:proofHashes.pop,mpHash:proofHashes.mp,epHash:proofHashes.ep,timestamp:Date.now()}}/>)}
                 </div>
-                {witnessData?.position_number&&(<div className="p-3 border border-amber-400/20 bg-amber-400/[0.03] text-center space-y-1"><div className="text-amber-300/60 text-[9px] uppercase tracking-[0.12em]">{witnessData.cohort==="genesis"?"Genesis Witness":"Protocol Witness"}</div><div className="text-amber-200/90 text-[18px] font-light">#{witnessData.position_number}</div></div>)}
+                {witnessData?.position_number&&(<div className="p-3 border border-amber-400/20 bg-amber-400/[0.03] text-center space-y-1"><div className="text-amber-300/60 text-[11px] uppercase tracking-[0.12em]">{witnessData.cohort==="genesis"?"Genesis Witness":"Protocol Witness"}</div><div className="text-amber-200/90 text-[18px] font-light">#{witnessData.position_number}</div></div>)}
                 {/* Genesis status */}
                 {genesisDone ? (
-                  <div className="text-center text-[#90c8ff]/40 text-[10px] tracking-[0.1em]">◈ Scan recorded — contributing to orbital evolution</div>
+                  <div className="text-center text-[#90c8ff]/40 text-[11px] tracking-[0.1em]">◈ Scan recorded — contributing to orbital evolution</div>
                 ) : (
-                  <div className="text-center text-amber-400/40 text-[10px] tracking-[0.1em]">⚠ Demo mode — scan not bound to identity</div>
+                  <div className="text-center text-amber-400/40 text-[11px] tracking-[0.1em]">⚠ Demo mode — scan not bound to identity</div>
                 )}
                 <div className="mt-auto space-y-2">
                   <button onClick={()=>{
@@ -881,9 +881,9 @@ export default function MotionDemoClient() {
                     a.click();
                     URL.revokeObjectURL(url);
                     playTick(600, "sine", 0.08, 0.02);
-                  }} className="w-full py-2.5 border border-[#3fb950]/40 text-[#3fb950]/60 text-[10px] tracking-[0.12em] uppercase hover:bg-[#3fb950]/10 hover:border-[#3fb950]/70 transition-all">💾 Download Landmark Data</button>
-                  <button onClick={()=>{const r=`MyShape PES: ${(pesData.score*100).toFixed(0)}% | μT:${(pesData.timing*100).toFixed(0)}% N:${(pesData.noise*100).toFixed(0)}% F:${(pesData.frequency*100).toFixed(0)}% B:${(pesData.biological*100).toFixed(0)}%\nVerified by MyShape Protocol — myshape.com/motion-demo`;navigator.clipboard.writeText(r).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),2000)})}} className="w-full py-2.5 border border-[#90c8ff]/20 text-[#90c8ff]/40 text-[10px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all">{copied?"✓ Copied":"📋 Copy Results"}</button>
-                  <button onClick={stop} className="w-full py-2.5 border border-[#90c8ff]/15 text-[#90c8ff]/35 text-[10px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all">↻ Run Again</button>
+                  }} className="w-full py-2.5 border border-[#3fb950]/40 text-[#3fb950]/60 text-[11px] tracking-[0.12em] uppercase hover:bg-[#3fb950]/10 hover:border-[#3fb950]/70 transition-all">💾 Download Landmark Data</button>
+                  <button onClick={()=>{const r=`MyShape PES: ${(pesData.score*100).toFixed(0)}% | μT:${(pesData.timing*100).toFixed(0)}% N:${(pesData.noise*100).toFixed(0)}% F:${(pesData.frequency*100).toFixed(0)}% B:${(pesData.biological*100).toFixed(0)}%\nVerified by MyShape Protocol — myshape.com/motion-demo`;navigator.clipboard.writeText(r).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),2000)})}} className="w-full py-2.5 border border-[#90c8ff]/20 text-[#90c8ff]/40 text-[11px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all">{copied?"✓ Copied":"📋 Copy Results"}</button>
+                  <button onClick={stop} className="w-full py-2.5 border border-[#90c8ff]/15 text-[#90c8ff]/35 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all">↻ Run Again</button>
                 </div>
               </div>
             </div>
@@ -892,7 +892,7 @@ export default function MotionDemoClient() {
             {/* ── PES Dashboard ── */}
             {pesData && (
               <>
-                <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.3em] uppercase">Presence_Entropy_Score (PES)</div>
+                <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.3em] uppercase">Presence_Entropy_Score (PES)</div>
                 <div className="flex items-center justify-center py-2">
                   <PESGauge score={pesData.score} size="sm" />
                 </div>
@@ -905,9 +905,9 @@ export default function MotionDemoClient() {
             {/* Live PES Preview (during capture) */}
             {phase === "capturing" && livePes && (
               <div className="p-3 border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02] space-y-2">
-                <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.2em] uppercase">Live PES Estimate</div>
+                <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.2em] uppercase">Live PES Estimate</div>
                 <div className="flex items-center justify-between">
-                  <span className="text-white/30 text-[9px]">Score</span>
+                  <span className="text-white/30 text-[11px]">Score</span>
                   <span className="text-[#90c8ff]/80 font-mono text-[13px]">{(livePes.score * 100).toFixed(0)}%</span>
                 </div>
                 {[
@@ -917,7 +917,7 @@ export default function MotionDemoClient() {
                   { label: "Bio", value: livePes.bio },
                 ].map(g => (
                   <div key={g.label} className="space-y-0.5">
-                    <div className="flex justify-between text-[8px]">
+                    <div className="flex justify-between text-[11px]">
                       <span className="text-white/20">{g.label}</span>
                       <span className="text-[#90c8ff]/40 font-mono">{(g.value * 100).toFixed(0)}%</span>
                     </div>
@@ -933,7 +933,7 @@ export default function MotionDemoClient() {
               </div>
             )}
 
-            <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.3em] uppercase">Motion_Telemetry</div>
+            <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.3em] uppercase">Motion_Telemetry</div>
             <TelemetryPanel
               sstFrames={sstFramesRef.current.length}
               validFrames={validFrameCount}
@@ -951,36 +951,36 @@ export default function MotionDemoClient() {
                 {!aiCompare ? (
                   <button onClick={handleAICompare}
                     onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                    className="w-full py-2 border border-[#90c8ff]/20 text-[#90c8ff]/40 text-[8px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all disabled:opacity-30"
+                    className="w-full py-2 border border-[#90c8ff]/20 text-[#90c8ff]/40 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all disabled:opacity-30"
                     disabled={wasmLoading}>
                     {wasmLoading ? "Loading Engine..." : "Compare with AI →"}
                   </button>
                 ) : (
                   <div className="p-3 border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02] space-y-2">
-                    <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.2em] uppercase text-center">
+                    <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.2em] uppercase text-center">
                       {wasmCompare?.similarity != null ? "WASM Engine — Real Analysis" : "AI Simulation (for comparison)"}
                     </div>
                     {/* WASM Signature similarity */}
                     {wasmCompare?.similarity != null && (
                       <div className="flex items-center justify-between px-2 py-1.5 bg-black/30 border border-[#90c8ff]/10 rounded-sm">
-                        <span className="text-white/20 text-[8px]">Sig Similarity</span>
-                        <span className="font-mono text-[10px]" style={{
+                        <span className="text-white/20 text-[11px]">Sig Similarity</span>
+                        <span className="font-mono text-[11px]" style={{
                           color: wasmCompare.similarity < 0.5 ? "rgba(239,68,68,0.8)" : "rgba(250,204,21,0.8)",
                           textShadow: wasmCompare.similarity < 0.5 ? "0 0 6px rgba(239,68,68,0.3)" : "none",
                         }}>{(wasmCompare.similarity * 100).toFixed(1)}%</span>
                       </div>
                     )}
-                    <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[8px]">
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
                       <div className="flex justify-between"><span className="text-white/15">μTiming</span><span className="text-amber-300/50">{(aiCompare.timing * 100).toFixed(0)}%</span></div>
                       <div className="flex justify-between"><span className="text-white/15">Noise</span><span className="text-amber-300/50">{(aiCompare.noise * 100).toFixed(0)}%</span></div>
                       <div className="flex justify-between"><span className="text-white/15">Freq</span><span className="text-amber-300/50">{(aiCompare.freq * 100).toFixed(0)}%</span></div>
                       <div className="flex justify-between"><span className="text-white/15">Bio</span><span className="text-amber-300/50">{(aiCompare.bio * 100).toFixed(0)}%</span></div>
                     </div>
-                    <div className="text-center text-[8px] text-amber-300/40 mt-1">
+                    <div className="text-center text-[11px] text-amber-300/40 mt-1">
                       AI PES: {(aiCompare.score * 100).toFixed(0)}% — ✗ SYNTHETIC
                     </div>
                     {wasmCompare?.similarity != null && (
-                      <div className="text-center text-[7px] text-[#90c8ff]/25 mt-0.5">
+                      <div className="text-center text-[11px] text-[#90c8ff]/25 mt-0.5">
                         128-dim Motion Signature — {wasmCompare.sigDim}d vector similarity
                       </div>
                     )}
@@ -988,12 +988,12 @@ export default function MotionDemoClient() {
                 )}
                 {/* Genesis 状态提示 */}
                 {genesisDone ? (
-                  <div className="text-center text-[#90c8ff]/25 text-[8px] tracking-[0.15em] uppercase">
+                  <div className="text-center text-[#90c8ff]/25 text-[11px] tracking-[0.15em] uppercase">
                     ◈ Scan recorded — contributing to your orbital evolution
                   </div>
                 ) : (
                   <div className="text-center space-y-2">
-                    <div className="text-amber-400/25 text-[8px] tracking-[0.15em] uppercase">
+                    <div className="text-amber-400/25 text-[11px] tracking-[0.15em] uppercase">
                       ⚠ Demo mode — scan not bound to identity
                     </div>
                     <button
@@ -1040,10 +1040,10 @@ export default function MotionDemoClient() {
                         }
                       }}
                       onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                      className="px-6 py-2 border border-[#90c8ff]/40 text-[#90c8ff]/60 text-[9px] tracking-[0.2em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all">
+                      className="px-6 py-2 border border-[#90c8ff]/40 text-[#90c8ff]/60 text-[11px] tracking-[0.2em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all">
                       Verify My Presence
                     </button>
-                    <a href="/genesis" className="inline-block text-[#90c8ff]/25 hover:text-[#90c8ff]/50 text-[8px] tracking-[0.15em] uppercase transition-colors">
+                    <a href="/genesis" className="inline-block text-[#90c8ff]/25 hover:text-[#90c8ff]/50 text-[11px] tracking-[0.15em] uppercase transition-colors">
                       Initialize Genesis identity →
                     </a>
                   </div>
@@ -1069,7 +1069,7 @@ export default function MotionDemoClient() {
                         }}
                       />
                     )}
-                    <div className="text-[#90c8ff]/40 text-[7px] tracking-[0.2em] uppercase text-center">
+                    <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.2em] uppercase text-center">
                       {witnessData.cohort === "genesis" ? "Genesis Cohort — Witness Confirmed" : "Protocol Witness"}
                     </div>
                     <div className="text-center">
@@ -1080,7 +1080,7 @@ export default function MotionDemoClient() {
                         ◈ Witness #{witnessData.position_number}
                       </span>
                     </div>
-                    <p className="text-white/25 text-[8px] leading-relaxed text-center">
+                    <p className="text-white/25 text-[11px] leading-relaxed text-center">
                       {witnessData.cohort === "genesis"
                         ? "You are a founding tester. This status is permanent — not cosmetic, structural."
                         : "Your motion data is now part of the calibration engine. Share your contribution."}
@@ -1090,14 +1090,14 @@ export default function MotionDemoClient() {
                       <a
                         href={`https://bsky.app/intent/compose?text=I+just+became+MyShape+Protocol+Witness+%23${witnessData.position_number}.+Join+the+first+300+to+calibrate+the+motion-signature+engine.%0A%0Ahttps://myshape.com/research/apply`}
                         target="_blank" rel="noopener noreferrer"
-                        className="px-2.5 py-1 border border-[#90c8ff]/15 text-[#90c8ff]/40 text-[7px] tracking-[0.1em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all motion-demo__card-sm"
+                        className="px-2.5 py-1 border border-[#90c8ff]/15 text-[#90c8ff]/40 text-[11px] tracking-[0.1em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all motion-demo__card-sm"
                       >
                         Share on Bluesky
                       </a>
                       <a
                         href={`https://www.linkedin.com/sharing/share-offsite/?url=https://myshape.com/research/apply?ref=witness_share`}
                         target="_blank" rel="noopener noreferrer"
-                        className="px-2.5 py-1 border border-[#90c8ff]/15 text-[#90c8ff]/40 text-[7px] tracking-[0.1em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all motion-demo__card-sm"
+                        className="px-2.5 py-1 border border-[#90c8ff]/15 text-[#90c8ff]/40 text-[11px] tracking-[0.1em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all motion-demo__card-sm"
                       >
                         Share on LinkedIn
                       </a>
@@ -1124,18 +1124,18 @@ export default function MotionDemoClient() {
                 <div className="space-y-3 pt-2">
                   <div className="h-px bg-gradient-to-r from-transparent via-[#90c8ff]/20 to-transparent" />
                   <div className="text-center space-y-2">
-                    <div className="text-[#90c8ff]/30 text-[7px] tracking-[0.4em] uppercase">Genesis Ritual · Motion Captured</div>
-                    <p className="text-white/40 text-[10px] leading-relaxed">
+                    <div className="text-[#90c8ff]/30 text-[11px] tracking-[0.4em] uppercase">Genesis Ritual · Motion Captured</div>
+                    <p className="text-white/40 text-[11px] leading-relaxed">
                       Your kinetic signature has been inscribed.
                       {researchConsented && uploadState === "success" && " This data now contributes to the protocol's calibration engine."}
                       {researchConsented && uploadState === "error" && " Research upload failed — data kept local."}
                     </p>
                     <div className="flex gap-2 justify-center pt-1">
-                      <a href="/research/apply" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/70 text-[7px] tracking-[0.15em] uppercase border-b border-transparent hover:border-[#90c8ff]/30 transition-all pb-0.5">
+                      <a href="/research/apply" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/70 text-[11px] tracking-[0.15em] uppercase border-b border-transparent hover:border-[#90c8ff]/30 transition-all pb-0.5">
                         Apply for Genesis Node →
                       </a>
                       <span className="text-white/10">|</span>
-                      <a href="/dashboard" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/70 text-[7px] tracking-[0.15em] uppercase border-b border-transparent hover:border-[#90c8ff]/30 transition-all pb-0.5">
+                      <a href="/dashboard" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/70 text-[11px] tracking-[0.15em] uppercase border-b border-transparent hover:border-[#90c8ff]/30 transition-all pb-0.5">
                         View Dashboard →
                       </a>
                     </div>
@@ -1183,12 +1183,12 @@ export default function MotionDemoClient() {
                     a.click();
                     URL.revokeObjectURL(url);
                     playTick(600, "sine", 0.08, 0.02);
-                  }} className="w-full py-2.5 border border-[#3fb950]/40 text-[#3fb950]/60 text-[10px] tracking-[0.12em] uppercase hover:bg-[#3fb950]/10 hover:border-[#3fb950]/70 transition-all">💾 Download Landmark Data</button>
+                  }} className="w-full py-2.5 border border-[#3fb950]/40 text-[#3fb950]/60 text-[11px] tracking-[0.12em] uppercase hover:bg-[#3fb950]/10 hover:border-[#3fb950]/70 transition-all">💾 Download Landmark Data</button>
                   </div>
                 )}
                 <button onClick={stop}
                   onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                  className="w-full py-2.5 border border-[#90c8ff]/15 text-[#90c8ff]/35 text-[9px] tracking-[0.3em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 hover:bg-[#90c8ff]/[0.03] transition-all">
+                  className="w-full py-2.5 border border-[#90c8ff]/15 text-[#90c8ff]/35 text-[11px] tracking-[0.3em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 hover:bg-[#90c8ff]/[0.03] transition-all">
                   ↻ Run_Again
                 </button>
               </div>

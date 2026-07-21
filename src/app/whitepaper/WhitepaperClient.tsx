@@ -283,7 +283,7 @@ export default function WhitepaperClient() {
           opacity: tocShow ? 1 : 0, pointerEvents: tocShow ? "auto" : "none",
           transition: "opacity 0.3s", zIndex: 10,
         }}>
-          <div className="text-[#90c8ff]/40 text-[10px] tracking-[0.5em] uppercase mb-10 font-mono font-bold">
+          <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.5em] uppercase mb-10 font-mono font-bold">
             // ON_THIS_PAGE
           </div>
           <ul className="space-y-8 border-l" style={{ borderColor: "rgba(144,200,255,0.08)" }}>
@@ -304,7 +304,7 @@ export default function WhitepaperClient() {
                   >
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`w-1 h-1 rounded-full shrink-0 transition-all duration-300 ${isActive ? "bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)] scale-100" : "bg-transparent scale-0"}`} />
-                      <span className="text-[10px] tracking-[0.3em] transition-all duration-300"
+                      <span className="text-[11px] tracking-[0.3em] transition-all duration-300"
                         style={{
                           color: isActive ? "rgba(144,200,255,0.8)" : "rgba(255,255,255,0.1)",
                           textShadow: isActive ? "0 0 10px rgba(144,200,255,0.3)" : "none",
@@ -330,7 +330,7 @@ export default function WhitepaperClient() {
         <div className="flex-1 min-w-0">
           {/* Header */}
           <div className="mb-28">
-            <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase mb-6">
+            <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.5em] uppercase mb-6">
               TECHNICAL_WHITEPAPER // V2.0_CONTINUITY
             </div>
             <h1 className="text-3xl md:text-4xl font-bold tracking-tighter text-white leading-tight mb-6">
@@ -345,14 +345,14 @@ export default function WhitepaperClient() {
               <span className="text-white/30">v0.1</span>
             </div>
             <div className="flex items-center gap-3 mt-4">
-              <span className="flex items-center gap-1.5 text-[#90c8ff]/60 text-[10px] tracking-[0.2em] uppercase">
+              <span className="flex items-center gap-1.5 text-[#90c8ff]/60 text-[11px] tracking-[0.2em] uppercase">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.6)] animate-pulse" />
                 Engine v0.1.0
               </span>
               <span className="text-white/10">|</span>
-              <span className="text-white/25 text-[10px]">25/25 tests pass</span>
+              <span className="text-white/25 text-[11px]">25/25 tests pass</span>
               <span className="text-white/10">|</span>
-              <span className="text-white/25 text-[10px]">Human—AI Gap: 0.3960</span>
+              <span className="text-white/25 text-[11px]">Human—AI Gap: 0.3960</span>
             </div>
           </div>
 
@@ -391,32 +391,32 @@ export default function WhitepaperClient() {
                     <div className="border p-6" style={{ borderColor: "rgba(144,200,255,0.15)", background: "rgba(4,14,28,0.5)" }}>
                       <div className="flex items-center gap-3 mb-4">
                         <span className={`w-2 h-2 rounded-full ${isSealed ? "bg-[#90c8ff] shadow-[0_0_12px_rgba(144,200,255,0.9)]" : "bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.8)] animate-pulse"}`} />
-                        <span className="text-[#90c8ff]/60 text-[10px] tracking-[0.4em] uppercase">
+                        <span className="text-[#90c8ff]/60 text-[11px] tracking-[0.4em] uppercase">
                           {isSealed ? "Genesis Cohort — Sealed & Immutable" : "Genesis Cohort — Live Registry"}
                         </span>
                         {isSealed && (
-                          <span className="text-[#90c8ff]/40 text-[10px] tracking-[0.2em] border border-[#90c8ff]/20 px-2 py-0.5">FINAL</span>
+                          <span className="text-[#90c8ff]/40 text-[11px] tracking-[0.2em] border border-[#90c8ff]/20 px-2 py-0.5">FINAL</span>
                         )}
                       </div>
 
                       <div className="flex items-baseline gap-4 mb-4">
                         <span className="text-5xl font-light font-mono text-[#90c8ff]/80">{genesisNodes.total}</span>
                         <span className="text-white/30 text-[12px] tracking-[0.2em] uppercase">Genesis Node{genesisNodes.total !== 1 ? "s" : ""} Active</span>
-                        <span className="text-[#90c8ff]/40 text-[10px]">— Phase: Alpha</span>
+                        <span className="text-[#90c8ff]/40 text-[11px]">— Phase: Alpha</span>
                       </div>
 
                       {/* 协议同步进度条 */}
                       <div className="mb-6">
                         {isSealed ? (
                           <div className="text-center py-3 border border-[#90c8ff]/20 bg-[#90c8ff]/[0.03]">
-                            <div className="text-[#90c8ff]/80 text-[10px] tracking-[0.4em] uppercase font-mono mb-1">◈ COHORT_SEALED ◈</div>
-                            <div className="text-white/25 text-[10px] tracking-[0.2em] uppercase">Identity Layer Anchored — Registry Immutable</div>
+                            <div className="text-[#90c8ff]/80 text-[11px] tracking-[0.4em] uppercase font-mono mb-1">◈ COHORT_SEALED ◈</div>
+                            <div className="text-white/25 text-[11px] tracking-[0.2em] uppercase">Identity Layer Anchored — Registry Immutable</div>
                           </div>
                         ) : (
                           <>
                             <div className="flex items-center justify-between mb-1.5">
-                              <span className="text-white/30 text-[10px] tracking-[0.3em] uppercase">Protocol Sync</span>
-                              <span className="text-[#90c8ff]/30 font-mono text-[10px]">{(genesisNodes.total / 100 * 100).toFixed(1)}%</span>
+                              <span className="text-white/30 text-[11px] tracking-[0.3em] uppercase">Protocol Sync</span>
+                              <span className="text-[#90c8ff]/30 font-mono text-[11px]">{(genesisNodes.total / 100 * 100).toFixed(1)}%</span>
                             </div>
                             <div className="relative h-1 bg-white/[0.04] overflow-hidden">
                               <div
@@ -430,7 +430,7 @@ export default function WhitepaperClient() {
                             </div>
                             <div className="flex items-center gap-1.5 mt-1">
                               <span className={`w-1 h-1 rounded-full transition-all duration-500 ${nodePulse ? "bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.8)]" : "bg-[#90c8ff]/30"}`} />
-                              <span className="text-white/30 text-[10px] tracking-[0.2em] uppercase">
+                              <span className="text-white/30 text-[11px] tracking-[0.2em] uppercase">
                                 {genesisNodes.total === 0 ? "Awaiting genesis initialization" :
                                  genesisNodes.total < 100 ? "Network bootstrapping in progress" :
                                  "Genesis Cohort sealed — network active"}
@@ -443,17 +443,17 @@ export default function WhitepaperClient() {
                       {genesisNodes.nodes.length > 0 && (
                         <div className={`grid ${isSealed ? "grid-cols-3 md:grid-cols-5" : "grid-cols-2 md:grid-cols-4"} gap-2`}>
                           {genesisNodes.nodes.slice(0, isSealed ? 100 : 20).map(n => (
-                            <div key={n.index} className="flex items-center gap-2 p-2 border text-[10px] font-mono transition-all duration-500"
+                            <div key={n.index} className="flex items-center gap-2 p-2 border text-[11px] font-mono transition-all duration-500"
                               style={{
                                 borderColor: isSealed ? "rgba(144,200,255,0.1)" : "rgba(255,255,255,0.04)",
                                 background: isSealed ? "rgba(4,14,28,0.8)" : "rgba(2,4,10,0.6)",
                               }}>
-                              <span className="text-white/30 text-[10px] w-5">#{n.index}</span>
+                              <span className="text-white/30 text-[11px] w-5">#{n.index}</span>
                               <span className="text-white/25 truncate">{n.id}</span>
                             </div>
                           ))}
                           {!isSealed && genesisNodes.total > 20 && (
-                            <div className="flex items-center justify-center p-2 border border-white/[0.02] text-[10px] text-white/30 font-mono">
+                            <div className="flex items-center justify-center p-2 border border-white/[0.02] text-[11px] text-white/30 font-mono">
                               +{genesisNodes.total - 20} more
                             </div>
                           )}
@@ -461,7 +461,7 @@ export default function WhitepaperClient() {
                       )}
                       {isSealed && (
                         <div className="text-center mt-4 pt-3 border-t border-[#90c8ff]/10">
-                          <span className="text-[#90c8ff]/30 text-[10px] tracking-[0.3em] uppercase font-mono">
+                          <span className="text-[#90c8ff]/30 text-[11px] tracking-[0.3em] uppercase font-mono">
                             ◈ Genesis Registry — Permanently Anchored to Protocol Root Index
                           </span>
                         </div>
@@ -472,7 +472,7 @@ export default function WhitepaperClient() {
                     <div className="text-center pt-4">
                       <a href="/genesis"
                         onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                        className="inline-flex items-center gap-2 px-8 py-3 border text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] transition-all"
+                        className="inline-flex items-center gap-2 px-8 py-3 border text-[#90c8ff]/70 text-[11px] tracking-[0.3em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] transition-all"
                         style={{ borderColor: "rgba(144,200,255,0.3)" }}>
                         Initialize Genesis <span className="text-[#90c8ff]/50">→</span>
                       </a>
@@ -483,7 +483,7 @@ export default function WhitepaperClient() {
                 {section.id === "integration" && (
                   <div className="space-y-3 my-8">
                     <div className="border p-5" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
-                      <div className="text-[#90c8ff]/40 text-[10px] tracking-[0.3em] uppercase mb-3 font-mono">TypeScript SDK</div>
+                      <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.3em] uppercase mb-3 font-mono">TypeScript SDK</div>
                       <pre className="text-[#90c8ff]/60 text-[12px] leading-relaxed font-mono whitespace-pre-wrap">
 {`import { MyShapeSDK } from "myshape-sdk";
 
@@ -497,7 +497,7 @@ if (result.verified) { executeTransaction(); }`}
                       </pre>
                     </div>
                     <div className="border p-5" style={{ borderColor: "rgba(144,200,255,0.1)", background: "rgba(2,4,10,0.6)" }}>
-                      <div className="text-white/30 text-[10px] tracking-[0.3em] uppercase mb-3 font-mono">Native CLI</div>
+                      <div className="text-white/30 text-[11px] tracking-[0.3em] uppercase mb-3 font-mono">Native CLI</div>
                       <pre className="text-[#90c8ff]/35 text-[12px] leading-relaxed font-mono whitespace-pre-wrap">
 {`cargo run --release --bin myshape-verify -- \\
   --enrollment alice.enroll.json \\
@@ -516,11 +516,11 @@ if (result.verified) { executeTransaction(); }`}
           <div className="mt-28 pt-12 border-t" style={{ borderColor: "rgba(144,200,255,0.08)" }}>
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="space-y-1">
-                <p className="text-white/30 text-[10px] tracking-[0.3em] uppercase font-mono">Ready to integrate?</p>
+                <p className="text-white/30 text-[11px] tracking-[0.3em] uppercase font-mono">Ready to integrate?</p>
                 <p className="text-white/30 text-[12px]">Five lines of code. Zero data stored. Real human presence.</p>
               </div>
               <a href="/developers"
-                className="inline-flex items-center gap-2 px-5 py-2.5 border text-[#90c8ff]/70 text-[10px] tracking-[0.2em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border text-[#90c8ff]/70 text-[11px] tracking-[0.2em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] transition-all"
                 style={{ borderColor: "rgba(144,200,255,0.25)" }}
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>
                 View SDK Reference <span className="text-[#90c8ff]/40">→</span>

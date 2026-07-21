@@ -36,7 +36,7 @@
 
 .tsw-header-label {
   color: rgba(144, 200, 255, 0.55);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
 }
@@ -48,7 +48,7 @@
 }
 
 .tsw-indicator {
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -60,7 +60,7 @@
 
 .tsw-indicator-sep {
   color: rgba(255, 255, 255, 0.08);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 /* Scan line */
@@ -100,7 +100,7 @@
   gap: 8px;
   padding: 6px 14px;
   transition: background-color 0.2s;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .tsw-row:hover {
@@ -109,7 +109,7 @@
 
 .tsw-row-prefix {
   color: rgba(255, 255, 255, 0.12);
-  font-size: 9px;
+  font-size: 11px;
   flex-shrink: 0;
 }
 
@@ -145,7 +145,7 @@
 
 .tsw-row-sub {
   color: rgba(255, 255, 255, 0.2);
-  font-size: 8px;
+  font-size: 11px;
   margin-left: auto;
 }
 
@@ -177,7 +177,7 @@
 
 .tsw-loading-text {
   color: rgba(144, 200, 255, 0.4);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
 }
@@ -197,7 +197,7 @@
 
 .tsw-error-text {
   color: rgba(239, 68, 68, 0.5);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
@@ -217,7 +217,7 @@
   background: none;
   border: 1px solid rgba(144, 200, 255, 0.12);
   color: rgba(144, 200, 255, 0.35);
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   padding: 3px 8px;
@@ -235,7 +235,7 @@
 
 .tsw-footer-text {
   color: rgba(255, 255, 255, 0.15);
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -248,7 +248,7 @@
   }
   .tsw-row-label {
     min-width: 85px;
-    font-size: 8px;
+    font-size: 11px;
   }
   .tsw-row {
     padding: 5px 10px;

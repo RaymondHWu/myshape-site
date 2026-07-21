@@ -37,7 +37,7 @@ export default function CompareClient() {
         <BackgroundParticles />
         <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6" style={{ paddingTop: "8rem", paddingBottom: "6rem" }}>
           <div className="space-y-4 mb-12">
-            <div className="flex items-center gap-4 text-[#90c8ff]/40 text-[9px] tracking-[0.3em] uppercase"><span>PROTOCOL ANALYSIS</span><span className="w-8 h-[1px] bg-[#90c8ff]/20" /><span>2026</span></div>
+            <div className="flex items-center gap-4 text-[#90c8ff]/40 text-[11px] tracking-[0.3em] uppercase"><span>PROTOCOL ANALYSIS</span><span className="w-8 h-[1px] bg-[#90c8ff]/20" /><span>2026</span></div>
             <h1 className="text-2xl md:text-4xl font-light tracking-[0.06em] text-white leading-tight">Identity Protocol<br /><span className="text-[#90c8ff]">Comparison Matrix</span></h1>
             <p className="text-white/35 text-[11px] tracking-[0.08em] leading-relaxed max-w-2xl">A principled comparison of MyShape Protocol with the leading identity verification systems. Not which protocol claims more — but which protocol protects what matters: your sovereignty, your privacy, and your irreplaceable continuity.</p>
           </div>
@@ -72,8 +72,8 @@ export default function CompareClient() {
           </section>
 
           <div className="mt-20 cmp-cta space-y-4">
-            <p className="text-white/40 text-[10px] tracking-[0.15em] uppercase">The Only Continuity Layer in This Comparison</p>
-            <p className="text-white/25 text-[10px] leading-relaxed max-w-lg mx-auto">All four protocols verify identity. Only MyShape verifies continuity. In the Agent Economy, continuity is the primitive that matters. The Genesis Cohort is onboarding now.</p>
+            <p className="text-white/40 text-[11px] tracking-[0.15em] uppercase">The Only Continuity Layer in This Comparison</p>
+            <p className="text-white/25 text-[11px] leading-relaxed max-w-lg mx-auto">All four protocols verify identity. Only MyShape verifies continuity. In the Agent Economy, continuity is the primitive that matters. The Genesis Cohort is onboarding now.</p>
             <div className="flex justify-center gap-4 pt-2">
               <Link href="/genesis" className="cmp-cta-btn" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>Begin Genesis →</Link>
               <Link href="/whitepaper" className="cmp-cta-btn cmp-cta-btn-dim" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>Read Whitepaper →</Link>

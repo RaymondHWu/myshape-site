@@ -11,7 +11,7 @@ export default function SpecsClient() {
 
       <div className="relative z-10 max-w-3xl mx-auto px-6 pt-28 pb-16">
         <div className="space-y-4 mb-12">
-          <div className="text-[#90c8ff]/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase">
+          <div className="text-[#90c8ff]/60 text-[11px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase">
             PROTOCOL_SPEC // V1.0
           </div>
           <h1 className="text-3xl md:text-5xl font-light tracking-[0.08em] md:tracking-[0.12em] text-white uppercase">
@@ -41,13 +41,13 @@ export default function SpecsClient() {
                 { label: "Biological Perturbation", desc: "Micro-saccadic corrections at limb endpoints. These are absent in synthetic trajectories." },
               ].map((d) => (
                 <div key={d.label} className="border border-[#90c8ff]/08 p-3">
-                  <div className="text-[#90c8ff]/70 text-[10px] tracking-[0.1em] uppercase mb-1">{d.label}</div>
-                  <div className="text-white/35 text-[10px] leading-relaxed">{d.desc}</div>
+                  <div className="text-[#90c8ff]/70 text-[11px] tracking-[0.1em] uppercase mb-1">{d.label}</div>
+                  <div className="text-white/35 text-[11px] leading-relaxed">{d.desc}</div>
                 </div>
               ))}
             </div>
 
-            <p className="text-[#90c8ff]/30 text-[10px]">
+            <p className="text-[#90c8ff]/30 text-[11px]">
               PES = w₁·timing + w₂·noise + w₃·frequency + w₄·biological, where weights are calibrated
               on 54 real human samples against a GAN-generated control set. Benchmark: 0.3960 Human–AI gap (PES v0.2).
             </p>
@@ -60,7 +60,7 @@ export default function SpecsClient() {
             2. Data Sovereignty Path
           </h2>
           <div className="border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02] p-5 space-y-3 text-[12px] leading-relaxed text-white/50">
-            <div className="font-mono text-[10px] text-[#90c8ff]/60 tracking-[0.15em] space-y-1">
+            <div className="font-mono text-[11px] text-[#90c8ff]/60 tracking-[0.15em] space-y-1">
               <div>1. Local Capture — MediaPipe Pose extracts 33-pt landmarks on-device</div>
               <div>2. SST Reduction — 33-pt → 18-pt skeleton topology (discards face/hand identity data)</div>
               <div>3. Motion Vector — 4D PES engine produces 128-dim signature from kinematics + acceleration + jerk + spectrum</div>
@@ -69,7 +69,7 @@ export default function SpecsClient() {
             </div>
 
             <div className="border-t border-[#90c8ff]/08 pt-3 mt-3">
-              <p className="text-white/30 text-[10px]">
+              <p className="text-white/30 text-[11px]">
                 <span className="text-[#90c8ff]/50">Zero raw data leaves the device.</span>{" "}
                 The server never sees camera frames, pose landmarks, or the 128-dim vector.
                 It only verifies the ZK proof. This is not a privacy policy — it is a cryptographic invariant.
@@ -92,7 +92,7 @@ export default function SpecsClient() {
               <li><span className="text-white/50">Presence Proof</span> — PES &gt; 0.5, verified via the 4D entropy engine</li>
               <li><span className="text-white/50">Temporal Position</span> — Among the first 100 eligible entities to submit a valid proof</li>
             </ul>
-            <p className="text-[#90c8ff]/30 text-[10px]">
+            <p className="text-[#90c8ff]/30 text-[11px]">
               Full governance specification:{" "}
               <a href="https://github.com/myshapeprotocol/docs/genesis-governance.md" className="text-[#90c8ff]/50 hover:text-[#90c8ff]/80 underline">
                 genesis-governance.md
@@ -114,7 +114,7 @@ export default function SpecsClient() {
             ].map((p) => (
               <div key={p.phase} className="flex items-start gap-3 text-[11px]">
                 <span
-                  className="shrink-0 mt-0.5 text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 rounded border"
+                  className="shrink-0 mt-0.5 text-[11px] tracking-[0.12em] uppercase px-2 py-0.5 rounded border"
                   style={{ color: p.color, borderColor: p.color + "30", background: p.color + "0a" }}
                 >
                   {p.status}
@@ -134,7 +134,7 @@ export default function SpecsClient() {
             5. Reference Stack
           </h2>
           <div className="border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02] p-5">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-[10px]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-[11px]">
               {[
                 ["Framework", "Next.js 16 (App Router)"],
                 ["UI", "React 19 + Tailwind CSS 4"],
@@ -146,7 +146,7 @@ export default function SpecsClient() {
                 ["Infra", "PM2 + Vercel"],
               ].map(([k, v]) => (
                 <div key={k} className="border border-[#90c8ff]/06 p-2">
-                  <div className="text-[#90c8ff]/40 text-[8px] tracking-[0.12em] uppercase">{k}</div>
+                  <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.12em] uppercase">{k}</div>
                   <div className="text-white/45 mt-0.5">{v}</div>
                 </div>
               ))}
@@ -159,7 +159,7 @@ export default function SpecsClient() {
             href="https://github.com/myshapeprotocol"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#90c8ff]/40 text-[10px] tracking-[0.2em] uppercase hover:text-[#90c8ff]/70 transition-colors"
+            className="text-[#90c8ff]/40 text-[11px] tracking-[0.2em] uppercase hover:text-[#90c8ff]/70 transition-colors"
           >
             ◈ Contribute on GitHub
           </a>

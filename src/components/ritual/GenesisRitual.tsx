@@ -45,7 +45,7 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
       </div>
 
       {/* 3. 背景加料：動態數據流 */}
-      <div className="absolute top-10 left-10 text-[8px] text-[#90c8ff]/20 space-y-1 hidden md:block">
+      <div className="absolute top-10 left-10 text-[11px] text-[#90c8ff]/20 space-y-1 hidden md:block">
         {[...Array(10)].map((_, i) => (
           <div key={i}>FETCHING_DATA_STREAM_0x{Math.random().toString(16).slice(2, 8).toUpperCase()}... OK</div>
         ))}
@@ -96,7 +96,7 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
             <div className="text-[#90c8ff] text-[16px] font-bold tracking-[0.6em] uppercase">
               {protocolStages[stage].text}
             </div>
-            <div className="text-white/30 text-[9px] tracking-[0.4em] uppercase">
+            <div className="text-white/30 text-[11px] tracking-[0.4em] uppercase">
               {protocolStages[stage].sub}
             </div>
           </motion.div>
@@ -105,7 +105,7 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
 
       {/* 底部進度條 */}
       <div className="absolute bottom-20 flex flex-col items-center gap-4 z-10">
-        <div className="flex gap-2 text-[8px] text-[#90c8ff]/40 tracking-[0.4em]">
+        <div className="flex gap-2 text-[11px] text-[#90c8ff]/40 tracking-[0.4em]">
            <span>PRTCL_ID: MS_V1.0</span>
            <span className="text-white/10">|</span>
            <span>MODE: ENCRYPTED_INIT</span>
@@ -117,7 +117,7 @@ export default function GenesisRitual({ onComplete }: { onComplete: () => void }
             className="h-full bg-[#90c8ff] shadow-[0_0_20px_rgba(6,182,212,1)]"
           />
         </div>
-        <div className="text-[#90c8ff]/60 text-[10px] font-mono mt-2">
+        <div className="text-[#90c8ff]/60 text-[11px] font-mono mt-2">
            {Math.round(((stage + 1) / protocolStages.length) * 100)}%
         </div>
       </div>

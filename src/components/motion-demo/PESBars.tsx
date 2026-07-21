@@ -18,7 +18,7 @@ export default function PESBars({ bars, variant = "full" }: PESBarsProps) {
     <div className="space-y-2">
       {bars.map((g) => (
         <div key={g.label}>
-          <div className="flex justify-between text-[10px]">
+          <div className="flex justify-between text-[11px]">
             <span className="text-white/35">{g.label}</span>
             <span className="text-[#90c8ff]/60 font-mono text-[11px]">
               {(g.value * 100).toFixed(0)}%

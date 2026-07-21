@@ -47,10 +47,10 @@ export default function DeveloperPlayground() {
       {/* Header */}
       <div className="px-5 py-3 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
         <div>
-          <span className="text-[#90c8ff]/60 text-[10px] tracking-[0.3em] uppercase">Developer Playground</span>
-          <span className="text-white/15 text-[8px] ml-3 tracking-[0.1em]">No setup · No camera · Browser only</span>
+          <span className="text-[#90c8ff]/60 text-[11px] tracking-[0.3em] uppercase">Developer Playground</span>
+          <span className="text-white/15 text-[11px] ml-3 tracking-[0.1em]">No setup · No camera · Browser only</span>
         </div>
-        <span className="text-white/10 text-[8px] tracking-[0.15em]">PLAYGROUND_ENGINE_V1</span>
+        <span className="text-white/10 text-[11px] tracking-[0.15em]">PLAYGROUND_ENGINE_V1</span>
       </div>
 
       <div className="p-5 space-y-4">
@@ -58,8 +58,8 @@ export default function DeveloperPlayground() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Code Panel */}
           <div>
-            <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-2">// YOUR_CODE</div>
-            <div className="bg-black/50 p-4 font-mono text-[10px] leading-relaxed overflow-x-auto"
+            <div className="text-white/20 text-[11px] tracking-[0.2em] uppercase mb-2">// YOUR_CODE</div>
+            <div className="bg-black/50 p-4 font-mono text-[11px] leading-relaxed overflow-x-auto"
               style={{ border: "1px solid rgba(144,200,255,0.08)" }}>
               <span className="text-white/20">{"// 1. Pre-recorded frames from a real human scan"}</span>
               <br />
@@ -103,12 +103,12 @@ export default function DeveloperPlayground() {
             <div className="mt-3 flex gap-3">
               {step === "idle" && (
                 <button onClick={handleRun}
-                  className="px-5 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.2em] uppercase hover:bg-[#90c8ff]/[0.06] hover:text-white hover:border-[#90c8ff]/50 transition-all">
+                  className="px-5 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[11px] tracking-[0.2em] uppercase hover:bg-[#90c8ff]/[0.06] hover:text-white hover:border-[#90c8ff]/50 transition-all">
                   ▶ Run Verification
                 </button>
               )}
               {step === "running" && (
-                <div className="flex items-center gap-2 px-5 py-2 border border-amber-400/30 text-amber-300/60 text-[10px] tracking-[0.15em]">
+                <div className="flex items-center gap-2 px-5 py-2 border border-amber-400/30 text-amber-300/60 text-[11px] tracking-[0.15em]">
                   <span className="inline-block w-2 h-2 bg-amber-400/60 rounded-full animate-pulse" />
                   Processing...
                 </div>
@@ -116,10 +116,10 @@ export default function DeveloperPlayground() {
               {step === "done" && (
                 <>
                   <button onClick={handleReset}
-                    className="px-5 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.2em] uppercase hover:bg-[#90c8ff]/[0.06] hover:text-[#90c8ff] transition-all">
+                    className="px-5 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[11px] tracking-[0.2em] uppercase hover:bg-[#90c8ff]/[0.06] hover:text-[#90c8ff] transition-all">
                     ↻ Run Again
                   </button>
-                  <span className="flex items-center text-[#90c8ff]/60 text-[10px] tracking-[0.15em]">
+                  <span className="flex items-center text-[#90c8ff]/60 text-[11px] tracking-[0.15em]">
                     <span className="inline-block w-1.5 h-1.5 bg-[#90c8ff] rounded-full mr-1.5" />
                     Complete
                   </span>
@@ -130,12 +130,12 @@ export default function DeveloperPlayground() {
 
           {/* Output Panel */}
           <div>
-            <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-2">// OUTPUT</div>
-            <div className="bg-black/50 p-4 font-mono text-[10px] leading-relaxed space-y-2 overflow-x-auto"
+            <div className="text-white/20 text-[11px] tracking-[0.2em] uppercase mb-2">// OUTPUT</div>
+            <div className="bg-black/50 p-4 font-mono text-[11px] leading-relaxed space-y-2 overflow-x-auto"
               style={{ border: "1px solid rgba(144,200,255,0.08)", minHeight: "200px" }}>
               {step === "idle" && (
                 <div className="flex items-center justify-center h-40">
-                  <span className="text-white/10 text-[10px] tracking-[0.15em]">
+                  <span className="text-white/10 text-[11px] tracking-[0.15em]">
                     Press &quot;Run Verification&quot; to see output
                   </span>
                 </div>
@@ -182,7 +182,7 @@ export default function DeveloperPlayground() {
                     <span className="text-white/30">zk_proof:</span>
                     <span className="text-white/15 ml-2">{"{"}</span>
                   </div>
-                  <div className="ml-4 space-y-0.5 text-[9px]">
+                  <div className="ml-4 space-y-0.5 text-[11px]">
                     <div><span className="text-[#90c8ff]/30">zkp:</span> <span className="text-white/25">{SAMPLE_DATA.proof.zkp}</span></div>
                     <div><span className="text-[#90c8ff]/30">pop:</span> <span className="text-white/25">{SAMPLE_DATA.proof.pop}</span></div>
                     <div><span className="text-[#90c8ff]/30">mp:</span> <span className="text-white/25">{SAMPLE_DATA.proof.mp}</span></div>
@@ -191,7 +191,7 @@ export default function DeveloperPlayground() {
                   <div><span className="text-white/15 ml-2">{"}"}</span></div>
 
                   {/* Stats */}
-                  <div className="pt-1 border-t border-white/5 text-[9px]">
+                  <div className="pt-1 border-t border-white/5 text-[11px]">
                     <span className="text-white/20">frames_processed: </span>
                     <span className="text-white/30">{SAMPLE_DATA.frames}</span>
                     <span className="text-white/20 ml-3">duration: </span>
@@ -203,7 +203,7 @@ export default function DeveloperPlayground() {
 
             {/* Info */}
             {step === "done" && (
-              <div className="mt-2 text-white/15 text-[8px] leading-relaxed">
+              <div className="mt-2 text-white/15 text-[11px] leading-relaxed">
                 This is a pre-computed result from an actual human scan. PES ≥ 0.70 indicates real biological presence.
                 The 4-component entropy profile (timing/noise/frequency/biological) forms a uniquely human &quot;motion signature&quot;
                 that current AI generation models cannot reproduce at the distribution level.
@@ -214,10 +214,10 @@ export default function DeveloperPlayground() {
 
         {/* Bottom hint */}
         <div className="flex items-center justify-between pt-3 border-t border-white/5">
-          <span className="text-white/10 text-[8px] tracking-[0.15em]">
+          <span className="text-white/10 text-[11px] tracking-[0.15em]">
             Sample data: 30s scan · 180 frames · Real human · MediaPipe 33-pt → SST 18-pt
           </span>
-          <a href="/motion-demo" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 text-[8px] tracking-[0.15em] transition-colors">
+          <a href="/motion-demo" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 text-[11px] tracking-[0.15em] transition-colors">
             Try with YOUR motion →
           </a>
         </div>

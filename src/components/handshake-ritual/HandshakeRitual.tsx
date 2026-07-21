@@ -246,10 +246,10 @@ const HandshakeRitual: React.FC = () => {
         {/* 环境标签 — 仅 idle 时可见，提示开发者当前 API 目标 */}
         {stage === "idle" && (
           <div className="flex items-center justify-center gap-2 mb-5">
-            <span className="text-[#90c8ff]/55 font-mono text-[8px] tracking-[0.25em] uppercase border border-[#90c8ff]/30 px-2 py-0.5">
+            <span className="text-[#90c8ff]/55 font-mono text-[11px] tracking-[0.25em] uppercase border border-[#90c8ff]/30 px-2 py-0.5">
               ENV: SUPABASE_PRODUCTION
             </span>
-            <span className="text-white/30 font-mono text-[8px] tracking-[0.15em]">
+            <span className="text-white/30 font-mono text-[11px] tracking-[0.15em]">
               — node registration is permanent —
             </span>
           </div>
@@ -266,7 +266,7 @@ const HandshakeRitual: React.FC = () => {
               ? "Handshake Interrupted."
               : "Initialize Node Handshake."}
         </h2>
-        <p className="text-[#90c8ff]/50 font-mono text-[8px] md:text-[9px] tracking-[0.25em] md:tracking-[0.4em] uppercase">
+        <p className="text-[#90c8ff]/50 font-mono text-[11px] md:text-[11px] tracking-[0.25em] md:tracking-[0.4em] uppercase">
           {stage === "sovereign"
             ? "SOVEREIGN_IDENTITY_CORE_ONLINE"
             : "ESTABLISHING_PROTOCOL_NODE_PRESENCE"}
@@ -298,7 +298,7 @@ const HandshakeRitual: React.FC = () => {
                 <form onSubmit={handleInitiate} className="flex flex-col items-center space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="h-[1px] w-10 bg-gradient-to-r from-transparent to-[#90c8ff]/30" />
-                    <span className="text-[#90c8ff]/40 font-mono text-[8px] tracking-[0.4em] uppercase">
+                    <span className="text-[#90c8ff]/40 font-mono text-[11px] tracking-[0.4em] uppercase">
                       Node_Registration
                     </span>
                     <div className="h-[1px] w-10 bg-gradient-to-l from-transparent to-[#90c8ff]/30" />
@@ -344,7 +344,7 @@ const HandshakeRitual: React.FC = () => {
                   <button
                     type="submit"
                     onMouseEnter={() => playTick(800, "sine", 0.1, 0.025)}
-                    className="relative group px-10 py-3 transition-all duration-500 overflow-hidden font-mono text-[10px] tracking-[0.3em] uppercase border border-[#90c8ff]/35 text-[#90c8ff]/75 hover:text-white hover:border-[#90c8ff] hover:shadow-[0_0_24px_rgba(144,200,255,0.2)]"
+                    className="relative group px-10 py-3 transition-all duration-500 overflow-hidden font-mono text-[11px] tracking-[0.3em] uppercase border border-[#90c8ff]/35 text-[#90c8ff]/75 hover:text-white hover:border-[#90c8ff] hover:shadow-[0_0_24px_rgba(144,200,255,0.2)]"
                     style={{ background: "rgba(144,200,255,0.05)" }}
                   >
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 handshake-btn-bg" />
@@ -352,7 +352,7 @@ const HandshakeRitual: React.FC = () => {
                   </button>
                 </form>
                 <a href="/genesis"
-                  className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 text-[9px] tracking-[0.12em] uppercase transition-colors no-underline mt-3">
+                  className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 text-[11px] tracking-[0.12em] uppercase transition-colors no-underline mt-3">
                   Genesis Cohort? Initialize_Genesis →
                 </a>
               </motion.div>
@@ -431,18 +431,18 @@ const HandshakeRitual: React.FC = () => {
                   <div className="flex items-center justify-between px-5 py-2 border-b border-[#90c8ff]/10">
                     <div className="flex items-center gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-[#c0e0ff] shadow-[0_0_8px_rgba(180,220,255,0.8)] animate-[nodePulse_2s_ease-in-out_infinite]" />
-                      <span className="text-[#90c8ff]/55 font-mono text-[9px] tracking-[0.35em] uppercase">
+                      <span className="text-[#90c8ff]/55 font-mono text-[11px] tracking-[0.35em] uppercase">
                         Sovereign_Node_Identity
                       </span>
                     </div>
-                    <span className="text-white/25 font-mono text-[8px] tracking-[0.2em]">
+                    <span className="text-white/25 font-mono text-[11px] tracking-[0.2em]">
                       {nodeResult.stage}
                     </span>
                   </div>
 
                   <div className="px-4 py-3 space-y-3">
                     <div>
-                      <div className="text-white/25 font-mono text-[7px] tracking-[0.2em] uppercase mb-0.5">
+                      <div className="text-white/25 font-mono text-[11px] tracking-[0.2em] uppercase mb-0.5">
                         Node_Handle
                       </div>
                       <div
@@ -454,11 +454,11 @@ const HandshakeRitual: React.FC = () => {
                     </div>
                     <div className="h-[1px] bg-gradient-to-r from-transparent via-[#90c8ff]/12 to-transparent" />
                     <div>
-                      <div className="text-white/25 font-mono text-[7px] tracking-[0.2em] uppercase mb-0.5">
+                      <div className="text-white/25 font-mono text-[11px] tracking-[0.2em] uppercase mb-0.5">
                         Node_Token
                       </div>
                       <div
-                        className="text-[#90c0e8]/60 font-mono text-[9px] tracking-[0.06em] break-all handshake-token-reveal"
+                        className="text-[#90c0e8]/60 font-mono text-[11px] tracking-[0.06em] break-all handshake-token-reveal"
                         style={{ animationDelay: "0.4s" }}
                       >
                         {nodeResult.node_token}
@@ -473,7 +473,7 @@ const HandshakeRitual: React.FC = () => {
                   transition={{ delay: 1.0, duration: 0.4 }}
                   onClick={handleReset}
                   onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                  className="relative group px-10 py-3 font-mono text-[9px] tracking-[0.3em] uppercase transition-all duration-500 border border-[#90c8ff]/25 text-[#90c8ff]/60 hover:text-white hover:border-[#90c8ff]/60"
+                  className="relative group px-10 py-3 font-mono text-[11px] tracking-[0.3em] uppercase transition-all duration-500 border border-[#90c8ff]/25 text-[#90c8ff]/60 hover:text-white hover:border-[#90c8ff]/60"
                   style={{ background: "rgba(144,200,255,0.03)" }}
                 >
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 handshake-btn-bg" />
@@ -485,7 +485,7 @@ const HandshakeRitual: React.FC = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.2, duration: 0.4 }}
-                  className="text-white/15 font-mono text-[8px] tracking-[0.15em]"
+                  className="text-white/15 font-mono text-[11px] tracking-[0.15em]"
                 >
                   Auto-redirecting to Dashboard in 6s...
                 </motion.p>
@@ -502,13 +502,13 @@ const HandshakeRitual: React.FC = () => {
                 transition={{ duration: 0.4 }}
                 className="flex flex-col items-center space-y-5"
               >
-                <div className="text-red-300/75 font-mono text-[10px] tracking-[0.25em] uppercase animate-pulse">
+                <div className="text-red-300/75 font-mono text-[11px] tracking-[0.25em] uppercase animate-pulse">
                   {`> ${errorMsg}`}
                 </div>
                 <button
                   onClick={handleReset}
                   onMouseEnter={() => playTick(600, "sine", 0.08, 0.02)}
-                  className="px-8 py-3 border border-white/20 text-white/55 font-mono text-[9px] tracking-[0.3em] uppercase hover:border-white/50 hover:text-white transition-all"
+                  className="px-8 py-3 border border-white/20 text-white/55 font-mono text-[11px] tracking-[0.3em] uppercase hover:border-white/50 hover:text-white transition-all"
                 >
                   Retry_Handshake
                 </button>
@@ -525,7 +525,7 @@ const HandshakeRitual: React.FC = () => {
         }`}
         style={{ zIndex: 10 }}
       >
-        <div className="text-[9px] font-mono text-white/30 tracking-[0.5em] leading-relaxed uppercase text-left">
+        <div className="text-[11px] font-mono text-white/30 tracking-[0.5em] leading-relaxed uppercase text-left">
           Protocol_Ref: 007_HANDSHAKE <br />
           Core: MetaCore_Ω <br />
           Status: {stage === "idle" ? "STANDBY" : stage.toUpperCase()}

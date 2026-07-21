@@ -20,7 +20,7 @@ export default function PapersHubClient() {
       <ProtocolHeader />
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="space-y-4 mb-14">
-          <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">RESEARCH_&_DOCUMENTATION</div>
+          <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.5em] uppercase">RESEARCH_&_DOCUMENTATION</div>
           <h1 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">Papers</h1>
           <p className="text-white/40 text-[12px] leading-relaxed max-w-xl">Technical documentation, security analysis, and architectural specifications for the MyShape Protocol.</p>
         </div>
@@ -36,7 +36,7 @@ export default function PapersHubClient() {
           ))}
         </div>
         <div className="mt-14 text-center">
-          <Typewriter text="All papers are living documents. Updated as the protocol evolves." className="text-white/40 text-[10px] tracking-[0.15em]" />
+          <Typewriter text="All papers are living documents. Updated as the protocol evolves." className="text-white/40 text-[11px] tracking-[0.15em]" />
         </div>
       </div>
       <ProtocolFooter />

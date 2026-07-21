@@ -13,7 +13,7 @@ export default function ProcessingOverlay() {
             <div className="w-3 h-3 rounded-full bg-[#90c8ff] shadow-[0_0_12px_rgba(144,200,255,0.6)] animate-pulse" />
           </div>
         </div>
-        <span className="text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase block animate-pulse">
+        <span className="text-[#90c8ff]/70 text-[11px] tracking-[0.3em] uppercase block animate-pulse">
           Generating ZK-Proof...
         </span>
         <div className="flex gap-1.5 justify-center">

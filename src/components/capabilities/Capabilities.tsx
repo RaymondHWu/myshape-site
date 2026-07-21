@@ -89,7 +89,7 @@ export default function Capabilities() {
 
       <div className="w-full max-w-[1200px] flex justify-between items-end mb-[clamp(4rem,10vw,10rem)]">
         <div className="max-w-[650px]">
-          <span className="text-[9px] tracking-[0.6em] text-white/20 block mb-4 uppercase">CAPABILITIES</span>
+          <span className="text-[11px] tracking-[0.6em] text-white/20 block mb-4 uppercase">CAPABILITIES</span>
           <h2 className="text-[clamp(2rem,5vw,3.2rem)] font-light -tracking-[0.02em] leading-[1.1] text-white m-0">
             Sovereignty as <span className="text-[#90c8ff]/80">Protocol.</span>
           </h2>

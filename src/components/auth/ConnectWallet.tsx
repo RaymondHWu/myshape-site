@@ -59,21 +59,21 @@ export default function ConnectWallet({ onSuccess, email, className = "" }: Prop
             <div className="flex flex-col items-center gap-1 animate-[fadeIn_0.4s_ease-out]">
               <div className="flex items-center gap-2 px-4 py-2 border border-[#90c8ff]/40 bg-[#90c8ff]/[0.06]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.8)]" />
-                <span className="text-[#90c8ff]/80 font-mono text-[10px] tracking-[0.2em] uppercase">Identity Linked</span>
+                <span className="text-[#90c8ff]/80 font-mono text-[11px] tracking-[0.2em] uppercase">Identity Linked</span>
               </div>
-              <span className="text-white/25 text-[8px] tracking-[0.15em] uppercase font-light italic">Geometry is now verified.</span>
+              <span className="text-white/25 text-[11px] tracking-[0.15em] uppercase font-light italic">Geometry is now verified.</span>
             </div>
           ) : (
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-2 px-3 py-1.5 border border-[#90c8ff]/25 bg-[#90c8ff]/[0.03]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#90c8ff]/60 shadow-[0_0_4px_rgba(144,200,255,0.4)]" />
-                <span className="text-[#90c8ff]/50 font-mono text-[10px] tracking-[0.1em]">
+                <span className="text-[#90c8ff]/50 font-mono text-[11px] tracking-[0.1em]">
                   {address.slice(0, 6)}...{address.slice(-4)}
                 </span>
               </div>
               <button
                 onClick={handleDisconnect}
-                className="text-white/15 hover:text-white/30 text-[8px] tracking-[0.2em] uppercase transition-colors"
+                className="text-white/15 hover:text-white/30 text-[11px] tracking-[0.2em] uppercase transition-colors"
               >
                 Disconnect
               </button>
@@ -85,7 +85,7 @@ export default function ConnectWallet({ onSuccess, email, className = "" }: Prop
           onClick={handleConnect}
           onMouseEnter={() => playTick(650, "sine", 0.07, 0.02)}
           disabled={status === "connecting" || status === "signing" || status === "verifying"}
-          className="relative group px-5 py-2.5 transition-all duration-500 overflow-hidden font-mono text-[9px] tracking-[0.3em] uppercase"
+          className="relative group px-5 py-2.5 transition-all duration-500 overflow-hidden font-mono text-[11px] tracking-[0.3em] uppercase"
           style={{
             border: status === "error" ? "1px solid rgba(248,113,113,0.3)" : "1px solid rgba(168,221,255,0.2)",
             background: "linear-gradient(180deg, rgba(168,200,240,0.04) 0%, rgba(144,180,220,0.01) 100%)",
@@ -110,7 +110,7 @@ export default function ConnectWallet({ onSuccess, email, className = "" }: Prop
         </button>
       )}
       {errorMsg && (
-        <p className="text-red-300/40 text-[8px] tracking-[0.15em] mt-1.5">{errorMsg}</p>
+        <p className="text-red-300/40 text-[11px] tracking-[0.15em] mt-1.5">{errorMsg}</p>
       )}
     </div>
   );

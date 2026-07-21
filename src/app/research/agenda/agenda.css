@@ -80,7 +80,7 @@
 
 .agenda-number-label {
   color: rgba(255, 255, 255, 0.3);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   transition: color 0.35s;
@@ -162,7 +162,7 @@
 
 .agenda-blockquote-cite {
   color: rgba(144, 200, 255, 0.4);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   font-style: normal;
@@ -176,7 +176,7 @@
 
 .agenda-section-heading {
   color: rgba(144, 200, 255, 0.5);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.6em;
   text-transform: uppercase;
   margin-bottom: 2.5rem;
@@ -249,7 +249,7 @@
 
 .agenda-question-status {
   font-family: monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   display: inline-flex;
@@ -377,7 +377,7 @@
 .agenda-roadmap-period-label {
   color: rgba(255,255,255,0.2);
   font-family: monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
@@ -466,7 +466,7 @@
 .agenda-method-num {
   color: rgba(144, 200, 255, 0.35);
   font-family: monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.25em;
   margin-bottom: 0.5rem;
 }
@@ -505,7 +505,7 @@
 
 .agenda-footer-text {
   color: rgba(255, 255, 255, 0.25);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   margin-bottom: 1rem;
 }

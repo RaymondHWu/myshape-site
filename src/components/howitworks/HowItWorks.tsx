@@ -15,7 +15,7 @@ export default function HowItWorks() {
         {/* 标题区 */}
         <div className="flex justify-between items-end mb-[clamp(3rem,6vw,6rem)]">
           <div className="max-w-[650px]">
-            <span className="text-[9px] tracking-[0.6em] text-white/20 block mb-4 uppercase">HOW IT WORKS</span>
+            <span className="text-[11px] tracking-[0.6em] text-white/20 block mb-4 uppercase">HOW IT WORKS</span>
             <h2 className="text-[clamp(2rem,5vw,3.2rem)] font-extralight -tracking-[0.02em] leading-[1.1] text-white m-0">
               The protocol behind <span className="text-[#90c8ff]/90">your identity.</span>
             </h2>

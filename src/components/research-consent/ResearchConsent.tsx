@@ -85,13 +85,13 @@ export default function ResearchConsent({
       {expanded && consented && (
         <div className="px-5 pb-1.5 border-t border-[#90c8ff]/10 pt-1.5">
           {uploadDone ? (
-            <span className="text-[#90c8ff]/70 text-[8px] font-mono">✓ Contribution recorded</span>
+            <span className="text-[#90c8ff]/70 text-[11px] font-mono">✓ Contribution recorded</span>
           ) : uploadState === "uploading" ? (
-            <span className="text-amber-300/70 text-[8px] font-mono">⟳ Uploading...</span>
+            <span className="text-amber-300/70 text-[11px] font-mono">⟳ Uploading...</span>
           ) : uploadState === "error" ? (
-            <span className="text-red-400/80 text-[8px] font-mono">✗ Upload failed — {uploadError || "unknown error"}</span>
+            <span className="text-red-400/80 text-[11px] font-mono">✗ Upload failed — {uploadError || "unknown error"}</span>
           ) : (
-            <p className="text-white/25 text-[8px] leading-tight">
+            <p className="text-white/25 text-[11px] leading-tight">
               Only joint-position wireframe data. No camera images. No face.
             </p>
           )}

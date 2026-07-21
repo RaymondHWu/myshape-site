@@ -117,7 +117,7 @@ export default function ProtocolManifesto() {
       <BackgroundParticles />
 
       {/* Top Navigation */}
-      <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/80 backdrop-blur-md px-10 py-5 flex justify-between items-center text-[10px] tracking-[0.4em]">
+      <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/80 backdrop-blur-md px-10 py-5 flex justify-between items-center text-[11px] tracking-[0.4em]">
         <Link href="/protocol" className="text-[#90c8ff]/70 hover:text-[#90c8ff] transition-colors uppercase">← EXIT_ARCHIVE</Link>
         <div className="text-white/20 uppercase font-bold tracking-[0.5em]">PROTOCOL_MANIFESTO // DATA_SEQUENCE</div>
       </nav>
@@ -132,7 +132,7 @@ export default function ProtocolManifesto() {
           opacity: tocShow ? 1 : 0, pointerEvents: tocShow ? "auto" : "none",
           transition: "opacity 0.3s", zIndex: 10,
         }}>
-          <div className="text-[10px] text-[#90c8ff]/40 mb-12 tracking-[0.5em] uppercase font-bold">ARCHIVE_INDEX</div>
+          <div className="text-[11px] text-[#90c8ff]/40 mb-12 tracking-[0.5em] uppercase font-bold">ARCHIVE_INDEX</div>
           <ul className="space-y-10 border-l border-white/5 pl-6">
             {sections.map(s => {
               const isActive = s.id === activeIndex;
@@ -141,7 +141,7 @@ export default function ProtocolManifesto() {
                   <a href={'#' + s.id} className="block"
                      style={isActive ? { borderLeft: '2px solid #90c8ff', paddingLeft: '22px', marginLeft: '-24px' } : {}}>
                     <div
-                      className={isActive ? 'text-[#90c8ff] font-bold text-[13px] transition-all duration-300 mb-1' : 'text-white/10 text-[10px] transition-all duration-300 mb-1'}
+                      className={isActive ? 'text-[#90c8ff] font-bold text-[13px] transition-all duration-300 mb-1' : 'text-white/10 text-[11px] transition-all duration-300 mb-1'}
                       style={isActive ? { textShadow: '0 0 12px rgba(144,200,255,0.7)' } : {}}>
                       {s.id}
                     </div>
@@ -150,7 +150,7 @@ export default function ProtocolManifesto() {
                       {s.title}
                     </div>
                     {isActive && (
-                      <div className="text-[8px] tracking-[0.3em] text-[#90c8ff]/60 mt-1.5 animate-pulse">
+                      <div className="text-[11px] tracking-[0.3em] text-[#90c8ff]/60 mt-1.5 animate-pulse">
                         [ READING_SYNC ]
                       </div>
                     )}
@@ -168,7 +168,7 @@ export default function ProtocolManifesto() {
               
               {/* Decoration Line */}
               <div className="flex items-center gap-6 mb-12">
-                <span className="text-[#90c8ff]/50 text-[10px] tracking-[0.6em] font-bold">{s.subtitle}</span>
+                <span className="text-[#90c8ff]/50 text-[11px] tracking-[0.6em] font-bold">{s.subtitle}</span>
                 <div className="h-[1px] flex-1 bg-white/10 group-hover:bg-[#90c8ff]/30 transition-colors duration-700" />
               </div>
 

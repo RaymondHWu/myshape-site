@@ -225,7 +225,7 @@ export default function ChallengeClient() {
         <Link href="/research" className="text-white/30 text-[11px] tracking-[0.2em] uppercase hover:text-white/60">
           ← Research
         </Link>
-        <span className="text-white/15 text-[9px] tracking-[0.3em] uppercase">EE-003</span>
+        <span className="text-white/15 text-[11px] tracking-[0.3em] uppercase">EE-003</span>
         <div className="w-16" />
       </header>
 
@@ -276,7 +276,7 @@ export default function ChallengeClient() {
             </button>
 
             <details className="group">
-              <summary className="text-white/20 text-[9px] tracking-[0.15em] text-center cursor-pointer hover:text-white/35 transition-colors list-none">How this works</summary>
+              <summary className="text-white/20 text-[11px] tracking-[0.15em] text-center cursor-pointer hover:text-white/35 transition-colors list-none">How this works</summary>
               <div className="mt-3 p-4 border border-white/[0.04] bg-white/[0.01] text-[11px] text-white/35 leading-relaxed space-y-2"
                 style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
                 <p>3 randomized rounds. Each round shows a direction — rotate your phone that way when the timer hits zero.</p>
@@ -290,7 +290,7 @@ export default function ChallengeClient() {
         {/* ── Countdown ── */}
         {phase === "countdown" && (
           <div className="flex flex-col items-center justify-center py-12 gap-6">
-            <div className="text-white/20 text-[10px] tracking-[0.3em] uppercase">
+            <div className="text-white/20 text-[11px] tracking-[0.3em] uppercase">
               Round {currentRound}/3 — Get Ready
             </div>
             <div className="text-[96px] leading-none" style={{ color: "#d29922" }}>
@@ -318,7 +318,7 @@ export default function ChallengeClient() {
             <div className="text-[#3fb950] text-[24px] font-bold tracking-[0.1em] uppercase animate-pulse">
               ROTATE {targetDir} NOW
             </div>
-            <div className="text-white/15 text-[9px] font-mono">IMU: {imuDebug} events</div>
+            <div className="text-white/15 text-[11px] font-mono">IMU: {imuDebug} events</div>
             <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-[#3fb950]/60 to-[#d29922]/60 rounded-full"
@@ -374,7 +374,7 @@ export default function ChallengeClient() {
 
             {/* Verdict */}
             <div className="text-center p-6 border-2 border-[#d29922]/40 bg-[#d29922]/[0.04] space-y-3">
-              <div className="text-white/20 text-[9px] tracking-[0.2em] uppercase">Policy Decision</div>
+              <div className="text-white/20 text-[11px] tracking-[0.2em] uppercase">Policy Decision</div>
               <div
                 className="text-[20px] font-light"
                 style={{ color: statusColor(displayVerdict) }}
@@ -400,8 +400,8 @@ export default function ChallengeClient() {
                     className={`p-3 border text-center ${ok ? "border-[#3fb950]/20 bg-[#3fb950]/[0.04]" : "border-[#f85149]/20 bg-[#f85149]/[0.04]"}`}
                   >
                     <div className="text-[24px]">{DIRECTION_ARROW[r.direction]}</div>
-                    <div className="text-[9px] text-white/30">R{r.round}</div>
-                    <div className={`text-[10px] ${ok ? "text-[#3fb950]" : "text-[#f85149]"}`}>
+                    <div className="text-[11px] text-white/30">R{r.round}</div>
+                    <div className={`text-[11px] ${ok ? "text-[#3fb950]" : "text-[#f85149]"}`}>
                       {ok ? "PASS" : "FAIL"}{debug ? ` ${r.angleDeg}° ${r.peakG}g` : ""}
                     </div>
                   </div>
@@ -412,8 +412,8 @@ export default function ChallengeClient() {
             {/* Evidence Components */}
             <div className="p-4 border border-white/10 bg-white/[0.02] space-y-3">
               <div className="flex items-center justify-between">
-                <div className="text-[10px] uppercase text-white/20">Evidence Components</div>
-                <span className="text-[8px] text-white/10 font-mono">{evidence.engineId}</span>
+                <div className="text-[11px] uppercase text-white/20">Evidence Components</div>
+                <span className="text-[11px] text-white/10 font-mono">{evidence.engineId}</span>
               </div>
               {evidence.components.map((comp) => (
                 <div
@@ -422,7 +422,7 @@ export default function ChallengeClient() {
                 >
                   <div className="space-y-0.5">
                     <div className="text-[11px] text-white/50">{comp.metric}</div>
-                    <div className="text-[9px] text-white/20">
+                    <div className="text-[11px] text-white/20">
                       {comp.value.toFixed(3)} vs {comp.threshold} — {comp.explanation}
                     </div>
                   </div>
@@ -435,12 +435,12 @@ export default function ChallengeClient() {
 
             {/* Diagnostic Log */}
             <div className="p-4 border border-white/10 bg-white/[0.02] space-y-2">
-              <div className="text-[10px] uppercase text-white/20">Diagnostic Log</div>
+              <div className="text-[11px] uppercase text-white/20">Diagnostic Log</div>
               <div className="space-y-1">
                 {evidence.diagnostics.map((d, i) => (
                   <div
                     key={i}
-                    className={`text-[10px] font-mono leading-relaxed ${
+                    className={`text-[11px] font-mono leading-relaxed ${
                       d.startsWith("✓")
                         ? "text-[#3fb950]/70"
                         : d.startsWith("✗")
@@ -472,8 +472,8 @@ export default function ChallengeClient() {
           </div>
         )}
         <div className="mt-10 pt-5 border-t border-white/[0.04] text-center">
-          <p className="text-white/25 text-[9px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
-          <p className="text-white/20 text-[8px] mt-1">
+          <p className="text-white/25 text-[11px] tracking-[0.1em]">Research Prototype &middot; The Continuity Lab</p>
+          <p className="text-white/20 text-[11px] mt-1">
             Parameters intentionally omitted &middot;{" "}
             <a href={`?debug=${debug ? "0" : "1"}`} className="underline hover:text-white/35">
               {debug ? "Public view" : "Developer mode"}

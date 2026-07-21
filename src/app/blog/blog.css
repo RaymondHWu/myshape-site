@@ -8,7 +8,7 @@
   padding: 0.4rem 0.85rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.4);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   background: transparent;
@@ -74,19 +74,19 @@
 
 .blog-post-series {
   color: rgba(144, 200, 255, 0.5);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.18em;
 }
 
 .blog-post-date {
   color: rgba(255, 255, 255, 0.25);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.1em;
 }
 
 .blog-post-featured-badge {
   color: rgba(144, 200, 255, 0.4);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.18em;
   border: 1px solid rgba(144, 200, 255, 0.25);
   padding: 0.15rem 0.45rem;
@@ -116,7 +116,7 @@
 
 .blog-post-tag {
   color: rgba(144, 200, 255, 0.25);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   transition: color 0.3s;
 }

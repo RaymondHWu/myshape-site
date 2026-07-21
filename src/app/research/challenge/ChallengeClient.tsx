@@ -15,7 +15,7 @@ export default function ChallengeClient() {
       <div className="relative z-10 max-w-2xl mx-auto px-4 md:px-6 pt-36 pb-16 text-center">
 
         <div className="mb-8">
-          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#f85149]/40">
+          <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-[#f85149]/40">
             Challenge BM-001
           </span>
         </div>
@@ -58,19 +58,19 @@ export default function ChallengeClient() {
             Open a GitHub Issue →
           </a>
 
-          <p className="text-white/12 text-[10px] tracking-[0.1em]">
+          <p className="text-white/12 text-[11px] tracking-[0.1em]">
             Or email challenge@myshape.com
           </p>
         </div>
 
         <div className="pt-8 border-t border-white/[0.04]">
-          <p className="text-white/15 text-[10px] tracking-[0.1em] leading-relaxed max-w-md mx-auto">
+          <p className="text-white/15 text-[11px] tracking-[0.1em] leading-relaxed max-w-md mx-auto">
             We do not defend our benchmarks. We design experiments that can falsify
             them. If you can break BM-001, you have advanced the research.
           </p>
           <Link
             href="/research"
-            className="inline-block mt-6 text-[#90c8ff]/30 text-[10px] tracking-[0.2em] uppercase hover:text-[#90c8ff]/50 transition-colors"
+            className="inline-block mt-6 text-[#90c8ff]/30 text-[11px] tracking-[0.2em] uppercase hover:text-[#90c8ff]/50 transition-colors"
             onMouseEnter={() => playTick(400, "sine", 0.03, 0.018)}
           >
             ← Research Hub

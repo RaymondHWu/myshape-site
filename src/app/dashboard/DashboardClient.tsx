@@ -67,7 +67,7 @@ export default function DashboardClient() {
       <div className="relative z-10 max-w-2xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 space-y-8 md:space-y-10">
         {/* ── Header ── */}
         <div>
-          <div className="text-[#90c8ff]/45 text-[10px] tracking-[0.5em] uppercase mb-4">
+          <div className="text-[#90c8ff]/45 text-[11px] tracking-[0.5em] uppercase mb-4">
             Protocol Journey
           </div>
           <h1 className="text-2xl md:text-3xl font-light tracking-[0.15em] text-white uppercase mb-2"
@@ -82,7 +82,7 @@ export default function DashboardClient() {
         {/* ── Not initialized ── */}
         {!hasIdentity && !loading && (
           <div className="text-center py-16 border border-[#90c8ff]/12 bg-[#90c8ff]/[0.02] space-y-6">
-            <div className="text-[#90c8ff]/35 text-[10px] tracking-[0.4em] uppercase">
+            <div className="text-[#90c8ff]/35 text-[11px] tracking-[0.4em] uppercase">
               Identity Not Initialized
             </div>
             <p className="text-white/30 text-[12px] leading-relaxed max-w-md mx-auto">
@@ -93,7 +93,7 @@ export default function DashboardClient() {
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/genesis"
-                className="inline-block px-10 py-3.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.3em] uppercase hover:bg-[#90c8ff]/[0.04] hover:text-white transition-all"
+                className="inline-block px-10 py-3.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[11px] tracking-[0.3em] uppercase hover:bg-[#90c8ff]/[0.04] hover:text-white transition-all"
                 style={{
                   clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                   background: "rgba(144,200,255,0.03)",
@@ -103,7 +103,7 @@ export default function DashboardClient() {
               </Link>
               <Link
                 href="/handshake"
-                className="inline-block px-10 py-3.5 border border-[#90c8ff]/20 text-[#90c8ff]/45 text-[10px] tracking-[0.3em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all"
+                className="inline-block px-10 py-3.5 border border-[#90c8ff]/20 text-[#90c8ff]/45 text-[11px] tracking-[0.3em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all"
                 style={{
                   clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                   background: "rgba(144,200,255,0.015)",
@@ -136,19 +136,19 @@ export default function DashboardClient() {
             <div className="flex flex-wrap gap-3 justify-center pt-4">
               <Link
                 href="/genesis/cohort"
-                className="px-5 py-2.5 border border-[#90c8ff]/15 text-white/20 text-[9px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/35 hover:text-white/40 transition-all no-underline"
+                className="px-5 py-2.5 border border-[#90c8ff]/15 text-white/20 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/35 hover:text-white/40 transition-all no-underline"
               >
                 Cohort →
               </Link>
               <Link
                 href="/protocol"
-                className="px-5 py-2.5 border border-[#90c8ff]/15 text-white/20 text-[9px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/35 hover:text-white/40 transition-all no-underline"
+                className="px-5 py-2.5 border border-[#90c8ff]/15 text-white/20 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/35 hover:text-white/40 transition-all no-underline"
               >
                 Protocol →
               </Link>
               <Link
                 href="/whitepaper"
-                className="px-5 py-2.5 border border-[#90c8ff]/15 text-white/20 text-[9px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/35 hover:text-white/40 transition-all no-underline"
+                className="px-5 py-2.5 border border-[#90c8ff]/15 text-white/20 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/35 hover:text-white/40 transition-all no-underline"
               >
                 Whitepaper →
               </Link>
@@ -158,7 +158,7 @@ export default function DashboardClient() {
 
         {/* ── Error: no data ── */}
         {!progress && !loading && hasIdentity && (
-          <div className="text-center py-16 text-white/20 text-[10px] tracking-[0.3em] uppercase space-y-4">
+          <div className="text-center py-16 text-white/20 text-[11px] tracking-[0.3em] uppercase space-y-4">
             <div>Unable to load identity data.</div>
             <div className="flex gap-4 justify-center">
               <Link href="/genesis" className="text-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-colors">

@@ -36,7 +36,7 @@ export default function ParadigmShift() {
       <div className="w-full max-w-4xl mx-auto px-6 mb-12 flex justify-between items-end border-b border-white/[0.06] pb-6"
         onMouseEnter={() => playTick(700, "sine", 0.06, 0.02)}>
         <div>
-          <div className="text-white/20 text-[9px] tracking-[0.6em] uppercase mb-3">Identity Paradigm Shift</div>
+          <div className="text-white/20 text-[11px] tracking-[0.6em] uppercase mb-3">Identity Paradigm Shift</div>
           <h2 style={{ fontSize: "clamp(1.6rem, 4vw, 2.6rem)", fontWeight: 200, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#fff", margin: 0 }}>
             Legacy <span style={{ color: "rgba(144,200,255,0.6)" }}>vs</span> MyShape
           </h2>
@@ -44,7 +44,7 @@ export default function ParadigmShift() {
             Stored identity can be copied. Stored identity can be stolen. Presence must be generated — and presence cannot be forged.
           </p>
         </div>
-        <div className="text-right text-[9px] tracking-widest hidden md:block pb-1">
+        <div className="text-right text-[11px] tracking-widest hidden md:block pb-1">
           <span className="text-white/15">STATUS:</span>{" "}
           <span className="text-[#90c8ff]/50">MATRIX_DECODING_ACTIVE</span>
         </div>
@@ -65,7 +65,7 @@ export default function ParadigmShift() {
             >
               {/* 左：Legacy 废弃区 */}
               <div className="w-full md:w-[42%] flex flex-col justify-center items-end text-right pr-6">
-                <span className={`text-[9px] tracking-[0.3em] mb-1 transition-colors duration-300 ${
+                <span className={`text-[11px] tracking-[0.3em] mb-1 transition-colors duration-300 ${
                   isHovered ? "text-white/35" : "text-white/20"
                 }`}>
                   [ {node.statusCode} // DEPRECATED ]
@@ -91,7 +91,7 @@ export default function ParadigmShift() {
                 <div className={`absolute h-[1px] bg-gradient-to-r from-transparent via-[#90c8ff]/20 to-transparent transition-all duration-500 ${
                   isHovered ? "w-[120%] opacity-100" : "w-0 opacity-0"
                 }`} />
-                <span className={`absolute -top-2 text-[9px] font-mono tracking-[0.2em] px-2 transition-all duration-300 z-20 ${
+                <span className={`absolute -top-2 text-[11px] font-mono tracking-[0.2em] px-2 transition-all duration-300 z-20 ${
                   isHovered
                     ? "text-[#90c8ff]/80 opacity-100 translate-y-0"
                     : "text-white/10 opacity-0 -translate-y-1"
@@ -103,12 +103,12 @@ export default function ParadigmShift() {
 
               {/* 移动端变量标签 */}
               <div className="md:hidden text-center my-1">
-                <span className="text-[10px] font-mono text-white/20 tracking-widest">{node.id}</span>
+                <span className="text-[11px] font-mono text-white/20 tracking-widest">{node.id}</span>
               </div>
 
               {/* 右：MyShape 主权区 */}
               <div className="w-full md:w-[42%] flex flex-col justify-center items-start text-left pl-6">
-                <span className={`text-[9px] tracking-[0.3em] mb-1 transition-colors duration-300 ${
+                <span className={`text-[11px] tracking-[0.3em] mb-1 transition-colors duration-300 ${
                   isHovered ? "text-[#90c8ff]/70" : "text-[#90c8ff]/25"
                 }`}>
                   {isHovered ? "▶ INSTANTIATED_TRUE" : "• PROTOCOL_PRIMITIVE"}
@@ -147,7 +147,7 @@ export default function ParadigmShift() {
       </div>
 
       {/* 底部校准线 */}
-      <div className="w-full max-w-4xl mx-auto px-6 mt-10 pt-4 border-t border-white/[0.06] flex justify-center text-[9px] tracking-widest" style={{ color: "rgba(255,255,255,0.25)" }}
+      <div className="w-full max-w-4xl mx-auto px-6 mt-10 pt-4 border-t border-white/[0.06] flex justify-center text-[11px] tracking-widest" style={{ color: "rgba(255,255,255,0.25)" }}
         onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
         SYSTEM_SHIFT_CALIBRATION: [ COMPLETED_100% ]
       </div>

@@ -48,7 +48,7 @@ export default function DatasetClient() {
                 <div key={stat.label} className="p-4 text-center"
                   style={{ border: "1px solid rgba(144,200,255,0.08)", background: "rgba(2,6,14,0.6)" }}>
                   <div className="text-[clamp(1.5rem,3vw,2.5rem)] font-light tracking-[-0.02em] text-[#90c8ff]/80">{stat.value}</div>
-                  <div className="text-[9px] tracking-[0.15em] uppercase text-white/25 mt-1">{stat.label}</div>
+                  <div className="text-[11px] tracking-[0.15em] uppercase text-white/25 mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -82,7 +82,7 @@ export default function DatasetClient() {
               ].map((entry, i) => (
                 <div key={i} className="flex gap-4 py-2"
                   style={{ borderBottom: i < 3 ? "1px solid rgba(255,255,255,0.03)" : "none" }}>
-                  <span className="font-mono text-[10px] text-white/25 shrink-0 mt-0.5">{entry.date}</span>
+                  <span className="font-mono text-[11px] text-white/25 shrink-0 mt-0.5">{entry.date}</span>
                   <span className="text-white/40 text-[12px] leading-relaxed"
                     style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
                     {entry.milestone}
@@ -119,7 +119,7 @@ export default function DatasetClient() {
               The Continuity Lab · July 2026{" · "}
               <Link href="/research" onMouseEnter={() => playTick(420, "sine", 0.03, 0.018)}>← Research Hub</Link>
             </p>
-            <p className="text-white/10 text-[9px] tracking-[0.1em] italic mt-4" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+            <p className="text-white/10 text-[11px] tracking-[0.1em] italic mt-4" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
               Every benchmark is temporary. Every question is permanent.
             </p>
           </div>

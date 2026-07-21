@@ -105,7 +105,7 @@ export default function CompletionCeremony({
               Your kinetic signature is now sealed into the sovereign identity layer.
             </p>
             <div
-              className="mx-auto mt-3 px-4 py-2 font-mono text-[#90c8ff] text-[10px] tracking-[0.15em] select-all cursor-pointer"
+              className="mx-auto mt-3 px-4 py-2 font-mono text-[#90c8ff] text-[11px] tracking-[0.15em] select-all cursor-pointer"
               style={{
                 background: "rgba(144,200,255,0.06)",
                 border: "1px solid rgba(144,200,255,0.2)",
@@ -116,12 +116,12 @@ export default function CompletionCeremony({
             >
               Genesis Key: {genesisKey}
             </div>
-            <p className="text-white/15 text-[8px] max-w-[240px] mx-auto leading-relaxed mt-1">
+            <p className="text-white/15 text-[11px] max-w-[240px] mx-auto leading-relaxed mt-1">
               This key is your proof of sovereign genesis. Store it. No one else holds it.
             </p>
             <button
               onClick={() => { window.location.href = "/genesis"; }}
-              className="mt-3 px-8 py-2.5 border border-[#90c8ff]/40 text-[#90c8ff] text-[10px] tracking-[0.15em] uppercase hover:bg-[#90c8ff]/10 hover:border-[#90c8ff]/70 transition-all"
+              className="mt-3 px-8 py-2.5 border border-[#90c8ff]/40 text-[#90c8ff] text-[11px] tracking-[0.15em] uppercase hover:bg-[#90c8ff]/10 hover:border-[#90c8ff]/70 transition-all"
               style={{ textShadow: "0 0 6px rgba(144,200,255,0.2)" }}
             >
               ◈ Add to my Sovereign Identity
@@ -134,7 +134,7 @@ export default function CompletionCeremony({
               as part of the protocol&apos;s next phase.
             </p>
             <div
-              className="mx-auto mt-3 px-4 py-2 font-mono text-[#d2991d]/70 text-[10px] tracking-[0.15em]"
+              className="mx-auto mt-3 px-4 py-2 font-mono text-[#d2991d]/70 text-[11px] tracking-[0.15em]"
               style={{
                 background: "rgba(210,153,29,0.06)",
                 border: "1px solid rgba(210,153,29,0.2)",
@@ -143,20 +143,20 @@ export default function CompletionCeremony({
             >
               Protocol is now in Continuity Phase mode.
             </div>
-            <p className="text-white/15 text-[8px] max-w-[260px] mx-auto leading-relaxed mt-1">
+            <p className="text-white/15 text-[11px] max-w-[260px] mx-auto leading-relaxed mt-1">
               Stay tuned for ZK-Identity updates. Your node remains active and sovereign.
             </p>
             <div className="flex flex-col items-center gap-2 mt-3">
               {/* Notify button — subscribe for ZK-Identity updates */}
               {notifyState === "done" ? (
-                <div className="text-[#3fb950]/60 text-[9px] tracking-[0.1em]">
+                <div className="text-[#3fb950]/60 text-[11px] tracking-[0.1em]">
                   ✓ You&apos;ll be notified for ZK-Identity launch
                 </div>
               ) : (
                 <button
                   onClick={subscribeForUpdates}
                   disabled={notifyState === "loading"}
-                  className="px-8 py-2.5 border border-[#d2991d]/30 text-[#d2991d]/70 text-[10px] tracking-[0.15em] uppercase hover:bg-[#d2991d]/10 hover:border-[#d2991d]/60 transition-all disabled:opacity-40"
+                  className="px-8 py-2.5 border border-[#d2991d]/30 text-[#d2991d]/70 text-[11px] tracking-[0.15em] uppercase hover:bg-[#d2991d]/10 hover:border-[#d2991d]/60 transition-all disabled:opacity-40"
                 >
                   {notifyState === "loading" ? "Subscribing..." : "Get notified for ZK-Identity launch"}
                 </button>
@@ -164,7 +164,7 @@ export default function CompletionCeremony({
               {notifyState === "error" && (
                 <button
                   onClick={subscribeForUpdates}
-                  className="text-red-400/50 text-[8px] tracking-[0.1em] hover:text-red-400/80"
+                  className="text-red-400/50 text-[11px] tracking-[0.1em] hover:text-red-400/80"
                 >
                   ⚠ Failed — tap to retry
                 </button>
@@ -172,7 +172,7 @@ export default function CompletionCeremony({
 
               <a
                 href="/dashboard"
-                className="px-8 py-2.5 border border-[#d2991d]/20 text-[#d2991d]/50 text-[10px] tracking-[0.15em] uppercase hover:bg-[#d2991d]/10 hover:border-[#d2991d]/50 transition-all"
+                className="px-8 py-2.5 border border-[#d2991d]/20 text-[#d2991d]/50 text-[11px] tracking-[0.15em] uppercase hover:bg-[#d2991d]/10 hover:border-[#d2991d]/50 transition-all"
               >
                 ◈ View my Node
               </a>
@@ -185,10 +185,10 @@ export default function CompletionCeremony({
         )}
 
         {researchConsented && uploadState === "success" && (
-          <p className="text-[#90c8ff]/30 text-[9px]">✓ Contributed to calibration engine</p>
+          <p className="text-[#90c8ff]/30 text-[11px]">✓ Contributed to calibration engine</p>
         )}
         {researchConsented && uploadState === "error" && (
-          <p className="text-red-400/40 text-[9px]">⚠ Research upload failed — data kept local</p>
+          <p className="text-red-400/40 text-[11px]">⚠ Research upload failed — data kept local</p>
         )}
       </div>
 

@@ -138,14 +138,14 @@ export default function IdentityClient() {
 
               {/* Telemetry Header */}
               <div className="flex items-start justify-between gap-2">
-                <div className="text-[9px] tracking-[0.7em] uppercase text-white/55">
+                <div className="text-[11px] tracking-[0.7em] uppercase text-white/55">
                   GENESIS_TELEMETRY
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={`h-1.5 w-1.5 rounded-full ${
                     status === "success" ? "bg-[#90c8ff] shadow-[0_0_12px_rgba(144,200,255,0.9)]" : "bg-[#90c8ff]/70 identity-pulse"
                   }`} />
-                  <span className="text-[9px] tracking-[0.5em] uppercase text-white/45"
+                  <span className="text-[11px] tracking-[0.5em] uppercase text-white/45"
                     style={status === "success" ? { textShadow: "0 0 8px rgba(144,200,255,0.4)" } : {}}>
                     {identityState}
                   </span>
@@ -153,7 +153,7 @@ export default function IdentityClient() {
               </div>
 
               {/* Telemetry Data */}
-              <div className="mt-2 grid grid-cols-1 gap-1.5 text-[10px] tracking-[0.28em] uppercase">
+              <div className="mt-2 grid grid-cols-1 gap-1.5 text-[11px] tracking-[0.28em] uppercase">
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-white/40">GENESIS_SECTOR</span>
                   <span className="text-[#90c8ff]/90">IDENTITY_LAYER</span>
@@ -173,13 +173,13 @@ export default function IdentityClient() {
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); if (status !== "idle") setStatus("idle"); }}
                     placeholder="EMAIL@ADDRESS.IO"
-                    className="w-full bg-transparent border border-[#90c8ff]/25 text-white/90 text-center md:text-left text-[10px] tracking-[0.25em] py-2 px-4 outline-none focus:border-[#90c8ff]/80"
+                    className="w-full bg-transparent border border-[#90c8ff]/25 text-white/90 text-center md:text-left text-[11px] tracking-[0.25em] py-2 px-4 outline-none focus:border-[#90c8ff]/80"
                     type="email" required
                     disabled={status === "submitting" || status === "success"}
                   />
                   <button type="submit" disabled={status === "submitting" || status === "success"}
                     onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-                    className="relative overflow-hidden border border-white/50 text-white py-2 px-6 text-[9px] tracking-[0.36em] uppercase hover:bg-white hover:text-black transition-colors">
+                    className="relative overflow-hidden border border-white/50 text-white py-2 px-6 text-[11px] tracking-[0.36em] uppercase hover:bg-white hover:text-black transition-colors">
                     <span className="relative z-10">
                       {status === "success" ? "GENESIS_COMPLETE" : status === "submitting" ? "UPLINKING..." : "COMMENCE_UPLINK"}
                     </span>
@@ -187,24 +187,24 @@ export default function IdentityClient() {
                 </div>
 
                 {errorHint && (
-                  <p className="mt-4 text-[10px] tracking-[0.35em] uppercase text-red-300/80 text-center animate-pulse">
+                  <p className="mt-4 text-[11px] tracking-[0.35em] uppercase text-red-300/80 text-center animate-pulse">
                     {`> ${errorHint}`}
                   </p>
                 )}
                 {status === "success" && (
                   <div className="mt-2 flex flex-col items-center gap-2">
-                    <p className="text-[10px] tracking-[0.35em] uppercase text-[#90c8ff]/70 text-center">
+                    <p className="text-[11px] tracking-[0.35em] uppercase text-[#90c8ff]/70 text-center">
                       NODE_REGISTERED. AUTH_STATE_UPDATED.
                     </p>
                     {isGenesisUser && (
-                      <p className="text-[8px] tracking-[0.3em] uppercase text-[#90c8ff]/60 text-center animate-pulse"
+                      <p className="text-[11px] tracking-[0.3em] uppercase text-[#90c8ff]/60 text-center animate-pulse"
                         style={{ textShadow: "0 0 8px rgba(144,200,255,0.5)" }}>
                         ◈ GENESIS_NODE — FOUNDING_IDENTITY
                       </p>
                     )}
                     <a href="/"
                       onMouseEnter={() => { playTick(800, "sine", 0.10, 0.025); window.dispatchEvent(new CustomEvent("protocol:particle-resonance")); }}
-                      className="group relative inline-flex items-center gap-3 px-8 py-2.5 border border-[#90c8ff]/30 text-[#90c8ff]/60 font-mono text-[9px] tracking-[0.35em] uppercase hover:border-[#90c8ff]/60 hover:text-[#90c8ff] transition-all duration-500"
+                      className="group relative inline-flex items-center gap-3 px-8 py-2.5 border border-[#90c8ff]/30 text-[#90c8ff]/60 font-mono text-[11px] tracking-[0.35em] uppercase hover:border-[#90c8ff]/60 hover:text-[#90c8ff] transition-all duration-500"
                       style={{ textShadow: "0 0 6px rgba(144,200,255,0.2)" }}>
                       <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                         style={{ background: "radial-gradient(ellipse at center, rgba(144,200,255,0.08) 0%, transparent 70%)" }} />

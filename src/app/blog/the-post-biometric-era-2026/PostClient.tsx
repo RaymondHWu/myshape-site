@@ -26,7 +26,7 @@ export default function PostClient() {
         <BackgroundParticles />
         <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-6" style={{ paddingTop: "8rem", paddingBottom: "6rem" }}>
           <div className="space-y-4 mb-16">
-            <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase"><span>GENESIS 011</span><span className="w-8 h-[1px] bg-[#90c8ff]/20" /><span>2026.07.03</span>
+            <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[11px] tracking-[0.3em] uppercase"><span>GENESIS 011</span><span className="w-8 h-[1px] bg-[#90c8ff]/20" /><span>2026.07.03</span>
               <span className="w-8 h-[1px] bg-[#90c8ff]/20" />
               <span className="text-white/40">The Continuity Lab</span></div>
             <h1 className="text-2xl md:text-3xl font-light tracking-[0.08em] text-white leading-tight" onMouseEnter={() => playTick(520, "sine", 0.04, 0.015)}>The<br /><span className="text-[#90c8ff]">Post-Biometric Era</span></h1>
@@ -38,14 +38,14 @@ export default function PostClient() {
           <PostNavigation slug="/blog/the-post-biometric-era-2026" />
 
           <div className="my-16 h-px bg-gradient-to-r from-transparent via-[#90c8ff]/15 to-transparent" />
-          <div className="space-y-4"><p className="text-white/38 text-[10px] tracking-[0.2em] uppercase text-center">Continue Reading</p>
+          <div className="space-y-4"><p className="text-white/38 text-[11px] tracking-[0.2em] uppercase text-center">Continue Reading</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <Link href="/blog/motion-vs-biometrics-why-your-face-is-not-a-password" onMouseEnter={() => playTick(700,"sine",0.08,0.02)} className="block p-4 border border-[#90c8ff]/10 hover:border-[#90c8ff]/25 transition-all"><p className="text-white/55 text-[12px] tracking-[0.08em]">Motion vs Biometrics</p><p className="text-white/38 text-[11px] tracking-[0.06em] mt-1">Why your face is not a password →</p></Link>
               <Link href="/blog/what-is-proof-of-continuity" onMouseEnter={() => playTick(700,"sine",0.08,0.02)} className="block p-4 border border-[#90c8ff]/10 hover:border-[#90c8ff]/25 transition-all"><p className="text-white/55 text-[12px] tracking-[0.08em]">What Is Proof of Continuity?</p><p className="text-white/38 text-[11px] tracking-[0.06em] mt-1">The missing primitive →</p></Link>
               <Link href="/compare" onMouseEnter={() => playTick(700,"sine",0.08,0.02)} className="block p-4 border border-[#90c8ff]/10 hover:border-[#90c8ff]/25 transition-all"><p className="text-white/55 text-[12px] tracking-[0.08em]">Protocol Comparison</p><p className="text-white/38 text-[11px] tracking-[0.06em] mt-1">MyShape vs competitors →</p></Link>
             </div>
           </div>
-          <div className="mt-12 p-8 border border-[#90c8ff]/15 bg-[#90c8ff]/[0.02] text-center space-y-4"><p className="text-white/55 text-[13px] tracking-[0.1em] uppercase">Experience Post-Biometric Identity</p><div className="flex justify-center gap-4 pt-2"><Link href="/motion-demo" onMouseEnter={() => playTick(700,"sine",0.08,0.02)} className="px-6 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/65 text-[10px] tracking-[0.18em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all">Motion Demo →</Link><Link href="/genesis" onMouseEnter={() => playTick(700,"sine",0.08,0.02)} className="px-6 py-2 border border-[#90c8ff]/15 text-[#90c8ff]/50 text-[10px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all">Genesis →</Link></div></div>
+          <div className="mt-12 p-8 border border-[#90c8ff]/15 bg-[#90c8ff]/[0.02] text-center space-y-4"><p className="text-white/55 text-[13px] tracking-[0.1em] uppercase">Experience Post-Biometric Identity</p><div className="flex justify-center gap-4 pt-2"><Link href="/motion-demo" onMouseEnter={() => playTick(700,"sine",0.08,0.02)} className="px-6 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/65 text-[11px] tracking-[0.18em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all">Motion Demo →</Link><Link href="/genesis" onMouseEnter={() => playTick(700,"sine",0.08,0.02)} className="px-6 py-2 border border-[#90c8ff]/15 text-[#90c8ff]/50 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all">Genesis →</Link></div></div>
           <div className="mt-12 text-center"><Link href="/blog" className="text-white/30 text-[11px] tracking-[0.18em] uppercase hover:text-white/55 transition-colors">← Protocol Log</Link></div>
         </div>
       </main>

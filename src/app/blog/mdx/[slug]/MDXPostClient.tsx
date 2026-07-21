@@ -27,7 +27,7 @@ export default function MDXPostClient({ title, subtitle, date, series, content, 
         <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-6" style={{ paddingTop: "8rem", paddingBottom: "6rem" }}>
           {/* Header */}
           <div className="space-y-4 mb-16">
-            <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase">
+            <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[11px] tracking-[0.3em] uppercase">
               {series && <span>{series}</span>}
               {series && <span className="w-8 h-[1px] bg-[#90c8ff]/20" />}
               <span>{date}</span>

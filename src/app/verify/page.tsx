@@ -176,21 +176,21 @@ export default function Page() {
               <div style={{ marginBottom: 20, padding: "12px 14px", background: "rgba(96,165,250,0.04)", border: "1px solid rgba(96,165,250,0.15)", borderRadius: 8, textAlign: "left", fontSize: 11 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
                   <span style={{ color: "#60A5FA", fontWeight: 500 }}>CPS-0001 Receipt</span>
-                  <button onClick={() => navigator.clipboard.writeText(receiptJson).then(() => { const b = document.activeElement as HTMLButtonElement; if (b) { b.textContent = "✓ Copied"; setTimeout(() => b.textContent = "Copy", 1500); } })} style={{ fontSize: 10, color: "#60A5FA", background: "none", border: "1px solid rgba(96,165,250,0.2)", borderRadius: 4, padding: "2px 8px", cursor: "pointer" }}>Copy</button>
+                  <button onClick={() => navigator.clipboard.writeText(receiptJson).then(() => { const b = document.activeElement as HTMLButtonElement; if (b) { b.textContent = "✓ Copied"; setTimeout(() => b.textContent = "Copy", 1500); } })} style={{ fontSize: 11, color: "#60A5FA", background: "none", border: "1px solid rgba(96,165,250,0.2)", borderRadius: 4, padding: "2px 8px", cursor: "pointer" }}>Copy</button>
                 </div>
-                <div style={{ color: "#64748B", fontSize: 10, fontFamily: "monospace", wordBreak: "break-all", lineHeight: 1.6, maxHeight: 80, overflow: "hidden" }}>
+                <div style={{ color: "#64748B", fontSize: 11, fontFamily: "monospace", wordBreak: "break-all", lineHeight: 1.6, maxHeight: 80, overflow: "hidden" }}>
                   {receiptJson.split("\n").slice(0, 6).join("\n")}
                 </div>
-                <div style={{ marginTop: 8, fontSize: 10, color: "rgba(96,165,250,0.5)", fontFamily: "monospace" }}>
+                <div style={{ marginTop: 8, fontSize: 11, color: "rgba(96,165,250,0.5)", fontFamily: "monospace" }}>
                   Chain: {receiptHash}...
                 </div>
-                <div style={{ marginTop: 8, fontSize: 9, color: "rgba(255,255,255,0.12)" }}>
+                <div style={{ marginTop: 8, fontSize: 11, color: "rgba(255,255,255,0.12)" }}>
                   Continuity Receipt · CPS-0001 v1.0 · hash-chained to previous verification
                 </div>
               </div>
             )}
 
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.1)", marginBottom: 20 }}>{samples} samples · anonymized for research</div>
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.1)", marginBottom: 20 }}>{samples} samples · anonymized for research</div>
 
             <button onClick={() => setPhase("idle")} style={{ width: "100%", padding: "14px 0", fontSize: 15, color: "#60A5FA", background: "transparent", border: "1px solid rgba(96,165,250,0.3)", borderRadius: 8, cursor: "pointer" }}>Try again</button>
           </>

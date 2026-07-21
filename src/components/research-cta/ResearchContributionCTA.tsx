@@ -70,11 +70,11 @@ export default function ResearchContributionCTA() {
                 {/* Label */}
                 <div className="flex items-center gap-2.5">
                   <span className={`w-1.5 h-1.5 rounded-full shrink-0 animate-pulse ${meetsThreshold ? "bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.5)]" : "bg-[#90c8ff]/50 shadow-[0_0_6px_rgba(144,200,255,0.3)]"}`} />
-                  <span className="text-white/20 text-[9px] tracking-[0.3em] uppercase font-mono">
+                  <span className="text-white/20 text-[11px] tracking-[0.3em] uppercase font-mono">
                     {meetsThreshold ? "CALIBRATION_READY" : "RESEARCH_PROTOCOL_ACTIVE"}
                   </span>
                   {count > 0 && (
-                    <span className="text-[#90c8ff]/35 text-[9px] font-mono tracking-[0.1em]">
+                    <span className="text-[#90c8ff]/35 text-[11px] font-mono tracking-[0.1em]">
                       +{count}
                     </span>
                   )}
@@ -92,8 +92,8 @@ export default function ResearchContributionCTA() {
 
                 {/* CTA */}
                 <div className="flex items-center gap-2 pt-1 text-[#90c8ff]/30 group-hover:text-[#90c8ff]/65 group-hover:gap-3 transition-all duration-500">
-                  <span className="text-[10px] tracking-[0.2em] uppercase font-mono">Apply for Early Access →</span>
-                  <span className="text-[8px] text-white/10 font-mono">/research/apply</span>
+                  <span className="text-[11px] tracking-[0.2em] uppercase font-mono">Apply for Early Access →</span>
+                  <span className="text-[11px] text-white/10 font-mono">/research/apply</span>
                 </div>
               </div>
 
@@ -114,10 +114,10 @@ export default function ResearchContributionCTA() {
                   </div>
                   {/* Label */}
                   <div className="text-center">
-                    <span className="text-[#90c8ff]/35 text-[10px] font-mono tracking-[0.08em]">
+                    <span className="text-[#90c8ff]/35 text-[11px] font-mono tracking-[0.08em]">
                       {progressPct}%
                     </span>
-                    <span className="text-white/10 text-[9px] font-mono tracking-[0.06em] block">
+                    <span className="text-white/10 text-[11px] font-mono tracking-[0.06em] block">
                       {needed} to go
                     </span>
                   </div>
@@ -130,7 +130,7 @@ export default function ResearchContributionCTA() {
                     <div className="absolute inset-0 rounded-full border border-[#90c8ff]/20 animate-ping" style={{ animationDuration: "3s" }} />
                     <div className="relative w-3 h-3 rounded-full bg-[#90c8ff]/70 shadow-[0_0_12px_rgba(144,200,255,0.4)]" />
                   </div>
-                  <span className="text-[#90c8ff]/40 text-[9px] font-mono tracking-[0.1em] uppercase">Ready</span>
+                  <span className="text-[#90c8ff]/40 text-[11px] font-mono tracking-[0.1em] uppercase">Ready</span>
                 </div>
               )}
             </div>

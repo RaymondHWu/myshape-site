@@ -418,7 +418,7 @@ export default function NoteClient() {
                 {" · "}
                 <Link href="/research/notes/001-the-continuity-problem" onMouseEnter={() => playTick(420, "sine", 0.03, 0.018)}>← RN #001</Link>
               </p>
-              <p className="text-white/10 text-[9px] tracking-[0.1em] italic mt-4" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+              <p className="text-white/10 text-[11px] tracking-[0.1em] italic mt-4" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
                 Every benchmark is temporary. Every question is permanent.
               </p>
             </div>

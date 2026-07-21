@@ -63,10 +63,10 @@ export default function AgendaClient() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3fb950]/20 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3fb950] shadow-[0_0_8px_rgba(63,185,80,0.5)]" />
             </span>
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#90c8ff]/55">
+            <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-[#90c8ff]/55">
               &gt; research_agenda <span className="text-white/20">--live</span>
             </span>
-            <span className="font-mono text-[8px] tracking-[0.2em] text-white/15 ml-auto">Q1–Q4</span>
+            <span className="font-mono text-[11px] tracking-[0.2em] text-white/15 ml-auto">Q1–Q4</span>
           </div>
           <h1 className="agenda-tagline">
             Researching <span>verifiable continuity</span> in the digital world.

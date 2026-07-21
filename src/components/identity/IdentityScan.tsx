@@ -34,7 +34,7 @@ export default function IdentityScan({ nodeHandle }: { nodeHandle: string }) {
 
       {/* 叠层标签：roddog03 */}
       <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none">
-        <p className="text-[10px] tracking-[0.6em] text-[#90c8ff]/40 font-mono mb-2">IDENTITY_ACTIVE</p>
+        <p className="text-[11px] tracking-[0.6em] text-[#90c8ff]/40 font-mono mb-2">IDENTITY_ACTIVE</p>
         <h2 className="text-2xl font-extralight text-white/60 tracking-[0.3em] font-mono uppercase">
           {nodeHandle}
         </h2>

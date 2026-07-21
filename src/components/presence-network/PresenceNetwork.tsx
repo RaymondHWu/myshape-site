@@ -60,7 +60,7 @@ function TopologyEmpty() {
         </div>
         <div className="text-center space-y-2">
           <p className="text-white/35 text-[11px] tracking-[0.2em] uppercase font-mono">NETWORK_TOPOLOGY</p>
-          <p className="text-white/20 text-[10px] tracking-[0.12em] uppercase font-mono max-w-[280px] leading-relaxed">MESH_INITIALIZES_WHEN_FIRST_NODE_COMPLETES_GENESIS_RITUAL</p>
+          <p className="text-white/20 text-[11px] tracking-[0.12em] uppercase font-mono max-w-[280px] leading-relaxed">MESH_INITIALIZES_WHEN_FIRST_NODE_COMPLETES_GENESIS_RITUAL</p>
         </div>
       </div>
     </div>
@@ -116,12 +116,12 @@ export default function PresenceNetwork() {
 
   if (loading) return (
     <div className="relative overflow-hidden transition-all duration-700" style={{ border: `1px solid ${BORDER}`, clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)" }}>
-      <div className="flex items-center gap-2 px-5 py-8 justify-center"><span className="w-1.5 h-1.5 bg-[#90c8ff]/40 rounded-full animate-pulse" /><span className="text-[#90c8ff]/40 text-[10px] tracking-[0.2em] font-mono">PROTOCOL_ENCLAVE_HANDSHAKE...</span></div>
+      <div className="flex items-center gap-2 px-5 py-8 justify-center"><span className="w-1.5 h-1.5 bg-[#90c8ff]/40 rounded-full animate-pulse" /><span className="text-[#90c8ff]/40 text-[11px] tracking-[0.2em] font-mono">PROTOCOL_ENCLAVE_HANDSHAKE...</span></div>
     </div>
   );
   if (!data) return (
     <div className="relative overflow-hidden transition-all duration-700" style={{ border: "1px solid rgba(248,113,113,0.10)", clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)" }}>
-      <div className="px-5 py-8 text-center"><span className="text-red-400/40 text-[10px] tracking-[0.2em] font-mono">NETWORK_UNREACHABLE</span></div>
+      <div className="px-5 py-8 text-center"><span className="text-red-400/40 text-[11px] tracking-[0.2em] font-mono">NETWORK_UNREACHABLE</span></div>
     </div>
   );
 
@@ -155,7 +155,7 @@ export default function PresenceNetwork() {
           <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${hasNodes ? "bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.5)] animate-pulse" : "bg-[#90c8ff]/40 shadow-[0_0_4px_rgba(144,200,255,0.2)]"}`} />
           <span className="text-white/35 text-[11px] tracking-[0.15em] uppercase font-mono">PROTOCOL_ENCLAVE</span>
           <span className="text-white/[0.06] select-none">|</span>
-          <span className={`text-[10px] tracking-[0.12em] uppercase font-mono ${hasNodes ? "text-green-400/70" : "text-white/22"}`}>{hasNodes ? "MESH_ACTIVE" : "PRE_GENESIS"}</span>
+          <span className={`text-[11px] tracking-[0.12em] uppercase font-mono ${hasNodes ? "text-green-400/70" : "text-white/22"}`}>{hasNodes ? "MESH_ACTIVE" : "PRE_GENESIS"}</span>
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-1.5">
@@ -163,8 +163,8 @@ export default function PresenceNetwork() {
           </div>
           {data.lastInbound && (
             <div className="flex items-center gap-1.5">
-              <span className="text-white/15 text-[9px] tracking-[0.1em] uppercase font-mono">LAST_INBOUND</span>
-              <span className="text-white/30 text-[10px] tracking-[0.08em] font-mono">{data.lastInbound.mask}</span>
+              <span className="text-white/15 text-[11px] tracking-[0.1em] uppercase font-mono">LAST_INBOUND</span>
+              <span className="text-white/30 text-[11px] tracking-[0.08em] font-mono">{data.lastInbound.mask}</span>
             </div>
           )}
         </div>
@@ -203,13 +203,13 @@ export default function PresenceNetwork() {
           <>
             <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
             <div className="absolute top-4 right-4 text-right pointer-events-none">
-              <div className="text-[10px] tracking-[0.25em] text-white/20 uppercase font-light font-mono">SCANS</div>
+              <div className="text-[11px] tracking-[0.25em] text-white/20 uppercase font-light font-mono">SCANS</div>
               <div className="text-[15px] font-mono text-[#90c8ff]/70 tracking-[0.06em]">{data.totalScans}</div>
             </div>
             <div className="absolute bottom-4 left-4 flex items-center gap-4 pointer-events-none">
-              <div className="flex items-center gap-1.5"><span className="relative flex w-2 h-2"><span className="absolute inset-0 rounded-full bg-white/80 animate-ping" style={{ animationDuration: "2s" }} /><span className="relative w-2 h-2 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.6)]" /></span><span className="text-white/25 text-[10px] tracking-[0.12em] uppercase font-mono">GENESIS</span></div>
-              <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#90c8ff]/60 shadow-[0_0_4px_rgba(144,200,255,0.4)]" /><span className="text-white/18 text-[10px] tracking-[0.12em] uppercase font-mono">ACTIVE</span></div>
-              <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-purple-400/40 shadow-[0_0_3px_rgba(168,85,247,0.3)]" /><span className="text-white/15 text-[10px] tracking-[0.12em] uppercase font-mono">AGENT</span></div>
+              <div className="flex items-center gap-1.5"><span className="relative flex w-2 h-2"><span className="absolute inset-0 rounded-full bg-white/80 animate-ping" style={{ animationDuration: "2s" }} /><span className="relative w-2 h-2 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.6)]" /></span><span className="text-white/25 text-[11px] tracking-[0.12em] uppercase font-mono">GENESIS</span></div>
+              <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#90c8ff]/60 shadow-[0_0_4px_rgba(144,200,255,0.4)]" /><span className="text-white/18 text-[11px] tracking-[0.12em] uppercase font-mono">ACTIVE</span></div>
+              <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-purple-400/40 shadow-[0_0_3px_rgba(168,85,247,0.3)]" /><span className="text-white/15 text-[11px] tracking-[0.12em] uppercase font-mono">AGENT</span></div>
             </div>
           </>
         ) : (

@@ -85,7 +85,7 @@ export default function GenesisNodeInit({ onClose }: { onClose: () => void }) {
             stage === "error" ? "bg-red-400 shadow-[0_0_6px_rgba(248,113,113,0.5)]" :
             "bg-[#90c8ff]/40"
           }`} />
-          <span className="text-white/35 text-[10px] tracking-[0.15em] uppercase font-mono">
+          <span className="text-white/35 text-[11px] tracking-[0.15em] uppercase font-mono">
             {stage === "done" ? "NODE_ACTIVE" : "GENESIS_NODE_INITIALIZATION"}
           </span>
           <button onClick={onClose} className="ml-auto text-white/10 hover:text-white/30 text-[12px] transition-colors"
@@ -100,7 +100,7 @@ export default function GenesisNodeInit({ onClose }: { onClose: () => void }) {
                 <p className="text-white/40 text-[12px] leading-relaxed mb-4 font-light">
                   Initialize your node on the protocol mesh. Your identity vector will be provisioned instantly — no approval required.
                 </p>
-                <label className="block text-white/25 text-[9px] tracking-[0.2em] uppercase mb-2 font-mono">
+                <label className="block text-white/25 text-[11px] tracking-[0.2em] uppercase mb-2 font-mono">
                   Identity Vector (Email)
                 </label>
                 <input ref={inputRef} type="email" value={email}
@@ -111,12 +111,12 @@ export default function GenesisNodeInit({ onClose }: { onClose: () => void }) {
               <div className="flex gap-2 pt-1">
                 <button type="submit" disabled={!email.includes("@")}
                   onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}
-                  className="flex-1 py-2.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[10px] tracking-[0.2em] uppercase font-mono hover:bg-[#90c8ff]/[0.06] hover:text-white hover:border-[#90c8ff] transition-all disabled:opacity-20 disabled:cursor-not-allowed">
+                  className="flex-1 py-2.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[11px] tracking-[0.2em] uppercase font-mono hover:bg-[#90c8ff]/[0.06] hover:text-white hover:border-[#90c8ff] transition-all disabled:opacity-20 disabled:cursor-not-allowed">
                   Initialize Node →
                 </button>
                 <button type="button" onClick={onClose}
                   onMouseEnter={() => playTick(350, "sine", 0.03, 0.008)}
-                  className="px-4 py-2.5 border border-white/10 text-white/20 text-[10px] tracking-[0.15em] uppercase font-mono hover:border-white/20 hover:text-white/40 transition-all">
+                  className="px-4 py-2.5 border border-white/10 text-white/20 text-[11px] tracking-[0.15em] uppercase font-mono hover:border-white/20 hover:text-white/40 transition-all">
                   Cancel
                 </button>
               </div>
@@ -130,11 +130,11 @@ export default function GenesisNodeInit({ onClose }: { onClose: () => void }) {
                 <div className="absolute inset-0 rounded-full border border-[#90c8ff]/[0.04] animate-ping opacity-50" style={{ animationDuration: "2s" }} />
               </div>
               <div className="text-center space-y-2">
-                <p className="text-[#90c8ff]/60 text-[10px] tracking-[0.3em] uppercase font-mono animate-pulse">
+                <p className="text-[#90c8ff]/60 text-[11px] tracking-[0.3em] uppercase font-mono animate-pulse">
                   PROVISIONING_ACCESS_TOKEN...
                 </p>
                 {PROTOCOL_STAGES.slice(0, protocolStep + 1).map((msg, i) => (
-                  <p key={i} className="text-white/20 text-[9px] tracking-[0.08em] font-mono transition-all duration-500"
+                  <p key={i} className="text-white/20 text-[11px] tracking-[0.08em] font-mono transition-all duration-500"
                     style={{ opacity: i === protocolStep ? 0.5 : 0.2 }}>
                     {msg}
                   </p>
@@ -158,27 +158,27 @@ export default function GenesisNodeInit({ onClose }: { onClose: () => void }) {
               </div>
               <div className="p-4 bg-black/40 border border-[#90c8ff]/10 space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-white/30 text-[9px] tracking-[0.15em] uppercase font-mono">NODE_TOKEN</span>
-                  <span className="text-[#90c8ff]/60 text-[9px] tracking-[0.05em] font-mono">{result.node_token!.slice(0, 20)}...</span>
+                  <span className="text-white/30 text-[11px] tracking-[0.15em] uppercase font-mono">NODE_TOKEN</span>
+                  <span className="text-[#90c8ff]/60 text-[11px] tracking-[0.05em] font-mono">{result.node_token!.slice(0, 20)}...</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-white/30 text-[9px] tracking-[0.15em] uppercase font-mono">IDENTITY_HASH</span>
-                  <span className="text-[#90c8ff]/45 text-[9px] tracking-[0.1em] font-mono">{identityHash}</span>
+                  <span className="text-white/30 text-[11px] tracking-[0.15em] uppercase font-mono">IDENTITY_HASH</span>
+                  <span className="text-[#90c8ff]/45 text-[11px] tracking-[0.1em] font-mono">{identityHash}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-white/30 text-[9px] tracking-[0.15em] uppercase font-mono">INITIALIZED</span>
-                  <span className="text-white/40 text-[9px] tracking-[0.05em] font-mono">{result.initialized_at}</span>
+                  <span className="text-white/30 text-[11px] tracking-[0.15em] uppercase font-mono">INITIALIZED</span>
+                  <span className="text-white/40 text-[11px] tracking-[0.05em] font-mono">{result.initialized_at}</span>
                 </div>
                 <button onClick={() => {
                   navigator.clipboard.writeText(result.node_token!);
                   playTick(700, "sine", 0.08, 0.02);
                 }}
                   onMouseEnter={() => playTick(600, "sine", 0.05, 0.012)}
-                  className="w-full mt-2 py-2 border border-[#90c8ff]/20 text-[#90c8ff]/50 text-[9px] tracking-[0.2em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] hover:text-[#90c8ff] hover:border-[#90c8ff]/40 transition-all">
+                  className="w-full mt-2 py-2 border border-[#90c8ff]/20 text-[#90c8ff]/50 text-[11px] tracking-[0.2em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] hover:text-[#90c8ff] hover:border-[#90c8ff]/40 transition-all">
                   Copy Token to Clipboard
                 </button>
               </div>
-              <p className="text-white/20 text-[10px] leading-relaxed text-center font-light">
+              <p className="text-white/20 text-[11px] leading-relaxed text-center font-light">
                 Handshake complete. You are now a verified node.
               </p>
             </div>
@@ -186,12 +186,12 @@ export default function GenesisNodeInit({ onClose }: { onClose: () => void }) {
 
           {stage === "error" && (
             <div className="space-y-4 text-center">
-              <p className="text-red-400/60 text-[10px] tracking-[0.2em] uppercase font-mono">
+              <p className="text-red-400/60 text-[11px] tracking-[0.2em] uppercase font-mono">
                 {`> ${errorMsg}`}
               </p>
               <button onClick={() => { setStage("input"); setErrorMsg(""); }}
                 onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}
-                className="px-6 py-2 border border-white/15 text-white/40 text-[9px] tracking-[0.15em] uppercase font-mono hover:border-white/30 hover:text-white/70 transition-all">
+                className="px-6 py-2 border border-white/15 text-white/40 text-[11px] tracking-[0.15em] uppercase font-mono hover:border-white/30 hover:text-white/70 transition-all">
                 Retry Handshake
               </button>
             </div>

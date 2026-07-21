@@ -45,7 +45,7 @@
 
 .hero-stage-label {
   font-family: monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: color-mix(in oklch, var(--accent-ice) 55%, transparent);
@@ -54,7 +54,7 @@
 .hero-stage-tier {
   margin-left: auto;
   font-family: monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: color-mix(in oklch, white 25%, transparent);
@@ -81,7 +81,7 @@
 
 .hero-particle-sub {
   font-family: monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: color-mix(in oklch, white 25%, transparent);
@@ -108,14 +108,14 @@
 
 .hero-next-hint {
   font-family: monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   color: color-mix(in oklch, white 30%, transparent);
 }
 
 .hero-next-pct {
   font-family: monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   color: color-mix(in oklch, white 45%, transparent);
 }
@@ -131,21 +131,21 @@
 
 .hero-streak-days {
   font-family: monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   color: color-mix(in oklch, white 35%, transparent);
 }
 
 .hero-streak-next {
   font-family: monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   color: color-mix(in oklch, var(--accent-cyan) 45%, transparent);
 }
 
 .hero-streak-max {
   font-family: monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   color: color-mix(in oklch, var(--accent-gold) 55%, transparent);
 }
@@ -171,7 +171,7 @@
 
 .matrix-label {
   font-family: monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: color-mix(in oklch, white 25%, transparent);
@@ -179,7 +179,7 @@
 
 .matrix-hint {
   font-family: monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   color: color-mix(in oklch, var(--accent-ice) 45%, transparent);
 }
@@ -261,7 +261,7 @@
 /* Card: status */
 .card-status {
   font-family: monospace;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
@@ -276,7 +276,7 @@
 
 /* Card: body */
 .card-desc {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.5;
   margin: 0;
 }
@@ -299,7 +299,7 @@
 
 .req-label {
   font-family: monospace;
-  font-size: 6px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: color-mix(in oklch, var(--accent-cyan) 40%, transparent);
@@ -307,7 +307,7 @@
 
 .req-detail {
   font-family: monospace;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.05em;
   color: color-mix(in oklch, var(--accent-cyan) 30%, transparent);
   line-height: 1.4;
@@ -332,7 +332,7 @@
 
 .req-label-dim {
   font-family: monospace;
-  font-size: 6px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: color-mix(in oklch, white 12%, transparent);
@@ -340,7 +340,7 @@
 
 .req-detail-dim {
   font-family: monospace;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.03em;
   color: color-mix(in oklch, white 15%, transparent);
   line-height: 1.4;
@@ -391,7 +391,7 @@
 
 .action-next-label {
   font-family: monospace;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: color-mix(in oklch, white 20%, transparent);
@@ -406,7 +406,7 @@
 
 .action-next-req {
   font-family: monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   color: color-mix(in oklch, white 30%, transparent);
 }
@@ -445,7 +445,7 @@
   border: 1px solid color-mix(in oklch, var(--accent-ice) 30%, transparent);
   color: color-mix(in oklch, var(--accent-ice) 70%, transparent);
   font-family: monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   text-decoration: none;
@@ -657,14 +657,14 @@
 .dash-error-label {
   color: rgba(144, 200, 255, 0.5);
   font-family: monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
 }
 
 .dash-error-text {
   color: rgba(255, 255, 255, 0.2);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   line-height: 1.6;
   max-width: 24rem;
@@ -673,7 +673,7 @@
 
 .dash-error-detail {
   color: rgba(255, 255, 255, 0.1);
-  font-size: 8px;
+  font-size: 11px;
   font-family: monospace;
   letter-spacing: 0.05em;
   word-break: break-all;
@@ -686,7 +686,7 @@
   border: 1px solid rgba(144, 200, 255, 0.25);
   color: rgba(144, 200, 255, 0.5);
   font-family: monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   background: rgba(144, 200, 255, 0.03);

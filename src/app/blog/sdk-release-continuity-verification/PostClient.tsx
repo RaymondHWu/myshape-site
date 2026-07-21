@@ -13,7 +13,7 @@ export default function PostClient() {
       <BackgroundParticles />
       <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 pt-28 pb-16">
         <article style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
-          <div className="text-[10px] text-white/25 tracking-[0.3em] uppercase mb-6">July 20, 2026 · SDK Release</div>
+          <div className="text-[11px] text-white/25 tracking-[0.3em] uppercase mb-6">July 20, 2026 · SDK Release</div>
           <h1 className="text-[clamp(2rem,5vw,3rem)] font-bold tracking-tight text-white leading-[1.1] mb-4">Continuity Verification Becomes Programmable</h1>
           <p className="text-white/35 text-lg mb-12 leading-relaxed">
             The Continuity Lab releases @thecontinuitylab/myshape v0.1.2 — the first open SDK for programmable continuity verification.
@@ -107,7 +107,7 @@ const result = await verifyContinuity({
             </div>
 
             <div className="mt-16 pt-8 border-t border-white/[0.04] text-center">
-              <Link href="/blog" className="text-white/35 text-[10px] tracking-[0.2em] uppercase hover:text-white/55 transition-colors">← Blog</Link>
+              <Link href="/blog" className="text-white/35 text-[11px] tracking-[0.2em] uppercase hover:text-white/55 transition-colors">← Blog</Link>
             </div>
           </div>
         </article>

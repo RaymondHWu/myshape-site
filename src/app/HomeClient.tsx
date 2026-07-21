@@ -32,7 +32,7 @@ export default function HomeClient() {
         <div className="relative z-10 -mt-6 pb-12 md:hidden flex flex-col items-center gap-4 px-6">
           <a
             href="/verify"
-            className="px-8 py-3 border border-[#60A5FA]/25 text-[#60A5FA]/60 text-[10px] tracking-[0.2em] uppercase font-mono hover:bg-[#60A5FA]/8 hover:border-[#60A5FA]/40 transition-all"
+            className="px-8 py-3 border border-[#60A5FA]/25 text-[#60A5FA]/60 text-[11px] tracking-[0.2em] uppercase font-mono hover:bg-[#60A5FA]/8 hover:border-[#60A5FA]/40 transition-all"
           >
             Verify Continuity →
           </a>
@@ -49,10 +49,10 @@ export default function HomeClient() {
         {/* ── Research Quick Links ── */}
         <section className="relative z-10 -mt-6 mb-8">
           <div className="max-w-3xl mx-auto px-6 flex justify-center gap-4">
-            <a href="/research/notes/004-motion-signature-rfc" className="px-5 py-3 border border-[#1E293B] bg-[#0B1220] text-[#A7B4C6] text-[10px] tracking-[0.15em] uppercase font-mono hover:border-[#60A5FA]/30 hover:text-[#60A5FA] transition-all">RFC-0001</a>
-            <a href="/research/notes/006-continuity-proof-rfc" className="px-5 py-3 border border-[#1E293B] bg-[#0B1220] text-[#A7B4C6] text-[10px] tracking-[0.15em] uppercase font-mono hover:border-[#60A5FA]/30 hover:text-[#60A5FA] transition-all">RFC-0002</a>
-            <a href="https://www.npmjs.com/package/@thecontinuitylab/myshape" className="px-5 py-3 border border-[#1E293B] bg-[#0B1220] text-[#A7B4C6] text-[10px] tracking-[0.15em] uppercase font-mono hover:border-[#60A5FA]/30 hover:text-[#60A5FA] transition-all">npm</a>
-            <a href="https://github.com/myshapeprotocol" className="px-5 py-3 border border-[#1E293B] bg-[#0B1220] text-[#A7B4C6] text-[10px] tracking-[0.15em] uppercase font-mono hover:border-[#60A5FA]/30 hover:text-[#60A5FA] transition-all">GitHub</a>
+            <a href="/research/notes/004-motion-signature-rfc" className="px-5 py-3 border border-[#1E293B] bg-[#0B1220] text-[#A7B4C6] text-[11px] tracking-[0.15em] uppercase font-mono hover:border-[#60A5FA]/30 hover:text-[#60A5FA] transition-all">RFC-0001</a>
+            <a href="/research/notes/006-continuity-proof-rfc" className="px-5 py-3 border border-[#1E293B] bg-[#0B1220] text-[#A7B4C6] text-[11px] tracking-[0.15em] uppercase font-mono hover:border-[#60A5FA]/30 hover:text-[#60A5FA] transition-all">RFC-0002</a>
+            <a href="https://www.npmjs.com/package/@thecontinuitylab/myshape" className="px-5 py-3 border border-[#1E293B] bg-[#0B1220] text-[#A7B4C6] text-[11px] tracking-[0.15em] uppercase font-mono hover:border-[#60A5FA]/30 hover:text-[#60A5FA] transition-all">npm</a>
+            <a href="https://github.com/myshapeprotocol" className="px-5 py-3 border border-[#1E293B] bg-[#0B1220] text-[#A7B4C6] text-[11px] tracking-[0.15em] uppercase font-mono hover:border-[#60A5FA]/30 hover:text-[#60A5FA] transition-all">GitHub</a>
           </div>
         </section>
 
@@ -60,7 +60,7 @@ export default function HomeClient() {
         <section className="relative pt-16 md:pt-32 pb-12 md:pb-20">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-16">
-              <div className="text-white/35 text-[10px] tracking-[0.6em] uppercase mb-4">Protocol_Stack</div>
+              <div className="text-white/35 text-[11px] tracking-[0.6em] uppercase mb-4">Protocol_Stack</div>
               <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 200, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#fff", margin: 0 }}>
                 Human <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>Presence</span> Protocol
               </h2>
@@ -89,7 +89,7 @@ export default function HomeClient() {
                       <span className="text-white/80 text-[15px] font-light tracking-[0.02em] group-hover:text-white transition-colors duration-500">{layer.name}</span>
                     </div>
                     <p className="text-white/30 text-[13px] font-light leading-relaxed mb-2 group-hover:text-white/55 transition-colors duration-500">{layer.desc}</p>
-                    <div className="inline-block px-2 py-0.5 font-mono text-[10px] tracking-[0.1em] rounded border border-[#90c8ff]/15 text-[#90c8ff]/40 bg-[#90c8ff]/[0.03] group-hover:border-[#90c8ff]/35 group-hover:text-[#90c8ff]/70 transition-all duration-500">{layer.meta}</div>
+                    <div className="inline-block px-2 py-0.5 font-mono text-[11px] tracking-[0.1em] rounded border border-[#90c8ff]/15 text-[#90c8ff]/40 bg-[#90c8ff]/[0.03] group-hover:border-[#90c8ff]/35 group-hover:text-[#90c8ff]/70 transition-all duration-500">{layer.meta}</div>
                   </div>
                 ))}
               </div>
@@ -179,7 +179,7 @@ export default function HomeClient() {
                         <p className="text-white/35 text-[13px] font-light leading-relaxed mb-2 group-hover:text-white/55 transition-colors duration-500">
                           {layer.desc}
                         </p>
-                        <div className="inline-block px-2 py-0.5 font-mono text-[10px] tracking-[0.1em] rounded group-hover:border-[#90c8ff]/30 group-hover:text-[#90c8ff]/70 transition-all duration-500"
+                        <div className="inline-block px-2 py-0.5 font-mono text-[11px] tracking-[0.1em] rounded group-hover:border-[#90c8ff]/30 group-hover:text-[#90c8ff]/70 transition-all duration-500"
                           style={{
                             border: "1px solid rgba(144, 200, 255, 0.15)",
                             color: "rgba(144, 200, 255, 0.5)",
@@ -213,10 +213,10 @@ export default function HomeClient() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3fb950]/30 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3fb950] shadow-[0_0_8px_rgba(63,185,80,0.5)]" />
                 </span>
-                <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-[#90c8ff]/50">
+                <span className="font-mono text-[11px] tracking-[0.35em] uppercase text-[#90c8ff]/50">
                   &gt; research_stream <span className="text-white/15">--active</span>
                 </span>
-                <span className="font-mono text-[7px] tracking-[0.2em] text-white/8 ml-auto">001/005</span>
+                <span className="font-mono text-[11px] tracking-[0.2em] text-white/8 ml-auto">001/005</span>
               </div>
               <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 200, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#fff", margin: 0 }}>
                 The <span style={{ color: "rgba(144, 200, 255, 0.8)" }}>Continuity</span> Problem
@@ -254,11 +254,11 @@ export default function HomeClient() {
                     {/* Specimen metadata bar */}
                     <div className="flex items-center gap-3 mb-8 pb-4 border-b border-[#90c8ff]/8">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#3fb950] shadow-[0_0_6px_rgba(63,185,80,0.6)]" />
-                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#3fb950]/70">SIGNAL_ACTIVE</span>
+                      <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#3fb950]/70">SIGNAL_ACTIVE</span>
                       <span className="text-white/10">·</span>
-                      <span className="font-mono text-[10px] tracking-[0.15em] text-white/25">SPECIMEN RN_001</span>
+                      <span className="font-mono text-[11px] tracking-[0.15em] text-white/25">SPECIMEN RN_001</span>
                       <span className="text-white/10">·</span>
-                      <span className="font-mono text-[10px] tracking-[0.15em] text-white/25">2026.07.09</span>
+                      <span className="font-mono text-[11px] tracking-[0.15em] text-white/25">2026.07.09</span>
                     </div>
 
                     {/* The question */}
@@ -274,10 +274,10 @@ export default function HomeClient() {
 
                     {/* Bottom status bar */}
                     <div className="flex items-center justify-between pt-4 border-t border-[#90c8ff]/6">
-                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#90c8ff]/50 group-hover:text-[#90c8ff]/70 transition-colors duration-500">
+                      <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#90c8ff]/50 group-hover:text-[#90c8ff]/70 transition-colors duration-500">
                         The Continuity Lab — Research Note Series
                       </span>
-                      <span className="font-mono text-[10px] tracking-[0.15em] text-white/35 group-hover:text-white/55 transition-all duration-500 group-hover:translate-x-1 inline-block">
+                      <span className="font-mono text-[11px] tracking-[0.15em] text-white/35 group-hover:text-white/55 transition-all duration-500 group-hover:translate-x-1 inline-block">
                         Open →
                       </span>
                     </div>
@@ -288,7 +288,7 @@ export default function HomeClient() {
               {/* ── Terminal command bar ── */}
               <div className="mt-8 flex items-center gap-4 px-1">
                 <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(144,200,255,0.15), rgba(144,200,255,0.05))" }} />
-                <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/18 shrink-0 select-none">stream_actions</span>
+                <span className="font-mono text-[11px] tracking-[0.25em] uppercase text-white/18 shrink-0 select-none">stream_actions</span>
                 <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, rgba(144,200,255,0.05), rgba(144,200,255,0.15), transparent)" }} />
               </div>
 
@@ -310,8 +310,8 @@ export default function HomeClient() {
                   }}
                 >
                   <span className="font-mono text-[11px] text-[#90c8ff]/30 group-hover/cta:text-[#90c8ff]/65 transition-colors">&gt;</span>
-                  <span className="font-mono text-[10px] tracking-[0.15em] text-[#90c8ff]/50 group-hover/cta:text-[#90c8ff]/80 transition-colors">research_hub</span>
-                  <span className="font-mono text-[10px] tracking-[0.1em] text-white/18 group-hover/cta:text-white/20 transition-colors hidden sm:inline">--open</span>
+                  <span className="font-mono text-[11px] tracking-[0.15em] text-[#90c8ff]/50 group-hover/cta:text-[#90c8ff]/80 transition-colors">research_hub</span>
+                  <span className="font-mono text-[11px] tracking-[0.1em] text-white/18 group-hover/cta:text-white/20 transition-colors hidden sm:inline">--open</span>
                 </Link>
                 <Link
                   href="/research/agenda"
@@ -330,8 +330,8 @@ export default function HomeClient() {
                   }}
                 >
                   <span className="font-mono text-[11px] text-[#d4af37]/30 group-hover/cta:text-[#d4af37]/65 transition-colors">&gt;</span>
-                  <span className="font-mono text-[10px] tracking-[0.15em] text-[#d4af37]/50 group-hover/cta:text-[#d4af37]/80 transition-colors">research_agenda</span>
-                  <span className="font-mono text-[10px] tracking-[0.1em] text-white/18 group-hover/cta:text-white/20 transition-colors hidden sm:inline">--view</span>
+                  <span className="font-mono text-[11px] tracking-[0.15em] text-[#d4af37]/50 group-hover/cta:text-[#d4af37]/80 transition-colors">research_agenda</span>
+                  <span className="font-mono text-[11px] tracking-[0.1em] text-white/18 group-hover/cta:text-white/20 transition-colors hidden sm:inline">--view</span>
                 </Link>
               </div>
             </div>

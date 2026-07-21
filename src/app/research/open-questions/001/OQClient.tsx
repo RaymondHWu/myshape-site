@@ -38,7 +38,7 @@ export default function OQClient() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4af37]/30 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#d4af37] shadow-[0_0_8px_rgba(212,175,55,0.5)]" />
             </span>
-            <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#d4af37]/60">
+            <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[#d4af37]/60">
               Active Research
             </span>
           </div>
@@ -186,7 +186,7 @@ export default function OQClient() {
               The Continuity Lab · July 2026{" · "}
               <Link href="/research" onMouseEnter={() => playTick(420, "sine", 0.03, 0.018)}>← Research Hub</Link>
             </p>
-            <p className="text-white/10 text-[9px] tracking-[0.1em] italic mt-4" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+            <p className="text-white/10 text-[11px] tracking-[0.1em] italic mt-4" style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
               Every benchmark is temporary. Every question is permanent.
             </p>
           </div>

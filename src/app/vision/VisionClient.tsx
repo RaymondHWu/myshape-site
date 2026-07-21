@@ -57,7 +57,7 @@ export default function VisionClient() {
           onMouseEnter={() => playTick(400, "sine", 0.03, 0.022)}>
           <div className="text-[#90c8ff]/[0.03] text-[140px] font-bold absolute -top-20 -left-10 select-none pointer-events-none leading-none">C</div>
           <div className="relative z-10 border-l-2 border-[#90c8ff]/25 pl-6 md:pl-10 py-3">
-            <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase font-mono mb-5">// THE CONTINUITY THESIS</div>
+            <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.3em] uppercase font-mono mb-5">// THE CONTINUITY THESIS</div>
             <p className="text-white/80 text-[15px] md:text-[18px] leading-[1.8] font-light mb-5">
               The digital world spent three decades answering <span className="text-[#90c8ff]/70">Who are you?</span>
               {' '}Passwords, presence-verification, DID, wallets — every identity system verifies a credential at a point in time.
@@ -95,7 +95,7 @@ export default function VisionClient() {
 
         {/* ── 2. 四大支柱 ── */}
         <section>
-          <div className="text-white/30 md:text-white/35 text-[10px] md:text-[12px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-12 text-center hover:text-[#90c8ff]/50 transition-colors cursor-default"
+          <div className="text-white/30 md:text-white/35 text-[11px] md:text-[12px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-12 text-center hover:text-[#90c8ff]/50 transition-colors cursor-default"
             onMouseEnter={() => playTick(450, "sine", 0.04, 0.022)}>
             // PROTOCOL_PILLARS
           </div>
@@ -106,13 +106,13 @@ export default function VisionClient() {
                 onMouseEnter={e => { playTick(600, "sine", 0.08, 0.015); e.currentTarget.style.borderColor = pillar.color; e.currentTarget.style.background = "rgba(144,200,255,0.02)"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(144,200,255,0.08)"; e.currentTarget.style.background = "transparent"; }}>
                 <div className={`h-[2px] mb-5 bg-gradient-to-r ${pillar.accent} w-12 group-hover:w-full transition-all duration-700`} />
-                <div className="text-[#90c8ff]/40 text-[10px] tracking-[0.4em] font-mono mb-2 group-hover:text-[#90c8ff]/70 transition-colors">
+                <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.4em] font-mono mb-2 group-hover:text-[#90c8ff]/70 transition-colors">
                   {pillar.id}
                 </div>
                 <h3 className="text-white/80 text-[13px] tracking-[0.25em] font-bold uppercase mb-2 group-hover:text-white transition-colors">
                   {pillar.title}
                 </h3>
-                <p className="text-[#90c8ff]/30 text-[10px] tracking-[0.15em] uppercase mb-4 group-hover:text-[#90c8ff]/50 transition-colors">
+                <p className="text-[#90c8ff]/30 text-[11px] tracking-[0.15em] uppercase mb-4 group-hover:text-[#90c8ff]/50 transition-colors">
                   {pillar.subtitle}
                 </p>
                 <p className="text-white/35 text-[12px] tracking-[0.1em] leading-[1.8] group-hover:text-white/55 transition-colors">
@@ -125,7 +125,7 @@ export default function VisionClient() {
 
         {/* ── 3. 协议轨迹 ── */}
         <section className="border-t border-white/[0.04] pt-16">
-          <div className="text-white/30 md:text-white/35 text-[10px] md:text-[12px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-14 text-center hover:text-[#90c8ff]/50 transition-colors cursor-default"
+          <div className="text-white/30 md:text-white/35 text-[11px] md:text-[12px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-14 text-center hover:text-[#90c8ff]/50 transition-colors cursor-default"
             onMouseEnter={() => playTick(450, "sine", 0.04, 0.022)}>
             Protocol Trajectory
           </div>
@@ -141,7 +141,7 @@ export default function VisionClient() {
                   {s.desc}
                 </p>
                 {s.active && (
-                  <div className="mt-3 text-[#90c8ff]/30 text-[10px] tracking-[0.2em] uppercase">◈ ACTIVE</div>
+                  <div className="mt-3 text-[#90c8ff]/30 text-[11px] tracking-[0.2em] uppercase">◈ ACTIVE</div>
                 )}
               </div>
             ))}
@@ -155,7 +155,7 @@ export default function VisionClient() {
           <div className="max-w-xl mx-auto text-center space-y-8 relative z-10">
             <div className="flex items-center justify-center gap-3">
               <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#90c8ff]/20" />
-              <span className="text-white/28 text-[10px] tracking-[0.4em] uppercase font-mono hover:text-[#90c8ff]/40 transition-colors cursor-default"
+              <span className="text-white/28 text-[11px] tracking-[0.4em] uppercase font-mono hover:text-[#90c8ff]/40 transition-colors cursor-default"
                 onMouseEnter={() => playTick(450, "sine", 0.03, 0.022)}>Continuity_Projection_001</span>
               <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#90c8ff]/20" />
             </div>
@@ -170,7 +170,7 @@ export default function VisionClient() {
                   onMouseEnter={() => playTick(350, "sine", 0.02, 0.005)} />
               ))}
             </div>
-            <p className="text-white/30 text-[10px] tracking-[0.2em] uppercase">
+            <p className="text-white/30 text-[11px] tracking-[0.2em] uppercase">
               — MyShape Protocol &middot; V1.0_GENESIS
             </p>
           </div>

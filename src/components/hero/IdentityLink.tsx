@@ -14,15 +14,15 @@ export default function IdentityLink() {
         className="group relative bg-transparent border border-blue-500/10 px-4 py-1.5 overflow-hidden transition-all hover:border-blue-500/40"
       >
         {/* 红蓝重影层 (Ghosting) */}
-        <span className="absolute inset-0 flex items-center justify-center text-red-500/30 opacity-0 group-hover:opacity-100 group-hover:animate-[glitch_0.3s_infinite] translate-x-[2px] pointer-events-none font-mono text-[10px]">
+        <span className="absolute inset-0 flex items-center justify-center text-red-500/30 opacity-0 group-hover:opacity-100 group-hover:animate-[glitch_0.3s_infinite] translate-x-[2px] pointer-events-none font-mono text-[11px]">
           {connected ? address.toUpperCase() : "INITIATE_SYNC"}
         </span>
-        <span className="absolute inset-0 flex items-center justify-center text-blue-400/30 opacity-0 group-hover:opacity-100 group-hover:animate-[glitch_0.3s_infinite_reverse] -translate-x-[2px] pointer-events-none font-mono text-[10px]">
+        <span className="absolute inset-0 flex items-center justify-center text-blue-400/30 opacity-0 group-hover:opacity-100 group-hover:animate-[glitch_0.3s_infinite_reverse] -translate-x-[2px] pointer-events-none font-mono text-[11px]">
           {connected ? address.toUpperCase() : "INITIATE_SYNC"}
         </span>
 
         {/* 主文字层 */}
-        <span className="relative z-10 font-mono text-[10px] tracking-[0.2em] text-blue-200/50 group-hover:text-white transition-colors">
+        <span className="relative z-10 font-mono text-[11px] tracking-[0.2em] text-blue-200/50 group-hover:text-white transition-colors">
           {connected ? (
             <span className="flex items-center gap-2">
               <span className="w-1 h-1 bg-blue-400 animate-pulse rounded-full" />
@@ -39,7 +39,7 @@ export default function IdentityLink() {
 
       {/* 状态提示：针对那个缺少的 "P" */}
       {connected && (
-        <div className="font-mono text-[7px] text-red-500/40 tracking-widest animate-pulse">
+        <div className="font-mono text-[11px] text-red-500/40 tracking-widest animate-pulse">
           SIGNAL_DEGRADATION: RECOVERY_IN_PROGRESS [ERR: MISSING_P]
         </div>
       )}

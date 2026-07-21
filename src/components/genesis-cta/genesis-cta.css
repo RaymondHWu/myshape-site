@@ -34,7 +34,7 @@
 
 .genesis-cta-title {
   color: rgba(144, 200, 255, 0.5);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
 }
@@ -49,7 +49,7 @@
 
 .genesis-cta-subtitle {
   color: rgba(255, 255, 255, 0.2);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   text-align: center;
@@ -69,7 +69,7 @@
   padding: 10px 24px;
   border: 1px solid rgba(144, 200, 255, 0.35);
   color: rgba(144, 200, 255, 0.8);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
@@ -93,7 +93,7 @@
 
 .genesis-cta-secondary {
   color: rgba(255, 255, 255, 0.2);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
@@ -106,7 +106,7 @@
 
 .genesis-cta-sep {
   color: rgba(255, 255, 255, 0.08);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 @media (prefers-reduced-motion: reduce) {

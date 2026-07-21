@@ -4,6 +4,19 @@ import { playTick } from "@/utils/useAudioTick";
 
 const LAYERS = [
   {
+    name: "PROTOCOL OBJECT",
+    tag: "CPS-0001",
+    color: "rgba(212,175,55,0.9)",
+    bg: "rgba(212,175,55,0.05)",
+    border: "rgba(212,175,55,0.25)",
+    items: [
+      { label: "ContinuityReceipt", desc: "Assertion · Evidence · Context · Signature" },
+      { label: "V₁-V₇", desc: "Verification contract · engine-independent" },
+      { label: "Conformance", desc: "23 tests · 10 scenarios · zero deps" },
+    ],
+    highlight: true,
+  },
+  {
     name: "SPECIFICATION LAYER",
     tag: "OPEN_STANDARDS",
     color: "rgba(144,200,255,0.9)",
@@ -34,9 +47,9 @@ const LAYERS = [
     bg: "rgba(144,200,255,0.03)",
     border: "rgba(144,200,255,0.15)",
     items: [
-      { label: "npm SDK", desc: "verifyContinuity() · v0.1.2" },
-      { label: "Playground", desc: "Interactive sandbox" },
-      { label: "GitHub", desc: "Open source · MIT license" },
+      { label: "npm SDK", desc: "@thecontinuitylab/myshape" },
+      { label: "Reference Verifier", desc: "Zero engine deps · TypeScript" },
+      { label: "GitHub", desc: "Open source · Apache 2.0" },
     ],
   },
   {
@@ -48,21 +61,20 @@ const LAYERS = [
     items: [
       { label: "576 Runs", desc: "4 engines · consumer hardware" },
       { label: "HuggingFace", desc: "Dataset · open access" },
-      { label: "121 Tests", desc: "Automated verification" },
+      { label: "192 Tests", desc: "Automated verification · CI" },
     ],
   },
   {
     name: "RESEARCH FOUNDATION",
-    tag: "OPEN_RESEARCH",
+    tag: "THE_CONTINUITY_LAB",
     color: "rgba(200,230,255,0.9)",
     bg: "rgba(144,200,255,0.05)",
     border: "rgba(144,200,255,0.25)",
     items: [
-      { label: "The Continuity Lab", desc: "Research organization" },
-      { label: "Research Notes", desc: "RN-001 through RN-003" },
+      { label: "CPS-0001", desc: "Core Protocol Specification" },
+      { label: "Research Notes", desc: "RN-001 · RN-003 · CPS-0001" },
       { label: "Failure Reports", desc: "FD-001 · DL-001" },
     ],
-    highlight: true,
   },
 ];
 
@@ -95,13 +107,6 @@ export default function EcosystemMap() {
               animation: `nodePulse 2.5s ease-in-out ${i * 0.4}s infinite`,
             }} />
         ))}
-        <div className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center"
-          style={{ left: "-24px", width: "52px" }}>
-          {["D","A","T","A","_","F","L","O","W"].map((c, i) => (
-            <span key={i} className="text-[10px] font-mono tracking-[0.15em]"
-              style={{ color: "rgba(144,200,255,0.25)", lineHeight: 1.4 }}>{c}</span>
-          ))}
-        </div>
       </div>
       <div className="space-y-4 ml-12 md:ml-16">
         {LAYERS.map((layer) => (
@@ -111,27 +116,27 @@ export default function EcosystemMap() {
             style={{
               background: layer.bg,
               border: `1px solid ${layer.border}`,
-              ...(layer.highlight ? { borderColor: "rgba(144,200,255,0.3)", boxShadow: "0 0 20px rgba(144,200,255,0.06)" } : {})
+              ...(layer.highlight ? { borderColor: "rgba(212,175,55,0.4)", boxShadow: "0 0 24px rgba(212,175,55,0.08)" } : {})
             }}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold tracking-[0.15em] uppercase"
+              <span className="text-[12px] font-bold tracking-[0.12em] uppercase"
                 style={{ color: layer.color }}>{layer.name}</span>
-              <span className="text-[8px] font-mono px-2 py-0.5 rounded"
-                style={{ color: layer.color, border: `1px solid ${layer.border}`, opacity: 0.7 }}>
+              <span className="text-[11px] font-mono px-2 py-0.5 rounded"
+                style={{ color: layer.color, border: `1px solid ${layer.border}`, opacity: 0.85 }}>
                 {layer.tag}
               </span>
             </div>
             <div className="flex flex-wrap gap-2">
               {layer.items.map((item) => (
                 <span key={item.label}
-                  className="text-[9px] px-2.5 py-1 rounded font-mono tracking-[0.05em] transition-all duration-300"
+                  className="text-[11px] px-2.5 py-1 rounded font-mono tracking-[0.03em] transition-all duration-300"
                   style={{
-                    color: "rgba(255,255,255,0.45)",
+                    color: "rgba(255,255,255,0.6)",
                     border: `1px solid ${layer.border}`,
-                    background: "rgba(255,255,255,0.01)",
+                    background: "rgba(255,255,255,0.02)",
                   }}>
-                  <span style={{ color: "rgba(255,255,255,0.65)" }}>{item.label}</span>
-                  <span style={{ color: "rgba(255,255,255,0.2)", marginLeft: 4 }}>{item.desc}</span>
+                  <span style={{ color: "rgba(255,255,255,0.8)" }}>{item.label}</span>
+                  <span style={{ color: "rgba(255,255,255,0.4)", marginLeft: 5 }}>{item.desc}</span>
                 </span>
               ))}
             </div>

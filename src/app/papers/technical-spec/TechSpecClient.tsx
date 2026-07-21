@@ -31,14 +31,14 @@ export default function TechSpecClient() {
       <ProtocolHeader />
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="space-y-4 mb-12 md:mb-14">
-          <div className="text-[#90c8ff]/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase" onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>TECHNICAL_SPECIFICATION // V1.0</div>
+          <div className="text-[#90c8ff]/60 text-[11px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase" onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>TECHNICAL_SPECIFICATION // V1.0</div>
           <h1 className="text-3xl md:text-5xl font-light tracking-[0.08em] md:tracking-[0.12em] text-white uppercase">Protocol Reference</h1>
           <p className="text-white/45 md:text-white/50 text-[11px] md:text-[14px] leading-relaxed max-w-2xl font-light">The engineering document behind the MyShape Protocol. Motion Vector format, PES engine, proof system, SST topology, and reference implementation.</p>
-          <p className="text-white/20 text-[9px] md:text-[10px] tracking-[0.15em] mt-2">By MyShape Protocol · V1.0 · June 2026</p>
+          <p className="text-white/20 text-[11px] md:text-[11px] tracking-[0.15em] mt-2">By MyShape Protocol · V1.0 · June 2026</p>
         </div>
 
         <section className="mb-12 md:mb-14">
-          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-5 md:mb-6" onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>// PROTOCOL_METRICS</h2>
+          <h2 className="text-white/30 md:text-white/35 text-[11px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-5 md:mb-6" onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>// PROTOCOL_METRICS</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {METRICS.map((m) => (
               <div key={m.label} className="ts-metric-card" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
@@ -50,7 +50,7 @@ export default function TechSpecClient() {
         </section>
 
         <section className="mb-12 md:mb-14">
-          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-5 md:mb-6" onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>// FIVE_LAYER_ARCHITECTURE</h2>
+          <h2 className="text-white/30 md:text-white/35 text-[11px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-5 md:mb-6" onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>// FIVE_LAYER_ARCHITECTURE</h2>
           <div className="space-y-1">
             {ARCHITECTURE.map((a, i) => (
               <div key={i} className="ts-layer-card" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
@@ -62,7 +62,7 @@ export default function TechSpecClient() {
         </section>
 
         <section className="mb-12 md:mb-14">
-          <h2 className="text-white/30 md:text-white/35 text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-5 md:mb-6" onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>// KEY_SPECIFICATIONS</h2>
+          <h2 className="text-white/30 md:text-white/35 text-[11px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-5 md:mb-6" onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>// KEY_SPECIFICATIONS</h2>
           <div className="space-y-3 md:space-y-4">
             {SPECS.map((s, i) => (
               <div key={i} className="ts-spec-card" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>
@@ -85,7 +85,7 @@ export default function TechSpecClient() {
         <section className="mt-4 ts-ref-card" onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
           <div className="ts-ref-title">Reference Implementation</div>
           <p className="ts-ref-text">16 protocol engines implemented in TypeScript. Zero external dependencies. All processing on-device. No data stored or transmitted.</p>
-          <a href="/developers" className="inline-block px-8 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/60 text-[10px] tracking-[0.2em] uppercase hover:border-[#90c8ff] hover:text-[#90c8ff] transition-all" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>View SDK →</a>
+          <a href="/developers" className="inline-block px-8 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/60 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff] hover:text-[#90c8ff] transition-all" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>View SDK →</a>
         </section>
       </div>
       <ProtocolFooter />

@@ -108,7 +108,7 @@ export default function Page() {
             <div style={{ fontSize: 13, color: "#94A3B8", marginBottom: 20 }}>{confidence}% confidence</div>
             <div style={{ fontSize: 11, color: "#64748B", lineHeight: 1.8, marginBottom: 24, padding: "12px 14px", background: "#0B1220", border: "1px solid #1E293B", borderRadius: 8, textAlign: "left" }}>
               {details.map((d, i) => <div key={i} style={{ color: d.startsWith("✓") ? "#34D399" : "#f85149" }}>{d}</div>)}
-              <div style={{ marginTop: 8, fontSize: 10, color: "rgba(255,255,255,0.12)" }}>{samples} samples · anonymized for research</div>
+              <div style={{ marginTop: 8, fontSize: 11, color: "rgba(255,255,255,0.12)" }}>{samples} samples · anonymized for research</div>
             </div>
             <button onClick={() => setPhase("idle")} style={{ width: "100%", padding: "14px 0", fontSize: 15, color: "#60A5FA", background: "transparent", border: "1px solid rgba(96,165,250,0.3)", borderRadius: 8, cursor: "pointer" }}>Try again</button>
           </>

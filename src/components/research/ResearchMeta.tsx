@@ -51,12 +51,12 @@ export default function ResearchMeta({ artifactId, type, number, status, publish
   return (
     <div className="inline-block">
       {/* Canon label — the unifying namespace above every research object */}
-      <div className="font-mono text-[8px] tracking-[0.25em] uppercase mb-1.5"
+      <div className="font-mono text-[11px] tracking-[0.25em] uppercase mb-1.5"
         style={{ color: "rgba(255,255,255,0.12)" }}>
         The Continuity Canon
       </div>
       <div
-        className="inline-flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[10px] tracking-[0.12em] uppercase"
+        className="inline-flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] tracking-[0.12em] uppercase"
         style={{
           border: "1px solid rgba(144,200,255,0.08)",
           background: "rgba(2,6,14,0.7)",

@@ -98,7 +98,7 @@ export default function PE001PhonePage() {
     <div className="min-h-screen bg-black text-white">
       <header className="border-b border-white/5 px-4 py-3 flex items-center justify-between">
         <Link href="/research" className="text-white/30 text-[11px] tracking-[0.2em] uppercase hover:text-white/60">← Research</Link>
-        <span className="text-white/15 text-[9px] tracking-[0.3em] uppercase">PE-001 Phone</span>
+        <span className="text-white/15 text-[11px] tracking-[0.3em] uppercase">PE-001 Phone</span>
         <div className="w-16" />
       </header>
 

@@ -84,7 +84,7 @@ export default function SearchDialog() {
             placeholder="Search blog, glossary, pages..."
             className="flex-1 bg-transparent text-white/80 text-[14px] tracking-[0.03em] outline-none placeholder:text-white/15 font-mono"
           />
-          <span className="text-white/10 text-[10px] tracking-[0.1em] font-mono">ESC</span>
+          <span className="text-white/10 text-[11px] tracking-[0.1em] font-mono">ESC</span>
         </div>
 
         {/* Results */}
@@ -107,7 +107,7 @@ export default function SearchDialog() {
               className="block px-4 py-3 hover:bg-white/[0.02] border-b border-white/[0.02] transition-colors group"
             >
               <div className="flex items-center gap-2 mb-0.5">
-                <span className={`text-[9px] tracking-[0.15em] uppercase font-mono ${
+                <span className={`text-[11px] tracking-[0.15em] uppercase font-mono ${
                   r.type === "blog" ? "text-[#90c8ff]/40" : r.type === "glossary" ? "text-[#d4af37]/40" : "text-white/25"
                 }`}>
                   {typeLabel[r.type]}
@@ -126,7 +126,7 @@ export default function SearchDialog() {
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-2 border-t border-white/[0.04] flex items-center justify-between text-white/10 text-[9px] tracking-[0.15em] font-mono">
+        <div className="px-4 py-2 border-t border-white/[0.04] flex items-center justify-between text-white/10 text-[11px] tracking-[0.15em] font-mono">
           <span>↑↓ Navigate</span>
           <span>↵ Open</span>
         </div>

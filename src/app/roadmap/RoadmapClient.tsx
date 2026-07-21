@@ -75,14 +75,14 @@ export default function RoadmapClient() {
                   <h2 className="text-[clamp(1.4rem,3vw,2rem)] font-light tracking-[0.02em] text-white mt-2">{e.title}</h2>
                   <p className="text-white/25 text-[13px] mt-1">{e.timeframe} · {e.thesis}</p>
                 </div>
-                <span className={`px-4 py-1.5 border text-[9px] tracking-[0.12em] uppercase font-mono ${cfg.badge}`}>{cfg.label}</span>
+                <span className={`px-4 py-1.5 border text-[11px] tracking-[0.12em] uppercase font-mono ${cfg.badge}`}>{cfg.label}</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {e.milestones.map((m) => (
                   <div key={m.label} className={`rm-ms flex items-center gap-3 px-4 py-3 border ${m.status==="COMPLETED"?"border-[#90c8ff]/10":"border-white/5"} ${msClass(m.status)}`}
                     onMouseEnter={() => playTick(600, "sine", 0.05, 0.02)}>
-                    <span className={`text-[10px] ${m.status==="COMPLETED"?"text-[#90c8ff]":m.status==="CURRENT"?"text-[#90c8ff]/60":"text-white/15"}`}>{msIcon(m.status)}</span>
+                    <span className={`text-[11px] ${m.status==="COMPLETED"?"text-[#90c8ff]":m.status==="CURRENT"?"text-[#90c8ff]/60":"text-white/15"}`}>{msIcon(m.status)}</span>
                     <span className={`text-[12px] tracking-[0.03em] ${m.status==="COMPLETED"?"text-white/60":m.status==="CURRENT"?"text-white/50":"text-white/20"}`}>{m.label}</span>
                   </div>
                 ))}

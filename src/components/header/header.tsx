@@ -226,7 +226,7 @@ const ProtocolHeader = () => {
               {walletStatus === "connecting" ? "CONNECTING" : walletStatus === "signing" ? "SIGNING" : "VERIFYING"}
             </span>
           ) : walletAddress ? (
-            <span className="font-mono text-[8px] tracking-[0.05em]">{walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}</span>
+            <span className="font-mono text-[11px] tracking-[0.05em]">{walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}</span>
           ) : (
             "MYSHAPE.BASE.ETH"
           )}

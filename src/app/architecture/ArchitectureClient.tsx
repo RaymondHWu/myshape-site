@@ -52,7 +52,7 @@ export default function ArchitectureClient() {
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         {/* Header */}
         <div className="space-y-4 md:space-y-5 mb-12 md:mb-16">
-          <div className="text-[#90c8ff]/60 text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase"
+          <div className="text-[#90c8ff]/60 text-[11px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase"
             onMouseEnter={() => playTick(500, "sine", 0.05, 0.01)}>
             Protocol_Architecture
           </div>
@@ -67,7 +67,7 @@ export default function ArchitectureClient() {
 
         {/* Pipeline */}
         <section className="mb-14 md:mb-20">
-          <h2 className="arch-section-h text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-6 md:mb-10"
+          <h2 className="arch-section-h text-[11px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-6 md:mb-10"
             onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>
             // PIPELINE
           </h2>
@@ -86,7 +86,7 @@ export default function ArchitectureClient() {
                     <span className="text-[11px] tracking-[0.15em] uppercase mt-3 text-center leading-tight font-medium transition-all duration-300 arch-pipeline-name">
                       {p.name}
                     </span>
-                    <span className="text-[8px] tracking-[0.1em] font-mono mt-1.5 transition-all duration-300 arch-pipeline-output">
+                    <span className="text-[11px] tracking-[0.1em] font-mono mt-1.5 transition-all duration-300 arch-pipeline-output">
                       {p.output}
                     </span>
                   </div>
@@ -111,7 +111,7 @@ export default function ArchitectureClient() {
                   style={{ animationDelay: `${i * 0.5}s` }} />
                 <div className="flex-1 pl-10 py-1.5">
                   <span className="text-[11px] tracking-[0.2em] uppercase font-medium text-white/60">{p.step}. {p.name}</span>
-                  <span className="block text-[9px] mt-0.5 font-mono text-[#90c8ff]/45">→ {p.output}</span>
+                  <span className="block text-[11px] mt-0.5 font-mono text-[#90c8ff]/45">→ {p.output}</span>
                 </div>
               </div>
             ))}
@@ -120,20 +120,20 @@ export default function ArchitectureClient() {
 
         {/* Protocol Artifacts — What the outputs actually look like */}
         <section className="mb-14 md:mb-20">
-          <h2 className="arch-section-h text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6"
+          <h2 className="arch-section-h text-[11px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6"
             onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>
             // PROTOCOL ARTIFACTS
           </h2>
-          <p className="text-white/25 md:text-white/30 text-[9px] md:text-[10px] mb-6 md:mb-8">
+          <p className="text-white/25 md:text-white/30 text-[11px] md:text-[11px] mb-6 md:mb-8">
             These are the concrete outputs of the MyShape pipeline. This is what your application receives.
           </p>
 
           {/* Identity Vector */}
           <div className="mb-6 md:mb-8">
-            <h3 className="text-[#90c8ff]/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Identity Vector <span className="text-white/15">— 128-dim, Poseidon-hashed, non-invertible</span></h3>
+            <h3 className="text-[#90c8ff]/50 text-[11px] md:text-[11px] tracking-[0.2em] uppercase mb-3">Identity Vector <span className="text-white/15">— 128-dim, Poseidon-hashed, non-invertible</span></h3>
             <div className="border p-4 md:p-5 overflow-x-auto font-mono arch-code-block"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
-              <pre className="text-[#90c8ff]/70 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
+              <pre className="text-[#90c8ff]/70 text-[11px] md:text-[11px] leading-relaxed whitespace-pre-wrap">
 {`// Motion Vector hash — the geometric signature
 {
   "mv_hash": "0x7a3f1b2c8d4e9f01...3a6b5c7d2e8f4a9b",
@@ -148,10 +148,10 @@ export default function ArchitectureClient() {
 
           {/* Presence Proof */}
           <div className="mb-6 md:mb-8">
-            <h3 className="text-[#90c8ff]/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Presence Proof <span className="text-white/15">— &lt; 512 bytes, verifiable in &lt; 1ms</span></h3>
+            <h3 className="text-[#90c8ff]/50 text-[11px] md:text-[11px] tracking-[0.2em] uppercase mb-3">Presence Proof <span className="text-white/15">— &lt; 512 bytes, verifiable in &lt; 1ms</span></h3>
             <div className="border p-4 md:p-5 overflow-x-auto font-mono arch-code-block"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
-              <pre className="text-[#90c8ff]/70 text-[9px] md:text-[10px] leading-relaxed whitespace-pre-wrap">
+              <pre className="text-[#90c8ff]/70 text-[11px] md:text-[11px] leading-relaxed whitespace-pre-wrap">
 {`// ZK-Presence composite proof
 {
   "proof_type": "ZK-Presence",
@@ -168,13 +168,13 @@ export default function ArchitectureClient() {
 
           {/* Entropy Gap Distribution */}
           <div>
-            <h3 className="text-[#90c8ff]/50 text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-3">Entropy Gap Distribution <span className="text-white/15">— zero overlap between human and AI</span></h3>
+            <h3 className="text-[#90c8ff]/50 text-[11px] md:text-[11px] tracking-[0.2em] uppercase mb-3">Entropy Gap Distribution <span className="text-white/15">— zero overlap between human and AI</span></h3>
             <div className="border p-5 md:p-6 arch-dist-block"
               onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>
               <div className="space-y-5">
                 {/* Human distribution */}
                 <div>
-                  <div className="flex justify-between text-[8px] md:text-[9px] mb-1.5">
+                  <div className="flex justify-between text-[11px] md:text-[11px] mb-1.5">
                     <span className="text-white/50">Human PES</span>
                     <span className="font-mono text-[#90c8ff]/70">0.65 — 0.99</span>
                   </div>
@@ -189,13 +189,13 @@ export default function ArchitectureClient() {
                 {/* Threshold line */}
                 <div className="relative h-0">
                   <div className="absolute left-[65%] -top-1 w-[1px] h-12 bg-[rgba(144,200,255,0.5)]" />
-                  <span className="absolute left-[65%] -top-4 text-[8px] tracking-[0.15em] uppercase font-mono -translate-x-1/2 whitespace-nowrap text-[#90c8ff]/70">
+                  <span className="absolute left-[65%] -top-4 text-[11px] tracking-[0.15em] uppercase font-mono -translate-x-1/2 whitespace-nowrap text-[#90c8ff]/70">
                     threshold 0.65
                   </span>
                 </div>
                 {/* AI distribution */}
                 <div>
-                  <div className="flex justify-between text-[8px] md:text-[9px] mb-1.5 mt-2">
+                  <div className="flex justify-between text-[11px] md:text-[11px] mb-1.5 mt-2">
                     <span className="text-white/40">AI / Synthetic PES</span>
                     <span className="font-mono text-white/30">0.01 — 0.15</span>
                   </div>
@@ -205,7 +205,7 @@ export default function ArchitectureClient() {
                     <div className="w-[80%] h-full bg-[rgba(255,255,255,0.02)]" />
                   </div>
                 </div>
-                <p className="text-white/20 text-[8px] tracking-[0.15em] uppercase mt-3">
+                <p className="text-white/20 text-[11px] tracking-[0.15em] uppercase mt-3">
                   Zero overlap between distributions. AI cannot cross the entropy threshold — <span className="text-[#90c8ff]/50">mathematically provable</span> via §10.
                 </p>
               </div>
@@ -215,18 +215,18 @@ export default function ArchitectureClient() {
 
         {/* The Entropy Gap */}
         <section className="mb-14 md:mb-20">
-          <h2 className="arch-section-h text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6"
+          <h2 className="arch-section-h text-[11px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6"
             onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>
             // THE ENTROPY GAP
           </h2>
-          <p className="text-white/35 md:text-white/40 text-[10px] md:text-[12px] leading-relaxed mb-6 md:mb-8">
+          <p className="text-white/35 md:text-white/40 text-[11px] md:text-[12px] leading-relaxed mb-6 md:mb-8">
             Human motion carries irreducible biological entropy. AI-generated motion is mathematically clean — and that cleanliness is <span className="text-[#90c8ff]/60">detectable</span>.
           </p>
           <div className="space-y-4 md:space-y-5">
             {ENTROPY_BARS.map(bar => (
               <div key={bar.label} className="flex items-center gap-3 md:gap-4"
                 onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
-                <span className="text-[9px] md:text-[11px] tracking-[0.15em] uppercase w-28 md:w-36 text-right shrink-0 font-medium arch-entropy-label">{bar.label}</span>
+                <span className="text-[11px] md:text-[11px] tracking-[0.15em] uppercase w-28 md:w-36 text-right shrink-0 font-medium arch-entropy-label">{bar.label}</span>
                 <div className="flex-1 h-4 md:h-5 rounded-sm overflow-hidden arch-entropy-track">
                   <div className="h-full rounded-sm arch-entropy-fill"
                     style={{
@@ -235,27 +235,27 @@ export default function ArchitectureClient() {
                       boxShadow: bar.pct > 50 ? "0 0 12px rgba(144,200,255,0.25)" : "none",
                     }} />
                 </div>
-                <span className="text-[10px] md:text-[12px] font-mono w-16 shrink-0 font-medium arch-entropy-value"
+                <span className="text-[11px] md:text-[12px] font-mono w-16 shrink-0 font-medium arch-entropy-value"
                   style={{ color: `rgba(144,200,255,${0.4 + bar.opacity * 0.6})` }}>{bar.pct}%</span>
               </div>
             ))}
           </div>
-          <p className="text-white/20 text-[8px] md:text-[9px] tracking-[0.2em] uppercase mt-5 md:mt-6">
+          <p className="text-white/20 text-[11px] md:text-[11px] tracking-[0.2em] uppercase mt-5 md:mt-6">
             PES Score threshold for human verification: <span className="text-[#90c8ff]/50">&ge; 85%</span>
           </p>
         </section>
 
         {/* 4D Entropy */}
         <section className="mb-14 md:mb-20">
-          <h2 className="arch-section-h text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6"
+          <h2 className="arch-section-h text-[11px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-4 md:mb-6"
             onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>
             // 4D ENTROPY SCORING
           </h2>
-          <p className="text-white/25 md:text-white/30 text-[9px] md:text-[10px] mb-5 md:mb-6">
+          <p className="text-white/25 md:text-white/30 text-[11px] md:text-[11px] mb-5 md:mb-6">
             Four independent dimensions. Each one alone can flag synthetic motion. Together, the false-positive rate approaches zero.
           </p>
           <div className="overflow-x-auto">
-            <table className="w-full text-[9px] md:text-[10px]">
+            <table className="w-full text-[11px] md:text-[11px]">
               <thead>
                 <tr className="border-b border-white/10 text-white/35">
                   <th className="text-left py-3 pr-2 font-medium tracking-[0.15em] uppercase w-[28%]">Dimension</th>
@@ -268,10 +268,10 @@ export default function ArchitectureClient() {
                 {ENTROPY_DIMS.map(d => (
                   <tr key={d.dim} className="border-b border-white/[0.03] arch-table-row"
                     onMouseEnter={() => playTick(550, "sine", 0.05, 0.012)}>
-                    <td className="py-3 pr-2 align-top font-medium arch-col-dim text-[9px]">{d.dim}</td>
-                    <td className="py-3 pr-2 align-top hidden md:table-cell arch-col-what text-[9px]">{d.what}</td>
-                    <td className="py-3 pr-2 align-top arch-col-human text-[9px]">{d.human}</td>
-                    <td className="py-3 align-top arch-col-ai text-[9px]">{d.ai}</td>
+                    <td className="py-3 pr-2 align-top font-medium arch-col-dim text-[11px]">{d.dim}</td>
+                    <td className="py-3 pr-2 align-top hidden md:table-cell arch-col-what text-[11px]">{d.what}</td>
+                    <td className="py-3 pr-2 align-top arch-col-human text-[11px]">{d.human}</td>
+                    <td className="py-3 align-top arch-col-ai text-[11px]">{d.ai}</td>
                   </tr>
                 ))}
               </tbody>
@@ -281,15 +281,15 @@ export default function ArchitectureClient() {
 
         {/* Threat Matrix */}
         <section className="mb-14 md:mb-20">
-          <h2 className="arch-section-h text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-3 md:mb-4"
+          <h2 className="arch-section-h text-[11px] md:text-[11px] tracking-[0.5em] md:tracking-[0.6em] uppercase mb-3 md:mb-4"
             onMouseEnter={() => playTick(450, "sine", 0.04, 0.01)}>
             // THREAT MATRIX
           </h2>
-          <p className="text-white/30 text-[9px] md:text-[10px] mb-6 md:mb-8">
+          <p className="text-white/30 text-[11px] md:text-[11px] mb-6 md:mb-8">
             7 known attack vectors. 7 verified defenses. Each independently tested against real-world threat models.
           </p>
           <div className="overflow-x-auto">
-            <table className="w-full text-[9px] md:text-[10px]">
+            <table className="w-full text-[11px] md:text-[11px]">
               <thead>
                 <tr className="border-b border-white/10 text-white/35">
                   <th className="text-left py-3 pr-3 font-medium tracking-[0.15em] uppercase">Attack</th>
@@ -302,10 +302,10 @@ export default function ArchitectureClient() {
                 {THREATS.map(t => (
                   <tr key={t.attack} className="border-b border-white/[0.03] arch-threat-row"
                     onMouseEnter={() => playTick(550, "sine", 0.05, 0.012)}>
-                    <td className="py-3 pr-3 font-medium arch-threat-attack text-[9px]">{t.attack}</td>
-                    <td className="py-3 pr-3 hidden md:table-cell arch-threat-vector text-[9px]">{t.vector}</td>
-                    <td className="py-3 pr-3 arch-threat-defense text-[9px]">{t.defense}</td>
-                    <td className="py-3 text-right font-mono font-medium text-[9px]"
+                    <td className="py-3 pr-3 font-medium arch-threat-attack text-[11px]">{t.attack}</td>
+                    <td className="py-3 pr-3 hidden md:table-cell arch-threat-vector text-[11px]">{t.vector}</td>
+                    <td className="py-3 pr-3 arch-threat-defense text-[11px]">{t.defense}</td>
+                    <td className="py-3 text-right font-mono font-medium text-[11px]"
                       style={{ color: `rgba(144,200,255,${confBrightness(t.confidence)})` }}>
                       {(t.confidence * 100).toFixed(1)}%
                     </td>
@@ -326,9 +326,9 @@ export default function ArchitectureClient() {
             <a key={card.href} href={card.href}
               onMouseEnter={() => playTick(700, "sine", 0.10, 0.025)}
               className="block p-5 md:p-6 text-center arch-cta-card">
-              <div className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase mb-2 font-mono arch-cta-label">{card.label}</div>
+              <div className="text-[11px] md:text-[11px] tracking-[0.3em] uppercase mb-2 font-mono arch-cta-label">{card.label}</div>
               <div className="text-[11px] md:text-[13px] tracking-[0.2em] uppercase mb-1.5 font-medium arch-cta-title">{card.title}</div>
-              <div className="text-[9px] md:text-[10px] arch-cta-desc">{card.desc}</div>
+              <div className="text-[11px] md:text-[11px] arch-cta-desc">{card.desc}</div>
               <div className="mt-3 inline-block text-[11px] arch-cta-arrow">→</div>
             </a>
           ))}

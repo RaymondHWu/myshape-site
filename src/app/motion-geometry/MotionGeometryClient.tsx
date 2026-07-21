@@ -55,7 +55,7 @@ export default function MotionGeometryClient() {
       <ProtocolHeader />
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="text-center mb-16">
-          <div className="text-[#90c8ff]/40 text-[10px] tracking-[0.5em] uppercase mb-6">MOTION_GEOMETRY // VISUAL_PIPELINE</div>
+          <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.5em] uppercase mb-6">MOTION_GEOMETRY // VISUAL_PIPELINE</div>
           <h1 className="text-2xl md:text-4xl font-light tracking-[0.08em] text-white mb-4" style={{ textShadow: "0 0 40px rgba(144,200,255,0.2)" }}>Entity → Geometry → Proof</h1>
           <p className="text-white/30 text-[12px] max-w-lg mx-auto leading-relaxed">Watch a simulated motion pipeline transform raw skeletal data into entropy scores and a cryptographic identity vector.</p>
         </div>
@@ -64,25 +64,25 @@ export default function MotionGeometryClient() {
           <div className="mg-panel text-center" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
             <div className="mg-panel-label">01 — Capture</div>
             <WireframePreview />
-            <div className="text-white/20 text-[9px] mt-4 tracking-[0.2em] uppercase">33-pt → 18-pt SST</div>
-            <div className="text-[#90c8ff]/30 font-mono text-[8px] mt-1">Frame {step + 1}/10</div>
+            <div className="text-white/20 text-[11px] mt-4 tracking-[0.2em] uppercase">33-pt → 18-pt SST</div>
+            <div className="text-[#90c8ff]/30 font-mono text-[11px] mt-1">Frame {step + 1}/10</div>
           </div>
           <div className="mg-panel space-y-4 flex flex-col justify-center" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
             <div className="mg-panel-label">02 — PES_4D</div>
             <Gauge label="μTiming" value={data.timing} color="#90c8ff" /><Gauge label="Noise" value={data.noise} color="#a78bfa" /><Gauge label="Freq" value={data.freq} color="#f472b6" /><Gauge label="Bio" value={data.bio} color="#a78bfa" />
-            <div className="pt-3 border-t border-white/5 flex justify-between items-center"><span className="text-white/20 text-[8px] tracking-[0.2em] uppercase">PES Score</span><span className="text-[#90c8ff]/80 font-mono text-[18px] font-light">{(data.score * 100).toFixed(0)}</span></div>
+            <div className="pt-3 border-t border-white/5 flex justify-between items-center"><span className="text-white/20 text-[11px] tracking-[0.2em] uppercase">PES Score</span><span className="text-[#90c8ff]/80 font-mono text-[18px] font-light">{(data.score * 100).toFixed(0)}</span></div>
           </div>
           <div className="mg-panel flex flex-col justify-center" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>
             <div className="mg-panel-label">03 — 128D Vector</div>
-            <div className="space-y-1 font-mono text-[8px]">
+            <div className="space-y-1 font-mono text-[11px]">
               {["K:0.42 A:0.88 J:0.15 S:0.71","K:0.39 A:0.84 J:0.11 S:0.69","K:0.41 A:0.87 J:0.14 S:0.72","K:0.44 A:0.89 J:0.16 S:0.73"].map((line,i)=>(<div key={i} className="mg-vec-line">{line}</div>))}
             </div>
-            <div className="mt-4 pt-3 border-t border-white/5"><div className="text-white/15 text-[8px] tracking-[0.2em] uppercase mb-1">Proof Hash</div><div className="text-[#90c8ff]/40 font-mono text-[9px] break-all"><DemoHash /></div></div>
+            <div className="mt-4 pt-3 border-t border-white/5"><div className="text-white/15 text-[11px] tracking-[0.2em] uppercase mb-1">Proof Hash</div><div className="text-[#90c8ff]/40 font-mono text-[11px] break-all"><DemoHash /></div></div>
           </div>
         </div>
 
         <div className="text-center space-y-4">
-          <p className="text-white/20 text-[10px]">This is a simulation. Experience the real pipeline with your own motion.</p>
+          <p className="text-white/20 text-[11px]">This is a simulation. Experience the real pipeline with your own motion.</p>
           <Link href="/motion-demo" className="mg-cta" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>Try Live Demo →</Link>
         </div>
       </div>

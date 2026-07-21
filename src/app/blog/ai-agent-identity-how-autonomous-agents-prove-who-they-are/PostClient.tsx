@@ -82,7 +82,7 @@ export default function PostClient() {
         <BackgroundParticles />
         <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-6" style={{ paddingTop: "8rem", paddingBottom: "6rem" }}>
           <div className="space-y-4 mb-16">
-            <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[10px] tracking-[0.3em] uppercase">
+            <div className="flex items-center gap-4 text-[#90c8ff]/50 text-[11px] tracking-[0.3em] uppercase">
               <span>GENESIS 009</span>
               <span className="w-8 h-[1px] bg-[#90c8ff]/20" />
               <span>2026.07.03</span>
@@ -114,7 +114,7 @@ export default function PostClient() {
 
           <div className="my-16 h-px bg-gradient-to-r from-transparent via-[#90c8ff]/15 to-transparent" />
           <div className="space-y-4">
-            <p className="text-white/38 text-[10px] tracking-[0.2em] uppercase text-center">Continue Reading</p>
+            <p className="text-white/38 text-[11px] tracking-[0.2em] uppercase text-center">Continue Reading</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <Link href="/blog/proof-of-personhood-vs-proof-of-continuity" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)} className="block p-4 border border-[#90c8ff]/10 hover:border-[#90c8ff]/25 transition-all">
                 <p className="text-white/55 text-[12px] tracking-[0.08em]">PoP vs PoC</p>
@@ -134,8 +134,8 @@ export default function PostClient() {
             <p className="text-white/55 text-[13px] tracking-[0.1em] uppercase">Register Your Agent</p>
             <p className="text-white/45 text-[12px] leading-[1.7] max-w-md mx-auto">The Agent Declaration protocol is live. Register your autonomous agent in the MyShape identity mesh — cryptographic proof of provenance and continuity.</p>
             <div className="flex justify-center gap-4 pt-2">
-              <Link href="/agent" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)} className="px-6 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/65 text-[10px] tracking-[0.18em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all">Agent Registration →</Link>
-              <Link href="/developers" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)} className="px-6 py-2 border border-[#90c8ff]/15 text-[#90c8ff]/50 text-[10px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all">SDK Docs →</Link>
+              <Link href="/agent" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)} className="px-6 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/65 text-[11px] tracking-[0.18em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all">Agent Registration →</Link>
+              <Link href="/developers" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)} className="px-6 py-2 border border-[#90c8ff]/15 text-[#90c8ff]/50 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all">SDK Docs →</Link>
             </div>
           </div>
           <div className="mt-12 text-center">

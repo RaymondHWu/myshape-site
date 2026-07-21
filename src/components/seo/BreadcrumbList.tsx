@@ -56,7 +56,7 @@ export default function BreadcrumbList({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {showVisual && (
-        <nav aria-label="Breadcrumb" className="text-white/30 text-[9px] tracking-[0.2em] uppercase font-mono py-4 px-4 md:px-6 max-w-3xl mx-auto">
+        <nav aria-label="Breadcrumb" className="text-white/30 text-[11px] tracking-[0.2em] uppercase font-mono py-4 px-4 md:px-6 max-w-3xl mx-auto">
           <ol className="flex flex-wrap items-center gap-1.5">
             {items.map((item, index) => (
               <li key={index} className="flex items-center gap-1.5">

@@ -58,7 +58,7 @@ export default function VerificationDashboard() {
   return (
     <div className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
       <div className="space-y-4 mb-10">
-        <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">LIVE_VERIFICATION // v0.1</div>
+        <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.5em] uppercase">LIVE_VERIFICATION // v0.1</div>
         <h2 className="text-3xl md:text-4xl font-light tracking-[0.15em] text-white uppercase">Presence Verification Dashboard</h2>
         <p className="text-white/40 text-[12px] leading-relaxed max-w-2xl">Runtime engine output from <code className="text-[#90c8ff]/60">myshape-demo</code> CLI. Motion Signature Engine (128-dim, 4 feature groups) + Multi-Factor Scorer. All scores computed by the Rust core engine compiled to native binary.</p>
       </div>
@@ -85,7 +85,7 @@ export default function VerificationDashboard() {
             <div className={`vd-verdict ${r.verdictClass}`} style={r.passed ? { color: "rgba(144,200,255,0.8)" } : { color: "rgba(248,113,113,0.8)" }}>{r.verdict}</div>
             <div className="vd-subtitle">{r.subtitle}</div>
             <div className="space-y-1.5"><FactorBar label="Motion" value={r.factors.motion} /><FactorBar label="Device" value={r.factors.device} /><FactorBar label="Context" value={r.factors.context} /></div>
-            <div className="mt-3 pt-3 border-t border-white/5 flex justify-between text-[9px]">
+            <div className="mt-3 pt-3 border-t border-white/5 flex justify-between text-[11px]">
               <span className="vd-threshold-label">Threshold</span>
               <span className="vd-threshold-value">{r.threshold.toFixed(2)}</span>
             </div>
@@ -111,7 +111,7 @@ export default function VerificationDashboard() {
                 <div className="vd-tag-detail">{tag.detail}</div>
               </button>
               {expandedTag === i && (
-                <div className="border border-t-0 p-3 text-[10px] leading-relaxed font-mono" style={{ borderColor: "rgba(248,113,113,0.2)", color: "rgba(255,255,255,0.35)", background: "transparent" }}>{tag.full}</div>
+                <div className="border border-t-0 p-3 text-[11px] leading-relaxed font-mono" style={{ borderColor: "rgba(248,113,113,0.2)", color: "rgba(255,255,255,0.35)", background: "transparent" }}>{tag.full}</div>
               )}
             </div>
           ))}

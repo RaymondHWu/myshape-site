@@ -38,7 +38,7 @@ function NodeTelemetry() {
 
   return (
     <section className="mb-10">
-      <h2 className="text-white/30 text-[10px] tracking-[0.5em] uppercase mb-4"
+      <h2 className="text-white/30 text-[11px] tracking-[0.5em] uppercase mb-4"
         onMouseEnter={() => playTick(500, "sine", 0.04, 0.01)}>// DEVELOPER_NODES</h2>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
@@ -49,7 +49,7 @@ function NodeTelemetry() {
           { label: "Total Requests", value: stats.total_requests },
         ].map(m => (
           <div key={m.label} className="border border-white/5 bg-white/[0.01] p-3 text-center">
-            <div className="text-white/20 text-[8px] tracking-[0.15em] uppercase mb-1">{m.label}</div>
+            <div className="text-white/20 text-[11px] tracking-[0.15em] uppercase mb-1">{m.label}</div>
             <div className="text-[#90c8ff]/70 text-[16px] font-light font-mono">{m.value}</div>
           </div>
         ))}
@@ -57,10 +57,10 @@ function NodeTelemetry() {
 
       {stats.top_domains.length > 0 && (
         <div className="border border-white/5 bg-white/[0.01] p-4 mb-2">
-          <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-3">Top Origin Domains</div>
+          <div className="text-white/20 text-[11px] tracking-[0.2em] uppercase mb-3">Top Origin Domains</div>
           <div className="space-y-1">
             {stats.top_domains.map(d => (
-              <div key={d.domain} className="flex justify-between text-[10px] font-mono">
+              <div key={d.domain} className="flex justify-between text-[11px] font-mono">
                 <span className="text-white/35">{d.domain}</span>
                 <span className="text-[#90c8ff]/50">{d.count}</span>
               </div>
@@ -71,9 +71,9 @@ function NodeTelemetry() {
 
       {stats.recent_nodes.length > 0 && (
         <div className="border border-white/5 bg-white/[0.01] p-4">
-          <div className="text-white/20 text-[8px] tracking-[0.2em] uppercase mb-3">Recent Nodes</div>
+          <div className="text-white/20 text-[11px] tracking-[0.2em] uppercase mb-3">Recent Nodes</div>
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-[9px] font-mono">
+            <table className="w-full text-left text-[11px] font-mono">
               <thead>
                 <tr className="text-white/20">
                   <th className="pb-2 font-normal">Origin</th>
@@ -196,7 +196,7 @@ export default function AdminClient() {
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6" style={{ paddingTop: "7rem", paddingBottom: "4rem" }}>
         <div className="space-y-4 mb-10">
-          <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] uppercase">Engine_Calibration // Admin_Console</div>
+          <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.5em] uppercase">Engine_Calibration // Admin_Console</div>
           <h1 className="text-2xl md:text-3xl font-light tracking-[0.12em] text-white uppercase">
             Calibration <span style={{ color: "rgba(144,200,255,0.6)" }}>Control</span>
           </h1>
@@ -206,12 +206,12 @@ export default function AdminClient() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {/* Research Sessions */}
           <div className="border border-white/10 bg-black/40 p-5 space-y-3" style={{ borderRadius: 4 }}>
-            <div className="text-white/25 text-[8px] tracking-[0.2em] uppercase">Research Sessions</div>
+            <div className="text-white/25 text-[11px] tracking-[0.2em] uppercase">Research Sessions</div>
             <div className="text-3xl font-light text-white/70 tabular-nums">
               {stats?.session_count ?? "—"}
             </div>
             <div className="space-y-1.5">
-              <div className="flex justify-between text-[8px]">
+              <div className="flex justify-between text-[11px]">
                 <span className="text-white/15">Toward 300</span>
                 <span className="text-[#90c8ff]/40">{progressPct}%</span>
               </div>
@@ -226,7 +226,7 @@ export default function AdminClient() {
               </div>
             </div>
             {stats?.latest_session_at && (
-              <div className="text-white/15 text-[7px]">
+              <div className="text-white/15 text-[11px]">
                 Latest: {new Date(stats.latest_session_at).toLocaleDateString()}
               </div>
             )}
@@ -234,18 +234,18 @@ export default function AdminClient() {
 
           {/* Calibration State */}
           <div className="border border-white/10 bg-black/40 p-5 space-y-3" style={{ borderRadius: 4 }}>
-            <div className="text-white/25 text-[8px] tracking-[0.2em] uppercase">Calibration</div>
+            <div className="text-white/25 text-[11px] tracking-[0.2em] uppercase">Calibration</div>
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${status?.calibrated ? "bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.6)]" : "bg-white/20"}`} />
               <span className={`text-lg font-light ${status?.calibrated ? "text-[#90c8ff]/80" : "text-white/30"}`}>
                 {status?.calibrated ? "ACTIVE" : "VACUUM"}
               </span>
             </div>
-            <div className="text-white/15 text-[8px] uppercase tracking-[0.1em]">
+            <div className="text-white/15 text-[11px] uppercase tracking-[0.1em]">
               Source: {status?.source ?? "—"}
             </div>
             {status?.artifact && (
-              <div className="text-white/20 text-[8px] space-y-0.5">
+              <div className="text-white/20 text-[11px] space-y-0.5">
                 <div>d&apos;={status.artifact.dPrime.toFixed(2)} | EER={(status.artifact.eer * 100).toFixed(1)}%</div>
                 <div>{status.artifact.sessionCount} sessions | {status.artifact.pcaOutputDim}d PCA</div>
               </div>
@@ -254,11 +254,11 @@ export default function AdminClient() {
 
           {/* Thresholds */}
           <div className="border border-white/10 bg-black/40 p-5 space-y-3" style={{ borderRadius: 4 }}>
-            <div className="text-white/25 text-[8px] tracking-[0.2em] uppercase">Thresholds</div>
+            <div className="text-white/25 text-[11px] tracking-[0.2em] uppercase">Thresholds</div>
             <div className="space-y-2">
               {(["high", "medium", "low"] as const).map((level) => (
                 <div key={level} className="flex justify-between items-center">
-                  <span className="text-white/20 text-[9px] uppercase tracking-[0.15em]">{level}</span>
+                  <span className="text-white/20 text-[11px] uppercase tracking-[0.15em]">{level}</span>
                   <span className="text-[#90c8ff]/60 text-[14px] tabular-nums font-mono">
                     {status?.thresholds[level]?.toFixed(3) ?? "—"}
                   </span>
@@ -272,15 +272,15 @@ export default function AdminClient() {
         <div className="border border-white/10 bg-black/40 p-5 space-y-4" style={{ borderRadius: 4 }}>
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div>
-              <div className="text-white/30 text-[10px] tracking-[0.15em] uppercase mb-1">Run Calibration</div>
-              <div className="text-white/15 text-[8px]">
+              <div className="text-white/30 text-[11px] tracking-[0.15em] uppercase mb-1">Run Calibration</div>
+              <div className="text-white/15 text-[11px]">
                 {meetsMin
                   ? `${stats?.session_count ?? 0} sessions collected — ready to calibrate`
                   : `Need ${status?.sessions_needed ?? 300} more sessions`}
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <label className="flex items-center gap-2 text-[9px] text-white/25 cursor-pointer">
+              <label className="flex items-center gap-2 text-[11px] text-white/25 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={use120Dim}
@@ -294,13 +294,13 @@ export default function AdminClient() {
                 placeholder="ADMIN_SECRET"
                 value={adminSecret}
                 onChange={(e) => setAdminSecret(e.target.value)}
-                className="bg-black/60 border border-white/10 px-3 py-1.5 text-[9px] text-white/50 tracking-[0.1em] outline-none focus:border-[#90c8ff]/30 w-36"
+                className="bg-black/60 border border-white/10 px-3 py-1.5 text-[11px] text-white/50 tracking-[0.1em] outline-none focus:border-[#90c8ff]/30 w-36"
                 style={{ borderRadius: 2 }}
               />
               <button
                 onClick={handleRunCalibration}
                 disabled={runState === "running" || !meetsMin}
-                className="px-6 py-2 border text-[9px] tracking-[0.2em] uppercase transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+                className="px-6 py-2 border text-[11px] tracking-[0.2em] uppercase transition-all disabled:opacity-20 disabled:cursor-not-allowed"
                 style={{
                   borderColor: meetsMin ? "rgba(144,200,255,0.3)" : "rgba(255,255,255,0.05)",
                   color: meetsMin ? "rgba(144,200,255,0.7)" : "rgba(255,255,255,0.15)",
@@ -314,7 +314,7 @@ export default function AdminClient() {
 
           {/* Result */}
           {runResult && (
-            <div className={`p-3 border text-[9px] tracking-[0.06em] font-mono ${
+            <div className={`p-3 border text-[11px] tracking-[0.06em] font-mono ${
               runState === "success" ? "border-[#90c8ff]/20 bg-[#90c8ff]/[0.03] text-[#90c8ff]/60" :
               runState === "error" ? "border-red-400/20 bg-red-400/[0.03] text-red-300/60" :
               "border-white/10 bg-white/[0.02] text-white/40"
@@ -328,7 +328,7 @@ export default function AdminClient() {
         <NodeTelemetry />
 
         {/* ── Quick Links ── */}
-        <div className="mt-8 flex gap-4 text-[8px] tracking-[0.15em] uppercase">
+        <div className="mt-8 flex gap-4 text-[11px] tracking-[0.15em] uppercase">
           <a href="/motion-demo" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Motion Demo →</a>
           <a href="/api/research/stats" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Stats API →</a>
           <a href="/api/admin/calibration/status" className="text-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-colors">Status API →</a>

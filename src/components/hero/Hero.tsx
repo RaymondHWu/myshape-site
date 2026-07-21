@@ -104,7 +104,7 @@ export default function Hero() {
           >
             PROOF OF PRESENCE
           </h1>
-          <p className="mt-5 text-[10px] md:text-[11px] tracking-[0.25em] text-blue-200/45 uppercase font-mono max-w-2xl mx-auto leading-relaxed"
+          <p className="mt-5 text-[11px] md:text-[11px] tracking-[0.25em] text-blue-200/45 uppercase font-mono max-w-2xl mx-auto leading-relaxed"
             style={{ textShadow: "0 0 12px rgba(144,200,255,0.15)" }}>
             Identity is not stored. Presence is the identity.
           </p>
@@ -163,7 +163,7 @@ export default function Hero() {
         <div className="absolute bottom-[56px] md:bottom-[92px] left-0 w-full z-100 text-center pointer-events-auto">
           <a href="/motion-demo"
             onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}
-            className="group relative inline-block px-8 py-2.5 border border-[#90c8ff]/25 text-[#90c8ff]/50 hover:text-[#90c8ff] hover:border-[#90c8ff]/60 text-[9px] md:text-[10px] tracking-[0.25em] uppercase font-mono transition-all duration-500"
+            className="group relative inline-block px-8 py-2.5 border border-[#90c8ff]/25 text-[#90c8ff]/50 hover:text-[#90c8ff] hover:border-[#90c8ff]/60 text-[11px] md:text-[11px] tracking-[0.25em] uppercase font-mono transition-all duration-500"
             style={{ boxShadow: "0 0 20px rgba(144,200,255,0.06)" }}>
             <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{ background: "radial-gradient(ellipse at center, rgba(144,200,255,0.08) 0%, transparent 70%)" }} />
@@ -175,7 +175,7 @@ export default function Hero() {
         </div>
         {/* 系统状态行 — 始终可见 */}
         <div className="absolute bottom-[30px] md:bottom-[60px] left-0 w-full z-100 text-center pointer-events-none">
-          <span className="font-mono font-light text-[9px] md:text-[10px] tracking-[0.4em] transition-all duration-700"
+          <span className="font-mono font-light text-[11px] md:text-[11px] tracking-[0.4em] transition-all duration-700"
             style={genesisCompleted
               ? { color: "rgba(180,220,255,0.8)", textShadow: "0 0 10px rgba(144,200,255,0.5), 0 0 20px rgba(144,200,255,0.2)" }
               : { color: "rgba(255,255,255,0.18)" }}>

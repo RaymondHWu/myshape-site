@@ -317,7 +317,7 @@ export default function MotionGuide({
         style={{ background: "linear-gradient(180deg, rgba(2,4,10,0.9) 60%, rgba(2,4,10,0) 100%)" }}>
         {/* Phase pill */}
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[#90c8ff]/70 text-[10px] tracking-[0.3em] font-mono">
+          <span className="text-[#90c8ff]/70 text-[11px] tracking-[0.3em] font-mono">
             PHASE {phase.phase}/5
           </span>
           <span className="text-white/70 text-[11px] tracking-[0.15em] font-medium">
@@ -351,7 +351,7 @@ export default function MotionGuide({
             }} />
         </div>
 
-        <span className="text-white/50 text-[10px] font-mono tabular-nums shrink-0">
+        <span className="text-white/50 text-[11px] font-mono tabular-nums shrink-0">
           {remainingSec.toFixed(1)}s
         </span>
       </div>
@@ -375,7 +375,7 @@ export default function MotionGuide({
           {phase.instruction}
         </p>
 
-        <p className="text-[#90c8ff]/30 text-[8px] tracking-[0.1em] uppercase mt-2 leading-tight">
+        <p className="text-[#90c8ff]/30 text-[11px] tracking-[0.1em] uppercase mt-2 leading-tight">
           {phase.dominantFeature}
         </p>
       </div>
@@ -390,7 +390,7 @@ export default function MotionGuide({
               style={{ borderRadius: 3 }}>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-red-400 shadow-[0_0_6px_rgba(239,68,68,0.6)]" />
-                <span className="text-red-300/80 text-[9px] tracking-[0.08em] font-mono leading-tight">
+                <span className="text-red-300/80 text-[11px] tracking-[0.08em] font-mono leading-tight">
                   {v.message}
                 </span>
               </div>
@@ -405,10 +405,10 @@ export default function MotionGuide({
       <div className="absolute bottom-4 right-4 px-3 py-2 border bg-black/70 backdrop-blur-sm"
         style={{ borderColor, borderRadius: 4 }}>
         <div className="flex items-center gap-2 mb-1.5">
-          <span className="text-white/20 text-[7px] tracking-[0.2em] uppercase">
+          <span className="text-white/20 text-[11px] tracking-[0.2em] uppercase">
             Anchors
           </span>
-          <span className="text-[8px] font-mono"
+          <span className="text-[11px] font-mono"
             style={{ color: anchorsAllVisible ? "rgba(144,200,255,0.7)" : "rgba(250,204,21,0.7)" }}>
             {anchorsAllVisible ? "✓ LOCKED" : `${missingCount} MISSING`}
           </span>
@@ -423,7 +423,7 @@ export default function MotionGuide({
                     ? "0 0 5px rgba(144,200,255,0.5)"
                     : "0 0 4px rgba(239,68,68,0.3)",
                 }} />
-              <span className="text-[7px] tracking-[0.06em] transition-colors duration-300"
+              <span className="text-[11px] tracking-[0.06em] transition-colors duration-300"
                 style={{ color: a.visible ? "rgba(255,255,255,0.5)" : "rgba(239,68,68,0.5)" }}>
                 {a.label}
               </span>

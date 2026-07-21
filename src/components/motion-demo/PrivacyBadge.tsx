@@ -9,7 +9,7 @@ export default function PrivacyBadge() {
         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
         <circle cx="12" cy="16" r="1" />
       </svg>
-      <span className="text-[#90c8ff]/60 text-[8px] tracking-[0.15em] uppercase">
+      <span className="text-[#90c8ff]/60 text-[11px] tracking-[0.15em] uppercase">
         100% Local Processing — Nothing Uploaded
       </span>
     </div>

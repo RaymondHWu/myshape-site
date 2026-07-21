@@ -173,10 +173,10 @@ export default function BenchmarksClient() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3fb950]/20 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3fb950] shadow-[0_0_8px_rgba(63,185,80,0.5)]" />
             </span>
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#90c8ff]/55">
+            <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-[#90c8ff]/55">
               &gt; benchmarks <span className="text-white/20">--all</span>
             </span>
-            <span className="font-mono text-[8px] tracking-[0.2em] text-white/15 ml-auto">100% passing</span>
+            <span className="font-mono text-[11px] tracking-[0.2em] text-white/15 ml-auto">100% passing</span>
           </div>
           <h1 className="text-[clamp(2rem,5vw,3.2rem)] font-light tracking-[-0.02em] leading-[1.1] text-white">
             Protocol <span style={{ color: "rgba(144,200,255,0.8)" }}>Benchmarks</span>
@@ -185,7 +185,7 @@ export default function BenchmarksClient() {
             <p className="text-white/50 text-[clamp(0.9rem,2vw,1.1rem)] font-light max-w-xl leading-relaxed">
               Every engine function, every API contract, every threat vector — tested.
             </p>
-            <span className="font-mono text-[9px] tracking-[0.15em] text-[#3fb950]/40 shrink-0 border border-[#3fb950]/15 px-2 py-0.5"
+            <span className="font-mono text-[11px] tracking-[0.15em] text-[#3fb950]/40 shrink-0 border border-[#3fb950]/15 px-2 py-0.5"
               style={{ background: "rgba(63,185,80,0.03)" }}>
               Last run: 2026-07-10 07:59 UTC
             </span>
@@ -218,7 +218,7 @@ export default function BenchmarksClient() {
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              <div className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-2">{stat.label}</div>
+              <div className="text-[11px] tracking-[0.2em] uppercase text-white/30 mb-2">{stat.label}</div>
               <div className="text-[clamp(1.5rem,4vw,2.5rem)] font-light tracking-[-0.03em]" style={{ color: stat.color }}>
                 {stat.value}
                 {stat.suffix && <span className="text-[0.45em] ml-1 opacity-50">{stat.suffix}</span>}
@@ -232,7 +232,7 @@ export default function BenchmarksClient() {
           <div className="flex items-center gap-2 mb-8">
             <div className="w-1 h-4" style={{ background: "linear-gradient(to bottom, #90c8ff, transparent)" }} />
             <h2 className="text-white/80 text-[14px] tracking-[0.3em] uppercase font-bold">Protocol Engines</h2>
-            <span className="text-white/15 text-[10px] tracking-[0.15em] ml-2">7 modules</span>
+            <span className="text-white/15 text-[11px] tracking-[0.15em] ml-2">7 modules</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -253,7 +253,7 @@ export default function BenchmarksClient() {
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-white/80 text-[12px] tracking-[0.05em] font-light">{mod.name}</span>
-                  <span className="font-mono text-[10px] tracking-[0.1em] text-[#3fb950]/60">{mod.tests} tests</span>
+                  <span className="font-mono text-[11px] tracking-[0.1em] text-[#3fb950]/60">{mod.tests} tests</span>
                 </div>
                 <p className="text-white/25 text-[11px] leading-relaxed">{mod.desc}</p>
               </div>
@@ -266,7 +266,7 @@ export default function BenchmarksClient() {
           <div className="flex items-center gap-2 mb-8">
             <div className="w-1 h-4" style={{ background: "linear-gradient(to bottom, #d4af37, transparent)" }} />
             <h2 className="text-white/80 text-[14px] tracking-[0.3em] uppercase font-bold">Active Benchmarks</h2>
-            <span className="text-white/15 text-[10px] tracking-[0.15em] ml-2">3 suites</span>
+            <span className="text-white/15 text-[11px] tracking-[0.15em] ml-2">3 suites</span>
           </div>
 
           <div className="space-y-6">
@@ -287,7 +287,7 @@ export default function BenchmarksClient() {
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-white/85 text-[14px] font-light tracking-[0.04em]">{bm.name}</h3>
-                  <span className="font-mono text-[10px] text-[#3fb950]/60">{bm.tests} tests</span>
+                  <span className="font-mono text-[11px] text-[#3fb950]/60">{bm.tests} tests</span>
                 </div>
                 <p className="text-white/30 text-[12px] leading-relaxed mb-4">{bm.desc}</p>
                 <div className="flex flex-wrap gap-3">
@@ -297,7 +297,7 @@ export default function BenchmarksClient() {
                       className="px-3 py-1.5 font-mono"
                       style={{ border: "1px solid rgba(212,175,55,0.15)", background: "rgba(212,175,55,0.03)" }}
                     >
-                      <span className="text-white/25 text-[9px] tracking-[0.1em] uppercase">{m.label}</span>
+                      <span className="text-white/25 text-[11px] tracking-[0.1em] uppercase">{m.label}</span>
                       <span className="text-[#d4af37]/80 text-[11px] ml-2 tracking-[0.05em]">{m.value}</span>
                     </div>
                   ))}
@@ -312,7 +312,7 @@ export default function BenchmarksClient() {
           <div className="flex items-center gap-2 mb-8">
             <div className="w-1 h-4" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.3), transparent)" }} />
             <h2 className="text-white/80 text-[14px] tracking-[0.3em] uppercase font-bold">Integration &amp; Utilities</h2>
-            <span className="text-white/15 text-[10px] tracking-[0.15em] ml-2">7 suites</span>
+            <span className="text-white/15 text-[11px] tracking-[0.15em] ml-2">7 suites</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -330,9 +330,9 @@ export default function BenchmarksClient() {
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-white/70 text-[11px] tracking-[0.04em] font-light">{item.name}</span>
-                  <span className="font-mono text-[9px] text-[#3fb950]/50">{item.tests} tests</span>
+                  <span className="font-mono text-[11px] text-[#3fb950]/50">{item.tests} tests</span>
                 </div>
-                <p className="text-white/20 text-[10px] leading-relaxed">{item.desc}</p>
+                <p className="text-white/20 text-[11px] leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -347,7 +347,7 @@ export default function BenchmarksClient() {
           </p>
           <Link
             href="/research/challenge"
-            className="font-mono text-[10px] tracking-[0.15em] uppercase text-[#f85149]/50 hover:text-[#f85149]/70 transition-colors"
+            className="font-mono text-[11px] tracking-[0.15em] uppercase text-[#f85149]/50 hover:text-[#f85149]/70 transition-colors"
             onMouseEnter={() => playTick(520, "sine", 0.04, 0.02)}
           >
             Challenge BM-001 →
@@ -369,7 +369,7 @@ export default function BenchmarksClient() {
 
         {/* ── Methodology Note ── */}
         <div className="mt-12 pt-8 border-t border-white/[0.05]">
-          <p className="text-white/15 text-[10px] tracking-[0.08em] leading-relaxed text-center max-w-xl mx-auto">
+          <p className="text-white/15 text-[11px] tracking-[0.08em] leading-relaxed text-center max-w-xl mx-auto">
             All benchmarks run via <code className="text-white/25">npx vitest run</code> on every commit.
             Results above from 2026-07-10. No failing tests. 5 pending tests are live-integration
             checks that require a running Supabase instance (skipped in CI).
@@ -378,7 +378,7 @@ export default function BenchmarksClient() {
             href="https://github.com/myshapeprotocol"
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-center mt-3 text-[#90c8ff]/20 text-[9px] tracking-[0.2em] uppercase hover:text-[#90c8ff]/40 transition-colors"
+            className="block text-center mt-3 text-[#90c8ff]/20 text-[11px] tracking-[0.2em] uppercase hover:text-[#90c8ff]/40 transition-colors"
             onMouseEnter={() => playTick(440, "sine", 0.025, 0.012)}
           >
             View Source on GitHub →
@@ -389,7 +389,7 @@ export default function BenchmarksClient() {
         <div className="mt-12 pt-8 border-t border-white/[0.04] text-center">
           <Link
             href="/research"
-            className="text-white/25 text-[10px] tracking-[0.2em] uppercase hover:text-white/45 transition-colors"
+            className="text-white/25 text-[11px] tracking-[0.2em] uppercase hover:text-white/45 transition-colors"
             onMouseEnter={() => playTick(400, "sine", 0.03, 0.018)}
           >
             ← Research Hub

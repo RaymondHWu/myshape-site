@@ -269,7 +269,7 @@ export default function FusionClient() {
     <div className="min-h-screen bg-black text-white">
       <header className="border-b border-white/5 px-4 py-3 flex items-center justify-between">
         <Link href="/research" className="text-white/30 text-[11px] tracking-[0.2em] uppercase hover:text-white/60">← Research</Link>
-        <span className="text-white/15 text-[9px] tracking-[0.3em] uppercase">EE-001</span>
+        <span className="text-white/15 text-[11px] tracking-[0.3em] uppercase">EE-001</span>
         <div className="w-16" />
       </header>
       <main className="max-w-lg mx-auto px-4 py-8 space-y-6">
@@ -282,7 +282,7 @@ export default function FusionClient() {
         </div>
 
         <video ref={videoRef} className="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none" playsInline muted />
-        <div className="p-2 border border-white/5 text-[9px] font-mono text-white/20 flex justify-between">
+        <div className="p-2 border border-white/5 text-[11px] font-mono text-white/20 flex justify-between">
           <span>IMU: {sampleCount} | Cam: {cameraStatus || "off"} | {isSimulated ? "SIM" : "LIVE"}</span>
           <span>{template ? "✓ Enrolled" : "○ No template"}</span>
         </div>
@@ -300,7 +300,7 @@ export default function FusionClient() {
             </button>
             {template && (
               <button onClick={() => { setTemplate(null); localStorage.removeItem("myshape-fusion-template"); setMode("enroll"); }}
-                className="w-full py-2 border border-white/5 text-white/15 text-[10px] tracking-[0.15em] uppercase hover:border-white/15">
+                className="w-full py-2 border border-white/5 text-white/15 text-[11px] tracking-[0.15em] uppercase hover:border-white/15">
                 Reset (Re-Enroll)
               </button>
             )}
@@ -317,12 +317,12 @@ export default function FusionClient() {
         {phase === "capturing" && (
           <div className="space-y-6">
             <div className="space-y-2">
-              <div className="flex justify-between text-[10px] uppercase"><span className="text-[#3fb950]/50">{mode === "enroll" ? "Enrolling" : "Verifying"}</span><span className="text-[#3fb950]/50 font-mono">{elapsed.toFixed(1)}s / {DURATION}s</span></div>
+              <div className="flex justify-between text-[11px] uppercase"><span className="text-[#3fb950]/50">{mode === "enroll" ? "Enrolling" : "Verifying"}</span><span className="text-[#3fb950]/50 font-mono">{elapsed.toFixed(1)}s / {DURATION}s</span></div>
               <div className="h-1.5 bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-[#3fb950]/60 to-[#90c8ff]/60 rounded-full transition-all duration-100" style={{ width: `${(elapsed / DURATION) * 100}%` }} /></div>
             </div>
-            <div className="grid grid-cols-2 gap-3 text-[10px]">
-              <div className="p-3 border border-[#3fb950]/10 bg-[#3fb950]/[0.02]"><div className="text-[#3fb950]/40 text-[8px] uppercase mb-1">IMU</div><div className="text-white/50 font-mono">{sampleCount} samples</div></div>
-              <div className="p-3 border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02]"><div className="text-[#90c8ff]/40 text-[8px] uppercase mb-1">Camera</div><div className="text-white/50 font-mono">{cameraSamplesRef.current.length} frames</div></div>
+            <div className="grid grid-cols-2 gap-3 text-[11px]">
+              <div className="p-3 border border-[#3fb950]/10 bg-[#3fb950]/[0.02]"><div className="text-[#3fb950]/40 text-[11px] uppercase mb-1">IMU</div><div className="text-white/50 font-mono">{sampleCount} samples</div></div>
+              <div className="p-3 border border-[#90c8ff]/10 bg-[#90c8ff]/[0.02]"><div className="text-[#90c8ff]/40 text-[11px] uppercase mb-1">Camera</div><div className="text-white/50 font-mono">{cameraSamplesRef.current.length} frames</div></div>
             </div>
             <div className="text-center p-8 border border-dashed border-white/10 text-white/30 text-[14px]">Move naturally — any motion works.</div>
           </div>
@@ -361,14 +361,14 @@ export default function FusionClient() {
             {/* ── Evidence Components (engine-agnostic table) ── */}
             <div className="p-4 border border-white/10 bg-white/[0.02] space-y-3">
               <div className="flex items-center justify-between">
-                <div className="text-[10px] uppercase text-white/20">Evidence Components</div>
-                <span className="text-[8px] text-white/10 font-mono">{evidence.engineId}</span>
+                <div className="text-[11px] uppercase text-white/20">Evidence Components</div>
+                <span className="text-[11px] text-white/10 font-mono">{evidence.engineId}</span>
               </div>
               {evidence.components.map((comp) => (
                 <div key={comp.metric} className="flex items-center justify-between p-2 border border-white/5">
                   <div className="space-y-0.5">
                     <div className="text-[11px] text-white/50">{comp.metric}</div>
-                    <div className="text-[9px] text-white/20">
+                    <div className="text-[11px] text-white/20">
                       {comp.value.toFixed(3)} vs {comp.threshold} — {comp.explanation}
                     </div>
                   </div>
@@ -381,10 +381,10 @@ export default function FusionClient() {
 
             {/* ── Diagnostic Log ── */}
             <div className="p-4 border border-white/10 bg-white/[0.02] space-y-2">
-              <div className="text-[10px] uppercase text-white/20">Diagnostic Log</div>
+              <div className="text-[11px] uppercase text-white/20">Diagnostic Log</div>
               <div className="space-y-1">
                 {evidence.diagnostics.map((d, i) => (
-                  <div key={i} className={`text-[10px] font-mono leading-relaxed ${
+                  <div key={i} className={`text-[11px] font-mono leading-relaxed ${
                     d.startsWith("✓") ? "text-[#3fb950]/70" : d.startsWith("✗") ? "text-[#f85149]/70" : d.startsWith("⚠") ? "text-[#d29922]/70" : "text-white/25"
                   }`}>{d}</div>
                 ))}
@@ -392,8 +392,8 @@ export default function FusionClient() {
             </div>
 
             {/* Policy note */}
-            <div className="p-3 border border-white/5 bg-white/[0.01] text-[9px] font-mono text-white/15 space-y-1">
-              <div className="text-white/20 text-[8px] uppercase mb-1">Policy · defaultPolicy v0.1</div>
+            <div className="p-3 border border-white/5 bg-white/[0.01] text-[11px] font-mono text-white/15 space-y-1">
+              <div className="text-white/20 text-[11px] uppercase mb-1">Policy · defaultPolicy v0.1</div>
               <div>All components must PASS. INSUFFICIENT in any → INSUFFICIENT_EVIDENCE.</div>
               <div>Verdict: <span style={{ color: statusColor(displayVerdict) }}>{displayVerdict}</span> (computed by VerificationPolicy — not stored in Evidence)</div>
             </div>

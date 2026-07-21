@@ -48,7 +48,7 @@ export default function ProtocolLayout({
               {renderSigil ? (
                 <IdentitySigil />
               ) : (
-                <div className="text-[#90c8ff]/50 text-[10px] tracking-[0.5em] mb-4 uppercase">
+                <div className="text-[#90c8ff]/60 text-[11px] tracking-[0.4em] mb-4 uppercase">
                   {category} // REF_{refId}
                 </div>
               )}
@@ -56,13 +56,13 @@ export default function ProtocolLayout({
                 {title.replace(/_/g, ' ')}
               </h1>
             </div>
-            <div className="text-[10px] tracking-[0.3em] text-right uppercase leading-loose font-mono">
-              <span style={{ color: 'rgba(255,255,255,0.35)' }}>
-                SECURITY_LVL: {secLevel}
+            <div className="text-[11px] tracking-[0.2em] text-right uppercase leading-loose font-mono">
+              <span style={{ color: 'rgba(255,255,255,0.5)' }}>
+                STATUS: {secLevel}
               </span>
               <br/>
-              <span style={{ color: 'rgba(255,255,255,0.35)' }}>
-                SYS_STATUS: {systemStatus}
+              <span style={{ color: 'rgba(255,255,255,0.5)' }}>
+                PHASE: {systemStatus}
               </span>
             </div>
           </div>

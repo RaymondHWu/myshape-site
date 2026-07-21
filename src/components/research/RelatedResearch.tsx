@@ -38,14 +38,14 @@ function Section({
 }) {
   return (
     <div className="mb-4">
-      <span className="font-mono text-[9px] tracking-[0.15em] uppercase mr-3" style={{ color }}>
+      <span className="font-mono text-[11px] tracking-[0.15em] uppercase mr-3" style={{ color }}>
         {title}
       </span>
       {items.map((item) => (
         <Link
           key={item.id}
           href={item.href}
-          className="inline-flex items-center gap-1.5 mr-3 mb-1.5 font-mono text-[10px] tracking-[0.08em] transition-all duration-300"
+          className="inline-flex items-center gap-1.5 mr-3 mb-1.5 font-mono text-[11px] tracking-[0.08em] transition-all duration-300"
           style={{
             color: `${color}80`,
             border: `1px solid ${color}20`,
@@ -86,7 +86,7 @@ export default function RelatedResearch(props: RelatedResearchProps) {
       className="mt-16 pt-8"
       style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/15 mb-4">
+      <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/15 mb-4">
         Related Research
       </div>
 
