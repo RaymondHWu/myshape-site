@@ -27,7 +27,7 @@ export default async function ResponsesPage() {
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <h1 style={{ fontSize: 20, fontWeight: 300, color: "#60A5FA", margin: "0 0 8px" }}>Survey Responses</h1>
         <p style={{ fontSize: 12, color: "#64748B", margin: "0 0 32px" }}>
-          {rows.length} response{rows.length !== 1 ? "s" : ""} · <a href="/lab/discovery-survey" style={{ color: "#60A5FA" }}>← Back to survey</a>
+          {rows.length} response{rows.length !== 1 ? "s" : ""} · <a href="/lab" style={{ color: "rgba(255,255,255,0.4)" }}>Lab Home</a> · <a href="/lab/discovery-survey" style={{ color: "#60A5FA" }}>← Back to survey</a>
         </p>
 
         {rows.length === 0 ? (
