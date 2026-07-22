@@ -2,10 +2,18 @@
 
 import { useState, useRef, useEffect } from "react";
 
+const CHALLENGE_PROMPTS = [
+  { text: "Rotate phone to the right →", icon: "↻" },
+  { text: "Rotate phone to the left ←", icon: "↺" },
+  { text: "Tilt phone forward ↑", icon: "↥" },
+  { text: "Tilt phone backward ↓", icon: "↧" },
+  { text: "Shake gently", icon: "⟳" },
+];
+
 const STEPS = [
-  { id: "motion", title: "Motion Check", desc: "Move your phone naturally for 8 seconds.", seconds: 8 },
-  { id: "challenge", title: "Gyroscope Challenge", desc: "Respond to directional prompts. Tests anti-replay.", seconds: 15 },
-  { id: "dual", title: "Dual-Engine Verification", desc: "Passive observation + active challenge combined.", seconds: 30 },
+  { id: "motion", title: "Free Motion", desc: "Move naturally. Any direction. Walk, wave, or gesture.", seconds: 8, hasPrompts: false },
+  { id: "challenge", title: "Directed Motion", desc: "Follow the on-screen prompts. Each one lasts a few seconds.", seconds: 15, hasPrompts: true },
+  { id: "dual", title: "Free + Directed", desc: "Start free, then respond to prompts halfway through.", seconds: 20, hasPrompts: true },
 ];
 
 export default function ContributePage() {
@@ -13,6 +21,8 @@ export default function ContributePage() {
   const [stepIdx, setStepIdx] = useState(0);
   const [phase, setPhase] = useState<"idle" | "countdown" | "recording" | "done" | "finished">("idle");
   const [msg, setMsg] = useState("");
+  const [prompt, setPrompt] = useState("");
+  const [promptIcon, setPromptIcon] = useState("");
   const [verdict, setVerdict] = useState("");
   const [confidence, setConfidence] = useState(0);
   const [details, setDetails] = useState<string[]>([]);
@@ -21,6 +31,7 @@ export default function ContributePage() {
   const [collected, setCollected] = useState(0);
   const ref = useRef<Array<{ t: number; ax: number; ay: number; az: number }>>([]);
   const capRef = useRef(false);
+  const promptRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => { setIsMobile(/Mobi|Android|iPhone/i.test(navigator.userAgent)); }, []);
 
@@ -51,8 +62,37 @@ export default function ContributePage() {
     window.addEventListener("devicemotion", handler);
 
     setPhase("recording");
-    setMsg("Move naturally...");
-    await delay(step.seconds * 1000);
+
+    if (step.hasPrompts) {
+      // Cycle through challenge prompts
+      let pi = 0;
+      const interval = step.id === "dual" ? 4000 : 3000; // 3-4 seconds per prompt
+      const startDelay = step.id === "dual" ? 10000 : 0; // dual: 10s free first
+
+      if (startDelay > 0) {
+        setPrompt("Move freely — prompts coming soon...");
+        setPromptIcon("~");
+        await delay(startDelay);
+      }
+
+      setPrompt(CHALLENGE_PROMPTS[0].text);
+      setPromptIcon(CHALLENGE_PROMPTS[0].icon);
+      const remaining = (step.seconds * 1000) - startDelay;
+
+      promptRef.current = setInterval(() => {
+        pi = (pi + 1) % CHALLENGE_PROMPTS.length;
+        setPrompt(CHALLENGE_PROMPTS[pi].text);
+        setPromptIcon(CHALLENGE_PROMPTS[pi].icon);
+      }, interval);
+
+      await delay(remaining);
+
+      if (promptRef.current) { clearInterval(promptRef.current); promptRef.current = null; }
+      setPrompt(""); setPromptIcon("");
+    } else {
+      setMsg("");
+      await delay(step.seconds * 1000);
+    }
 
     capRef.current = false;
     window.removeEventListener("devicemotion", handler);
@@ -151,8 +191,13 @@ export default function ContributePage() {
         )}
 
         {(phase === "countdown" || phase === "recording") && (
-          <div style={{ fontSize: phase === "recording" ? 18 : 64, fontWeight: 200, color: "#34D399", padding: phase === "recording" ? 40 : 56 }}>
-            {msg}
+          <div style={{ textAlign: "center" }}>
+            {promptIcon && (
+              <div style={{ fontSize: 48, color: "#34D399", marginBottom: 12, opacity: 0.6 }}>{promptIcon}</div>
+            )}
+            <div style={{ fontSize: prompt ? 18 : phase === "recording" ? 18 : 64, fontWeight: 200, color: "#34D399", padding: prompt ? 20 : phase === "recording" ? 40 : 56 }}>
+              {prompt || msg}
+            </div>
           </div>
         )}
 
