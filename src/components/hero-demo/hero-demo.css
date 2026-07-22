@@ -335,7 +335,7 @@
     top: auto;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 48px;
+    display: none; bottom: auto;
     max-width: 90vw;
     gap: 4px;
     flex-wrap: wrap;

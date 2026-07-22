@@ -569,14 +569,6 @@ export default function HeroDemo() {
           </p>
         </div>
 
-        <div className={`hero-demo-subtitle ${subtitleVisible ? "on" : ""}`}>
-          <span className="hero-demo-subtitle-dot" />
-          <span className="hero-demo-subtitle-label">{SCENES[uiScene].label}</span>
-          <span className="hero-demo-subtitle-sep">//</span>
-          <span className="hero-demo-subtitle-text">{displayedSubtitle}</span>
-          <span className="hero-demo-subtitle-cursor">|</span>
-        </div>
-
         <div className="hero-demo-dots">
           {SCENES.map((s, i) => (
             <button
