@@ -332,7 +332,7 @@
   .hero-demo-subtitle {
     position: absolute;
     top: auto;
-    bottom: 56px;
+    bottom: 58px;
     max-width: 90vw;
     gap: 4px;
     flex-wrap: wrap;
@@ -361,11 +361,11 @@
     height: 8px;
   }
 
-  /* CTA — 下半屏，堆叠排列 */
+  /* CTA — 下半屏，横排 */
   .hero-demo-ctas {
     bottom: 10px;
     gap: 8px;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
   }
 
