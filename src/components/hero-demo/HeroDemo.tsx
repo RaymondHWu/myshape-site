@@ -649,7 +649,7 @@ export default function HeroDemo() {
         </div>
 
         <div className="hero-demo-ctas">
-          {/* Subtitle inside CTAs — stays glued to buttons */}
+          {/* Subtitle inside CTAs */}
           <div className="hero-demo-subtitle-inline">
             <span className="hero-demo-subtitle-dot" />
             <span className="hero-demo-subtitle-label">{SCENES[uiScene]?.label}</span>
@@ -657,13 +657,9 @@ export default function HeroDemo() {
             <span className="hero-demo-subtitle-text">{displayedSubtitle}</span>
             <span className="hero-demo-subtitle-cursor">|</span>
           </div>
-          <Link href="/verify" className="hero-demo-cta primary"
+          <Link href="/lab/contribute" className="hero-demo-cta primary"
             onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>
-            <span className="hero-demo-cta-label">Verify</span>
-          </Link>
-          <Link href="/lab/contribute" className="hero-demo-cta secondary"
-            onMouseEnter={() => playTick(600, "sine", 0.08, 0.02)}>
-            <span className="hero-demo-cta-label">Contribute</span>
+            <span className="hero-demo-cta-label">Contribute Data</span>
           </Link>
         </div>
       </div>
