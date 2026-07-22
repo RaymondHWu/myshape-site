@@ -38,7 +38,7 @@ export default function LabPage() {
 
         {/* Logo image — includes title, subtitle, and icon */}
         <div style={{ margin: "0 auto 36px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <img src="/lab-sigil.svg" alt="The Continuity Lab · Continuity · Evidence · Verification"
+          <img src="/lab-sigil.png" alt="The Continuity Lab · Continuity · Evidence · Trust"
             style={{ maxWidth: "min(100%, 420px)", height: "auto", objectFit: "contain" }} />
         </div>
 
