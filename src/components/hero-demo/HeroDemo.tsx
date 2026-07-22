@@ -657,19 +657,21 @@ export default function HeroDemo() {
         </div>
 
         <div className="hero-demo-ctas">
+          {/* Subtitle inside CTAs — stays glued to buttons */}
+          <div className="hero-demo-subtitle-inline">
+            <span className="hero-demo-subtitle-dot" />
+            <span className="hero-demo-subtitle-label">{SCENES[uiScene]?.label}</span>
+            <span className="hero-demo-subtitle-sep">//</span>
+            <span className="hero-demo-subtitle-text">{displayedSubtitle}</span>
+            <span className="hero-demo-subtitle-cursor">|</span>
+          </div>
           <Link href="/verify" className="hero-demo-cta primary"
-            onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-            itemProp="potentialAction" itemScope itemType="https://schema.org/EntryPoint">
-            <meta itemProp="name" content="Verify Continuity" />
-            <meta itemProp="description" content="Verify your physical continuity — move your phone naturally for 8 seconds and receive a CPS-0001 Continuity Receipt." />
-            <span className="hero-demo-cta-label">VERIFY</span>
+            onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>
+            <span className="hero-demo-cta-label">Verify</span>
           </Link>
           <Link href="/lab/contribute" className="hero-demo-cta secondary"
-            onMouseEnter={() => playTick(600, "sine", 0.08, 0.02)}
-            itemProp="potentialAction" itemScope itemType="https://schema.org/EntryPoint">
-            <meta itemProp="name" content="Contribute Data" />
-            <meta itemProp="description" content="Contribute motion data to the open Continuity Dataset." />
-            <span className="hero-demo-cta-label">CONTRIBUTE</span>
+            onMouseEnter={() => playTick(600, "sine", 0.08, 0.02)}>
+            <span className="hero-demo-cta-label">Contribute</span>
           </Link>
         </div>
       </div>

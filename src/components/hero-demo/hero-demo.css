@@ -367,7 +367,7 @@
   .hero-demo-ctas {
     bottom: 10px;
     gap: 8px;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     z-index: 10;
   }
