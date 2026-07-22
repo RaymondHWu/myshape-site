@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 340">
+  <defs>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="45%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.15"/>
+      <stop offset="50%" stop-color="#38BDF8" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#34D399" stop-opacity="0.12"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Subtle glow behind ring -->
+  <circle cx="200" cy="150" r="88" fill="none" stroke="url(#glow)" stroke-width="8" opacity="0.5"/>
+
+  <!-- Main ring: r=88, C≈553, gap at top ~30°≈46px, dashoffset puts gap centered -->
+  <circle cx="200" cy="150" r="88" fill="none" stroke="url(#ring)" stroke-width="2"
+    stroke-dasharray="507 46" stroke-dashoffset="138" stroke-linecap="round"/>
+
+  <!-- Text -->
+  <text x="200" y="280" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="300" fill="rgba(255,255,255,0.82)" letter-spacing="0.06em">The Continuity Lab</text>
+  <text x="200" y="304" text-anchor="middle" font-family="monospace" font-size="9.5" fill="rgba(255,255,255,0.28)" letter-spacing="0.22em">CONTINUITY · EVIDENCE · VERIFICATION</text>
+</svg>
