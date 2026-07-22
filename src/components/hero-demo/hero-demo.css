@@ -96,18 +96,13 @@
 /* ── 场景字幕（粒子下方，醒目）── */
 .hero-demo-subtitle {
   position: absolute;
-  bottom: 155px;
+  bottom: 90px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 10px;
   max-width: 640px;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.hero-demo-subtitle.on {
   opacity: 1;
 }
 
@@ -303,12 +298,12 @@
     object-fit: contain;
   }
 
-  /* 40% 黑色遮罩层 */
+  /* 20% 黑色遮罩层 — 粒子更可见 */
   .hero-demo-root::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(2, 4, 10, 0.4);
+    background: rgba(2, 4, 10, 0.2);
     pointer-events: none;
     z-index: 1;
   }
@@ -335,7 +330,7 @@
     top: auto;
     left: 50%;
     transform: translateX(-50%);
-    display: none; bottom: auto;
+    display: flex; bottom: 50px;
     max-width: 90vw;
     gap: 4px;
     flex-wrap: wrap;
@@ -395,7 +390,7 @@
   }
 
   .hero-demo-subtitle {
-    bottom: 140px;
+    bottom: 50px;
   }
 
   .hero-demo-dots {

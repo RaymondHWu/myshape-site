@@ -47,7 +47,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   // Allow phone testing in dev
-  allowedDevOrigins: IS_PROD ? undefined : ["192.168.0.105", "192.168.0.100"],
+  allowedDevOrigins: IS_PROD ? undefined : ["192.168.0.105", "192.168.0.100", "127.0.0.1", "localhost", "192.168.0.105:3443", "192.168.0.105:3000"],
 
   // ── Redirects ──
   async redirects() {

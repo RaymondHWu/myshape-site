@@ -5,7 +5,7 @@ export function proxy(req: NextRequest) {
   const host = req.headers.get("host") || "";
 
   // Force HTTPS redirect
-  if (req.headers.get("x-forwarded-proto") === "http") {
+  if (process.env.NODE_ENV === "production" && req.headers.get("x-forwarded-proto") === "http") {
     const httpsUrl = req.url.replace("http://", "https://");
     return NextResponse.redirect(httpsUrl, 301);
   }

@@ -492,7 +492,7 @@ export default function HeroDemo() {
   }, []);
 
   return (
-    <section className="hero-demo-root" itemScope itemType="https://schema.org/WebApplication">
+    <section className="hero-demo-root" suppressHydrationWarning itemScope itemType="https://schema.org/WebApplication">
       <meta itemProp="name" content="MyShape Motion-Signature Verification" />
       <meta itemProp="description" content="Real-time ethereal data energy visualization of sovereign identity through non-corporeal particle geometry." />
       <meta itemProp="applicationCategory" content="Identity Verification" />
@@ -648,15 +648,15 @@ export default function HeroDemo() {
           ))}
         </div>
 
+        <div className={`hero-demo-subtitle ${subtitleVisible ? "on" : ""}`}>
+          <span className="hero-demo-subtitle-dot" />
+          <span className="hero-demo-subtitle-label">{SCENES[uiScene]?.label}</span>
+          <span className="hero-demo-subtitle-sep">//</span>
+          <span className="hero-demo-subtitle-text">{displayedSubtitle}</span>
+          <span className="hero-demo-subtitle-cursor">|</span>
+        </div>
+
         <div className="hero-demo-ctas">
-          {/* Subtitle inside CTAs */}
-          <div className="hero-demo-subtitle-inline">
-            <span className="hero-demo-subtitle-dot" />
-            <span className="hero-demo-subtitle-label">{SCENES[uiScene]?.label}</span>
-            <span className="hero-demo-subtitle-sep">//</span>
-            <span className="hero-demo-subtitle-text">{displayedSubtitle}</span>
-            <span className="hero-demo-subtitle-cursor">|</span>
-          </div>
           <Link href="/lab/contribute" className="hero-demo-cta primary"
             onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>
             <span className="hero-demo-cta-label">Contribute Data</span>
