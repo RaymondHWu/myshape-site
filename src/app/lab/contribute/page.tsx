@@ -284,6 +284,9 @@ export default function ContributePage() {
             <button onClick={nextStep} style={{ width: "100%", padding: "14px 0", fontSize: 15, color: "#060B14", background: "#34D399", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 500 }}>
               {isLast ? "Finish" : `Next: ${STEPS[stepIdx + 1].title} →`}
             </button>
+            <div style={{ marginTop: 10 }}>
+              <a href="/" style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", textDecoration: "none" }}>← Home</a>
+            </div>
           </>
         )}
 
