@@ -410,3 +410,15 @@
     width: 82vw;
   }
 }
+
+/* ── 字幕内嵌到 CTA 模块 ── */
+.hero-demo-subtitle-inline {
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; flex-wrap: wrap; margin-bottom: 8px;
+  font-family: var(--font-geist-mono), monospace;
+}
+.hero-demo-subtitle-inline .hero-demo-subtitle-dot { width:4px;height:4px;border-radius:50%;background:rgba(144,200,255,.6); }
+.hero-demo-subtitle-inline .hero-demo-subtitle-label { font-size:10px;letter-spacing:.15em;color:rgba(144,200,255,.6); }
+.hero-demo-subtitle-inline .hero-demo-subtitle-sep { color:rgba(255,255,255,.1);font-size:10px; }
+.hero-demo-subtitle-inline .hero-demo-subtitle-text { font-size:12px;color:rgba(255,255,255,.55); }
+.hero-demo-subtitle-inline .hero-demo-subtitle-cursor { font-size:12px;color:rgba(144,200,255,.5); }
