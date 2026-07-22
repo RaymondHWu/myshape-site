@@ -194,6 +194,9 @@ export default function ContributePage() {
           <button onClick={reset} style={{ padding: "12px 28px", fontSize: 14, color: "#34D399", background: "transparent", border: "1px solid rgba(52,211,153,0.3)", borderRadius: 8, cursor: "pointer" }}>
             Start over
           </button>
+          <div style={{ marginTop: 12 }}>
+            <a href="/" style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", textDecoration: "none" }}>← Back to home</a>
+          </div>
 
           <div style={{ marginTop: 32, padding: "16px 20px", border: "1px solid rgba(144,200,255,0.12)", borderRadius: 8, textAlign: "left" }}>
             <div style={{ fontSize: 11, color: "#64748B", marginBottom: 6, letterSpacing: "0.1em" }}>📱+💻 REQUIRES 2 DEVICES</div>
