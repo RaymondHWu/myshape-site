@@ -662,16 +662,14 @@ export default function HeroDemo() {
             itemProp="potentialAction" itemScope itemType="https://schema.org/EntryPoint">
             <meta itemProp="name" content="Verify Continuity" />
             <meta itemProp="description" content="Verify your physical continuity — move your phone naturally for 8 seconds and receive a CPS-0001 Continuity Receipt." />
-            <meta itemProp="actionApplication" content="MyShape Protocol Continuity Verification" />
-            <span className="hero-demo-cta-label">VERIFY_CONTINUITY</span>
+            <span className="hero-demo-cta-label">VERIFY</span>
           </Link>
-          <Link href="/lab/contribute" className="hero-demo-cta primary"
+          <Link href="/lab/contribute" className="hero-demo-cta secondary"
             onMouseEnter={() => playTick(600, "sine", 0.08, 0.02)}
             itemProp="potentialAction" itemScope itemType="https://schema.org/EntryPoint">
             <meta itemProp="name" content="Contribute Data" />
-            <meta itemProp="description" content="Contribute motion data to the open Continuity Dataset. Three experiments, one page, anonymous." />
-            <meta itemProp="actionApplication" content="Continuity Dataset Data Collection" />
-            <span className="hero-demo-cta-label">CONTRIBUTE_DATA</span>
+            <meta itemProp="description" content="Contribute motion data to the open Continuity Dataset." />
+            <span className="hero-demo-cta-label">CONTRIBUTE</span>
           </Link>
         </div>
       </div>
