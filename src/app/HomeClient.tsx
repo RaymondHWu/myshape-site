@@ -18,7 +18,7 @@ export default function HomeClient() {
         <HeroDemo />
 
         {/* ── Hero Value Proposition ── */}
-        <div className="relative z-10 pt-20 md:pt-32 pb-6 md:pb-8 px-6 text-center">
+        <div className="relative z-10 pt-32 md:pt-32 pb-6 md:pb-8 px-6 text-center">
           <p className="text-white/85 text-[clamp(1.3rem,3.5vw,2rem)] font-light tracking-[0.03em] leading-relaxed max-w-3xl mx-auto"
             style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
             Identity answers who you are.

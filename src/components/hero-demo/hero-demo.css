@@ -291,9 +291,9 @@
 /* ── 移动端极简协议入口 ── */
 @media (max-width: 768px) {
   .hero-demo-root {
-    height: 85dvh;
-    min-height: 85dvh;
-    max-height: 85dvh;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
   }
 
   /* 粒子团缩小 — 限制 canvas 在屏幕中上部 */
@@ -360,7 +360,7 @@
 
   /* CTA — 下半屏，堆叠排列 */
   .hero-demo-ctas {
-    bottom: 20px;
+    bottom: 10px;
     gap: 8px;
     flex-direction: column;
     align-items: center;
