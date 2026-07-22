@@ -291,9 +291,9 @@
 /* ── 移动端极简协议入口 ── */
 @media (max-width: 768px) {
   .hero-demo-root {
-    height: 100dvh;
-    min-height: 100dvh;
-    max-height: 100dvh;
+    height: 72dvh;
+    min-height: 480px;
+    max-height: 72dvh;
     overflow: hidden;
   }
 
