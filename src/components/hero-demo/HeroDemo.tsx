@@ -665,7 +665,7 @@ export default function HeroDemo() {
             <meta itemProp="actionApplication" content="MyShape Protocol Continuity Verification" />
             <span className="hero-demo-cta-label">VERIFY_CONTINUITY</span>
           </Link>
-          <Link href="/lab/contribute" className="hero-demo-cta secondary"
+          <Link href="/lab/contribute" className="hero-demo-cta primary"
             onMouseEnter={() => playTick(600, "sine", 0.08, 0.02)}
             itemProp="potentialAction" itemScope itemType="https://schema.org/EntryPoint">
             <meta itemProp="name" content="Contribute Data" />
