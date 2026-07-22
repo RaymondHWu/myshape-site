@@ -328,14 +328,29 @@
     opacity: 0.45;
   }
 
-  /* 场景字幕 — 移动端隐藏，避免遮挡粒子 */
+  /* 场景字幕 — 粒子下方固定区域 */
   .hero-demo-subtitle {
-    display: none;
+    bottom: 70px;
+    max-width: 90vw;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   /* 场景指示点 — 移动端隐藏 */
   .hero-demo-dots {
     display: none;
+  }
+
+  .hero-demo-subtitle-text {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .hero-demo-subtitle-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(144, 200, 255, 0.7);
   }
 
   .hero-demo-dot {
