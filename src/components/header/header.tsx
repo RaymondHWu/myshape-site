@@ -308,10 +308,9 @@ const ProtocolHeader = () => {
         { label: "Protocol", href: "/protocol" },
         { label: "Blog",     href: "/blog" },
         { label: "Research", href: "/research" },
-        { label: "Verify",  href: "/verify" },
         { label: "Playground",  href: "https://thecontinuitylab.org/lab/playground" },
       ].map(link =>
-          <Link key={link.href} href={link.href} className={link.label === "Verify" ? "md:hidden" : ""}
+          <Link key={link.href} href={link.href}
             onMouseEnter={e => {
               playTick(600, "sine", 0.08, 0.02);
               e.currentTarget.style.color = "rgb(34, 211, 238)";
