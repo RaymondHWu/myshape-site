@@ -30,7 +30,7 @@ const ENGINES = [
   { engine: "VS-001", name: "Dual-Engine Pipeline", rate: "93% · N=60", slug: "/research/protocol-verify" },
 ];
 
-const DATASET = { id: "DS-001", name: "Continuity Dataset", status: "576 runs · 4 engines · HuggingFace", slug: "https://huggingface.co/ContinuityLab-Org/myshape-576" };
+const DATASET = { id: "DS-001", name: "Continuity Dataset", status: "576 runs · 4 engines · HuggingFace", slug: "/research/dataset" };
 
 export default function ResearchClient() {
   return (
@@ -137,7 +137,7 @@ export default function ResearchClient() {
             <span className="w-1 h-1 rounded-full bg-[#a371f7] shadow-[0_0_6px_rgba(163,113,247,0.5)]" />
             <h2 className="text-[11px] tracking-[0.4em] uppercase text-[#a371f7]/70">Dataset</h2>
           </div>
-          <a href={DATASET.slug} className="rn-card block max-w-md" target="_blank" rel="noopener noreferrer" onMouseEnter={() => playTick(520, "sine", 0.05, 0.02)}>
+          <a href={DATASET.slug} className="rn-card block max-w-md" onMouseEnter={() => playTick(520, "sine", 0.05, 0.02)}>
             <div className="rn-card-num"><span className="rn-card-dot" style={{background:"#a371f7",boxShadow:"0 0 6px rgba(163,113,247,0.5)"}} />{DATASET.id}</div>
             <div className="rn-card-title">{DATASET.name}</div>
             <div className="rn-card-subtitle">{DATASET.status}</div>

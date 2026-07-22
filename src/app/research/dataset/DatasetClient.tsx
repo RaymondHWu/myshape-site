@@ -40,8 +40,8 @@ export default function DatasetClient() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
               {[
-                { label: "Total Samples", value: "281" },
-                { label: "Human Subjects", value: "54" },
+                { label: "Total Runs", value: "576" },
+                { label: "Human Subjects", value: "~81" },
                 { label: "AI Strategies", value: "4" },
                 { label: "Countries", value: "3" },
               ].map((stat) => (
@@ -58,7 +58,7 @@ export default function DatasetClient() {
           <section className="note-section">
             <h2>Composition</h2>
 
-            <p><strong>Human motion (81 samples).</strong> 30-second unstructured motion sequences from 54 subjects. Standard webcam at 30 fps. MediaPipe Pose (33 landmarks). No choreography, no controlled environment. Ecological variability is intentional.</p>
+            <p><strong>Human motion (576 runs).</strong> 30-second unstructured motion sequences from ~81 subjects. Standard webcam at 30 fps. MediaPipe Pose (33 landmarks). No choreography, no controlled environment. Ecological variability is intentional.</p>
 
             <p><strong>Synthetic motion (200 samples, 50 per strategy).</strong></p>
             <p>1. Random walk — Gaussian per-joint walk calibrated to human joint range.</p>
@@ -75,8 +75,8 @@ export default function DatasetClient() {
 
             <div className="space-y-3">
               {[
-                { date: "2026.07.10", milestone: "DS-001 established as first-class Research Object. 281 samples." },
-                { date: "2026.07.04", milestone: "PES v0.2 recalibration across 54 human subjects. Cohen's d: 2.1." },
+                { date: "2026.07.10", milestone: "DS-001 established as first-class Research Object. 576 runs." },
+                { date: "2026.07.04", milestone: "PES v0.2 recalibration across ~81 human subjects. Cohen's d: 2.1." },
                 { date: "2026 Q3 (target)", milestone: "300+ human samples. Explicit coverage of age, mobility, and hardware diversity." },
                 { date: "2026 Q4 (target)", milestone: "Longitudinal samples — same subjects across multiple sessions, days apart." },
               ].map((entry, i) => (
