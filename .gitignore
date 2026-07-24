@@ -158,3 +158,4 @@ coverage/
 /src/instrumentation-client.ts
 /src/instrumentation.ts
 papers/arxiv-rn-001/paper.pdf
+continuity-protocol/test-vectors/generated/

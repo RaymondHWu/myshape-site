@@ -31,8 +31,9 @@ New to CPS-0001? Start there. It covers the protocol object model, the engine in
 ├── cli/                                   ← Standalone verifier
 │   └── bin/cps-verify.mjs
 ├── reference-verifier/                    ← Reference implementation (Web Crypto)
-├── second-producer/                       ← Second implementation (@noble)
-│   ├── toy-engine.ts                      ← 30-line example
+├── second-producer/                       ← Reference implementations (@noble)
+│   ├── toy-engine.ts                      ← Minimal example (30 lines)
+│   ├── agent-trace-engine.ts              ← System execution trace example
 │   └── noble-verifier.ts
 ├── test-vectors/
 │   ├── valid/                             ← Known-good receipts

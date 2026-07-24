@@ -1,0 +1,1 @@
+{"query":"mutation {\n  createDiscussion(input: {\n    repositoryId: \"R_kgDOTFMrJg\",\n    categoryId: \"DIC_kwDOTFMrJs4DA5L8\",\n    title: \"[Challenge] Implement CPS-0001 from spec alone\",\n    body: \"See continuity-protocol/DISCUSSION_POST.md for full content.\"\n  }) {\n    discussion { url }\n  }\n}"}

@@ -44,17 +44,18 @@ That's an EvidenceBlock. Everything else (Receipt assembly, signing, verificatio
 
 ## Step 3: Look at an Example (10 min)
 
-Two examples exist, deliberately different:
+Three examples exist, deliberately different:
 
-| | PES Engine | Toy Engine |
-|:---|:---|:---|
-| File | `src/engine/presence-entropy.ts` | `second-producer/toy-engine.ts` |
-| Sensor | Camera | None |
-| Data | 33-point skeleton | Text string |
-| Meaningful? | Yes | No |
-| Lines | ~300 | ~30 |
+| | PES Engine | Agent Trace Engine | Toy Engine |
+|:---|:---|:---|:---|
+| File | `src/engine/presence-entropy.ts` | `second-producer/agent-trace-engine.ts` | `second-producer/toy-engine.ts` |
+| Domain | Human motion | Software execution | Arbitrary text |
+| Sensor | Camera/IMU | Log file | None |
+| Data | 33-point skeleton | System snapshots | Text string |
+| Meaningful? | ✅ | ✅ | ❌ |
+| Lines | ~300 | ~100 | ~30 |
 
-**Start with the Toy Engine.** It's 30 lines and proves the protocol doesn't care what evidence is.
+**Start with the Toy Engine.** It's 30 lines and proves the protocol doesn't care what evidence is. Then look at Agent Trace for a second real example — no hardware needed.
 
 ## Step 4: Build Your Engine (30 min)
 
