@@ -19,11 +19,11 @@ import {
   type ContinuityReceipt,
 } from "../reference-verifier/verifier";
 
-import valid01 from "../test-vectors/valid-receipt-01.json";
-import valid02 from "../test-vectors/valid-receipt-02-chained.json";
-import expired from "../test-vectors/expired.json";
-import tampered from "../test-vectors/tampered-evidence.json";
-import brokenChain from "../test-vectors/broken-chain.json";
+import valid01 from "../test-vectors/valid/single-engine.json";
+import valid02 from "../test-vectors/valid/multi-engine.json";
+import expired from "../test-vectors/invalid/expired.json";
+import tampered from "../test-vectors/invalid/tampered-evidence.json";
+import brokenChain from "../test-vectors/invalid/broken-chain.json";
 
 // ═══════════════════════════════════════════
 // CONFORMANCE-01: Valid Receipt (single engine)

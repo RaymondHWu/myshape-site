@@ -143,6 +143,58 @@ AI-native identity | zero-knowledge presence | motion-signature verification
 
 > 完整依赖列表见 `package.json`。核心技术：Next.js 16, React 19, Tailwind 4, Three.js, MediaPipe, Supabase, TypeScript strict。
 
+### 协议层 (CPS-0001)
+
+```
+外部集成者
+    │
+    ▼
+┌──────────────────────────────┐
+│  SDK v2  (3 functions)       │
+│  verify()  getReceipt()      │
+│  checkContinuity()           │
+│  src/sdk/presence-v2.ts      │
+│  src/sdk/continuity.ts       │
+└──────────┬───────────────────┘
+           │
+    ┌──────▼──────────┐
+    │  CPS-0001        │  Ed25519 签名 (src/lib/crypto.ts)
+    │  buildReceipt()  │  V₁-V₆ 验证
+    │  verifyReceipt() │  @noble/hashes SHA-256 (sync, universal)
+    │  signReceipt()   │
+    │  src/lib/evidence/cps0001.ts
+    └──────┬──────────┘
+           │
+    ┌──────▼──────────┐
+    │  PES Engine      │  4 维熵评分
+    │  Threat Assess   │  C0-C3 攻击模型
+    │  src/engine/     │
+    └─────────────────┘
+```
+
+参考实现：
+- `src/lib/evidence/cps0001.ts` — 主实现 (@noble/hashes)
+- `continuity-protocol/noble-verifier.ts` — 第二实现 (@noble/hashes + @noble/curves)
+- `continuity-protocol/reference-verifier/` — 第三实现 (Web Crypto)
+
+跨实现互操作验证通过。任何 CPS-0001 生产者均可互操作。
+
+API endpoints：
+- `POST /api/verify-receipt` — 验证 receipt (rate limited)
+
+页面：
+- `/demo/proctoring` — 考试监考 E2E demo
+- `/verify-receipt` — 公开验证页 (paste → V₁-V₇)
+- `/motion-demo` — 运动签名 demo
+- `/research/protocol-verify` — 研究验证页
+
+已删除的旧系统 (2026-07-24)：
+- ❌ proof-system.ts (Pedersen + Schnorr)
+- ❌ zk-circuit.ts
+- ❌ SDK v1 (presence.ts, proof.ts, verification.ts)
+- ❌ quickHash DJB2 (8 copies → single sha256Hex)
+- ❌ crypto.subtle.digest (async) → @noble/hashes (sync)
+
 ---
 
 ## 3. 代码风格

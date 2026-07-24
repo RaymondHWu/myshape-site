@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { buildReceipt, createReceiptId, computePayloadDigest } from "@/lib/evidence/cps0001";
+import { buildReceipt, createReceiptId, computePayloadDigest, signReceipt } from "@/lib/evidence/cps0001";
 import type { ContinuityInterval } from "@/lib/evidence/cps0001";
+import { getOrCreateKeyPair, createIssuerIdentity } from "@/lib/crypto";
 
 export default function Page() {
   const [phase, setPhase] = useState<"idle" | "go" | "done">("idle");
@@ -16,12 +17,6 @@ export default function Page() {
   const [receiptHash, setReceiptHash] = useState("");
   const ref = useRef<Array<{ t: number; ax: number; ay: number; az: number }>>([]);
   const capRef = useRef(false);
-
-  async function sha256(text: string): Promise<string> {
-    const buf = new TextEncoder().encode(text);
-    const hash = await crypto.subtle.digest("SHA-256", buf);
-    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-  }
 
   async function go() {
     setError(""); setVerdict(""); setConfidence(0); setDetails([]); setReceiptJson(""); setReceiptHash("");
@@ -89,7 +84,7 @@ export default function Page() {
       n: data.length,
       meanInterval: Math.round(mi * 100) / 100,
     };
-    const payloadDigest = await computePayloadDigest(payload);
+    const payloadDigest = computePayloadDigest(payload);
 
     const interval: ContinuityInterval = {
       start: startTime.toISOString(),
@@ -97,14 +92,18 @@ export default function Page() {
       coverageMs: endTime.getTime() - startTime.getTime(),
     };
 
-    // Opaque subject ID — SHA-256 of localStorage-stable device secret
+    // Opaque subject ID
     let devId = typeof window !== "undefined" ? localStorage.getItem("vfy-dev") : null;
     if (!devId && typeof window !== "undefined") {
       devId = createReceiptId();
       localStorage.setItem("vfy-dev", devId);
     }
 
-    const receipt = buildReceipt({
+    // Ed25519 keypair for signing
+    const kp = getOrCreateKeyPair();
+    const issuer = createIssuerIdentity(kp);
+
+    const unsigned = buildReceipt({
       evidence: [{
         engineId: "EE-001",
         engineVersion: "1.2.0",
@@ -114,18 +113,21 @@ export default function Page() {
       }],
       interval,
       subject: { id: devId ?? "unknown", type: "embodied" },
-      issuer: { id: "self", publicKey: "" },
+      issuer,
       previousReceiptHash: prev,
       verdict: ok ? "PASS" : "FAIL",
     });
 
-    // Hash the full receipt for chain link
+    // Sign with Ed25519
+    const receipt = signReceipt(unsigned, kp.secretKey);
+
+    // Chain link: SHA-256 of full receipt
     const receiptStr = JSON.stringify(receipt);
-    const hash = await sha256(receiptStr);
-    const shortHash = hash.slice(0, 16);
+    const fullHash = computePayloadDigest({ receipt: receiptStr } as Record<string, unknown>);
+    const shortHash = fullHash.slice(0, 16);
     setReceiptJson(JSON.stringify(receipt, null, 2));
     setReceiptHash(shortHash);
-    if (typeof window !== "undefined") localStorage.setItem("vfy-prev", hash);
+    if (typeof window !== "undefined") localStorage.setItem("vfy-prev", fullHash);
 
     setPhase("done");
 

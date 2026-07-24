@@ -1,38 +1,46 @@
 // ============================================================
-// MyShape Protocol SDK v1.0 (§8)
+// MyShape Protocol SDK v2
 //
-// Usage:
+// Three-function public API:
 //   import MyShape from "@/sdk";
-//   const receipt = MyShape.requestPresence(frames, timestamps);
-//   const isValid = MyShape.verifyReceipt(receipt);
+//
+//   const result  = MyShape.verify(frames, timestamps);
+//   const receipt = MyShape.getReceipt(result);
+//   const status  = MyShape.checkContinuity([receipt]);
+//
+// CPS-0001 ContinuityReceipt is the protocol object.
+// Engine-independent. Zero-knowledge. Browser-native.
 // ============================================================
 
-export { generatePresenceProof, getEntropyScore, requestPresence } from "./presence";
-export type { PresenceReceipt, GeneratePresenceOptions, PresenceProofResult } from "./presence";
+export {
+  verify,
+  getReceipt,
+  getEntropyScore,
+  buildReceiptFromPES,
+  verifyReceiptFn as verifyReceipt,
+} from "./presence-v2";
+export type {
+  ContinuityResult,
+  GenerateOptions,
+  ContinuityReceipt,
+  VerificationResult,
+} from "./presence-v2";
 
-export { verifyLocalProof, aggregateProofs, revokeDevice } from "./proof";
-export type { AggregatedProof, RevocationReceipt } from "./proof";
+export { checkContinuity } from "./continuity";
+export type { ContinuityStatus, ContinuityTrend, ContinuityOptions } from "./continuity";
 
-export { verifyPresenceProof, verifyPresenceReceipt } from "./verification";
+// ── Default export ──
 
-// ── Convenience: default export ──
-
-import { generatePresenceProof, getEntropyScore, requestPresence } from "./presence";
-import { verifyLocalProof, aggregateProofs, revokeDevice } from "./proof";
-import { verifyPresenceProof, verifyPresenceReceipt } from "./verification";
+import { verify, getReceipt, getEntropyScore, buildReceiptFromPES, verifyReceiptFn } from "./presence-v2";
+import { checkContinuity } from "./continuity";
 
 const MyShapeSDK = {
-  // Presence (§8.2)
-  generatePresenceProof,
+  verify,
+  getReceipt,
   getEntropyScore,
-  requestPresence,
-  // Proof (§8.3)
-  verifyLocalProof,
-  aggregateProofs,
-  revokeDevice,
-  // Verification (§8.4)
-  verifyPresenceProof,
-  verifyReceipt: verifyPresenceReceipt,
+  buildReceiptFromPES,
+  verifyReceipt: verifyReceiptFn,
+  checkContinuity,
 };
 
 export default MyShapeSDK;

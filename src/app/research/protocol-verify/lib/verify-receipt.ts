@@ -5,12 +5,12 @@
 // and returns the result of each step. Designed for animated UI
 // display — each step is independent.
 //
-// V₂ (signature) is skipped — requires external key material.
-// V₇ (chain) is conditional — requires a predecessor receipt.
+// V₂ (Ed25519 signature) and V₇ (chain) are VERIFIED.
 // ═══════════════════════════════════════════════════════════════════
 
 import {
   verifySchema,
+  verifySignature,
   verifyAssertions,
   verifyTemporal,
   verifyEvidenceIntegrity,
@@ -42,9 +42,9 @@ export interface VerificationStepsResult {
  * This is a non-short-circuiting verifier — all steps run even if one fails.
  * Each step is independent; the overall verdict is INVALID if any step fails.
  */
-export async function runVerificationSteps(
+export function runVerificationSteps(
   receipt: ContinuityReceipt,
-): Promise<VerificationStepsResult> {
+): VerificationStepsResult {
   const steps: VerificationStep[] = [];
 
   // V₁: Schema Validity
@@ -58,13 +58,15 @@ export async function runVerificationSteps(
     error: v1 ?? undefined,
   });
 
-  // V₂: Signature Verification (skipped)
+  // V₂: Ed25519 Signature Verification
+  const v2 = verifySignature(receipt);
   steps.push({
     id: "V₂",
     label: "Signature Verification",
-    description: "Cryptographic signature matches issuer public key",
-    detail: "This demonstration uses unsigned receipts. V₂ requires a trusted issuer key and is skipped.",
-    status: "skipped",
+    description: "Ed25519 signature matches issuer public key",
+    detail: "Verifies the canonical signing payload signature against the issuer's Ed25519 public key.",
+    status: v2 ? "fail" : "pass",
+    error: v2 ?? undefined,
   });
 
   // V₃: Assertion Consistency
@@ -90,7 +92,7 @@ export async function runVerificationSteps(
   });
 
   // V₅: Evidence Reference Integrity
-  const v5 = await verifyEvidenceIntegrity(receipt);
+  const v5 = verifyEvidenceIntegrity(receipt);
   steps.push({
     id: "V₅",
     label: "Evidence Integrity",

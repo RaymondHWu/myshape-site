@@ -5,7 +5,7 @@
 // No browser, no sensors — just data vs algorithm.
 // ═══════════════════════════════════════════════════════════════════
 
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import {
   detectJerkPeaks,
   detectDirectionChanges,
@@ -14,6 +14,21 @@ import {
   type IMUSample,
   type CameraSample,
 } from "./causal-coupling";
+
+// ── Deterministic PRNG (mulberry32) — replaces Math.random() in tests ──
+
+let _seed = 42;
+function seededRandom(): number {
+  _seed |= 0;
+  _seed = (_seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(_seed ^ (_seed >>> 15), 1 | _seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+}
+
+beforeEach(() => {
+  _seed = 42;
+});
 import {
   type Direction,
   type GyroSample,
@@ -31,10 +46,10 @@ import {
 
 function generateNormalGyro(targetDir: Direction, durationMs = 2000): GyroSample[] {
   const axis = gyroAxisFor(targetDir); const sign = expectedSign(targetDir);
-  const baseRate = sign * 120; // 120°/s in the correct direction
+  const baseRate = sign * 120;
   const samples: GyroSample[] = [];
   for (let t = 0; t < durationMs; t += 16) {
-    const rate = baseRate + (Math.random() - 0.5) * 40;
+    const rate = baseRate + (seededRandom() - 0.5) * 40;
     samples.push({ t, ax: 0, ay: 0, az: 9.8, rx: axis === "rx" ? rate : 0, ry: axis === "ry" ? rate : 0, rz: 0 });
   }
   return samples;
@@ -45,7 +60,7 @@ function generateOppositeGyro(targetDir: Direction, durationMs = 2000): GyroSamp
   const baseRate = -sign * 120;
   const samples: GyroSample[] = [];
   for (let t = 0; t < durationMs; t += 16) {
-    const rate = baseRate + (Math.random() - 0.5) * 40;
+    const rate = baseRate + (seededRandom() - 0.5) * 40;
     samples.push({ t, ax: 0, ay: 0, az: 9.8, rx: axis === "rx" ? rate : 0, ry: axis === "ry" ? rate : 0, rz: 0 });
   }
   return samples;
@@ -54,14 +69,14 @@ function generateOppositeGyro(targetDir: Direction, durationMs = 2000): GyroSamp
 function generateNoMotion(durationMs = 2000): GyroSample[] {
   const samples: GyroSample[] = [];
   for (let t = 0; t < durationMs; t += 16) {
-    samples.push({ t, ax: 0, ay: 0, az: 9.8, rx: (Math.random() - 0.5) * 5, ry: (Math.random() - 0.5) * 5, rz: 0 });
+    samples.push({ t, ax: 0, ay: 0, az: 9.8, rx: (seededRandom() - 0.5) * 5, ry: (seededRandom() - 0.5) * 5, rz: 0 });
   }
   return samples;
 }
 
 function generateRandomDirection(targetDir: Direction, durationMs = 2000): GyroSample[] {
   const dirs: Direction[] = ["←", "↑", "→", "↓"];
-  const guessed = dirs[Math.floor(Math.random() * dirs.length)];
+  const guessed = dirs[Math.floor(seededRandom() * dirs.length)];
   if (guessed === targetDir) return generateNormalGyro(targetDir, durationMs);
   return generateOppositeGyro(targetDir, durationMs);
 }
@@ -95,7 +110,7 @@ describe("EE-003 · Gyroscope Challenge Attacks", () => {
     // Simulate 10000 3-round challenges with random guessing
     let fullPasses = 0;
     for (let trial = 0; trial < 10000; trial++) {
-      const roundDirs = (["←", "↑", "→", "↓"] as Direction[]).sort(() => Math.random() - 0.5).slice(0, 3);
+      const roundDirs = (["←", "↑", "→", "↓"] as Direction[]).sort(() => seededRandom() - 0.5).slice(0, 3);
       let passed = 0;
       for (const dir of roundDirs) {
         const samples = generateRandomDirection(dir);
@@ -130,8 +145,8 @@ describe("EE-003 · Gyroscope Challenge Attacks", () => {
 function generateCoupledIMU(durationMs = 2000): IMUSample[] {
   const samples: IMUSample[] = [];
   for (let t = 0; t < durationMs; t += 16) {
-    const ax = Math.sin(t * 0.025) * 3 + Math.sin(t * 0.08) * 1.5 + (Math.random() - 0.5) * 0.5;
-    const ay = Math.cos(t * 0.03) * 2.5 + Math.cos(t * 0.07) * 1.2 + (Math.random() - 0.5) * 0.5;
+    const ax = Math.sin(t * 0.025) * 3 + Math.sin(t * 0.08) * 1.5 + (seededRandom() - 0.5) * 0.5;
+    const ay = Math.cos(t * 0.03) * 2.5 + Math.cos(t * 0.07) * 1.2 + (seededRandom() - 0.5) * 0.5;
     samples.push({ t, ax, ay, az: 9.8, rx: 0, ry: 0, rz: 0, interval: 16 });
   }
   return samples;
@@ -139,21 +154,20 @@ function generateCoupledIMU(durationMs = 2000): IMUSample[] {
 
 function generateCoupledCamera(durationMs = 2000): CameraSample[] {
   return generateCoupledIMU(durationMs).map((s) => ({
-    t: s.t + Math.floor((Math.random() - 0.5) * 60), // small natural jitter ±30ms
-    x: s.ax * 5 + (Math.random() - 0.5) * 2,
-    y: s.ay * 4 + (Math.random() - 0.5) * 2,
+    t: s.t + Math.floor((seededRandom() - 0.5) * 60),
+    x: s.ax * 5 + (seededRandom() - 0.5) * 2,
+    y: s.ay * 4 + (seededRandom() - 0.5) * 2,
     z: 0,
   }));
 }
 
 function generateUncorrelatedCamera(durationMs = 2000): CameraSample[] {
-  // Independently generated — no causal relationship
   const samples: CameraSample[] = [];
   for (let t = 0; t < durationMs; t += 66) {
     samples.push({
       t,
-      x: Math.cos(t * 0.05) * 10 + (Math.random() - 0.5) * 5,
-      y: Math.sin(t * 0.04) * 8 + (Math.random() - 0.5) * 5,
+      x: Math.cos(t * 0.05) * 10 + (seededRandom() - 0.5) * 5,
+      y: Math.sin(t * 0.04) * 8 + (seededRandom() - 0.5) * 5,
       z: 0,
     });
   }

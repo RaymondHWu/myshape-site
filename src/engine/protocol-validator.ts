@@ -1,107 +1,33 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
 // ============================================================
-// MyShape Protocol — Protocol Validator (§9.4)
-// Implements all six verification rules for Presence Transactions.
+// MyShape Protocol — Protocol Validator
+//
+// Applies verification rules to CPS-0001 ContinuityReceipts.
+// Built on verifyReceipt() (V₁-V₆) with additional checks:
+//   - Replay protection (pop_hash / receipt registry)
+//   - Device revocation
+//   - Entropy threshold
+//   - Timestamp freshness
 // ============================================================
 
-import type { ZKPresenceProof } from "./proof-system";
-import type { PresenceTransaction, VerificationRules } from "@/types/protocol";
+import { verifyReceipt, type ContinuityReceipt, type VerificationResult as CpsResult } from "@/lib/evidence/cps0001";
+import { sha256Hex } from "@/lib/hash";
 
-// ── In-memory replay registry (production: distributed registry) ──
+// ── In-memory registries (production: Supabase — see supabase/migrations/20260724_replay_registry.sql) ──
 
 const replayRegistry = new Set<string>();
 const deviceRevocationList = new Set<string>();
 
-// ── Rule 1: ZKP Validity ──
+// ── Verification rules (same structure as legacy for backward compat) ──
 
-function rule1_zkpValidity(tx: PresenceTransaction): boolean {
-  // Recompute root hash from sub-proofs
-  const quickHash = (s: string) => {
-    let h = 0x6d797368;
-    for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h & h; }
-    return Math.abs(h).toString(16).padStart(8, "0");
-  };
-  const recomputed = quickHash(
-    `${tx.zkp.pop.pop_hash}:${tx.zkp.mp.mp_hash}:${tx.zkp.ep.ep_hash}`,
-  );
-  return recomputed === tx.zkp.zkp_hash;
+export interface VerificationRules {
+  schema_valid: boolean;
+  assertions_consistent: boolean;
+  temporal_valid: boolean;
+  evidence_intact: boolean;
+  fresh: boolean;
+  replay_protection: boolean;
+  device_not_revoked: boolean;
 }
-
-// ── Rule 2: Entropy Threshold ──
-
-function rule2_entropyThreshold(tx: PresenceTransaction, pesMin = 0.65): boolean {
-  return tx.entropy_score >= pesMin;
-}
-
-// ── Rule 3: Timestamp Validity ──
-
-function rule3_timestampValidity(tx: PresenceTransaction, maxAgeSeconds = 300): boolean {
-  const now = Math.floor(Date.now() / 1000);
-  // Not in the future
-  if (tx.timestamp > now + 10) return false; // 10s clock skew tolerance
-  // Not expired
-  if (now - tx.timestamp > maxAgeSeconds) return false;
-  // Within proof expiration window
-  if (now > tx.zkp.expires_at) return false;
-  return true;
-}
-
-// ── Rule 4: Replay Protection ──
-
-function rule4_replayProtection(tx: PresenceTransaction): boolean {
-  const popKey = `pop:${tx.zkp.pop.pop_hash}`;
-  const tsKey = `ts:${tx.timestamp}`;
-  const deviceKey = `dev:${tx.device_salt_hash}`;
-
-  if (replayRegistry.has(popKey)) return false;
-  if (replayRegistry.has(tsKey)) return false;
-  if (replayRegistry.has(deviceKey)) return false;
-
-  // Register for future checks
-  replayRegistry.add(popKey);
-  replayRegistry.add(tsKey);
-  replayRegistry.add(deviceKey);
-
-  // Clean old entries periodically (keep last 1000)
-  if (replayRegistry.size > 3000) {
-    const entries = Array.from(replayRegistry);
-    entries.slice(0, 1000).forEach(k => replayRegistry.delete(k));
-  }
-
-  return true;
-}
-
-// ── Rule 5: Device Revocation ──
-
-export function revokeProtocolDevice(deviceSaltHash: string): void {
-  deviceRevocationList.add(deviceSaltHash);
-}
-
-function rule5_deviceRevocation(tx: PresenceTransaction): boolean {
-  return !deviceRevocationList.has(tx.device_salt_hash);
-}
-
-// ── Rule 6: Proof Integrity ──
-
-function rule6_proofIntegrity(tx: PresenceTransaction): boolean {
-  // Version consistency
-  if (tx.zkp.version !== 1) return false;
-  if (tx.zkp.pop.version !== 1) return false;
-  if (tx.zkp.mp.version !== 1) return false;
-  if (tx.zkp.ep.version !== 1) return false;
-  if (tx.version !== 1) return false;
-
-  // Timestamp consistency
-  if (tx.zkp.pop.timestamp !== tx.zkp.mp.timestamp) return false;
-  if (tx.zkp.pop.timestamp !== tx.zkp.ep.timestamp) return false;
-
-  // PES consistency
-  if (Math.abs(tx.entropy_score - tx.zkp.ep.pes) > 0.001) return false;
-
-  return true;
-}
-
-// ── Full Verification (§9.4) ──
 
 export interface VerificationReport {
   passed: boolean;
@@ -110,18 +36,80 @@ export interface VerificationReport {
   verified_at: number;
 }
 
+// ── Replay Protection ──
+
+/**
+ * Check and register a receipt for replay protection.
+ * Uses receiptId as the unique key (receiptId is UUIDv7 — unique per proof).
+ */
+function checkReplay(receipt: ContinuityReceipt): boolean {
+  const key = `receipt:${receipt.receiptId}`;
+  if (replayRegistry.has(key)) return false;
+  replayRegistry.add(key);
+
+  // Clean old entries periodically
+  if (replayRegistry.size > 3000) {
+    const entries = Array.from(replayRegistry);
+    entries.slice(0, 1000).forEach((k) => replayRegistry.delete(k));
+  }
+  return true;
+}
+
+// ── Device Revocation ──
+
+export function revokeDevice(subjectId: string): void {
+  deviceRevocationList.add(subjectId);
+}
+
+function checkDeviceRevocation(receipt: ContinuityReceipt): boolean {
+  return !deviceRevocationList.has(receipt.subject.id);
+}
+
+// ── Full Verification ──
+
+/**
+ * Verify a CPS-0001 ContinuityReceipt.
+ *
+ * Applies:
+ *   1. CPS-0001 schema + assertions + temporal + evidence + freshness
+ *   2. Replay protection (receiptId not previously seen)
+ *   3. Device revocation check
+ *   4. Entropy threshold
+ *   5. Timestamp freshness
+ */
 export function verifyPresenceTransaction(
-  tx: PresenceTransaction,
+  receipt: ContinuityReceipt,
   options: { pes_min?: number; max_age_seconds?: number } = {},
 ): VerificationReport {
+  const { pes_min = 0.20, max_age_seconds = 300 } = options;
+  const now = Math.floor(Date.now() / 1000);
+
+  // Run CPS-0001 verification (V₁, V₃, V₄, V₅, V₆)
+  const cpsResult: CpsResult = verifyReceipt(receipt);
+  const cpsValid = cpsResult.status === "VALID";
+
+  // Extract confidence from first evidence block
+  const confidence = receipt.evidence[0]?.confidence ?? 0;
+
+  // Build rules
   const rules: VerificationRules = {
-    zkp_valid: rule1_zkpValidity(tx),
-    entropy_threshold: rule2_entropyThreshold(tx, options.pes_min),
-    timestamp_valid: rule3_timestampValidity(tx, options.max_age_seconds),
-    replay_protection: rule4_replayProtection(tx),
-    device_not_revoked: rule5_deviceRevocation(tx),
-    proof_integrity: rule6_proofIntegrity(tx),
+    schema_valid: cpsValid,
+    assertions_consistent: cpsValid,
+    temporal_valid: cpsValid,
+    evidence_intact: cpsValid,
+    fresh: cpsValid,
+    replay_protection: checkReplay(receipt),
+    device_not_revoked: checkDeviceRevocation(receipt),
   };
+
+  // Additional checks beyond CPS-0001
+  if (confidence < pes_min) {
+    rules.fresh = false; // re-use fresh flag for entropy threshold
+  }
+  const receiptTime = new Date(receipt.interval.end).getTime() / 1000;
+  if (now - receiptTime > max_age_seconds) {
+    rules.temporal_valid = false;
+  }
 
   const failed = Object.entries(rules)
     .filter(([, v]) => !v)
@@ -131,33 +119,41 @@ export function verifyPresenceTransaction(
     passed: failed.length === 0,
     rules,
     failed_rules: failed,
-    verified_at: Math.floor(Date.now() / 1000),
+    verified_at: now,
   };
 }
 
-// ── Create a Presence Transaction from a ZKP ──
+// ── Create a ContinuityReceipt-based transaction (stub signature) ──
 
+/**
+ * Wrap a ContinuityReceipt with an additional device hash and signature.
+ *
+ * @deprecated The ContinuityReceipt is self-contained. This wrapper exists
+ * only for backward compatibility with the legacy PresenceTransaction format.
+ * New code should use ContinuityReceipt directly.
+ */
 export function createPresenceTransaction(
-  zkp: ZKPresenceProof,
-  pes: number,
+  receipt: ContinuityReceipt,
+  confidence: number,
   deviceSalt: string,
-): PresenceTransaction {
-  const quickHash = (s: string) => {
-    let h = 0x6d797368;
-    for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h & h; }
-    return Math.abs(h).toString(16).padStart(8, "0");
-  };
-
-  // Sign the transaction (stub — production uses EdDSA or similar)
-  const signData = `${zkp.zkp_hash}:${pes}:${zkp.generated_at}:${quickHash(deviceSalt)}`;
-  const signature = quickHash(signData);
+): {
+  version: 1;
+  receipt: ContinuityReceipt;
+  entropy_score: number;
+  timestamp: number;
+  device_salt_hash: string;
+  signature: string;
+} {
+  const deviceHash = sha256Hex(deviceSalt);
+  const signData = `${receipt.receiptId}:${confidence}:${receipt.interval.end}:${deviceHash}`;
+  const signature = sha256Hex(signData);
 
   return {
     version: 1,
-    zkp,
-    entropy_score: pes,
-    timestamp: zkp.generated_at,
-    device_salt_hash: quickHash(deviceSalt),
+    receipt,
+    entropy_score: confidence,
+    timestamp: Math.floor(new Date(receipt.interval.end).getTime() / 1000),
+    device_salt_hash: deviceHash,
     signature,
   };
 }

@@ -1,7 +1,7 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
 "use client";
 import React from "react";
 import { playTick } from "@/utils/useAudioTick";
+import type { ContinuityReceipt } from "@/lib/evidence/cps0001";
 
 interface ProofData {
   pesScore: number;
@@ -9,20 +9,26 @@ interface ProofData {
   noise: number;
   freq: number;
   bio: number;
-  zkpHash: string;
-  popHash: string;
-  mpHash: string;
-  epHash: string;
+  receiptId: string;
+  payloadDigest: string;
   timestamp: number;
 }
 
-export default function PresenceSignature({ proof }: { proof: ProofData }) {
-  const presenceId = proof.zkpHash.slice(0, 16);
+interface Props {
+  proof: ProofData;
+  receipt?: ContinuityReceipt;
+}
+
+export default function PresenceSignature({ proof, receipt }: Props) {
+  const presenceId = proof.receiptId.slice(0, 16);
   const now = new Date(proof.timestamp).toISOString();
   const pesPct = Math.round(proof.pesScore * 100);
 
   const handleDownload = () => {
-    const data = `PRESENCE_PROOF\nProtocol: MyShape CPS-0001 v1.0-RC\nPresence_ID: ${presenceId}\nPES: ${pesPct}%\nTimestamp: ${now}\nZK_Hash: ${proof.zkpHash}\nPoP: ${proof.popHash}\nMP: ${proof.mpHash}\nEP: ${proof.epHash}\nDevice: Local Generation\nRaw Data: Zero Upload\n—————————————\nVerified by MyShape Protocol\nmyshape.com`;
+    const receiptBlock = receipt
+      ? `Receipt_ID: ${receipt.receiptId}\nEvidence_Hash: ${proof.payloadDigest}\n`
+      : `Receipt_Hash: ${proof.payloadDigest}\n`;
+    const data = `PRESENCE_PROOF\nProtocol: MyShape CPS-0001 v1.0\nPresence_ID: ${presenceId}\nPES: ${pesPct}%\nTimestamp: ${now}\n${receiptBlock}Device: Local Generation\nRaw Data: Zero Upload\n—————————————\nVerified by MyShape Protocol\nmyshape.com`;
     const blob = new Blob([data], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -61,8 +67,8 @@ export default function PresenceSignature({ proof }: { proof: ProofData }) {
           <div className="text-white/60 font-mono group-hover:text-white/90 text-[11px]">{now.slice(11, 19)} UTC</div>
         </div>
         <div className="border-b border-white/[0.04] pb-1.5 flex justify-between items-center group hover:scale-[1.02] hover:bg-[#90c8ff]/[0.04] hover:border-[#90c8ff]/15 transition-all hover:text-white/80 duration-300 cursor-default rounded-sm px-1 -mx-1">
-          <div className="text-white/50 text-[11px] tracking-[0.2em] group-hover:text-white/80 uppercase mb-1">ZK Hash</div>
-          <div className="text-white/50 font-mono text-[11px]">{proof.zkpHash.slice(0, 12)}</div>
+          <div className="text-white/50 text-[11px] tracking-[0.2em] group-hover:text-white/80 uppercase mb-1">Receipt ID</div>
+          <div className="text-white/50 font-mono text-[11px]">{proof.receiptId.slice(0, 12)}</div>
         </div>
       </div>
 

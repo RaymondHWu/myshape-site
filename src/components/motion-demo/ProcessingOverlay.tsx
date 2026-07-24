@@ -1,4 +1,4 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
+// MyShape Protocol — Processing Overlay (CPS-0001 receipt generation)
 "use client";
 import "./ProcessingOverlay.css";
 

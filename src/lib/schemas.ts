@@ -1,4 +1,4 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
+// MyShape Protocol — Validation Schemas
 // ============================================================
 // MyShape Protocol — Runtime API Schemas (Zod)
 // ============================================================

@@ -1,4 +1,5 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
+// MyShape Protocol — Presence Reputation Engine (§14-16)
+// Persistent reputation scoring across sessions, co-presence graphs, and consensus.
 // ============================================================
 // MyShape Protocol — Presence Reputation Engine (§14-16)
 //
@@ -7,7 +8,7 @@
 // §16 Presence Consensus — network agreement on presence
 // ============================================================
 
-import type { ZKPresenceProof } from "./proof-system";
+import type { ContinuityReceipt } from "@/lib/evidence/cps0001";
 
 // ── §14 — Presence Reputation ──
 
@@ -101,14 +102,14 @@ export function createPresenceGraph(): PresenceGraph {
 export function addPresenceNode(
   graph: PresenceGraph,
   nodeId: string,
-  proof: ZKPresenceProof,
+  receipt: ContinuityReceipt,
   reputation: ReputationProfile,
 ): void {
   graph.nodes.set(nodeId, {
     node_id: nodeId,
-    last_zkp_hash: proof.zkp_hash,
-    last_pes: proof.ep.pes,
-    last_seen: proof.generated_at,
+    last_zkp_hash: receipt.receiptId,
+    last_pes: receipt.evidence[0]?.confidence ?? 0,
+    last_seen: Math.floor(new Date(receipt.interval.end).getTime() / 1000),
     reputation,
   });
 }
@@ -154,7 +155,7 @@ export interface ConsensusResult {
 }
 
 export function runPresenceConsensus(
-  proofs: Array<{ node_id: string; zkp: ZKPresenceProof }>,
+  proofs: Array<{ node_id: string; receipt: ContinuityReceipt }>,
   options: { threshold?: number; min_nodes?: number } = {},
 ): ConsensusResult {
   const { threshold = 0.67, min_nodes = 1 } = options;
@@ -170,11 +171,11 @@ export function runPresenceConsensus(
     };
   }
 
-  // Consensus = fraction of nodes whose PES agrees within tolerance
-  const pesValues = proofs.map(p => p.zkp.ep.pes);
+  // Consensus = fraction of nodes whose confidence agrees within tolerance
+  const pesValues = proofs.map((p) => p.receipt.evidence[0]?.confidence ?? 0);
   const medianPes = pesValues.sort((a, b) => a - b)[Math.floor(pesValues.length / 2)];
   const tolerance = 0.10;
-  const agreeing = proofs.filter(p => Math.abs(p.zkp.ep.pes - medianPes) <= tolerance);
+  const agreeing = proofs.filter((p) => Math.abs((p.receipt.evidence[0]?.confidence ?? 0) - medianPes) <= tolerance);
   const agreementRatio = agreeing.length / proofs.length;
 
   return {
@@ -183,6 +184,6 @@ export function runPresenceConsensus(
     agreement_ratio: agreementRatio,
     participating_nodes: proofs.length,
     dissenting_nodes: proofs.length - agreeing.length,
-    final_pes: agreeing.reduce((s, p) => s + p.zkp.ep.pes, 0) / agreeing.length,
+    final_pes: agreeing.reduce((s, p) => s + (p.receipt.evidence[0]?.confidence ?? 0), 0) / agreeing.length,
   };
 }

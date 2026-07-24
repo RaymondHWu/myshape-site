@@ -1,4 +1,4 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
+// MyShape Protocol — ZK Proof Display Component (CPS-0001)
 "use client";
 
 interface ZKProofBoxProps {

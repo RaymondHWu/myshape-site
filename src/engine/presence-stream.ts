@@ -1,69 +1,64 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
 // ============================================================
 // MyShape Protocol — Presence Stream Engine (§11-13)
 //
-// §11 ZK-Presence Aggregation — recursive proofs over time
-// §12 Multi-Device Presence — fused proofs across devices
+// §11 Receipt Aggregation — recursive receipts over time
+// §12 Multi-Device Presence — fused receipts across devices
 // §13 Continuous Presence — real-time presence stream + PSS
+//
+// Uses CPS-0001 ContinuityReceipt as the protocol object.
 // ============================================================
 
-import type { ZKPresenceProof } from "./proof-system";
-import type { PESComponents } from "./presence-entropy";
+import type { ContinuityReceipt } from "@/lib/evidence/cps0001";
+import { sha256Hex } from "@/lib/hash";
 
 // ── §11 — Aggregated Proof ──
 
 export interface AggregatedProof {
   version: "1.1";
   window_count: number;
-  proofs: ZKPresenceProof[];
-  entropy_score: number;      // PES_agg
+  receipts: ContinuityReceipt[];
+  entropy_score: number;      // PES_agg (min confidence)
   timestamp_start: number;
   timestamp_end: number;
   root_hash: string;
 }
 
 export function aggregateProofs(
-  proofs: ZKPresenceProof[],
+  receipts: ContinuityReceipt[],
   options: { max_gap_seconds?: number; min_entropy?: number } = {},
 ): AggregatedProof | null {
   const { max_gap_seconds = 3, min_entropy = 0.65 } = options;
-  if (proofs.length === 0) return null;
+  if (receipts.length === 0) return null;
 
-  // Rule 1: Temporal continuity — gap between consecutive proofs ≤ max_gap
-  const sorted = [...proofs].sort((a, b) => a.generated_at - b.generated_at);
+  // Rule 1: Temporal continuity — gap between consecutive receipts ≤ max_gap
+  const sorted = [...receipts].sort(
+    (a, b) => new Date(a.interval.start).getTime() - new Date(b.interval.start).getTime(),
+  );
   for (let i = 1; i < sorted.length; i++) {
-    if (sorted[i].generated_at - sorted[i - 1].generated_at > max_gap_seconds) {
-      return null; // gap too large — not a continuous stream
-    }
+    const gap =
+      new Date(sorted[i].interval.start).getTime() / 1000 -
+      new Date(sorted[i - 1].interval.end).getTime() / 1000;
+    if (gap > max_gap_seconds) return null;
   }
 
-  // Rule 2: Entropy preservation — aggregate PES must meet threshold
-  const pesValues = sorted.map(p => p.ep.pes);
-  const minPes = Math.min(...pesValues);
-  const avgPes = pesValues.reduce((a, b) => a + b, 0) / pesValues.length;
-  // Conservative: use minimum PES as aggregate (security-first)
-  const pesAgg = minPes;
+  // Rule 2: Entropy preservation — aggregate confidence must meet threshold
+  const confidences = sorted.map((r) => r.evidence[0]?.confidence ?? 0);
+  const minConf = Math.min(...confidences);
+  const avgConf = confidences.reduce((a, b) => a + b, 0) / confidences.length;
+  const pesAgg = minConf; // conservative: use minimum
   if (pesAgg < min_entropy) return null;
 
-  // Rule 3: Proof integrity — all same version, compatible
-  if (sorted.some(p => p.version !== 1)) return null;
-
-  // Compute root hash
-  const quickHash = (s: string) => {
-    let h = 0x6d797368;
-    for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h & h; }
-    return Math.abs(h).toString(16).padStart(8, "0");
-  };
-  const hashInput = sorted.map(p => p.zkp_hash).join(":") + `:avg=${avgPes.toFixed(4)}`;
+  // Compute root hash from receipt IDs
+  const hashInput = sorted.map((r) => r.receiptId).join(":") + `:avg=${avgConf.toFixed(4)}`;
 
   return {
     version: "1.1",
     window_count: sorted.length,
-    proofs: sorted,
+    receipts: sorted,
     entropy_score: pesAgg,
-    timestamp_start: sorted[0].generated_at,
-    timestamp_end: sorted[sorted.length - 1].generated_at,
-    root_hash: quickHash(hashInput),
+    timestamp_start: Math.floor(new Date(sorted[0].interval.start).getTime() / 1000),
+    timestamp_end: Math.floor(new Date(sorted[sorted.length - 1].interval.end).getTime() / 1000),
+    root_hash: sha256Hex(hashInput),
   };
 }
 
@@ -74,22 +69,22 @@ export type DeviceType = "headset" | "phone" | "watch" | "laptop" | "external_ca
 export interface DeviceProof {
   device_id: string;
   device_type: DeviceType;
-  zkp: ZKPresenceProof;
+  receipt: ContinuityReceipt;
   timestamp: number;
 }
 
 // §12.6 — Device weights
 const DEVICE_WEIGHTS: Record<DeviceType, number> = {
-  headset: 1.0,          // VR — full skeleton, highest trust
-  phone: 0.6,            // single camera, limited FOV
-  watch: 0.3,            // IMU only, no camera
-  laptop: 0.5,           // built-in webcam
-  external_camera: 0.7,   // dedicated camera
+  headset: 1.0,
+  phone: 0.6,
+  watch: 0.3,
+  laptop: 0.5,
+  external_camera: 0.7,
 };
 
 export interface MultiDevicePresence {
   devices: DeviceProof[];
-  fused_pes: number;        // weighted fusion
+  fused_pes: number;
   fused_timestamp: number;
   device_count: number;
 }
@@ -102,17 +97,17 @@ export function fuseMultiDevicePresence(
   if (deviceProofs.length === 0) return null;
 
   // Device synchronization: all timestamps within tolerance
-  const timestamps = deviceProofs.map(d => d.timestamp);
+  const timestamps = deviceProofs.map((d) => d.timestamp);
   const maxTs = Math.max(...timestamps);
   const minTs = Math.min(...timestamps);
   if (maxTs - minTs > sync_tolerance_ms / 1000) return null;
 
-  // Weighted entropy fusion
+  // Weighted entropy fusion (use evidence confidence as PES)
   let totalWeight = 0;
   let weightedPes = 0;
   for (const dp of deviceProofs) {
     const w = DEVICE_WEIGHTS[dp.device_type] ?? 0.5;
-    weightedPes += dp.zkp.ep.pes * w;
+    weightedPes += (dp.receipt.evidence[0]?.confidence ?? 0) * w;
     totalWeight += w;
   }
 
@@ -127,9 +122,8 @@ export function fuseMultiDevicePresence(
 // ── §13 — Continuous Presence Stream ──
 
 export interface PresenceSnapshot {
-  zkp: ZKPresenceProof;
+  receipt: ContinuityReceipt;
   pes: number;
-  components: PESComponents;
   timestamp: number;
 }
 
@@ -138,13 +132,11 @@ export interface PresenceStream {
   start_time: number;
   duration_seconds: number;
   sample_count: number;
-  pss: number;              // Presence Stability Score (§13)
+  pss: number;
   pss_trend: "rising" | "stable" | "declining";
 }
 
 // §13 — Presence Stability Score
-// Measures how consistently real presence is maintained over time.
-// High PSS = stable, genuine presence. Low PSS = intermittent or degrading.
 
 export function computePresenceStabilityScore(
   snapshots: PresenceSnapshot[],
@@ -153,21 +145,19 @@ export function computePresenceStabilityScore(
     return { pss: snapshots.length > 0 ? snapshots[0].pes : 0, trend: "stable" };
   }
 
-  const pesValues = snapshots.map(s => s.pes);
+  const pesValues = snapshots.map((s) => s.pes);
   const mean = pesValues.reduce((a, b) => a + b, 0) / pesValues.length;
 
-  // Stability = 1 − coefficient of variation
   const variance = pesValues.reduce((s, v) => s + (v - mean) ** 2, 0) / pesValues.length;
   const cv = mean > 0 ? Math.sqrt(variance) / mean : 1;
   const stability = Math.max(0, 1 - cv);
 
-  // PSS = mean PES × stability factor
   const pss = mean * (0.5 + 0.5 * stability);
 
-  // Trend: compare first half vs second half
   const mid = Math.floor(pesValues.length / 2);
   const firstHalf = pesValues.slice(0, mid).reduce((a, b) => a + b, 0) / mid;
-  const secondHalf = pesValues.slice(mid).reduce((a, b) => a + b, 0) / (pesValues.length - mid);
+  const secondHalf =
+    pesValues.slice(mid).reduce((a, b) => a + b, 0) / (pesValues.length - mid);
   const delta = secondHalf - firstHalf;
   const trend: PresenceStream["pss_trend"] =
     delta > 0.03 ? "rising" : delta < -0.03 ? "declining" : "stable";
@@ -175,7 +165,9 @@ export function computePresenceStabilityScore(
   return { pss, trend };
 }
 
-export function createPresenceStream(snapshots: PresenceSnapshot[]): PresenceStream | null {
+export function createPresenceStream(
+  snapshots: PresenceSnapshot[],
+): PresenceStream | null {
   if (snapshots.length === 0) return null;
 
   const sorted = [...snapshots].sort((a, b) => a.timestamp - b.timestamp);

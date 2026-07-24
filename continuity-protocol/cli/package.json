@@ -1,0 +1,23 @@
+{
+  "name": "@continuity-protocol/verifier",
+  "version": "1.0.0-rc",
+  "description": "CPS-0001 Reference Verifier — standalone CLI for verifying Continuity Receipts",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "cps-verify": "./bin/cps-verify.mjs"
+  },
+  "dependencies": {
+    "@noble/curves": "^2.2.0",
+    "@noble/hashes": "^2.2.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["cps-0001", "continuity", "protocol", "verifier", "receipt"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/myshapeprotocol/myshape-protocol",
+    "directory": "continuity-protocol/cli"
+  }
+}

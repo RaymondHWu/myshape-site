@@ -11,9 +11,11 @@ import PresenceSignature from "@/components/presence-signature/PresenceSignature
 import { mediaPipeToSST, normalizeSSTFrame } from "@/engine/skeleton-topology";
 import { computeFullPES } from "@/engine/presence-entropy";
 import { assessThreat } from "@/engine/threat-assessment";
-import { generateFullProof } from "@/engine/proof-system";
 import { getDeviceSalt } from "@/engine/local-identity";
 import type { JointPosition, SSTJointId } from "@/types/motion-vector";
+import { buildReceiptFromPES } from "@/sdk/presence-v2";
+import type { ContinuityReceipt } from "@/lib/evidence/cps0001";
+import { sha256Hex } from "@/lib/hash";
 import { useResearchUpload } from "@/hooks/useResearchUpload";
 import type { UploadData } from "@/hooks/useResearchUpload";
 import ResearchConsent from "@/components/research-consent/ResearchConsent";
@@ -28,6 +30,7 @@ import ThreatVerdict from "@/components/motion-demo/ThreatVerdict";
 import TelemetryPanel from "@/components/motion-demo/TelemetryPanel";
 
 type Phase = "idle" | "capturing" | "processing" | "complete";
+type SensorMode = "camera" | "gyro";
 
 interface SparkParticle {
   x: number; y: number;
@@ -67,10 +70,13 @@ export default function MotionDemoClient() {
   const [sovereignKey, setSovereignKey] = useState<string | null>(null);
   const [cohortFull, setCohortFull] = useState(false);
   const [phase, setPhase] = useState<Phase>("idle");
+  const [sensorMode, setSensorMode] = useState<SensorMode | null>(null);
+  const [cameraAvailable] = useState(() => typeof navigator?.mediaDevices?.getUserMedia === "function");
   const [features, setFeatures] = useState<FeatureFrame | null>(null);
   const [pesData, setPesData] = useState<PESData | null>(null);
   const [threatVerdict, setThreatVerdict] = useState<string>("");
-  const [proofHashes, setProofHashes] = useState<{ zkp: string; pop: string; mp: string; ep: string } | null>(null);
+  const [proofHashes, setProofHashes] = useState<{ receiptId: string; payloadDigest: string } | null>(null);
+  const [continuityReceipt, setContinuityReceipt] = useState<ContinuityReceipt | null>(null);
   const [livePes, setLivePes] = useState<{ score: number; timing: number; noise: number; freq: number; bio: number } | null>(null);
   const [aiCompare, setAiCompare] = useState<{ score: number; timing: number; noise: number; freq: number; bio: number } | null>(null);
   const [wasmCompare, setWasmCompare] = useState<{ loading: boolean; similarity: number | null; sigDim: number } | null>(null);
@@ -122,6 +128,7 @@ export default function MotionDemoClient() {
     // 在用户点击的同步代码块中恢复 AudioContext（浏览器自动播放策略要求）
     resumeAudio();
 
+    setSensorMode("camera");
     setPhase("capturing");
     phaseRef.current = "capturing";
     setCountdown(30);
@@ -155,7 +162,14 @@ export default function MotionDemoClient() {
     phaseTorsoVelRef.current = [0, 0, 0, 0, 0];
 
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, frameRate: 30 } });
+      // Try with progressively relaxed constraints
+      let stream: MediaStream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 640 }, height: { ideal: 480 } } });
+      } catch {
+        // Fallback: any available camera with any settings
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      }
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -163,21 +177,11 @@ export default function MotionDemoClient() {
         // The canvas renders the mirrored camera frame itself.
         await videoRef.current.play();
       }
-      if (!window.Pose) {
-        await new Promise<void>(resolve => {
-          const s = document.createElement("script");
-          s.src = "https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/pose.js";
-          s.crossOrigin = "anonymous";
-          // SRI ensures CDN file hasn't been tampered with
-          s.integrity = "sha384-qcJQ+n/ZcF15Xu2EoRupB4Av+GEAGeW0Td1mp2A90u0NdNLzLYQVMUq1Ax1YAHqk";
-          s.onload = () => resolve();
-          s.onerror = () => { console.warn("[motion-demo] MediaPipe load failed"); resolve(); };
-          document.head.appendChild(s);
-        });
-      }
-      if (!window.Pose) { setPhase("idle"); return; }
-      const MP_BASE = "https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404";
-      const pose = new window.Pose({ locateFile: (f: string) => { const url = `${MP_BASE}/${f}`; if (!f || f.includes("undefined")) throw new Error("Invalid MP file"); return url; } });
+      // Use npm package — handles WASM correctly on modern Chrome
+      const { Pose } = await import("@mediapipe/pose");
+      const pose = new Pose({
+        locateFile: (f: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${f}`,
+      });
       pose.setOptions({ modelComplexity: 0, smoothLandmarks: true, minDetectionConfidence: 0.5 });
       // ── onResults: extract features + update energy ref for particle engine ──
       pose.onResults((results: PoseResult) => {
@@ -454,9 +458,71 @@ export default function MotionDemoClient() {
         drawLoop();
       }, 500);
     } catch (err) {
-      console.error("Camera access failed:", err);
+      const msg = err instanceof DOMException ? `${err.name}: ${err.message}` : String(err);
+      console.error("Camera access failed:", msg);
+      if (typeof navigator?.mediaDevices?.getUserMedia !== "function") {
+        alert("Camera unavailable.\n\nOn mobile: use the /verify page instead (gyroscope).\nOn desktop: use https:// or localhost.");
+      } else {
+        alert(`Camera error: ${msg}\n\n1. Windows Settings > Privacy > Camera ON\n2. No other app using camera\n3. Use localhost or https://`);
+      }
       setPhase("idle");
     }
+  }, []);
+
+  // ── Phone Gyro Mode ──
+
+  const startGyroCapture = useCallback(async () => {
+    resumeAudio();
+    setSensorMode("gyro");
+    setPhase("capturing");
+    phaseRef.current = "capturing";
+    setCountdown(8);
+    captureStartRef.current = performance.now();
+    setCaptureElapsedMs(0);
+    setValidFrameCount(0);
+    setAllPhasesComplete(false);
+    sstFramesRef.current = [];
+    setProofHashes(null);
+    setPesData(null);
+    setThreatVerdict("");
+
+    const timer = setInterval(() => {
+      const elapsed = performance.now() - captureStartRef.current;
+      setCaptureElapsedMs(elapsed);
+      setCountdown(Math.max(0, Math.ceil((8000 - elapsed) / 1000)));
+      if (elapsed >= 8000) { clearInterval(timer); setAllPhasesComplete(true); }
+    }, 250);
+
+    const data: Array<{ t: number; ax: number; ay: number; az: number }> = [];
+    const handler = (e: DeviceMotionEvent) => {
+      data.push({ t: performance.now(), ax: e.acceleration?.x ?? e.accelerationIncludingGravity?.x ?? 0, ay: e.acceleration?.y ?? e.accelerationIncludingGravity?.y ?? 0, az: e.acceleration?.z ?? e.accelerationIncludingGravity?.z ?? 0 });
+    };
+    window.addEventListener("devicemotion", handler);
+    setTimeout(() => { window.removeEventListener("devicemotion", handler); }, 8000);
+
+    // Wait for capture to finish
+    await new Promise(r => setTimeout(r, 8200));
+    setPhase("processing");
+    phaseRef.current = "processing";
+
+    if (data.length < 10) { setPhase("idle"); alert("Not enough motion data. Try moving more."); return; }
+    const n = data.length;
+    let si = 0; for (let i = 1; i < n; i++) si += data[i].t - data[i-1].t;
+    const mi = si / (n-1); let sv = 0;
+    for (let i = 1; i < n; i++) { const d = data[i].t - data[i-1].t; sv += (d-mi)*(d-mi); }
+    const cv = Math.sqrt(sv/(n-1)) / Math.max(mi, 1);
+    let sm = 0; for (const d of data) sm += Math.sqrt(d.ax*d.ax + d.ay*d.ay + d.az*d.az);
+    const mm = sm/n; let mv = 0;
+    for (const d of data) { const m = Math.sqrt(d.ax*d.ax + d.ay*d.ay + d.az*d.az); mv += (m-mm)*(m-mm); }
+    const mvv = mv/n;
+    const pes = Math.min(cv/0.25, 1) * 0.5 + Math.min(mvv/1.5, 1) * 0.5;
+
+    setPesData({ score: pes, timing: cv, noise: mvv, frequency: 0, biological: 0 });
+    setThreatVerdict(pes > 0.25 ? "✓ HUMAN_PRESENCE_VERIFIED" : "⚠ UNCERTAIN");
+
+    const receipt = buildReceiptFromPES({ pes, components: { frequencyEntropy: 0, microTimingVariance: cv, noiseResidual: mvv, biologicalPerturbation: 0 }, windowSeconds: 8, deviceSalt: getDeviceSalt() });
+    setContinuityReceipt(receipt);
+    setProofHashes({ receiptId: receipt.receiptId, payloadDigest: receipt.evidence[0]?.payloadDigest ?? "" });
   }, []);
 
   // ── Sync phaseRef with phase state (keeps feed loop + onResults in sync) ──
@@ -502,31 +568,11 @@ export default function MotionDemoClient() {
       setThreatVerdict(threat.overallVerdict === "human" ? "✓ HUMAN_PRESENCE_VERIFIED"
         : threat.overallVerdict === "suspicious" ? "⚠ SUSPICIOUS — FURTHER_CHECK_REQUIRED"
         : "✗ SYNTHETIC_DETECTED");
-      // ── Generate full Continuity Proof ──
-      const quickHash = (s: string) => {
-        let h = 0x6d797368;
-        for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h & h; }
-        return Math.abs(h).toString(16).padStart(8, "0");
-      };
-      const sstJson = JSON.stringify(sstFrames.slice(-30).map(f => f.frame));
-      const componentsJson = JSON.stringify(components);
+      // ── Generate CPS-0001 Continuity Receipt ──
       const deviceSalt = getDeviceSalt();
-      const zkp = generateFullProof({
-        fps: 30,
-        windowSeconds: 1,
-        nodes: 18,
-        mvHash: quickHash(sstJson),
-        featureHash: quickHash(componentsJson),
-        pes,
-        pesComponents: components,
-        deviceSalt,
-      });
-      setProofHashes({
-        zkp: zkp.zkp_hash,
-        pop: zkp.pop.pop_hash,
-        mp: zkp.mp.mp_hash,
-        ep: zkp.ep.ep_hash,
-      });
+      const receipt = buildReceiptFromPES({ pes, components, windowSeconds: 1, deviceSalt });
+      setContinuityReceipt(receipt);
+      setProofHashes({ receiptId: receipt.receiptId, payloadDigest: receipt.evidence[0]?.payloadDigest ?? "" });
 
       // ── Phase E-1: Research upload (fire-and-forget, opt-in only) ──
       if (researchConsented) {
@@ -727,22 +773,46 @@ export default function MotionDemoClient() {
 
             {phase === "idle" && (
               <>
-                <IdlePanel
-                  isChromium={isChromium}
-                  researchConsented={researchConsented}
-                  onConsentChange={setResearchConsented}
-                  lighting={lighting}
-                  onLightingChange={setLighting}
-                  uploadState={uploadState}
-                  uploadError={uploadError}
-                  sessionId={sessionId}
-                  uploadDone={uploadDone}
-                  onStartCapture={startCapture}
-                />
+                {cameraAvailable && (
+                  <IdlePanel
+                    isChromium={isChromium}
+                    researchConsented={researchConsented}
+                    onConsentChange={setResearchConsented}
+                    lighting={lighting}
+                    onLightingChange={setLighting}
+                    uploadState={uploadState}
+                    uploadError={uploadError}
+                    sessionId={sessionId}
+                    uploadDone={uploadDone}
+                    onStartCapture={startCapture}
+                  />
+                )}
+                <div className="mt-6 text-center">
+                  <button
+                    onClick={startGyroCapture}
+                    className="px-8 py-3 border border-[#90c8ff]/30 text-[#90c8ff]/60 text-xs tracking-[0.15em] uppercase hover:bg-[#90c8ff]/5 hover:text-[#90c8ff]/90 transition-all"
+                  >
+                    {cameraAvailable ? "Use Phone Gyro Instead" : "Begin (Gyroscope)"}
+                  </button>
+                  {!cameraAvailable && (
+                    <p className="text-white/20 text-[10px] mt-3">Camera unavailable — using motion sensors. Tilt and shake your phone.</p>
+                  )}
+                  {cameraAvailable && (
+                    <p className="text-white/15 text-[10px] mt-3">Open this page on your phone to use the gyroscope sensor.</p>
+                  )}
+                </div>
               </>
             )}
 
-            {phase === "capturing" && (
+            {phase === "capturing" && sensorMode === "gyro" && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 z-20">
+                <div className="text-6xl font-light text-[#90c8ff] animate-pulse">{countdown}</div>
+                <div className="text-white/40 text-sm mt-4">Move your phone — tilt, shake, rotate</div>
+                <div className="text-white/20 text-xs mt-2">{validFrameCount} samples</div>
+              </div>
+            )}
+
+            {phase === "capturing" && sensorMode !== "gyro" && (
               <>
                 {/* ── SkeletonOverlay: ethereal wireframe on camera feed ── */}
                 <SkeletonOverlay
@@ -831,7 +901,7 @@ export default function MotionDemoClient() {
               <div className="sm:flex-1 border border-white/10 bg-black/40 p-3 flex flex-col space-y-2">
                 {/* Box 2: Presence Signature + Witness + Actions */}
                 <div>
-                  {proofHashes&&(<PresenceSignature proof={{pesScore:pesData.score,timing:pesData.timing,noise:pesData.noise,freq:pesData.frequency,bio:pesData.biological,zkpHash:proofHashes.zkp,popHash:proofHashes.pop,mpHash:proofHashes.mp,epHash:proofHashes.ep,timestamp:Date.now()}}/>)}
+                  {proofHashes&&(<PresenceSignature proof={{pesScore:pesData.score,timing:pesData.timing,noise:pesData.noise,freq:pesData.frequency,bio:pesData.biological,receiptId:proofHashes.receiptId,payloadDigest:proofHashes.payloadDigest,timestamp:Date.now()}} receipt={continuityReceipt??undefined}/>)}
                 </div>
                 {witnessData?.position_number&&(<div className="p-3 border border-amber-400/20 bg-amber-400/[0.03] text-center space-y-1"><div className="text-amber-300/60 text-[11px] uppercase tracking-[0.12em]">{witnessData.cohort==="sovereign"?"Protocol Witness":"Protocol Witness"}</div><div className="text-amber-200/90 text-[18px] font-light">#{witnessData.position_number}</div></div>)}
                 {/* Verification status */}
@@ -1113,10 +1183,8 @@ export default function MotionDemoClient() {
                     noise: pesData.noise,
                     freq: pesData.frequency,
                     bio: pesData.biological,
-                    zkpHash: proofHashes.zkp,
-                    popHash: proofHashes.pop,
-                    mpHash: proofHashes.mp,
-                    epHash: proofHashes.ep,
+                    receiptId: proofHashes.receiptId,
+                    payloadDigest: proofHashes.payloadDigest,
                     timestamp: Date.now(),
                   }} />
                 )}

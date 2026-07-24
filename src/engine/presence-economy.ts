@@ -1,4 +1,5 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
+// MyShape Protocol — Presence Economy (§17-19)
+// Token minting, value computation, and incentive mechanisms.
 // ============================================================
 // MyShape Protocol — Presence Economy (§17-19)
 //
@@ -8,6 +9,7 @@
 // ============================================================
 
 import type { ReputationProfile } from "./presence-reputation";
+import { sha256Hex, shortFingerprint } from "@/lib/hash";
 
 // ── §17 — Presence Value ──
 
@@ -82,20 +84,14 @@ export function mintPresenceToken(params: {
   else if (value.pv >= 0.30) tier = "presence";
   else tier = "basic";
 
-  // Owner hash — privacy-preserving (reveals nothing about device)
-  const quickHash = (s: string) => {
-    let h = 0x6d797368;
-    for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h & h; }
-    return Math.abs(h).toString(16).padStart(8, "0");
-  };
-
+  // Owner hash — privacy-preserving (SHA-256, reveals nothing about device)
   return {
-    token_id: `PT_${Date.now().toString(36).toUpperCase()}_${quickHash(zkpHash + deviceSalt)}`,
+    token_id: `PT_${Date.now().toString(36).toUpperCase()}_${shortFingerprint(zkpHash + deviceSalt)}`,
     tier,
     minted_at: Math.floor(Date.now() / 1000),
     value,
     proof_hash: zkpHash,
-    owner_hash: quickHash(deviceSalt),
+    owner_hash: sha256Hex(deviceSalt),
     is_soulbound: true, // §18.2 — non-transferable
   };
 }

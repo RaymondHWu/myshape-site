@@ -1,0 +1,134 @@
+# CPS-0001: Build Your Own Producer
+
+**Goal: write code in any language that produces a valid CPS-0001 Continuity Receipt.**
+
+Time estimate: 30–90 minutes. You only need SHA-256 and Ed25519 (available in every language's standard library or one install away).
+
+---
+
+## What You're Building
+
+```
+Your Code → EvidenceBlock → Receipt → cps-verify → ✅ VALID
+```
+
+## What You Need
+
+1. This directory (`continuity-protocol/`)
+2. SHA-256 implementation
+3. Ed25519 implementation
+
+No MyShape code. No sensor hardware. No special knowledge.
+
+---
+
+## Step 1: Read the Spec (5 min)
+
+Read `CPS0001.md`. You only need §§1–7. The key object is `ContinuityReceipt`.
+
+## Step 2: Understand the Interface (5 min)
+
+Read `ENGINE_AUTHORING_GUIDE.md`. The only thing YOUR code must produce is:
+
+```json
+{
+  "engineId": "your-engine-id",
+  "engineVersion": "1.0.0",
+  "confidence": 0.8,
+  "payload": { ... },
+  "payloadDigest": "<SHA-256 of JSON.stringify(payload)>"
+}
+```
+
+That's an EvidenceBlock. Everything else (Receipt assembly, signing, verification) is protocol plumbing — you can use the test script below as a template.
+
+## Step 3: Look at an Example (10 min)
+
+Two examples exist, deliberately different:
+
+| | PES Engine | Toy Engine |
+|:---|:---|:---|
+| File | `src/engine/presence-entropy.ts` | `second-producer/toy-engine.ts` |
+| Sensor | Camera | None |
+| Data | 33-point skeleton | Text string |
+| Meaningful? | Yes | No |
+| Lines | ~300 | ~30 |
+
+**Start with the Toy Engine.** It's 30 lines and proves the protocol doesn't care what evidence is.
+
+## Step 4: Build Your Engine (30 min)
+
+Pick any idea. Examples:
+- Keyboard typing rhythm
+- Mouse movement pattern
+- Microphone audio entropy
+- System uptime + load average
+- Weather station readings
+- SQL query to a public dataset
+- Random number generator with a seed
+
+Your Engine must:
+1. Accept some input
+2. Compute a confidence score [0, 1]
+3. Output an EvidenceBlock
+
+## Step 5: Generate a Receipt (15 min)
+
+Use `onboarding-test.mjs` as a template. It shows the complete pipeline:
+- Generate keypair (Ed25519)
+- Build unsigned receipt from your EvidenceBlock
+- Sign it
+- Verify locally
+
+```bash
+node continuity-protocol/onboarding-test.mjs
+```
+
+## Step 6: Verify (30 sec)
+
+```bash
+cd continuity-protocol/cli && npm install
+node bin/cps-verify.mjs your-receipt.json
+```
+
+Expected output:
+```
+✅ V₁ Schema Validity
+✅ V₂ Cryptographic Signature
+✅ V₃ Assertion Consistency
+✅ V₄ Temporal Consistency
+✅ V₅ Evidence Integrity
+✅ V₆ Freshness
+VERDICT: ✅ VALID
+```
+
+---
+
+## If You Get Stuck
+
+Test vectors for debugging:
+```
+test-vectors/valid/single-engine.json   ← known-good
+test-vectors/valid/multi-engine.json    ← 2 engines
+test-vectors/invalid/tampered-evidence.json ← payload modified
+test-vectors/invalid/expired.json       ← past expiration
+```
+
+Run `cps-verify` against the valid ones first to confirm the tool works, then test your own.
+
+---
+
+## What This Proves
+
+When your receipt passes verification, it proves:
+
+- Your Engine can produce evidence in a standard format
+- Your receipt is structurally valid
+- Your cryptographic signature is correct
+- Your evidence integrity is verified
+
+**It does not prove your evidence is "true."** The protocol validates form, not content. Whether the evidence is sufficient for any real-world decision is the consumer's responsibility.
+
+---
+
+*Part of the Continuity Protocol Project · 2026-07-24*

@@ -15,14 +15,14 @@ describe("Engine module integrity", () => {
     expect(typeof m.computeFullPES).toBe("function");
   });
 
-  it("proof-system exports generate + verify functions", async () => {
-    const m = await import("./proof-system");
-    expect(typeof m.generatePresenceProof).toBe("function");
-    expect(typeof m.generateMotionProof).toBe("function");
-    expect(typeof m.generateEntropyProof).toBe("function");
-    expect(typeof m.generateZKPresenceProof).toBe("function");
-    expect(typeof m.verifyZKPresenceProof).toBe("function");
-    expect(typeof m.generateFullProof).toBe("function");
+  it("CPS-0001 exports build + verify functions", async () => {
+    const m = await import("@/lib/evidence/cps0001");
+    expect(typeof m.buildReceipt).toBe("function");
+    expect(typeof m.buildAssertions).toBe("function");
+    expect(typeof m.verifyReceipt).toBe("function");
+    expect(typeof m.verifySchema).toBe("function");
+    expect(typeof m.verifyEvidenceIntegrity).toBe("function");
+    expect(typeof m.engineEvidenceToBlock).toBe("function");
   });
 
   it("entropy-growth exports game mechanics", async () => {
@@ -59,15 +59,5 @@ describe("Engine module integrity", () => {
     expect(typeof m.projectSecurityHorizon).toBe("function");
     expect(m.HUMAN_ENTROPY_LOWER_BOUND).toBeDefined();
     expect(m.AI_ENTROPY_UPPER_BOUND).toBeDefined();
-  });
-
-  it("zk-circuit exports Pedersen + Schnorr functions", async () => {
-    const m = await import("./zk-circuit");
-    expect(typeof m.pedersenCommit).toBe("function");
-    expect(typeof m.pedersenVerify).toBe("function");
-    expect(typeof m.schnorrProve).toBe("function");
-    expect(typeof m.schnorrVerify).toBe("function");
-    expect(typeof m.generateZKPresenceProof).toBe("function");
-    expect(typeof m.verifyExternalZKPresence).toBe("function");
   });
 });

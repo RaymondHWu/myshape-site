@@ -1,118 +1,54 @@
-# Continuity Protocol
+# CPS-0001
 
-**CPS-0001 v1.0-RC** · Apache 2.0 · [The Continuity Lab](https://thecontinuitylab.org)
+CPS-0001 defines a portable continuity receipt format and verification contract.
 
-> CPS-0001 is NOT MyShape. MyShape is the first implementation. The protocol is the object model. Any engine, any sensor, any team can produce a valid receipt.
+**License**: Apache 2.0
 
-## Implement CPS-0001 in 10 Minutes
+---
 
-→ **[QUICKSTART.md](QUICKSTART.md)** — Create a receipt. Verify it. No MyShape required.
+## Quick Start
+
+```bash
+cd cli && npm install
+node bin/cps-verify.mjs ../test-vectors/valid/single-engine.json
+# → VERDICT: ✅ VALID
+```
+
+## Build Your Own Producer
+
+→ **[START_HERE.md](START_HERE.md)** — 30–90 minute guided walkthrough.
+
+New to CPS-0001? Start there. It covers the protocol object model, the engine interface, and the verification pipeline. No MyShape knowledge required.
 
 ## Structure
 
 ```
-continuity-protocol/
-├── QUICKSTART.md              # 10-minute getting started
-├── IMPLEMENT.md               # Full 1-hour implementation guide
-├── reference-verifier/
-│   └── verifier.ts            # Zero-dependency verifier (V₁–V₇)
-├── schemas/
-│   └── continuity-receipt.schema.json
-├── test-vectors/              # JSON test vectors
-│   ├── valid-receipt-01.json
-│   ├── valid-receipt-02-chained.json
-│   ├── expired.json
-│   ├── tampered-evidence.json
-│   └── broken-chain.json
-├── conformance/
-│   └── conformance.test.ts    # 23 assertions, zero MyShape deps
-├── second-producer/           # Proof: engine-independent Producer
-│   ├── dummy-engine.ts
-│   └── dummy-engine.test.ts
-├── verifier-plugin/           # First Consumer: HTTP middleware
-│   ├── index.ts               # parse, verify, risk score, serialize
-│   ├── middleware.ts          # Express drop-in middleware
-│   ├── plugin.test.ts         # 14 tests
-│   └── README.md              # Compatibility matrix + embedding guide
-└── research/                  # Discovery & experiments
-    ├── discovery-survey.md
-    ├── discovery-interview.md
-    ├── experiments/
-    │   ├── EXP-001-agent-authorization.md
-    │   ├── EXP-002-enterprise-session.md
-    │   └── EXP-003-xr-spatial.md
-    └── ...
+├── START_HERE.md                          ← Entry point for new implementers
+├── CPS0001.md                             ← Protocol specification
+├── ENGINE_AUTHORING_GUIDE.md              ← How to build an Engine
+├── WHY_CPS_DOES_NOT_VALIDATE_EVIDENCE.md  ← Protocol boundary
+├── onboarding-test.mjs                    ← Full pipeline template
+├── cli/                                   ← Standalone verifier
+│   └── bin/cps-verify.mjs
+├── reference-verifier/                    ← Reference implementation (Web Crypto)
+├── second-producer/                       ← Second implementation (@noble)
+│   ├── toy-engine.ts                      ← 30-line example
+│   └── noble-verifier.ts
+├── test-vectors/
+│   ├── valid/                             ← Known-good receipts
+│   └── invalid/                           ← Tampered, expired, broken
+├── schemas/                               ← JSON Schema
+└── conformance/                           ← Conformance test suite
 ```
 
-## Reference Verifier
+## Independent Implementation Challenge
 
-The verifier is **engine-independent**. It imports nothing from MyShape. It processes any CPS-0001-conformant receipt regardless of which evidence engine produced it.
+→ **[BLIND_IMPLEMENTATION_CHALLENGE.md](BLIND_IMPLEMENTATION_CHALLENGE.md)** — Can you implement CPS-0001 without access to the original implementation?
 
-```typescript
-import { verifyReceipt } from "./reference-verifier/verifier";
+We are testing whether this specification is sufficient for independent implementation. If you'd like to participate, read the challenge and submit your results.
 
-const result = await verifyReceipt(receipt);
-// { status: "VALID" } or { status: "INVALID", reason: "EXPIRED", detail: "..." }
-```
+Currently tracking results in → **[BLIND_TEST_REPORT.md](BLIND_TEST_REPORT.md)**
 
-V₁–V₇ checks: schema → signature → assertions → temporal → evidence integrity → freshness → predecessor reference.
+---
 
-## Test Vectors
-
-| Vector | Expected |
-|:---|:---|
-| `valid-receipt-01.json` | V₁–V₆ pass |
-| `valid-receipt-02-chained.json` | V₁–V₆ pass, V₇ chains to valid-01 |
-| `expired.json` | V₆: EXPIRED |
-| `tampered-evidence.json` | V₅: EVIDENCE_TAMPERED |
-| `broken-chain.json` | V₇: CHAIN_BROKEN |
-
-## Conformance
-
-Any team claiming CPS-0001 compatibility must pass the conformance suite:
-
-```bash
-npx vitest run continuity-protocol/conformance/
-```
-
-10 conformance scenarios, 23 assertions. Zero dependencies on MyShape engine code.
-
-## Architecture
-
-```
-              The Continuity Lab
-                     |
-                 CPS-0001
-              (Protocol Object)
-                     |
-        -------------------------
-        |                       |
-    MyShape Engine        Your Engine
-    (first impl)         (any sensor)
-                     |
-              Reference Verifier
-              (V₁–V₇ · engine-independent)
-                     |
-              Verifier Plugin
-              (HTTP middleware · allow/deny)
-                     |
-                Application
-```
-
-MyShape is the **first implementation**, not the protocol.
-
-## Compatibility Matrix
-
-| Producer | Consumer | Result |
-|:---|:---|:---|
-| Dummy Engine (`second-producer/`) | Reference Verifier | ✅ PASS |
-| Dummy Engine (`second-producer/`) | HTTP Verifier Plugin | ✅ PASS |
-| MyShape EE-001 | Reference Verifier | ✅ PASS |
-| MyShape EE-001 | HTTP Verifier Plugin | ✅ PASS |
-| Tampered evidence | Reference Verifier | ❌ REJECT (V₅) |
-| Expired receipt | Reference Verifier | ❌ REJECT (V₆) |
-| Broken chain | Reference Verifier | ❌ REJECT (V₇) |
-
-## Full Specification
-
-https://myshape.com/research/notes/008-continuity-protocol-core
+*Part of the Continuity Protocol Project · 2026-07-24*

@@ -32,11 +32,11 @@ function makeEngineEvidence(overrides?: Partial<EngineEvidence>): EngineEvidence
 }
 
 describe("Phase A: Receipt Builder (Gate A)", () => {
-  it("produces a valid receipt from single evidence block", async () => {
+  it("produces a valid receipt from single evidence block", () => {
     const start = new Date(Date.now() - 60000);
     const end = new Date();
 
-    const result = await buildEvidenceReceipt({
+    const result = buildEvidenceReceipt({
       evidence: [makeEngineEvidence()],
       startTime: start,
       endTime: end,
@@ -47,7 +47,7 @@ describe("Phase A: Receipt Builder (Gate A)", () => {
     expect(verifySchema(result.receipt as ContinuityReceipt)).toBeNull();
 
     // Must pass V₅ evidence integrity
-    expect(await verifyEvidenceIntegrity(result.receipt as ContinuityReceipt)).toBeNull();
+    expect(verifyEvidenceIntegrity(result.receipt as ContinuityReceipt)).toBeNull();
 
     // Full verification must succeed
     expect(result.verification.status).toBe("VALID");
@@ -59,11 +59,11 @@ describe("Phase A: Receipt Builder (Gate A)", () => {
     expect(parsed.protocolVersion).toBe("1.0");
   });
 
-  it("produces a valid receipt from dual-engine evidence", async () => {
+  it("produces a valid receipt from dual-engine evidence", () => {
     const start = new Date(Date.now() - 120000);
     const end = new Date();
 
-    const result = await buildEvidenceReceipt({
+    const result = buildEvidenceReceipt({
       evidence: [
         makeEngineEvidence({ engineId: "EE-001" }),
         makeEngineEvidence({
@@ -86,7 +86,7 @@ describe("Phase A: Receipt Builder (Gate A)", () => {
     });
 
     expect(verifySchema(result.receipt as ContinuityReceipt)).toBeNull();
-    expect(await verifyEvidenceIntegrity(result.receipt as ContinuityReceipt)).toBeNull();
+    expect(verifyEvidenceIntegrity(result.receipt as ContinuityReceipt)).toBeNull();
     expect(result.verification.status).toBe("VALID");
 
     // Must have both evidence blocks
@@ -97,11 +97,11 @@ describe("Phase A: Receipt Builder (Gate A)", () => {
     expect(result.receipt.interval.coverageMs).toBeLessThan(300000); // 5 min max
   });
 
-  it("produces deterministic interval from wall-clock times", async () => {
+  it("produces deterministic interval from wall-clock times", () => {
     const start = new Date("2026-12-01T10:00:00.000Z");
     const end = new Date("2026-12-01T10:00:08.000Z");
 
-    const result = await buildEvidenceReceipt({
+    const result = buildEvidenceReceipt({
       evidence: [makeEngineEvidence()],
       startTime: start,
       endTime: end,
@@ -113,11 +113,11 @@ describe("Phase A: Receipt Builder (Gate A)", () => {
     expect(result.receipt.interval.coverageMs).toBe(8000);
   });
 
-  it("receipt is JSON-serializable and parseable", async () => {
+  it("receipt is JSON-serializable and parseable", () => {
     const start = new Date(Date.now() - 30000);
     const end = new Date();
 
-    const result = await buildEvidenceReceipt({
+    const result = buildEvidenceReceipt({
       evidence: [makeEngineEvidence()],
       startTime: start,
       endTime: end,
@@ -140,11 +140,11 @@ describe("Phase A: Receipt Builder (Gate A)", () => {
     expect(Array.isArray(parsed.references)).toBe(true);
   });
 
-  it("does NOT make business decisions (no verdict)", async () => {
+  it("does NOT make business decisions (no verdict)", () => {
     const start = new Date(Date.now() - 30000);
     const end = new Date();
 
-    const result = await buildEvidenceReceipt({
+    const result = buildEvidenceReceipt({
       evidence: [makeEngineEvidence()],
       startTime: start,
       endTime: end,

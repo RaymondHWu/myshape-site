@@ -8,6 +8,7 @@
 
 import type { ReputationProfile } from "./presence-reputation";
 import type { PresenceToken } from "./presence-economy";
+import { shortFingerprint } from "@/lib/hash";
 
 // ── §23 — Presence Identity Lifecycle ──
 
@@ -34,14 +35,8 @@ export function createPresenceIdentity(
   deviceSalt: string,
   reputation: ReputationProfile,
 ): PresenceIdentity {
-  const quickHash = (s: string) => {
-    let h = 0x6d797368;
-    for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h = h & h; }
-    return Math.abs(h).toString(16).padStart(8, "0");
-  };
-
   return {
-    identity_id: `ID_${quickHash(deviceSalt)}`,
+    identity_id: `ID_${shortFingerprint(deviceSalt)}`,
     stage: "genesis",
     created_at: Math.floor(Date.now() / 1000),
     last_active: Math.floor(Date.now() / 1000),

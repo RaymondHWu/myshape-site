@@ -10,6 +10,7 @@ import {
   verifyEvidenceIntegrity,
   verifyFreshness,
   verifyReceipt,
+  signReceipt,
   engineEvidenceToBlock,
   type ContinuityReceipt,
   type EvidenceBlock,
@@ -18,8 +19,12 @@ import {
   type IssuerIdentity,
 } from "./cps0001";
 import type { EngineEvidence } from "./types";
+import { generateKeyPair, createIssuerIdentity } from "@/lib/crypto";
 
 // ── Helpers ──
+
+const TEST_KEYPAIR = generateKeyPair();
+const TEST_ISSUER = createIssuerIdentity(TEST_KEYPAIR);
 
 function makeBlock(overrides?: Partial<EvidenceBlock>): EvidenceBlock {
   return {
@@ -33,8 +38,8 @@ function makeBlock(overrides?: Partial<EvidenceBlock>): EvidenceBlock {
 }
 
 function makeInterval(overrides?: Partial<ContinuityInterval>): ContinuityInterval {
-  const start = new Date(Date.now() - 60000); // 1 minute ago
-  const end = new Date(Date.now() - 52000);   // 52 seconds ago (8s window)
+  const start = new Date(Date.now() - 60000);
+  const end = new Date(Date.now() - 52000);
   return {
     start: start.toISOString(),
     end: end.toISOString(),
@@ -48,7 +53,23 @@ function makeSubject(overrides?: Partial<SubjectRef>): SubjectRef {
 }
 
 function makeIssuer(overrides?: Partial<IssuerIdentity>): IssuerIdentity {
-  return { id: "sha256:issuer0001...", publicKey: "MCowBQYDK2VwAyEA...", ...overrides };
+  return { ...TEST_ISSUER, ...overrides };
+}
+
+/** Build a valid signed receipt for testing. */
+function makeSignedReceipt(overrides: Partial<Omit<ContinuityReceipt, "signature">> = {}): ContinuityReceipt {
+  const block = makeBlock();
+  block.payloadDigest = computePayloadDigest(block.payload);
+
+  const unsigned = buildReceipt({
+    evidence: [block],
+    interval: makeInterval(),
+    subject: makeSubject(),
+    issuer: makeIssuer(),
+    ...overrides,
+  });
+
+  return signReceipt(unsigned, TEST_KEYPAIR.secretKey);
 }
 
 // ═══════════════════════════════════════════
@@ -73,18 +94,18 @@ describe("createReceiptId", () => {
 
 describe("computePayloadDigest", () => {
   it("returns a 64-char hex string", async () => {
-    const digest = await computePayloadDigest({ key: "value" });
+    const digest = computePayloadDigest({ key: "value" });
     expect(digest).toMatch(/^[0-9a-f]{64}$/);
   });
 
-  it("is deterministic — same payload → same digest", async () => {
+  it("is deterministic — same payload → same digest", () => {
     const p = { a: 1, b: "test" };
-    expect(await computePayloadDigest(p)).toBe(await computePayloadDigest(p));
+    expect(computePayloadDigest(p)).toBe(computePayloadDigest(p));
   });
 
-  it("produces different digests for different payloads", async () => {
-    const d1 = await computePayloadDigest({ x: 1 });
-    const d2 = await computePayloadDigest({ x: 2 });
+  it("produces different digests for different payloads", () => {
+    const d1 = computePayloadDigest({ x: 1 });
+    const d2 = computePayloadDigest({ x: 2 });
     expect(d1).not.toBe(d2);
   });
 });
@@ -126,9 +147,9 @@ describe("buildAssertions", () => {
 // ═══════════════════════════════════════════
 
 describe("buildReceipt", () => {
-  it("produces a well-formed receipt (without signature)", async () => {
+  it("produces a well-formed receipt (without signature)", () => {
     const block = makeBlock();
-    block.payloadDigest = await computePayloadDigest(block.payload);
+    block.payloadDigest = computePayloadDigest(block.payload);
 
     const receipt = buildReceipt({
       evidence: [block],
@@ -176,7 +197,7 @@ describe("buildReceipt", () => {
 // ═══════════════════════════════════════════
 
 describe("verifySchema (V₁)", () => {
-  it("returns null for a valid receipt", async () => {
+  it("returns null for a valid receipt", () => {
     const r = buildReceipt({
       evidence: [],
       interval: makeInterval(),
@@ -326,9 +347,9 @@ describe("verifyTemporal (V₄)", () => {
 // ═══════════════════════════════════════════
 
 describe("verifyEvidenceIntegrity (V₅)", () => {
-  it("passes when payloadDigest matches", async () => {
+  it("passes when payloadDigest matches", () => {
     const payload = { entropy: 0.72 };
-    const digest = await computePayloadDigest(payload);
+    const digest = computePayloadDigest(payload);
     const r = buildReceipt({
       evidence: [{ engineId: "EE-001", engineVersion: "1.0", confidence: 0.8, payload, payloadDigest: digest }],
       interval: makeInterval(),
@@ -336,12 +357,12 @@ describe("verifyEvidenceIntegrity (V₅)", () => {
       issuer: makeIssuer(),
     }) as ContinuityReceipt;
     r.signature = { algorithm: "Ed25519", value: "sig", signedAt: r.interval.end };
-    expect(await verifyEvidenceIntegrity(r)).toBeNull();
+    expect(verifyEvidenceIntegrity(r)).toBeNull();
   });
 
-  it("rejects tampered payload", async () => {
+  it("rejects tampered payload", () => {
     const payload = { entropy: 0.72 };
-    const digest = await computePayloadDigest(payload);
+    const digest = computePayloadDigest(payload);
     const r = buildReceipt({
       evidence: [{ engineId: "EE-001", engineVersion: "1.0", confidence: 0.8, payload: { entropy: 0.99 }, payloadDigest: digest }],
       interval: makeInterval(),
@@ -349,7 +370,7 @@ describe("verifyEvidenceIntegrity (V₅)", () => {
       issuer: makeIssuer(),
     }) as ContinuityReceipt;
     r.signature = { algorithm: "Ed25519", value: "sig", signedAt: r.interval.end };
-    expect(await verifyEvidenceIntegrity(r)).toBe("EVIDENCE_TAMPERED");
+    expect(verifyEvidenceIntegrity(r)).toBe("EVIDENCE_TAMPERED");
   });
 });
 
@@ -402,54 +423,46 @@ describe("verifyFreshness (V₆)", () => {
 // ═══════════════════════════════════════════
 
 describe("verifyReceipt (V₁–V₆ integration)", () => {
-  it("returns VALID for a well-formed receipt", async () => {
-    const payload = { entropy: 0.72 };
-    const digest = await computePayloadDigest(payload);
-    const r = buildReceipt({
-      evidence: [{ engineId: "EE-001", engineVersion: "1.0", confidence: 0.85, payload, payloadDigest: digest }],
-      interval: makeInterval(),
-      subject: makeSubject(),
-      issuer: makeIssuer(),
-    }) as ContinuityReceipt;
-    const futureExpiry = new Date(new Date(r.interval.end).getTime() + 3600_000).toISOString();
-    r.signature = { algorithm: "Ed25519", value: "sig", signedAt: r.interval.end };
-    r.expiresAt = futureExpiry;
+  it("returns VALID for a well-formed receipt", () => {
+    const r = makeSignedReceipt();
 
-    const result = await verifyReceipt(r);
+    const result = verifyReceipt(r);
     expect(result.status).toBe("VALID");
   });
 
-  it("returns INVALID with correct reason for schema violation", async () => {
-    const r = buildReceipt({
-      evidence: [],
-      interval: makeInterval(),
-      subject: makeSubject(),
-      issuer: makeIssuer(),
-    }) as ContinuityReceipt;
-    r.signature = { algorithm: "Ed25519", value: "sig", signedAt: r.interval.end };
-    r.protocolVersion = "0.5";
+  it("returns INVALID with correct reason for schema violation", () => {
+    const r = makeSignedReceipt();
+    // Override after signing (signature covers original fields, but schema check runs first)
+    const tampered = { ...r, protocolVersion: "0.5" } as ContinuityReceipt;
 
-    const result = await verifyReceipt(r);
+    const result = verifyReceipt(tampered);
     expect(result.status).toBe("INVALID");
     if (result.status === "INVALID") expect(result.reason).toBe("INVALID_SCHEMA");
   });
 
-  it("returns INVALID for tampered evidence", async () => {
-    const payload = { entropy: 0.72 };
-    const digest = await computePayloadDigest(payload);
-    const r = buildReceipt({
-      evidence: [{ engineId: "EE-001", engineVersion: "1.0", confidence: 0.85, payload: { entropy: 0.01 }, payloadDigest: digest }],
-      interval: makeInterval(),
-      subject: makeSubject(),
-      issuer: makeIssuer(),
-    }) as ContinuityReceipt;
-    const futureExpiry = new Date(new Date(r.interval.end).getTime() + 3600_000).toISOString();
-    r.signature = { algorithm: "Ed25519", value: "sig", signedAt: r.interval.end };
-    r.expiresAt = futureExpiry;
+  it("returns INVALID for tampered evidence", () => {
+    const r = makeSignedReceipt();
+    // Tamper with evidence payload after signing
+    const tampered = {
+      ...r,
+      evidence: [{ ...r.evidence[0], payload: { entropy: 0.01 } }],
+    } as ContinuityReceipt;
 
-    const result = await verifyReceipt(r);
+    const result = verifyReceipt(tampered);
     expect(result.status).toBe("INVALID");
     if (result.status === "INVALID") expect(result.reason).toBe("EVIDENCE_TAMPERED");
+  });
+
+  it("returns INVALID for forged signature", () => {
+    const r = makeSignedReceipt();
+    const forged = {
+      ...r,
+      issuer: { ...r.issuer, publicKey: "00".repeat(32) }, // wrong public key
+    } as ContinuityReceipt;
+
+    const result = verifyReceipt(forged);
+    expect(result.status).toBe("INVALID");
+    if (result.status === "INVALID") expect(result.reason).toBe("INVALID_SIGNATURE");
   });
 });
 
@@ -458,7 +471,7 @@ describe("verifyReceipt (V₁–V₆ integration)", () => {
 // ═══════════════════════════════════════════
 
 describe("engineEvidenceToBlock", () => {
-  it("converts EngineEvidence to EvidenceBlock", async () => {
+  it("converts EngineEvidence to EvidenceBlock", () => {
     const ee: EngineEvidence = {
       engineId: "EE-001",
       timestamp: "2026-07-22T10:00:00.000Z",
@@ -470,7 +483,7 @@ describe("engineEvidenceToBlock", () => {
       evidenceDigest: "old-digest",
     };
 
-    const block = await engineEvidenceToBlock(ee);
+    const block = engineEvidenceToBlock(ee);
 
     expect(block.engineId).toBe("EE-001");
     expect(block.engineVersion).toBe("1.0.0");
@@ -480,7 +493,7 @@ describe("engineEvidenceToBlock", () => {
     expect(block.payloadDigest).toMatch(/^[0-9a-f]{64}$/);
   });
 
-  it("uses custom engine version", async () => {
+  it("uses custom engine version", () => {
     const ee: EngineEvidence = {
       engineId: "EE-003",
       timestamp: "t",
@@ -489,11 +502,11 @@ describe("engineEvidenceToBlock", () => {
       confidence: 0.5,
     };
 
-    const block = await engineEvidenceToBlock(ee, "2.1.0");
+    const block = engineEvidenceToBlock(ee, "2.1.0");
     expect(block.engineVersion).toBe("2.1.0");
   });
 
-  it("payloadDigest matches payload content", async () => {
+  it("payloadDigest matches payload content", () => {
     const ee: EngineEvidence = {
       engineId: "EE-001",
       timestamp: "t",
@@ -502,8 +515,8 @@ describe("engineEvidenceToBlock", () => {
       confidence: 1.0,
     };
 
-    const block = await engineEvidenceToBlock(ee);
-    const expected = await computePayloadDigest(block.payload);
+    const block = engineEvidenceToBlock(ee);
+    const expected = computePayloadDigest(block.payload);
     expect(block.payloadDigest).toBe(expected);
   });
 });

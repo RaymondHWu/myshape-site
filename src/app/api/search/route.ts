@@ -1,4 +1,4 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
+// MyShape Protocol — Search API
 import { NextResponse } from "next/server";
 import { POSTS } from "@/app/blog/posts";
 

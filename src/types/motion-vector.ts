@@ -1,4 +1,5 @@
-/** @experimental ZK subsystem — under active research. Not production-grade. */
+// MyShape Protocol — Motion Vector Types
+// CPS-0001 ContinuityReceipt is the canonical proof object (see src/lib/evidence/cps0001.ts).
 // ============================================================
 // MyShape Protocol — Motion Vector Type System v1.0
 // Derived from: Technical Specification v1.0 §1–§6
@@ -108,16 +109,21 @@ export interface MotionVectorFinal {
 
 // ── §1.6-1.7 — Proof primitives ──
 
+/** @deprecated Use CPS-0001 ContinuityReceipt (src/lib/evidence/cps0001.ts) instead. */
 export interface ProofOfPresence {
   mv_hash: string;
-  pes: number;               // above threshold → real presence
+  pes: number;
   timestamp: number;
   window: number;
 }
 
+/** @deprecated Replaced by CPS-0001 ContinuityReceipt. Legacy type — not used in production. */
 export interface ZKPresenceProof {
-  proof: Uint8Array;         // 128-512 bytes
-  public_inputs: string[];   // mv_hash, timestamp range
+  /** @deprecated */
+  proof: Uint8Array;
+  /** @deprecated */
+  public_inputs: string[];
+  /** @deprecated */
   verified: boolean;
 }
 

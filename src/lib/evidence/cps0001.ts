@@ -124,12 +124,17 @@ export type VerificationResult =
 
 // ── Builder ──
 
-/** Generate a time-sortable receipt ID (UUIDv7-like: timestamp + random). */
+/** Generate a time-sortable receipt ID (UUIDv7-like: timestamp + crypto random). */
 export function createReceiptId(): string {
   const ts = Date.now().toString(16).padStart(12, "0");
-  const rand = Array.from({ length: 20 }, () =>
-    Math.floor(Math.random() * 16).toString(16),
-  ).join("");
+  // Use crypto.getRandomValues when available, fall back to Math.random
+  const randBytes = new Uint8Array(20);
+  if (typeof globalThis.crypto !== "undefined" && globalThis.crypto.getRandomValues) {
+    globalThis.crypto.getRandomValues(randBytes);
+  } else {
+    for (let i = 0; i < randBytes.length; i++) randBytes[i] = Math.floor(Math.random() * 256);
+  }
+  const rand = Array.from(randBytes, (b) => b.toString(16).padStart(2, "0")).join("");
   // Format: 00000000-0000-7000-8000-000000000000 (UUIDv7 layout)
   const hex = (ts + rand).slice(0, 32).padEnd(32, "0");
   return [
@@ -141,16 +146,8 @@ export function createReceiptId(): string {
   ].join("-");
 }
 
-async function sha256(data: string): Promise<string> {
-  const buf = new TextEncoder().encode(data);
-  const hash = await crypto.subtle.digest("SHA-256", buf);
-  return Array.from(new Uint8Array(hash))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-/** Compute payloadDigest for an evidence payload. */
-export async function computePayloadDigest(payload: Record<string, unknown>): Promise<string> {
+/** Compute payloadDigest for an evidence payload. Uses sync SHA-256 (@noble/hashes). */
+export function computePayloadDigest(payload: Record<string, unknown>): string {
   return sha256(JSON.stringify(payload));
 }
 
@@ -255,9 +252,9 @@ export function verifyTemporal(receipt: ContinuityReceipt): FailureCode | null {
 }
 
 /** V₅: Evidence reference integrity. */
-export async function verifyEvidenceIntegrity(receipt: ContinuityReceipt): Promise<FailureCode | null> {
+export function verifyEvidenceIntegrity(receipt: ContinuityReceipt): FailureCode | null {
   for (const block of receipt.evidence) {
-    const expected = await computePayloadDigest(block.payload);
+    const expected = computePayloadDigest(block.payload);
     if (expected !== block.payloadDigest) return "EVIDENCE_TAMPERED";
   }
   return null;
@@ -274,12 +271,13 @@ export function verifyFreshness(receipt: ContinuityReceipt): FailureCode | null 
 }
 
 /** Run all verifiable checks (V₁, V₃, V₄, V₅, V₆). V₂ and V₇ need external context. */
-export async function verifyReceipt(receipt: ContinuityReceipt): Promise<VerificationResult> {
+export function verifyReceipt(receipt: ContinuityReceipt): VerificationResult {
   const schemaErr = verifySchema(receipt);
   if (schemaErr) return { status: "INVALID", reason: schemaErr, detail: "Receipt does not conform to CPS-0001 schema." };
 
-  // V₂ (signature) skipped — requires crypto verify against issuer public key.
-  // Implementations MUST verify the signature before accepting.
+  // V₂: Signature verification
+  const sigErr = verifySignature(receipt);
+  if (sigErr) return { status: "INVALID", reason: sigErr, detail: "Signature verification failed — receipt may be forged or tampered." };
 
   const assertionErr = verifyAssertions(receipt);
   if (assertionErr) return { status: "INVALID", reason: assertionErr, detail: "Assertion consistency violation — continuity claimed without observation." };
@@ -287,7 +285,7 @@ export async function verifyReceipt(receipt: ContinuityReceipt): Promise<Verific
   const temporalErr = verifyTemporal(receipt);
   if (temporalErr) return { status: "INVALID", reason: temporalErr, detail: "Temporal model violated." };
 
-  const evidenceErr = await verifyEvidenceIntegrity(receipt);
+  const evidenceErr = verifyEvidenceIntegrity(receipt);
   if (evidenceErr) return { status: "INVALID", reason: evidenceErr, detail: "Evidence payloadDigest does not match payload." };
 
   const freshnessErr = verifyFreshness(receipt);
@@ -296,15 +294,82 @@ export async function verifyReceipt(receipt: ContinuityReceipt): Promise<Verific
   return { status: "VALID" };
 }
 
+// ── Signing (§6.4) — Ed25519 ──
+
+import { sign as edSign, verify as edVerify } from "@/lib/crypto";
+
+/**
+ * Build the canonical signing payload for a receipt.
+ *
+ * Deterministic: receiptId + interval + subject + evidence digests.
+ * This is what gets signed — any tampering with these fields
+ * invalidates the signature.
+ */
+export function canonicalSigningPayload(receipt: Omit<ContinuityReceipt, "signature">): string {
+  const evidenceDigests = receipt.evidence.map((e) => e.payloadDigest).join(":");
+  return [
+    receipt.receiptId,
+    receipt.interval.start,
+    receipt.interval.end,
+    receipt.interval.coverageMs.toString(),
+    receipt.subject.id,
+    evidenceDigests,
+    receipt.issuer.id,
+    receipt.issuer.publicKey,
+  ].join(":");
+}
+
+/**
+ * Sign a receipt with an Ed25519 secret key.
+ * Returns the signed receipt (with signature field populated).
+ */
+export function signReceipt(
+  unsigned: Omit<ContinuityReceipt, "signature">,
+  secretKeyHex: string,
+): ContinuityReceipt {
+  const payload = canonicalSigningPayload(unsigned);
+  const sigValue = edSign(payload, secretKeyHex);
+  const signedAt = new Date().toISOString();
+
+  return {
+    ...unsigned,
+    signature: {
+      algorithm: "Ed25519",
+      value: sigValue,
+      signedAt,
+    },
+  };
+}
+
+/** V₂: Verify the receipt's Ed25519 signature against the issuer's public key. */
+export function verifySignature(receipt: ContinuityReceipt): FailureCode | null {
+  if (!receipt.signature) return "INVALID_SIGNATURE";
+  if (receipt.signature.algorithm !== "Ed25519") return "INVALID_SIGNATURE";
+
+  const { signature, ...unsigned } = receipt;
+  const payload = canonicalSigningPayload(unsigned);
+  const valid = edVerify(signature.value, payload, receipt.issuer.publicKey);
+
+  return valid ? null : "INVALID_SIGNATURE";
+}
+
 // ── Conversion: EngineEvidence → EvidenceBlock ──
 
 import type { EngineEvidence } from "./types";
+import { sha256Hex } from "@/lib/hash";
+
+// ── Crypto (sync — @noble/hashes, works browser + SSR) ──
+
+/** SHA-256 hex digest of a string payload. */
+function sha256(data: string): string {
+  return sha256Hex(data);
+}
 
 /** Convert an internal EngineEvidence to a CPS-0001 EvidenceBlock. */
-export async function engineEvidenceToBlock(
+export function engineEvidenceToBlock(
   engineEvidence: EngineEvidence,
   engineVersion = "1.0.0",
-): Promise<EvidenceBlock> {
+): EvidenceBlock {
   // Build opaque payload from engine evidence components + diagnostics
   const payload: Record<string, unknown> = {
     components: engineEvidence.components.map((c) => ({
@@ -317,7 +382,7 @@ export async function engineEvidenceToBlock(
     diagnostics: engineEvidence.diagnostics,
   };
 
-  const payloadDigest = await computePayloadDigest(payload);
+  const payloadDigest = computePayloadDigest(payload);
 
   return {
     engineId: engineEvidence.engineId,
