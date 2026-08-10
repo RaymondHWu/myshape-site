@@ -1,0 +1,88 @@
+#!/bin/sh
+# ============================================================
+# MyShape Protocol — Pre-Push IP Guard
+#
+# Fires on `git push` — BEFORE anything reaches a remote (most
+# importantly the `org` remote that triggers Vercel deploy).
+#
+# Purpose: even if pre-commit was bypassed (--no-verify) or the
+# working tree was force-committed, this catches internal/sensitive
+# files in the commits about to be pushed and aborts the push.
+#
+# Rule sources: CLAUDE.md §0.0 and scripts/ip-protection-check.sh.
+# Keep the pattern lists in sync across all three.
+#
+# Enable (one-time, per clone):
+#   sh scripts/githooks/install.sh        # macOS/Linux
+#   powershell -File scripts/githooks/install.ps1   # Windows
+# ============================================================
+
+# Resolve repo root (scripts/githooks/pre-push → repo root)
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+cd "$ROOT" || exit 1
+
+# ── Prohibited directory paths ──
+FORBIDDEN_PATH='^(docs/\.core/|memory/|\.claude/projects/|MyShape_Documentation/|myshape-context/|\.ai/|docs/testing/|docs/docs/|engine/target/|cli/target/|wasm/target/|wasm/pkg-bundler/|\.certs/)'
+
+# ── Prohibited individual files & globs (anchored full-path match) ──
+FORBIDDEN_FILE='^(docs/Threat-Model\.md|docs/e1-e2-uniqueness-stability-experiment-v0\.1\.md|docs/key-management-enrollment-v0\.1\.md|docs/PHASE_E_ARCHITECTURE\.md|docs/DEMO_GUIDE\.md|docs/reddit-.*\.md|docs/substack-.*\.md|docs/x-post-.*\.md|scripts/verify-.*\.mjs|public/.*\.md|public/cmd\.html|public/genesis-100\.html|public/matrix-dashboard\.html|GENESIS_001_DISCUSSION\.md|PES-Benchmark-v0\.2\.md|PROTOCOL_CORE_SNAPSHOT\.md|PROTOCOL_LOG\.md|DESIGN\.md|supabase/MIGRATION_GUIDE\.md|gen-papers\.mjs|my-cps-0001-receipt\.json|\.env(\.[A-Za-z0-9_-]+)?(\.example)?)$'
+
+# ── Prohibited file types ──
+FORBIDDEN_EXT='\.(pem|zip|pdf|docx?|pptx?|xlsx?)$'
+
+echo ""
+echo "╔══════════════════════════════════════════════════════╗"
+echo "║  MyShape Protocol — Pre-Push IP Guard                ║"
+echo "╚══════════════════════════════════════════════════════╝"
+
+VIOLATIONS=0
+
+# stdin for pre-push: one line per ref being pushed:
+#   <local ref> <local sha> <remote ref> <remote sha>
+while read local_ref local_sha remote_ref remote_sha; do
+  [ -z "$local_ref" ] && continue
+
+  # Strip Windows CR line-endings that some environments append to the
+  # refinfo fields (e.g. piping from PowerShell). Without this, git diff
+  # receives a trailing \r and silently fails.
+  local_sha=$(printf '%s\n' "$local_sha" | tr -d '\015')
+  remote_sha=$(printf '%s\n' "$remote_sha" | tr -d '\015')
+
+  [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue
+
+  if [ "$remote_sha" != "0000000000000000000000000000000000000000" ]; then
+    BASE="$remote_sha"
+  else
+    # New remote ref: diff against the closest ancestor on an existing remote
+    BASE="$(git merge-base "$local_sha" refs/remotes/origin/master 2>/dev/null || echo '')"
+    if [ -z "$BASE" ]; then
+      BASE="$(git rev-list --max-parents=0 HEAD 2>/dev/null || echo '')"
+    fi
+    [ -z "$BASE" ] && continue
+  fi
+
+  files="$(git diff --name-only --diff-filter=ACMR "$BASE..$local_sha" 2>/dev/null || true)"
+
+  for f in $files; do
+    if echo "$f" | grep -Eq "$FORBIDDEN_PATH" \
+      || echo "$f" | grep -Eq "$FORBIDDEN_FILE" \
+      || echo "$f" | grep -Eq "$FORBIDDEN_EXT"; then
+      echo "  ✘ BLOCKED: $f"
+      VIOLATIONS=$((VIOLATIONS + 1))
+    fi
+  done
+done
+
+if [ "$VIOLATIONS" -gt 0 ]; then
+  echo ""
+  echo "✘ PUSH BLOCKED — $VIOLATIONS internal/sensitive file(s) in pushed commits."
+  echo "  Review CLAUDE.md §0.0 / scripts/ip-protection-check.sh."
+  echo "  If truly intentional, get explicit approval before a forced push."
+  echo "╔══════════════════════════════════════════════════════╗"
+  exit 1
+fi
+
+echo "  ✓ No forbidden files in pushed commits."
+echo "╔══════════════════════════════════════════════════════╗"
+echo ""
+exit 0
