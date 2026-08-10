@@ -1,5 +1,12 @@
 # Continuity Verification Becomes Programmable
 
+> **📌 Superseded — this note documents the v0.1.x phone/IMU SDK.**
+> The current release is **`@thecontinuitylab/myshape@0.2.0`** (browser-native SDK v2).
+> The v0.2.0 API is `verify()` / `getReceipt()` / `checkContinuity()` producing a
+> CPS-0001 **ContinuityReceipt** (engine-independent, Ed25519-signed). The
+> `verifyContinuity()` IMU API described below no longer exists.
+> This file is retained as historical record of the v0.1.x design.
+
 ## The Continuity Lab releases @thecontinuitylab/myshape v0.1.2
 
 **July 2026**

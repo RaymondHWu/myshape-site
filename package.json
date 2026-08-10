@@ -1,6 +1,6 @@
 {
   "name": "myshape_protocol",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "scripts": {
     "dev": "next dev",
@@ -12,6 +12,7 @@
     "phone": "next build && next start & node scripts/https-dev-proxy.js",
     "test:watch": "vitest --config vitest.config.ts",
     "test:coverage": "vitest run --config vitest.config.ts --coverage",
+    "hooks:install": "powershell -ExecutionPolicy Bypass -File scripts/githooks/install.ps1",
     "benchmark": "vitest run --config vitest.config.ts src/engine/__benchmark__/",
     "benchmark:all": "vitest run --config vitest.config.ts",
     "push": "git push origin master && git push org master",
