@@ -111,7 +111,7 @@ export default function DevelopersClient() {
             Five lines of code. Zero data stored. Real human presence.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
-            <a href="/verify" className="dev-cta" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>Verify Continuity →</a>
+            <a href="/lab/playground" className="dev-cta" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>Verify Continuity →</a>
             <a href="https://github.com/myshapeprotocol" target="_blank" rel="noopener noreferrer" className="dev-cta dev-cta-dim" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>GitHub →</a>
             <a href="/research/notes/008-continuity-protocol-core" className="dev-cta dev-cta-dim" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>CPS-0001 →</a>
             <a href="https://www.npmjs.com/package/@thecontinuitylab/myshape" target="_blank" rel="noopener noreferrer" className="dev-cta dev-cta-gold" onMouseEnter={() => playTick(600, "sine", 0.06, 0.015)}>npm Install →</a>
@@ -137,7 +137,7 @@ export default function DevelopersClient() {
                 )}
                 {s.isAction && (
                   <div className="dev-qs-actions">
-                    <a href="/verify" className="dev-cta" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>Verify Continuity →</a>
+                    <a href="/lab/playground" className="dev-cta" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>Verify Continuity →</a>
                     <a href="#playground" className="dev-cta dev-cta-dim" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>▼ Skip to Playground</a>
                   </div>
                 )}

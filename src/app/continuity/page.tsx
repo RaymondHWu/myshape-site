@@ -149,7 +149,7 @@ export default function ContinuityPage() {
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 28 }}>
             <a href="/research/notes/008-continuity-protocol-core" className="link-cta">Read CPS-0001 →</a>
-            <a href="/verify-receipt" className="link-ghost">Verify a Receipt →</a>
+            <a href="/lab/playground" className="link-ghost">Verify a Receipt →</a>
           </div>
         </div>
 

@@ -90,7 +90,7 @@ export default function EvidenceClient() {
         <section className="text-center py-10 border-t border-white/[0.05] space-y-5">
           <p className="text-white/40 text-[12px]">All evidence is reproducible. Run the benchmarks yourself.</p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link href="/verify" className="px-9 py-3 border border-[#60A5FA]/30 text-[#60A5FA]/70 text-[11px] tracking-[0.15em] uppercase hover:bg-[#60A5FA]/[0.04] hover:text-white transition-all" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>Verify Continuity →</Link>
+            <Link href="/lab/playground" className="px-9 py-3 border border-[#60A5FA]/30 text-[#60A5FA]/70 text-[11px] tracking-[0.15em] uppercase hover:bg-[#60A5FA]/[0.04] hover:text-white transition-all" onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}>Verify Continuity →</Link>
             <Link href="/research/notes/008-continuity-protocol-core" className="px-9 py-3 border border-[#90c8ff]/20 text-[#90c8ff]/55 text-[11px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/35 hover:text-[#90c8ff]/70 transition-all" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>CPS-0001 →</Link>
             <Link href="/whitepaper" className="px-9 py-3 border border-[#90c8ff]/20 text-[#90c8ff]/55 text-[11px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/35 hover:text-[#90c8ff]/70 transition-all" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>Whitepaper →</Link>
           </div>
