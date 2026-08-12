@@ -528,9 +528,8 @@ export default function PlaygroundPage() {
           </>
         )}
 
-        {/* CTA — real data */}
-        {verdict && (
-          <div style={{ marginTop: 32, padding: "24px", border: "1px solid rgba(212,175,55,0.15)", background: "rgba(212,175,55,0.02)", borderRadius: 2 }}>
+        {/* CTA — real data (always in DOM, visibility controlled by CSS) */}
+        <div style={{ marginTop: 32, padding: "24px", border: "1px solid rgba(212,175,55,0.15)", background: "rgba(212,175,55,0.02)", borderRadius: 2, display: verdict ? "block" : "none" }}>
             <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
               {/* QR — static PNG in public/ */}
               <div style={{ textAlign: "center", flexShrink: 0 }}>
@@ -552,7 +551,6 @@ export default function PlaygroundPage() {
               </div>
             </div>
           </div>
-        )}
 
         {/* Footer */}
         <div style={{ marginTop: 40, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
