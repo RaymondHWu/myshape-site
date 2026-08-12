@@ -187,8 +187,7 @@ export default function PlaygroundPage() {
     setOriginalReceipt(json);
     setReceiptSource("experiment");
     setTab("verify");
-    // auto-verify: pass json directly to avoid stale receiptJson state
-    handleVerify(json);
+    // user clicks "→ Verify This Receipt" to run V₁-V₇
   }
 
   const stepColor = (s: StepStatus) => s === "pass" ? "#48bb78" : s === "fail" ? "#f56565" : "#a0aec0";
