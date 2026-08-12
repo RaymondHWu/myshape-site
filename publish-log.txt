@@ -142,3 +142,26 @@
 ═══ Day 5 publish complete ═══
 
 
+[2026-07-31T00:59:33.056Z] ═══ Day 4: Evidence — Bluesky, Telegram, Discord, GitHub, HF ═══
+
+[2026-07-31T00:59:33.067Z] [bluesky] Authenticating...
+[2026-07-31T00:59:34.353Z] [bluesky] Logged in: @myshapeprotocol.bsky.social
+[2026-07-31T00:59:34.632Z] [bluesky] Post 1/6: https://bsky.app/profile/myshapeprotocol.bsky.social/post/3mrvqtya6ew2e
+[2026-07-31T00:59:36.429Z] [bluesky] Post 2/6: https://bsky.app/profile/myshapeprotocol.bsky.social/post/3mrvqtzwyxm2u
+[2026-07-31T00:59:38.233Z] [bluesky] Post 3/6: https://bsky.app/profile/myshapeprotocol.bsky.social/post/3mrvqu3nr6i2h
+[2026-07-31T00:59:40.050Z] [bluesky] Post 4/6: https://bsky.app/profile/myshapeprotocol.bsky.social/post/3mrvqu5euyn2e
+[2026-07-31T00:59:41.850Z] [bluesky] Post 5/6: https://bsky.app/profile/myshapeprotocol.bsky.social/post/3mrvqu74jju2o
+[2026-07-31T00:59:43.643Z] [bluesky] Post 6/6: https://bsky.app/profile/myshapeprotocol.bsky.social/post/3mrvquat5v42u
+[2026-07-31T00:59:43.644Z] [bluesky] ✅ Thread complete
+
+[2026-07-31T00:59:45.658Z] [telegram] Publishing...
+[2026-07-31T00:59:47.352Z] [telegram] ✅ Message sent (id: 23)
+[2026-07-31T00:59:48.364Z] [discord] Publishing...
+[2026-07-31T00:59:49.546Z] [discord] ✅ Message sent
+[2026-07-31T00:59:50.551Z] [github] Creating discussion...
+[2026-07-31T00:59:52.295Z] [github] ✅ https://github.com/myshapeprotocol/myshape-protocol/discussions/11
+[2026-07-31T00:59:53.305Z] [huggingface] Creating discussion...
+[2026-07-31T00:59:54.377Z] [huggingface] ✅ Created: /datasets/ContinuityLab-Org/cps-0001-benchmark/discussions/7
+[2026-07-31T00:59:54.377Z] 
+═══ Day 4 publish complete ═══
+
