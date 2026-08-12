@@ -16,7 +16,8 @@ const FIELDS = [
 
 export default function EvidenceStrip() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [playCount, setPlayCount] = useState(0);
+  const visible = playCount > 0; // derived — true once first triggered; render/glow keep reading it
   const [declassified, setDeclassified] = useState(false);
   const [revealed, setRevealed] = useState<boolean[]>(Array(FIELDS.length).fill(false));
   const [stamped, setStamped] = useState(false);
@@ -24,27 +25,35 @@ export default function EvidenceStrip() {
   const [scanY, setScanY] = useState(0);
   const [receiptDigits, setReceiptDigits] = useState("7a3f9c1e");
 
-  /* ── trigger on scroll — wait until mostly in view ─── */
+  /* ── intersection — re-trigger on EVERY entry into view ── */
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
+    let armed = true;
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        // only start when >50% visible — user is actually looking
-        if (entry.intersectionRatio > 0.5 && !visible) {
-          setVisible(true);
-          obs.disconnect();
+      ([e]) => {
+        if (e.isIntersecting && e.intersectionRatio > 0.5 && armed) {
+          armed = false;
+          setPlayCount((c) => c + 1); // replay the sequence each visit
+        } else if (!e.isIntersecting) {
+          armed = true; // re-arm when it scrolls out of view
         }
       },
-      { threshold: [0, 0.3, 0.5, 0.7] },
+      { threshold: [0.2, 0.5, 0.8] },
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [visible]);
+  }, []);
 
-  /* ── animation sequence ───────────────────────────── */
+  /* ── animation sequence — REPLAYS on every entry ───── */
   useEffect(() => {
-    if (!visible) return;
+    if (playCount === 0) return;
+    // reset state so the sequence visibly replays each visit
+    setDeclassified(false);
+    setRevealed(Array(FIELDS.length).fill(false));
+    setStamped(false);
+    setFooter(false);
+
     const ids: ReturnType<typeof setTimeout>[] = [];
 
     ids.push(setTimeout(() => setDeclassified(true), 400));
@@ -63,7 +72,7 @@ export default function EvidenceStrip() {
     ids.push(setTimeout(() => setFooter(true), 800 + FIELDS.length * 300 + 800));
 
     return () => ids.forEach(clearTimeout);
-  }, [visible]);
+  }, [playCount]);
 
   /* ── scan line ────────────────────────────────────── */
   useEffect(() => {

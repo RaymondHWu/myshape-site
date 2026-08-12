@@ -2,7 +2,7 @@
   padding: clamp(3.5rem, 6vw, 6rem) clamp(1rem, 4vw, 2rem);
   background: rgba(6,11,20,0.5);
   border-top: 1px solid rgba(255,255,255,0.05);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  
 }
 
 .evidence-strip__inner {
@@ -53,7 +53,7 @@
 .evidence-strip__value {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #90c8ff;
+  color: #00E5FF;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   white-space: nowrap;
   min-width: 80px;
@@ -76,7 +76,7 @@
   display: block;
   text-align: center;
   font-size: 0.78rem;
-  color: rgba(144,200,255,0.4);
+  color: rgba(0,229,255,0.4);
   text-decoration: none;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-weight: 300;
@@ -84,7 +84,7 @@
 }
 
 .evidence-strip__link:hover {
-  color: rgba(144,200,255,0.65);
+  color: rgba(0,229,255,0.65);
 }
 
 @media (max-width: 480px) {

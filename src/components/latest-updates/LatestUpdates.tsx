@@ -12,8 +12,8 @@ interface UpdateEntry {
 
 const UPDATES: UpdateEntry[] = [
   {
-    date: "2026-07-30",
-    text: "npm package v0.1.6 — real sample data, npx myshape demo with live verification output",
+    date: "2026-08-07",
+    text: "npm package v0.2.0 — 4-layer verification pipeline (EE-001 PES + EE-002 + EE-003 + Threat Assessment), 120 tests, extensible by design",
     href: "https://www.npmjs.com/package/@thecontinuitylab/myshape",
     tag: "Release",
   },
@@ -62,9 +62,9 @@ const FILTERS = [
 ] as const;
 
 const TAG_STYLES: Record<string, { bg: string; text: string }> = {
-  RFC: { bg: "rgba(144,200,255,0.12)", text: "#90c8ff" },
+  RFC: { bg: "rgba(0,229,255,0.12)", text: "#00E5FF" },
   RN: { bg: "rgba(212,175,55,0.12)", text: "#d4af37" },
-  Benchmark: { bg: "rgba(144,200,255,0.12)", text: "#90c8ff" },
+  Benchmark: { bg: "rgba(0,229,255,0.12)", text: "#00E5FF" },
   Paper: { bg: "rgba(255,255,255,0.08)", text: "rgba(255,255,255,0.6)" },
   Release: { bg: "rgba(100,255,180,0.10)", text: "#64ffb4" },
   Lab: { bg: "rgba(255,255,255,0.05)", text: "rgba(255,255,255,0.45)" },

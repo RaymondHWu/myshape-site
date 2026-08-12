@@ -6,8 +6,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { GeistSans, GeistMono } from "geist/font";
 import PageTransition from "@/components/transition/PageTransition";
 import ScrollTop from "@/components/ui/ScrollTop";
-import HeroVisualLoader from "@/components/hero/HeroVisualLoader";
 import SearchDialog from "@/components/search/SearchDialog";
+import AudioInit from "@/components/audio/AudioInit";
 
 /* -------------------------------
    全站 SEO metadata（首页 · myshape.com 默认）
@@ -101,7 +101,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preload" href="/_next/static/media/geist-sans-*.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
 
         <meta name="color-scheme" content="dark" />
-        <meta name="theme-color" content="#02040a" />
+        <meta name="theme-color" content="#051025" />
 
         {/* -------------------------------
             Schema.org 结构化数据 — 传统 SEO + GEO 双优化
@@ -255,16 +255,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           flexDirection: "column",
         }}
       >
-        {/* 背景视觉层 — 星空墙 */}
-        <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-          <HeroVisualLoader showCore={false} />
-        </div>
 
 
         {/* Page content */}
         <div style={{ position: "relative", zIndex: 1, width: "100%", flex: 1 }}>
           {children}
         </div>
+        <AudioInit />
         <SearchDialog />
         <Analytics />
         <ScrollTop />

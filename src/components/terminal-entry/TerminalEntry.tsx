@@ -30,7 +30,8 @@ const DELAY = {
 };
 
 export default function TerminalEntry() {
-  const [visible, setVisible] = useState(false);
+  const [playCount, setPlayCount] = useState(0);
+  const visible = playCount > 0; // derived — true once first triggered; render/glow keep reading it
   const [phase, setPhase] = useState(0);
   const [stagesShown, setStagesShown] = useState(0);
   const [npmText, setNpmText] = useState("");
@@ -41,23 +42,34 @@ export default function TerminalEntry() {
   const stageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-  /* ── intersection ─────────────────────────────────── */
+  /* ── intersection — re-trigger on EVERY entry into view ── */
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    let armed = true;
     const obs = new IntersectionObserver(
       ([e]) => {
-        if (e.intersectionRatio > 0.5) { setVisible(true); obs.disconnect(); }
+        if (e.isIntersecting && e.intersectionRatio > 0.5 && armed) {
+          armed = false;
+          setPlayCount((c) => c + 1); // replay the sequence each visit
+        } else if (!e.isIntersecting) {
+          armed = true; // re-arm when it scrolls out of view
+        }
       },
-      { threshold: [0, 0.3, 0.5, 0.7] },
+      { threshold: [0.2, 0.5, 0.8] },
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
-  /* ── animation sequence ───────────────────────────── */
+  /* ── animation sequence — REPLAYS on every entry ───── */
   useEffect(() => {
-    if (!visible) return;
+    if (playCount === 0) return;
+    // reset state so the sequence visibly replays each visit
+    setPhase(0);
+    setStagesShown(0);
+    setNpmText("");
+    setVerifyText("");
     const t = (cb: () => void, ms: number) => {
       const id = setTimeout(cb, ms);
       timers.current.push(id);
@@ -78,7 +90,7 @@ export default function TerminalEntry() {
     t(() => setPhase(7), DELAY.ctas);
 
     return () => timers.current.forEach(clearTimeout);
-  }, [visible]);
+  }, [playCount]);
 
   /* ── circuit canvas ───────────────────────────────── */
   const drawCircuits = useCallback(() => {
