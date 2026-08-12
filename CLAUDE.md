@@ -258,3 +258,15 @@ API endpoints：
 ```
 
 Types: feat, fix, refactor, docs, test, chore, perf, ci
+
+---
+
+## 7. 記憶備忘（Session Log）規則 · 必須遵守
+
+> 因為 AI Agent 是**無狀態**的（跨對話不會自動記憶），本節規則確保工作能跨對話無縫接續。
+
+- **每次對話收尾前**，必須將本次成果寫入 `memory/session-log.md`（格式見該檔案的「格式範本」），至少包含：狀態、改了哪些檔案、卡關點、下一步。
+- **每次新對話開始**，若使用者說「接續工作」，先讀取 `memory/session-log.md` 的【最新一筆】再動手，不要憑空猜測。
+- **`memory/` 目錄已被 git 忽略**，屬於純本機記憶。切記：
+  - 可以自由讀寫，但**絕對不能 `git add memory/`**，也不要把裡面的內容貼到公開 repo / PR / 提交訊息中。
+- 若 CLAUDE.md 本身有需要長期記住的新規則，也請同步在此新增，而不是只放 session-log。
