@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
+import QRCode from "qrcode";
 import { detectJerkPeaks, buildEvidence, matchEvents, detectDirectionChanges } from "@/lib/evidence/causal-coupling";
 import { evaluatePolicy } from "@/lib/evidence/types";
 import type { IMUSample, CameraSample } from "@/lib/evidence/causal-coupling";
@@ -115,9 +116,23 @@ export default function PlaygroundPage() {
   const [vError, setVError] = useState("");
   const [typingPos, setTypingPos] = useState(0);
   const typingRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [qrDataUrl, setQrDataUrl] = useState("");
 
   // Cleanup on unmount
   useEffect(() => () => { if (typingRef.current) clearInterval(typingRef.current); }, []);
+
+  // Generate QR code locally — no external API dependency
+  useEffect(() => {
+    let cancelled = false;
+    QRCode.toDataURL("https://thecontinuitylab.org/lab/contribute", {
+      width: 140,
+      margin: 1,
+      color: { dark: "#051025", light: "#ffffff" },
+    })
+      .then((url) => { if (!cancelled) setQrDataUrl(url); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   // Typewriter effect: reveals all steps, then types detail text character by character
   function startTyping(all: Step[]) {
@@ -533,15 +548,20 @@ export default function PlaygroundPage() {
         {verdict && (
           <div style={{ marginTop: 32, padding: "24px", border: "1px solid rgba(212,175,55,0.15)", background: "rgba(212,175,55,0.02)", borderRadius: 2 }}>
             <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
-              {/* QR */}
+              {/* QR — generated locally, no external API */}
               <div style={{ textAlign: "center", flexShrink: 0 }}>
-                <img
-                  src="https://chart.googleapis.com/chart?cht=qr&chs=96x96&chl=https://thecontinuitylab.org/lab/contribute&choe=UTF-8&chld=L"
-                  alt="QR code to contribute page"
-                  style={{ display: "block", width: 96, height: 96, border: "1px solid #1E293B", borderRadius: 4, background: "#fff" }}
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                />
-                <div style={{ fontSize: 9, color: "#64748B", marginTop: 4 }}>Scan with phone → contribute data</div>
+                {qrDataUrl ? (
+                  <img
+                    src={qrDataUrl}
+                    alt="QR code — scan to contribute real motion data"
+                    style={{ display: "block", width: 120, height: 120, border: "1px solid #1E293B", borderRadius: 4, background: "#fff" }}
+                  />
+                ) : (
+                  <div style={{ width: 120, height: 120, border: "1px solid #1E293B", borderRadius: 4, background: "#0B1220", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <span style={{ fontSize: 10, color: "#475569" }}>QR loading…</span>
+                  </div>
+                )}
+                <div style={{ fontSize: 9, color: "#64748B", marginTop: 6 }}>Scan with phone → contribute data</div>
               </div>
               {/* Copy */}
               <div style={{ minWidth: 200 }}>
