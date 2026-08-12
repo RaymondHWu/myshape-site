@@ -129,7 +129,7 @@ export default function PresenceNetwork() {
   const genesisPct = Math.min(100, Math.round((data.sovereignNodes / 100) * 100));
 
   return (
-    <div className="relative bg-[#02040a]/60 backdrop-blur-sm overflow-hidden transition-all duration-700"
+    <div className="relative bg-[#051025]/60 backdrop-blur-sm overflow-hidden transition-all duration-700"
       style={{
         border: `1px solid ${hover ? BORDER_HOVER : BORDER}`,
         clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",

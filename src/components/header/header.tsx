@@ -296,7 +296,7 @@ const ProtocolHeader = () => {
     <div className="sub-nav-bar" style={{
       position: "fixed", top: "60px", left: 0, width: "100%", height: "32px",
       display: "flex", alignItems: "center", justifyContent: "center", gap: "32px",
-      background: "rgba(2,4,10,0.85)", backdropFilter: "blur(4px)",
+      background: "rgba(5,16,37,0.85)", backdropFilter: "blur(4px)",
       borderBottom: "1px solid rgba(255,255,255,0.05)", zIndex: 9998,
       fontFamily: "monospace",
       overflowX: "auto", overflowY: "hidden", whiteSpace: "nowrap",
@@ -351,7 +351,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "space-between",
     padding: "0 12px",
     background:
-      "linear-gradient(to bottom, rgba(2, 4, 10, 0.95) 0%, rgba(2, 4, 10, 0) 100%)",
+      "linear-gradient(to bottom, rgba(5, 16, 37, 0.95) 0%, rgba(5, 16, 37, 0) 100%)",
     backdropFilter: "blur(8px)",
     WebkitBackdropFilter: "blur(8px)",
     zIndex: 99999,
@@ -366,7 +366,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: "100%",
     height: "1px",
     background:
-      "linear-gradient(to right, transparent, rgba(144, 200, 255, 0.2), transparent)",
+      "linear-gradient(to right, transparent, rgba(0, 229, 255, 0.2), transparent)",
   },
   leftSection: {
     display: "flex",
@@ -396,10 +396,10 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   timeDisplay: { opacity: 0.4, letterSpacing: "0.05em" },
   nodeBadge: {
-    border: "1px solid rgba(144, 200, 255, 0.15)",
+    border: "1px solid rgba(0, 229, 255, 0.15)",
     padding: "3px 8px",
     fontSize: "8px",
-    background: "rgba(144, 200, 255, 0.02)",
+    background: "rgba(0, 229, 255, 0.02)",
     borderRadius: "2px",
     opacity: 0.6,
   },
@@ -407,7 +407,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     alignItems: "center",
     gap: "8px",
-    border: "1px solid rgba(144, 200, 255, 0.2)",
+    border: "1px solid rgba(0, 229, 255, 0.2)",
     padding: "4px 12px",
     borderRadius: "2px",
     color: "#90c8ff",

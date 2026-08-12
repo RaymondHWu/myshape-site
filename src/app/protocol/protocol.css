@@ -23,7 +23,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1.25rem;
-  background: #02040a;
+  background: #051025;
   border: 1px solid rgba(144, 200, 255, 0.1);
   transition:
     border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -83,7 +83,7 @@
 /* ── Spec cards ── */
 
 .proto-spec-card {
-  background: #02040a;
+  background: #051025;
   padding: 1.5rem;
   border: 1px solid rgba(144, 200, 255, 0.1);
   transition:
@@ -181,7 +181,7 @@
   border-radius: 50%;
   border: 1px solid rgba(144, 200, 255, 0.3);
   color: rgba(144, 200, 255, 0.6);
-  background: #02040a;
+  background: #051025;
   display: flex;
   align-items: center;
   justify-content: center;

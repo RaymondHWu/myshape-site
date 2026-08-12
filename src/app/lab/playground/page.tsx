@@ -194,7 +194,7 @@ export default function PlaygroundPage() {
   const stepColor = (s: StepStatus) => s === "pass" ? "#48bb78" : s === "fail" ? "#f56565" : "#a0aec0";
 
   return (
-    <div style={{ minHeight: "100vh", background: "#060B14", color: "#E6EDF7", fontFamily: "system-ui, -apple-system, sans-serif", position: "relative" }}>
+    <div style={{ minHeight: "100vh", background: "#051025", color: "#E6EDF7", fontFamily: "system-ui, -apple-system, sans-serif", position: "relative" }}>
       <style>{`@keyframes blink{50%{opacity:0}} @keyframes statusIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}`}</style>
       <BackgroundParticles />
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "48px 24px" }}>

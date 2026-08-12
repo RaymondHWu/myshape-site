@@ -27,7 +27,7 @@ const METRICS = [
 
 export default function TechSpecClient() {
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
+    <div className="min-h-screen bg-[#051025] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
         <div className="space-y-4 mb-12 md:mb-14">

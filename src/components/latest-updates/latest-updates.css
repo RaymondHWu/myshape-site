@@ -54,9 +54,9 @@
 }
 
 .latest-updates__filter-btn--active {
-  color: #90c8ff;
-  border-color: rgba(144, 200, 255, 0.2);
-  background: rgba(144, 200, 255, 0.05);
+  color: #00E5FF;
+  border-color: rgba(0, 229, 255, 0.2);
+  background: rgba(0, 229, 255, 0.05);
 }
 
 .latest-updates__list {
@@ -84,7 +84,7 @@
 }
 
 .latest-updates__link:hover .latest-updates__row {
-  background: rgba(144, 200, 255, 0.03);
+  background: rgba(0, 229, 255, 0.03);
 }
 
 .latest-updates__link:hover .latest-updates__arrow {
@@ -116,7 +116,7 @@
 }
 
 .latest-updates__arrow {
-  color: rgba(144, 200, 255, 0.3);
+  color: rgba(0, 229, 255, 0.3);
   opacity: 0;
   transition: all 0.2s;
   font-size: 0.75rem;

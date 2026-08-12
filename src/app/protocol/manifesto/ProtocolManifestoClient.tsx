@@ -107,7 +107,7 @@ export default function ProtocolManifesto() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
+    <div className="min-h-screen bg-[#051025] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
 
       {/* Background Grid */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.04]"

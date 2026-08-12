@@ -26,7 +26,7 @@ export default function BlogClient() {
   const filtered = activeCategory === "featured" ? featured : POSTS.filter(p => p.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
+    <div className="min-h-screen bg-[#051025] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
       <BackgroundParticles />
 

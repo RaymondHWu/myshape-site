@@ -46,7 +46,7 @@ function confBrightness(c: number) {
 
 export default function ArchitectureClient() {
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
+    <div className="min-h-screen bg-[#051025] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16">
@@ -107,7 +107,7 @@ export default function ArchitectureClient() {
             {PIPELINE.map((p, i) => (
               <div key={p.step} className="relative flex gap-3 pb-3 last:pb-0"
                 onMouseEnter={() => playTick(700, "sine", 0.06, 0.015)}>
-                <div className="absolute left-[14px] top-[20px] w-3.5 h-3.5 rounded-full border-2 border-[#90c8ff]/50 bg-[#02040a] z-10 transition-all duration-500 arch-mobile-dot"
+                <div className="absolute left-[14px] top-[20px] w-3.5 h-3.5 rounded-full border-2 border-[#90c8ff]/50 bg-[#051025] z-10 transition-all duration-500 arch-mobile-dot"
                   style={{ animationDelay: `${i * 0.5}s` }} />
                 <div className="flex-1 pl-10 py-1.5">
                   <span className="text-[11px] tracking-[0.2em] uppercase font-medium text-white/60">{p.step}. {p.name}</span>

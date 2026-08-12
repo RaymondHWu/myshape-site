@@ -138,7 +138,7 @@ export default function Page() {
   const isPass = verdict === "Physical motion detected";
 
   return (
-    <div style={{ minHeight: "100dvh", background: "#060B14", color: "#E6EDF7", fontFamily: "system-ui, sans-serif", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, textAlign: "center" }}>
+    <div style={{ minHeight: "100dvh", background: "#051025", color: "#E6EDF7", fontFamily: "system-ui, sans-serif", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, textAlign: "center" }}>
       <div style={{ maxWidth: 380, width: "100%" }}>
 
         {phase === "idle" && (
@@ -149,7 +149,7 @@ export default function Page() {
             <h1 style={{ fontSize: 28, fontWeight: 300, margin: "0 0 8px" }}>Physical Motion Check</h1>
             <p style={{ fontSize: 14, color: "#94A3B8", margin: "0 0 32px", lineHeight: 1.6 }}>This verifies sensor data comes from a physically moving device — not a script. It does not identify you.</p>
             {error && <div style={{ fontSize: 12, color: "#f85149", marginBottom: 16, padding: 10, background: "rgba(248,81,73,0.06)", border: "1px solid rgba(248,81,73,0.2)", borderRadius: 6 }}>{error}</div>}
-            <button onClick={go} style={{ width: "100%", padding: "16px 0", fontSize: 17, color: "#060B14", background: "#60A5FA", border: "none", borderRadius: 8, cursor: "pointer" }}>
+            <button onClick={go} style={{ width: "100%", padding: "16px 0", fontSize: 17, color: "#051025", background: "#60A5FA", border: "none", borderRadius: 8, cursor: "pointer" }}>
               Start
             </button>
           </>

@@ -191,7 +191,7 @@ export default function AdminClient() {
   const meetsMin = status?.meets_minimum_threshold ?? false;
 
   return (
-    <div className="bg-[#02040a] text-[#f8feff] font-mono min-h-screen">
+    <div className="bg-[#051025] text-[#f8feff] font-mono min-h-screen">
       <ProtocolHeader />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6" style={{ paddingTop: "7rem", paddingBottom: "4rem" }}>

@@ -86,7 +86,7 @@ export default function IdentityClient() {
   };
 
   return (
-    <div className="relative w-full min-h-dvh overflow-hidden bg-[#02040a] font-mono">
+    <div className="relative w-full min-h-dvh overflow-hidden bg-[#051025] font-mono">
       <h1 className="sr-only">MyShape Identity — Sovereign Identity Dashboard</h1>
 
       {/* 星空背景墙 */}

@@ -12,7 +12,7 @@ export async function GET(request: Request) {
         style={{
           width: 1200,
           height: 630,
-          background: "#02040a",
+          background: "#051025",
           fontFamily: "monospace",
           display: "flex",
           flexDirection: "column",

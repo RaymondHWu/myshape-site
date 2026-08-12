@@ -96,7 +96,7 @@ export default function ParadigmShift() {
                     ? "text-[#90c8ff]/80 opacity-100 translate-y-0"
                     : "text-white/10 opacity-0 -translate-y-1"
                 }`}
-                style={{ background: "#02040a" }}>
+                style={{ background: "#051025" }}>
                   {node.id}
                 </span>
               </div>

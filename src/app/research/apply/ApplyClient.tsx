@@ -96,7 +96,7 @@ function ApplyForm() {
   const isGenesis = result.cohort === "genesis";
 
   return (
-    <div className="bg-[#02040a] text-[#f8feff] font-mono min-h-screen">
+    <div className="bg-[#051025] text-[#f8feff] font-mono min-h-screen">
       <ProtocolHeader />
 
       <div className="relative z-10 max-w-2xl mx-auto px-4 md:px-6" style={{ paddingTop: "7rem", paddingBottom: "4rem" }}>
@@ -318,7 +318,7 @@ function ApplyForm() {
                 disabled={status === "submitting"}
               >
                 {BG_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value} className="bg-[#02040a] text-white/50">
+                  <option key={opt.value} value={opt.value} className="bg-[#051025] text-white/50">
                     {opt.label}
                   </option>
                 ))}
@@ -390,7 +390,7 @@ function ApplyForm() {
 export default function ApplyClient() {
   return (
     <Suspense fallback={
-      <div className="bg-[#02040a] min-h-screen flex items-center justify-center">
+      <div className="bg-[#051025] min-h-screen flex items-center justify-center">
         <div className="text-[#90c8ff]/30 text-[11px] tracking-[0.3em] uppercase animate-pulse">Loading...</div>
       </div>
     }>

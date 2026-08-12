@@ -77,7 +77,7 @@ export default function SearchClient({ initialQuery }: { initialQuery: string })
             borderRadius: 8,
             border: "none",
             background: "var(--color-accent, #4da8da)",
-            color: "#02040a",
+            color: "#051025",
             fontWeight: 600,
             fontSize: "0.95rem",
             cursor: "pointer",

@@ -58,7 +58,7 @@ export default function HeroVisual({ showCore = true }: { showCore?: boolean }) 
     const draw = () => {
       if (!showCore) {
         // 背景墙层
-        ctx.fillStyle = '#02040a';
+        ctx.fillStyle = '#051025';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         stars.forEach(s => {
           s.z -= 0.005; if (s.z <= 0) s.z = 2;

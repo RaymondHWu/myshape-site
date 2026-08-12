@@ -60,7 +60,7 @@ export default function AgentClient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
+    <div className="min-h-screen bg-[#051025] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
       <BackgroundParticles />
 
@@ -136,7 +136,7 @@ export default function AgentClient() {
                 <label className="block text-[#90c8ff]/50 text-[11px] tracking-[0.25em] uppercase mb-2">Agent_Type</label>
                 <select value={agentType} onChange={(e) => setAgentType(e.target.value)}
                   disabled={status === "submitting"}
-                  className="w-full bg-[#02040a] border border-white/12 py-3 px-4 text-white/65 text-[12px] tracking-[0.1em] outline-none focus:border-[#90c8ff]/60">
+                  className="w-full bg-[#051025] border border-white/12 py-3 px-4 text-white/65 text-[12px] tracking-[0.1em] outline-none focus:border-[#90c8ff]/60">
                   {agentTypes.map((t) => (
                     <option key={t.value} value={t.value}>{t.value} — {t.label}</option>
                   ))}

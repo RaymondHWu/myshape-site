@@ -76,7 +76,7 @@ export default function SurveyClient() {
 
   if (sent) {
     return (
-      <div style={{ minHeight: "100dvh", background: "#060B14", color: "#E6EDF7", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "system-ui, sans-serif" }}>
+      <div style={{ minHeight: "100dvh", background: "#051025", color: "#E6EDF7", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "system-ui, sans-serif" }}>
         <div style={{ textAlign: "center", maxWidth: 400 }}>
           <div style={{ fontSize: 40, marginBottom: 16 }}>✓</div>
           <h2 style={{ fontSize: 22, fontWeight: 300, margin: "0 0 8px", color: "#60A5FA" }}>Thank you</h2>
@@ -90,7 +90,7 @@ export default function SurveyClient() {
   }
 
   return (
-    <div style={{ minHeight: "100dvh", background: "#060B14", color: "#E6EDF7", fontFamily: "system-ui, sans-serif" }}>
+    <div style={{ minHeight: "100dvh", background: "#051025", color: "#E6EDF7", fontFamily: "system-ui, sans-serif" }}>
       <div style={{ maxWidth: 560, margin: "0 auto", padding: "60px 24px 80px" }}>
         <h1 style={{ fontSize: 24, fontWeight: 300, margin: "0 0 4px", color: "#fff" }}>Discovery Survey</h1>
         <p style={{ fontSize: 12, color: "#64748B", margin: "0 0 32px", lineHeight: 1.7 }}>
@@ -133,7 +133,7 @@ export default function SurveyClient() {
           </div>
 
           <button type="submit"
-            style={{ width: "100%", padding: "14px 0", fontSize: 14, color: "#060B14", background: "#60A5FA", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 500 }}>
+            style={{ width: "100%", padding: "14px 0", fontSize: 14, color: "#051025", background: "#60A5FA", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 500 }}>
             Submit
           </button>
         </form>

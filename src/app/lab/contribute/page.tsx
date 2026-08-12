@@ -168,7 +168,7 @@ export default function ContributePage() {
   /* ── Desktop prompt ── */
   if (!isMobile) {
     return (
-      <div style={{ minHeight: "100dvh", background: "#060B14", color: "#E6EDF7", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "system-ui, sans-serif", textAlign: "center" }}>
+      <div style={{ minHeight: "100dvh", background: "#051025", color: "#E6EDF7", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "system-ui, sans-serif", textAlign: "center" }}>
         <div style={{ maxWidth: 360 }}>
           <div style={{ fontSize: 40, marginBottom: 16 }}>📱</div>
           <h2 style={{ fontSize: 22, fontWeight: 300, margin: "0 0 12px", color: "#60A5FA" }}>Open on your phone</h2>
@@ -184,7 +184,7 @@ export default function ContributePage() {
   /* ── Finished screen ── */
   if (phase === "finished") {
     return (
-      <div style={{ minHeight: "100dvh", background: "#060B14", color: "#E6EDF7", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "system-ui, sans-serif", textAlign: "center" }}>
+      <div style={{ minHeight: "100dvh", background: "#051025", color: "#E6EDF7", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "system-ui, sans-serif", textAlign: "center" }}>
         <div style={{ maxWidth: 360 }}>
           <div style={{ fontSize: 48, marginBottom: 12 }}>✓</div>
           <h2 style={{ fontSize: 22, fontWeight: 300, color: "#34D399", margin: "0 0 8px" }}>All done — thank you!</h2>
@@ -213,7 +213,7 @@ export default function ContributePage() {
 
   /* ── Main UI ── */
   return (
-    <div style={{ minHeight: "100dvh", background: "#060B14", color: "#E6EDF7", fontFamily: "system-ui, sans-serif", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", padding: "80px 24px 60px", textAlign: "center" }}>
+    <div style={{ minHeight: "100dvh", background: "#051025", color: "#E6EDF7", fontFamily: "system-ui, sans-serif", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", padding: "80px 24px 60px", textAlign: "center" }}>
       <div style={{ maxWidth: 380, width: "100%" }}>
 
         {/* ── Progress dots ── */}
@@ -239,7 +239,7 @@ export default function ContributePage() {
             {error && (
               <div style={{ fontSize: 12, color: "#f85149", marginBottom: 16, padding: 10, background: "rgba(248,81,73,0.06)", border: "1px solid rgba(248,81,73,0.2)", borderRadius: 6 }}>{error}</div>
             )}
-            <button onClick={run} style={{ width: "100%", padding: "18px 0", fontSize: 17, color: "#060B14", background: "#34D399", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 500 }}>
+            <button onClick={run} style={{ width: "100%", padding: "18px 0", fontSize: 17, color: "#051025", background: "#34D399", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 500 }}>
               Start
             </button>
             <button onClick={() => setPhase("finished")} style={{ marginTop: 10, fontSize: 11, color: "rgba(255,255,255,0.2)", background: "none", border: "none", cursor: "pointer" }}>
@@ -281,7 +281,7 @@ export default function ContributePage() {
                 <div style={{ marginTop: 8, fontSize: 10, color: "rgba(255,255,255,0.12)" }}>Saved to Continuity Dataset</div>
               </div>
             )}
-            <button onClick={nextStep} style={{ width: "100%", padding: "14px 0", fontSize: 15, color: "#060B14", background: "#34D399", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 500 }}>
+            <button onClick={nextStep} style={{ width: "100%", padding: "14px 0", fontSize: 15, color: "#051025", background: "#34D399", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 500 }}>
               {isLast ? "Finish" : `Next: ${STEPS[stepIdx + 1].title} →`}
             </button>
             <div style={{ marginTop: 10 }}>

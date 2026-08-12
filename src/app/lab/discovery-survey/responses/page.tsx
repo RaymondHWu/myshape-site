@@ -23,7 +23,7 @@ export default async function ResponsesPage() {
   const rows = await getResponses();
 
   return (
-    <div style={{ minHeight: "100dvh", background: "#060B14", color: "#E6EDF7", fontFamily: "monospace", padding: "40px 24px" }}>
+    <div style={{ minHeight: "100dvh", background: "#051025", color: "#E6EDF7", fontFamily: "monospace", padding: "40px 24px" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <h1 style={{ fontSize: 20, fontWeight: 300, color: "#60A5FA", margin: "0 0 8px" }}>Survey Responses</h1>
         <p style={{ fontSize: 12, color: "#64748B", margin: "0 0 32px" }}>

@@ -381,7 +381,7 @@ export default function GenesisClient() {
         refId="005" category="CIV_LAYER" title="GENESIS_PROTOCOL"
         secLevel="SEALED" systemStatus="CONTINUITY_PHASE"
       >
-        <div className="min-h-screen bg-[#02040a] flex flex-col items-center justify-center px-6 py-24">
+        <div className="min-h-screen bg-[#051025] flex flex-col items-center justify-center px-6 py-24">
           <VortexScan />
           <motion.div
             initial={{ opacity: 0, y: 20 }}

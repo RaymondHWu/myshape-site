@@ -18,7 +18,7 @@ export default function ErrorFallback({
   resetLabel = "REINITIALIZE_NODE",
 }: ErrorFallbackProps) {
   return (
-    <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#02040a] gap-8 px-6">
+    <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#051025] gap-8 px-6">
       <div className="text-center">
         <div className="font-mono text-[11px] tracking-[0.5em] text-white/30 uppercase mb-4">
           {title}

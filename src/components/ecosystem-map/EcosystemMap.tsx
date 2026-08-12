@@ -99,7 +99,7 @@ export default function EcosystemMap() {
             style={{ background: "rgba(255,255,255,0.6)" }} />
         </div>
         {LAYERS.map((_, i) => (
-          <div key={i} className="absolute w-2 h-2 rounded-full bg-[#02040a] border border-[#90c8ff]/40 z-10"
+          <div key={i} className="absolute w-2 h-2 rounded-full bg-[#051025] border border-[#90c8ff]/40 z-10"
             style={{
               top: `${(i + 0.5) * (100 / LAYERS.length)}%`,
               left: "-4px",

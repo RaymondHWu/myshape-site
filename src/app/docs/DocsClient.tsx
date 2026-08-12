@@ -64,7 +64,7 @@ const MODULES = [
 
 export default function DocsClient() {
   return (
-    <div className="bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30 min-h-screen flex flex-col">
+    <div className="bg-[#051025] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30 min-h-screen flex flex-col">
       <ProtocolHeader />
       <main className="flex-1 relative">
         <BackgroundParticles />
@@ -91,11 +91,11 @@ export default function DocsClient() {
             <div className="space-y-6">
               <div className="p-6 border border-[#90c8ff]/10 bg-white/[0.01]">
                 <p className="text-white/30 text-[11px] tracking-[0.2em] uppercase mb-3">Install</p>
-                <pre className="text-[#90c8ff]/60 text-[11px] bg-[#02040a] p-4 border border-[#90c8ff]/5 overflow-x-auto"><code>npm install @myshapeprotocol/sdk</code></pre>
+                <pre className="text-[#90c8ff]/60 text-[11px] bg-[#051025] p-4 border border-[#90c8ff]/5 overflow-x-auto"><code>npm install @myshapeprotocol/sdk</code></pre>
               </div>
               <div className="p-6 border border-[#90c8ff]/10 bg-white/[0.01]">
                 <p className="text-white/30 text-[11px] tracking-[0.2em] uppercase mb-3">Verify Presence (5 lines)</p>
-                <pre className="text-[#90c8ff]/50 text-[11px] bg-[#02040a] p-4 border border-[#90c8ff]/5 overflow-x-auto leading-relaxed">
+                <pre className="text-[#90c8ff]/50 text-[11px] bg-[#051025] p-4 border border-[#90c8ff]/5 overflow-x-auto leading-relaxed">
 {`import { MyShapeClient } from '@myshapeprotocol/sdk';
 
 const client = new MyShapeClient({ apiKey: 'ms_live_...' });

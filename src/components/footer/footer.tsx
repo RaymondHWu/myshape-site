@@ -84,16 +84,16 @@ export default function ProtocolFooter() {
           <div key={group.title} className={`flex ${i % 2 === 0 ? "justify-start" : "justify-end"} md:justify-center`}>
             <div className={`flex flex-col ${i % 2 === 0 ? "items-start" : "items-end"} md:items-start min-w-[140px]`}>
               <div className="mb-8 group cursor-default">
-                <h4 className="text-white text-[12px] font-bold tracking-[0.2em] mb-2 uppercase group-hover:text-[#90c8ff] transition-colors">
+                <h4 className="text-white text-[12px] font-bold tracking-[0.2em] mb-2 uppercase group-hover:text-[#00E5FF] transition-colors">
                   {group.title}
                 </h4>
-                <div className="w-4 h-[1px] bg-[#90c8ff]/50 group-hover:w-10 transition-all duration-700 ease-in-out shadow-[0_0_8px_#90c8ff]" />
+                <div className="w-4 h-[1px] bg-[#00E5FF]/50 group-hover:w-10 transition-all duration-700 ease-in-out shadow-[0_0_8px_#00E5FF]" />
               </div>
 
               {group.links.map((link) => {
                 const safeHref = link.href || "#";
                 const isExternal = safeHref.startsWith("http");
-                const linkClass = "text-white/45 text-[11px] mb-4 hover:text-[#90c8ff] hover:translate-x-1 transition-all duration-300 tracking-[0.12em] uppercase block";
+                const linkClass = "text-white/45 text-[11px] mb-4 hover:text-[#00E5FF] hover:translate-x-1 transition-all duration-300 tracking-[0.12em] uppercase block";
 
                 return (
                   <span key={link.name} onMouseEnter={() => playTick(500, "sine", 0.10, 0.025)}>
@@ -114,8 +114,8 @@ export default function ProtocolFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 bg-[#90c8ff] rounded-full animate-pulse shadow-[0_0_10px_#90c8ff]" />
-              <span className="text-[#90c8ff]/70 text-[11px] tracking-[0.2em] uppercase font-mono font-bold">
+              <div className="w-1.5 h-1.5 bg-[#00E5FF] rounded-full animate-pulse shadow-[0_0_10px_#00E5FF]" />
+              <span className="text-[#00E5FF]/70 text-[11px] tracking-[0.2em] uppercase font-mono font-bold">
                 CPS-0001 v1.0-RC
               </span>
               <span className="text-white/15">|</span>
@@ -152,12 +152,12 @@ export default function ProtocolFooter() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={status === "SENDING" ? "TRANSMITTING..." : `ENTER_EMAIL_ADDR${cursorVisible ? "█" : " "}`}
                 disabled={status !== "IDLE"}
-                className="w-full bg-transparent border-b border-white/10 py-3 text-[11px] text-[#90c8ff]/70 placeholder:text-white/30 focus:outline-none focus:border-[#90c8ff]/50 transition-all tracking-[0.15em] uppercase font-mono"
+                className="w-full bg-transparent border-b border-white/10 py-3 text-[11px] text-[#00E5FF]/70 placeholder:text-white/30 focus:outline-none focus:border-[#00E5FF]/50 transition-all tracking-[0.15em] uppercase font-mono"
                 required
               />
               <button
                 type="submit"
-                className="absolute right-0 bottom-3 text-[11px] font-normal text-[#90c8ff]/35 hover:text-[#90c8ff]/70 transition-all tracking-[0.15em]"
+                className="absolute right-0 bottom-3 text-[11px] font-normal text-[#00E5FF]/35 hover:text-[#00E5FF]/70 transition-all tracking-[0.15em]"
               >
                 {status === "IDLE" && "[ CONNECT ]"}
                 {status === "SENDING" && "[ ... ]"}
@@ -171,7 +171,7 @@ export default function ProtocolFooter() {
 
       <div className="max-w-6xl mx-auto px-4 md:px-10 mt-3 md:mt-16 pt-3 md:pt-6 border-t border-white/5 text-center space-y-1">
         <div className="items-center justify-center gap-1.5 flex">
-          <span className="w-1 h-1 rounded-full bg-[#90c8ff]/60 shadow-[0_0_4px_rgba(144,200,255,0.5)]" />
+          <span className="w-1 h-1 rounded-full bg-[#00E5FF]/60 shadow-[0_0_4px_rgba(0,229,255,0.5)]" />
           <span className="text-[11px] text-white/35 tracking-[0.15em] uppercase font-mono">CPS-0001 v1.0-RC &middot; 4 Engines &middot; 192 Tests &middot; 576 Runs</span>
         </div>
         <span className="text-[11px] text-white/40 tracking-[0.15em] uppercase font-mono block">

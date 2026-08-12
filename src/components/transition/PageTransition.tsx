@@ -84,7 +84,7 @@ export default function PageTransition() {
       style={{
         display: "none",
         zIndex: 99999,
-        backgroundColor: "#02040a",
+        backgroundColor: "#051025",
         opacity: "0",
         transition: "opacity 420ms cubic-bezier(0.4, 0, 0.2, 1)",
       }}

@@ -6,7 +6,7 @@ import "./loading.css";
 
 export default function RootLoading() {
   return (
-    <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#02040a] gap-6">
+    <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#051025] gap-6">
       {/* Pulse indicator — brand-consistent Ice Blue glow */}
       <div
         className="w-1 h-1 rounded-full bg-[#90c8ff]"

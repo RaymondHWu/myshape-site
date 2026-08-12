@@ -22,7 +22,7 @@ export default function ZKFlow() {
           <div key={item.step} className="group flex flex-col items-center text-center"
             onMouseEnter={() => playTick(800, "sine", 0.08, 0.02)}>
             {/* 圆形节点 */}
-            <div className="w-16 h-16 rounded-full border border-white/10 bg-[#02040a] flex items-center justify-center mb-8 group-hover:border-[#90c8ff] transition-all duration-700 relative">
+            <div className="w-16 h-16 rounded-full border border-white/10 bg-[#051025] flex items-center justify-center mb-8 group-hover:border-[#90c8ff] transition-all duration-700 relative">
               <span className="text-[11px] text-white/30 group-hover:text-[#90c8ff] font-bold tracking-widest transition-colors">
                 {item.step}
               </span>

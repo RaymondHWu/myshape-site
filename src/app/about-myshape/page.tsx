@@ -33,7 +33,7 @@ const PRINCIPLES = [
 
 export default function AboutPage() {
   return (
-    <div style={{ minHeight: "100vh", background: "#02040a", color: "#E6EDF7", fontFamily: "system-ui, -apple-system, sans-serif", overflowX: "hidden", position: "relative" }}>
+    <div style={{ minHeight: "100vh", background: "#051025", color: "#E6EDF7", fontFamily: "system-ui, -apple-system, sans-serif", overflowX: "hidden", position: "relative" }}>
       <style>{`
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(12px); }

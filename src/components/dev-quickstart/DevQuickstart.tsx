@@ -367,7 +367,7 @@ export default function DevQuickstart() {
                 >
                   {copied === "snippet" ? "✓ COPIED" : "COPY SNIPPET"}
                 </button>
-                <span className="dqs-hint">npm install @myshapeprotocol/sdk</span>
+                <span className="dqs-hint">npm install @thecontinuitylab/myshape</span>
               </div>
             </div>
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function RootNotFound() {
   return (
-    <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#02040a] gap-8 px-6 font-mono select-none">
+    <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#051025] gap-8 px-6 font-mono select-none">
       {/* 大号水印 */}
       <div className="absolute text-[clamp(48px,12vw,140px)] font-extralight text-[#90c8ff]/[0.04] tracking-[0.3em] pointer-events-none">
         404

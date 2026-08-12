@@ -76,7 +76,7 @@ MyShape is building that infrastructure. Not as an afterthought bolted onto a hu
 
 export default function PostClient() {
   return (
-    <div className="bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30 min-h-screen flex flex-col">
+    <div className="bg-[#051025] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30 min-h-screen flex flex-col">
       <ProtocolHeader />
       <main className="flex-1 relative">
         <BackgroundParticles />

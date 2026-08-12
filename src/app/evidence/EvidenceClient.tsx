@@ -30,7 +30,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 
 export default function EvidenceClient() {
   return (
-    <div className="min-h-screen bg-[#02040a] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
+    <div className="min-h-screen bg-[#051025] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 space-y-16 md:space-y-20">
         <div className="text-center">
