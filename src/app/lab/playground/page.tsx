@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
-import QRCode from "qrcode";
 import { detectJerkPeaks, buildEvidence, matchEvents, detectDirectionChanges } from "@/lib/evidence/causal-coupling";
 import { evaluatePolicy } from "@/lib/evidence/types";
 import type { IMUSample, CameraSample } from "@/lib/evidence/causal-coupling";
@@ -116,21 +115,25 @@ export default function PlaygroundPage() {
   const [vError, setVError] = useState("");
   const [typingPos, setTypingPos] = useState(0);
   const typingRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const [qrDataUrl, setQrDataUrl] = useState("");
+  const [qrSvg, setQrSvg] = useState("");
 
   // Cleanup on unmount
   useEffect(() => () => { if (typingRef.current) clearInterval(typingRef.current); }, []);
 
-  // Generate QR code locally — no external API dependency
+  // Generate QR code as SVG — no Canvas / no external API
   useEffect(() => {
     let cancelled = false;
-    QRCode.toDataURL("https://thecontinuitylab.org/lab/contribute", {
-      width: 140,
-      margin: 1,
-      color: { dark: "#051025", light: "#ffffff" },
-    })
-      .then((url) => { if (!cancelled) setQrDataUrl(url); })
-      .catch(() => {});
+    import("qrcode").then((m) => {
+      if (cancelled) return;
+      m.default.toString("https://thecontinuitylab.org/lab/contribute", {
+        type: "svg",
+        width: 140,
+        margin: 1,
+        color: { dark: "#051025", light: "#ffffff" },
+      })
+        .then((svg: string) => { if (!cancelled) setQrSvg(svg); })
+        .catch(() => {});
+    }).catch(() => {});
     return () => { cancelled = true; };
   }, []);
 
@@ -548,13 +551,12 @@ export default function PlaygroundPage() {
         {verdict && (
           <div style={{ marginTop: 32, padding: "24px", border: "1px solid rgba(212,175,55,0.15)", background: "rgba(212,175,55,0.02)", borderRadius: 2 }}>
             <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
-              {/* QR — generated locally, no external API */}
+              {/* QR — SVG generated locally, no external API */}
               <div style={{ textAlign: "center", flexShrink: 0 }}>
-                {qrDataUrl ? (
-                  <img
-                    src={qrDataUrl}
-                    alt="QR code — scan to contribute real motion data"
-                    style={{ display: "block", width: 120, height: 120, border: "1px solid #1E293B", borderRadius: 4, background: "#fff" }}
+                {qrSvg ? (
+                  <div
+                    style={{ width: 120, height: 120, border: "1px solid #1E293B", borderRadius: 4, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}
+                    dangerouslySetInnerHTML={{ __html: qrSvg }}
                   />
                 ) : (
                   <div style={{ width: 120, height: 120, border: "1px solid #1E293B", borderRadius: 4, background: "#0B1220", display: "flex", alignItems: "center", justifyContent: "center" }}>
