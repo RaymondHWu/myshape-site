@@ -21,13 +21,14 @@ export default function Page() {
   async function go() {
     setError(""); setVerdict(""); setConfidence(0); setDetails([]); setReceiptJson(""); setReceiptHash("");
 
+    if (!("DeviceMotionEvent" in window)) { setError("No motion sensor."); return; }
+
     if (typeof (DeviceMotionEvent as any).requestPermission === "function") {
       try {
         const p = await (DeviceMotionEvent as any).requestPermission();
         if (p !== "granted") { setError("Motion access needed."); return; }
       } catch { setError("Permission error."); return; }
     }
-    if (!("DeviceMotionEvent" in window)) { setError("No motion sensor."); return; }
 
     setPhase("go");
     setMsg("3");
@@ -69,11 +70,13 @@ export default function Page() {
     const mvv = mv / n;
 
     const sc = Math.min(cv / 0.25, 1) * 0.5 + Math.min(mvv / 1.5, 1) * 0.5;
-    const ok = sc > 0.25;
+    const timingOk = cv > 0.08;
+    const intensityOk = mvv > 0.25;
+    const ok = timingOk && intensityOk;
 
     setVerdict(ok ? "Physical motion detected" : "Uncertain — weak signal");
     setConfidence(Math.round(sc * 100));
-    setDetails([cv > 0.08 ? "✓ Natural timing" : "✗ Too regular", mvv > 0.25 ? "✓ Good intensity" : "✗ Too weak"]);
+    setDetails([timingOk ? "✓ Natural timing" : "✗ Too regular", intensityOk ? "✓ Good intensity" : "✗ Too weak"]);
 
     // Build CPS-0001 ContinuityReceipt
     const prev = typeof window !== "undefined" ? localStorage.getItem("vfy-prev") ?? null : null;

@@ -84,7 +84,7 @@ function runAllChecks(receipt: ContinuityReceipt): Step[] {
 
   // V₇
   const genesis = !receipt.previousReceiptHash;
-  steps.push({ id: "V₇", label: "Predecessor Chain", detail: genesis ? "Genesis receipt — no predecessor to verify" : "Chain link verification requires predecessor receipt", status: genesis ? "skipped" : "skipped" });
+  steps.push({ id: "V₇", label: "Predecessor Chain", detail: genesis ? "Genesis receipt — no predecessor to verify" : "Chain link referenced but predecessor receipt not provided for verification", status: genesis ? "skipped" : "skipped" });
 
   return steps;
 }

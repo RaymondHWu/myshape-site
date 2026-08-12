@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
-import BackgroundParticles from "@/components/particles/BackgroundParticles";
 import { detectJerkPeaks, buildEvidence, matchEvents, detectDirectionChanges } from "@/lib/evidence/causal-coupling";
 import { evaluatePolicy } from "@/lib/evidence/types";
 import type { IMUSample, CameraSample } from "@/lib/evidence/causal-coupling";
@@ -61,7 +60,7 @@ function runAllChecks(receipt: ContinuityReceipt): Step[] {
   const v6 = verifyFreshness(receipt);
   steps.push({ id: "V6", label: "Freshness", detail: humanLabel("V6"), status: v6 ? "fail" : "pass", error: v6 ?? undefined });
   const genesis = !receipt.previousReceiptHash;
-  steps.push({ id: "V7", label: "Chain", detail: humanLabel("V7"), status: genesis ? "skipped" : "skipped" });
+  steps.push({ id: "V7", label: "Chain", detail: genesis ? "Genesis receipt — no predecessor to verify" : "Chain link referenced but predecessor receipt not provided for verification", status: genesis ? "skipped" : "skipped" });
   return steps;
 }
 
@@ -73,8 +72,10 @@ export default function PlaygroundPage() {
   const [humanness, setHumanness] = useState(0.75);
   const [samples, setSamples] = useState(200);
 
+  const sim = useMemo(() => generateData(humanness, samples), [humanness, samples]);
+
   const result = useMemo(() => {
-    const { imu, cam } = generateData(humanness, samples);
+    const { imu, cam } = sim;
     const imuEvents = detectJerkPeaks(imu);
     const camEvents = detectDirectionChanges(cam);
     const { matches } = matchEvents(imuEvents, camEvents);
@@ -82,7 +83,7 @@ export default function PlaygroundPage() {
     const ev = buildEvidence(imuEvents, camEvents, matches, [], [], duration);
     const verdict = evaluatePolicy({ policyId: "playground", acceptThreshold: 0.70, rejectThreshold: 0.35 }, ev.confidence ?? 0);
     return { verdict, confidence: ev.confidence ?? 0, components: ev.components, diagnostics: ev.diagnostics, imuEvents: imuEvents.length, camEvents: camEvents.length, matches: matches.length };
-  }, [humanness, samples]);
+  }, [sim]);
 
   const vc = result.verdict === "PASS" ? "#34D399" : result.verdict === "FAIL" ? "#f85149" : "#d29922";
 
@@ -90,7 +91,7 @@ export default function PlaygroundPage() {
     if (tab !== "experiment") return;
     const c = canvasRef.current; if (!c) return;
     const ctx = c.getContext("2d"); if (!ctx) return;
-    const { imu } = generateData(humanness, samples);
+    const { imu } = sim;
     const data = imu.map((s) => ({ t: s.t, v: Math.sqrt(s.ax ** 2 + s.ay ** 2 + s.az ** 2) }));
     const times = data.map((d) => d.t); const vals = data.map((d) => d.v);
     const maxT = times[times.length - 1] || 1; const maxV = Math.max(...vals, 12); const minV = Math.min(...vals, 6);
@@ -103,7 +104,7 @@ export default function PlaygroundPage() {
     const peaks = detectJerkPeaks(imu);
     ctx.fillStyle = "#f85149";
     peaks.forEach((p) => { const x = (p.t / maxT) * W; const y = H - ((data.find((d) => d.t >= p.t)?.v || minV) - minV) / (maxV - minV) * (H - 10) - 5; ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill(); });
-  }, [humanness, samples, tab]);
+  }, [sim, tab]);
 
   // ── Verify ──
   const [receiptJson, setReceiptJson] = useState("");
@@ -185,10 +186,9 @@ export default function PlaygroundPage() {
     setReceiptJson(json);
     setOriginalReceipt(json);
     setReceiptSource("experiment");
-    setVSteps([]);
-    setVerdict("");
-    setTypingPos(0);
     setTab("verify");
+    // auto-verify: pass json directly to avoid stale receiptJson state
+    handleVerify(json);
   }
 
   const stepColor = (s: StepStatus) => s === "pass" ? "#48bb78" : s === "fail" ? "#f56565" : "#a0aec0";
@@ -196,31 +196,70 @@ export default function PlaygroundPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#051025", color: "#E6EDF7", fontFamily: "system-ui, -apple-system, sans-serif", position: "relative" }}>
       <style>{`@keyframes blink{50%{opacity:0}} @keyframes statusIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}`}</style>
-      <BackgroundParticles />
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "48px 24px" }}>
 
-        {/* Tabs */}
-        <div style={{ display: "flex", gap: 0, marginBottom: 32, borderBottom: "1px solid #1E293B" }}>
+        {/* ── Step Indicator: ① Experiment → ② Verify ── */}
+        <div style={{
+          display: "flex", alignItems: "center", marginBottom: 32,
+          borderBottom: "1px solid rgba(0,229,255,0.06)", paddingBottom: 14,
+        }}>
           {([
-            ["experiment", "Experiment", "Tweak parameters → see live verification"],
-            ["verify", "Verify", "Sign experiment evidence → validate CPS-0001 receipt"],
-          ] as [Tab, string, string][]).map(([key, label, hint]) => (
-            <button
-              key={key}
-              onClick={() => setTab(key)}
-              style={{
-                padding: "12px 24px", fontSize: 14,
-                fontWeight: tab === key ? 600 : 400,
-                color: tab === key ? "#60A5FA" : "#64748B",
-                background: "none", border: "none",
-                borderBottom: tab === key ? "2px solid #60A5FA" : "2px solid transparent",
-                cursor: "pointer", transition: "all 0.2s",
-              }}
-              title={hint}
-            >
-              {label}
-            </button>
-          ))}
+            { key: "experiment" as Tab, no: "1", label: "Experiment", hint: "Tweak parameters → see live evidence" },
+            { key: "verify" as Tab, no: "2", label: "Verify", hint: "Sign → validate CPS-0001 receipt" },
+          ].map(({ key, no, label, hint }, i) => {
+            const isActive = tab === key;
+            const isDone = key === "experiment" && !!originalReceipt;
+            const isLocked = key === "verify" && !originalReceipt;
+            return (
+              <div key={key} style={{ display: "flex", alignItems: "center", flex: i === 0 ? undefined : 0, minWidth: i === 1 ? 120 : undefined }}>
+                <button
+                  onClick={() => { if (!isLocked) setTab(key); }}
+                  disabled={isLocked}
+                  style={{
+                    padding: "6px 8px", fontSize: 13, background: "none", border: "none",
+                    cursor: isLocked ? "default" : "pointer",
+                    display: "flex", alignItems: "center", gap: 10,
+                    color: "inherit", fontFamily: "inherit",
+                    opacity: isLocked ? 0.35 : 1,
+                    transition: "opacity 0.3s ease",
+                  }}
+                  title={isLocked ? "Sign evidence in Experiment first →" : hint}
+                >
+                  {/* step number circle */}
+                  <span style={{
+                    width: 26, height: 26, borderRadius: "50%",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 12, fontWeight: 700, flexShrink: 0,
+                    border: isDone ? "2px solid rgba(52,211,153,0.5)"
+                      : isActive ? "2px solid rgba(0,229,255,0.5)"
+                      : "2px solid #1E293B",
+                    background: isDone ? "rgba(52,211,153,0.08)"
+                      : isActive ? "rgba(0,229,255,0.06)"
+                      : "transparent",
+                    color: isDone ? "#34D399" : isActive ? "#00E5FF" : "#475569",
+                    transition: "all 0.35s ease",
+                  }}>
+                    {isDone ? "✓" : no}
+                  </span>
+                  <span style={{
+                    fontWeight: isActive ? 600 : 400,
+                    color: isActive ? "#E6EDF7" : isDone ? "rgba(52,211,153,0.7)" : "#64748B",
+                    transition: "color 0.3s ease",
+                  }}>{label}</span>
+                </button>
+                {/* connector line — fills green when step 1 complete */}
+                {i === 0 && (
+                  <div style={{
+                    flex: 1, height: 2, margin: "0 4px", borderRadius: 1, minWidth: 40,
+                    background: isDone
+                      ? "linear-gradient(90deg, #34D399, rgba(52,211,153,0.15))"
+                      : "#1E293B",
+                    transition: "background 0.5s ease",
+                  }} />
+                )}
+              </div>
+            );
+          }))}
         </div>
 
         {/* ═══════════ TAB: Experiment ═══════════ */}
@@ -325,16 +364,16 @@ export default function PlaygroundPage() {
             <button
               onClick={handleSignAndVerify}
               style={{
-                display: "block", width: "100%", padding: "14px 0", marginBottom: 32,
+                display: "block", width: "100%", padding: "14px 0", marginBottom: 8,
                 border: "2px solid rgba(52,211,153,0.6)", background: "rgba(52,211,153,0.06)",
                 color: "#34D399", fontSize: 14, fontWeight: 600, cursor: "pointer",
                 letterSpacing: "0.1em",
               }}
             >
-              → Sign &amp; Verify This Evidence
+              02 → Sign &amp; Verify This Evidence
             </button>
-            <p style={{ textAlign: "center", fontSize: 11, color: "#64748B", marginTop: -20, marginBottom: 20 }}>
-              Signs the experiment result as a CPS-0001 receipt and sends it to the Verifier.
+            <p style={{ textAlign: "center", fontSize: 11, color: "#64748B", marginTop: 0, marginBottom: 20 }}>
+              Signs the experiment result as a CPS-0001 receipt and jumps to the Verifier (step 02).
             </p>
 
             <details style={{ marginBottom: 32 }}>
