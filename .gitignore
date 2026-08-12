@@ -70,6 +70,7 @@ build-output.txt
 lint-output.txt
 staged-files.txt
 fix-colors.ps1
+tsc-out.txt
 publish-day4.mjs
 patch-hero.py
 
