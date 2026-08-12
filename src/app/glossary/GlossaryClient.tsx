@@ -48,7 +48,7 @@ const GLOSSARY: GlossaryTerm[] = [
     term: "Continuity",
     definition:
       "A zero-knowledge proof that verifies an entity is physically present and generating authentic motion — without revealing their identity, appearance, or any personal data. Continuity ensures verifiability without surveillance. The raw motion data never leaves the device; only the cryptographic proof is transmitted.",
-    seeAlso: ["Presence Entropy Score (PES)", "Zero-Knowledge Proof", "Motion-Signature"],
+    seeAlso: ["Presence Entropy Score (PES)", "Continuity Receipt", "Motion-Signature"],
   },
   {
     term: "Entropy Gap Theorem",
@@ -65,14 +65,8 @@ const GLOSSARY: GlossaryTerm[] = [
   {
     term: "Genesis Ritual",
     definition:
-      "The identity initialization process that transforms a human's unique motion-signature into a sovereign Data-Body. The ritual involves a guided motion capture session, PES computation, ZK-proof generation, and node registration. Upon completion, the participant achieves GENESIS_NODE status — a permanent, non-revocable tier limited to 100 founding human entities.",
-    seeAlso: ["Genesis Cohort", "Data-Body", "Motion-Signature"],
-  },
-  {
-    term: "Genesis Cohort",
-    definition:
-      "The inaugural group of 100 sovereign identity nodes initialized during the MyShape Protocol launch phase. These founding nodes constitute the protocol's root entropy source — the cryptographic trust anchor from which all subsequent identity verifications derive their statistical significance. Permanent tier. Never offered again.",
-    seeAlso: ["Genesis Ritual", "Root Entropy Source"],
+      "The enrollment process through which an entity's Motion-Signature is first captured and inscribed into a genesis receipt — the first link in its continuity chain. A guided motion-capture session (see Halo Scan) produces the initial evidence, which is signed into a self-sovereign receipt with no predecessor. Every entity enrolls the same way; there is no privileged founding tier.",
+    seeAlso: ["Halo Scan", "Data-Body", "Motion-Signature"],
   },
   {
     term: "Presence Receipt",
@@ -111,12 +105,6 @@ const GLOSSARY: GlossaryTerm[] = [
     seeAlso: ["Data-Body", "Non-Binary Aesthetic", "Ethereal Data Energy"],
   },
   {
-    term: "Root Entropy Source",
-    definition:
-      "The cryptographic trust anchor formed by the Genesis Cohort's collective motion-signatures. Each Genesis Node contributes a unique entropy profile that, when combined across the 100-node cohort, creates a statistical baseline for verifying human presence. All subsequent identity verifications derive their statistical significance from this root source.",
-    seeAlso: ["Genesis Cohort", "Entropy Gap Theorem"],
-  },
-  {
     term: "Agent Economy",
     definition:
       "The emerging economic paradigm in which autonomous AI agents execute transactions, manage assets, vote in governance, and interact with protocols on behalf of human principals. The Agent Economy demands a new identity primitive — proof of continuity — because static identity verification cannot distinguish between a continuously sovereign agent and a compromised one.",
@@ -131,8 +119,8 @@ const GLOSSARY: GlossaryTerm[] = [
   {
     term: "Continuity Receipt",
     definition:
-      "A cryptographic method by which one party (the prover) can prove to another party (the verifier) that a statement is true without revealing any information beyond the validity of the statement itself. In MyShape, ZKPs enable proving 'I am a human generating authentic motion' without revealing who you are, what you look like, or any raw motion data.",
-    seeAlso: ["Continuity", "Presence Entropy Score (PES)"],
+      "The signed attestation object produced by the CPS-0001 protocol. A receipt bundles the evidence engines' outputs, the subject identity, and the verification interval into a single Ed25519-signed, SHA-256-digested record that any independent party can verify. Each receipt references its predecessor, forming a verifiable continuity chain; a receipt with no predecessor is a genesis receipt.",
+    seeAlso: ["Proof of Continuity", "Presence Receipt", "State-Chain Evolution"],
   },
   {
     term: "SST (Skeletal Surface Topology)",
@@ -143,20 +131,20 @@ const GLOSSARY: GlossaryTerm[] = [
   {
     term: "Halo Scan",
     definition:
-      "The circular deep-sense motion capture sequence used during the Genesis Ritual. The participant performs a controlled circular movement that exposes the full kinematic range of the upper form. The Halo Scan is designed to maximize entropy extraction — revealing the subtle biological noise patterns that help distinguish biological from synthetic motion.",
+      "The circular deep-sense motion capture sequence used during enrollment. The participant performs a controlled circular movement that exposes the full kinematic range of the upper form. The Halo Scan is designed to maximize entropy extraction — revealing the subtle biological noise patterns that help distinguish biological from synthetic motion.",
     seeAlso: ["Genesis Ritual", "Motion-Signature"],
   },
   {
     term: "Motion Pipeline",
     definition:
-      "The six-stage processing pipeline that transforms raw camera input into a zero-knowledge proof of presence: (1) Capture → (2) Pose Extraction (MediaPipe 33-landmark) → (3) SST Transformation (33→18 point topology) → (4) Feature Computation (128-dim vector across 4 groups) → (5) PES Scoring → (6) ZK-Proof Generation. All stages except proof verification run on-device.",
+      "The processing pipeline that transforms raw camera input into a signed continuity receipt: (1) Capture → (2) Pose Extraction (MediaPipe 33-landmark) → (3) SST Transformation (33→18 point topology) → (4) Feature Computation (128-dim vector across 4 groups) → (5) PES Scoring → (6) Receipt Signing (Ed25519). All stages except verification run on-device.",
     seeAlso: ["Motion-Signature", "SST", "Presence Entropy Score (PES)"],
   },
   {
     term: "Protocol Node",
     definition:
-      "A registered identity entity in the MyShape Protocol network. Each node has a unique node_handle, an associated email (for human nodes), and a status (PENDING_VERIFICATION, ACTIVE, or GENESIS_NODE). Human nodes are verified through motion-signature; AI agent nodes are declared through the Agent Registration protocol.",
-    seeAlso: ["Genesis Ritual", "Agent Declaration"],
+      "An entity that produces or verifies continuity receipts in the MyShape Protocol network. A node can be a human subject (verified through motion-signature) or an AI agent (declared through the Agent Declaration protocol). Every node is sovereign — no platform assigns, revokes, or tiers its status.",
+    seeAlso: ["Continuity Receipt", "Agent Declaration"],
   },
   {
     term: "Agent Declaration",
@@ -382,11 +370,11 @@ export default function GlossaryClient() {
                     Motion Demo →
                   </Link>
                   <Link
-                    href="/genesis"
+                    href="/verify-receipt"
                     onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)}
                     className="px-6 py-2 border border-[#90c8ff]/15 text-[#90c8ff]/50 text-[11px] tracking-[0.18em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/70 transition-all"
                   >
-                    Genesis →
+                    Verify Receipt →
                   </Link>
                 </div>
               </div>

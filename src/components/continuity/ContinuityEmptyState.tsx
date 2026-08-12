@@ -12,7 +12,7 @@ export default function ContinuityEmptyState() {
         first to establish a sovereign continuity chain.
       </p>
       <Link
-        href="/genesis"
+        href="/motion-demo"
         className="continuity-empty-cta"
         onMouseEnter={() => playTick(600, "sine", 0.08, 0.02)}
       >

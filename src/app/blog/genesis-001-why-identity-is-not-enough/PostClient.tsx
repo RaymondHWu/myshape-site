@@ -184,11 +184,11 @@ export default function PostClient() {
                 Motion Demo →
               </Link>
               <Link
-                href="/genesis"
+                href="/verify-receipt"
                 onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)}
                 className="px-6 py-2 border border-[#90c8ff]/15 text-[#90c8ff]/50 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all"
               >
-                Genesis →
+                Verify Receipt →
               </Link>
             </div>
           </div>

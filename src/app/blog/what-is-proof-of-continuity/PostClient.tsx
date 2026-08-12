@@ -141,7 +141,7 @@ export default function PostClient() {
               The first 100 human nodes form the root entropy source of the MyShape Protocol. Your presence is the proof. Your continuity is the anchor.
             </p>
             <div className="flex justify-center gap-4 pt-2">
-              <Link href="/genesis" className="blog-cta-btn" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)}>Begin Genesis →</Link>
+              <Link href="/verify-receipt" className="blog-cta-btn" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)}>Verify Receipt →</Link>
               <Link href="/compare" className="blog-cta-btn blog-cta-btn-dim" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)}>See Comparison →</Link>
             </div>
           </div>

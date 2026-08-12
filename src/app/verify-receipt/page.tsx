@@ -164,7 +164,7 @@ export default function VerifyReceiptPage() {
     <div className="min-h-screen bg-[#0a0a0f] text-white font-mono">
       <div className="max-w-3xl mx-auto px-6 py-12">
         <div className="text-center mb-10">
-          <h1 className="text-2xl tracking-[0.3em] uppercase text-[#90c8ff] mb-2">
+          <h1 className="text-2xl tracking-[0.3em] uppercase text-[#00E5FF] mb-2">
             CPS-0001 Receipt Verification
           </h1>
           <p className="text-white/30 text-xs tracking-wider mb-4">
@@ -185,7 +185,7 @@ export default function VerifyReceiptPage() {
               <span className="text-xs text-white/30 tracking-wider uppercase">Receipt JSON</span>
               <button
                 onClick={handleLoadSample}
-                className="text-xs text-[#90c8ff]/60 hover:text-[#90c8ff] transition-colors"
+                className="text-xs text-[#00E5FF]/60 hover:text-[#00E5FF] transition-colors"
               >
                 Load sample receipt →
               </button>
@@ -194,7 +194,7 @@ export default function VerifyReceiptPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder='Paste CPS-0001 ContinuityReceipt JSON here…'
-              className="w-full h-40 bg-[#0d0d14] border border-[#90c8ff]/20 text-white/70 text-xs p-4 resize-y font-mono focus:outline-none focus:border-[#90c8ff]/50"
+              className="w-full h-40 bg-[#0d0d14] border border-[#00E5FF]/20 text-white/70 text-xs p-4 resize-y font-mono focus:outline-none focus:border-[#00E5FF]/50"
               spellCheck={false}
             />
           </div>
@@ -203,7 +203,7 @@ export default function VerifyReceiptPage() {
           <button
             onClick={handleVerify}
             disabled={!input.trim()}
-            className="w-full py-3 border-2 border-[#90c8ff]/60 text-[#90c8ff] text-xs tracking-[0.2em] uppercase font-bold hover:bg-[#90c8ff]/10 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-full py-3 border-2 border-[#00E5FF]/60 text-[#00E5FF] text-xs tracking-[0.2em] uppercase font-bold hover:bg-[#00E5FF]/10 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           >
             Verify Receipt
           </button>

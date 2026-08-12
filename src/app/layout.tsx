@@ -180,7 +180,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     "Sovereign Data-Body",
                     "Ethereal Data Energy",
                     "Non-Binary Aesthetic",
-                    "Genesis Cohort",
+                    "Proof of Continuity",
                   ],
                 },
                 {

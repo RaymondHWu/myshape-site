@@ -28,7 +28,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/identity",
     "/protocol",
     "/motion-demo",
-    "/handshake",
     "/continuity",
     "/architecture",
     "/roadmap",

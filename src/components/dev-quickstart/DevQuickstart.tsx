@@ -19,23 +19,22 @@ const supabase = (supabaseUrl && supabaseAnonKey)
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
-const CLIENT_SNIPPET_JS = `// 5 lines to keep your node in sync
-import { MyShapeClient } from '@myshapeprotocol/sdk';
+const CLIENT_SNIPPET_JS = `// 5 lines to anchor your node in the identity mesh
+import { getOrCreateKeyPair, createIssuerIdentity } from '@thecontinuitylab/myshape';
 
-const node = new MyShapeClient({
-  token: 'ms_xxxxxxxx',  // ← your dev token
-});
+const keyPair = getOrCreateKeyPair();      // persistent Ed25519 key
+const identity = createIssuerIdentity(keyPair);
 
-await node.connect();     // persistent presence stream
-console.log(node.status); // { handle: 'DEV_XXXX', active: true }`;
+console.log(identity.id);                  // → 'a3f9c2…' node fingerprint`;
 
-const CLIENT_SNIPPET_PY = `# 5 lines to keep your node in sync
-from myshape import Node
+const CLIENT_SNIPPET_PY = `# Verify a CPS-0001 receipt via the public REST endpoint
+import requests
 
-node = Node(token="ms_xxxxxxxx")  # ← your dev token
-
-node.connect()                     # persistent presence stream
-print(node.status)                 # { 'handle': 'DEV_XXXX', 'active': True }`;
+res = requests.post(
+    "https://www.myshape.com/api/verify-receipt",
+    json=receipt,            # your ContinuityReceipt dict
+)
+print(res.json()["status"])  # → 'VALID'`;
 
 export default function DevQuickstart() {
   const [handle, setHandle] = useState("");

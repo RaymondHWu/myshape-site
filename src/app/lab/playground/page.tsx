@@ -68,6 +68,10 @@ export default function PlaygroundPage() {
   const [tab, setTab] = useState<Tab>("experiment");
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // ── Hydration guard: suspend non-deterministic content until client mount ──
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   // ── Experiment ──
   const [humanness, setHumanness] = useState(0.75);
   const [samples, setSamples] = useState(200);
@@ -115,9 +119,13 @@ export default function PlaygroundPage() {
   const [vError, setVError] = useState("");
   const [typingPos, setTypingPos] = useState(0);
   const typingRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const revealTimersRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
 
   // Cleanup on unmount
-  useEffect(() => () => { if (typingRef.current) clearInterval(typingRef.current); }, []);
+  useEffect(() => () => {
+    if (typingRef.current) clearInterval(typingRef.current);
+    revealTimersRef.current.forEach((t) => clearTimeout(t));
+  }, []);
 
   // Typewriter effect: reveals all steps, then types detail text character by character
   function startTyping(all: Step[]) {
@@ -141,17 +149,21 @@ export default function PlaygroundPage() {
       }
       setVSteps(all.slice(0, stepIdx + 1));
       stepIdx++;
-      setTimeout(revealStep, 280);
+      const t = setTimeout(revealStep, 280);
+      revealTimersRef.current.add(t);
     };
     // Show first 2 immediately
     setVSteps(all.slice(0, 2));
     stepIdx = 2;
-    setTimeout(revealStep, 250);
+    const t0 = setTimeout(revealStep, 250);
+    revealTimersRef.current.add(t0);
   }
 
   function handleVerify(json?: string) {
     const raw = json ?? receiptJson;
     if (typingRef.current) { clearInterval(typingRef.current); typingRef.current = null; }
+    revealTimersRef.current.forEach((t) => clearTimeout(t));
+    revealTimersRef.current.clear();
     setVError(""); setVSteps([]); setVerdict(""); setTypingPos(0);
     let receipt: ContinuityReceipt;
     try { receipt = JSON.parse(raw) as ContinuityReceipt; } catch { setVError("Invalid JSON — check the receipt format."); return; }
@@ -262,7 +274,12 @@ export default function PlaygroundPage() {
         </div>
 
         {/* ═══════════ TAB: Experiment ═══════════ */}
-        {tab === "experiment" && (
+        {tab === "experiment" && !mounted && (
+          <div style={{ textAlign: "center", padding: "60px 0", color: "#64748B", fontSize: 13 }}>
+            Loading simulation engine…
+          </div>
+        )}
+        {tab === "experiment" && mounted && (
           <>
             {/* Preset scenarios */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 8, marginBottom: 20 }}>
@@ -398,10 +415,10 @@ export default function PlaygroundPage() {
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
                   {[
                     { label: "Corrupt Signature", hint: "Tampers the Ed25519 signature → V2 fails", action: () => {
-                      try { const r = JSON.parse(receiptJson); r.signature = r.signature.slice(0, -10) + "0000000000"; setReceiptJson(JSON.stringify(r, null, 2)); setReceiptSource("manual"); handleVerify(JSON.stringify(r, null, 2)); } catch {}
+                      try { const r = JSON.parse(receiptJson); r.signature.value = r.signature.value.slice(0, -10) + "0000000000"; setReceiptJson(JSON.stringify(r, null, 2)); setReceiptSource("manual"); handleVerify(JSON.stringify(r, null, 2)); } catch {}
                     }},
-                    { label: "Break Timeline", hint: "Sets coverage to 0 → V4 fails", action: () => {
-                      try { const r = JSON.parse(receiptJson); r.interval.coverageMs = 0; setReceiptJson(JSON.stringify(r, null, 2)); setReceiptSource("manual"); handleVerify(JSON.stringify(r, null, 2)); } catch {}
+                    { label: "Break Timeline", hint: "Backdates signedAt before the interval → V4 fails", action: () => {
+                      try { const r = JSON.parse(receiptJson); r.signature.signedAt = r.interval.start; setReceiptJson(JSON.stringify(r, null, 2)); setReceiptSource("manual"); handleVerify(JSON.stringify(r, null, 2)); } catch {}
                     }},
                     { label: "Mismatch Hash", hint: "Changes payload without updating digest → V5 fails", action: () => {
                       try { const r = JSON.parse(receiptJson); r.evidence[0].payload.humanness = 0; setReceiptJson(JSON.stringify(r, null, 2)); setReceiptSource("manual"); handleVerify(JSON.stringify(r, null, 2)); } catch {}
@@ -430,17 +447,11 @@ export default function PlaygroundPage() {
                 )}
               </>
             )}
-            {!originalReceipt && receiptSource !== "manual" && (
-              <p style={{ fontSize: 13, color: "#64748B", margin: "0 0 20px", lineHeight: 1.6 }}>
-                Paste any CPS-0001 receipt to verify it — or <a href="#" onClick={(e) => { e.preventDefault(); setTab("experiment"); }} style={{ color: "#60A5FA" }}>go to Experiment</a> to generate one.
-              </p>
-            )}
-
             <textarea
               value={receiptJson}
               onChange={(e) => { setReceiptJson(e.target.value); setReceiptSource("manual"); }}
               placeholder="Paste CPS-0001 ContinuityReceipt JSON here…"
-              style={{ width: "100%", height: 160, boxSizing: "border-box", background: "#0d0d14", border: "1px solid rgba(144,200,255,0.2)", color: "rgba(255,255,255,0.7)", fontSize: 11, padding: 12, fontFamily: "monospace", resize: "vertical" }}
+              style={{ width: "100%", height: 160, boxSizing: "border-box", background: "#0d0d14", border: "1px solid rgba(0,229,255,0.2)", color: "rgba(255,255,255,0.7)", fontSize: 11, padding: 12, fontFamily: "monospace", resize: "vertical" }}
               spellCheck={false}
             />
 
@@ -455,9 +466,9 @@ export default function PlaygroundPage() {
               style={{
                 width: "100%", padding: receiptSource === "experiment" && !verdict ? "14px 0" : "10px 0",
                 marginTop: 8, marginBottom: 20,
-                border: receiptSource === "experiment" && !verdict ? "2px solid rgba(52,211,153,0.6)" : "2px solid rgba(144,200,255,0.6)",
+                border: receiptSource === "experiment" && !verdict ? "2px solid rgba(52,211,153,0.6)" : "2px solid rgba(0,229,255,0.6)",
                 background: receiptSource === "experiment" && !verdict ? "rgba(52,211,153,0.06)" : "transparent",
-                color: receiptSource === "experiment" && !verdict ? "#34D399" : "#90c8ff",
+                color: receiptSource === "experiment" && !verdict ? "#34D399" : "#00E5FF",
                 fontSize: receiptSource === "experiment" && !verdict ? 14 : 12,
                 fontWeight: 600, cursor: receiptJson.trim() ? "pointer" : "not-allowed",
                 letterSpacing: "0.1em", opacity: receiptJson.trim() ? 1 : 0.3,
@@ -489,7 +500,7 @@ export default function PlaygroundPage() {
                 <div style={{ display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap" }}>
                   {verdict === "VALID" && (
                     <>
-                      <button onClick={() => { try { const r = JSON.parse(receiptJson); r.signature = r.signature.slice(0, -10) + "0000000000"; setReceiptJson(JSON.stringify(r, null, 2)); setReceiptSource("manual"); handleVerify(JSON.stringify(r, null, 2)); } catch {} }} style={{ padding: "5px 12px", fontSize: 10, border: "1px solid rgba(245,101,101,0.3)", background: "transparent", color: "rgba(245,101,101,0.7)", cursor: "pointer", borderRadius: 2 }}>🔨 Corrupt it</button>
+                      <button onClick={() => { try { const r = JSON.parse(receiptJson); r.signature.value = r.signature.value.slice(0, -10) + "0000000000"; setReceiptJson(JSON.stringify(r, null, 2)); setReceiptSource("manual"); handleVerify(JSON.stringify(r, null, 2)); } catch {} }} style={{ padding: "5px 12px", fontSize: 10, border: "1px solid rgba(245,101,101,0.3)", background: "transparent", color: "rgba(245,101,101,0.7)", cursor: "pointer", borderRadius: 2 }}>🔨 Corrupt it</button>
                     </>
                   )}
                   <button onClick={() => setTab("experiment")} style={{ padding: "5px 12px", fontSize: 10, border: "1px solid rgba(96,165,250,0.3)", background: "transparent", color: "rgba(96,165,250,0.7)", cursor: "pointer", borderRadius: 2 }}>← Try different parameters</button>

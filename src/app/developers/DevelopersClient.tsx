@@ -9,9 +9,9 @@ import { playTick } from "@/utils/useAudioTick";
 import "./developers.css";
 
 const SDK_METHODS = [
-  { module: "Continuity", method: "verifyContinuity(opts?)", returns: "ContinuityReceipt", desc: "Full CPS-0001 verification flow" },
-  { module: "Continuity", method: "getEntropyScore(samples)", returns: "number | null", desc: "Real-time PES for live UI feedback" },
-  { module: "Receipt", method: "buildReceipt(params)", returns: "ContinuityReceipt", desc: "Construct a CPS-0001 conformant receipt" },
+  { module: "Continuity", method: "verifyContinuity(opts)", returns: "VerifyContinuityOutput", desc: "4-layer pipeline: EE-001 → EE-002 → EE-003 → VS-001" },
+  { module: "Receipt", method: "buildReceipt(params)", returns: "Omit<ContinuityReceipt, 'signature'>", desc: "Construct a CPS-0001 conformant receipt" },
+  { module: "Receipt", method: "signReceipt(unsigned, sk)", returns: "ContinuityReceipt", desc: "Ed25519-sign an unsigned receipt" },
   { module: "Receipt", method: "verifyReceipt(receipt)", returns: "VerificationResult", desc: "V₁-V₆ verification with FailureCode" },
   { module: "Receipt", method: "computePayloadDigest(payload)", returns: "string", desc: "SHA-256 digest of evidence payload" },
   { module: "Verifier", method: "verifySchema(receipt)", returns: "FailureCode | null", desc: "V₁ schema validity check" },
@@ -22,17 +22,19 @@ const SDK_METHODS = [
 const API_ENDPOINTS = [
   { method: "GET", path: "/api/identity?email=...", desc: "Look up a node by email" },
   { method: "GET", path: "/api/nodes/count", desc: "Total protocol node counts" },
-  { method: "POST", path: "/api/nodes/handshake", desc: "Register a new protocol node → returns node_token + node_handle", cta: "/handshake" as const },
+  { method: "POST", path: "/api/nodes/handshake", desc: "Register a new protocol node → returns node_token + node_handle" },
 ];
 
 const QUICK_START = `// Verify continuity in 5 lines
 import { verifyContinuity } from "@thecontinuitylab/myshape";
 
-const receipt = await verifyContinuity();
-// Opens your phone camera — move naturally for 8 seconds
+const result = await verifyContinuity({
+  imuSamples,        // from device motion sensors
+  cameraSamples,     // optional: cross-modal
+  frames, timestamps,// optional: presence entropy
+});
 
-const result = await verifyReceipt(receipt);
-// { status: "VALID" } — protocol-verified continuity`;
+// { verdict: "PASS", confidence: 0.92, evidence, threatReport }`;
 
 const QUICK_STEPS = [
   { step: "01", title: "Install the SDK", time: "30 sec", code: "npm install @thecontinuitylab/myshape", desc: "Zero native dependencies. TypeScript. Works with Node.js 18+." },
@@ -59,33 +61,40 @@ const API_EXAMPLES = [
 ];
 
 const CODE_EXAMPLES = [
-  { title: "Continuity Verification", code: `import { verifyContinuity, verifyReceipt } from "@thecontinuitylab/myshape";
+  { title: "Continuity Verification", code: `import { verifyContinuity } from "@thecontinuitylab/myshape";
 
 // 8-second IMU capture on-device
-const receipt = await verifyContinuity();
+const result = await verifyContinuity({
+  imuSamples,       // EE-002: cross-modal causal coupling
+  cameraSamples,    // EE-002: cross-modal causal coupling
+  frames, timestamps, // EE-001: presence entropy score
+  challengeResults, // EE-003: challenge-response (anti-replay)
+});
 
-// → ContinuityReceipt (CPS-0001 conformant)
-// { protocolVersion, assertions, evidence, interval, subject, ... }
+// → { verdict: "PASS" | "FAIL", confidence, evidence, threatReport }
+if (result.verdict === "PASS") { /* trust the session */ }` },
+  { title: "Build & Verify a Receipt", code: `import { buildReceipt, signReceipt, verifyReceipt, computePayloadDigest, generateKeyPair, createIssuerIdentity } from "@thecontinuitylab/myshape";
 
-const result = await verifyReceipt(receipt);
-// → { status: "VALID" } or { status: "INVALID", reason: "EXPIRED" }` },
-  { title: "Build & Verify a Receipt", code: `import { buildReceipt, verifyReceipt } from "@thecontinuitylab/myshape";
+const kp = generateKeyPair();
+const issuer = createIssuerIdentity(kp);
+const payload = { score: 0.85 };
 
-const receipt = buildReceipt({
+const unsigned = buildReceipt({
   evidence: [{
     engineId: "my-engine",
     engineVersion: "1.0.0",
     confidence: 0.85,
-    payload: { score: 0.85 },
-    payloadDigest: await computePayloadDigest({ score: 0.85 }),
+    payload,
+    payloadDigest: computePayloadDigest(payload),
   }],
   interval: { start, end, coverageMs: 8000 },
   subject: { id: "sha256:...", type: "embodied" },
-  issuer: { id: "my-issuer", publicKey: "..." },
+  issuer,
 });
 
-const result = await verifyReceipt(receipt);
-// Engine-independent — any engine produces valid receipts` },
+const receipt = signReceipt(unsigned, kp.secretKey);
+const result = verifyReceipt(receipt);
+// → { status: "VALID" } — engine-independent` },
 ];
 
 export default function DevelopersClient() {
@@ -273,7 +282,6 @@ export default function DevelopersClient() {
               <span className="dev-api-row-method font-bold w-10 shrink-0">{ep.method}</span>
               <span className="dev-api-row-path font-mono shrink-0">{ep.path}</span>
               <span className="dev-api-row-desc flex-1">{ep.desc}</span>
-              {"cta" in ep && <a href={ep.cta} className="shrink-0 px-3 py-1 border border-[#90c8ff]/20 text-[#90c8ff]/50 text-[11px] tracking-[0.15em] uppercase hover:border-[#90c8ff]/50 hover:text-[#90c8ff]/90 transition-all no-underline">Try it →</a>}
             </div>
           ))}
 
@@ -289,7 +297,7 @@ export default function DevelopersClient() {
                 <pre className="bg-black/60 p-3 text-[#90c8ff]/50 text-[11px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">{'{\n  "total": 17,\n  "humans": 8,\n  "agents": 3\n}'}</pre>
               </div>
               <div>
-                <div className="text-white/40 text-[11px] tracking-[0.1em] mb-1 flex items-center gap-2">POST /api/nodes/handshake <a href="/handshake" className="text-[#90c8ff]/40 hover:text-[#90c8ff]/80 text-[11px] tracking-[0.15em] uppercase no-underline transition-colors">→ Live Demo</a></div>
+                <div className="text-white/40 text-[11px] tracking-[0.1em] mb-1">POST /api/nodes/handshake</div>
                 <pre className="bg-black/60 p-3 text-[#90c8ff]/50 text-[11px] leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto">{'// Request\n{ "email": "entity@protocol.io", "origin_domain": "myshape.com" }\n\n// Response (201)\n{\n  "node_token": "ms_a1b2c3d4e5f6...",\n  "node_handle": "NODE_4F7A2C1B",\n  "stage": "INITIALIZED"\n}'}</pre>
               </div>
             </div>

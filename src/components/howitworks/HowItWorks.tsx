@@ -56,7 +56,7 @@ export default function HowItWorks() {
         <h2>How MyShape Works — Motion-Native Identity Pipeline</h2>
         <p>MyShape transforms human motion into a zero-knowledge identity layer. The pipeline consists of three stages: local motion capture, behavioral encoding, and zero-knowledge verification.</p>
         <p>Related concepts include: motion identity, kinetic authentication, privacy-preserving identity, decentralized identity mesh, and AI-native identity protocols.</p>
-        <a href="/genesis">Genesis Protocol</a>
+        <a href="/continuity">Continuity Layer</a>
         <a href="/identity">Identity Layer</a>
         <a href="/protocol">Protocol Architecture</a>
         <a href="/papers">Technical Papers</a>

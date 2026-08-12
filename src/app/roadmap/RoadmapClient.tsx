@@ -20,9 +20,10 @@ const EPOCHS = [
     epoch: "PHASE_I", title: "Research Foundation", timeframe: "2026 Q2–Q3", status: "CURRENT" as Status, thesis: "Continuity as a measurable property",
     milestones: [
       { label: "Evidence Engines — EE-001, EE-002, EE-003, VS-001", status: "COMPLETED" as Status },
-      { label: "576 experimental runs — 4 engines, consumer hardware", status: "COMPLETED" as Status },
+      { label: "Experimental runs — 4 evidence engines, consumer hardware", status: "COMPLETED" as Status },
       { label: "RFC-0001 — Motion Signature Format (Draft)", status: "COMPLETED" as Status },
       { label: "RFC-0002 — Continuity Proof Format (Draft)", status: "COMPLETED" as Status },
+      { label: "CPS-0001 — Continuity Protocol Core v1.0-RC", status: "COMPLETED" as Status },
       { label: "npm SDK — @thecontinuitylab/myshape v0.2.0", status: "COMPLETED" as Status },
       { label: "Playground — interactive verification sandbox", status: "COMPLETED" as Status },
       { label: "Cross-device continuity experiment", status: "CURRENT" as Status },

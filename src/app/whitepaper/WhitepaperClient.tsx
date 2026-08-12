@@ -35,7 +35,7 @@ The consequence: no finite training dataset can fully determine a target's Motio
   },
   {
     id: "engine", num: "3", heading: "The 4-Layer Continuity Verification Pipeline",
-    content: `The MyShape Protocol reference implementation (@thecontinuitylab/myshape v0.2.0) is written in TypeScript and runs in the browser, Node.js, and Deno. It combines four independent evidence layers so that no single forged signal can pass — the architecture is built around cost asymmetry, not a single "unforgeable" measurement.
+    content: `The MyShape Protocol reference implementation (@thecontinuitylab/myshape v0.2.1) is written in TypeScript and runs in the browser, Node.js, and Deno. It combines four independent evidence layers so that no single forged signal can pass — the architecture is built around cost asymmetry, not a single "unforgeable" measurement.
 
 Layer 1 — EE-001 Presence Entropy Score (PES): A 4-dimensional analysis of biological sensor noise that distinguishes a living human from synthetic simulation. PES evaluates timing entropy, intensity variance, spectral content, and micro-motion consistency. On the benchmark dataset, PES separates human from AI with Cohen's d = 2.1 and AUC = 0.94.
 
@@ -66,29 +66,34 @@ The AI forgery is rejected across four independent evidence layers:
   },
   {
     id: "integration", num: "5", heading: "Integration: Verify in Three Lines",
-    content: `The @thecontinuitylab/myshape SDK v0.2.0 produces and verifies CPS-0001 Continuity Receipts. Engine-independent by design — any conformant producer interoperates.
+    content: `The @thecontinuitylab/myshape SDK v0.2.1 produces and verifies CPS-0001 Continuity Receipts. Engine-independent by design — any conformant producer interoperates.
 
   npm install @thecontinuitylab/myshape
 
 Verify continuity from sensor data:
 
-  import { verify, getReceipt, checkContinuity } from "@thecontinuitylab/myshape";
+  import { verifyContinuity } from "@thecontinuitylab/myshape";
 
-  const receipt = await verify();          // 4-layer pipeline → ContinuityReceipt
-  const ok = await checkContinuity(receipt);  // V₁–V₆ engine-independent checks
-  if (ok.status === "VALID") { /* trust the session */ }
+  const result = await verifyContinuity({
+    imuSamples,          // EE-002: cross-modal causal coupling
+    cameraSamples,       // EE-002: cross-modal causal coupling
+    frames, timestamps,  // EE-001: presence entropy score
+    challengeResults,    // EE-003: challenge-response (anti-replay)
+  });
+  if (result.verdict === "PASS") { /* trust the session */ }
 
 Or build and verify a receipt explicitly:
 
-  import { buildReceipt, verifyReceipt } from "@thecontinuitylab/myshape";
+  import { buildReceipt, signReceipt, verifyReceipt } from "@thecontinuitylab/myshape";
 
-  const receipt = buildReceipt({
-    evidence: [{ engineId: "my-engine", confidence: 0.85, payload: {...}, payloadDigest: "sha256:..." }],
+  const unsigned = buildReceipt({
+    evidence: [{ engineId: "my-engine", engineVersion: "1.0.0", confidence: 0.85, payload: {...}, payloadDigest: "sha256:..." }],
     interval: { start, end, coverageMs: 8000 },
     subject: { id: "sha256:...", type: "embodied" },
     issuer: { id: "my-issuer", publicKey: "..." },
   });
-  const result = await verifyReceipt(receipt);
+  const receipt = signReceipt(unsigned, secretKey);
+  const result = verifyReceipt(receipt);
 
 The receipt is a plain JSON object — portable, verifiable offline, and accepted by any CPS-0001 conformant verifier. No enrollment, no persistent identity data, no server round-trip required.`,
   },
@@ -103,55 +108,7 @@ The MyShape engine detects the shadow by measuring what the shadow cannot cast: 
 The AI Paradox: The better AI gets at generating realistic motion, the more aggressively it smooths, averages, and regularizes — and the more detectable it becomes to spectral analysis. Every improvement in visual fidelity comes at the cost of spectral fidelity. The AI faces an impossible tradeoff: look more real, or be more real. It cannot do both.`,
   },
   {
-    id: "genesis-protocol", num: "7", heading: "Genesis Protocol — The Entropy Source of Trust",
-    content: `§7.1 The Logical Primitive
-
-A protocol without an origin is a protocol without sovereignty. Every decentralized system must answer a single question: where does the first bit of trust come from?
-
-In proof-of-work, trust emerges from burned energy. In proof-of-stake, trust emerges from locked capital. In MyShape, trust emerges from the irreducible entropy of a living human entity — measured, verified, and permanently inscribed into the protocol's root index.
-
-A Genesis Node is not a user account. It is an entropy source. It injects the first measurable, unforgeable signal of biological presence into an otherwise deterministic computational system. This signal — the Motion Signature of a specific human entity, verified at initialization — becomes the cryptographic seed from which all subsequent trust derivations flow.
-
-§7.2 The Root Index
-
-When a node completes the Genesis Ritual and achieves GENESIS_NODE status, three things occur at the protocol layer:
-
-1. Identity Commitment. The node's initial Motion Signature hash is written to the protocol_nodes table with status = GENESIS_NODE. This record is immutable — it cannot be downgraded, archived, or revoked. It is a permanent entry in the protocol's identity namespace.
-
-2. Root Entropy Injection. The entropy extracted during the Genesis scan — the full 128-dimensional Motion Signature vector with its associated PES score — becomes part of the protocol's accumulated entropy pool. This pool is the foundation for all future zero-knowledge proof generation.
-
-3. Governance Weight Initialization. The node receives scan_count = 0 and data_contribution = 0 — but its status field carries the genesis flag permanently. Future governance mechanisms (voting weight, proposal submission rights, feature access gating) read this flag at the protocol level, not the application level. The flag is not cosmetic. It is structural.
-
-§7.3 Evolution: From Founding Entity to Validator
-
-The Genesis designation is permanent, but node capability evolves. The protocol defines a growth trajectory measured by two objective metrics:
-
-scan_count — The cumulative number of successful Motion-Signature verifications performed by this node. Each verification requires a live human presence, a camera, and a successful PES threshold crossing. This is not a vanity metric. It measures the node's active contribution to the protocol's entropy pool.
-
-data_contribution — The aggregate entropy value contributed across all scans. Higher scan_count with consistent high-PES scores produces higher data_contribution. This metric distinguishes between a node that verified once and a node that continuously reinforces the protocol's trust substrate.
-
-The progression:
-
-  Founding Entity → scan_count ≥ 50   → Active Validator
-  Active Validator → scan_count ≥ 500 → Core Validator
-  Core Validator   → data_contribution ≥ 10,000 → Anchor Node
-
-Anchor Nodes form the protocol's long-term trust backbone. Their accumulated entropy contributions are weighted more heavily in multi-party verification scenarios and consensus mechanisms. The path is open to all Genesis Nodes, but it is earned, not granted.
-
-§7.4 Permanent Access as Protocol Metadata
-
-The early_access flag returned by the Node Privileges API is not a feature flag managed by a product team. It is a protocol-level property derived from the genesis flag in the protocol_nodes table. Any future protocol upgrade, governance mechanism, or feature deployment that reads this flag must honor it — not because a policy document says so, but because the protocol's root index says so.
-
-This is the architectural distinction between a "badge" and a "right." A badge is application-layer decoration. A right is protocol-layer metadata that constrains downstream logic. Genesis Nodes bear the latter.
-
-§7.5 The Invitation Mechanism
-
-Genesis Nodes are limited to the first 100 human entities to complete the Genesis Ritual. This is not artificial scarcity. It is bootstrap security. The protocol requires a minimum entropy threshold to initialize its zero-knowledge proof system with statistical significance. One hundred high-entropy human sources, each contributing a 128-dimensional Motion Signature, provide sufficient diversity to establish the initial trust anchor.
-
-New nodes may join the protocol after the Genesis Cohort is sealed, but they enter as ACTIVE nodes — verified, sovereign, and fully functional, but without the permanent genesis flag. The protocol is open. The Genesis is finite.`,
-  },
-  {
-    id: "continuity", num: "8", heading: "The Continuity Horizon",
+    id: "continuity", num: "7", heading: "The Continuity Horizon",
     content: `Every identity system in production today answers the wrong question.
 
 They ask: Who are you?
@@ -188,49 +145,6 @@ This is not a product roadmap. It is the definition of a new protocol layer — 
 export default function WhitepaperClient() {
   const [activeId, setActiveId] = useState("proposition");
   const [tocShow, setTocShow] = useState(true);
-  const [sovereignNodes, setGenesisNodes] = useState<{ total: number; remaining: number; nodes: Array<{ index: number; id: string; joined: string }> } | null>(null);
-  const [prevTotal, setPrevTotal] = useState(0);
-  const [nodePulse, setNodePulse] = useState(false);
-  const [isSealed, setIsSealed] = useState(false);
-  const [glitchActive, setGlitchActive] = useState(false);
-
-  // 实时轮询 Genesis 节点数
-  useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
-    const poll = () => {
-      fetch("/api/nodes/genesis")
-        .then(r => r.json())
-        .then(data => {
-          if (data.nodes) {
-            const wasNotSealed = sovereignNodes && sovereignNodes.total < 100;
-            const nowSealed = data.total >= 100;
-            setGenesisNodes(prev => {
-              if (prev && data.total > prev.total) {
-                setNodePulse(true);
-                setTimeout(() => setNodePulse(false), 1200);
-              }
-              return data;
-            });
-            if (data.total > prevTotal) setPrevTotal(data.total);
-            // 检测封存事件
-            if (wasNotSealed && nowSealed) {
-              setIsSealed(true);
-              setGlitchActive(true);
-              setTimeout(() => setGlitchActive(false), 2500);
-            }
-            if (data.total >= 100) {
-              setIsSealed(true);
-              clearInterval(interval); // 封存后停止轮询
-            }
-          }
-        })
-        .catch(() => {});
-    };
-    poll();
-    interval = setInterval(poll, 15000);
-    return () => clearInterval(interval);
-  }, []);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -264,13 +178,6 @@ export default function WhitepaperClient() {
     <div className="min-h-screen bg-[#051025] text-[#f8feff] font-mono selection:bg-[#90c8ff]/30">
       <ProtocolHeader />
 
-      {/* Glitch 封存特效 */}
-      {glitchActive && (
-        <div className="fixed inset-0 z-50 pointer-events-none" style={{ animation: "glitchShift 0.15s steps(1) infinite" }}>
-          <div className="absolute inset-0 border-[3px] border-[#90c8ff]/30" style={{ animation: "glitchBorder 2.5s ease-out forwards", boxShadow: "inset 0 0 120px rgba(144,200,255,0.15), 0 0 80px rgba(144,200,255,0.1)" }} />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#90c8ff]/[0.04] to-transparent" />
-        </div>
-      )}
       <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 flex flex-col md:flex-row gap-12 md:gap-24">
         {/* Spacer */}
         <div className="md:w-56 shrink-0 hidden md:block" />
@@ -382,125 +289,31 @@ export default function WhitepaperClient() {
                   </div>
                 )}
 
-                {section.id === "genesis-protocol" && sovereignNodes && (
-                  <div className="space-y-6 my-10">
-                    {/* Genesis Cohort 实时状态 */}
-                    <div className="border p-6" style={{ borderColor: "rgba(144,200,255,0.15)", background: "rgba(4,14,28,0.5)" }}>
-                      <div className="flex items-center gap-3 mb-4">
-                        <span className={`w-2 h-2 rounded-full ${isSealed ? "bg-[#90c8ff] shadow-[0_0_12px_rgba(144,200,255,0.9)]" : "bg-[#90c8ff] shadow-[0_0_8px_rgba(144,200,255,0.8)] animate-pulse"}`} />
-                        <span className="text-[#90c8ff]/60 text-[11px] tracking-[0.4em] uppercase">
-                          {isSealed ? "Genesis Cohort — Sealed & Immutable" : "Genesis Cohort — Live Registry"}
-                        </span>
-                        {isSealed && (
-                          <span className="text-[#90c8ff]/40 text-[11px] tracking-[0.2em] border border-[#90c8ff]/20 px-2 py-0.5">FINAL</span>
-                        )}
-                      </div>
-
-                      <div className="flex items-baseline gap-4 mb-4">
-                        <span className="text-5xl font-light font-mono text-[#90c8ff]/80">{sovereignNodes.total}</span>
-                        <span className="text-white/30 text-[12px] tracking-[0.2em] uppercase">Genesis Node{sovereignNodes.total !== 1 ? "s" : ""} Active</span>
-                        <span className="text-[#90c8ff]/40 text-[11px]">— Phase: Alpha</span>
-                      </div>
-
-                      {/* 协议同步进度条 */}
-                      <div className="mb-6">
-                        {isSealed ? (
-                          <div className="text-center py-3 border border-[#90c8ff]/20 bg-[#90c8ff]/[0.03]">
-                            <div className="text-[#90c8ff]/80 text-[11px] tracking-[0.4em] uppercase font-mono mb-1">◈ COHORT_SEALED ◈</div>
-                            <div className="text-white/25 text-[11px] tracking-[0.2em] uppercase">Identity Layer Anchored — Registry Immutable</div>
-                          </div>
-                        ) : (
-                          <>
-                            <div className="flex items-center justify-between mb-1.5">
-                              <span className="text-white/30 text-[11px] tracking-[0.3em] uppercase">Protocol Sync</span>
-                              <span className="text-[#90c8ff]/30 font-mono text-[11px]">{(sovereignNodes.total / 100 * 100).toFixed(1)}%</span>
-                            </div>
-                            <div className="relative h-1 bg-white/[0.04] overflow-hidden">
-                              <div
-                                className={`absolute inset-y-0 left-0 bg-gradient-to-r from-[#90c8ff]/40 via-[#90c8ff]/60 to-[#90c8ff]/40 transition-all duration-1000 ease-out ${nodePulse ? "animate-pulse" : ""}`}
-                                style={{
-                                  width: `${Math.max(sovereignNodes.total / 100 * 100, 1)}%`,
-                                  boxShadow: nodePulse ? "0 0 12px rgba(144,200,255,0.6)" : "0 0 4px rgba(144,200,255,0.2)",
-                                }}
-                              />
-                              <div className="absolute inset-y-0 w-full pointer-events-none" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%)", backgroundSize: "200% 100%", animation: "shimmer 3s ease-in-out infinite" }} />
-                            </div>
-                            <div className="flex items-center gap-1.5 mt-1">
-                              <span className={`w-1 h-1 rounded-full transition-all duration-500 ${nodePulse ? "bg-[#90c8ff] shadow-[0_0_6px_rgba(144,200,255,0.8)]" : "bg-[#90c8ff]/30"}`} />
-                              <span className="text-white/30 text-[11px] tracking-[0.2em] uppercase">
-                                {sovereignNodes.total === 0 ? "Awaiting genesis initialization" :
-                                 sovereignNodes.total < 100 ? "Network bootstrapping in progress" :
-                                 "Genesis Cohort sealed — network active"}
-                              </span>
-                            </div>
-                          </>
-                        )}
-                      </div>
-
-                      {sovereignNodes.nodes.length > 0 && (
-                        <div className={`grid ${isSealed ? "grid-cols-3 md:grid-cols-5" : "grid-cols-2 md:grid-cols-4"} gap-2`}>
-                          {sovereignNodes.nodes.slice(0, isSealed ? 100 : 20).map(n => (
-                            <div key={n.index} className="flex items-center gap-2 p-2 border text-[11px] font-mono transition-all duration-500"
-                              style={{
-                                borderColor: isSealed ? "rgba(144,200,255,0.1)" : "rgba(255,255,255,0.04)",
-                                background: isSealed ? "rgba(4,14,28,0.8)" : "rgba(2,4,10,0.6)",
-                              }}>
-                              <span className="text-white/30 text-[11px] w-5">#{n.index}</span>
-                              <span className="text-white/25 truncate">{n.id}</span>
-                            </div>
-                          ))}
-                          {!isSealed && sovereignNodes.total > 20 && (
-                            <div className="flex items-center justify-center p-2 border border-white/[0.02] text-[11px] text-white/30 font-mono">
-                              +{sovereignNodes.total - 20} more
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {isSealed && (
-                        <div className="text-center mt-4 pt-3 border-t border-[#90c8ff]/10">
-                          <span className="text-[#90c8ff]/30 text-[11px] tracking-[0.3em] uppercase font-mono">
-                            ◈ Genesis Registry — Permanently Anchored to Protocol Root Index
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* CTA */}
-                    <div className="text-center pt-4">
-                      <a href="/genesis"
-                        onMouseEnter={() => playTick(800, "sine", 0.10, 0.025)}
-                        className="inline-flex items-center gap-2 px-8 py-3 border text-[#90c8ff]/70 text-[11px] tracking-[0.3em] uppercase font-mono hover:bg-[#90c8ff]/[0.04] transition-all"
-                        style={{ borderColor: "rgba(144,200,255,0.3)" }}>
-                        Initialize Genesis <span className="text-[#90c8ff]/50">→</span>
-                      </a>
-                    </div>
-                  </div>
-                )}
-
                 {section.id === "integration" && (
                   <div className="space-y-3 my-8">
                     <div className="border p-5" style={{ borderColor: "rgba(144,200,255,0.1)" }}>
                       <div className="text-[#90c8ff]/40 text-[11px] tracking-[0.3em] uppercase mb-3 font-mono">TypeScript SDK</div>
                       <pre className="text-[#90c8ff]/60 text-[12px] leading-relaxed font-mono whitespace-pre-wrap">
-{`import { MyShapeSDK } from "myshape-sdk";
+{`import { verifyContinuity } from "@thecontinuitylab/myshape";
 
-const myshape = await MyShapeSDK.init();
-const enrollment = myshape.createEnrollment(sigs, userId, device);
-const challenge = myshape.generateChallenge();
-const result = myshape.verifyIntent(
-  challenge, motion, context, enrollment
-);
-if (result.verified) { executeTransaction(); }`}
+const result = await verifyContinuity({
+  imuSamples,       // EE-002: cross-modal causal coupling
+  cameraSamples,    // EE-002: cross-modal causal coupling
+  frames,           // EE-001: presence entropy score
+  timestamps,       // EE-001: presence entropy score
+  challengeResults, // EE-003: challenge-response (anti-replay)
+});
+
+if (result.verdict === "PASS") {
+  executeTransaction();   // continuity verified
+}`}
                       </pre>
                     </div>
                     <div className="border p-5" style={{ borderColor: "rgba(144,200,255,0.1)", background: "rgba(2,4,10,0.6)" }}>
-                      <div className="text-white/30 text-[11px] tracking-[0.3em] uppercase mb-3 font-mono">Native CLI</div>
+                      <div className="text-white/30 text-[11px] tracking-[0.3em] uppercase mb-3 font-mono">CLI</div>
                       <pre className="text-[#90c8ff]/35 text-[12px] leading-relaxed font-mono whitespace-pre-wrap">
-{`cargo run --release --bin myshape-verify -- \\
-  --enrollment alice.enroll.json \\
-  --challenge session.challenge.json \\
-  --motion captured.motion.json \\
-  --risk high`}
+{`npx @thecontinuitylab/myshape demo
+npx @thecontinuitylab/myshape --help`}
                       </pre>
                     </div>
                   </div>

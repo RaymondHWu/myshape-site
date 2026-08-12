@@ -86,30 +86,20 @@ export default function DashboardClient() {
               Identity Not Initialized
             </div>
             <p className="text-white/30 text-[12px] leading-relaxed max-w-md mx-auto">
-              Complete the Genesis Ritual or Node Handshake to unlock your
-              sovereign identity dashboard — particle evolution, capability
-              matrix, and protocol journey tracking.
+              Establish a continuity chain to unlock your protocol journey
+              dashboard — particle evolution, capability matrix, and
+              trajectory tracking.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
-                href="/genesis"
+                href="/motion-demo"
                 className="inline-block px-10 py-3.5 border border-[#90c8ff]/30 text-[#90c8ff]/70 text-[11px] tracking-[0.3em] uppercase hover:bg-[#90c8ff]/[0.04] hover:text-white transition-all"
                 style={{
                   clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                   background: "rgba(144,200,255,0.03)",
                 }}
               >
-                Genesis →
-              </Link>
-              <Link
-                href="/handshake"
-                className="inline-block px-10 py-3.5 border border-[#90c8ff]/20 text-[#90c8ff]/45 text-[11px] tracking-[0.3em] uppercase hover:border-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-all"
-                style={{
-                  clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                  background: "rgba(144,200,255,0.015)",
-                }}
-              >
-                Node Handshake →
+                Continuity Chamber →
               </Link>
             </div>
           </div>
@@ -135,12 +125,6 @@ export default function DashboardClient() {
             {/* ── Quick nav ── */}
             <div className="flex flex-wrap gap-3 justify-center pt-4">
               <Link
-                href="/genesis/cohort"
-                className="px-5 py-2.5 border border-[#90c8ff]/15 text-white/20 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/35 hover:text-white/40 transition-all no-underline"
-              >
-                Cohort →
-              </Link>
-              <Link
                 href="/protocol"
                 className="px-5 py-2.5 border border-[#90c8ff]/15 text-white/20 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/35 hover:text-white/40 transition-all no-underline"
               >
@@ -161,11 +145,8 @@ export default function DashboardClient() {
           <div className="text-center py-16 text-white/20 text-[11px] tracking-[0.3em] uppercase space-y-4">
             <div>Unable to load identity data.</div>
             <div className="flex gap-4 justify-center">
-              <Link href="/genesis" className="text-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-colors">
-                Genesis →
-              </Link>
-              <Link href="/handshake" className="text-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-colors">
-                Handshake →
+              <Link href="/motion-demo" className="text-[#90c8ff]/40 hover:text-[#90c8ff]/70 transition-colors">
+                Continuity Chamber →
               </Link>
             </div>
           </div>

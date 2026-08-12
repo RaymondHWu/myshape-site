@@ -73,9 +73,9 @@ export default function CompareClient() {
 
           <div className="mt-20 cmp-cta space-y-4">
             <p className="text-white/40 text-[11px] tracking-[0.15em] uppercase">The Only Continuity Layer in This Comparison</p>
-            <p className="text-white/25 text-[11px] leading-relaxed max-w-lg mx-auto">All four protocols verify identity. Only MyShape verifies continuity. In the Agent Economy, continuity is the primitive that matters. The Genesis Cohort is onboarding now.</p>
+            <p className="text-white/25 text-[11px] leading-relaxed max-w-lg mx-auto">All four protocols verify identity. Only MyShape verifies continuity. In the Agent Economy, continuity is the primitive that matters. The protocol is open — seeking its first independent verifiers.</p>
             <div className="flex justify-center gap-4 pt-2">
-              <Link href="/genesis" className="cmp-cta-btn" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>Begin Genesis →</Link>
+              <Link href="/verify-receipt" className="cmp-cta-btn" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>Verify Receipt →</Link>
               <Link href="/whitepaper" className="cmp-cta-btn cmp-cta-btn-dim" onMouseEnter={() => playTick(700, "sine", 0.08, 0.02)}>Read Whitepaper →</Link>
             </div>
           </div>

@@ -27,15 +27,15 @@ export default function ProtocolLayout({
   transparentBg = false,
 }: ProtocolLayoutProps) {
   return (
-    <div className={`min-h-screen text-white font-mono selection:bg-[#90c8ff]/30 overflow-x-clip flex flex-col ${transparentBg ? 'bg-transparent' : 'bg-[#051025]'}`}>
+    <div className={`min-h-screen text-white font-mono selection:bg-[#00E5FF]/30 overflow-x-clip flex flex-col ${transparentBg ? 'bg-transparent' : 'bg-[#051025]'}`}>
       {/* 1. 桌面端：背景動畫裝飾 */}
       <div className="hidden md:block fixed inset-0 pointer-events-none opacity-10"
            style={{
-             backgroundImage: 'radial-gradient(circle, #90c8ff 1px, transparent 1px)',
+             backgroundImage: 'radial-gradient(circle, #00E5FF 1px, transparent 1px)',
              backgroundSize: '60px 60px'
            }} />
 
-      <div className="hidden md:block fixed top-0 left-0 w-full h-[2px] bg-[#90c8ff]/5 shadow-[0_0_15px_rgba(144,200,255,0.2)] animate-scan-slow pointer-events-none z-50" />
+      <div className="hidden md:block fixed top-0 left-0 w-full h-[2px] bg-[#00E5FF]/5 shadow-[0_0_15px_rgba(0,229,255,0.2)] animate-scan-slow pointer-events-none z-50" />
 
       <ProtocolHeader />
 
@@ -48,7 +48,7 @@ export default function ProtocolLayout({
               {renderSigil ? (
                 <IdentitySigil />
               ) : (
-                <div className="text-[#90c8ff]/60 text-[11px] tracking-[0.4em] mb-4 uppercase">
+                <div className="text-[#00E5FF]/60 text-[11px] tracking-[0.4em] mb-4 uppercase">
                   {category} // REF_{refId}
                 </div>
               )}

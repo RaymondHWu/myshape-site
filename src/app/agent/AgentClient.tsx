@@ -91,11 +91,11 @@ export default function AgentClient() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-16">
           <div className="p-5 border border-white/5 bg-white/[0.01]">
             <div className="text-[#90c8ff]/50 text-[11px] tracking-[0.3em] uppercase mb-2">// YOUR IDENTITY</div>
-            <a href="/genesis" className="text-white/70 hover:text-[#90c8ff] text-[12px] tracking-[0.15em] transition-colors"
+            <a href="/motion-demo" className="text-white/70 hover:text-[#90c8ff] text-[12px] tracking-[0.15em] transition-colors"
               onMouseEnter={() => playTick(480, "sine", 0.035, 0.02)}>
-              GENESIS_PROTOCOL →
+              CONTINUITY_CHAMBER →
             </a>
-            <p className="text-white/25 text-[11px] mt-1.5">Register yourself — motion-geometry verification</p>
+            <p className="text-white/25 text-[11px] mt-1.5">Verify your presence — motion-geometry verification</p>
           </div>
           <div className="p-5 border border-[#90c8ff]/20 bg-[#90c8ff]/[0.02]">
             <div className="text-[#90c8ff]/60 text-[11px] tracking-[0.3em] uppercase mb-2">// YOUR AGENT</div>

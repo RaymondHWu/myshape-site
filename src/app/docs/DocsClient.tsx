@@ -12,20 +12,23 @@ const API_SECTIONS = [
     anchor: "quickstart",
     content: `Install the SDK:
 \`\`\`bash
-npm install @myshapeprotocol/sdk
+npm install @thecontinuitylab/myshape
 \`\`\`
 
-Initialize and verify in 5 lines:
+Verify continuity in 5 lines:
 \`\`\`typescript
-import { MyShapeClient } from '@myshapeprotocol/sdk';
+import { verifyContinuity } from '@thecontinuitylab/myshape';
 
-const client = new MyShapeClient({ apiKey: 'ms_live_...' });
-const proof = await client.verifyPresence();        // on-device WASM
-const { valid, pes } = await client.validate(proof); // server-side
-console.log(valid ? 'Human present' : 'Verification failed');
+const result = await verifyContinuity({
+  imuSamples,          // EE-002: cross-modal causal coupling
+  cameraSamples,       // EE-002: cross-modal causal coupling
+  frames, timestamps,  // EE-001: presence entropy score
+  challengeResults,    // EE-003: challenge-response (anti-replay)
+});
+console.log(result.verdict === 'PASS' ? 'Continuity verified' : 'Verification failed');
 \`\`\`
 
-All motion processing runs on-device via WASM. The server only receives the ~250 byte ZK proof. Zero raw motion data is transmitted.`,
+All motion processing runs on-device. The 4-layer pipeline (EE-001 → EE-002 → EE-003 → VS-001) aggregates evidence into a single verdict. Zero raw motion data is transmitted.`,
   },
   {
     title: "API Reference",
@@ -91,17 +94,20 @@ export default function DocsClient() {
             <div className="space-y-6">
               <div className="p-6 border border-[#90c8ff]/10 bg-white/[0.01]">
                 <p className="text-white/30 text-[11px] tracking-[0.2em] uppercase mb-3">Install</p>
-                <pre className="text-[#90c8ff]/60 text-[11px] bg-[#051025] p-4 border border-[#90c8ff]/5 overflow-x-auto"><code>npm install @myshapeprotocol/sdk</code></pre>
+                <pre className="text-[#90c8ff]/60 text-[11px] bg-[#051025] p-4 border border-[#90c8ff]/5 overflow-x-auto"><code>npm install @thecontinuitylab/myshape</code></pre>
               </div>
               <div className="p-6 border border-[#90c8ff]/10 bg-white/[0.01]">
-                <p className="text-white/30 text-[11px] tracking-[0.2em] uppercase mb-3">Verify Presence (5 lines)</p>
+                <p className="text-white/30 text-[11px] tracking-[0.2em] uppercase mb-3">Verify Continuity (5 lines)</p>
                 <pre className="text-[#90c8ff]/50 text-[11px] bg-[#051025] p-4 border border-[#90c8ff]/5 overflow-x-auto leading-relaxed">
-{`import { MyShapeClient } from '@myshapeprotocol/sdk';
+{`import { verifyContinuity } from '@thecontinuitylab/myshape';
 
-const client = new MyShapeClient({ apiKey: 'ms_live_...' });
-const proof = await client.verifyPresence();        // on-device WASM
-const { valid, pes } = await client.validate(proof); // server-side
-console.log(valid ? '✅ Human present (PES: ' + pes + ')' : '❌ Verification failed');`}
+const result = await verifyContinuity({
+  imuSamples,          // EE-002: cross-modal causal coupling
+  cameraSamples,       // EE-002: cross-modal causal coupling
+  frames, timestamps,  // EE-001: presence entropy score
+  challengeResults,    // EE-003: challenge-response (anti-replay)
+});
+console.log(result.verdict === 'PASS' ? '✅ Continuity verified' : '❌ Verification failed');`}
                 </pre>
               </div>
             </div>

@@ -368,15 +368,9 @@ function ApplyForm() {
               {status === "submitting" ? "Submitting..." : "Become an Early Presence Pioneer"}
             </button>
 
-            <div className="text-center">
-              <a href="/genesis-100.html" target="_blank" className="text-[#90c8ff]/25 text-[11px] tracking-[0.15em] uppercase hover:text-[#90c8ff]/50 transition-colors">
-                Read the full Genesis 100 Manifesto ↗
-              </a>
-            </div>
-
             <p className="text-white/15 text-[11px] text-center tracking-[0.05em]">
-              First 50 receive Genesis Cohort status — a permanent protocol-level identity anchor.
-              After applying, complete a 30-second motion capture to contribute to the research.
+              Selected participants contribute motion-capture data to calibrate the
+              protocol&apos;s evidence engines.
             </p>
           </form>
         )}

@@ -153,7 +153,7 @@ export default function PostClient() {
           <div className="mt-12 p-8 border border-[#90c8ff]/15 bg-[#90c8ff]/[0.02] text-center space-y-4">
             <p className="text-white/55 text-[13px] tracking-[0.1em] uppercase">Experience Proof of Continuity</p>
             <div className="flex justify-center gap-4 pt-2">
-              <Link href="/genesis" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)} className="px-6 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/65 text-[11px] tracking-[0.18em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all">Genesis →</Link>
+              <Link href="/verify-receipt" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)} className="px-6 py-2 border border-[#90c8ff]/30 text-[#90c8ff]/65 text-[11px] tracking-[0.18em] uppercase hover:bg-[#90c8ff]/10 hover:text-[#90c8ff] transition-all">Verify Receipt →</Link>
               <Link href="/motion-demo" onMouseEnter={() => playTick(700, "sine", 0.08, 0.025)} className="px-6 py-2 border border-[#90c8ff]/15 text-[#90c8ff]/50 text-[11px] tracking-[0.2em] uppercase hover:border-[#90c8ff]/30 hover:text-[#90c8ff]/60 transition-all">Motion Demo →</Link>
             </div>
           </div>

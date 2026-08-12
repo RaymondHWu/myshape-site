@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import ProtocolHeader from "@/components/header/header";
 import ProtocolFooter from "@/components/footer/footer";
 import ContinuityKPI from "@/components/continuity/ContinuityKPI";
-import ContinuityGenesisNodes from "@/components/continuity/ContinuityGenesisNodes";
 import ContinuityNodeList from "@/components/continuity/ContinuityNodeList";
 import ContinuitySkeleton from "@/components/continuity/ContinuitySkeleton";
 import ContinuityEmptyState from "@/components/continuity/ContinuityEmptyState";
@@ -88,9 +87,6 @@ export default function ContinuityClient() {
               </h2>
               <ContinuityKPI data={data} evoEntropy={evoEntropy} />
             </section>
-
-            {/* Genesis Nodes */}
-            <ContinuityGenesisNodes data={data} />
 
             {/* Network Nodes */}
             <ContinuityNodeList data={data} />

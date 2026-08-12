@@ -93,16 +93,16 @@ export default function CompletionCeremony({
           }}
         >
           {sovereignKey
-            ? "◈ Genesis Node Sealed"
+            ? "◈ Continuity Chain Sealed"
             : cohortFull
-              ? "◈ Genesis Phase Finalized"
-              : "◈ Genesis Ritual Complete"}
+              ? "◈ Continuity Phase Finalized"
+              : "◈ Continuity Session Complete"}
         </div>
 
         {sovereignKey ? (
           <>
             <p className="text-white/30 text-[11px] max-w-xs leading-relaxed">
-              Your kinetic signature is now sealed into the sovereign identity layer.
+              Your kinetic signature is now sealed into a continuity receipt.
             </p>
             <div
               className="mx-auto mt-3 px-4 py-2 font-mono text-[#90c8ff] text-[11px] tracking-[0.15em] select-all cursor-pointer"
@@ -117,20 +117,20 @@ export default function CompletionCeremony({
               Sovereign Key: {sovereignKey}
             </div>
             <p className="text-white/15 text-[11px] max-w-[240px] mx-auto leading-relaxed mt-1">
-              This key is your proof of sovereign genesis. Store it. No one else holds it.
+              This key is your proof of sovereign continuity. Store it. No one else holds it.
             </p>
             <button
-              onClick={() => { window.location.href = "/genesis"; }}
+              onClick={() => { window.location.href = "/dashboard"; }}
               className="mt-3 px-8 py-2.5 border border-[#90c8ff]/40 text-[#90c8ff] text-[11px] tracking-[0.15em] uppercase hover:bg-[#90c8ff]/10 hover:border-[#90c8ff]/70 transition-all"
               style={{ textShadow: "0 0 6px rgba(144,200,255,0.2)" }}
             >
-              ◈ Add to my Sovereign Identity
+              ◈ View my Continuity Dashboard
             </button>
           </>
         ) : cohortFull ? (
           <>
             <p className="text-white/30 text-[11px] max-w-xs leading-relaxed">
-              The Genesis 100 cohort is now sealed. Your kinetic signature has been recorded
+              The continuity phase is live. Your kinetic signature has been recorded
               as part of the protocol&apos;s next phase.
             </p>
             <div

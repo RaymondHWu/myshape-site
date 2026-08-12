@@ -11,7 +11,7 @@ const FEATURES = [
   "Monthly protocol status reports",
   "New research paper alerts",
   "Motion-signature technical deep-dives",
-  "Genesis Cohort milestones",
+  "Proof of Continuity milestones",
   "Agent Economy analysis",
   "Zero early-access spam. Pure signal.",
 ];
