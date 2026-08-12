@@ -114,6 +114,50 @@ export {
   ATTACK_COST_MODEL,
 } from "./threat-assessment.js";
 
+// ── CPS-0001 Protocol Layer ──
+export type {
+  AssertionEntry,
+  AssertionSet,
+  EvidenceBlock,
+  ContinuityInterval,
+  SubjectRef,
+  PredecessorRef,
+  IssuerIdentity,
+  ReceiptSignature,
+  ContinuityReceipt,
+  FailureCode,
+  VerificationResult,
+} from "./cps0001.js";
+
+// Note: Verdict is already exported from types.js — CPS-0001 re-exports the same type
+export {
+  createReceiptId,
+  computePayloadDigest,
+  buildAssertions,
+  buildReceipt,
+  verifySchema,
+  verifyAssertions,
+  verifyTemporal,
+  verifyEvidenceIntegrity,
+  verifyFreshness,
+  verifyReceipt,
+  canonicalSigningPayload,
+  signReceipt,
+  verifySignature,
+  engineEvidenceToBlock,
+} from "./cps0001.js";
+
+export {
+  generateKeyPair,
+  getPublicKey,
+  sign,
+  verify,
+  createIssuerIdentity,
+  getOrCreateKeyPair,
+} from "./crypto.js";
+
+export type { KeyPair } from "./crypto.js";
+
 // ── High-level API ──
 
 import type { IMUSample, CameraSample } from "./causal-coupling.js";

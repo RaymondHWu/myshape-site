@@ -13,6 +13,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/index.ts", "src/types.ts", "src/causal-coupling.ts", "src/gyro-challenge.ts", "src/cli.ts"],
+  "include": ["src/index.ts", "src/types.ts", "src/causal-coupling.ts", "src/gyro-challenge.ts", "src/cli.ts", "src/hash.ts", "src/crypto.ts", "src/cps0001.ts"],
   "exclude": ["src/**/*.test.ts", "node_modules", "dist"]
 }
