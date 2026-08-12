@@ -533,13 +533,12 @@ export default function PlaygroundPage() {
         {verdict && (
           <div style={{ marginTop: 32, padding: "24px", border: "1px solid rgba(212,175,55,0.15)", background: "rgba(212,175,55,0.02)", borderRadius: 2 }}>
             <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
-              {/* QR — pre-generated SVG, no runtime dependency */}
+              {/* QR — static PNG in public/ */}
               <div style={{ textAlign: "center", flexShrink: 0 }}>
-                <div
-                  style={{ width: 120, height: 120, border: "1px solid #1E293B", borderRadius: 4, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }}
-                  dangerouslySetInnerHTML={{
-                    __html: `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 35 35" shape-rendering="crispEdges"><path fill="#fff" d="M0 0h35v35H0z"/><path stroke="#051025" d="M1 1.5h7m1 0h1m4 0h2m2 0h2m2 0h2m3 0h7M1 2.5h1m5 0h1m1 0h2m2 0h3m1 0h1m1 0h2m6 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h5m4 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h3m1 0h3m1 0h3m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h2m5 0h2m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h3m2 0h4m1 0h1m1 0h1m2 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 8.5h1m1 0h4m1 0h1m4 0h1M1 9.5h1m2 0h8m3 0h1m1 0h2m2 0h1m2 0h3m2 0h1m1 0h3M1 10.5h1m1 0h1m1 0h2m5 0h9m1 0h1m1 0h1m4 0h3M1 11.5h3m1 0h3m1 0h1m1 0h1m1 0h2m1 0h2m3 0h1m1 0h2m4 0h5M4 12.5h2m3 0h1m3 0h2m1 0h1m2 0h1m1 0h3m1 0h2m1 0h1m2 0h3M1 13.5h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2M1 14.5h2m3 0h1m1 0h2m3 0h1m1 0h1m3 0h3m3 0h2m1 0h1m2 0h1M1 15.5h1m1 0h1m2 0h2m3 0h2m1 0h1m1 0h1m2 0h4m4 0h2m1 0h1M1 16.5h2m1 0h1m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1m3 0h1m1 0h1m2 0h1m2 0h3m1 0h1M1 17.5h1m1 0h1m1 0h1m1 0h1m2 0h1m3 0h3m6 0h8M2 18.5h2m7 0h3m1 0h2m1 0h4m1 0h1m2 0h2m1 0h1m1 0h1m1 0h1M1 19.5h3m3 0h3m3 0h2m1 0h5m1 0h3m1 0h3m1 0h4M6 20.5h1m2 0h3m1 0h1m1 0h2m3 0h2m1 0h1m2 0h1m2 0h4M1 21.5h2m1 0h1m2 0h2m1 0h3m1 0h4m1 0h1m2 0h2m1 0h1m4 0h1m1 0h1M1 22.5h1m2 0h3m2 0h3m1 0h2m7 0h1m1 0h1m1 0h1m1 0h3M1 23.5h1m3 0h11m3 0h4m1 0h5m3 0h2M1 24.5h1m1 0h1m2 0h1m2 0h1m3 0h1m2 0h1m1 0h4m2 0h1m3 0h2m1 0h3M1 25.5h4m1 0h2m1 0h1m1 0h2m6 0h1m1 0h1m2 0h7m1 0h1M9 26.5h2m2 0h1m2 0h4m2 0h1m2 0h1m3 0h1m1 0h2M1 27.5h7m1 0h1m5 0h2m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1M1 28.5h1m5 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m2 0h4m3 0h5M1 29.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2m1 0h2m3 0h8m3 0h1M1 30.5h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h1m1 0h1m2 0h5m1 0h1m4 0h1M1 31.5h1m1 0h3m1 0h1m2 0h2m1 0h2m1 0h1m3 0h1m3 0h1m1 0h1m1 0h3m1 0h2M1 32.5h1m5 0h1m6 0h2m3 0h3m2 0h1m2 0h7M1 33.5h7m1 0h4m1 0h1m1 0h3m1 0h2m2 0h2m2 0h3"/></svg>`,
-                  }}
+                <img
+                  src="/qr-contribute.png"
+                  alt="QR code — scan to contribute real motion data"
+                  style={{ display: "block", width: 120, height: 120, border: "1px solid #1E293B", borderRadius: 4, background: "#fff" }}
                 />
                 <div style={{ fontSize: 9, color: "#64748B", marginTop: 6 }}>Scan with phone → contribute data</div>
               </div>
