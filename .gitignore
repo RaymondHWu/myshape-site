@@ -119,6 +119,11 @@ coverage/
 /scripts/verify-pipeline.mjs
 /scripts/verify-recruitment.mjs
 
+# Publishing campaign — internal strategy + content drafts
+/scripts/phase1-publishing-tracker.md
+/scripts/content-day*.md
+/scripts/agent-workflow/drafts.json
+
 # docs/ — internal only (public docs live in docs/public/)
 /docs/Threat-Model.md
 /docs/e1-e2-uniqueness-stability-experiment-v0.1.md
