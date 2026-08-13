@@ -8,6 +8,32 @@
 
 Reference implementation of the MyShape motion-signature engine. Sensor data in → verification result out. Research by [The Continuity Lab](https://thecontinuitylab.org).
 
-## Quick Test (no install needed)
+## Install
+
+```bash
+npm install @thecontinuitylab/myshape
+```
+
+## Quick Test
+
+```ts
+import { verifyContinuity } from "@thecontinuitylab/myshape";
+
+const result = await verifyContinuity({
+  imuSamples: [],       // required — IMU sensor samples (EE-002)
+  cameraSamples: [],    // optional — camera motion (EE-002 cross-modal)
+  frames: [],           // optional — pose frames (EE-001 PES)
+  timestamps: [],       // optional — pose frame timestamps (EE-001)
+  challengeResults: [], // optional — challenge rounds (EE-003)
+});
+
+// → { verdict, confidence, evidence, threatReport }
+```
+
+`verifyContinuity` runs a 4-layer pipeline — Presence Entropy Score (EE-001), Cross-Modal Causal Coupling (EE-002), Challenge-Response (EE-003), and Verification Session aggregation (VS-001). Each layer contributes weighted evidence toward a final `verdict` and `confidence`.
+
+## CPS-0001 Receipts
+
+For engine-independent continuity receipts, the package also exports the CPS-0001 layer — `buildReceipt`, `signReceipt`, `verifyReceipt`, `generateKeyPair`, plus full schema checks (`verifySchema`, `verifyAssertions`, `verifyTemporal`, `verifyFreshness`). Receipts are Ed25519-signed and interoperable across implementations.
 
 

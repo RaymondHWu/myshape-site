@@ -12,9 +12,11 @@ import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+const pkgJson = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf-8"));
+
 const PKG = {
   name: "@thecontinuitylab/myshape",
-  version: "0.2.0",
+  version: pkgJson.version,
   docs: "https://myshape.com",
   lab: "https://thecontinuitylab.org",
   protocol: "CPS-0001",
