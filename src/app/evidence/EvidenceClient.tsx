@@ -56,7 +56,7 @@ export default function EvidenceClient() {
             </table>
             <div className="mt-5 pt-4 border-t border-white/[0.05] flex justify-between text-[11px]"><span className="ev-gap-label">Human—AI Gap</span><span className="ev-gap-value">0.3960</span></div>
           </div>
-          <p className="text-white/30 text-[11px] text-center mt-3 tracking-[0.1em]">Source: PES benchmark · 192 tests · reproducible on consumer hardware</p>
+          <p className="text-white/30 text-[11px] text-center mt-3 tracking-[0.1em]">Source: PES benchmark · 120 tests · reproducible on consumer hardware</p>
         </section>
 
         <section className="grid md:grid-cols-2 gap-8">

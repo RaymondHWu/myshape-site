@@ -61,7 +61,7 @@ const LAYERS = [
     items: [
       { label: "576 Runs", desc: "4 engines · consumer hardware" },
       { label: "HuggingFace", desc: "Dataset · open access" },
-      { label: "192 Tests", desc: "Automated verification · CI" },
+      { label: "120 Tests", desc: "Automated verification · CI" },
     ],
   },
   {

@@ -13,7 +13,7 @@ const SPEC_SECTIONS = [
   { id: "EE-002", title: "Causal Coupling", desc: "IMU + camera event matching ±500ms. Temporal alignment: 100%", status: "active" },
   { id: "EE-003", title: "Challenge Response", desc: "3-round gyroscope challenge. Jittered timing. Anti-replay.", status: "active" },
   { id: "VS-001", title: "Verification Session", desc: "Dual-engine pipeline. Passive → escalate → aggregate → verdict", status: "active" },
-  { id: "npm", title: "SDK", desc: "verifyContinuity(). npm install @thecontinuitylab/myshape. 192 tests. MIT.", status: "published" },
+  { id: "npm", title: "SDK", desc: "verifyContinuity(). npm install @thecontinuitylab/myshape. 120 tests. Apache-2.0.", status: "published" },
 ];
 
 const FIVE_LAYERS = [
@@ -29,7 +29,7 @@ const ENGINES = [
   { name: "Causal Coupling (EE-002)", file: "316 runs · 58% pass", desc: "Cross-modal event binding. Proves IMU and camera observe the same physical event." },
   { name: "Gyroscope Challenge (EE-003)", file: "200 runs · 59% pass", desc: "3-round randomized directional challenge with jittered timing. Defeats replay." },
   { name: "Verification Session (VS-001)", file: "60 runs · 93% pass", desc: "Dual-engine pipeline. Passive presence + active challenge escalation." },
-  { name: "Reference Verifier", file: "192 tests · MIT license", desc: "CPS-0001 conformance suite. 23 assertions, 10 scenarios. Zero engine deps." },
+  { name: "Reference Verifier", file: "120 tests · Apache-2.0", desc: "CPS-0001 conformance suite. 23 assertions, 10 scenarios. Zero engine deps." },
 ];
 
 const LIFECYCLE = [
@@ -113,7 +113,7 @@ export default function ProtocolClient() {
             <div className="proto-section-title text-center mb-8" onMouseEnter={() => playTick(500, "sine", 0.04, 0.022)}>Protocol Status</div>
             <div className="flex flex-col md:flex-row items-center justify-center gap-0 md:gap-0">
               {[
-                { phase: "Research Candidate", status: "current", desc: "v1.0-RC · CPS-0001 frozen · 192 tests · reference verifier · conformance suite", freq: 500 },
+                { phase: "Research Candidate", status: "current", desc: "v1.0-RC · CPS-0001 frozen · 120 tests · reference verifier · conformance suite", freq: 500 },
                 { phase: "Protocol Candidate", status: "next", desc: "Community review · third-party implementations · interoperability validation", freq: 600 },
                 { phase: "Stable", status: "future", desc: "v1.0 release · RFC 3161 public timestamp · ecosystem adoption", freq: 700 },
               ].map((p, i) => (

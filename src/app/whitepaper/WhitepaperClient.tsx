@@ -35,7 +35,7 @@ The consequence: no finite training dataset can fully determine a target's Motio
   },
   {
     id: "engine", num: "3", heading: "The 4-Layer Continuity Verification Pipeline",
-    content: `The MyShape Protocol reference implementation (@thecontinuitylab/myshape v0.2.1) is written in TypeScript and runs in the browser, Node.js, and Deno. It combines four independent evidence layers so that no single forged signal can pass — the architecture is built around cost asymmetry, not a single "unforgeable" measurement.
+    content: `The MyShape Protocol reference implementation (@thecontinuitylab/myshape v0.2.2) is written in TypeScript and runs in the browser, Node.js, and Deno. It combines four independent evidence layers so that no single forged signal can pass — the architecture is built around cost asymmetry, not a single "unforgeable" measurement.
 
 Layer 1 — EE-001 Presence Entropy Score (PES): A 4-dimensional analysis of biological sensor noise that distinguishes a living human from synthetic simulation. PES evaluates timing entropy, intensity variance, spectral content, and micro-motion consistency. On the benchmark dataset, PES separates human from AI with Cohen's d = 2.1 and AUC = 0.94.
 
@@ -66,7 +66,7 @@ The AI forgery is rejected across four independent evidence layers:
   },
   {
     id: "integration", num: "5", heading: "Integration: Verify in Three Lines",
-    content: `The @thecontinuitylab/myshape SDK v0.2.1 produces and verifies CPS-0001 Continuity Receipts. Engine-independent by design — any conformant producer interoperates.
+    content: `The @thecontinuitylab/myshape SDK v0.2.2 produces and verifies CPS-0001 Continuity Receipts. Engine-independent by design — any conformant producer interoperates.
 
   npm install @thecontinuitylab/myshape
 
@@ -247,12 +247,12 @@ export default function WhitepaperClient() {
               <span className="text-white/10">·</span>
               <span className="text-white/30">August 2026</span>
               <span className="text-white/10">·</span>
-              <span className="text-white/30">SDK v0.2.0</span>
+              <span className="text-white/30">SDK v0.2.2</span>
             </div>
             <div className="flex items-center gap-3 mt-4">
               <span className="flex items-center gap-1.5 text-[#00E5FF]/60 text-[11px] tracking-[0.2em] uppercase">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] shadow-[0_0_6px_rgba(0,229,255,0.6)] animate-pulse" />
-                Continuity Protocol v0.2.0
+                Continuity Protocol v0.2.2
               </span>
               <span className="text-white/10">|</span>
               <span className="text-white/25 text-[11px]">120 tests pass</span>

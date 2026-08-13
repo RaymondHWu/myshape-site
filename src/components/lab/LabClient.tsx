@@ -154,7 +154,7 @@ const STATS = [
   { n: "1", label: "Protocol", unit: "CPS" },
   { n: "2", label: "RFCs", unit: "specs" },
   { n: "7", label: "Research Notes", unit: "papers" },
-  { n: "192", label: "Tests", unit: "cases" },
+  { n: "120", label: "Tests", unit: "cases" },
 ];
 
 function LabStats() {

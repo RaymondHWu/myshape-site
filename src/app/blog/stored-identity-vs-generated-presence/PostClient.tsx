@@ -208,7 +208,7 @@ export default function PostClient() {
             <span className="text-white/10">|</span>
             <span className="text-[#90c8ff]/25">◈ Engine: Rust → WASM</span>
             <span className="text-white/10">|</span>
-            <span className="text-[#90c8ff]/25">◈ License: MIT</span>
+            <span className="text-[#90c8ff]/25">◈ License: Apache-2.0</span>
           </div>
         </div>
 

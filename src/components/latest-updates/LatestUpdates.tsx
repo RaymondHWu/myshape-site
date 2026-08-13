@@ -13,7 +13,7 @@ interface UpdateEntry {
 const UPDATES: UpdateEntry[] = [
   {
     date: "2026-08-07",
-    text: "npm package v0.2.0 — 4-layer verification pipeline (EE-001 PES + EE-002 + EE-003 + Threat Assessment), 120 tests, extensible by design",
+    text: "npm package v0.2.2 — 4-layer verification pipeline (EE-001 PES + EE-002 + EE-003 + Threat Assessment), 120 tests, extensible by design",
     href: "https://www.npmjs.com/package/@thecontinuitylab/myshape",
     tag: "Release",
   },
