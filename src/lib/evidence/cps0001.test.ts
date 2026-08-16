@@ -190,6 +190,30 @@ describe("buildReceipt", () => {
     });
     expect(receipt.verdict).toBe("PASS");
   });
+
+  it("honors a pre-computed assertions override and still self-verifies", () => {
+    const block = makeBlock();
+    block.payloadDigest = computePayloadDigest(block.payload);
+
+    const receipt = buildReceipt({
+      evidence: [block],
+      interval: makeInterval(),
+      subject: makeSubject(),
+      issuer: makeIssuer(),
+      assertions: {
+        observationOccurred: { value: true, confidence: 0.95 },
+        continuityMaintained: { value: false, confidence: 0.0 },
+        receiptIntegrity: { value: true, confidence: 1.0 },
+      },
+    });
+
+    expect(receipt.assertions.continuityMaintained.value).toBe(false);
+    expect(receipt.assertions.continuityMaintained.confidence).toBe(0.0);
+
+    // Assertions are not part of the signing payload, so the override must not break the signature.
+    const signed = signReceipt(receipt, TEST_KEYPAIR.secretKey);
+    expect(verifyReceipt(signed).status).toBe("VALID");
+  });
 });
 
 // ═══════════════════════════════════════════

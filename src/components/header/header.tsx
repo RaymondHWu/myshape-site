@@ -305,9 +305,10 @@ const ProtocolHeader = () => {
       scrollbarWidth: "none",
     }}>
       {[
+        { label: "Try",        href: "/try" },
         { label: "Continuity", href: "/continuity" },
-        { label: "Research",  href: "/research" },
-        { label: "Protocol",  href: "/protocol" },
+        { label: "Research",   href: "/research" },
+        { label: "Protocol",   href: "/protocol" },
         { label: "Playground", href: "https://thecontinuitylab.org/lab/playground" },
       ].map(link =>
           <Link key={link.href} href={link.href}

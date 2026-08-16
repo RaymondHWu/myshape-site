@@ -47,7 +47,7 @@ export interface GenerateOptions {
 
 // ── Internal: PES components → EngineEvidence ──
 
-function pesToEngineEvidence(
+export function pesToEngineEvidence(
   pes: number,
   components: {
     frequencyEntropy: number;

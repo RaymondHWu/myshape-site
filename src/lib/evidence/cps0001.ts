@@ -182,6 +182,8 @@ export function buildReceipt(params: {
   issuer: IssuerIdentity;
   previousReceiptHash?: PredecessorRef;
   verdict?: Verdict;
+  /** Optional pre-computed assertions. Defaults to the engine-independent average. */
+  assertions?: AssertionSet;
 }): Omit<ContinuityReceipt, "signature"> {
   const confidences = params.evidence.map((e) => e.confidence);
 
@@ -191,7 +193,7 @@ export function buildReceipt(params: {
     interval: params.interval,
     subject: params.subject,
     evidence: params.evidence,
-    assertions: buildAssertions(confidences),
+    assertions: params.assertions ?? buildAssertions(confidences),
     verdict: params.verdict,
     previousReceiptHash: params.previousReceiptHash ?? null,
     references: [],

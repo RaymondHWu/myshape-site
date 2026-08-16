@@ -159,6 +159,19 @@ describe("analyzeRound", () => {
     expect(result.magnitudeStatus).toBe("FAIL");
   });
 
+  it("RC-1: correct sign but below magnitude threshold → directionMatch false", () => {
+    // Static/noise-level rotation (≤11°/s) in the correct direction must NOT match —
+    // direction matching is now magnitude-aware (regression of REAL-TRY-001B).
+    const samples: GyroSample[] = [
+      { t: 0, ax: 0, ay: 0, az: 9.8, rx: 11, ry: 0, rz: 0 },
+      { t: 100, ax: 0, ay: 0, az: 9.8, rx: 8, ry: 0, rz: 0 },
+      { t: 200, ax: 0, ay: 0, az: 9.8, rx: 6, ry: 0, rz: 0 },
+    ];
+    const result = analyzeRound(samples, "→");
+    expect(result.directionMatch).toBe(false);
+    expect(result.magnitudeStatus).toBe("FAIL");
+  });
+
   it("FAIL: wrong axis motion (yaw when pitch expected)", () => {
     // Use yaw motion but challenge expects pitch → direction match should be false
     // (peak rotation on ry=0 for yaw-only motion, so sign check on ry vs 0 fails)
@@ -211,6 +224,11 @@ describe("buildChallengeEvidence", () => {
 
     const chalComp = ev.components.find((c) => c.metric === "ChallengeResponse")!;
     expect(chalComp.status).toBe("PASS");
+    expect(chalComp.threshold).toBe(1.0);
+    expect(chalComp.value).toBe(1.0);
+
+    // v0.2: EE-003 confidence is a binary gate — 1 only when all 3 rounds pass
+    expect(ev.confidence).toBe(1);
   });
 
   it("0/3 PASS → all components INSUFFICIENT", () => {
@@ -226,6 +244,22 @@ describe("buildChallengeEvidence", () => {
     expect(ev.diagnostics.some((d) => d.includes("CFC-007"))).toBe(true);
     // CFC-006 triggered
     expect(ev.diagnostics.some((d) => d.includes("CFC-006"))).toBe(true);
+
+    // v0.2: 3/3 gate → FAIL, confidence 0
+    const chalComp = ev.components.find((c) => c.metric === "ChallengeResponse")!;
+    expect(chalComp.status).toBe("FAIL");
+    expect(ev.confidence).toBe(0);
+  });
+
+  it("gate: 2/3 passing + 1/3 absent → confidence 0, ChallengeResponse FAIL", () => {
+    const ev = buildChallengeEvidence([
+      passingRound(1), passingRound(2), failingRound(3),
+    ]);
+    const chalComp = ev.components.find((c) => c.metric === "ChallengeResponse")!;
+    expect(chalComp.status).toBe("FAIL");
+    expect(chalComp.threshold).toBe(1.0);
+    expect(chalComp.value).toBeCloseTo(2 / 3);
+    expect(ev.confidence).toBe(0);
   });
 
   it("CFC-008 triggered when all rounds pass with identical parameters", () => {

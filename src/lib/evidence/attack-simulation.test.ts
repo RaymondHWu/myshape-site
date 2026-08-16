@@ -39,6 +39,7 @@ import {
   buildChallengeEvidence,
   GYRO_THRESHOLD_DEG_S,
 } from "./gyro-challenge";
+import { evaluateTwoStage } from "../continuity/verify-continuity";
 
 // ═══════════════════════════════════════════════════════════════════
 // EE-003 Gyroscope Challenge — data generators
@@ -106,7 +107,7 @@ describe("EE-003 · Gyroscope Challenge Attacks", () => {
     expect(result.magnitudeStatus === "PASS").toBe(false);
   });
 
-  it("SECURITY: random guess has ~25% chance per round", () => {
+  it("SECURITY: random guess has ~1.6% chance to pass all 3 rounds", () => {
     // Simulate 10000 3-round challenges with random guessing
     let fullPasses = 0;
     for (let trial = 0; trial < 10000; trial++) {
@@ -117,12 +118,11 @@ describe("EE-003 · Gyroscope Challenge Attacks", () => {
         const result = analyzeRound(samples, dir);
         if (result.directionMatch && result.magnitudeStatus === "PASS") passed++;
       }
-      if (passed >= 2) fullPasses++; // need 2/3 to pass
+      if (passed === 3) fullPasses++; // v0.2: need 3/3 to pass
     }
-    // Expected: 0.25^2 * 0.75 * 3 + 0.25^3 ≈ 0.156
-    // With 10000 trials, 95% CI is roughly 1000-2100
-    expect(fullPasses).toBeLessThan(2500); // well above expected, but generous bound
-    expect(fullPasses).toBeGreaterThan(500);  // sanity check
+    // Expected: 0.25^3 = 0.015625 → ~156 of 10000 trials
+    expect(fullPasses).toBeLessThan(1000); // generous upper bound
+    expect(fullPasses).toBeGreaterThan(10);  // sanity check
   });
 
   it("SECURITY: replay of known sequence is undetectable (acknowledged limitation)", () => {
@@ -246,14 +246,13 @@ describe("Verification Session · Combined Attack Resistance", () => {
     expect(result.directionMatch).toBe(false);
   });
 
-  it("SECURITY: 3-round challenge with 2/3 threshold provides reasonable security", () => {
+  it("SECURITY: 3-round challenge with 3/3 threshold provides strong security", () => {
     // With 4 directions, P(guess one round) = 0.25
-    // P(pass 2/3 by guessing) = C(3,2) * 0.25^2 * 0.75 + 0.25^3
-    // = 3 * 0.0625 * 0.75 + 0.015625 = 0.140625 + 0.015625 = 0.15625
+    // P(pass all 3 by guessing) = 0.25^3 = 0.015625 (~1.6%)
 
     const probOnePass = 0.25;
-    const probTwoPass = 3 * probOnePass ** 2 * (1 - probOnePass) + probOnePass ** 3;
-    expect(probTwoPass).toBeCloseTo(0.15625, 3);
+    const probPassAll = probOnePass ** 3;
+    expect(probPassAll).toBeCloseTo(0.015625, 5);
 
     // This is why we need multi-modal escalation:
     // After EE-003, if confidence is still low, escalate to EE-004 (voice), etc.
@@ -262,14 +261,14 @@ describe("Verification Session · Combined Attack Resistance", () => {
 
   it("SECURITY: escalation strategy compounds evidence signals", () => {
     // Scenario: attacker passes passive (lucky), faces 2 escalation rounds
-    // EE-003 (gyro): P(pass) = 0.156
+    // EE-003 (gyro, 3/3): P(pass) = 0.015625
     // EE-004 (hypothetical voice): P(pass) = 0.25
-    // Combined: P(pass both) = 0.156 * 0.25 = 0.039 (4%)
+    // Combined: P(pass both) = 0.015625 * 0.25 ≈ 0.0039
 
-    const gyroPass = 0.15625;
+    const gyroPass = 0.015625;
     const voicePass = 0.25; // hypothetical
     const combinedPass = gyroPass * voicePass;
-    expect(combinedPass).toBeCloseTo(0.039, 2);
+    expect(combinedPass).toBeCloseTo(0.0039, 4);
 
     // This is the power of escalation strategy — each additional evidence
     // request multiplies the attacker's difficulty, not adds to it.
@@ -292,7 +291,7 @@ describe("buildChallengeEvidence · Adversarial Inputs", () => {
     expect(hasCFC008).toBe(true);
   });
 
-  it("SECURITY: mixed-quality attack — 1 pass + 2 fails → INSUFFICIENT", () => {
+  it("SECURITY: mixed-quality attack — 1 pass + 2 fails → FAIL", () => {
     const results: RoundResult[] = [
       { round: 1, direction: "→", jitterMs: 500, angleDeg: 55, directionMatch: true, peakG: 0.30, magnitudeStatus: "PASS", sampleCount: 100 },
       { round: 2, direction: "↑", jitterMs: 300, angleDeg: 3, directionMatch: false, peakG: 0.05, magnitudeStatus: "FAIL", sampleCount: 80 },
@@ -300,23 +299,24 @@ describe("buildChallengeEvidence · Adversarial Inputs", () => {
     ];
     const ev = buildChallengeEvidence(results);
     const chalComp = ev.components.find((c) => c.metric === "ChallengeResponse")!;
-    // directionRate = 1/3 ≈ 0.33 → FAIL; magnitudeRate = 1/3 ≈ 0.33 → FAIL
-    // challengeValue = 0.33 * 0.55 + 0.33 * 0.45 ≈ 0.33 → FAIL
-    expect(chalComp.status).not.toBe("PASS");
+    // v0.2 3/3 gate: 1/3 passing → FAIL, confidence 0
+    expect(chalComp.status).toBe("FAIL");
+    expect(ev.confidence).toBe(0);
   });
 
-  it("SECURITY: attacker passes direction but fails magnitude → still insufficient", () => {
+  it("SECURITY: attacker passes direction but fails magnitude → still fails", () => {
     const results: RoundResult[] = [
       { round: 1, direction: "→", jitterMs: 500, angleDeg: 3, directionMatch: true, peakG: 0.04, magnitudeStatus: "FAIL", sampleCount: 100 },
       { round: 2, direction: "↑", jitterMs: 300, angleDeg: 5, directionMatch: true, peakG: 0.03, magnitudeStatus: "FAIL", sampleCount: 100 },
       { round: 3, direction: "←", jitterMs: 700, angleDeg: 4, directionMatch: true, peakG: 0.06, magnitudeStatus: "FAIL", sampleCount: 100 },
     ];
     const ev = buildChallengeEvidence(results);
-    // All rounds match direction but all fail magnitude → still can't pass
+    // All rounds match direction but all fail magnitude → the 3/3 gate rejects
     const magComp = ev.components.find((c) => c.metric === "MovementMagnitude")!;
     expect(magComp.status).not.toBe("PASS");
     const chalComp = ev.components.find((c) => c.metric === "ChallengeResponse")!;
-    expect(chalComp.status).not.toBe("PASS");
+    expect(chalComp.status).toBe("FAIL");
+    expect(ev.confidence).toBe(0);
   });
 });
 
@@ -325,50 +325,36 @@ describe("buildChallengeEvidence · Adversarial Inputs", () => {
 // ═══════════════════════════════════════════════════════════════════
 
 describe("Cross-Engine · Multi-Vector Attacks", () => {
-  it("SECURITY: attacker cannot specialize in one engine and ignore others", () => {
-    // Even if an attacker optimizes for gyro (EE-003),
-    // the session still requires passive evidence (EE-001) to be present.
-    // An empty passive result cannot bootstrap into acceptance.
+  it("SECURITY: attacker cannot compensate a failed stage with a strong other stage", () => {
+    // Two-stage: Stage 1 (presence) must pass independently of Stage 2 (challenge).
+    // A perfect gyro cannot rescue a missing presence signal.
+    const ee001 = 0.0; // no passive evidence
+    const ee003 = 1.0; // perfect gyro
 
-    const passiveConfidence = 0.0; // no passive evidence
-    const activeConfidence = 0.9;   // perfect gyro
-
-    // Without passive evidence, aggregate is dragged down
-    const aggregate = (passiveConfidence + activeConfidence) / 2;
-    expect(aggregate).toBe(0.45); // still below 0.70 acceptance
+    const verdict = evaluateTwoStage(ee001, ee003);
+    expect(verdict.stage1Pass).toBe(false);
+    expect(verdict.verified).toBe(false); // presence failure vetoes — no compensation
   });
 
-  it("SECURITY: replay of known gyro sequence + fake IMU cannot reach 0.70", () => {
-    // Attacker replays known gyro → passes EE-003 with 1.0
-    // Attacker simulates IMU → passes EE-001 with 0.65 (capped)
-    // But aggregate = (0.65 + 1.0) / 2 = 0.825 → passes!
-
-    // This is why the IMU cap exists — to force diversity.
-    // Future: add a diversity bonus/reward to prevent
-    // over-reliance on any single engine.
+  it("SECURITY: two-stage verdict uses weakest-link confidence, not average", () => {
+    // Replay of known gyro sequence (EE-003=1.0) + weak IMU (EE-001=0.65)
+    // passes both stages, but confidence is min, NOT (0.65+1.0)/2 = 0.825.
     const imuConf = 0.65;
     const gyroConf = 1.0;
-    const aggregate = (imuConf + gyroConf) / 2;
-    // Combined evidence passes — which is correct behavior
-    // (two independent sensors agree)
-    expect(aggregate).toBeGreaterThanOrEqual(0.70);
-
-    // The real defense: if attacker can consistently fake BOTH sensors,
-    // we escalate to a third modality (voice, ECG, etc.)
-    // This is the escalation strategy — not rejection, but progressive raising of the bar.
+    const verdict = evaluateTwoStage(imuConf, gyroConf);
+    expect(verdict.stage1Pass).toBe(true);
+    expect(verdict.stage2Pass).toBe(true);
+    expect(verdict.verified).toBe(true);
+    expect(verdict.confidence).toBe(0.65);
   });
 
-  it("SECURITY: evidence chain integrity — confidence monotonicity", () => {
-    // Once evidence is collected and aggregated, removing or degrading
-    // a piece of evidence should not increase confidence.
-    // (This is a basic sanity check — actual chain integrity comes from receipts.)
+  it("SECURITY: weakest-link confidence degrades when a stage weakens", () => {
+    // Degrading one stage must not be hidden by a strong other stage.
+    const strong = evaluateTwoStage(0.60, 0.80);
+    const degraded = evaluateTwoStage(0.60, 0.40);
+    expect(strong.confidence).toBeGreaterThan(degraded.confidence);
 
-    const allEvidence = [0.60, 0.80]; // EE-001 + EE-003
-    const fullAggregate = allEvidence.reduce((a, b) => a + b, 0) / allEvidence.length;
-
-    const degradedEvidence = [0.60, 0.40]; // EE-003 weakened
-    const degradedAggregate = degradedEvidence.reduce((a, b) => a + b, 0) / degradedEvidence.length;
-
-    expect(fullAggregate).toBeGreaterThan(degradedAggregate);
+    // A below-threshold challenge vetoes the verdict regardless of presence.
+    expect(evaluateTwoStage(0.80, 0.40).verified).toBe(false);
   });
 });
