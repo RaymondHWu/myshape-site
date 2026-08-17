@@ -117,7 +117,8 @@ export function analyzeRound(
     if (Math.abs(rate) > maxAbsRotation) maxAbsRotation = Math.abs(rate);
   }
 
-  const directionMatch = (sign > 0 && peakRot > 0) || (sign < 0 && peakRot < 0);
+  const signCorrect = (sign > 0 && peakRot > 0) || (sign < 0 && peakRot < 0);
+  const directionMatch = signCorrect && maxAbsRotation >= GYRO_THRESHOLD_DEG_S;
 
   let magnitudeStatus: "PASS" | "FAIL" | "INSUFFICIENT";
   if (maxAbsRotation >= GYRO_THRESHOLD_DEG_S) magnitudeStatus = "PASS";
@@ -181,23 +182,24 @@ export function buildChallengeEvidence(
   else if (magnitudePasses === 0) diagnostics.push("✗ CFC-006 · Challenge Non-Response: no rounds had detectable motion");
   else diagnostics.push(`⚠ weak movement magnitude (${magnitudePasses}/${results.length} rounds)`);
 
-  // ChallengeResponse (aggregate)
-  const challengeValue = directionRate * 0.55 + magnitudeRate * 0.45;
-  const challengeStatus: "PASS" | "FAIL" | "INSUFFICIENT" =
-    challengeValue >= 0.66 ? "PASS" : challengeValue >= 0.33 ? "FAIL" : "INSUFFICIENT";
+  // ChallengeResponse (mandatory gate — every required round must pass)
+  const passingRounds = results.filter((r) => r.directionMatch && r.magnitudeStatus === "PASS").length;
+  const challengePassed = passingRounds === TOTAL_ROUNDS && results.length === TOTAL_ROUNDS;
+  const challengeValue = passingRounds / TOTAL_ROUNDS;
+  const challengeStatus: "PASS" | "FAIL" = challengePassed ? "PASS" : "FAIL";
 
   components.push({
     engine: "EE-003",
     metric: "ChallengeResponse",
     value: challengeValue,
-    threshold: 0.5,
+    threshold: 1.0,
     status: challengeStatus,
-    explanation: "directionMatch×0.55 + movementMagnitude×0.45",
+    explanation: `${passingRounds}/${TOTAL_ROUNDS} rounds passed (all ${TOTAL_ROUNDS} required)`,
     hint: computeHint("CausalEvidence", challengeStatus),
   });
 
-  if (challengeStatus === "PASS") diagnostics.push("✓ Additional Evidence collected");
-  else if (challengeStatus === "FAIL") diagnostics.push("✗ Additional Evidence insufficient");
+  if (challengePassed) diagnostics.push("✓ Additional Evidence collected");
+  else diagnostics.push(`✗ Additional Evidence insufficient — ${passingRounds}/${TOTAL_ROUNDS} rounds passed`);
 
   // CFC-008 Predictability check
   if (results.length >= 3 && directionPasses === results.length && magnitudePasses === results.length) {
@@ -225,8 +227,7 @@ export function buildChallengeEvidence(
     );
   });
 
-  const chalComp = components.find((c) => c.metric === "ChallengeResponse");
-  const confidence = chalComp?.value ?? 0;
+  const confidence = challengePassed ? 1 : 0;
 
   return {
     engineId: "EE-003",

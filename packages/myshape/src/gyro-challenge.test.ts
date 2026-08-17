@@ -265,3 +265,48 @@ describe("buildChallengeEvidence", () => {
     }
   });
 });
+
+// ═══════════════════════════════════════════
+// v0.2 · Binary 3/3 gate (2/3 is not 0.667)
+// ═══════════════════════════════════════════
+
+describe("v0.2 binary gate", () => {
+  function passRound(round: number): RoundResult {
+    return { round, direction: "→", jitterMs: 500, angleDeg: 50, directionMatch: true, peakG: 0.3, magnitudeStatus: "PASS", sampleCount: 100 };
+  }
+
+  function failRound(round: number): RoundResult {
+    return { round, direction: "→", jitterMs: 300, angleDeg: 5, directionMatch: false, peakG: 0.05, magnitudeStatus: "FAIL", sampleCount: 80 };
+  }
+
+  it("3/3 valid rounds → confidence 1.0, ChallengeResponse PASS", () => {
+    const ev = buildChallengeEvidence([passRound(1), passRound(2), passRound(3)]);
+    expect(ev.confidence).toBe(1);
+
+    const chal = ev.components.find((c) => c.metric === "ChallengeResponse")!;
+    expect(chal.status).toBe("PASS");
+    expect(chal.threshold).toBe(1.0);
+    expect(chal.value).toBe(1);
+  });
+
+  it("2/3 valid rounds → confidence 0.0, ChallengeResponse FAIL (not 0.667)", () => {
+    const ev = buildChallengeEvidence([passRound(1), passRound(2), failRound(3)]);
+    expect(ev.confidence).toBe(0);
+
+    const chal = ev.components.find((c) => c.metric === "ChallengeResponse")!;
+    expect(chal.status).toBe("FAIL");
+    expect(chal.value).toBe(2 / 3); // diagnostic fraction only; confidence stays binary
+  });
+
+  it("correct direction but magnitude < 40°/s → directionMatch false (magnitude-aware)", () => {
+    const samples: GyroSample[] = [
+      { t: 0, ax: 0, ay: 0, az: 9.8, rx: 25, ry: 0, rz: 0 },
+      { t: 100, ax: 0, ay: 0, az: 9.8, rx: 25, ry: 0, rz: 0 },
+      { t: 200, ax: 0, ay: 0, az: 9.8, rx: 25, ry: 0, rz: 0 },
+    ];
+    // expectedSign("→") = +1, peakRot = +25 → sign correct but 25 < 40°/s
+    const result = analyzeRound(samples, "→");
+    expect(result.directionMatch).toBe(false);
+    expect(result.magnitudeStatus).toBe("INSUFFICIENT"); // 25 ∈ [20, 40)
+  });
+});

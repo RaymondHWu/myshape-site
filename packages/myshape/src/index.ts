@@ -4,11 +4,10 @@
  * Single entry point for motion-signature verification.
  * RFC-0001 conformant. Reference implementation.
  *
- * 4-layer pipeline:
- *   1. EE-001: Presence Entropy Score (PES) — is there a living entity?
- *   2. EE-002: Cross-Modal Causal Coupling — do sensors see the same event?
- *   3. EE-003: Challenge-Response — randomized gyro challenge defeats replay
- *   4. VS-001: Verification Session — aggregate confidence + escalation
+ * Two-stage verification (v0.2):
+ *   Stage 1: EE-001 Presence Entropy Score (PES) — presence established (≥ 0.50)
+ *   Stage 2: EE-003 Challenge-Response — all 3 rounds pass (=== 1.000)
+ *   EE-002 (Cross-Modal Causal Coupling) remains informational — not in verdict
  *
  * @example
  * ```ts
@@ -166,7 +165,6 @@ import type { JointPosition, PESComponents } from "./presence-entropy.js";
 import type { EngineEvidence, Verdict, VerificationPolicy } from "./types.js";
 import type { ThreatReport } from "./threat-assessment.js";
 
-import { evaluatePolicy } from "./types.js";
 import { detectJerkPeaks, detectDirectionChanges, matchEvents, buildEvidence } from "./causal-coupling.js";
 import { buildChallengeEvidence } from "./gyro-challenge.js";
 import { computeFullPES, buildPESEvidence } from "./presence-entropy.js";
@@ -183,7 +181,7 @@ export interface VerifyContinuityInput {
   timestamps?: number[];
   /** Challenge round results (optional, for EE-003) */
   challengeResults?: RoundResult[];
-  /** Verification policy override */
+  /** @deprecated Two-stage verdict uses fixed thresholds (EE-001 ≥ 0.50, EE-003 = 1.000); this override is ignored. */
   policy?: VerificationPolicy;
   /** Sampling duration in ms (default 8000) */
   duration?: number;
@@ -196,23 +194,26 @@ export interface VerifyContinuityOutput {
   threatReport?: ThreatReport;
 }
 
+// ── Two-stage verdict thresholds (v0.2) ──
+const PRESENCE_THRESHOLD = 0.5;        // Stage 1: EE-001 confidence ≥ 0.5  → presence established
+const CHALLENGE_PASS_CONFIDENCE = 1.0; // Stage 2: EE-003 confidence === 1.0 → all 3 rounds passed
+
 /**
- * verifyContinuity — 4-layer continuity verification pipeline.
+ * verifyContinuity — two-stage continuity verification (v0.2).
  *
- * Layer 1 (EE-001): PES — passive biological presence detection
- *   Requires: frames + timestamps (optional but recommended)
+ * Stage 1 (EE-001): Presence Entropy Score — presence established when ≥ 0.50
+ *   Requires: frames + timestamps
  *
- * Layer 2 (EE-002): Cross-Modal Causal Coupling — sensor agreement
- *   Requires: imuSamples + cameraSamples
+ * Stage 2 (EE-003): Challenge-Response — all 3 rounds must pass (=== 1.000)
+ *   Requires: challengeResults
  *
- * Layer 3 (EE-003): Challenge-Response — active replay defeat
- *   Requires: challengeResults (optional, used when escalation needed)
- *
- * Layer 4 (VS-001): Session aggregation — confidence merge + policy
- *   Always runs — aggregates all available evidence
+ * Both stages are mandatory: presence must not compensate for an
+ * incomplete challenge. EE-002 (Cross-Modal Causal Coupling) is still
+ * computed when imuSamples are provided, but does not participate in the verdict.
+ * verdict = stage1Pass && stage2Pass; confidence = min(EE-001, EE-003).
  */
 export async function verifyContinuity(input: VerifyContinuityInput): Promise<VerifyContinuityOutput> {
-  const { imuSamples, cameraSamples, frames, timestamps, challengeResults, policy, duration = 8000 } = input;
+  const { imuSamples, cameraSamples, frames, timestamps, challengeResults, duration = 8000 } = input;
 
   const allEvidence: EngineEvidence[] = [];
 
@@ -243,45 +244,20 @@ export async function verifyContinuity(input: VerifyContinuityInput): Promise<Ve
     allEvidence.push(challengeEvidence);
   }
 
-  // ── Layer 4: VS-001 — Session Aggregation ──
-  if (allEvidence.length === 0) {
-    return {
-      verdict: "INSUFFICIENT_EVIDENCE",
-      confidence: 0,
-      evidence: [],
-    };
-  }
-
-  // Weighted confidence aggregation
-  // PES (EE-001): weight 0.35 — strongest single signal
-  // Causal (EE-002): weight 0.40 — primary cross-modal check
-  // Challenge (EE-003): weight 0.25 — active confirmation
-  const weights: Record<string, number> = {
-    "EE-001": 0.35,
-    "EE-002": 0.40,
-    "EE-003": 0.25,
-  };
-
-  let totalWeight = 0;
-  let weightedConfidence = 0;
-
-  for (const ev of allEvidence) {
-    const w = weights[ev.engineId] ?? 0.20;
-    totalWeight += w;
-    weightedConfidence += w * (ev.confidence ?? 0);
-  }
-
-  const aggregateConfidence = totalWeight > 0 ? weightedConfidence / totalWeight : 0;
+  // ── Two-stage verdict (v0.2) ──
+  // Stage 1 = EE-001 presence (≥ 0.50); Stage 2 = EE-003 challenge (=== 1.000).
+  // Both mandatory — presence must not compensate for an incomplete challenge.
+  const ee001 = allEvidence.find((e) => e.engineId === "EE-001");
+  const ee003 = allEvidence.find((e) => e.engineId === "EE-003");
 
   // Threat assessment (if PES evidence available)
   let threatReport: ThreatReport | undefined;
-  const pesEvidence = allEvidence.find((e) => e.engineId === "EE-001");
-  if (pesEvidence) {
-    const mtComp = pesEvidence.components.find((c) => c.metric === "IMU_PES");
-    const nrComp = pesEvidence.components.find((c) => c.metric === "Camera_PES");
-    const feComp = pesEvidence.components.find((c) => c.metric === "FrequencyEntropy");
-    const bioComp = pesEvidence.components.find((c) => c.metric === "BiologicalPerturbation");
-    const pesComp = pesEvidence.components.find((c) => c.metric === "PresenceEntropyScore");
+  if (ee001) {
+    const mtComp = ee001.components.find((c) => c.metric === "IMU_PES");
+    const nrComp = ee001.components.find((c) => c.metric === "Camera_PES");
+    const feComp = ee001.components.find((c) => c.metric === "FrequencyEntropy");
+    const bioComp = ee001.components.find((c) => c.metric === "BiologicalPerturbation");
+    const pesComp = ee001.components.find((c) => c.metric === "PresenceEntropyScore");
 
     if (mtComp && nrComp && bioComp && pesComp) {
       const components: PESComponents = {
@@ -294,19 +270,27 @@ export async function verifyContinuity(input: VerifyContinuityInput): Promise<Ve
     }
   }
 
-  // Policy evaluation
-  const defaultPolicy: VerificationPolicy = {
-    policyId: "default",
-    acceptThreshold: 0.70,
-    rejectThreshold: 0.35,
-    ...policy,
-  };
+  // Both stages are required for a verdict.
+  if (!ee001 || !ee003) {
+    return {
+      verdict: "INSUFFICIENT_EVIDENCE",
+      confidence: 0,
+      evidence: allEvidence,
+      threatReport,
+    };
+  }
 
-  const verdict = evaluatePolicy(defaultPolicy, aggregateConfidence);
+  const ee001Confidence = ee001.confidence ?? 0;
+  const ee003Confidence = ee003.confidence ?? 0;
+  const stage1Pass = ee001Confidence >= PRESENCE_THRESHOLD;
+  const stage2Pass = ee003Confidence >= CHALLENGE_PASS_CONFIDENCE;
+  const verified = stage1Pass && stage2Pass;
+  const confidence = Math.min(ee001Confidence, ee003Confidence);
+  const verdict: Verdict = verified ? "PASS" : "FAIL";
 
   return {
     verdict,
-    confidence: aggregateConfidence,
+    confidence,
     evidence: allEvidence,
     threatReport,
   };
