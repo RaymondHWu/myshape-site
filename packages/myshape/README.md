@@ -30,7 +30,7 @@ const result = await verifyContinuity({
 // → { verdict, confidence, evidence, threatReport }
 ```
 
-`verifyContinuity` runs a 4-layer pipeline — Presence Entropy Score (EE-001), Cross-Modal Causal Coupling (EE-002), Challenge-Response (EE-003), and Verification Session aggregation (VS-001). Each layer contributes weighted evidence toward a final `verdict` and `confidence`.
+`verifyContinuity` implements CPS-0001 v0.2 two-stage verification: Stage 1 = EE-001 ≥ 0.50 (Presence Entropy Score); Stage 2 = EE-003 = 1.0 (all 3 challenge rounds pass); both must pass. Confidence is the weaker stage (min). EE-002 (Cross-Modal Causal Coupling) is informational only and does not affect the verdict.
 
 ## CPS-0001 Receipts
 

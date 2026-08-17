@@ -84,6 +84,13 @@ export default function NoteClient() {
             <section className="note-section" id="status">
               <h2>Status of This Document</h2>
               <p>
+                <strong>Historical — superseded by CPS-0001 v0.2.</strong> This RFC describes the earlier
+                weighted multi-engine aggregation semantics. CPS-0001 v0.2 now uses two-stage verification:
+                Stage 1 = EE-001 ≥ 0.50; Stage 2 = EE-003 = 1.0; both must pass. Confidence is the weaker
+                stage (min). EE-002 is informational only and does not affect the verdict. The sections below
+                are preserved as historical record and have not been rewritten.
+              </p>
+              <p>
                 <strong>RFC-0001 · Draft · 2026-07-18.</strong> Published by The Continuity Lab.
                 This is a living document. Comments, corrections, and proposed amendments should be submitted
                 as GitHub issues against the MyShape Protocol repository.

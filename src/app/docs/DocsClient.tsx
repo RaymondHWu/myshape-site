@@ -28,7 +28,7 @@ const result = await verifyContinuity({
 console.log(result.verdict === 'PASS' ? 'Continuity verified' : 'Verification failed');
 \`\`\`
 
-All motion processing runs on-device. The 4-layer pipeline (EE-001 → EE-002 → EE-003 → VS-001) aggregates evidence into a single verdict. Zero raw motion data is transmitted.`,
+All motion processing runs on-device. CPS-0001 v0.2 uses two-stage verification: Stage 1 = EE-001 ≥ 0.50; Stage 2 = EE-003 = 1.0; both must pass. Confidence is the weaker stage (min). EE-002 is informational only and does not affect the verdict. Zero raw motion data is transmitted.`,
   },
   {
     title: "API Reference",

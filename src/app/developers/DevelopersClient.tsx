@@ -9,7 +9,7 @@ import { playTick } from "@/utils/useAudioTick";
 import "./developers.css";
 
 const SDK_METHODS = [
-  { module: "Continuity", method: "verifyContinuity(opts)", returns: "VerifyContinuityOutput", desc: "4-layer pipeline: EE-001 → EE-002 → EE-003 → VS-001" },
+  { module: "Continuity", method: "verifyContinuity(opts)", returns: "VerifyContinuityOutput", desc: "Two-stage verification: Stage 1 EE-001 ≥ 0.50; Stage 2 EE-003 = 1.0 (both required; confidence = min)" },
   { module: "Receipt", method: "buildReceipt(params)", returns: "Omit<ContinuityReceipt, 'signature'>", desc: "Construct a CPS-0001 conformant receipt" },
   { module: "Receipt", method: "signReceipt(unsigned, sk)", returns: "ContinuityReceipt", desc: "Ed25519-sign an unsigned receipt" },
   { module: "Receipt", method: "verifyReceipt(receipt)", returns: "VerificationResult", desc: "V₁-V₆ verification with FailureCode" },
