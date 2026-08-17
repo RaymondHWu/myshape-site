@@ -25,17 +25,22 @@
  */
 
 // ── Public types ──
+// Two-stage verdict output types (current).
 export type {
   EngineEvidence,
   ComponentEvidence,
   Verdict,
+  EvidenceStatus,
+} from "./types.js";
+
+// ── Legacy weighted-policy types (deprecated — NOT the CPS-0001 v0.2 verdict) ──
+export type {
   EvidenceReceipt,
   VerificationPolicy,
   VerificationSession,
   SessionPhase,
   EscalationStrategy,
   EscalationStep,
-  EvidenceStatus,
 } from "./types.js";
 
 export type {
@@ -71,8 +76,10 @@ export {
   computeStatus,
   computeHint,
   hashEvidence,
-  evaluatePolicy,
 } from "./types.js";
+
+// Legacy weighted-policy evaluator (deprecated — NOT the CPS-0001 v0.2 verdict).
+export { evaluatePolicy } from "./types.js";
 
 export {
   median,
@@ -181,7 +188,11 @@ export interface VerifyContinuityInput {
   timestamps?: number[];
   /** Challenge round results (optional, for EE-003) */
   challengeResults?: RoundResult[];
-  /** @deprecated Two-stage verdict uses fixed thresholds (EE-001 ≥ 0.50, EE-003 = 1.000); this override is ignored. */
+  /**
+   * @deprecated Legacy weighted-policy override. The CPS-0001 v0.2 two-stage
+   * verdict uses fixed thresholds (EE-001 ≥ 0.50, EE-003 = 1.000) and ignores
+   * this field entirely. It does not participate in the v0.2 verdict.
+   */
   policy?: VerificationPolicy;
   /** Sampling duration in ms (default 8000) */
   duration?: number;

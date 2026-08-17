@@ -83,8 +83,10 @@ export interface EngineEvidence {
 // Exists BETWEEN individual engines and the Receipt.
 // Owns the decision logic. Evidence does not know its own verdict.
 
+/** @deprecated Legacy escalation model. Superseded by CPS-0001 v0.2 two-stage verification (see `verifyContinuity`). Not part of the v0.2 verdict. */
 export type SessionPhase = "acquire" | "passive" | "escalate" | "additional" | "aggregate" | "complete";
 
+/** @deprecated Legacy escalation/aggregation model. Superseded by CPS-0001 v0.2 two-stage verification (see `verifyContinuity`). Not part of the v0.2 verdict. */
 export interface VerificationSession {
   sessionId: string;
   timestamp: string;
@@ -102,6 +104,7 @@ export interface VerificationSession {
 // Not a fixed Stage 2. A configurable policy that decides,
 // given current confidence, which engine to invoke next (if any).
 
+/** @deprecated Legacy escalation model. Superseded by CPS-0001 v0.2 two-stage verification (see `verifyContinuity`). Not part of the v0.2 verdict. */
 export interface EscalationStep {
   /** Minimum confidence to reach before this step is considered satisfied */
   requiredConfidence: number;
@@ -111,6 +114,7 @@ export interface EscalationStep {
   label: string;
 }
 
+/** @deprecated Legacy escalation model. Superseded by CPS-0001 v0.2 two-stage verification (see `verifyContinuity`). Not part of the v0.2 verdict. */
 export interface EscalationStrategy {
   strategyId: string;
   steps: EscalationStep[];
@@ -120,6 +124,7 @@ export interface EscalationStrategy {
 
 export type Verdict = "PASS" | "FAIL" | "INSUFFICIENT_EVIDENCE" | "CONTRADICTORY" | "EXPIRED";
 
+/** @deprecated Legacy weighted-policy model. Superseded by CPS-0001 v0.2 two-stage verification (see `verifyContinuity`). Does NOT participate in the v0.2 verdict — do not use for continuity verdicts. */
 export interface VerificationPolicy {
   policyId: string;
   /** Minimum aggregate confidence to accept */
@@ -128,7 +133,14 @@ export interface VerificationPolicy {
   rejectThreshold: number;
 }
 
-/** Default policy: ≥0.70 accept, <0.35 reject, between → escalate */
+/**
+ * Legacy weighted-policy verdict — NOT the CPS-0001 v0.2 verdict.
+ *
+ * @deprecated Superseded by two-stage verification. The authoritative continuity
+ * verdict is produced by `verifyContinuity()` (Stage 1 EE-001 ≥ 0.50 AND Stage 2
+ * EE-003 = 1.0). This evaluator applies the legacy accept/reject thresholds and
+ * must not be used to decide continuity under CPS-0001 v0.2.
+ */
 export function evaluatePolicy(policy: VerificationPolicy, confidence: number): Verdict {
   if (confidence >= policy.acceptThreshold) return "PASS";
   if (confidence < policy.rejectThreshold) return "FAIL";
@@ -137,6 +149,7 @@ export function evaluatePolicy(policy: VerificationPolicy, confidence: number): 
 
 // ── EvidenceReceipt (future) — signed, chainable evidence container ──
 
+/** @deprecated Legacy receipt container. Superseded by CPS-0001 `ContinuityReceipt` (see cps0001.ts). Not part of the v0.2 verdict. */
 export interface EvidenceReceipt {
   receiptId: string;
   subject: string;
@@ -156,7 +169,7 @@ export interface EvidenceReceipt {
 }
 
 // ── Deprecated: remove once all consumers use evaluatePolicy ──
-/** @deprecated Use evaluatePolicy + VerificationSession instead */
+/** @deprecated Legacy verdict helper. Superseded by CPS-0001 v0.2 two-stage verification (see `verifyContinuity`). Not part of the v0.2 verdict. */
 export function defaultPolicy(evidenceList: EngineEvidence[]): Verdict {
   const allComponents = evidenceList.flatMap((e) => e.components);
   if (allComponents.length === 0) return "INSUFFICIENT_EVIDENCE";

@@ -35,7 +35,7 @@ The consequence: no finite training dataset can fully determine a target's Motio
   },
   {
     id: "engine", num: "3", heading: "The Two-Stage Continuity Verification Pipeline",
-    content: `The MyShape Protocol reference implementation (@thecontinuitylab/myshape v0.2.2) is written in TypeScript and runs in the browser, Node.js, and Deno. CPS-0001 v0.2 uses two-stage verification: Stage 1 = EE-001 ≥ 0.50; Stage 2 = EE-003 = 1.0; both must pass. Confidence is the weaker stage (min). EE-002 is informational only and does not affect the verdict. The architecture is built around cost asymmetry, not a single "unforgeable" measurement.
+    content: `The MyShape Protocol reference implementation (@thecontinuitylab/myshape v0.3.0) is written in TypeScript and runs in the browser, Node.js, and Deno. CPS-0001 v0.2 uses two-stage verification: Stage 1 = EE-001 ≥ 0.50; Stage 2 = EE-003 = 1.0; both must pass. Confidence is the weaker stage (min). EE-002 is informational only and does not affect the verdict. The architecture is built around cost asymmetry, not a single "unforgeable" measurement.
 
 Layer 1 — EE-001 Presence Entropy Score (PES): A 4-dimensional analysis of biological sensor noise that distinguishes a living human from synthetic simulation. PES evaluates timing entropy, intensity variance, spectral content, and micro-motion consistency. On the benchmark dataset, PES separates human from AI with Cohen's d = 2.1 and AUC = 0.94.
 
@@ -66,7 +66,7 @@ The AI forgery is rejected across four independent evidence layers:
   },
   {
     id: "integration", num: "5", heading: "Integration: Verify in Three Lines",
-    content: `The @thecontinuitylab/myshape SDK v0.2.2 produces and verifies CPS-0001 Continuity Receipts. Engine-independent by design — any conformant producer interoperates.
+    content: `The @thecontinuitylab/myshape SDK v0.3.0 produces and verifies CPS-0001 Continuity Receipts. Engine-independent by design — any conformant producer interoperates.
 
   npm install @thecontinuitylab/myshape
 
@@ -247,7 +247,7 @@ export default function WhitepaperClient() {
               <span className="text-white/10">·</span>
               <span className="text-white/30">August 2026</span>
               <span className="text-white/10">·</span>
-              <span className="text-white/30">SDK v0.2.2</span>
+              <span className="text-white/30">SDK v0.3.0</span>
             </div>
             <div className="flex items-center gap-3 mt-4">
               <span className="flex items-center gap-1.5 text-[#00E5FF]/60 text-[11px] tracking-[0.2em] uppercase">

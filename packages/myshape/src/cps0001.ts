@@ -151,7 +151,18 @@ export function computePayloadDigest(payload: Record<string, unknown>): string {
   return sha256(JSON.stringify(payload));
 }
 
-/** Build the three normative assertions from engine confidence scores. */
+/**
+ * Build the three normative assertions from engine confidence scores.
+ *
+ * This is the engine-independent fallback: it averages the provided engine
+ * confidence scores into a single `continuityMaintained` assertion
+ * (`avg >= 0.5`). It is NOT the CPS-0001 v0.2 two-stage verdict.
+ *
+ * The two-stage verdict (Stage 1 EE-001 ≥ 0.50 AND Stage 2 EE-003 = 1.0,
+ * confidence = min) requires engine identity and MUST be computed by the
+ * caller and passed into `buildReceipt({ assertions })`. This function cannot
+ * apply that gate because it receives only bare confidence numbers.
+ */
 export function buildAssertions(engineConfidences: number[]): AssertionSet {
   const avg = engineConfidences.length > 0
     ? engineConfidences.reduce((a, b) => a + b, 0) / engineConfidences.length
@@ -182,6 +193,8 @@ export function buildReceipt(params: {
   issuer: IssuerIdentity;
   previousReceiptHash?: PredecessorRef;
   verdict?: Verdict;
+  /** Optional pre-computed assertions. Defaults to the engine-independent average. */
+  assertions?: AssertionSet;
 }): Omit<ContinuityReceipt, "signature"> {
   const confidences = params.evidence.map((e) => e.confidence);
 
@@ -191,7 +204,7 @@ export function buildReceipt(params: {
     interval: params.interval,
     subject: params.subject,
     evidence: params.evidence,
-    assertions: buildAssertions(confidences),
+    assertions: params.assertions ?? buildAssertions(confidences),
     verdict: params.verdict,
     previousReceiptHash: params.previousReceiptHash ?? null,
     references: [],
